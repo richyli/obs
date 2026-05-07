@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>課堂進度 · Tableau Dashboard</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; }
+body {
+  font-family: "Helvetica Neue", Arial, "Noto Sans TC", sans-serif;
+  background: #f0f2f5;
+  margin: 0; min-height: 100vh; color: #1a1a1a;
+}
+
+/* ── Setup screen ─────────────────────────────── */
+.setup-wrap {
+  display: flex; align-items: center; justify-content: center;
+  min-height: 100vh; padding: 2rem;
+}
+.setup-card {
+  background: #fff; border-radius: 14px; padding: 2.5rem;
+  max-width: 520px; width: 100%;
+  box-shadow: 0 4px 24px rgba(0,0,0,.1);
+}
+.setup-card h2 { margin: 0 0 .4rem; font-size: 1.25rem; }
+.setup-card p  { color: #555; font-size: .88rem; line-height: 1.7; margin: 0 0 1.4rem; }
+.setup-card code {
+  background: #f2f2f2; padding: .1em .4em; border-radius: 4px; font-size: .85em;
+}
+.setup-card input {
+  width: 100%; padding: .7rem 1rem; border: 1.5px solid #ddd;
+  border-radius: 8px; font-size: .95rem; margin-bottom: 1rem;
+}
+.setup-card input:focus { outline: none; border-color: #0055cc; }
+
+/* ── Shared header ────────────────────────────── */
+.hdr {
+  background: #fff; padding: 1rem 1.8rem;
+  border-bottom: 1px solid #e4e4e4;
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 20;
+  box-shadow: 0 2px 8px rgba(0,0,0,.06);
+}
+.hdr h1 { margin: 0; font-size: 1.05rem; font-weight: 700; }
+.hdr-right { display: flex; align-items: center; gap: .8rem; }
+.dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+.dot.ok  { background: #22c55e; }
+.dot.err { background: #ef4444; }
+.conn-text { font-size: .75rem; color: #999; }
+.session-chip {
+  font-size: .72rem; font-weight: 700; letter-spacing: .03em;
+  background: #e8f0ff; color: #0055cc;
+  padding: .2rem .65rem; border-radius: 20px;
+}
+
+/* ── Student view ─────────────────────────────── */
+.s-grid {
+  max-width: 660px; margin: 1.8rem auto;
+  padding: 0 1.2rem; display: grid; gap: .7rem;
+}
+.unit-card {
+  background: #fff; border-radius: 10px;
+  padding: .95rem 1.2rem;
+  display: flex; align-items: center; gap: 1rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,.07);
+  border-left: 4px solid transparent;
+  transition: border-color .2s, background .2s;
+}
+.unit-card.active { border-left-color: #fbbf24; background: #fffbeb; }
+.unit-card.done   { border-left-color: #22c55e; background: #f0fff4; }
+.unit-label { flex: 1; font-size: .93rem; font-weight: 500; }
+.btn-done {
+  padding: .48rem 1.1rem; border: none; border-radius: 7px;
+  font-size: .88rem; font-weight: 700; cursor: pointer;
+  white-space: nowrap; transition: all .15s;
+  background: #0055cc; color: #fff;
+}
+.btn-done:hover:not(:disabled) { background: #0044aa; transform: scale(1.04); }
+.btn-done.done   { background: #22c55e; cursor: default; }
+.btn-done:disabled { background: #e0e0e0; color: #999; cursor: not-allowed; }
+.active-badge {
+  font-size: .72rem; font-weight: 700; letter-spacing: .04em;
+  background: #fbbf24; color: #7c5a00;
+  padding: .15rem .5rem; border-radius: 4px; margin-left: .4rem;
+}
+
+/* ── Teacher view ─────────────────────────────── */
+.t-wrap { max-width: 820px; margin: 1.8rem auto; padding: 0 1.2rem; }
+.t-controls {
+  background: #fff; border-radius: 10px;
+  padding: 1.1rem 1.4rem; margin-bottom: 1.2rem;
+  display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
+  box-shadow: 0 1px 4px rgba(0,0,0,.07);
+}
+.t-controls label { font-size: .88rem; color: #555; white-space: nowrap; }
+.num-input {
+  width: 68px; padding: .4rem .5rem;
+  border: 1.5px solid #ddd; border-radius: 6px;
+  font-size: 1rem; font-weight: 700; text-align: center;
+}
+.btn-reset  { background: #ef4444; color: #fff; }
+.btn-reset:hover { background: #cc0000; }
+.btn-primary    { background: #0055cc; color: #fff; }
+.btn-primary:hover { background: #0044aa; }
+.btn-reset, .btn-primary {
+  padding: .48rem 1.1rem; border: none; border-radius: 7px;
+  font-size: .88rem; font-weight: 700; cursor: pointer; transition: background .15s;
+}
+
+.t-row {
+  background: #fff; border-radius: 10px;
+  padding: .85rem 1.2rem; margin-bottom: .55rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,.06);
+  cursor: pointer; transition: box-shadow .15s;
+  border-left: 4px solid transparent;
+}
+.t-row:hover { box-shadow: 0 2px 8px rgba(0,0,0,.1); }
+.t-row.active { border-left-color: #fbbf24; background: #fffbeb; }
+.t-row-top {
+  display: flex; align-items: center;
+  justify-content: space-between; margin-bottom: .5rem;
+}
+.t-label { font-size: .93rem; font-weight: 500; }
+.t-count { font-size: .93rem; font-weight: 700; color: #0055cc; }
+.bar-bg { width: 100%; height: 8px; background: #eee; border-radius: 4px; overflow: hidden; }
+.bar-fill {
+  height: 100%; border-radius: 4px;
+  background: #22c55e; transition: width .45s ease;
+}
+.bar-fill.low { background: #ef4444; }
+.bar-fill.mid { background: #fbbf24; }
+.t-hint { font-size: .75rem; color: #bbb; margin-top: .3rem; text-align: right; }
+
+@media (max-width: 500px) {
+  .hdr { padding: .9rem 1rem; }
+  .s-grid, .t-wrap { padding: 0 .7rem; }
+}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+// ═══════════════════════════════════════════════════════════════
+// 設定區（僅需填一次）
+// ═══════════════════════════════════════════════════════════════
+// 1. 前往 https://console.firebase.google.com 建立免費專案
+// 2. Realtime Database → 建立資料庫（測試模式）
+// 3. 規則改為: { "rules": { "classroom": { ".read": true, ".write": true }}}
+// 4. 將 DB URL 貼到下方，格式如：
+//    https://myproject-default-rtdb.asia-southeast1.firebasedatabase.app
+const FIREBASE_URL = "";          // ← 填入你的 Firebase DB URL
+
+const TEACHER_PW  = "obs";        // 老師網址：加 ?t=obs
+const POLL_MS     = 2500;         // 輪詢間隔 (ms)
+// ═══════════════════════════════════════════════════════════════
+
+const UNITS = [
+  ["u01","① 連結 CSV 資料"],
+  ["u02","② 確認欄位型別"],
+  ["u03","③ 建立 Hierarchy"],
+  ["u04","④ 長條圖"],
+  ["u05","⑤ Hierarchy drill-down"],
+  ["u06","⑥ 折線圖"],
+  ["u07","⑦ Reference Line"],
+  ["u08","⑧ 地圖（Map）"],
+  ["u09","⑨ Tooltip 自訂"],
+  ["u10","⑩ Small Multiples"],
+  ["u11","⑪ Sankey Chart"],
+  ["u12","⑫ 建立 Dashboard"],
+  ["u13","⑬ 加入篩選動作"],
+  ["u14","⑭ 全域篩選器"],
+  ["u15","⑮ 匯出 / 分享"],
+];
+
+// ── 狀態 ──────────────────────────────────────────────────────
+const params     = new URLSearchParams(location.search);
+const IS_TEACHER = params.get("t") === TEACHER_PW;
+const LS_DB      = "cls_db_url";
+const LS_LOCAL   = "cls_local";
+
+let dbUrl     = (FIREBASE_URL || localStorage.getItem(LS_DB) || "").replace(/\/$/, "");
+let connected = false;
+let pollTimer = null;
+
+// Server state
+let srv = { session: 0, total: 0, active: "" };
+UNITS.forEach(([id]) => { srv[id] = 0; });
+
+// Per-student local state
+let local = JSON.parse(localStorage.getItem(LS_LOCAL) || '{"session":0,"done":{}}');
+
+const root = document.getElementById("root");
+
+// ── Firebase REST helpers ─────────────────────────────────────
+function dbPath() { return `${dbUrl}/classroom.json`; }
+
+async function dbGet() {
+  try {
+    const r = await fetch(dbPath());
+    if (!r.ok) throw new Error(r.status);
+    connected = true;
+    return await r.json();
+  } catch { connected = false; return null; }
+}
+async function dbPatch(data) {
+  return fetch(dbPath(), {
+    method: "PATCH", body: JSON.stringify(data),
+    headers: { "Content-Type": "application/json" }
+  });
+}
+async function dbPut(data) {
+  return fetch(dbPath(), {
+    method: "PUT", body: JSON.stringify(data),
+    headers: { "Content-Type": "application/json" }
+  });
+}
+
+// ── Sync ──────────────────────────────────────────────────────
+async function poll() {
+  const data = await dbGet();
+  if (!data) { render(); return; }
+
+  // Session reset detection: clear local done if server session incremented
+  if ((data.session || 0) > (local.session || 0)) {
+    local = { session: data.session, done: {} };
+    localStorage.setItem(LS_LOCAL, JSON.stringify(local));
+  }
+
+  srv.session = data.session || 0;
+  srv.total   = data.total   || 0;
+  srv.active  = data.active  || "";
+  UNITS.forEach(([id]) => { srv[id] = data[id] || 0; });
+  render();
+}
+
+// ── Student action ─────────────────────────────────────────────
+async function markDone(uid) {
+  if (local.done[uid]) return;
+  local.done[uid] = true;
+  localStorage.setItem(LS_LOCAL, JSON.stringify(local));
+  const next = (srv[uid] || 0) + 1;
+  srv[uid] = next;
+  render();
+  await dbPatch({ [uid]: next });
+}
+
+// ── Teacher actions ────────────────────────────────────────────
+async function resetAll() {
+  if (!confirm("確定重置所有學生進度？\n學生頁面將在 3 秒內自動更新。")) return;
+  const newSession = (srv.session || 0) + 1;
+  const fresh = { session: newSession, total: srv.total, active: srv.active };
+  UNITS.forEach(([id]) => { fresh[id] = 0; });
+  await dbPut(fresh);
+  srv = { ...fresh };
+  render();
+}
+
+async function setTotal(n) {
+  if (isNaN(n) || n < 1) return;
+  srv.total = n;
+  await dbPatch({ total: n });
+  render();
+}
+
+async function setActive(uid) {
+  const next = srv.active === uid ? "" : uid;  // toggle off if clicking same
+  srv.active = next;
+  render();
+  await dbPatch({ active: next });
+}
+
+// ── Setup screen ──────────────────────────────────────────────
+function renderSetup() {
+  root.innerHTML = `
+<div class="setup-wrap">
+  <div class="setup-card">
+    <h2>🔧 首次設定 Firebase</h2>
+    <p>
+      本工具需要一個免費的 Firebase Realtime Database 來同步學生進度。<br>
+      <strong>步驟：</strong><br>
+      1. 前往 <a href="https://console.firebase.google.com" target="_blank">console.firebase.google.com</a><br>
+      2. 新增專案 → Realtime Database → 建立（選測試模式）<br>
+      3. 規則頁籤改為：<br>
+      <code>{"rules":{"classroom":{".read":true,".write":true}}}</code><br>
+      4. 複製 Database URL 貼入下方
+    </p>
+    <input id="db-in" type="url"
+           placeholder="https://my-project-default-rtdb.firebaseio.com"
+           value="${localStorage.getItem(LS_DB) || ""}">
+    <button class="btn-primary" style="width:100%;padding:.7rem"
+            onclick="saveDb()">儲存並開始</button>
+  </div>
+</div>`;
+}
+
+function saveDb() {
+  const val = document.getElementById("db-in").value.trim().replace(/\/$/, "");
+  if (!val.startsWith("https://")) { alert("請輸入完整 HTTPS URL"); return; }
+  dbUrl = val;
+  localStorage.setItem(LS_DB, val);
+  init();
+}
+
+// ── Render ────────────────────────────────────────────────────
+function connHtml() {
+  return `<span class="dot ${connected ? "ok" : "err"}"></span>
+          <span class="conn-text">${connected ? "已連線" : "離線"}</span>`;
+}
+
+function renderStudent() {
+  const inSession = local.session === srv.session;
+
+  const cards = UNITS.map(([uid, label]) => {
+    const isDone   = inSession && !!local.done[uid];
+    const isActive = srv.active === uid;
+    let cls = "";
+    if (isDone)   cls = " done";
+    else if (isActive) cls = " active";
+
+    const badge  = isActive && !isDone ? `<span class="active-badge">現在</span>` : "";
+    const btnCls = isDone ? " done" : "";
+    const btnDis = isDone ? " disabled" : "";
+
+    return `
+<div class="unit-card${cls}">
+  <span class="unit-label">${label}${badge}</span>
+  <button class="btn-done${btnCls}"${btnDis}
+          onclick="${isDone ? "" : `markDone('${uid}')`}">
+    ${isDone ? "✓ 完成" : "完成"}
+  </button>
+</div>`;
+  }).join("");
+
+  root.innerHTML = `
+<div class="hdr">
+  <h1>Tableau Dashboard 課堂進度</h1>
+  <div class="hdr-right">${connHtml()}</div>
+</div>
+<div class="s-grid">${cards}</div>`;
+}
+
+function renderTeacher() {
+  const total = srv.total || 1;
+
+  const rows = UNITS.map(([uid, label]) => {
+    const cnt  = srv[uid] || 0;
+    const pct  = Math.min(100, Math.round(cnt / total * 100));
+    const fill = pct >= 80 ? "" : pct >= 40 ? " mid" : " low";
+    const isActive = srv.active === uid;
+
+    return `
+<div class="t-row${isActive ? " active" : ""}" onclick="setActive('${uid}')">
+  <div class="t-row-top">
+    <span class="t-label">${label}${isActive ? ' <span class="active-badge">現在進行</span>' : ""}</span>
+    <span class="t-count">${cnt} / ${total}</span>
+  </div>
+  <div class="bar-bg"><div class="bar-fill${fill}" style="width:${pct}%"></div></div>
+  <div class="t-hint">點擊以標記為「現在進行」單元</div>
+</div>`;
+  }).join("");
+
+  root.innerHTML = `
+<div class="hdr">
+  <h1>課堂進度（講師）</h1>
+  <div class="hdr-right">
+    <span class="session-chip">Session ${srv.session}</span>
+    ${connHtml()}
+  </div>
+</div>
+<div class="t-wrap">
+  <div class="t-controls">
+    <label>學生總人數：</label>
+    <input class="num-input" type="number" min="1" max="300"
+           value="${srv.total || ""}" placeholder="25"
+           onchange="setTotal(parseInt(this.value))">
+    <button class="btn-reset" onclick="resetAll()">🔄 重置進度</button>
+    ${connHtml()}
+  </div>
+  ${rows}
+</div>`;
+}
+
+function render() {
+  if (IS_TEACHER) renderTeacher();
+  else renderStudent();
+}
+
+// ── Init ──────────────────────────────────────────────────────
+function init() {
+  if (!dbUrl) { renderSetup(); return; }
+  poll();
+  clearInterval(pollTimer);
+  pollTimer = setInterval(poll, POLL_MS);
+}
+
+init();
+</script>
+</body>
+</html>
