@@ -173,10 +173,12 @@ const UNITS = [
 ];
 
 // ── 狀態 ──────────────────────────────────────────────────────
-const params     = new URLSearchParams(location.search);
-const IS_TEACHER = params.get("t") === TEACHER_PW;
-const LS_DB      = "cls_db_url";
-const LS_LOCAL   = "cls_local";
+const params       = new URLSearchParams(location.search);
+const WANTS_TEACHER = params.has("t");
+let   IS_TEACHER   = WANTS_TEACHER &&
+                     sessionStorage.getItem("teacher_auth") === "1";
+const LS_DB        = "cls_db_url";
+const LS_LOCAL     = "cls_local";
 
 let dbUrl     = (FIREBASE_URL || localStorage.getItem(LS_DB) || "").replace(/\/$/, "");
 let connected = false;
@@ -301,6 +303,38 @@ function saveDb() {
   init();
 }
 
+// ── Teacher password gate ─────────────────────────────────────
+function renderTeacherLogin() {
+  root.innerHTML = `
+<div class="setup-wrap">
+  <div class="setup-card">
+    <h2>🔒 講師登入</h2>
+    <p>請輸入講師密碼以進入課堂管理介面。</p>
+    <input id="pw-in" type="password" placeholder="密碼"
+           style="margin-bottom:.8rem"
+           onkeydown="if(event.key==='Enter')checkTeacherPw()">
+    <button class="btn-primary" style="width:100%;padding:.7rem"
+            onclick="checkTeacherPw()">登入</button>
+    <p id="pw-err" style="color:#ef4444;font-size:.85rem;margin:.6rem 0 0;display:none">
+      密碼錯誤，請再試一次</p>
+  </div>
+</div>`;
+  setTimeout(() => document.getElementById("pw-in")?.focus(), 50);
+}
+
+function checkTeacherPw() {
+  const val = document.getElementById("pw-in")?.value || "";
+  if (val === TEACHER_PW) {
+    sessionStorage.setItem("teacher_auth", "1");
+    IS_TEACHER = true;
+    init();
+  } else {
+    document.getElementById("pw-err").style.display = "block";
+    document.getElementById("pw-in").value = "";
+    document.getElementById("pw-in").focus();
+  }
+}
+
 // ── Render ────────────────────────────────────────────────────
 function connHtml() {
   return `<span class="dot ${connected ? "ok" : "err"}"></span>
@@ -387,6 +421,7 @@ function render() {
 
 // ── Init ──────────────────────────────────────────────────────
 function init() {
+  if (WANTS_TEACHER && !IS_TEACHER) { renderTeacherLogin(); return; }
   if (!dbUrl) { renderSetup(); return; }
   poll();
   clearInterval(pollTimer);
