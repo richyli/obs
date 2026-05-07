@@ -77,6 +77,21 @@ hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
   font-size: 1.05rem;
 }
 .index-list li:last-child { border-bottom: none; }
+.toc {
+  background: #f7f7f7;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  padding: 0.8rem 1.4rem;
+  margin: 1.5rem 0 2.5rem;
+  font-size: 0.88em;
+  line-height: 1.6;
+}
+.toc::before { content: "目錄"; font-weight: 700; display: block; margin-bottom: 0.4rem; }
+.toc ul { margin: 0.1rem 0; padding-left: 1.2rem; }
+.toc > ul { padding-left: 0; }
+.toc li { margin: 0.15rem 0; list-style: none; }
+.toc a { color: #444; }
+.toc a:hover { color: #0055cc; }
 .embed-block {
   border-left: 3px solid #aaa;
   padding: 0.5rem 1.2rem;
@@ -84,14 +99,57 @@ hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
   background: #f8f8f8;
 }
 </style>
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
 </head>
 <body>
 <div class="container">
 <nav><a href="index.html">← 目錄</a></nav>
 <h1>Claude Code</h1>
 <p class="meta">#AI_agent　#claude</p>
+<div class="toc">
+<ul>
+<li><a href="#reference">reference</a></li>
+<li><a href="#installation">Installation</a><ul>
+<li><a href="#vs-code">VS Code</a></li>
+<li><a href="#git">Git</a></li>
+</ul>
+</li>
+<li><a href="#system-code">System Code</a><ul>
+<li><a href="#claudemd">Claude.md</a></li>
+<li><a href="#wat-framework">WAT Framework</a></li>
+</ul>
+</li>
+<li><a href="#plug-in">Plug-in</a><ul>
+<li><a href="#claude-mem">Claude-Mem</a></li>
+</ul>
+</li>
+<li><a href="#skill">Skill</a></li>
+<li><a href="#interface">Interface</a></li>
+<li><a href="#command">Command</a><ul>
+<li><a href="#automation">Automation</a></li>
+</ul>
+</li>
+<li><a href="#newbie-projects">Newbie Projects</a><ul>
+<li><a href="#web-scrape">Web Scrape</a></li>
+<li><a href="#personal-website">Personal Website</a></li>
+<li><a href="#utility">Utility</a><ul>
+<li><a href="#japanese-keyboard">Japanese Keyboard</a></li>
+</ul>
+</li>
+<li><a href="#agent">Agent</a></li>
+</ul>
+</li>
+</ul>
+</div>
+
 <p>AI Agent, Claude, Vibe Coding</p>
-<h2>reference</h2>
+<h2 id="reference">reference</h2>
 <ul>
 <li><a href="https://www.youtube.com/watch?v=saggDHHnmtQ&amp;list=PLjWDgfv04HA9r-jCEmUAagOWU6p8teZmR">https://www.youtube.com/watch?v=saggDHHnmtQ&amp;list=PLjWDgfv04HA9r-jCEmUAagOWU6p8teZmR</a></li>
 <li>Claude code in Action - Coursera</li>
@@ -99,16 +157,16 @@ hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
 <li><a href="https://haosquare.com/claude-code-ai-coding-intro/">https://haosquare.com/claude-code-ai-coding-intro/</a></li>
 <li></li>
 </ul>
-<h2>Installation</h2>
+<h2 id="installation">Installation</h2>
 <ul>
 <li><a href="https://code.claude.com/docs/zh-TW/overview">https://code.claude.com/docs/zh-TW/overview</a></li>
 </ul>
-<h3>VS Code</h3>
-<h3>Git</h3>
-<h2>System Code</h2>
-<h3>Claude.md</h3>
+<h3 id="vs-code">VS Code</h3>
+<h3 id="git">Git</h3>
+<h2 id="system-code">System Code</h2>
+<h3 id="claudemd">Claude.md</h3>
 <p><a href="https://haosquare.com/claude-code-claude-md-intro/">https://haosquare.com/claude-code-claude-md-intro/</a></p>
-<h3>WAT Framework</h3>
+<h3 id="wat-framework">WAT Framework</h3>
 <ul>
 <li>Workflow</li>
 <li>Agent<ul>
@@ -120,8 +178,8 @@ hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
 </ul>
 </li>
 </ul>
-<h2>Plug-in</h2>
-<h4>Claude-Mem</h4>
+<h2 id="plug-in">Plug-in</h2>
+<h4 id="claude-mem">Claude-Mem</h4>
 <p><a href="https://hackmd.io/@BASHCAT/S1tqslOwWe?utm_source=preview-mode&amp;utm_medium=rec">https://hackmd.io/@BASHCAT/S1tqslOwWe?utm_source=preview-mode&amp;utm_medium=rec</a>
 <a href="https://github.com/thedotmack/claude-mem">https://github.com/thedotmack/claude-mem</a></p>
 <p>最近出的Claude-Mem算是解決了Claude Code長期以來的一個明顯短板。</p>
@@ -136,10 +194,10 @@ hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
 <p>安裝方式也很簡單，兩個指令就能啟用，重啟之後就能開始使用持久記憶。</p>
 <p>目前 GitHub 星數已飆升29.9k，如果你長期在用 Claude Code 開發專案，這類「記憶層」工具很值得關注。它不只是省 token，而是試圖為 AI 工作流建立一層更穩定的長期上下文管理機制。</p>
 <blockquote></blockquote>
-<h2>Skill</h2>
+<h2 id="skill">Skill</h2>
 <p><a href="https://haosquare.com/claude-skills/">https://haosquare.com/claude-skills/</a>
 <a href="https://haosquare.com/claude-skills-continuous-learning/">https://haosquare.com/claude-skills-continuous-learning/</a></p>
-<h2>Interface</h2>
+<h2 id="interface">Interface</h2>
 <ul>
 <li>
 <p>Plan Mode</p>
@@ -164,9 +222,9 @@ cd Documents           # You go into Documents folder
 mkdir my-first-project # You create a new folder
 cd my-first-project    # You go into that new folder
 </code></pre>
-<h2>Command</h2>
+<h2 id="command">Command</h2>
 <p><a href="https://haosquare.com/claude-code-slash-commands/">https://haosquare.com/claude-code-slash-commands/</a></p>
-<h3>Automation</h3>
+<h3 id="automation">Automation</h3>
 <p>目前 Claude Code for VS Code 共提供四種模式</p>
 <ul>
 <li>Plan mode</li>
@@ -233,19 +291,19 @@ cd my-first-project    # You go into that new folder
 <p><code># 自動重構 claude refactor --yes --skip-confirm  # 部署前再問我 claude deploy</code></p>
 <p>結語：把「提問」留給人類，把「執行」交給 Claude Code</p>
 <p>設定好 <code>--yes</code> 與 <code>.claude.json</code> 後，你就能把重複性工作完全託管給 Claude Code。記得先在測試專案跑一次，確認它不會把整個 repo 刪光，再正式上線。自動化不是偷懶，而是把大腦留給更有創意的事。</p>
-<h2>Newbie Projects</h2>
+<h2 id="newbie-projects">Newbie Projects</h2>
 <p><a href="https://buildtolaunch.substack.com/p/claude-code-beginners-guide">https://buildtolaunch.substack.com/p/claude-code-beginners-guide</a></p>
-<h3>Web Scrape</h3>
+<h3 id="web-scrape">Web Scrape</h3>
 <p><a href="https://github.com/firecrawl/firecrawl-claude-plugin">https://github.com/firecrawl/firecrawl-claude-plugin</a></p>
-<h3>Personal Website</h3>
+<h3 id="personal-website">Personal Website</h3>
 <pre><code>cd Documents/my-projects
 mkdir portfolio-site
 cd portfolio-site
 claude
 </code></pre>
-<h3>Utility</h3>
-<h4>Japanese Keyboard</h4>
-<h3>Agent</h3>
+<h3 id="utility">Utility</h3>
+<h4 id="japanese-keyboard">Japanese Keyboard</h4>
+<h3 id="agent">Agent</h3>
 <p>VS Code</p>
 </div>
 </body>

@@ -77,6 +77,21 @@ hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
   font-size: 1.05rem;
 }
 .index-list li:last-child { border-bottom: none; }
+.toc {
+  background: #f7f7f7;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  padding: 0.8rem 1.4rem;
+  margin: 1.5rem 0 2.5rem;
+  font-size: 0.88em;
+  line-height: 1.6;
+}
+.toc::before { content: "目錄"; font-weight: 700; display: block; margin-bottom: 0.4rem; }
+.toc ul { margin: 0.1rem 0; padding-left: 1.2rem; }
+.toc > ul { padding-left: 0; }
+.toc li { margin: 0.15rem 0; list-style: none; }
+.toc a { color: #444; }
+.toc a:hover { color: #0055cc; }
 .embed-block {
   border-left: 3px solid #aaa;
   padding: 0.5rem 1.2rem;
@@ -84,15 +99,33 @@ hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
   background: #f8f8f8;
 }
 </style>
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
 </head>
 <body>
 <div class="container">
 <nav><a href="index.html">← 目錄</a></nav>
 <h1>computational journalism</h1>
 <p class="meta">#computational_journalism　#journalism　#NLP</p>
-<h2><a href="computational_journalism.html">computational journalism</a>（計算新聞學）</h2>
+<div class="toc">
+<ul>
+<li><a href="#computational-journalism">computational journalism（計算新聞學）</a><ul>
+<li><a href="#_1">主要應用領域</a></li>
+<li><a href="#ai">AI 自動化寫作與記者角色</a></li>
+<li><a href="#_2">可信度與倫理問題</a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+<h2 id="computational-journalism"><a href="computational_journalism.html">computational journalism</a>（計算新聞學）</h2>
 <p><strong>定義</strong>：計算新聞學（computational journalism）結合電腦科學、統計分析與新聞實踐，運用資料挖掘、NLP、機器學習與視覺化技術輔助新聞報導、調查與事實查核。</p>
-<h3>主要應用領域</h3>
+<h3 id="_1">主要應用領域</h3>
 <table>
 <thead>
 <tr>
@@ -129,9 +162,9 @@ hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
 </tr>
 </tbody>
 </table>
-<h3>AI 自動化寫作與記者角色</h3>
+<h3 id="ai">AI 自動化寫作與記者角色</h3>
 <p>自動化寫作（automated journalism）最初限於格式化報導（財報、運動）；生成式 AI 出現後，範圍大幅擴展，引發關於professional role conceptions轉變的討論。Møller 2025 Journalistic Roles Shape GenAI Adoption 發現記者的角色認知影響其採用 GenAI 的態度。</p>
-<h3>可信度與倫理問題</h3>
+<h3 id="_2">可信度與倫理問題</h3>
 <ul>
 <li>演算法偏誤（algorithmic bias）可能在大規模文本生成中系統性複製既有偏見</li>
 <li>AI 生成新聞的AI authorship標示問題（AI journalism transparency requires disclosure labels watermarks）</li>

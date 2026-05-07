@@ -77,6 +77,21 @@ hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
   font-size: 1.05rem;
 }
 .index-list li:last-child { border-bottom: none; }
+.toc {
+  background: #f7f7f7;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  padding: 0.8rem 1.4rem;
+  margin: 1.5rem 0 2.5rem;
+  font-size: 0.88em;
+  line-height: 1.6;
+}
+.toc::before { content: "目錄"; font-weight: 700; display: block; margin-bottom: 0.4rem; }
+.toc ul { margin: 0.1rem 0; padding-left: 1.2rem; }
+.toc > ul { padding-left: 0; }
+.toc li { margin: 0.15rem 0; list-style: none; }
+.toc a { color: #444; }
+.toc a:hover { color: #0055cc; }
 .embed-block {
   border-left: 3px solid #aaa;
   padding: 0.5rem 1.2rem;
@@ -84,16 +99,42 @@ hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
   background: #f8f8f8;
 }
 </style>
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
 </head>
 <body>
 <div class="container">
 <nav><a href="index.html">← 目錄</a></nav>
 <h1>Diakopoulos, Nicholas</h1>
 <p class="meta">#scholar　#computational_journalism　#algorithmic_transparency　#AI_journalism　#journalism_ethics</p>
-<h2>Diakopoulos, Nicholas</h2>
+<div class="toc">
+<ul>
+<li><a href="#diakopoulos-nicholas">Diakopoulos, Nicholas</a><ul>
+<li><a href="#_1">主要學術貢獻與典範</a></li>
+<li><a href="#_2">核心觀點</a></li>
+<li><a href="#_3">合作學者</a></li>
+<li><a href="#_4">相關學者</a></li>
+<li><a href="#_5">必讀論文</a></li>
+<li><a href="#wiki">Wiki 筆記索引</a><ul>
+<li><a href="#_6">論文主大綱</a></li>
+<li><a href="#_7">關鍵發現</a></li>
+<li><a href="#_8">相關概念</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+<h2 id="diakopoulos-nicholas">Diakopoulos, Nicholas</h2>
 <p><strong>機構</strong>：Northwestern University（Medill School of Journalism）
 <strong>研究領域</strong>：計算新聞學、演算法透明度、生成式 AI 在新聞業的應用與倫理、自動化新聞</p>
-<h3>主要學術貢獻與典範</h3>
+<h3 id="_1">主要學術貢獻與典範</h3>
 <ul>
 <li>與 Koliska 透過焦點團體研究（N=50）提出「輸入-輸出流程透明度框架」，識別演算法透明度的四個披露層次：資料、模型、推論、介面；成為後來演算法問責研究與業界實踐的標準參照（Diakopoulos &amp; Koliska, 2017）。</li>
 <li>揭示演算法的「人類在迴路（human-in-the-loop）」複雜化透明度歸責問題，以及透明度與競爭優勢之間的根本性張力（Diakopoulos &amp; Koliska, 2017）。</li>
@@ -101,41 +142,41 @@ hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
 <li>與 Veerbeek 設計、建立並評估三 Agent（Analyst + Reporter + Editor）協作 pipeline，用於從資料集自動生成「tip sheets」，在新聞價值面整體優於單一模型基準（0.67 vs. 0.52）（Veerbeek &amp; Diakopoulos, 2024）。</li>
 <li>確立「計算新聞探索（Computational News Discovery, CND）」概念框架，主張用演算法引導編輯注意力指向潛在新聞事件，但強調此類系統不能取代記者（Veerbeek &amp; Diakopoulos, 2024）。</li>
 </ul>
-<h3>核心觀點</h3>
+<h3 id="_2">核心觀點</h3>
 <ul>
 <li>「演算法透明度需要跨資料/模型/推論/介面四層次的系統性披露，不同演算法類型需要揭露不同資訊」（Diakopoulos &amp; Koliska, 2017）。</li>
 <li>「新聞機構在演算法透明度與競爭優勢之間面臨根本性張力」（Diakopoulos &amp; Koliska, 2017）。</li>
 <li>「缺乏人類監督是生成式 AI 在新聞業的最大倫理顧慮，超過資訊準確性本身」（Diakopoulos et al., 2024）。</li>
 <li>「多 Agent 協作 pipeline 比單一模型更能生成具新聞價值的洞見，但精確性仍然偏低（~34%），不可取代記者判斷」（Veerbeek &amp; Diakopoulos, 2024）。</li>
 </ul>
-<h3>合作學者</h3>
+<h3 id="_3">合作學者</h3>
 <ul>
 <li>Koliska, Michael（Georgetown，演算法透明度共同作者）</li>
 <li>Veerbeek, Jan（Northwestern，生成式 Agents tip sheets 共同作者）</li>
 <li>Cools, Hannes（U Amsterdam，共同作者）</li>
 <li>Helberger, Natali（U Amsterdam，AI 新聞倫理共同作者）</li>
 </ul>
-<h3>相關學者</h3>
+<h3 id="_4">相關學者</h3>
 <ul>
 <li>Lewis, Seth C. — communicative AI framework、AI turn in journalism</li>
 <li>Guzman, Andrea L. — Human-Machine Communication、communicative AI</li>
 <li>Karlsson, Michael — 演算法透明度、新聞規範</li>
 <li>Thomson, T. J. — GenAI 新聞政策、視覺 AI 透明度</li>
 </ul>
-<h3>必讀論文</h3>
+<h3 id="_5">必讀論文</h3>
 <ol>
 <li>Diakopoulos &amp; Koliska (2017). Algorithmic Transparency in the News Media（演算法透明度四層次框架奠基；wiki/ 有完整筆記）</li>
 <li>Diakopoulos et al. (2024). Generative AI in Journalism: The Evolution of Newswork and Ethics（新聞業 GenAI 現況調查；wiki/ 有完整筆記）</li>
 <li>Veerbeek &amp; Diakopoulos (2024). Using Generative Agents to Create Tip Sheets for Investigative Data Reporting（多 Agent 新聞探索 pipeline；wiki/ 有完整筆記）</li>
 </ol>
-<h3>Wiki 筆記索引</h3>
-<h4>論文主大綱</h4>
+<h3 id="wiki">Wiki 筆記索引</h3>
+<h4 id="_6">論文主大綱</h4>
 <ul>
 <li>Diakopoulos &amp; Koliska (2017). Algorithmic Transparency in the News Media</li>
 <li>Diakopoulos et al. (2024). Generative AI in Journalism: The Evolution of Newswork and Ethics</li>
 <li>Veerbeek &amp; Diakopoulos (2024). Using Generative Agents to Create Tip Sheets</li>
 </ul>
-<h4>關鍵發現</h4>
+<h4 id="_7">關鍵發現</h4>
 <ul>
 <li>algorithmic transparency in news requires disclosure of data model inference and interface layers</li>
 <li>news organizations face tension between algorithmic transparency and competitive advantage</li>
@@ -149,7 +190,7 @@ hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
 <li>generative agents pipeline outperforms single-model baseline on newsworthiness in data journalism</li>
 <li>transparency illusion limits algorithmic accountability</li>
 </ul>
-<h4>相關概念</h4>
+<h4 id="_8">相關概念</h4>
 <ul>
 <li><a href="computational_journalism.html">computational journalism</a></li>
 <li>algorithmic accountability</li>

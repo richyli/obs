@@ -77,6 +77,21 @@ hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
   font-size: 1.05rem;
 }
 .index-list li:last-child { border-bottom: none; }
+.toc {
+  background: #f7f7f7;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  padding: 0.8rem 1.4rem;
+  margin: 1.5rem 0 2.5rem;
+  font-size: 0.88em;
+  line-height: 1.6;
+}
+.toc::before { content: "目錄"; font-weight: 700; display: block; margin-bottom: 0.4rem; }
+.toc ul { margin: 0.1rem 0; padding-left: 1.2rem; }
+.toc > ul { padding-left: 0; }
+.toc li { margin: 0.15rem 0; list-style: none; }
+.toc a { color: #444; }
+.toc a:hover { color: #0055cc; }
 .embed-block {
   border-left: 3px solid #aaa;
   padding: 0.5rem 1.2rem;
@@ -84,13 +99,26 @@ hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
   background: #f8f8f8;
 }
 </style>
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
 </head>
 <body>
 <div class="container">
 <nav><a href="index.html">← 目錄</a></nav>
 <h1>journalistic roles</h1>
 <p class="meta">#journalistic_roles　#journalism_studies　#journalism_norms</p>
-<h2><a href="journalistic_roles.html">journalistic roles</a>（新聞角色）</h2>
+<div class="toc">
+<ul>
+<li><a href="#journalistic-roles">journalistic roles（新聞角色）</a></li>
+</ul>
+</div>
+
+<h2 id="journalistic-roles"><a href="journalistic_roles.html">journalistic roles</a>（新聞角色）</h2>
 <p><strong>定義</strong>：新聞角色指記者對自身在社會中所應扮演功能的認知與期待，影響其新聞決策與報導行為（Mellado, 2019）。</p>
 <p><strong>來源</strong>：Hanitzsch &amp; Vos（2018）提出 18 種具政治導向的新聞角色，分屬六大功能，打破西方民主導向框架，適用於非西方與非民主情境。</p>
 <p><strong>主要功能分類</strong>（Hanitzsch &amp; Vos, 2018）：
