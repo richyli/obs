@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Notes</title>
+<title>DN Lost Mothers ProPublica</title>
 <style>*, *::before, *::after { box-sizing: border-box; }
 
 /* ── Base ── */
@@ -175,55 +175,90 @@ hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
 </style>
 </head>
 <body>
-<div class="container">
-<h1>Notes</h1>
-<p class="meta">12 篇</p>
-<ul class="index-list">
-  <li><a href="algorithmic_transparency_in_news_requires_disclosure_of_data_model_inference_and_interface_layers.html">algorithmic transparency in news requires disclosure of data model inference and interface layers</a></li>
-  <li><a href="Claude_Code.html">Claude Code</a></li>
-  <li><a href="conjoint_book.html">conjoint_book</a></li>
-  <li><a href="Dashboard_with_Excel_and_Tableau.html">Tableau Dashboard 基礎教案</a></li>
-  <li><a href="Diakopoulos%2C_Nicholas.html">Diakopoulos, Nicholas</a></li>
-  <li><a href="digital_narrative_database_teaching.html">digital narrative database teaching</a></li>
-  <li><a href="digital_narrative_teaching_25.html">digital narrative teaching 25</a></li>
-  <li><a href="DN_Lost_Mothers_ProPublica.html">DN Lost Mothers ProPublica</a></li>
-  <li><a href="DN_%E7%B5%A6%E4%BD%A0%E7%8F%8A%E6%99%82%E8%90%AC_%E4%BD%A0%E6%83%B3%E6%8A%95%E7%B5%A6%E8%AA%B0.html">DN 給你珊時萬 你想投給誰</a></li>
-  <li><a href="journalistic_roles.html">journalistic roles</a></li>
-  <li><a href="Mellado%2C_Claudia.html">Mellado, Claudia</a></li>
-  <li><a href="No_code_charts.html">No code charts</a></li>
+<div class="layout">
+<aside class="sidebar">
+<div class="toc">
+<ul>
+<li><a href="#_1">簡介</a></li>
+<li><a href="#_2">評語</a></li>
+<li><a href="#_3">相關</a></li>
 </ul>
 </div>
-<div id="pw-gate" style="position:fixed;inset:0;background:#fff;display:flex;
-     align-items:center;justify-content:center;z-index:9999;font-family:sans-serif;">
-  <div style="text-align:center;padding:2rem;">
-    <p style="font-size:1.05rem;margin-bottom:1rem;color:#555;">Password required</p>
-    <input id="pw-in" type="password" autofocus
-           style="padding:0.5rem 1rem;font-size:1rem;border:1px solid #ccc;
-                  border-radius:4px;margin-right:0.5rem;width:160px;">
-    <button onclick="checkPw()"
-            style="padding:0.5rem 1.2rem;font-size:1rem;background:#0055cc;
-                   color:#fff;border:none;border-radius:4px;cursor:pointer;">Enter</button>
-    <p id="pw-err" style="color:red;font-size:0.85rem;margin-top:0.6rem;display:none;">
-      Incorrect password</p>
-  </div>
+</aside>
+<main class="content">
+<h1>DN Lost Mothers ProPublica</h1>
+<p class="meta">#digital_narrative　#crowdsourced_database　#memorial_journalism　#public_health</p>
+<h2 id="lost-mothers-maternal-mortality-in-the-us">Lost Mothers: Maternal Mortality in the U.S.</h2>
+<p><strong>來源</strong>：<a href="https://www.propublica.org/series/lost-mothers">ProPublica</a>（2017）</p>
+<p><strong>評分</strong>：92 / 100</p>
+<p><strong>敘事方法</strong>：<code>crowdsourced_database</code>、<code>memorial_journalism</code>、<code>public_health</code></p>
+<h3 id="_1">簡介</h3>
+<p>ProPublica + NPR 合作系列報導，邀請讀者提交孕產婦死亡個案，並建立「The Lost Mothers」紀念資料庫；2018 普立茲獎入圍作品。</p>
+<h3 id="_2">評語</h3>
+<p><strong>優點</strong>：把分散的個別悲劇連結成可被引用的全國性資料庫；紀念敘事 + 群眾資料庫的結合，是 CRUD 模式的人本範例</p>
+<p><strong>缺點</strong>：案件提交需要心理支持機制，記者要面對悲傷敘事的長期心理負擔；驗證牽涉醫療隱私，倫理審核成本高</p>
+<h3 id="_3">相關</h3>
+<p>digital narrative index、<a href="digital_narrative_teaching_25.html">digital narrative teaching 25</a></p>
+</main>
 </div>
 <script>
-(function(){
-  if(sessionStorage.getItem('obs_auth')==='1'){
-    document.getElementById('pw-gate').style.display='none';
+(function () {
+  // ── Rebuild TOC with toggle buttons ──────────────────────────────────────
+  var toc = document.querySelector('.sidebar .toc');
+  if (toc) {
+    toc.querySelectorAll('li').forEach(function (li) {
+      var childUl = li.querySelector(':scope > ul');
+      var link    = li.querySelector(':scope > a');
+      if (!link) return;
+
+      var row = document.createElement('div');
+      row.className = 'toc-row';
+
+      if (childUl) {
+        var btn = document.createElement('button');
+        btn.className = 'toc-toggle';
+        btn.setAttribute('aria-expanded', 'true');
+        btn.textContent = '▾';          // ▾ open
+        btn.addEventListener('click', function () {
+          var open = childUl.hidden;
+          childUl.hidden = !open;
+          btn.textContent = open ? '▾' : '▸';   // ▾ / ▸
+          btn.setAttribute('aria-expanded', String(open));
+        });
+        row.appendChild(btn);
+      } else {
+        var spacer = document.createElement('span');
+        spacer.style.width = '1rem';
+        spacer.style.flexShrink = '0';
+        row.appendChild(spacer);
+      }
+
+      row.appendChild(link);
+      li.insertBefore(row, li.firstChild);
+    });
   }
-  document.getElementById('pw-in').addEventListener('keydown',function(e){
-    if(e.key==='Enter') checkPw();
-  });
-})();
-function checkPw(){
-  if(document.getElementById('pw-in').value==='obs'){
-    sessionStorage.setItem('obs_auth','1');
-    document.getElementById('pw-gate').style.display='none';
-  } else {
-    document.getElementById('pw-err').style.display='block';
-  }
-}
+
+  // ── Scroll spy ───────────────────────────────────────────────────────────
+  var headings = document.querySelectorAll('.content h2[id], .content h3[id], .content h4[id]');
+  var tocLinks = document.querySelectorAll('.sidebar .toc a');
+  if (!headings.length || !tocLinks.length) return;
+
+  var current = null;
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      var link = document.querySelector('.sidebar .toc a[href="#' + e.target.id + '"]');
+      if (!link) return;
+      if (current) current.classList.remove('active');
+      current = link;
+      current.classList.add('active');
+      // Scroll link into view within sidebar
+      current.scrollIntoView({ block: 'nearest' });
+    });
+  }, { rootMargin: '-5% 0px -75% 0px', threshold: 0 });
+
+  headings.forEach(function (h) { io.observe(h); });
+}());
 </script>
 </body>
 </html>
