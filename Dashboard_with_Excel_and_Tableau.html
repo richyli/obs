@@ -204,6 +204,11 @@ MathJax = {
 <li><a href="#part-310-10">Part 3｜折線圖：10 年銷售走勢（10 分鐘）</a></li>
 <li><a href="#part-410">Part 4｜地圖：各國銷售地理分布（10 分鐘）</a></li>
 <li><a href="#part-5small-multiples10">Part 5｜Small Multiples：各品類月度趨勢（10 分鐘）</a></li>
+<li><a href="#part-55sankey-chart10">Part 5.5｜Sankey Chart：銷售流向圖（10 分鐘）</a><ul>
+<li><a href="#aextension">方式 A：Extension（推薦，適合課堂）</a></li>
+<li><a href="#b-tableau-table-calculation">方式 B：原生 Tableau（進階，需 Table Calculation）</a></li>
+</ul>
+</li>
 <li><a href="#part-6dashboard-10">Part 6｜Dashboard 組合（10 分鐘）</a></li>
 <li><a href="#part-7-demo-qa3">Part 7｜互動 Demo 與 Q&amp;A（3 分鐘）</a></li>
 </ul>
@@ -247,19 +252,20 @@ MathJax = {
 <li>[ ] <strong>⑧ 地圖（Map）</strong>（8 min）— 雙擊 Country、Filled Map、Color by Sales</li>
 <li>[ ] <strong>⑨ Tooltip 自訂</strong>（2 min）— 加入 Profit 至 Tooltip</li>
 <li>[ ] <strong>⑩ Small Multiples</strong>（8 min）— Category 放 Rows、Month 放 Columns、Trellis 排版</li>
+<li>[ ] <strong>⑪ Sankey Chart</strong>（10 min）— Continent → Category → Sub_Category 銷售流向（Extension 或原生）</li>
 </ul>
 <h4 id="dashboard">Dashboard 組合</h4>
 <ul>
-<li>[ ] <strong>⑪ 建立 Dashboard</strong>（5 min）— 拖入 4 個 Sheet、Container 排版</li>
-<li>[ ] <strong>⑫ 加入篩選動作</strong>（5 min）— Dashboard Actions → Filter（點擊地圖篩選）</li>
-<li>[ ] <strong>⑬ 全域篩選器</strong>（2 min）— Category Filter 套用到所有 Sheet</li>
-<li>[ ] <strong>⑭ 匯出 / 分享</strong>（2 min）— Export as Packaged Workbook (.twbx)</li>
+<li>[ ] <strong>⑫ 建立 Dashboard</strong>（5 min）— 拖入 5 個 Sheet、Container 排版</li>
+<li>[ ] <strong>⑬ 加入篩選動作</strong>（5 min）— Dashboard Actions → Filter（點擊地圖篩選）</li>
+<li>[ ] <strong>⑭ 全域篩選器</strong>（2 min）— Category Filter 套用到所有 Sheet</li>
+<li>[ ] <strong>⑮ 匯出 / 分享</strong>（2 min）— Export as Packaged Workbook (.twbx)</li>
 </ul>
 <hr />
 <h3 id="_4">學習目標</h3>
 <p>完成本課後，學員能夠：
 - 連結 CSV 資料並確認欄位型別
-- 建立長條圖、折線圖、地圖、Small Multiples 四種圖表
+- 建立長條圖、折線圖、地圖、Small Multiples、Sankey 五種圖表
 - 將圖表組合成互動式 Dashboard 並加入篩選動作</p>
 <hr />
 <h3 id="retail_monthlycsv">資料集：<a href="retail_monthly.csv">retail_monthly.csv</a></h3>
@@ -449,6 +455,53 @@ MathJax = {
 <li>重新命名為 <code>Small Multiples - Category</code></li>
 </ol>
 <p><strong>進階</strong>：把 <code>YEAR(Date)</code> 也加入 Columns，就能看到年度 × 月份的矩陣格局</p>
+<hr />
+<h4 id="part-55sankey-chart10">Part 5.5｜Sankey Chart：銷售流向圖（10 分鐘）</h4>
+<p><strong>目標</strong>：視覺化「銷售額從哪個洲、流向哪個品類、再流向哪個子品類」</p>
+<p><strong>Sankey 適合的問題</strong>：<br />
+- 哪個洲的消費集中在哪些品類？<br />
+- Electronics 裡 Phones 與 Computers 各佔多少？<br />
+- 流量最大的「路徑」是什麼？</p>
+<p><strong>Tableau 建立 Sankey 的兩種方式</strong>：</p>
+<h5 id="aextension">方式 A：Extension（推薦，適合課堂）</h5>
+<ol>
+<li>上方選單 <strong>Help → Extension Gallery</strong>，或至 <a href="https://extensionsgallery.tableau.com">[https://extensionsgallery.tableau.com](https://extensionsgallery.tableau.com)</a> 搜尋 <strong>Sankey</strong></li>
+<li>下載 <code>.trex</code> 檔案（如 SankeyMaker）</li>
+<li>新增 Dashboard → 左側 <strong>Objects → Extension</strong> → 拖入畫面 → 載入 <code>.trex</code></li>
+<li>在 Extension 設定中指定：</li>
+<li><strong>Source（來源節點）</strong>：<code>Continent</code></li>
+<li><strong>Target（目標節點）</strong>：<code>Category</code></li>
+<li><strong>Value（流量大小）</strong>：<code>SUM(Sales)</code></li>
+<li>可再加一層：Source → <code>Category</code>，Target → <code>Sub_Category</code></li>
+</ol>
+<h5 id="b-tableau-table-calculation">方式 B：原生 Tableau（進階，需 Table Calculation）</h5>
+<blockquote>
+<p>適合已熟悉 Tableau 的學員，課堂可示範概念即可。</p>
+</blockquote>
+<p><strong>核心邏輯</strong>：用兩個資料列（起點 / 終點）搭配 <code>WINDOW_SUM</code> 與 <code>INDEX</code> 計算出每條流線的座標，再用 Line Mark 連接。</p>
+<ol>
+<li>準備「長格式」資料：每筆流線需要兩筆記錄（<code>path = 0</code> 和 <code>path = 1</code>）</li>
+<li>建立計算欄位：</li>
+<li><code>X軸 = IF path = 0 THEN 1 ELSE 2 END</code>（或多層時為 1, 2, 3）</li>
+<li><code>Y軸 = WINDOW_SUM(SUM([Sales]))</code> 搭配排序</li>
+<li>Mark 設定為 <strong>Line</strong>，Detail 放 <code>Continent</code> + <code>Category</code></li>
+<li>用 <code>SIZE()</code> 或 Dual Axis 控制線條粗細</li>
+</ol>
+<p><strong>本資料集建議 Sankey 結構</strong>：</p>
+<pre><code>Continent  ──→  Category  ──→  Sub_Category
+Asia              Electronics       Phones
+                                    Computers
+              Clothing          Apparel
+                                    Accessories
+              Furniture         Home
+                                    Office
+Europe        ...
+North America ...
+South America ...
+Africa        ...
+</code></pre>
+<p><strong>重新命名</strong>：<code>Sankey - Sales Flow</code></p>
+<p><strong>提問</strong>：Asia 的銷售主要流向哪個品類？South Africa 的流量相比其他洲差異有多大？</p>
 <hr />
 <h4 id="part-6dashboard-10">Part 6｜Dashboard 組合（10 分鐘）</h4>
 <p><strong>目標</strong>：整合 4 個圖表，加入互動篩選</p>
