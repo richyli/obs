@@ -150,7 +150,7 @@ body {
 //    https://myproject-default-rtdb.asia-southeast1.firebasedatabase.app
 const FIREBASE_URL = "https://course-update-36460-default-rtdb.firebaseio.com";
 
-const TEACHER_PW  = "obs";        // 老師網址：加 ?t=obs
+const TEACHER_HASH = "a93ac600f27f6602bf628cd929c9028e285038fc8637fe1ec6792e8850ade6a8"; // SHA-256
 const POLL_MS     = 2500;         // 輪詢間隔 (ms)
 // ═══════════════════════════════════════════════════════════════
 
@@ -322,9 +322,11 @@ function renderTeacherLogin() {
   setTimeout(() => document.getElementById("pw-in")?.focus(), 50);
 }
 
-function checkTeacherPw() {
+async function checkTeacherPw() {
   const val = document.getElementById("pw-in")?.value || "";
-  if (val === TEACHER_PW) {
+  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(val));
+  const hex = Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,"0")).join("");
+  if (hex === TEACHER_HASH) {
     sessionStorage.setItem("teacher_auth", "1");
     IS_TEACHER = true;
     init();
