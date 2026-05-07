@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tableau Dashboard 基礎教案</title>
+<style>*, *::before, *::after { box-sizing: border-box; }
+
+/* ── Base ── */
+body {
+  font-family: "Helvetica Neue", Arial, "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+  font-size: 20px;
+  line-height: 1.9;
+  color: #111;
+  background: #fff;
+  margin: 0;
+}
+
+/* ── Two-column layout (note pages) ── */
+.layout { display: flex; align-items: flex-start; min-height: 100vh; }
+
+.sidebar {
+  width: 270px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 2rem 1rem 2rem 1.5rem;
+  border-right: 1px solid #e8e8e8;
+  background: #f9f9f9;
+}
+.sidebar-back {
+  display: block;
+  font-size: 0.82rem;
+  color: #999;
+  margin-bottom: 1.4rem;
+  text-decoration: none;
+}
+.sidebar-back:hover { color: #333; }
+.sidebar-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #bbb;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+/* ── TOC in sidebar ── */
+.toc { font-size: 0.82rem; line-height: 1.55; }
+.toc ul { list-style: none; margin: 0; padding: 0; }
+.toc ul ul { padding-left: 0.9rem; }
+.toc li { margin: 0; }
+.toc-row { display: flex; align-items: baseline; gap: 0.2rem; }
+.toc-row a {
+  flex: 1;
+  display: block;
+  padding: 0.18rem 0.3rem;
+  border-radius: 3px;
+  color: #555;
+  text-decoration: none;
+  word-break: break-word;
+}
+.toc-row a:hover { background: #ebebeb; color: #111; }
+.toc-row a.active { color: #0055cc; font-weight: 600; background: #e8f0ff; }
+.toc-toggle {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-size: 0.65rem;
+  color: #bbb;
+  line-height: 1;
+  width: 1rem;
+  text-align: center;
+}
+.toc-toggle:hover { color: #555; }
+
+/* ── Main content ── */
+.content {
+  flex: 1;
+  min-width: 0;
+  padding: 3rem 3rem 6rem;
+  max-width: 800px;
+}
+
+/* ── Single-column (index page) ── */
+.container { max-width: 800px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
+
+/* ── Typography ── */
+h1 {
+  font-size: 1.75rem; font-weight: 700;
+  margin: 0 0 0.15rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 2px solid #111;
+  line-height: 1.3;
+}
+h2 {
+  font-size: 1.3rem; font-weight: 700;
+  margin: 2.5rem 0 0.5rem;
+  padding-bottom: 0.2rem;
+  border-bottom: 1px solid #ddd;
+}
+h3 { font-size: 1.1rem; font-weight: 700; margin: 1.8rem 0 0.4rem; }
+h4 { font-size: 1rem; font-weight: 700; margin: 1.4rem 0 0.3rem; }
+p { margin: 0.9rem 0; }
+a { color: #0055cc; text-decoration: none; }
+a:hover { text-decoration: underline; }
+nav { margin-bottom: 2.5rem; font-size: 0.85rem; color: #999; }
+nav a { color: #999; }
+
+/* ── Code ── */
+code {
+  font-family: "SFMono-Regular", Consolas, monospace;
+  background: #f2f2f2;
+  padding: 0.1em 0.4em;
+  border-radius: 3px;
+  font-size: 0.85em;
+}
+pre {
+  background: #f2f2f2;
+  padding: 1.2rem 1.4rem;
+  border-radius: 5px;
+  overflow-x: auto;
+  font-size: 0.85em;
+  line-height: 1.6;
+}
+pre code { background: none; padding: 0; }
+
+/* ── Lists ── */
+ul, ol { padding-left: 1.6rem; margin: 0.8rem 0; }
+li { margin: 0.35rem 0; }
+li > ul, li > ol { margin: 0.2rem 0; }
+
+/* ── Other elements ── */
+blockquote {
+  border-left: 4px solid #ccc;
+  margin: 1.2rem 0;
+  padding: 0.3rem 1.2rem;
+  color: #444;
+  background: #fafafa;
+}
+table { border-collapse: collapse; width: 100%; margin: 1.2rem 0; font-size: 0.95em; }
+th, td { border: 1px solid #ccc; padding: 0.55rem 0.9rem; text-align: left; }
+th { background: #f5f5f5; font-weight: 700; }
+tr:nth-child(even) { background: #fafafa; }
+hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
+.meta { font-size: 0.8rem; color: #aaa; margin: 0.3rem 0 1.8rem; }
+.index-list { list-style: none; padding: 0; margin: 1rem 0; }
+.index-list li { padding: 0.55rem 0; border-bottom: 1px solid #eee; font-size: 1.05rem; }
+.index-list li:last-child { border-bottom: none; }
+.embed-block {
+  border-left: 3px solid #aaa;
+  padding: 0.5rem 1.2rem;
+  margin: 1.5rem 0;
+  background: #f8f8f8;
+}
+
+/* ── Mobile ── */
+@media (max-width: 800px) {
+  .layout { flex-direction: column; }
+  .sidebar {
+    position: static;
+    width: 100%;
+    height: auto;
+    max-height: 50vh;
+    border-right: none;
+    border-bottom: 1px solid #e8e8e8;
+    padding: 1rem 1.5rem;
+  }
+  .content { padding: 1.5rem 1.2rem 4rem; }
+}
+</style>
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+<a class="sidebar-back" href="index.html">← 目錄</a>
+<div class="sidebar-label">本頁目錄</div>
+<div class="toc">
+<ul>
+<li><a href="#tableau-dashboard">Tableau Dashboard</a><ul>
+<li><a href="#_1">操作項目清單（逐項進行）</a><ul>
+<li><a href="#_2">基礎環境</a></li>
+<li><a href="#_3">圖表建立</a></li>
+<li><a href="#dashboard">Dashboard 組合</a></li>
+</ul>
+</li>
+<li><a href="#_4">學習目標</a></li>
+<li><a href="#retail_monthlycsv">資料集：retail_monthly.csv</a></li>
+<li><a href="#_5">課程流程</a><ul>
+<li><a href="#part-02">Part 0｜開場展示（2 分鐘）</a></li>
+<li><a href="#part-15">Part 1｜連結資料（5 分鐘）</a></li>
+<li><a href="#part-210">Part 2｜長條圖：各國銷售比較（10 分鐘）</a></li>
+<li><a href="#part-310-10">Part 3｜折線圖：10 年銷售走勢（10 分鐘）</a></li>
+<li><a href="#part-410">Part 4｜地圖：各國銷售地理分布（10 分鐘）</a></li>
+<li><a href="#part-5small-multiples10">Part 5｜Small Multiples：各品類月度趨勢（10 分鐘）</a></li>
+<li><a href="#part-6dashboard-10">Part 6｜Dashboard 組合（10 分鐘）</a></li>
+<li><a href="#part-7-demo-qa3">Part 7｜互動 Demo 與 Q&amp;A（3 分鐘）</a></li>
+</ul>
+</li>
+<li><a href="#dashboard_1">Dashboard 設計思維：四種角色視角</a><ul>
+<li><a href="#role-1company-ceo">Role 1｜Company CEO — 全局健康儀表板</a></li>
+<li><a href="#role-2regional-md">Role 2｜Regional MD — 區域績效比較儀表板</a></li>
+<li><a href="#role-3sales-head">Role 3｜Sales Head — 銷售動態追蹤儀表板</a></li>
+<li><a href="#role-4category-manager">Role 4｜Category Manager — 品類深度分析儀表板</a></li>
+<li><a href="#_6">四種視角比較表</a></li>
+</ul>
+</li>
+<li><a href="#_7">講師備註</a></li>
+<li><a href="#_8">附錄：可供練習的問題</a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+</aside>
+<main class="content">
+<h1>Tableau Dashboard 基礎教案</h1>
+<p class="meta">#tableau　#dashboard　#teaching　#data_visualization　#NCCU_Teach</p>
+<h2 id="tableau-dashboard">Tableau Dashboard</h2>
+<h3 id="_1">操作項目清單（逐項進行）</h3>
+<blockquote>
+<p>每完成一項打勾。括號內為建議時間，合計約 60 分鐘。</p>
+</blockquote>
+<h4 id="_2">基礎環境</h4>
+<ul>
+<li>[ ] <strong>① 連結 CSV 資料</strong>（2 min）— File → Connect → Text File</li>
+<li>[ ] <strong>② 確認欄位型別</strong>（2 min）— 日期 / 數值 / 字串型別辨識</li>
+<li>[ ] <strong>③ 建立 Hierarchy</strong>（3 min）— Category + Sub_Category → Product 層級</li>
+</ul>
+<h4 id="_3">圖表建立</h4>
+<ul>
+<li>[ ] <strong>④ 長條圖</strong>（8 min）— Columns / Rows 拖曳、Color encoding、排序</li>
+<li>[ ] <strong>⑤ Hierarchy drill-down</strong>（2 min）— 點 <code>+</code> 展開子品類</li>
+<li>[ ] <strong>⑥ 折線圖</strong>（8 min）— 日期層級切換（年→月）、多條折線</li>
+<li>[ ] <strong>⑦ Reference Line</strong>（2 min）— 加入平均值參考線</li>
+<li>[ ] <strong>⑧ 地圖（Map）</strong>（8 min）— 雙擊 Country、Filled Map、Color by Sales</li>
+<li>[ ] <strong>⑨ Tooltip 自訂</strong>（2 min）— 加入 Profit 至 Tooltip</li>
+<li>[ ] <strong>⑩ Small Multiples</strong>（8 min）— Category 放 Rows、Month 放 Columns、Trellis 排版</li>
+</ul>
+<h4 id="dashboard">Dashboard 組合</h4>
+<ul>
+<li>[ ] <strong>⑪ 建立 Dashboard</strong>（5 min）— 拖入 4 個 Sheet、Container 排版</li>
+<li>[ ] <strong>⑫ 加入篩選動作</strong>（5 min）— Dashboard Actions → Filter（點擊地圖篩選）</li>
+<li>[ ] <strong>⑬ 全域篩選器</strong>（2 min）— Category Filter 套用到所有 Sheet</li>
+<li>[ ] <strong>⑭ 匯出 / 分享</strong>（2 min）— Export as Packaged Workbook (.twbx)</li>
+</ul>
+<hr />
+<h3 id="_4">學習目標</h3>
+<p>完成本課後，學員能夠：
+- 連結 CSV 資料並確認欄位型別
+- 建立長條圖、折線圖、地圖、Small Multiples 四種圖表
+- 將圖表組合成互動式 Dashboard 並加入篩選動作</p>
+<hr />
+<h3 id="retail_monthlycsv">資料集：<code>retail_monthly.csv</code></h3>
+<p><strong>虛擬全球零售月報</strong>，7,200 筆（10 國 × 6 子品類 × 120 個月）</p>
+<table>
+<thead>
+<tr>
+<th>欄位</th>
+<th>型別</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Date</code></td>
+<td>Date</td>
+<td>每月第一天，格式 YYYY-MM-DD（2015-01 ~ 2024-12）</td>
+</tr>
+<tr>
+<td><code>Country</code></td>
+<td>String</td>
+<td>10 個國家，涵蓋五大洲（見下表）</td>
+</tr>
+<tr>
+<td><code>Category</code></td>
+<td>String</td>
+<td>第一層品類：Electronics / Clothing / Furniture</td>
+</tr>
+<tr>
+<td><code>Sub_Category</code></td>
+<td>String</td>
+<td>第二層子品類（見下表）</td>
+</tr>
+<tr>
+<td><code>Sales</code></td>
+<td>Integer</td>
+<td>當月銷售額（USD）</td>
+</tr>
+<tr>
+<td><code>Profit</code></td>
+<td>Integer</td>
+<td>當月利潤（USD）</td>
+</tr>
+<tr>
+<td><code>Quantity</code></td>
+<td>Integer</td>
+<td>當月銷售數量（件）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>國家分布（供地圖練習）</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>洲別</th>
+<th>國家</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>北美</td>
+<td>United States、Canada</td>
+</tr>
+<tr>
+<td>南美</td>
+<td>Brazil</td>
+</tr>
+<tr>
+<td>歐洲</td>
+<td>United Kingdom、Germany、France</td>
+</tr>
+<tr>
+<td>亞洲</td>
+<td>Japan、China、India</td>
+</tr>
+<tr>
+<td>非洲</td>
+<td>South Africa</td>
+</tr>
+</tbody>
+</table>
+<p><strong>品類二層結構（供 Hierarchy 練習）</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>Category（第一層）</th>
+<th>Sub_Category（第二層）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Electronics</td>
+<td>Phones、Computers</td>
+</tr>
+<tr>
+<td>Clothing</td>
+<td>Apparel、Accessories</td>
+</tr>
+<tr>
+<td>Furniture</td>
+<td>Home、Office</td>
+</tr>
+</tbody>
+</table>
+<p><strong>資料設計邏輯</strong>（講師可分享給學員）：
+- 每年成長率約 3%
+- 季節性高峰：11 月（+30%）、12 月（+50%）→ 適合觀察零售旺季
+- 利潤率：Electronics 12% / Clothing 25% / Furniture 20%</p>
+<hr />
+<h3 id="_5">課程流程</h3>
+<h4 id="part-02">Part 0｜開場展示（2 分鐘）</h4>
+<blockquote>
+<p><strong>先展示最終成品</strong>，讓學員有明確目標，再逐步拆解。</p>
+</blockquote>
+<p>展示完成的 Dashboard：地圖 + 折線圖 + 長條圖 + Small Multiples，點擊地圖可篩選其他圖表。</p>
+<hr />
+<h4 id="part-15">Part 1｜連結資料（5 分鐘）</h4>
+<ol>
+<li><strong>File → Connect → Text File</strong> → 選取 <code>retail_monthly.csv</code></li>
+<li>確認資料預覽（Data Source 頁籤）</li>
+<li>確認欄位型別：</li>
+<li><code>Date</code> → 日期型（應顯示日曆圖示）</li>
+<li><code>Sales</code> / <code>Profit</code> / <code>Quantity</code> → 數值型（綠色）</li>
+<li><code>Country</code> / <code>Category</code> → 字串型（藍色）</li>
+<li>點 <strong>Sheet 1</strong> 進入工作表</li>
+</ol>
+<p><strong>關鍵概念</strong>：左側 Data 面板的藍色（Dimensions）vs. 綠色（Measures）</p>
+<p><strong>建立 Hierarchy（3 分鐘，含在 Part 1 內）</strong>：
+1. 在 Data 面板找到 <code>Category</code>
+2. 按住 Ctrl 同時點選 <code>Sub_Category</code>
+3. 右鍵 → <strong>Hierarchy → Create Hierarchy</strong> → 命名為 <code>Product</code>
+4. 把 <code>Sub_Category</code> 拖到 <code>Category</code> 下方（確認縮排順序）
+5. 之後在圖表中點擊 <code>+</code> / <code>-</code> 符號可展開/收合子品類</p>
+<hr />
+<h4 id="part-210">Part 2｜長條圖：各國銷售比較（10 分鐘）</h4>
+<p><strong>目標</strong>：比較 5 個國家、3 個品類的銷售額</p>
+<p><strong>步驟</strong>：
+1. 將 <code>Country</code> 拖到 <strong>Columns</strong>
+2. 將 <code>Sales</code> 拖到 <strong>Rows</strong>（自動加總為 SUM）
+3. 將 <code>Category</code> 拖到 <strong>Marks → Color</strong> → 看到 3 色堆疊
+4. 切換為並排長條圖：上方工具列選 <strong>Side-by-side Bars</strong>
+5. <strong>展開 Hierarchy</strong>：將 Color 改為 <code>Sub_Category</code>，觀察 6 個子品類的差異
+6. 排序：點欄位標頭的排序箭頭，按總銷售額降序
+7. 重新命名此 Sheet 為 <code>Bar - Sales by Country</code></p>
+<p><strong>提問</strong>：哪個國家的 Electronics 銷售最高？Phones 和 Computers 哪個佔比更大？</p>
+<hr />
+<h4 id="part-310-10">Part 3｜折線圖：10 年銷售走勢（10 分鐘）</h4>
+<p><strong>目標</strong>：觀察銷售趨勢與季節性規律</p>
+<p><strong>步驟</strong>：
+1. 新增 Sheet
+2. 將 <code>Date</code> 拖到 <strong>Columns</strong>
+   - Tableau 預設為年份；點欄位右側箭頭 → 選 <strong>Month（連續）</strong> → 顯示月份走勢
+3. 將 <code>Sales</code> 拖到 <strong>Rows</strong>
+4. 將 <code>Country</code> 拖到 <strong>Marks → Color</strong>
+5. 觀察：每年 11-12 月明顯高峰
+6. 加入 Reference Line：右鍵 Y 軸 → <strong>Add Reference Line</strong> → 選 Average（全域平均線）
+7. 重新命名為 <code>Line - Monthly Trend</code></p>
+<p><strong>關鍵概念</strong>：連續（green pill）vs. 離散（blue pill）日期的差異；點右鍵可切換</p>
+<hr />
+<h4 id="part-410">Part 4｜地圖：各國銷售地理分布（10 分鐘）</h4>
+<p><strong>目標</strong>：建立 Choropleth（填色地圖）</p>
+<p><strong>步驟</strong>：
+1. 新增 Sheet
+2. <strong>雙擊 <code>Country</code></strong> → Tableau 自動辨識地理角色，生成地圖底圖
+3. 將 <code>SUM(Sales)</code> 拖到 <strong>Marks → Color</strong> → 地圖變為填色地圖
+4. 點 <strong>Color → Edit Colors</strong> → 選 Red-Green Diverging 或 Blue-Teal
+5. 將 <code>SUM(Profit)</code> 拖到 <strong>Marks → Tooltip</strong> → 游標懸停顯示利潤
+6. 調整地圖背景：上方選單 <strong>Map → Map Layers</strong> → 試驗不同底圖風格</p>
+<p><strong>若 Country 沒有被辨識</strong>：右鍵欄位 → Geographic Role → Country/Region</p>
+<ol>
+<li>重新命名為 <code>Map - Sales by Country</code></li>
+</ol>
+<p><strong>提問</strong>：哪個國家在地圖上看起來最小但銷售不低？（英國）</p>
+<hr />
+<h4 id="part-5small-multiples10">Part 5｜Small Multiples：各品類月度趨勢（10 分鐘）</h4>
+<p><strong>目標</strong>：用 Trellis 排版同時比較多個分組，一眼看出品類差異</p>
+<p><strong>步驟</strong>：
+1. 新增 Sheet
+2. 將 <code>MONTH(Date)</code> 拖到 <strong>Columns</strong>（選離散 Month → 顯示 1~12）
+3. 將 <code>SUM(Sales)</code> 拖到 <strong>Rows</strong>
+4. 將 <code>Category</code> <strong>再次拖到 Rows</strong>（放在 <code>SUM(Sales)</code> 的左邊）
+   → 自動產生 3 個並排的折線圖面板
+5. 將 <code>YEAR(Date)</code> 拖到 <strong>Marks → Color</strong>（顯示各年份顏色差異）
+6. 上方工具列選 <strong>Fit Width</strong></p>
+<p><strong>效果</strong>：三個品類各自一行，X 軸對齊，可直接比較季節性差異是否一致</p>
+<ol>
+<li>重新命名為 <code>Small Multiples - Category</code></li>
+</ol>
+<p><strong>進階</strong>：把 <code>YEAR(Date)</code> 也加入 Columns，就能看到年度 × 月份的矩陣格局</p>
+<hr />
+<h4 id="part-6dashboard-10">Part 6｜Dashboard 組合（10 分鐘）</h4>
+<p><strong>目標</strong>：整合 4 個圖表，加入互動篩選</p>
+<p><strong>步驟</strong>：
+1. 底部 Tab 點 <strong>⊕ New Dashboard</strong>
+2. 左側 Sheets 面板依序拖入：
+   - 上排左：<code>Map - Sales by Country</code>
+   - 上排右：<code>Line - Monthly Trend</code>
+   - 下排左：<code>Bar - Sales by Country</code>
+   - 下排右：<code>Small Multiples - Category</code>
+3. 加入篩選器：
+   - 點選 Bar Chart → 右上角出現選單 → 點 <strong>Use as Filter</strong> 圖示（漏斗符號）
+   - 或：<strong>Dashboard → Actions → Add Action → Filter</strong>
+     - Source: Map → Target: 所有 Sheets → On Select: Filter
+4. 加入 Category 全域篩選：
+   - 點任一含 <code>Category</code> 的 Sheet → 右上角 → 篩選圖示 → 選 Apply to All Sheets
+5. 加 Dashboard 標題：<strong>Dashboard → Show Title</strong> → 輸入「Global Retail Dashboard 2015-2024」
+6. 測試：點擊地圖上的國家 → 觀察其他圖表是否同步篩選</p>
+<p><strong>版面調整技巧</strong>：拖住 Sheet 邊框可調整大小；Container 可使用 Horizontal / Vertical 巢狀排列</p>
+<hr />
+<h4 id="part-7-demo-qa3">Part 7｜互動 Demo 與 Q&amp;A（3 分鐘）</h4>
+<p><strong>示範</strong>：
+- <strong>Highlight Action</strong>：Dashboard → Actions → Add Action → Highlight（滑過地圖高亮其他圖表）
+- <strong>匯出</strong>：File → Export Packaged Workbook (<code>.twbx</code>) → 包含資料，可直接給他人開啟</p>
+<p><strong>常見問題</strong>：
+- Q：地圖只顯示部分國家？→ 右鍵 Country 欄位 → Geographic Role → Country/Region
+- Q：日期沒辦法切換到月份？→ 確認 Date 欄位是 Date 型別（非 String）
+- Q：Small Multiples 面板太多？→ 減少 Rows/Columns 上的維度數量</p>
+<hr />
+<h3 id="dashboard_1">Dashboard 設計思維：四種角色視角</h3>
+<blockquote>
+<p><strong>核心概念</strong>：相同資料，不同問題，不同版型。Dashboard 的設計從「這個人每天要回答什麼問題？」出發。</p>
+</blockquote>
+<hr />
+<h4 id="role-1company-ceo">Role 1｜Company CEO — 全局健康儀表板</h4>
+<p><strong>核心問題</strong>：整體業務是否健康？成長動能在哪裡？</p>
+<p><strong>設計原則</strong>：掃描式閱讀、KPI 先行、不超過 4 個圖表</p>
+<table>
+<thead>
+<tr>
+<th>指標</th>
+<th>圖表</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>總銷售額、利潤、利潤率、YoY 成長</td>
+<td>KPI 數字卡片</td>
+<td>進門第一眼</td>
+</tr>
+<tr>
+<td>各國銷售分布</td>
+<td>世界地圖（填色）</td>
+<td>哪個市場最大</td>
+</tr>
+<tr>
+<td>10 年年度趨勢</td>
+<td>折線圖（年彙總）</td>
+<td>是否持續成長</td>
+</tr>
+<tr>
+<td>品類利潤佔比</td>
+<td>長條圖或 Treemap</td>
+<td>哪個品類最值錢</td>
+</tr>
+</tbody>
+</table>
+<p><strong>版型（ASCII）</strong>：</p>
+<pre><code>┌──────────────────────────────────────────────────────────────┐
+│  Global Retail — CEO View            Filter: [Year ▼]        │
+├───────────┬───────────┬───────────┬──────────────────────────┤
+│ Total     │  Profit   │ Margin %  │  YoY Growth              │
+│ Sales     │           │           │    ▲ +8.3%               │
+│  $2.4B    │  $420M    │  17.5%    │                          │
+├───────────┴───────────┴───────────┴──────────────────────────┤
+│                                                               │
+│         [ WORLD MAP — Color Gradient by Total Sales ]        │
+│                                                               │
+│  USA ████  China █████  UK ████  Japan ███  ...              │
+│                                                               │
+├──────────────────────────────┬───────────────────────────────┤
+│  Annual Revenue Trend        │  Profit by Category (Bar)    │
+│  2015 ────────────── 2024    │  Electronics  ████████ 48%   │
+│          /‾‾‾\___/‾‾‾‾      │  Clothing     ██████   31%   │
+│         /                   │  Furniture    ████     21%   │
+└──────────────────────────────┴───────────────────────────────┘
+</code></pre>
+<hr />
+<h4 id="role-2regional-md">Role 2｜Regional MD — 區域績效比較儀表板</h4>
+<p><strong>核心問題</strong>：我的區域跟其他區域相比表現如何？區域內哪個國家要關注？</p>
+<p><strong>設計原則</strong>：比較優先、區域篩選、同期對比</p>
+<table>
+<thead>
+<tr>
+<th>指標</th>
+<th>圖表</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>本區域各國排名</td>
+<td>橫向長條圖（含全球平均線）</td>
+<td>誰在平均以下</td>
+</tr>
+<tr>
+<td>區域 vs. 全球趨勢</td>
+<td>雙折線圖</td>
+<td>區域是否跑贏大盤</td>
+</tr>
+<tr>
+<td>區域地圖</td>
+<td>填色地圖（篩選至本洲）</td>
+<td>快速地理定位</td>
+</tr>
+<tr>
+<td>各國品類結構</td>
+<td>Small Multiples</td>
+<td>每個市場的產品組合是否健康</td>
+</tr>
+</tbody>
+</table>
+<p><strong>版型（ASCII）</strong>：</p>
+<pre><code>┌──────────────────────────────────────────────────────────────┐
+│  Regional Performance        Filter: [Europe ▼] [Year ▼]    │
+├────────────────────────────────┬─────────────────────────────┤
+│  Country Sales (Bar)           │  Region Map                 │
+│  vs. Global Average            │                             │
+│                                │                             │
+│  UK    ████████████████        │    [ EUROPE MAP ]           │
+│  GER   ████████████            │    (Countries colored       │
+│  FRA   ██████████              │     by Sales)               │
+│  ── Global Avg ──              │                             │
+│                                │                             │
+├────────────────────────────────┴─────────────────────────────┤
+│  My Region vs. Global Trend (Line — Monthly)                 │
+│  Europe ────   Global ┄┄┄┄                                   │
+│             /‾‾‾\____/‾‾‾‾  ← Nov-Dec spike                 │
+├────────────────────────────────┬─────────────────────────────┤
+│  Category Mix by Country       │  YoY Growth by Country     │
+│  (Small Multiples — 3 panels)  │  (Bar — +/- diverging)     │
+│  UK:  Elec ▓▓▓▓ Cloth ▓▓▓     │  UK    ████ +12%           │
+│  GER: Elec ▓▓▓  Cloth ▓▓      │  GER   ██   +6%            │
+│  FRA: Elec ▓▓▓▓ Cloth ▓▓▓▓    │  FRA   ▒▒  -3%  ←注意     │
+└────────────────────────────────┴─────────────────────────────┘
+</code></pre>
+<hr />
+<h4 id="role-3sales-head">Role 3｜Sales Head — 銷售動態追蹤儀表板</h4>
+<p><strong>核心問題</strong>：這個月有沒有達標？旺季前要提前準備哪些國家？</p>
+<p><strong>設計原則</strong>：月份粒度、YoY 比較、行動導向（找異常）</p>
+<table>
+<thead>
+<tr>
+<th>指標</th>
+<th>圖表</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>本月銷售、YoY 變化、YTD</td>
+<td>KPI 數字卡片</td>
+<td>即時戰情</td>
+</tr>
+<tr>
+<td>每月銷售 — 今年 vs. 去年</td>
+<td>雙折線圖</td>
+<td>找超標或落後的月份</td>
+</tr>
+<tr>
+<td>各國排名（本月）</td>
+<td>橫向長條圖</td>
+<td>誰在推動業績</td>
+</tr>
+<tr>
+<td>季節性熱力圖</td>
+<td>Heatmap（國家 × 月份）</td>
+<td>旺季分布與規劃</td>
+</tr>
+</tbody>
+</table>
+<p><strong>版型（ASCII）</strong>：</p>
+<pre><code>┌──────────────────────────────────────────────────────────────┐
+│  Sales Performance           Filter: [Country ▼] [Cat ▼]    │
+├───────────┬───────────┬───────────┬──────────────────────────┤
+│ This      │  YoY      │  YTD      │  Peak Month              │
+│ Month     │  Change   │  Sales    │  (Historically)          │
+│  $24.3M   │  +11% ▲   │  $142M    │  December                │
+├───────────┴───────────┴───────────┴──────────────────────────┤
+│  Monthly Sales — This Year ─── vs. Last Year ┄┄┄            │
+│                                                               │
+│                              /‾\ /‾‾‾‾▲ Nov ▲ Dec          │
+│  ──┄┄──┄┄──┄┄──┄┄──┄┄──┄┄──/   /                           │
+│  Jan                                           Dec           │
+├─────────────────────────────┬────────────────────────────────┤
+│  Country Ranking (This Yr)  │  Seasonal Heatmap              │
+│  Sorted by current Sales    │  (Country × Month)             │
+│                             │                                 │
+│  USA   ██████████████       │       Jan Feb ... Nov Dec      │
+│  China █████████████        │  USA   ░░  ░░  ... ██  ██     │
+│  UK    ████████             │  China ░░  ░░  ... ██  ██     │
+│  Japan ███████              │  UK    ░░  ░░  ... ██  ██     │
+│  ...                        │  India ░░  ░░  ... ▒▒  ▒▒     │
+└─────────────────────────────┴────────────────────────────────┘
+</code></pre>
+<hr />
+<h4 id="role-4category-manager">Role 4｜Category Manager — 品類深度分析儀表板</h4>
+<p><strong>核心問題</strong>：我的品類在哪個市場最強？哪個子品類的毛利最好值得投資？</p>
+<p><strong>設計原則</strong>：品類篩選鎖定、子品類下鑽、利潤率意識</p>
+<table>
+<thead>
+<tr>
+<th>指標</th>
+<th>圖表</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>品類銷售、利潤率、最佳市場</td>
+<td>KPI 數字卡片</td>
+<td>品類大局觀</td>
+</tr>
+<tr>
+<td>子品類趨勢</td>
+<td>Small Multiples（Phones / Computers）</td>
+<td>兩個子品類消長</td>
+</tr>
+<tr>
+<td>銷售 × 利潤率散佈圖</td>
+<td>Scatter（每點 = 一個國家）</td>
+<td>找高價值市場</td>
+</tr>
+<tr>
+<td>品類地圖</td>
+<td>填色地圖（篩選至本品類）</td>
+<td>哪個區域潛力最大</td>
+</tr>
+</tbody>
+</table>
+<p><strong>版型（ASCII）</strong>：</p>
+<pre><code>┌──────────────────────────────────────────────────────────────┐
+│  Category Dashboard    Filter: [Electronics ▼] [Year ▼]     │
+├───────────┬───────────┬───────────┬──────────────────────────┤
+│ Category  │  Profit   │ Top       │  Best Sub-Cat            │
+│ Revenue   │  Margin   │ Market    │  (by Profit)             │
+│  $840M    │  12.5%    │  USA      │  Computers               │
+├───────────┴───────────┴───────────┴──────────────────────────┤
+│  Sub-Category Trend (Small Multiples)                        │
+│  Phones:     Jan ────────────────────────── Dec             │
+│  Computers:  Jan ──────────────────────────── Dec           │
+│  (Color by Year — darker = more recent)                     │
+├─────────────────────────────┬────────────────────────────────┤
+│  Sales vs. Profit Margin    │  Category Sales by Country     │
+│  Scatter (1 dot = 1 country)│  (Map — filtered to category) │
+│                             │                                 │
+│  Margin%  USA •             │                                 │
+│    ▲      JP •  CN •        │    [ WORLD MAP ]               │
+│    │           UK •  FR •   │                                 │
+│    │    BR •       IN •     │                                 │
+│    └──────────────→ Sales   │                                 │
+└─────────────────────────────┴────────────────────────────────┘
+</code></pre>
+<hr />
+<h4 id="_6">四種視角比較表</h4>
+<table>
+<thead>
+<tr>
+<th>角色</th>
+<th>時間粒度</th>
+<th>地理粒度</th>
+<th>品類粒度</th>
+<th>核心圖表</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CEO</td>
+<td>年</td>
+<td>全球</td>
+<td>品類總覽</td>
+<td>KPI 卡 + 地圖 + 年趨勢</td>
+</tr>
+<tr>
+<td>Regional MD</td>
+<td>月</td>
+<td>區域→國家</td>
+<td>品類結構</td>
+<td>比較長條 + 雙折線 + Small Multiples</td>
+</tr>
+<tr>
+<td>Sales Head</td>
+<td>月</td>
+<td>全球→國家</td>
+<td>彙總</td>
+<td>雙折線 YoY + 排名 + 熱力圖</td>
+</tr>
+<tr>
+<td>Category Manager</td>
+<td>月</td>
+<td>全球</td>
+<td>子品類</td>
+<td>Small Multiples + Scatter + 地圖</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="_7">講師備註</h3>
+<table>
+<thead>
+<tr>
+<th>項目</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>建議 Tableau 版本</td>
+<td>2022.1 以上（含 Tableau Public 免費版）</td>
+</tr>
+<tr>
+<td>最容易卡關處</td>
+<td>Small Multiples 的拖曳順序；可預留彈性時間</td>
+</tr>
+<tr>
+<td>資料說明時機</td>
+<td>連結資料後花 2 分鐘解釋欄位，學員後續操作更有方向感</td>
+</tr>
+<tr>
+<td>進階延伸</td>
+<td>LOD 計算式（FIXED）、參數控制、Story Points</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="_8">附錄：可供練習的問題</h3>
+<ol>
+<li><strong>哪個品類的年均利潤率最高？</strong> → 建立計算欄位 <code>[Profit]/[Sales]</code>，長條圖呈現</li>
+<li><strong>2020 年（疫情）各國銷售是否下滑？</strong> → 折線圖加 Year 篩選器觀察</li>
+<li><strong>哪個月份是全球零售旺季？</strong> → 按月份分組的長條圖（Discrete Month）</li>
+<li><strong>各國銷售成長率比較</strong> → 用 Table Calculation → Percent Difference</li>
+</ol>
+</main>
+</div>
+<script>
+(function () {
+  // ── Rebuild TOC with toggle buttons ──────────────────────────────────────
+  var toc = document.querySelector('.sidebar .toc');
+  if (toc) {
+    toc.querySelectorAll('li').forEach(function (li) {
+      var childUl = li.querySelector(':scope > ul');
+      var link    = li.querySelector(':scope > a');
+      if (!link) return;
+
+      var row = document.createElement('div');
+      row.className = 'toc-row';
+
+      if (childUl) {
+        var btn = document.createElement('button');
+        btn.className = 'toc-toggle';
+        btn.setAttribute('aria-expanded', 'true');
+        btn.textContent = '▾';          // ▾ open
+        btn.addEventListener('click', function () {
+          var open = childUl.hidden;
+          childUl.hidden = !open;
+          btn.textContent = open ? '▾' : '▸';   // ▾ / ▸
+          btn.setAttribute('aria-expanded', String(open));
+        });
+        row.appendChild(btn);
+      } else {
+        var spacer = document.createElement('span');
+        spacer.style.width = '1rem';
+        spacer.style.flexShrink = '0';
+        row.appendChild(spacer);
+      }
+
+      row.appendChild(link);
+      li.insertBefore(row, li.firstChild);
+    });
+  }
+
+  // ── Scroll spy ───────────────────────────────────────────────────────────
+  var headings = document.querySelectorAll('.content h2[id], .content h3[id], .content h4[id]');
+  var tocLinks = document.querySelectorAll('.sidebar .toc a');
+  if (!headings.length || !tocLinks.length) return;
+
+  var current = null;
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      var link = document.querySelector('.sidebar .toc a[href="#' + e.target.id + '"]');
+      if (!link) return;
+      if (current) current.classList.remove('active');
+      current = link;
+      current.classList.add('active');
+      // Scroll link into view within sidebar
+      current.scrollIntoView({ block: 'nearest' });
+    });
+  }, { rootMargin: '-5% 0px -75% 0px', threshold: 0 });
+
+  headings.forEach(function (h) { io.observe(h); });
+}());
+</script>
+</body>
+</html>
