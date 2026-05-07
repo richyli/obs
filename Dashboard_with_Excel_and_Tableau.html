@@ -187,14 +187,22 @@ MathJax = {
 <div class="toc">
 <ul>
 <li><a href="#_1">操作項目清單（逐項進行）</a><ul>
-<li><a href="#_2">基礎環境</a></li>
-<li><a href="#_3">圖表建立</a></li>
+<li><a href="#_2">前置準備</a></li>
+<li><a href="#excel">Excel：樞紐分析</a></li>
+<li><a href="#tableau">Tableau：資料視覺化</a></li>
 <li><a href="#dashboard">Dashboard 組合</a></li>
 </ul>
 </li>
-<li><a href="#_4">學習目標</a></li>
+<li><a href="#_3">學習目標</a></li>
 <li><a href="#retail_monthlycsv">資料集：retail_monthly.csv</a></li>
-<li><a href="#_5">課程流程</a><ul>
+<li><a href="#excel-30">Excel 部分（約 30 分鐘）</a><ul>
+<li><a href="#excel-part-110">Excel Part 1｜匯入與樞紐分析表（10 分鐘）</a></li>
+<li><a href="#excel-part-28">Excel Part 2｜基本圖表（8 分鐘）</a></li>
+<li><a href="#excel-part-310">Excel Part 3｜互動圖表（10 分鐘）</a></li>
+</ul>
+</li>
+<li><a href="#tableau_1">Tableau 部分</a></li>
+<li><a href="#_4">課程流程</a><ul>
 <li><a href="#part-02">Part 0｜開場展示（2 分鐘）</a></li>
 <li><a href="#part-15">Part 1｜連結資料（5 分鐘）</a></li>
 <li><a href="#part-210">Part 2｜長條圖：各國銷售比較（10 分鐘）</a></li>
@@ -215,11 +223,11 @@ MathJax = {
 <li><a href="#role-2regional-md">Role 2｜Regional MD — 區域績效比較儀表板</a></li>
 <li><a href="#role-3sales-head">Role 3｜Sales Head — 銷售動態追蹤儀表板</a></li>
 <li><a href="#role-4category-manager">Role 4｜Category Manager — 品類深度分析儀表板</a></li>
-<li><a href="#_6">四種視角比較表</a></li>
+<li><a href="#_5">四種視角比較表</a></li>
 </ul>
 </li>
-<li><a href="#_7">講師備註</a></li>
-<li><a href="#_8">附錄：可供練習的問題</a></li>
+<li><a href="#_6">講師備註</a></li>
+<li><a href="#_7">附錄：可供練習的問題</a></li>
 </ul>
 </div>
 </aside>
@@ -231,34 +239,47 @@ MathJax = {
 <p><strong>課堂進度：</strong> <a href="progress.html">progress.html</a> ｜ 老師：<a href="progress.html?t">progress.html?t</a></p>
 <h3 id="_1">操作項目清單（逐項進行）</h3>
 <blockquote>
-<p>每完成一項打勾。括號內為建議時間，合計約 60 分鐘。</p>
+<p>每完成一項打勾。括號內為建議時間。</p>
 </blockquote>
-<h4 id="_2">基礎環境</h4>
+<h4 id="_2">前置準備</h4>
 <ul>
-<li>[ ] <strong>① 連結 CSV 資料</strong>（2 min）— File → Connect → Text File</li>
-<li>[ ] <strong>② 確認欄位型別</strong>（2 min）— 日期 / 數值 / 字串型別辨識</li>
-<li>[ ] <strong>③ 建立 Hierarchy</strong>（3 min）— Category + Sub_Category → Product 層級</li>
+<li>[ ] <strong>⓪-1 安裝 Excel</strong>（課前完成）</li>
+<li>[ ] <strong>⓪-2 安裝 Tableau Public</strong>（課前完成）— <a href="https://www.tableau.com/products/public">tableau.com/products/public</a></li>
+<li>[ ] <strong>⓪-3 下載 retail_monthly.csv</strong>（課前完成）— <a href="retail_monthly.csv">retail_monthly.csv</a></li>
 </ul>
-<h4 id="_3">圖表建立</h4>
+<h4 id="excel">Excel：樞紐分析</h4>
 <ul>
-<li>[ ] <strong>④ 長條圖</strong>（8 min）— Columns / Rows 拖曳、Color encoding、排序</li>
-<li>[ ] <strong>⑤ Hierarchy drill-down</strong>（2 min）— 點 <code>+</code> 展開子品類</li>
-<li>[ ] <strong>⑥ 折線圖</strong>（8 min）— 日期層級切換（年→月）、多條折線</li>
-<li>[ ] <strong>⑦ Reference Line</strong>（2 min）— 加入平均值參考線</li>
-<li>[ ] <strong>⑧ 地圖（Map）</strong>（8 min）— 雙擊 Country、Filled Map、Color by Sales</li>
-<li>[ ] <strong>⑨ Tooltip 自訂</strong>（2 min）— 加入 Profit 至 Tooltip</li>
-<li>[ ] <strong>⑩ Small Multiples</strong>（8 min）— Category 放 Rows、Month 放 Columns、Trellis 排版</li>
-<li>[ ] <strong>⑪ Sankey Chart</strong>（10 min）— Continent → Category → Sub_Category 銷售流向（Extension 或原生）</li>
+<li>[ ] <strong>E① 匯入 CSV</strong>（3 min）— 資料 → 從文字/CSV → 選取檔案</li>
+<li>[ ] <strong>E② 建立樞紐分析表</strong>（8 min）— 插入 → 樞紐分析表，Country × Sales</li>
+<li>[ ] <strong>E③ 樞紐分析圖（直條圖）</strong>（5 min）— 從 PivotTable 建立 PivotChart</li>
+<li>[ ] <strong>E④ 樞紐分析圖（折線圖）</strong>（5 min）— Month × Sales，觀察季節性</li>
+<li>[ ] <strong>E⑤ 切片器（Slicer）</strong>（5 min）— 插入 → 切片器 → 選 Category</li>
+<li>[ ] <strong>E⑥ 時間軸（Timeline）</strong>（3 min）— 插入 → 時間軸 → 選 Date</li>
+<li>[ ] <strong>E⑦ 互動 Dashboard</strong>（5 min）— 切片器連結多個 PivotTable</li>
+</ul>
+<h4 id="tableau">Tableau：資料視覺化</h4>
+<ul>
+<li>[ ] <strong>T① 連結 CSV 資料</strong>（2 min）— File → Connect → Text File</li>
+<li>[ ] <strong>T② 確認欄位型別</strong>（2 min）— 日期 / 數值 / 字串型別辨識</li>
+<li>[ ] <strong>T③ 建立 Hierarchy</strong>（3 min）— Category + Sub_Category → Product 層級</li>
+<li>[ ] <strong>T④ 長條圖</strong>（8 min）— Columns / Rows 拖曳、Color encoding、排序</li>
+<li>[ ] <strong>T⑤ Hierarchy drill-down</strong>（2 min）— 點 <code>+</code> 展開子品類</li>
+<li>[ ] <strong>T⑥ 折線圖</strong>（8 min）— 日期層級切換（年→月）、多條折線</li>
+<li>[ ] <strong>T⑦ Reference Line</strong>（2 min）— 加入平均值參考線</li>
+<li>[ ] <strong>T⑧ 地圖（Map）</strong>（8 min）— 雙擊 Country、Filled Map、Color by Sales</li>
+<li>[ ] <strong>T⑨ Tooltip 自訂</strong>（2 min）— 加入 Profit 至 Tooltip</li>
+<li>[ ] <strong>T⑩ Small Multiples</strong>（8 min）— Category 放 Rows、Month 放 Columns</li>
+<li>[ ] <strong>T⑪ Sankey Chart</strong>（10 min）— Continent → Category → Sub_Category 流向</li>
 </ul>
 <h4 id="dashboard">Dashboard 組合</h4>
 <ul>
-<li>[ ] <strong>⑫ 建立 Dashboard</strong>（5 min）— 拖入 5 個 Sheet、Container 排版</li>
-<li>[ ] <strong>⑬ 加入篩選動作</strong>（5 min）— Dashboard Actions → Filter（點擊地圖篩選）</li>
-<li>[ ] <strong>⑭ 全域篩選器</strong>（2 min）— Category Filter 套用到所有 Sheet</li>
-<li>[ ] <strong>⑮ 匯出 / 分享</strong>（2 min）— Export as Packaged Workbook (.twbx)</li>
+<li>[ ] <strong>D① 建立 Dashboard</strong>（5 min）— 拖入 5 個 Sheet、Container 排版</li>
+<li>[ ] <strong>D② 加入篩選動作</strong>（5 min）— Dashboard Actions → Filter</li>
+<li>[ ] <strong>D③ 全域篩選器</strong>（2 min）— Category Filter 套用到所有 Sheet</li>
+<li>[ ] <strong>D④ 匯出 / 分享</strong>（2 min）— Export as Packaged Workbook (.twbx)</li>
 </ul>
 <hr />
-<h3 id="_4">學習目標</h3>
+<h3 id="_3">學習目標</h3>
 <p>完成本課後，學員能夠：
 - 連結 CSV 資料並確認欄位型別
 - 建立長條圖、折線圖、地圖、Small Multiples、Sankey 五種圖表
@@ -371,7 +392,50 @@ MathJax = {
 - 季節性高峰：11 月（+30%）、12 月（+50%）→ 適合觀察零售旺季
 - 利潤率：Electronics 12% / Clothing 25% / Furniture 20%</p>
 <hr />
-<h3 id="_5">課程流程</h3>
+<h3 id="excel-30">Excel 部分（約 30 分鐘）</h3>
+<blockquote>
+<p>先用 Excel 建立直覺，再轉到 Tableau 看效率差異。相同資料、相同目標，兩種工具的體驗對比是本課核心。</p>
+</blockquote>
+<h4 id="excel-part-110">Excel Part 1｜匯入與樞紐分析表（10 分鐘）</h4>
+<p><strong>目標</strong>：用熟悉的工具快速摘要 7,200 筆資料</p>
+<p><strong>步驟</strong>：
+1. 開啟 Excel → <strong>資料 → 從文字/CSV</strong> → 選取 <code>retail_monthly.csv</code>
+2. 確認分隔符號（逗號）→ 載入
+3. 選取任意儲存格 → <strong>插入 → 樞紐分析表</strong> → 新工作表
+4. <strong>PivotTable 1</strong>（各國銷售）：
+   - Rows: <code>Country</code>、Values: <code>Sum of Sales</code>
+   - 排序：由大到小
+5. <strong>PivotTable 2</strong>（品類 × 年度）：
+   - Rows: <code>Category</code>、Columns: <code>Date</code>（群組成年份）、Values: <code>Sum of Sales</code>
+6. 數字格式：選取數值 → Ctrl+1 → 數值 → 千位分隔符號</p>
+<p><strong>提問</strong>：哪個國家銷售最高？Electronics 的成長趨勢如何？</p>
+<hr />
+<h4 id="excel-part-28">Excel Part 2｜基本圖表（8 分鐘）</h4>
+<p><strong>目標</strong>：從樞紐分析表一鍵生成圖表</p>
+<p><strong>步驟</strong>：
+1. 點擊 PivotTable 1 任意格 → <strong>樞紐分析表分析 → 樞紐分析圖</strong>
+2. 選<strong>群組直條圖</strong> → 確定 → 標題改為「各國銷售比較」
+3. 新增 PivotTable 3（月度趨勢）：
+   - Rows: <code>Date</code>（群組成月份，選「月」）
+   - Values: <code>Sum of Sales</code>
+4. 從 PivotTable 3 生成<strong>折線圖</strong> → 觀察 11–12 月高峰
+5. 調整圖表：移除格線、加資料標籤</p>
+<p><strong>提問</strong>：Excel 圖表與手動拖曳比起來，哪個步驟最繁瑣？</p>
+<hr />
+<h4 id="excel-part-310">Excel Part 3｜互動圖表（10 分鐘）</h4>
+<p><strong>目標</strong>：加入切片器與時間軸，讓圖表可篩選</p>
+<p><strong>步驟</strong>：
+1. 點擊任一 PivotTable → <strong>樞紐分析表分析 → 插入切片器</strong>
+   - 勾選 <code>Category</code>、<code>Continent</code>
+2. <strong>插入 → 時間軸</strong> → 選 <code>Date</code> → 調整粒度為「月」
+3. 切片器連結多個 PivotTable：
+   - 右鍵切片器 → <strong>報表連線</strong> → 勾選所有 PivotTable
+4. 將 PivotChart、切片器、時間軸排列在同一工作表
+5. 測試：點擊 <code>Electronics</code> → 所有圖表同步更新</p>
+<p><strong>提問</strong>：這就是 Excel 版 Dashboard。你覺得和 Tableau 相比最大的限制是什麼？</p>
+<hr />
+<h3 id="tableau_1">Tableau 部分</h3>
+<h3 id="_4">課程流程</h3>
 <h4 id="part-02">Part 0｜開場展示（2 分鐘）</h4>
 <blockquote>
 <p><strong>先展示最終成品</strong>，讓學員有明確目標，再逐步拆解。</p>
@@ -763,7 +827,7 @@ Africa        ...
 └─────────────────────────────┴────────────────────────────────┘
 </code></pre>
 <hr />
-<h4 id="_6">四種視角比較表</h4>
+<h4 id="_5">四種視角比較表</h4>
 <table>
 <thead>
 <tr>
@@ -806,7 +870,7 @@ Africa        ...
 </tbody>
 </table>
 <hr />
-<h3 id="_7">講師備註</h3>
+<h3 id="_6">講師備註</h3>
 <table>
 <thead>
 <tr>
@@ -834,7 +898,7 @@ Africa        ...
 </tbody>
 </table>
 <hr />
-<h3 id="_8">附錄：可供練習的問題</h3>
+<h3 id="_7">附錄：可供練習的問題</h3>
 <ol>
 <li><strong>哪個品類的年均利潤率最高？</strong> → 建立計算欄位 <code>[Profit]/[Sales]</code>，長條圖呈現</li>
 <li><strong>2020 年（疫情）各國銷售是否下滑？</strong> → 折線圖加 Year 篩選器觀察</li>
