@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Claude Code</title>
+<style>*, *::before, *::after { box-sizing: border-box; }
+body {
+  font-family: "Helvetica Neue", Arial, "Noto Sans TC", "Microsoft JhengHei",
+               sans-serif;
+  font-size: 20px;
+  line-height: 1.9;
+  color: #111;
+  background: #fff;
+  margin: 0;
+  padding: 3rem 1.5rem 5rem;
+}
+.container { max-width: 800px; margin: 0 auto; }
+h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: 0 0 0.15rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 2px solid #111;
+  line-height: 1.3;
+}
+h2 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin: 2.5rem 0 0.5rem;
+  padding-bottom: 0.2rem;
+  border-bottom: 1px solid #ddd;
+}
+h3 { font-size: 1.1rem; font-weight: 700; margin: 1.8rem 0 0.4rem; }
+h4 { font-size: 1rem; font-weight: 700; margin: 1.4rem 0 0.3rem; }
+p { margin: 0.9rem 0; }
+a { color: #0055cc; text-decoration: none; }
+a:hover { text-decoration: underline; }
+nav { margin-bottom: 2.5rem; font-size: 0.85rem; color: #999; }
+nav a { color: #999; }
+code {
+  font-family: "SFMono-Regular", Consolas, monospace;
+  background: #f2f2f2;
+  padding: 0.1em 0.4em;
+  border-radius: 3px;
+  font-size: 0.85em;
+}
+pre {
+  background: #f2f2f2;
+  padding: 1.2rem 1.4rem;
+  border-radius: 5px;
+  overflow-x: auto;
+  font-size: 0.85em;
+  line-height: 1.6;
+}
+pre code { background: none; padding: 0; }
+ul, ol { padding-left: 1.6rem; margin: 0.8rem 0; }
+li { margin: 0.35rem 0; }
+li > ul, li > ol { margin: 0.2rem 0; }
+blockquote {
+  border-left: 4px solid #ccc;
+  margin: 1.2rem 0;
+  padding: 0.3rem 1.2rem;
+  color: #444;
+  background: #fafafa;
+}
+table { border-collapse: collapse; width: 100%; margin: 1.2rem 0; font-size: 0.95em; }
+th, td { border: 1px solid #ccc; padding: 0.55rem 0.9rem; text-align: left; }
+th { background: #f5f5f5; font-weight: 700; }
+tr:nth-child(even) { background: #fafafa; }
+hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
+.meta { font-size: 0.8rem; color: #aaa; margin: 0.3rem 0 1.8rem; }
+.index-list { list-style: none; padding: 0; margin: 1rem 0; }
+.index-list li {
+  padding: 0.55rem 0;
+  border-bottom: 1px solid #eee;
+  font-size: 1.05rem;
+}
+.index-list li:last-child { border-bottom: none; }
+</style>
+</head>
+<body>
+<div class="container">
+<nav><a href="index.html">← 目錄</a></nav>
+<h1>Claude Code</h1>
+<p class="meta">#AI_agent　#claude</p>
+<p>AI Agent, Claude, Vibe Coding</p>
+<h2>reference</h2>
+<ul>
+<li>https://www.youtube.com/watch?v=saggDHHnmtQ&amp;list=PLjWDgfv04HA9r-jCEmUAagOWU6p8teZmR</li>
+<li>Claude code in Action - Coursera</li>
+<li>https://www.coursera.org/learn/claude-code-in-action/home/module/1</li>
+<li>https://haosquare.com/claude-code-ai-coding-intro/</li>
+<li></li>
+</ul>
+<h2>Installation</h2>
+<ul>
+<li>https://code.claude.com/docs/zh-TW/overview</li>
+</ul>
+<h3>VS Code</h3>
+<h3>Git</h3>
+<h2>System Code</h2>
+<h3>Claude.md</h3>
+<p>https://haosquare.com/claude-code-claude-md-intro/</p>
+<h3>WAT Framework</h3>
+<ul>
+<li>Workflow</li>
+<li>Agent<ul>
+<li>Role</li>
+</ul>
+</li>
+<li>Tools<ul>
+<li>Python Scripts</li>
+</ul>
+</li>
+</ul>
+<h2>Plug-in</h2>
+<h4>Claude-Mem</h4>
+<p>https://hackmd.io/@BASHCAT/S1tqslOwWe?utm_source=preview-mode&amp;utm_medium=rec
+https://github.com/thedotmack/claude-mem</p>
+<p>最近出的Claude-Mem算是解決了Claude Code長期以來的一個明顯短板。</p>
+<p>很多人在使用 Claude Code 時都會遇到同樣的問題：沒有跨對話的持久記憶。每次重開 session，都必須重新說明專案背景、架構與需求，不只消耗 token，也打斷工作節奏。</p>
+<p>這個專案做的事情很單純但很關鍵，把過去對話與操作內容自動整理、壓縮，再在未來對話中只注入「真正相關的上下文」，而不是全部塞回去。</p>
+<p>它的做法包含幾個核心機制：</p>
+<p>• 自動捕捉使用過程中的內容</p>
+<p>• 透過 AI 進行記憶壓縮</p>
+<p>• 只在需要時載入關鍵上下文</p>
+<p>• 分層式提取資訊，而不是一次讀取所有資料</p>
+<p>官方提到，這樣可以顯著降低每次對話所需的 token 數量，最多可將每次對話所需的 token 減少 95%，同時讓工具呼叫次數變得更有效率。</p>
+<p>安裝方式也很簡單，兩個指令就能啟用，重啟之後就能開始使用持久記憶。</p>
+<p>目前 GitHub 星數已飆升29.9k，如果你長期在用 Claude Code 開發專案，這類「記憶層」工具很值得關注。它不只是省 token，而是試圖為 AI 工作流建立一層更穩定的長期上下文管理機制。</p>
+<blockquote></blockquote>
+<h2>Skill</h2>
+<p>https://haosquare.com/claude-skills/
+https://haosquare.com/claude-skills-continuous-learning/</p>
+<h2>Interface</h2>
+<ul>
+<li>
+<p>Plan Mode</p>
+</li>
+<li>
+<p><code>pwd</code> — "<em>Where am I right now?</em>"</p>
+</li>
+<li>
+<p><code>ls</code> (Mac) or <code>dir</code> (Windows) — "<em>What's in this folder?</em>"</p>
+</li>
+<li>
+<p><code>cd foldername</code> — "<em>Go into this folder</em>"</p>
+</li>
+<li>
+<p><code>cd ..</code> — "<em>Go back up one level</em>"</p>
+</li>
+<li><code>mkdir projectname</code> - "<em>Make a new folder</em>"</li>
+</ul>
+<pre><code>pwd                    # Computer says: /Users/yourname
+ls                     # Computer shows: Documents, Downloads, Desktop
+cd Documents           # You go into Documents folder
+mkdir my-first-project # You create a new folder
+cd my-first-project    # You go into that new folder
+</code></pre>
+<h2>Command</h2>
+<p>https://haosquare.com/claude-code-slash-commands/</p>
+<h3>Automation</h3>
+<p>目前 Claude Code for VS Code 共提供四種模式</p>
+<ul>
+<li>Plan mode</li>
+<li>bypass permissions</li>
+<li>Ask before edits</li>
+<li>Edit automatically</li>
+</ul>
+<p>!Pasted image 20260222094018.png</p>
+<p>https://university.tenten.co/t/claude-code-yes/1964</p>
+<p>一行指令，秒開「Yes-All」模式</p>
+<p>最簡單暴力的做法，就是在任何 <code>claude</code> 指令後面加上：</p>
+<p>claude --yes --skip-confirm</p>
+<ul>
+<li><code>--yes</code>：對所有「y/n」問題自動回答 yes</li>
+<li><code>--skip-confirm</code>：跳過任何需要人類二次確認的步驟</li>
+</ul>
+<p>把這行寫進你的 <code>Makefile</code> 或 <code>package.json</code> script，之後只要 <code>npm run claude</code> 就能全自動跑。</p>
+<hr />
+<p>永久設定：讓 <code>.claude.json</code> 幫你記住</p>
+<p>不想每次打參數？在專案根目錄放一個 <code>.claude.json</code>，貼上：</p>
+<p><code>{   "autoYes": true,   "skipConfirm": true,   "silent": false }</code></p>
+<p>存檔後，無論誰跑 <code>claude</code> 都會自動 yes。<br />
+（小提醒：把 <code>.claude.json</code> 加進 <code>.gitignore</code>，避免隊友被強迫自動化。）</p>
+<hr />
+<p>環境變數也行：CI/CD 最愛</p>
+<p>GitHub Actions、GitLab CI 或任何容器環境，只要在 <code>env</code> 區塊加：</p>
+<p><code>CLAUDE_AUTO_YES: 1 CLAUDE_SKIP_CONFIRM: 1</code></p>
+<p>這樣就算在無互動的容器裡，Claude Code 也能乖乖閉嘴執行。</p>
+<hr />
+<p>常見坑位速查表</p>
+<table>
+<thead>
+<tr>
+<th>情境</th>
+<th>指令範例</th>
+<th>備註</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>本地測試</td>
+<td><code>claude --yes --skip-confirm</code></td>
+<td>先跑一次看看會不會刪錯檔</td>
+</tr>
+<tr>
+<td>CI 環境</td>
+<td><code>claude --yes --skip-confirm --silent</code></td>
+<td><code>--silent</code> 可關閉進度條，減少 log 噪音</td>
+</tr>
+<tr>
+<td>多人協作</td>
+<td><code>.claude.json</code> 加 <code>.gitignore</code></td>
+<td>避免隊友被迫自動 yes</td>
+</tr>
+<tr>
+<td>安全顧慮</td>
+<td>加 <code>--dry-run</code> 先預覽</td>
+<td>確認沒問題再去掉 <code>--dry-run</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p>進階：只在特定步驟自動 yes</p>
+<p>有時你想讓 Claude Code 自動重構，但部署前還是想親眼看一眼。這時可用「分階段指令」：</p>
+<p><code># 自動重構 claude refactor --yes --skip-confirm  # 部署前再問我 claude deploy</code></p>
+<p>結語：把「提問」留給人類，把「執行」交給 Claude Code</p>
+<p>設定好 <code>--yes</code> 與 <code>.claude.json</code> 後，你就能把重複性工作完全託管給 Claude Code。記得先在測試專案跑一次，確認它不會把整個 repo 刪光，再正式上線。自動化不是偷懶，而是把大腦留給更有創意的事。</p>
+<h2>Newbie Projects</h2>
+<p>https://buildtolaunch.substack.com/p/claude-code-beginners-guide</p>
+<h3>Web Scrape</h3>
+<p>https://github.com/firecrawl/firecrawl-claude-plugin</p>
+<h3>Personal Website</h3>
+<pre><code>cd Documents/my-projects
+mkdir portfolio-site
+cd portfolio-site
+claude
+</code></pre>
+<h3>Utility</h3>
+<h4>Japanese Keyboard</h4>
+<h3>Agent</h3>
+<p>VS Code</p>
+</div>
+</body>
+</html>
