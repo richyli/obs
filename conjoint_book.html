@@ -5,28 +5,100 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>conjoint_book</title>
 <style>*, *::before, *::after { box-sizing: border-box; }
+
+/* ── Base ── */
 body {
-  font-family: "Helvetica Neue", Arial, "Noto Sans TC", "Microsoft JhengHei",
-               sans-serif;
+  font-family: "Helvetica Neue", Arial, "Noto Sans TC", "Microsoft JhengHei", sans-serif;
   font-size: 20px;
   line-height: 1.9;
   color: #111;
   background: #fff;
   margin: 0;
-  padding: 3rem 1.5rem 5rem;
 }
-.container { max-width: 800px; margin: 0 auto; }
-h1 {
-  font-size: 1.75rem;
+
+/* ── Two-column layout (note pages) ── */
+.layout { display: flex; align-items: flex-start; min-height: 100vh; }
+
+.sidebar {
+  width: 270px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 2rem 1rem 2rem 1.5rem;
+  border-right: 1px solid #e8e8e8;
+  background: #f9f9f9;
+}
+.sidebar-back {
+  display: block;
+  font-size: 0.82rem;
+  color: #999;
+  margin-bottom: 1.4rem;
+  text-decoration: none;
+}
+.sidebar-back:hover { color: #333; }
+.sidebar-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #bbb;
   font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+/* ── TOC in sidebar ── */
+.toc { font-size: 0.82rem; line-height: 1.55; }
+.toc ul { list-style: none; margin: 0; padding: 0; }
+.toc ul ul { padding-left: 0.9rem; }
+.toc li { margin: 0; }
+.toc-row { display: flex; align-items: baseline; gap: 0.2rem; }
+.toc-row a {
+  flex: 1;
+  display: block;
+  padding: 0.18rem 0.3rem;
+  border-radius: 3px;
+  color: #555;
+  text-decoration: none;
+  word-break: break-word;
+}
+.toc-row a:hover { background: #ebebeb; color: #111; }
+.toc-row a.active { color: #0055cc; font-weight: 600; background: #e8f0ff; }
+.toc-toggle {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-size: 0.65rem;
+  color: #bbb;
+  line-height: 1;
+  width: 1rem;
+  text-align: center;
+}
+.toc-toggle:hover { color: #555; }
+
+/* ── Main content ── */
+.content {
+  flex: 1;
+  min-width: 0;
+  padding: 3rem 3rem 6rem;
+  max-width: 800px;
+}
+
+/* ── Single-column (index page) ── */
+.container { max-width: 800px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
+
+/* ── Typography ── */
+h1 {
+  font-size: 1.75rem; font-weight: 700;
   margin: 0 0 0.15rem;
   padding-bottom: 0.4rem;
   border-bottom: 2px solid #111;
   line-height: 1.3;
 }
 h2 {
-  font-size: 1.3rem;
-  font-weight: 700;
+  font-size: 1.3rem; font-weight: 700;
   margin: 2.5rem 0 0.5rem;
   padding-bottom: 0.2rem;
   border-bottom: 1px solid #ddd;
@@ -38,6 +110,8 @@ a { color: #0055cc; text-decoration: none; }
 a:hover { text-decoration: underline; }
 nav { margin-bottom: 2.5rem; font-size: 0.85rem; color: #999; }
 nav a { color: #999; }
+
+/* ── Code ── */
 code {
   font-family: "SFMono-Regular", Consolas, monospace;
   background: #f2f2f2;
@@ -54,9 +128,13 @@ pre {
   line-height: 1.6;
 }
 pre code { background: none; padding: 0; }
+
+/* ── Lists ── */
 ul, ol { padding-left: 1.6rem; margin: 0.8rem 0; }
 li { margin: 0.35rem 0; }
 li > ul, li > ol { margin: 0.2rem 0; }
+
+/* ── Other elements ── */
 blockquote {
   border-left: 4px solid #ccc;
   margin: 1.2rem 0;
@@ -71,32 +149,28 @@ tr:nth-child(even) { background: #fafafa; }
 hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
 .meta { font-size: 0.8rem; color: #aaa; margin: 0.3rem 0 1.8rem; }
 .index-list { list-style: none; padding: 0; margin: 1rem 0; }
-.index-list li {
-  padding: 0.55rem 0;
-  border-bottom: 1px solid #eee;
-  font-size: 1.05rem;
-}
+.index-list li { padding: 0.55rem 0; border-bottom: 1px solid #eee; font-size: 1.05rem; }
 .index-list li:last-child { border-bottom: none; }
-.toc {
-  background: #f7f7f7;
-  border: 1px solid #e0e0e0;
-  border-radius: 5px;
-  padding: 0.8rem 1.4rem;
-  margin: 1.5rem 0 2.5rem;
-  font-size: 0.88em;
-  line-height: 1.6;
-}
-.toc::before { content: "目錄"; font-weight: 700; display: block; margin-bottom: 0.4rem; }
-.toc ul { margin: 0.1rem 0; padding-left: 1.2rem; }
-.toc > ul { padding-left: 0; }
-.toc li { margin: 0.15rem 0; list-style: none; }
-.toc a { color: #444; }
-.toc a:hover { color: #0055cc; }
 .embed-block {
   border-left: 3px solid #aaa;
   padding: 0.5rem 1.2rem;
   margin: 1.5rem 0;
   background: #f8f8f8;
+}
+
+/* ── Mobile ── */
+@media (max-width: 800px) {
+  .layout { flex-direction: column; }
+  .sidebar {
+    position: static;
+    width: 100%;
+    height: auto;
+    max-height: 50vh;
+    border-right: none;
+    border-bottom: 1px solid #e8e8e8;
+    padding: 1rem 1.5rem;
+  }
+  .content { padding: 1.5rem 1.2rem 4rem; }
 }
 </style>
 <script>
@@ -108,10 +182,10 @@ MathJax = {
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
 </head>
 <body>
-<div class="container">
-<nav><a href="index.html">← 目錄</a></nav>
-<h1>conjoint_book</h1>
-<p class="meta">#conjoint　#handbook　#auto_generated</p>
+<div class="layout">
+<aside class="sidebar">
+<a class="sidebar-back" href="index.html">← 目錄</a>
+<div class="sidebar-label">本頁目錄</div>
 <div class="toc">
 <ul>
 <li><a href="#conjoint">Conjoint 研究手冊</a><ul>
@@ -250,10 +324,14 @@ MathJax = {
 </ul>
 </div>
 
+</aside>
+<main class="content">
+<h1>conjoint_book</h1>
+<p class="meta">#conjoint　#handbook　#auto_generated</p>
 <h2 id="conjoint">Conjoint 研究手冊</h2>
-<p>最後更新：2026-05-07b（本輪 /book-edit route mode 整合 Cai et al. 2022 城市公園景觀偏好 conjoint（廣州珠江公園，6 屬性 OED 正交設計，N=實地訪客，水體排名第一、廣場遮蔭第二、開闊度第三）——§7 新增「景觀設計／城市公園偏好」列；來源索引 +1 筆）</p>
-<p>最後更新：2026-05-07（本輪 /book-edit 整合 Nickkar, Karimanzira &amp; Rashidi 2023 共享自動駕駛車輛 SAV ACBC 研究：§6.2 新增 SAV + pandemic 情境 ACBC bullet、§7 新增「共享自動駕駛車輛（SAV）/ 交通偏好」列；來源索引 +1 筆）</p>
-<p>最後更新：2026-05-06（本輪 /conjoint-book 整合 read-citavi 下游 3 篇 conjoint 主擁有論文 + 1 既有 synthesis 更新：Hainmueller, Hopkins &amp; Yamamoto 2014 <em>Political Analysis</em> conjoint 因果推論奠基論文（三識別假設 stability/no-carryover、no profile-order、fully randomized attribute distribution；五項診斷檢驗 carryover/profile-order/randomization balance/attribute-order/atypical profiles；forced choice 設計 mitigates single-attribute aliasing；AMCE 估計化約為 OLS + cluster-robust SE；conjoint 一次實驗識別多項因果假設；AMCE 對其他屬性聯合分布的依賴是 feature 而非 bug）—— 補入 §3.1 AMCE OLS + cluster-robust SE bullet、§8 AMCE 統計陷阱 6 條 Hainmueller 識別假設與診斷 bullets；Kulshreshtha, Sharma &amp; Bajpai 2023 <em>IJQRM</em> conjoint 方法論完整 review（4 種 preference model reliability 排序 vector &gt; ideal-point &gt; mixed &gt; part-worth；boundary extension 污染 cue cards；reliability 雙軸 over time vs over items；pseudo-attributes 在加性模型捕捉互動效應；理性選擇四公理 completeness/transitivity/continuity/rationality；亞洲 2010s 後段才大量應用）—— 補入 §1.3 5 條 bullets（4 model reliability 排序、pseudo-attributes、理性公理、亞洲應用、Eggers 三形式延伸）、§4.1 reliability 雙軸 + 文獻長期忽略報告 2 bullets、§8 boundary extension 1 bullet；Rowen et al. 2022 <em>Value in Health</em> DCE clinical negligence claims（英國 N=1,013 single-profile DCE、7 屬性、PSI 嚴重度 mild/moderate/severe 隨機分派、logistic + marginal effects；baseline claim probability 42→78%；apology 跨嚴重度顯著降低；investigation+prevention 對 mild 最強；easy process + high compensation chance 提升；compensation amount 僅在 mild 顯著；PSI 嚴重度系統性 moderate NHS response attributes）—— §7 新增「醫療疏失索賠／clinical negligence」列；既有 synthesis Foundational Methodological Issues in Conjoint Analysis 已更新含 Hainmueller + Kulshreshtha 段落；來源索引 +3 筆；前輪更新：2026-05-05（read-citavi 下游 8 篇新 SC × conjoint 論文：Bask 2013 芬蘭手機 CBC + LCL 4 cluster（focus group → max diff → CBC + LCL 三階段壓縮、CAIC + entropy 0.81 + holdout 68.5% 三重驗證、每屬性僅 2 levels）；Garver 2012 ACM 引介到 logistics（解決 CBC 4 大限制 + summed pricing + 5 need-based segments）；Hsu 2006 supplier selection 三因素量表（quality / service / strategic-management fit、EFA + 雙樣本 CFA 跨國驗證、price 併入 service 因素）；Karniouchina 2009 RB vs CB conjoint 方法論比較（193 名筆電 between-subjects、HB CB 個體 hit rate 高於 HB RB、choice share 在無 no-buy option 時收斂、CB loss aversion 強於 RB）；Khalfan 2007 + Manu 2015 質性 trust 研究（為 conjoint trust attribute 設計提供概念貢獻）；Hartmann 2010 NL 202 家總包商 CBC + MNL（price × trust 互動、過去合作 trust utility ×3、price-trust 互補非替代）；van der Rhee 2009 歐洲 4 國 N=200 採購 DCA + MNL（production flexibility 最重要、manufacturing tolerances &gt; price、current vs. new supplier 對照設計）+ 3 個 synthesis（Conjoint Applications in Supply Chain Risk and Sustainability 擴充、Trust in Construction Supply Chain Determinants and Mechanisms 新建、Supplier Selection Conjoint Across B2B Industries 新建）——補入 §1.3 ratings-based 與 RB vs CB bullets、§2.4 屬性減 levels 控認知 bullet、§2.6 視覺編碼 bullet、§3.1 RB vs CB compatibility 與 hit rate bullets、§3.4 Bask 4-cluster + Garver 5-segment + CAIC + 多階段壓縮 bullets、§5.1 Hsu 量表 + price-as-service-factor bullet、§6.2 ACM 三階段引介到 logistics + summed pricing bullets、§7 新增「B2B 製造業大宗鋁料採購」「建造業分包採購（trust × price 互動）」「parcel shipping ACM」「永續手機 SCM」「supplier selection 量表構念化」5 列；來源索引 +8 筆；前輪更新：2026-05-05（read-citavi 下游 2 篇新論文：Valeeva et al. 2005 乳品鏈 ACA（24 專家、101 屬性、$R^2 > 0.75$、block-then-integrate 設計）+ Atwater et al. 2014 motor carrier conjoint（1692 業者、6 變數 PARS、MCR 300–900 仿 FICO、不對稱 Type I:Type II = 35:1、conjoint 跳脫人類受訪者預設）+ 2 個新 synthesis（Conjoint Applications in Supply Chain Risk and Sustainability、Conjoint Beyond Consumer Preference Expert Elicitation and Objective Rankings）——補入 §1.3 conjoint 跳脫消費者預設 1 bullet、§2.4 大屬性集 ACA 1 bullet、§3.6 conjoint 非線性 part-worth vs. logit 1 bullet、§6.2 Valeeva ACA 專家設計 2 bullets、§7 新增「供應鏈風險／motor carrier 韌性」與「食安／乳品鏈／expert elicitation」兩列、§8 不對稱錯誤成本 + 客觀排名作為 conjoint DV 設計 2 bullets；來源索引 +2 筆；前輪更新：2026-05-04（本輪 /book-edit route mode 整合 He et al. 2024 CMV 新方法（§5.3 新增 5 bullets、批判 conjoint 高估 WTP）、Zhang et al. 2021 旅遊紀念品 CBCA（§7 新增旅遊紀念品列）；來源索引 +2；前輪 /book-edit route mode 整合 Spindler et al. 2023 永續運動服飾 CBC + Lim et al. 2022 初級醫療 conjoint 系統性回顧——補入 §2.11 永續服飾屬性重要性與初級醫療 waiting time bullet；§5.5 Spindler 2023 WTP bullet；§3.4 Lim 2022 人口特徵調節偏好異質性 bullet；§8 Spindler 2023 WTP 非加法性陷阱 bullet；來源索引 +2 筆）；前輪更新：2026-04-29（本輪 /book-edit 整合 Choo &amp; Siow（2006）婚姻市場 TU 配對模型 + Hitsch, Hortaçsu &amp; Ariely（2010）線上交友條件 Logit 偏好估計——擴寫 §7 配偶偏好／婚姻市場列（加入 TU 結構模型理論啟發與線上交友實證發現：種族內婚偏好、女性收入偏好權重 2×、無策略性自我設限）；來源索引 +2 筆）；前輪更新：2026-04-29（本輪 /book-edit 整合 Pachali, Kurz &amp; Otter（2023）CBC + Bayesian latent budget constraint——補入 §3.2 HB latent budget inference bullet + §5.5 WTP 高估 bullet + §7 競爭定價與預算限制列；來源索引 +1 筆）；前輪更新：2026-04-28（本輪 /book-edit 整合 3 篇新論文：Ailawadhi 2025 癌症治療 DCE CRI/MAR/MAB、Christensen &amp; Saikkonen 2025 芬蘭民主 conjoint marginal means、Adserà et al. 2023 民主 WTP society-choice——補入 §2.11 ＋§7 ＋§5.5）；前輪更新：2026-04-27（本輪 /conjoint-book 整合 4 篇新 conjoint 論文：Aichholzer 2023 跨族婚姻 MM／in-group-out-group 操作化、Uchikoshi et al. 2024 日本婚姻市場 rating-based conjoint、Sonmez et al. 2023 科學家信任 within-design 黨派操弄、Bennour et al. 2022 移民居住地選擇政治性接待環境 AMCE——補入 §1.7 社會認同理論框架 1 條、§2.6 屬性順序固定設計例 1 條、§4.8 within-design 黨派操弄設計 1 條、§7 新增 3 列（配偶偏好婚姻市場、科學家信任、移民居住地選擇）、§8 AMCE 陷阱 1 條；來源索引 +4 筆）；前輪更新：2026-04-24（本輪 /conjoint-book 從黃以馨 Yuli（Wave Sunshine 體適能學院，師大附中運動中心）教練名片出發，設計台灣運動教練選擇 CBC conjoint 研究——補入 §2.11「運動教練選擇情境」1 條新 bullet（6 屬性設計：教練專長/認證等級/訓練形式/費用/性別/年資、Signaling Theory + Experience goods 框架、LCA 後分析偏好群）；§7 新增「運動教練／健身服務選擇」列（含 Fotiadis 2016 + Leister 2007 + Anonymous 2009 + Pinto 2018 方法論錨點、NT$800–2,000 費用水準、預期 3 偏好群異質性）；前輪更新：2026-04-23（本輪 /book-edit route mode 整合 5 篇新論文：Gregory 2011 服務業 Modified Kano + CBC n=3,231 度假所有權 WTP、Barone 2007 加權序數 OLR + 光環效應雜訊控制、Lin 2017 logistic odds + prospect theory Kano 精緻化、Jin 2022 文字探勘 Kansei-Kano 三階段整合、SharifUllah 2011 Monte Carlo 補全缺失 Kano 回應——補入 §6.6 Kano-Conjoint Integration 8 條新 bullet（服務業 Kano-CBC 典範、Modified Kano 改名、KE+文字探勘整合、加權 OLR 雜訊控制、logistic odds 精緻化、屬性動態性、Monte Carlo 補全）；§5.5 新增 Gregory 2011 度假所有權 WTP bullet；§7 新增「度假所有權／服務業 Kano-CBC」列）；前輪更新：2026-04-22（本輪 /book-edit 整合 /extend 擴充的 latent class conjoint 概念檔——補入 §3.4 導言 Kamakura & Russell 1989 歷史奠基段落、整合型估計優勢說明，以及 6 條新 bullet：LC-MNL 歷史源頭、整合型估計優勢、Vriens 1996 Monte Carlo LCN 最佳、識別性多次隨機起始值、尺度異質性遮蔽、外部驗證必要性）；前輪更新：2026-04-22（本輪 /conjoint-book 整合 /extend 擴充的 mixed logit 與 visual conjoint 概念檔更新，以及 /summary-note 新建的兩個健康 DCE 綜合筆記——補入 §3.1 ANA+RPL 改善模型配適、log-normal 固定符號係數原則；§6.7 視覺 conjoint ANA 模式與 accidental details 警示；§7 健康列加入 Biologic Therapy Route Preferences in Chronic Inflammatory Disease 和 Aggregate DCE Masks Patient Preference Heterogeneity Across Chronic Diseases 兩個 synthesis note 連結）；前輪更新：2026-04-20（本輪 /conjoint-book 整合 3 篇新論文：Kim & Lee 2023 OTT killer content CBC、Kim Nam Ryu 2017 music streaming 正交分數因子、Nam Park 2026 新聞平台可信度訊號 mixed logit + Bayesian HB——補入 §5.5 OTT/music streaming/news platform MWTP 跨領域發現、§7 OTT 與新聞平台列更新、§3.1 mixed logit 實例、§2.7 正交分數因子設計實例、§來源索引 +3 筆）；前輪 /conjoint-book 整合 Batch H 24 篇新 conjoint / WTP 論文：Carroll & Green 1995 方法分類圖與軟體生態、Gensler et al. 2012 extreme response behavior MAPE 37% + individually adapted design、Kuhfeld SAS OLS vs ALS + 兩類模擬器、King et al. 2019 螢幕佈局反轉屬性重要性排序、Arenoe & van der Rest 2020 動態 CBC 旅館預訂 + RCMNL、Schoder et al. 2006 MC newspaper majority fallacy、Putzke et al. 2010 augmented TAM + MC 報紙、BechLarsen & Grunert 2003 三國功能食品跨文化、Annunziata & Vecchio 2013 義大利功能食品三區隔、Pu & Grossklags 2015 隱私貨幣化 conjoint、Burmester et al. 2016 盜版 CBC+HB、OBrien et al. 2025 奧地利數位新聞 CBCA、Yue et al. 2010 生物可降解容器 hypothetical bias、Lee et al. 2014 rank-ordered DCE 公共資訊 WTP、Rodriguez 2016 調查式新聞 WTP、Kim et al. 2017 OTT CBC、Palumbo et al. 2011 生育治療 WTP+conjoint、Nikou et al. 2014 行動平台 conjoint——補入 §1.1 方法分類圖來源、§1.3 OLS vs ALS + 兩類模擬器、§4.5 螢幕佈局反轉重要性排序、§4.5 extreme response behavior MAPE 37%、§5.2 hypothetical bias biodegradable containers 、§5.5 新增 OTT / piracy / investigative journalism / public info WTP、§6 新增 Dynamic CBC §6.11、§7 新增 OTT streaming / piracy / MC newspaper / investigative journalism / biodegradable / public info 七列、§來源索引 新增 24 筆論文）；前輪 /conjoint-book 整合 Batch G 6 篇新 conjoint 媒體／新聞論文：Kanuri et al. 2014 CBC 報紙版面偏好、Trilling & Knudsen 2025 Facebook 新聞分享聯合實驗、Zoizner et al. 2025 AI 歸因新聞黨派選擇 N=2,011、Knudsen et al. 2023 新聞推薦 AMCE topical preference match、Artemenko & Faizova 2025 介面複雜度信任 N=1,236 k-means 5 群、Kapoor & Yadav 2020 媒體學生職涯偏好 job security 53.5%——補入 §2.11 六條新聞/媒體相關 attribute 情境 bullet、§7 新增四列（新聞分享、介面 UX 信任、AI 新聞歸因、職涯偏好媒體學生）並擴寫新聞/媒體選擇列、§來源索引 新增 7 筆論文；本輪 /conjoint-book 整合 14 篇新 conjoint / health / sustainability / AI 論文：Vermeulen 2008 三 no-choice 模型 + D-optimal design、Moskowitz 2004 functional foods utility-based segmentation、Johnson ISPOR 2013 Task Force 6 design approaches、Imburgia 2025 vaccine social media ratings-based conjoint、Flynn 2010 QALY DCE 方法論 review、Eggers 2022 CBC handbook 3 utility 形式、Backhaus 2025 chocolate 範例 traditional + CBC、Kaplan 2019 prostate cancer rating/TTO/conjoint within-subject 比較、Kolling 2025 sustainability label 跨國 conjoint、Devlin 2019 BERT、Kuo 2020 fire/burglary risk message conjoint、Greenhalgh 2004 diffusion of innovation review、Henderson 2020 ML carbon footprint、Jones 2017 CCU social acceptance、Michie 2011 BCW + COM-B、Perlstein 2025 risk talk conjoint、Igarashi 2022 Japan pandemic vaccine panel-logit、Schwartz 2020 Green AI position、Bridges 2012 hearing aid bounded rating vs conjoint、Della 2016 Kentucky AA ACA F&V、de Vries 2022 DHPC conjoint——補入 §1.3 ratings-based conjoint + 三 utility 形式定義、§2.7 ISPOR 6 approaches + S-efficiency + Modified Fedorov、§2.12 三 no-choice 模型 + Robust design + reference design 表現、§3.4 ebook latent class catastrophic 偏好誤判 + functional foods 3 mindsets、§3.5 variance scale factor + ranking-based QALY 兩問題 + death anchor + panel logit、§4.3 conjoint vs rating vs TTO 預測效度比較 + ceiling effect、§4.5 5% mothers no variability、§5.4 Eggers ebook market simulation 與 WTP 推導、§7 新增 5 列（health 訊息／疫苗 social media、QALY/health state valuation、疫苗偏好 pandemic+HPV、sustainability/circular economy/ESG label、風險溝通 risk talk、藥物安全溝通 DHPC）、§8 新增 probability neglect 段落 + 4 confusables（TTO/SG/BCW/COM-B/diffusion）；前輪 /conjoint-book **新增 §目錄**（70+ 條 wikilink 含 anchor，涵蓋全部主章節與子節）並依新「延伸閱讀連結優先序」規則於 §1.1 / §1.3 / §1.7 / §2.1 / §3.2 / §3.3 / §3.4 / §3.5 / §3.6 / §4.5 / §4.8 / §5.1 / §5.2 / §5.5 / §6.2 / §8 AMCE 陷阱 / §8 異質性 / §8 測量誤差 等 18 處子節導言加入 synthesis note wikilink（首選 synthesis、次 concept、最後 methods / 主大綱）；前輪 /conjoint-book 整合 7 篇 health / physical activity / implementation / consumer conjoint 論文：Brown et al. 2009 n=501 久坐老人 walking program bivariate probit + $9/週現金誘因 +31pp 參與率、formal group disutility $37/週、incentive 作為 continuous level；Pinto et al. 2018 PAPRIKA (1000minds) adaptive pairwise ranking 慢性膝痛 n=146、3 preference phenotype via NbClust 最佳化 average-linkage hierarchical clustering、health benefit 0.26 + enjoyment 0.24 主導；Farley et al. 2013 rating-based CA + SPSS CVA OLS 英國 NHS PCT postnatal depression innovation prioritization、impact + evidence 主導、national/local priority 意外不重要、holdout r²=0.93、11% response rate；Paudel et al. 2025 澳洲 n=372 老人 outdoor fitness ACBC + HB、surface 21.5% + senior equipment 18.7% + shady trees 14%、rubber &gt; natural &gt; loose &gt; concrete；van Gils et al. 2011 荷蘭 n=46 T2DM full-profile conjoint + spline knot at €0 + split-sample 驗證 prospect theory loss aversion（copayment slope 0.0008 &gt; bonus slope 0.0002, F=4.93, p=.032）；Liu et al. 2024 Cedars-Sinai n=304 骨鬆 CBC + HB + LCA、hip-fracture efficacy 31.0% 主導、oral (+37.2) &gt;&gt; IV (−48.3)、2-class 60.9% efficacy-focused vs 39.1% multi-factor；Oktaneldanora, Purnomo &amp; Noer 2025 印尼 n=185 SPSS full-profile conjoint isotonic drink、flavor 33% ≈ price 32% &gt; sugar 19% &gt; packaging 16%、Pearson R=0.787、9-stimulus orthogonal design——補入 §1.7 prospect theory loss aversion 實證、§2.2/2.3 rating-based CA 與 cost level、§2.7 orthogonal plan 實例、§3.4 3-phenotype preference cluster、§5.1 bivariate probit WTA 補償、§5.2 incentive-aligned vs cash incentive、§6.2 PAPRIKA/1000minds 與 ACBC 老人應用、§7 新增 implementation science、physical activity / walking、osteoporosis、outdoor fitness、sports nutrition 五列；前輪整合 8 篇：Head &amp; Ziolkowski 2012 ACA+K-means+PLS-SEM、Egala &amp; Liang 2024 mCDS CBC decision autonomy 29.36%、Jaeger et al. 2013 OLS vs PLS、Jaeger et al. 2001 蘋果 CBC 2×2 刺激呈現、Vukic et al. 2014 塞爾維亞 Gen Y tourism、Basha et al. 2019 university brand、König et al. 2022 XAI WTP、Haaijer et al. 2001 no-choice 常數不可缺簡—— 補入 §2.2/2.11 ACA 屬性流程與跨域發現、§2.12 no-choice 常數建模、§3.2/3.5 PLS-SEM 整合、§3.4 preference-based segmentation 補強、§5.3 WTP 跨域（AI XAI）、§6.1 ACA 五題型、§7 應用場域（AI XAI、tourism、university brands、CCU aviation、mobile phone）、§8 confusables（stimuli presentation physical vs pictorial 等效）；前輪 /conjoint-book 整合 4 篇 health / patient preferences CA：Lin 2021 中國 60 院長 EBI 採用 fractional factorial + HGLM、Vermeulen 2007 荷蘭 274 醫師/護理師/患者 wound dressing orthogonal + WTP triple design、Coxon 2015 英國 863 關節痛 50+ partial-profile CBC 引入 GP attitude 24%、Leister 2007 德國 151 患者 two-phase pilot + two-model conjoint 揭露 experience goods 訊號結構——補入 §2.2 屬性雙重萃取、§2.8 partial-profile 年長族群應用、§4.3 feasibility self-assessment、§5.1 WTP 三重設計與錨定警訊、§5.1 impact score as WTP surrogate、§7 健康／醫療列擴寫；新增 synthesis Health Conjoint Cross Stakeholder Preferences）；前輪 /conjoint-book 展開頂部 6 項 task list：§2.6 屬性／水準隨機化擴充、新增 §2.12 Opt-out / No-purchase 選項、§6.7 視覺 conjoint 補充 DeLong 2021 與 Deliza 2003、新增 §6.10 Mixed-method Conjoint Integration、新增 §1.7 伴隨理論／理論基礎——素材來自 Jedidi &amp; Zhang 2002、Wang 2023、Webb 2018 MS opt-out、Rudolph 2024、Rodrigues 2018 focus group、van Deen 2023、Kim 2022/2023 compound、TAM、HSM、selection system theory、RUM；前輪處理 awards / signaling 批次：Wellbrock &amp; Wolfram 2023 DD 準實驗、Gemser 2008 OLS、Dekker 2017 跨國、Pallas 2016 概念、Lanosga 2015 檔案、Nölleke 2023 訪談、Shemberger 2024 書章節、Meléndez Rodríguez 2022 grounded theory；更前輪整合 van Deen 2023 IBD SC/IV、Kluge 2021 能源溝通、Deliza 2003 包裝感官、Hildebrandt 2023 隱私、Tangianu 2025 官僚訓練、Ono &amp; Yamada 2018 日本性別偏見、Nettle 2025 英國福利、Clayton 2023 swapping error 校正、López Ortega 2025 視覺 vs 文字、Vecchiato 2025 Twitter 視覺 conjoint、Sisodia 2025 generative β-VAE、Green, Carroll 1981 POSSE</p>
+<blockquote>
+<p>更新紀錄：conjoint_book_changelog</p>
+</blockquote>
 <p>本手冊以條列短句彙整 wiki/ 中所有 conjoint 相關筆記的可取用內容。每一條後附 APA citation；延伸閱讀優先連結 synthesis note（跨論文整合），其次整理過的 concept / finding note，最後才到方法論與主大綱 note。完整 reference 可至 §來源索引 對應的主大綱筆記查閱。</p>
 <h3 id="_1">目錄</h3>
 <ul>
@@ -2048,6 +2126,66 @@ MathJax = {
 <li>Cai 2022 Bridging Landscape — Cai, Huang &amp; Lin (2022)——廣州珠江公園 conjoint + OED；6 景觀屬性壓縮為 12 情境照片；水體排名第一、廣場第二、開闊度第三；最優組合：開放式 + 流水 + 遮蔭廣場；參數化景觀設計典範——補入 §7 景觀設計／城市公園偏好列</li>
 </ul>
 <hr />
+</main>
 </div>
+<script>
+(function () {
+  // ── Rebuild TOC with toggle buttons ──────────────────────────────────────
+  var toc = document.querySelector('.sidebar .toc');
+  if (toc) {
+    toc.querySelectorAll('li').forEach(function (li) {
+      var childUl = li.querySelector(':scope > ul');
+      var link    = li.querySelector(':scope > a');
+      if (!link) return;
+
+      var row = document.createElement('div');
+      row.className = 'toc-row';
+
+      if (childUl) {
+        var btn = document.createElement('button');
+        btn.className = 'toc-toggle';
+        btn.setAttribute('aria-expanded', 'true');
+        btn.textContent = '▾';          // ▾ open
+        btn.addEventListener('click', function () {
+          var open = childUl.hidden;
+          childUl.hidden = !open;
+          btn.textContent = open ? '▾' : '▸';   // ▾ / ▸
+          btn.setAttribute('aria-expanded', String(open));
+        });
+        row.appendChild(btn);
+      } else {
+        var spacer = document.createElement('span');
+        spacer.style.width = '1rem';
+        spacer.style.flexShrink = '0';
+        row.appendChild(spacer);
+      }
+
+      row.appendChild(link);
+      li.insertBefore(row, li.firstChild);
+    });
+  }
+
+  // ── Scroll spy ───────────────────────────────────────────────────────────
+  var headings = document.querySelectorAll('.content h2[id], .content h3[id], .content h4[id]');
+  var tocLinks = document.querySelectorAll('.sidebar .toc a');
+  if (!headings.length || !tocLinks.length) return;
+
+  var current = null;
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      var link = document.querySelector('.sidebar .toc a[href="#' + e.target.id + '"]');
+      if (!link) return;
+      if (current) current.classList.remove('active');
+      current = link;
+      current.classList.add('active');
+      // Scroll link into view within sidebar
+      current.scrollIntoView({ block: 'nearest' });
+    });
+  }, { rootMargin: '-5% 0px -75% 0px', threshold: 0 });
+
+  headings.forEach(function (h) { io.observe(h); });
+}());
+</script>
 </body>
 </html>
