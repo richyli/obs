@@ -133,21 +133,30 @@ body {
 .cmp-pts { font-size: .75rem; font-weight: 700; min-width: 2.8rem; }
 
 /* ── Article ── */
-.art-block { margin-top: 1.6rem; border-top: 1px solid #eee; padding-top: 1.2rem; }
+.art-block {
+  margin-top: 2rem; border-top: 1px solid #eee; padding-top: 1.6rem;
+  max-width: 50%; text-align: left;
+}
 .art-label {
   font-size: .68rem; text-transform: uppercase; letter-spacing: .1em;
-  color: #aaa; margin-bottom: .65rem;
+  color: #bbb; margin-bottom: 1.8rem;
 }
-.art-body { font-size: .87rem; line-height: 1.9; color: #222; }
-.art-body p { margin: 0 0 .8rem; }
-.art-body p:last-child { margin-bottom: 0; }
+.art-section { margin-bottom: 2.2rem; }
+.art-section:last-of-type { margin-bottom: 0; }
+.art-sec-title {
+  font-size: .8rem; font-weight: 700; color: #444;
+  margin: 0 0 .7rem; letter-spacing: .01em;
+}
+.art-body { font-size: .87rem; line-height: 2; color: #2a2a2a; }
+.art-body p { margin: 0; }
 .art-hi { font-weight: 700; }
-.art-footer { font-size: .75rem; color: #aaa; margin-top: .6rem; }
+.art-footer { font-size: .73rem; color: #bbb; margin-top: 2rem; display: block; }
 
 @media (max-width: 480px) {
   .hdr h1 { font-size: .88rem; }
   .bval { font-size: 1.4rem; }
   .otitle { font-size: .88rem; }
+  .art-block { max-width: 100%; }
 }
 </style>
 </head>
@@ -487,9 +496,13 @@ function generateArticle(ch, cmp) {
   }[cc];
   const paraC = `${tfC}台灣工業部門消耗全國約52%的電力，鋼鐵、石化與半導體是高耗能的主要來源。經濟部工業局推動「工廠節能輔導計畫」，2024年補助金額達13億元，協助工廠汰換設備、導入能源管理系統（EnMS）。台積電承諾2030年達成100%再生能源使用，並將節電績效納入供應鏈評分；部分大型鋼廠亦自主設定2030年減碳30%目標。然而，中小型工廠普遍反映設備改裝回收期超過10年，難以自行承擔，補貼的覆蓋範圍是否足夠仍是政策瓶頸。補貼能否有效削減尖峰用電，取決於設計是否精準對應高耗能時段，而非只是補助設備汰換本身。${rpC}`;
 
-  let html = `<p>${paraA}</p><p>${paraB}</p><p>${paraC}</p>`;
+  const sec = (emoji, title, body) =>
+    `<div class="art-section"><div class="art-sec-title">${emoji} ${title}</div><div class="art-body"><p>${body}</p></div></div>`;
+  let html = sec("⚛️", "核電延役", paraA)
+           + sec("🌱", "再生能源加速", paraB)
+           + sec("💡", "工業節電補貼", paraC);
   if (n >= 3) {
-    html += `<p class="art-footer">以上內容根據目前 ${n} 位讀者的回應個人化生成，隨更多人參與持續更新。</p>`;
+    html += `<span class="art-footer">以上內容根據目前 ${n} 位讀者的回應個人化生成，隨更多人參與持續更新。</span>`;
   }
   return html;
 }
