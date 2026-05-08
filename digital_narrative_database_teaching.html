@@ -263,6 +263,7 @@ MathJax = {
 </li>
 <li><a href="#_21">七、評分指標</a></li>
 <li><a href="#_22">八、常見坑與避雷</a></li>
+<li><a href="#ona-excellence-in-ai-innovation">九、ONA Excellence in AI Innovation 對標</a></li>
 <li><a href="#_23">相關</a></li>
 </ul>
 </div>
@@ -294,7 +295,7 @@ MathJax = {
 <tr>
 <td><strong>訊號 1：你的故事 + 我的故事 = 我們的故事</strong></td>
 <td>每位讀者的輸入或經驗，透過聚合成為更大的故事</td>
-<td>DN You Draw It NYT、<a href="DN_Lost_Mothers_ProPublica.html">DN Lost Mothers ProPublica</a></td>
+<td>DN You Draw It NYT、DN Lost Mothers ProPublica</td>
 </tr>
 <tr>
 <td><strong>訊號 2：事件持續發生</strong></td>
@@ -353,7 +354,7 @@ MathJax = {
 <p><strong>特徵</strong>：讀者寫入、記者審核、通過後公開；有「待審 → 驗證中 → 已公開」狀態流。</p>
 <p><strong>代表作</strong>：
 - DN Documenting Hate ProPublica — 仇恨犯罪群眾投稿
-- <a href="DN_Lost_Mothers_ProPublica.html">DN Lost Mothers ProPublica</a> — 孕產婦死亡個案投稿
+- DN Lost Mothers ProPublica — 孕產婦死亡個案投稿
 - DN g0v 政治獻金透明 — 雙人校對轉錄</p>
 <p><strong>Firestore 結構</strong>：</p>
 <pre><code>collection: submissions
@@ -410,7 +411,7 @@ collection: users / {uid} / decisions
 <p><strong>特徵</strong>：使用者寫入一個資料點，看到自己 vs 全體分布；後端要做 sampling/aggregation。</p>
 <p><strong>代表作</strong>：
 - DN You Draw It NYT — 你畫的曲線 vs 大家畫的
-- <a href="DN_%E7%B5%A6%E4%BD%A0%E7%8F%8A%E6%99%82%E8%90%AC_%E4%BD%A0%E6%83%B3%E6%8A%95%E7%B5%A6%E8%AA%B0.html">DN 給你珊時萬 你想投給誰</a>（可擴充）— 你的政治光譜 vs 大家的</p>
+- DN 給你珊時萬 你想投給誰（可擴充）— 你的政治光譜 vs 大家的</p>
 <p><strong>Firestore 結構</strong>：</p>
 <pre><code>collection: drawings / {questionId}
   doc {submissionId}:
@@ -457,7 +458,7 @@ collection: drawings_aggregate / {questionId}
 <h4 id="pattern-b-crowdsourced-reports3">Pattern B — Crowdsourced Reports（3 件）</h4>
 <ul>
 <li>DN Documenting Hate ProPublica（ProPublica, 2017）</li>
-<li><a href="DN_Lost_Mothers_ProPublica.html">DN Lost Mothers ProPublica</a>（ProPublica, 2017）</li>
+<li>DN Lost Mothers ProPublica（ProPublica, 2017）</li>
 <li>DN 從毒打到虐殺 動物虐待定罪率（窩窩, 2023）— Google Form 形式入門版</li>
 </ul>
 <h4 id="pattern-c-real-time-tracker2">Pattern C — Real-time Tracker（2 件）</h4>
@@ -1025,9 +1026,21 @@ match /drawings_aggregate/{qid} {
 <li><strong>時區地獄</strong>：用 <code>serverTimestamp()</code> 而不是 <code>new Date()</code>，避免讀者本地時鐘不準</li>
 <li><strong>moderation 工作量低估</strong>：Pattern B 上線後審核排隊。<strong>解法</strong>：先設 100 件上限或封閉測試</li>
 </ul>
+<h3 id="ona-excellence-in-ai-innovation">九、ONA Excellence in AI Innovation 對標</h3>
+<p>ONA 從 2024 年起設立「Excellence in AI Innovation」獎，所有入圍作品都環繞「<strong>AI 嵌入新聞工作流</strong>」——其中多數本身就是 Pattern D / Pattern B 的 Firebase 實作對象。建議學生在做練習前先看：</p>
+<ul>
+<li>🏆 2024｜DN They Call Us Meat BBC｜BBC — AI 配音保護證人匿名（倫理 + voice cloning）</li>
+<li>🏆 2025 Large｜DN WSJ AI Tools 2025｜WSJ — AI 工具標準化嵌入工作流</li>
+<li>🏆 2025 Small｜DN The Pudding 2025 Small Newsroom｜The Pudding — 小編輯室 AI 加速資料新聞</li>
+<li>入圍 2024｜DN We Asked AI to Map Our Stories THE CITY｜THE CITY — AI 主題分類自家報導</li>
+<li>入圍 2024｜DN YESEO｜RJI — Slack bot AI SEO 助理</li>
+<li>入圍 2025｜DN ChatMigrante Factchequeado｜Factchequeado — RAG 移民助理（Pattern B 的 AI 加強版）</li>
+</ul>
+<p>完整年代清單見 digital narrative ONA awards 2020-2025。</p>
 <h3 id="_23">相關</h3>
 <ul>
 <li>純前端教材：<a href="digital_narrative_teaching_25.html">digital narrative teaching 25</a></li>
+<li>ONA 獎項清單：digital narrative ONA awards 2020-2025</li>
 <li>完整索引：digital narrative index</li>
 <li>自動化新聞：computational narrative</li>
 </ul>

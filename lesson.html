@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>課堂講義 · Excel &amp; Tableau Dashboard</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; }
+body {
+  font-family: "Helvetica Neue", Arial, "Noto Sans TC", sans-serif;
+  background: #f0f2f5; margin: 0; min-height: 100vh; color: #1a1a1a;
+}
+
+/* ── Setup / Login screens ────────────────────── */
+.setup-wrap {
+  display: flex; align-items: center; justify-content: center;
+  min-height: 100vh; padding: 2rem;
+}
+.setup-card {
+  background: #fff; border-radius: 14px; padding: 2.5rem;
+  max-width: 520px; width: 100%;
+  box-shadow: 0 4px 24px rgba(0,0,0,.1);
+}
+.setup-card h2 { margin: 0 0 .4rem; font-size: 1.25rem; }
+.setup-card p  { color: #555; font-size: .88rem; line-height: 1.7; margin: 0 0 1.4rem; }
+.setup-card input {
+  width: 100%; padding: .7rem 1rem; border: 1.5px solid #ddd;
+  border-radius: 8px; font-size: .95rem; margin-bottom: 1rem;
+}
+.setup-card input:focus { outline: none; border-color: #0055cc; }
+
+/* ── Sticky header ────────────────────────────── */
+.hdr {
+  background: #fff; padding: .85rem 1.8rem;
+  border-bottom: 1px solid #e4e4e4;
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 30;
+  box-shadow: 0 2px 8px rgba(0,0,0,.06);
+}
+.hdr-left { display: flex; flex-direction: column; }
+.hdr h1 { margin: 0; font-size: 1rem; font-weight: 700; }
+.hdr-sub { font-size: .75rem; color: #999; margin-top: .1rem; }
+.hdr-right { display: flex; align-items: center; gap: .7rem; }
+.dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+.dot.ok  { background: #22c55e; }
+.dot.err { background: #ef4444; }
+.conn-text { font-size: .75rem; color: #999; }
+.session-chip {
+  font-size: .72rem; font-weight: 700; letter-spacing: .03em;
+  background: #e8f0ff; color: #0055cc;
+  padding: .2rem .6rem; border-radius: 20px;
+}
+
+/* ── Active unit banner (below header) ────────── */
+.now-banner {
+  background: #fbbf24; color: #7c5a00;
+  font-size: .8rem; font-weight: 700; letter-spacing: .03em;
+  text-align: center; padding: .35rem 1rem;
+  position: sticky; top: 57px; z-index: 29;
+}
+
+/* ── Lesson wrapper ───────────────────────────── */
+.lesson-wrap {
+  max-width: 780px; margin: 1.4rem auto 3rem;
+  padding: 0 1.2rem;
+  display: flex; flex-direction: column; gap: .8rem;
+}
+
+/* ── Section divider ──────────────────────────── */
+.section-hdr {
+  display: flex; align-items: center; gap: .7rem;
+  font-size: .72rem; font-weight: 800; letter-spacing: .1em;
+  text-transform: uppercase; color: #666;
+  padding: .5rem 0 .1rem; margin-top: .6rem;
+}
+.section-hdr::after { content: ""; flex: 1; height: 1px; background: #d0d0d0; }
+
+/* ── Teacher controls bar ─────────────────────── */
+.t-controls {
+  background: #fff; border-radius: 10px;
+  padding: .85rem 1.2rem;
+  display: flex; align-items: center; gap: .9rem; flex-wrap: wrap;
+  box-shadow: 0 1px 4px rgba(0,0,0,.07);
+}
+.t-controls label { font-size: .87rem; color: #555; white-space: nowrap; }
+.num-input {
+  width: 60px; padding: .32rem .5rem;
+  border: 1.5px solid #ddd; border-radius: 6px;
+  font-size: 1rem; font-weight: 700; text-align: center;
+}
+.btn-reset   { background: #ef4444; color: #fff; }
+.btn-reset:hover { background: #cc0000; }
+.btn-primary { background: #0055cc; color: #fff; }
+.btn-primary:hover { background: #0044aa; }
+.btn-reset, .btn-primary {
+  padding: .4rem .95rem; border: none; border-radius: 7px;
+  font-size: .87rem; font-weight: 700; cursor: pointer; transition: background .15s;
+}
+
+/* ── Lesson card ──────────────────────────────── */
+.lesson-card {
+  background: #fff; border-radius: 10px; overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0,0,0,.07);
+  border-left: 4px solid transparent;
+  transition: border-color .2s, background .2s;
+}
+.lesson-card.active { border-left-color: #fbbf24; }
+.lesson-card.done   { border-left-color: #22c55e; }
+
+/* Card header */
+.card-hdr {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: .8rem 1.2rem; gap: .6rem;
+  border-bottom: 1px solid #f0f0f0;
+  background: #fafafa;
+}
+.lesson-card.active .card-hdr { background: #fffbeb; }
+.lesson-card.done   .card-hdr { background: #f0fff4; }
+.card-hdr-main { display: flex; align-items: center; gap: .5rem; flex: 1; flex-wrap: wrap; }
+.card-label { font-size: .93rem; font-weight: 700; }
+.u-time {
+  font-size: .7rem; color: #aaa; font-weight: 400;
+  background: #efefef; padding: .1rem .4rem; border-radius: 4px;
+}
+.active-badge {
+  font-size: .7rem; font-weight: 700; letter-spacing: .04em;
+  background: #fbbf24; color: #7c5a00;
+  padding: .15rem .5rem; border-radius: 4px;
+}
+.done-badge {
+  font-size: .7rem; font-weight: 700;
+  background: #22c55e; color: #fff;
+  padding: .15rem .5rem; border-radius: 4px;
+}
+
+/* Card body (lesson content) */
+.card-body {
+  padding: .7rem 1.2rem .5rem;
+  transition: opacity .3s;
+}
+.lesson-card.done .card-body { opacity: .45; }
+
+.card-body p  { font-size: .87rem; line-height: 1.65; color: #333; margin: .4rem 0; }
+.card-body h4 { font-size: .83rem; font-weight: 700; color: #444; margin: .8rem 0 .3rem; }
+.card-body ol, .card-body ul { margin: .4rem 0 .4rem 1.25rem; }
+.card-body > ul { list-style: disc; }
+.card-body > ol { list-style: decimal; }
+.card-body li ul { list-style: circle; margin-top: .2rem; }
+.card-body li { font-size: .87rem; line-height: 1.6; color: #333; margin-bottom: .28rem; }
+.card-body code {
+  background: #f3f3f3; color: #c7254e;
+  padding: .1em .35em; border-radius: 3px;
+  font-size: .83em; font-family: "SFMono-Regular", Consolas, monospace;
+}
+.card-body strong { color: #111; }
+.card-body a { color: #0055cc; }
+
+.note {
+  background: #f0f7ff; border-left: 3px solid #0055cc;
+  padding: .5rem .85rem; border-radius: 0 6px 6px 0;
+  margin: .55rem 0; font-size: .84rem; line-height: 1.55; color: #333;
+}
+.question {
+  background: #fff8e6; border-left: 3px solid #f59e0b;
+  padding: .5rem .85rem; border-radius: 0 6px 6px 0;
+  margin: .55rem 0; font-size: .84rem; line-height: 1.55; color: #333;
+}
+
+/* Card footer */
+.card-foot {
+  display: flex; align-items: center; justify-content: flex-end;
+  padding: .65rem 1.2rem; border-top: 1px solid #f0f0f0; gap: .6rem;
+}
+.card-foot.t-foot { flex-direction: column; align-items: stretch; gap: .28rem; }
+.t-foot-top {
+  display: flex; justify-content: space-between; align-items: center;
+}
+.t-hint-text { font-size: .72rem; color: #ccc; }
+.u-count { font-size: .85rem; font-weight: 700; color: #0055cc; }
+.bar-bg  { width: 100%; height: 7px; background: #eee; border-radius: 4px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 4px; background: #22c55e; transition: width .4s ease; }
+.bar-fill.low { background: #ef4444; }
+.bar-fill.mid { background: #fbbf24; }
+
+/* Done / complete button */
+.btn-done {
+  padding: .42rem 1.1rem; border: none; border-radius: 7px;
+  font-size: .87rem; font-weight: 700; cursor: pointer;
+  white-space: nowrap; transition: all .15s;
+  background: #0055cc; color: #fff;
+}
+.btn-done:hover:not(:disabled) { background: #0044aa; transform: scale(1.03); }
+.btn-done.done   { background: #22c55e; cursor: default; }
+.btn-done:disabled { background: #e0e0e0; color: #999; cursor: not-allowed; }
+
+/* Teacher card: clickable header */
+.card-hdr.t-clickable { cursor: pointer; }
+.card-hdr.t-clickable:hover { filter: brightness(.97); }
+
+@media (max-width: 520px) {
+  .hdr { padding: .8rem 1rem; }
+  .lesson-wrap { padding: 0 .7rem; margin-top: 1rem; }
+  .card-hdr { padding: .7rem 1rem; }
+  .card-body { padding: .6rem 1rem .4rem; }
+  .card-foot { padding: .55rem 1rem; }
+  .card-body li, .card-body p { font-size: .83rem; }
+}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+const FIREBASE_URL = "https://course-update-36460-default-rtdb.firebaseio.com";
+const TEACHER_HASH = "a93ac600f27f6602bf628cd929c9028e285038fc8637fe1ec6792e8850ade6a8";
+const POLL_MS = 2500;
+
+// ── Lesson content (keyed by unit id) ─────────────
+const CONTENT = {
+"e00a": `<p>請在上課前完成，需要 Excel 2016 以上版本（Mac 亦可）。</p>
+<ul>
+  <li>Windows：透過 Microsoft 365 安裝</li>
+  <li>Mac：App Store 搜尋 <code>Microsoft Excel</code></li>
+</ul>`,
+
+"u00a": `<ol>
+  <li>前往 <a href="https://www.tableau.com/products/public" target="_blank">tableau.com/products/public</a></li>
+  <li>輸入 Email → 下載安裝（完全免費）</li>
+  <li>啟動後看到「Connect」面板表示安裝成功</li>
+</ol>`,
+
+"u00b": `<p>從課程頁面下載並儲存在桌面（容易找到）。</p>
+<ul>
+  <li><strong>7,200 筆</strong>，8 欄：<code>Date, Continent, Country, Category, Sub_Category, Sales, Profit, Quantity</code></li>
+  <li>時間範圍：2015-01 ~ 2024-12（10 年月報）</li>
+  <li>10 個國家 × 6 子品類 × 120 個月</li>
+</ul>`,
+
+"e01": `<ol>
+  <li>開啟 Excel → 上方選單 <strong>資料 → 從文字/CSV</strong></li>
+  <li>選取 <code>retail_monthly.csv</code></li>
+  <li>確認分隔符號為「逗號」→ 點<strong>載入</strong></li>
+</ol>
+<div class="note">確認資料有 7,200 筆（在工作表最下方查看行號）。</div>`,
+
+"e02": `<ol>
+  <li>點選資料範圍任意儲存格 → <strong>插入 → 樞紐分析表</strong> → 新工作表 → 確定</li>
+  <li><strong>PivotTable 1</strong>（各國銷售）：
+    <ul>
+      <li>Rows: <code>Country</code>，Values: <code>Sum of Sales</code></li>
+      <li>排序：由大到小</li>
+    </ul>
+  </li>
+  <li>再建立 <strong>PivotTable 2</strong>（品類 × 年度）：
+    <ul>
+      <li>Rows: <code>Category</code>，Columns: <code>Date</code>（右鍵 → 群組 → 年份），Values: <code>Sum of Sales</code></li>
+    </ul>
+  </li>
+  <li>數字格式：選取數值儲存格 → <strong>Ctrl+1</strong> → 數值 → 勾選千位分隔符號</li>
+</ol>
+<div class="question">💬 哪個國家銷售最高？Electronics 近 10 年成長趨勢如何？</div>`,
+
+"e03": `<ol>
+  <li>點擊 PivotTable 1 任意儲存格 → <strong>樞紐分析表分析 → 樞紐分析圖</strong></li>
+  <li>選<strong>群組直條圖</strong> → 確定</li>
+  <li>雙擊圖表標題 → 改為「各國銷售比較」</li>
+</ol>`,
+
+"e04": `<ol>
+  <li>新增 <strong>PivotTable 3</strong>（月度趨勢）：
+    <ul>
+      <li>Rows: <code>Date</code>（右鍵 → 群組 → 選「月」，取消勾選「年」）</li>
+      <li>Values: <code>Sum of Sales</code></li>
+    </ul>
+  </li>
+  <li>從 PivotTable 3 建立<strong>折線圖</strong></li>
+  <li>觀察：11 月、12 月是否出現明顯高峰？</li>
+  <li>調整圖表：移除格線（右鍵格線 → 刪除）、加資料標籤（右鍵圖表 → 新增資料標籤）</li>
+</ol>
+<div class="question">💬 Excel 圖表與手動拖曳相比，哪個步驟最繁瑣？</div>`,
+
+"e05": `<ol>
+  <li>點擊任一 PivotTable → <strong>樞紐分析表分析 → 插入切片器</strong></li>
+  <li>勾選 <code>Category</code> 與 <code>Continent</code> → 確定</li>
+  <li>點擊切片器測試篩選效果</li>
+</ol>
+<div class="note">切片器可以讓使用者點選類別，即時過濾 PivotTable 資料。</div>`,
+
+"e06": `<ol>
+  <li>點擊任一 PivotTable → <strong>插入 → 時間軸</strong> → 選 <code>Date</code> → 確定</li>
+  <li>時間軸右上角調整粒度：選「月」</li>
+  <li>右鍵切片器 → <strong>報表連線</strong> → 勾選所有 PivotTable</li>
+  <li>對時間軸做同樣操作：右鍵 → 報表連線 → 全選</li>
+</ol>`,
+
+"e07": `<ol>
+  <li>將所有 PivotChart、切片器、時間軸排列到<strong>同一工作表</strong>（拖曳調整位置與大小）</li>
+  <li>點擊切片器「Electronics」→ 確認所有圖表同步更新</li>
+  <li>拖曳調整版面，讓整體排版整齊</li>
+</ol>
+<div class="question">💬 這就是 Excel 版 Dashboard。你覺得和 Tableau 相比，最大的限制是什麼？</div>`,
+
+"u01": `<ol>
+  <li>開啟 Tableau Public → <strong>File → Connect → Text File</strong></li>
+  <li>選取 <code>retail_monthly.csv</code></li>
+  <li>確認 Data Source 頁籤顯示 7,200 筆資料預覽</li>
+  <li>點底部 <strong>Sheet 1</strong> 進入工作表</li>
+</ol>
+<div class="note">左側 Data 面板：<strong>藍色 = Dimensions</strong>（類別欄位），<strong>綠色 = Measures</strong>（數值欄位）</div>`,
+
+"u02": `<p>在 Data Source 頁籤確認各欄位型別正確：</p>
+<ul>
+  <li><code>Date</code> → 日曆圖示（日期型）</li>
+  <li><code>Sales</code> / <code>Profit</code> / <code>Quantity</code> → 綠色（數值型 Measure）</li>
+  <li><code>Country</code> / <code>Category</code> / <code>Sub_Category</code> / <code>Continent</code> → 藍色（字串型 Dimension）</li>
+</ul>
+<div class="note">型別錯誤時：點欄位左側的小圖示 → 選正確型別。</div>`,
+
+"u03": `<ol>
+  <li>在 Data 面板按住 <strong>Ctrl</strong>，依序點選 <code>Category</code> 與 <code>Sub_Category</code></li>
+  <li>右鍵 → <strong>Hierarchy → Create Hierarchy</strong> → 命名為 <code>Product</code></li>
+  <li>確認 <code>Sub_Category</code> 排在 <code>Category</code> 下方（有縮排）</li>
+</ol>
+<div class="note">建立後，在圖表中點 <code>+</code> 展開子品類、點 <code>−</code> 收合。</div>`,
+
+"u04": `<ol>
+  <li>將 <code>Country</code> 拖到 <strong>Columns</strong></li>
+  <li>將 <code>Sales</code> 拖到 <strong>Rows</strong>（自動加總為 SUM）</li>
+  <li>將 <code>Category</code> 拖到 <strong>Marks → Color</strong> → 看到 3 色堆疊</li>
+  <li>上方工具列切換為<strong>並排長條圖（Side-by-side Bars）</strong></li>
+  <li>排序：點欄位標頭的排序箭頭，按總銷售額降序</li>
+  <li>重新命名 Sheet：<code>Bar - Sales by Country</code></li>
+</ol>
+<div class="question">💬 哪個國家的 Electronics 銷售最高？Phones 和 Computers 哪個佔比更大？</div>`,
+
+"u05": `<ol>
+  <li>將 Marks → Color 改為 <code>Sub_Category</code>（展開為 6 個子品類）</li>
+  <li>點擊 Columns 上 <code>Category</code> 欄位旁的 <code>+</code> 符號展開層級</li>
+  <li>觀察 6 個子品類的銷售分布差異</li>
+  <li>點 <code>−</code> 收合回品類層級</li>
+</ol>`,
+
+"u06": `<ol>
+  <li>新增 Sheet</li>
+  <li>將 <code>Date</code> 拖到 <strong>Columns</strong> → 點欄位右側箭頭 → 選 <strong>Month（連續）</strong></li>
+  <li>將 <code>Sales</code> 拖到 <strong>Rows</strong></li>
+  <li>將 <code>Country</code> 拖到 <strong>Marks → Color</strong></li>
+  <li>觀察每年 11–12 月的銷售高峰模式</li>
+  <li>重新命名 Sheet：<code>Line - Monthly Trend</code></li>
+</ol>
+<div class="note">連續日期（綠色 pill）vs. 離散日期（藍色 pill）→ 右鍵欄位可切換，產生截然不同的圖形。</div>`,
+
+"u07": `<ol>
+  <li>右鍵 Y 軸 → <strong>Add Reference Line</strong></li>
+  <li>選 <strong>Average</strong>（全域平均線）→ 確定</li>
+  <li>觀察哪幾個月超過平均、哪幾個月低於平均</li>
+</ol>`,
+
+"u08": `<ol>
+  <li>新增 Sheet</li>
+  <li><strong>雙擊 <code>Country</code></strong> → Tableau 自動辨識地理角色，生成地圖底圖</li>
+  <li>將 <code>Sales</code> 拖到 <strong>Marks → Color</strong> → 地圖變為填色地圖（Choropleth）</li>
+  <li>點 <strong>Color → Edit Colors</strong> → 選 Blue-Teal 漸層</li>
+  <li>上方選單 <strong>Map → Map Layers</strong> → 試驗不同底圖風格</li>
+  <li>重新命名 Sheet：<code>Map - Sales by Country</code></li>
+</ol>
+<div class="note">若 Country 未被辨識：右鍵欄位 → Geographic Role → Country/Region</div>
+<div class="question">💬 哪個國家在地圖上看起來最小但銷售不低？（提示：英國）</div>`,
+
+"u09": `<ol>
+  <li>將 <code>Profit</code> 拖到 <strong>Marks → Tooltip</strong></li>
+  <li>滑鼠懸停在地圖的國家上 → 確認 Tooltip 同時顯示 Sales 與 Profit</li>
+  <li>（選做）點 Marks → Tooltip → 自訂 Tooltip 文字格式與排版</li>
+</ol>`,
+
+"u10": `<ol>
+  <li>新增 Sheet</li>
+  <li>將 <code>MONTH(Date)</code> 拖到 <strong>Columns</strong>（選離散 Month → 顯示 1~12）</li>
+  <li>將 <code>Sales</code> 拖到 <strong>Rows</strong></li>
+  <li>將 <code>Category</code> 再次拖到 <strong>Rows</strong>（放在 <code>SUM(Sales)</code> 左邊）→ 自動產生 3 個並排折線圖面板</li>
+  <li>將 <code>YEAR(Date)</code> 拖到 <strong>Marks → Color</strong>（各年份顏色不同）</li>
+  <li>上方工具列選 <strong>Fit Width</strong></li>
+  <li>重新命名 Sheet：<code>Small Multiples - Category</code></li>
+</ol>
+<div class="note">效果：三個品類各自一行，X 軸對齊，可直接比較季節性差異是否一致。<br>
+進階：把 <code>YEAR(Date)</code> 也加到 Columns，可看年度 × 月份的矩陣格局。</div>`,
+
+"u11": `<p>視覺化「哪個洲的銷售，流向哪個品類，再流向哪個子品類」。</p>
+<h4>方式 A：Extension（推薦，適合課堂）</h4>
+<ol>
+  <li>上方選單 <strong>Help → Extension Gallery</strong> 搜尋 <strong>Sankey</strong></li>
+  <li>下載 <code>.trex</code> 檔（如 SankeyMaker）</li>
+  <li>新增 Dashboard → 左側 Objects → <strong>Extension</strong> → 拖入畫面 → 載入 <code>.trex</code></li>
+  <li>設定：Source = <code>Continent</code>，Target = <code>Category</code>，Value = <code>SUM(Sales)</code></li>
+  <li>可加第二層：Source → <code>Category</code>，Target → <code>Sub_Category</code></li>
+</ol>
+<div class="question">💬 Asia 的銷售主要流向哪個品類？South Africa 的流量相比其他洲差多少？</div>`,
+
+"u12": `<ol>
+  <li>底部 Tab 點 <strong>⊕ New Dashboard</strong></li>
+  <li>左側 Sheets 面板依序拖入：
+    <ul>
+      <li>上左：<code>Map - Sales by Country</code></li>
+      <li>上右：<code>Line - Monthly Trend</code></li>
+      <li>下左：<code>Bar - Sales by Country</code></li>
+      <li>下右：<code>Small Multiples - Category</code></li>
+    </ul>
+  </li>
+  <li>拖住 Sheet 邊框可調整大小；使用 Horizontal / Vertical Container 巢狀排列</li>
+</ol>`,
+
+"u13": `<ol>
+  <li>方法一（快速）：點選 Bar Chart → 右上角圖示 → <strong>Use as Filter（漏斗符號）</strong></li>
+  <li>方法二（精確）：<strong>Dashboard → Actions → Add Action → Filter</strong>
+    <ul>
+      <li>Source：Map → Target：所有 Sheets → On Select：Filter</li>
+    </ul>
+  </li>
+  <li>測試：點擊地圖上的國家 → 其他圖表是否同步篩選？</li>
+</ol>`,
+
+"u14": `<ol>
+  <li>點任一含 <code>Category</code> 的 Sheet → 右上角篩選圖示 → <strong>Apply to All Sheets</strong></li>
+  <li>加 Dashboard 標題：<strong>Dashboard → Show Title</strong><br>
+      輸入 <code>Global Retail Dashboard 2015-2024</code></li>
+</ol>`,
+
+"u15": `<p><strong>示範操作</strong></p>
+<ul>
+  <li><strong>Highlight Action</strong>：Dashboard → Actions → Add Action → Highlight（滑過地圖高亮其他圖表）</li>
+  <li><strong>匯出</strong>：File → Export Packaged Workbook (<code>.twbx</code>) → 包含資料，可直接分享給他人開啟</li>
+</ul>
+<h4>常見問題</h4>
+<ul>
+  <li>地圖只顯示部分國家？→ 右鍵 Country → Geographic Role → Country/Region</li>
+  <li>日期無法切換到月份？→ 確認 Date 欄位為 Date 型別（非 String）</li>
+  <li>Small Multiples 面板太多？→ 減少 Rows/Columns 上的維度數量</li>
+</ul>`,
+};
+
+// UNITS: [id, label, time] — null id = section header
+const UNITS = [
+  [null,   "前置準備"],
+  ["e00a", "⓪-1 安裝 Excel",               "課前"],
+  ["u00a", "⓪-2 安裝 Tableau Public",       "課前"],
+  ["u00b", "⓪-3 下載 retail_monthly.csv",   "課前"],
+  [null,   "Excel 部分"],
+  ["e01",  "E① 匯入 CSV",                   "3 min"],
+  ["e02",  "E② 建立樞紐分析表",               "8 min"],
+  ["e03",  "E③ 樞紐分析圖（直條圖）",         "5 min"],
+  ["e04",  "E④ 樞紐分析圖（折線圖）",         "5 min"],
+  ["e05",  "E⑤ 切片器（Slicer）",            "5 min"],
+  ["e06",  "E⑥ 時間軸（Timeline）",          "3 min"],
+  ["e07",  "E⑦ 互動 Dashboard",              "5 min"],
+  [null,   "Tableau 部分"],
+  ["u01",  "T① 連結 CSV 資料",               "2 min"],
+  ["u02",  "T② 確認欄位型別",                 "2 min"],
+  ["u03",  "T③ 建立 Hierarchy",              "3 min"],
+  ["u04",  "T④ 長條圖",                      "8 min"],
+  ["u05",  "T⑤ Hierarchy drill-down",       "2 min"],
+  ["u06",  "T⑥ 折線圖",                      "8 min"],
+  ["u07",  "T⑦ Reference Line",             "2 min"],
+  ["u08",  "T⑧ 地圖（Map）",                 "8 min"],
+  ["u09",  "T⑨ Tooltip 自訂",                "2 min"],
+  ["u10",  "T⑩ Small Multiples",            "8 min"],
+  ["u11",  "T⑪ Sankey Chart",               "10 min"],
+  [null,   "Dashboard 組合"],
+  ["u12",  "D① 建立 Dashboard",              "5 min"],
+  ["u13",  "D② 加入篩選動作",                 "5 min"],
+  ["u14",  "D③ 全域篩選器",                   "2 min"],
+  ["u15",  "D④ 匯出 / 分享",                  "2 min"],
+];
+
+// ── State ─────────────────────────────────────────
+const params        = new URLSearchParams(location.search);
+const WANTS_TEACHER = params.has("t");
+let   IS_TEACHER    = WANTS_TEACHER && sessionStorage.getItem("teacher_auth") === "1";
+const LS_DB         = "cls_db_url";
+const LS_LOCAL      = "cls_local";
+
+let dbUrl     = (FIREBASE_URL || localStorage.getItem(LS_DB) || "").replace(/\/$/, "");
+let connected = false;
+let pollTimer = null;
+
+let srv = { session: 0, total: 0, active: "" };
+UNITS.forEach(([id]) => { if (id) srv[id] = 0; });
+
+let local = JSON.parse(localStorage.getItem(LS_LOCAL) || '{"session":0,"done":{}}');
+
+const root = document.getElementById("root");
+
+// ── Firebase REST ──────────────────────────────────
+function dbPath() { return `${dbUrl}/classroom.json`; }
+async function dbGet() {
+  try {
+    const r = await fetch(dbPath());
+    if (!r.ok) throw new Error(r.status);
+    connected = true; return await r.json();
+  } catch { connected = false; return null; }
+}
+async function dbPatch(data) {
+  return fetch(dbPath(), { method: "PATCH", body: JSON.stringify(data),
+    headers: { "Content-Type": "application/json" } });
+}
+async function dbPut(data) {
+  return fetch(dbPath(), { method: "PUT", body: JSON.stringify(data),
+    headers: { "Content-Type": "application/json" } });
+}
+
+// ── Sync ──────────────────────────────────────────
+async function poll() {
+  const data = await dbGet();
+  if (!data) { render(); return; }
+  if ((data.session || 0) > (local.session || 0)) {
+    local = { session: data.session, done: {} };
+    localStorage.setItem(LS_LOCAL, JSON.stringify(local));
+  }
+  srv.session = data.session || 0;
+  srv.total   = data.total   || 0;
+  srv.active  = data.active  || "";
+  UNITS.forEach(([id]) => { if (id) srv[id] = data[id] || 0; });
+  render();
+}
+
+// ── Student action ────────────────────────────────
+async function markDone(uid) {
+  if (local.done[uid]) return;
+  local.done[uid] = true;
+  localStorage.setItem(LS_LOCAL, JSON.stringify(local));
+  const next = (srv[uid] || 0) + 1;
+  srv[uid] = next; render();
+  await dbPatch({ [uid]: next });
+}
+
+// ── Teacher actions ───────────────────────────────
+async function resetAll() {
+  if (!confirm("確定重置所有學生進度？\n學生頁面將在 3 秒內自動更新。")) return;
+  const newSession = (srv.session || 0) + 1;
+  const fresh = { session: newSession, total: srv.total, active: srv.active };
+  UNITS.forEach(([id]) => { if (id) fresh[id] = 0; });
+  await dbPut(fresh); srv = { ...fresh }; render();
+}
+async function setTotal(n) {
+  if (isNaN(n) || n < 1) return;
+  srv.total = n; await dbPatch({ total: n }); render();
+}
+async function setActive(uid) {
+  const next = srv.active === uid ? "" : uid;
+  srv.active = next; render(); await dbPatch({ active: next });
+}
+
+// ── Login screens ─────────────────────────────────
+function renderSetup() {
+  root.innerHTML = `
+<div class="setup-wrap"><div class="setup-card">
+  <h2>🔧 首次設定 Firebase</h2>
+  <p>請輸入 Firebase Realtime Database URL。</p>
+  <input id="db-in" type="url" placeholder="https://my-project-default-rtdb.firebaseio.com"
+         value="${localStorage.getItem(LS_DB) || ""}">
+  <button class="btn-primary" style="width:100%;padding:.7rem" onclick="saveDb()">儲存並開始</button>
+</div></div>`;
+}
+function saveDb() {
+  const val = document.getElementById("db-in").value.trim().replace(/\/$/, "");
+  if (!val.startsWith("https://")) { alert("請輸入完整 HTTPS URL"); return; }
+  dbUrl = val; localStorage.setItem(LS_DB, val); init();
+}
+function renderTeacherLogin() {
+  root.innerHTML = `
+<div class="setup-wrap"><div class="setup-card">
+  <h2>🔒 講師登入</h2>
+  <p>請輸入講師密碼以進入課堂管理介面。</p>
+  <input id="pw-in" type="password" placeholder="密碼"
+         onkeydown="if(event.key==='Enter')checkTeacherPw()">
+  <button class="btn-primary" style="width:100%;padding:.7rem" onclick="checkTeacherPw()">登入</button>
+  <p id="pw-err" style="color:#ef4444;font-size:.85rem;margin:.6rem 0 0;display:none">密碼錯誤，請再試一次</p>
+</div></div>`;
+  setTimeout(() => document.getElementById("pw-in")?.focus(), 50);
+}
+async function checkTeacherPw() {
+  const val = document.getElementById("pw-in")?.value || "";
+  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(val));
+  const hex = Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,"0")).join("");
+  if (hex === TEACHER_HASH) {
+    sessionStorage.setItem("teacher_auth","1"); IS_TEACHER = true; init();
+  } else {
+    document.getElementById("pw-err").style.display = "block";
+    document.getElementById("pw-in").value = "";
+    document.getElementById("pw-in").focus();
+  }
+}
+
+// ── Connection indicator ──────────────────────────
+function connHtml() {
+  return `<span class="dot ${connected ? "ok" : "err"}"></span>
+          <span class="conn-text">${connected ? "已連線" : "離線"}</span>`;
+}
+
+// ── Build one card's HTML ─────────────────────────
+function buildCard(uid, label, time) {
+  const content  = CONTENT[uid] || "";
+  const inSession = local.session === srv.session;
+
+  if (IS_TEACHER) {
+    const total    = srv.total || 1;
+    const cnt      = srv[uid] || 0;
+    const pct      = Math.min(100, Math.round(cnt / total * 100));
+    const fill     = pct >= 80 ? "" : pct >= 40 ? " mid" : " low";
+    const isActive = srv.active === uid;
+    const badge    = isActive ? `<span class="active-badge">現在進行</span>` : "";
+
+    return `
+<div class="lesson-card${isActive ? " active" : ""}">
+  <div class="card-hdr t-clickable" onclick="setActive('${uid}')">
+    <div class="card-hdr-main">
+      <span class="card-label">${label}</span>
+      ${time ? `<span class="u-time">${time}</span>` : ""}
+    </div>
+    ${badge}
+  </div>
+  ${content ? `<div class="card-body">${content}</div>` : ""}
+  <div class="card-foot t-foot">
+    <div class="t-foot-top">
+      <span class="t-hint-text">點擊標題以標記「現在進行」</span>
+      <span class="u-count">${cnt} / ${total}</span>
+    </div>
+    <div class="bar-bg"><div class="bar-fill${fill}" style="width:${pct}%"></div></div>
+  </div>
+</div>`;
+  } else {
+    const isDone   = inSession && !!local.done[uid];
+    const isActive = srv.active === uid;
+    const cls      = isDone ? " done" : isActive ? " active" : "";
+    const badge    = isActive && !isDone ? `<span class="active-badge">現在</span>`
+                   : isDone              ? `<span class="done-badge">✓ 完成</span>`
+                   :                       "";
+    return `
+<div class="lesson-card${cls}">
+  <div class="card-hdr">
+    <div class="card-hdr-main">
+      <span class="card-label">${label}</span>
+      ${time ? `<span class="u-time">${time}</span>` : ""}
+    </div>
+    ${badge}
+  </div>
+  ${content ? `<div class="card-body">${content}</div>` : ""}
+  <div class="card-foot">
+    <button class="btn-done${isDone ? " done" : ""}"${isDone ? " disabled" : ""}
+            onclick="${isDone ? "" : `markDone('${uid}')`}">
+      ${isDone ? "✓ 完成" : "完成"}
+    </button>
+  </div>
+</div>`;
+  }
+}
+
+// ── Render ────────────────────────────────────────
+function render() {
+  const scrollY = window.scrollY;
+
+  const activeUnit = UNITS.find(([id]) => id && id === srv.active);
+  const nowBanner  = activeUnit
+    ? `<div class="now-banner">現在：${activeUnit[1]}</div>`
+    : "";
+
+  const items = UNITS.map(([uid, label, time]) => {
+    if (!uid) return `<div class="section-hdr">${label}</div>`;
+    return buildCard(uid, label, time);
+  }).join("");
+
+  const header = IS_TEACHER ? `
+<div class="hdr">
+  <div class="hdr-left">
+    <h1>課堂進度（講師）</h1>
+    <div class="hdr-sub">點擊各段落標題以標記「現在進行」</div>
+  </div>
+  <div class="hdr-right">
+    <span class="session-chip">Session ${srv.session}</span>
+    ${connHtml()}
+  </div>
+</div>
+${nowBanner}` : `
+<div class="hdr">
+  <div class="hdr-left">
+    <h1>Excel &amp; Tableau Dashboard</h1>
+    <div class="hdr-sub">依照步驟操作，完成後按「完成」</div>
+  </div>
+  <div class="hdr-right">${connHtml()}</div>
+</div>
+${nowBanner}`;
+
+  const controls = IS_TEACHER ? `
+<div class="t-controls">
+  <label>學生總人數：</label>
+  <input class="num-input" type="number" min="1" max="300"
+         value="${srv.total || ""}" placeholder="25"
+         onchange="setTotal(parseInt(this.value))">
+  <button class="btn-reset" onclick="resetAll()">🔄 重置進度</button>
+  ${connHtml()}
+</div>` : "";
+
+  root.innerHTML = `${header}<div class="lesson-wrap">${controls}${items}</div>`;
+  requestAnimationFrame(() => window.scrollTo(0, scrollY));
+}
+
+// ── Init ──────────────────────────────────────────
+function init() {
+  if (WANTS_TEACHER && !IS_TEACHER) { renderTeacherLogin(); return; }
+  if (!dbUrl) { renderSetup(); return; }
+  poll();
+  clearInterval(pollTimer);
+  pollTimer = setInterval(poll, POLL_MS);
+}
+
+init();
+</script>
+</body>
+</html>
