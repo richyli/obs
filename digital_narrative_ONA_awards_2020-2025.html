@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>digital narrative ONA awards 2020-2025</title>
+<style>*, *::before, *::after { box-sizing: border-box; }
+
+/* ── Base ── */
+body {
+  font-family: "Helvetica Neue", Arial, "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+  font-size: 20px;
+  line-height: 1.9;
+  color: #111;
+  background: #fff;
+  margin: 0;
+}
+
+/* ── Two-column layout (note pages) ── */
+.layout { display: flex; align-items: flex-start; min-height: 100vh; }
+
+.sidebar {
+  width: 270px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 2rem 1rem 2rem 1.5rem;
+  border-right: 1px solid #e8e8e8;
+  background: #f9f9f9;
+}
+.sidebar-back {
+  display: block;
+  font-size: 0.82rem;
+  color: #999;
+  margin-bottom: 1.4rem;
+  text-decoration: none;
+}
+.sidebar-back:hover { color: #333; }
+.sidebar-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #bbb;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+/* ── TOC in sidebar ── */
+.toc { font-size: 0.82rem; line-height: 1.55; }
+.toc ul { list-style: none; margin: 0; padding: 0; }
+.toc ul ul { padding-left: 0.9rem; }
+.toc li { margin: 0; }
+.toc-row { display: flex; align-items: baseline; gap: 0.2rem; }
+.toc-row a {
+  flex: 1;
+  display: block;
+  padding: 0.18rem 0.3rem;
+  border-radius: 3px;
+  color: #555;
+  text-decoration: none;
+  word-break: break-word;
+}
+.toc-row a:hover { background: #ebebeb; color: #111; }
+.toc-row a.active { color: #0055cc; font-weight: 600; background: #e8f0ff; }
+.toc-toggle {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-size: 0.65rem;
+  color: #bbb;
+  line-height: 1;
+  width: 1rem;
+  text-align: center;
+}
+.toc-toggle:hover { color: #555; }
+
+/* ── Main content ── */
+.content {
+  flex: 1;
+  min-width: 0;
+  padding: 3rem 3rem 6rem;
+  max-width: 800px;
+}
+
+/* ── Single-column (index page) ── */
+.container { max-width: 800px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
+
+/* ── Typography ── */
+h1 {
+  font-size: 1.75rem; font-weight: 700;
+  margin: 0 0 0.15rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 2px solid #111;
+  line-height: 1.3;
+}
+h2 {
+  font-size: 1.3rem; font-weight: 700;
+  margin: 2.5rem 0 0.5rem;
+  padding-bottom: 0.2rem;
+  border-bottom: 1px solid #ddd;
+}
+h3 { font-size: 1.1rem; font-weight: 700; margin: 1.8rem 0 0.4rem; }
+h4 { font-size: 1rem; font-weight: 700; margin: 1.4rem 0 0.3rem; }
+p { margin: 0.9rem 0; }
+a { color: #0055cc; text-decoration: none; }
+a:hover { text-decoration: underline; }
+nav { margin-bottom: 2.5rem; font-size: 0.85rem; color: #999; }
+nav a { color: #999; }
+
+/* ── Code ── */
+code {
+  font-family: "SFMono-Regular", Consolas, monospace;
+  background: #f2f2f2;
+  padding: 0.1em 0.4em;
+  border-radius: 3px;
+  font-size: 0.85em;
+}
+pre {
+  background: #f2f2f2;
+  padding: 1.2rem 1.4rem;
+  border-radius: 5px;
+  overflow-x: auto;
+  font-size: 0.85em;
+  line-height: 1.6;
+}
+pre code { background: none; padding: 0; }
+
+/* ── Lists ── */
+ul, ol { padding-left: 1.6rem; margin: 0.8rem 0; }
+li { margin: 0.35rem 0; }
+li > ul, li > ol { margin: 0.2rem 0; }
+
+/* ── Other elements ── */
+blockquote {
+  border-left: 4px solid #ccc;
+  margin: 1.2rem 0;
+  padding: 0.3rem 1.2rem;
+  color: #444;
+  background: #fafafa;
+}
+table { border-collapse: collapse; width: 100%; margin: 1.2rem 0; font-size: 0.95em; }
+th, td { border: 1px solid #ccc; padding: 0.55rem 0.9rem; text-align: left; }
+th { background: #f5f5f5; font-weight: 700; }
+tr:nth-child(even) { background: #fafafa; }
+hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
+.meta { font-size: 0.8rem; color: #aaa; margin: 0.3rem 0 1.8rem; }
+.index-list { list-style: none; padding: 0; margin: 1rem 0; }
+.index-list li { padding: 0.55rem 0; border-bottom: 1px solid #eee; font-size: 1.05rem; }
+.index-list li:last-child { border-bottom: none; }
+.embed-block {
+  border-left: 3px solid #aaa;
+  padding: 0.5rem 1.2rem;
+  margin: 1.5rem 0;
+  background: #f8f8f8;
+}
+
+/* ── Mobile ── */
+@media (max-width: 800px) {
+  .layout { flex-direction: column; }
+  .sidebar {
+    position: static;
+    width: 100%;
+    height: auto;
+    max-height: 50vh;
+    border-right: none;
+    border-bottom: 1px solid #e8e8e8;
+    padding: 1rem 1.5rem;
+  }
+  .content { padding: 1.5rem 1.2rem 4rem; }
+}
+</style>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+<div class="toc">
+<ul>
+<li><a href="#_1">三個獎項的定位</a></li>
+<li><a href="#excellence-in-ai-innovation2024">一、Excellence in AI Innovation（2024 起）</a><ul>
+<li><a href="#20255">2025（5 件）</a></li>
+<li><a href="#20243">2024（3 件）</a></li>
+<li><a href="#2020-2023">2020-2023</a></li>
+</ul>
+</li>
+<li><a href="#excellence-in-visual-digital-storytelling2020-2025">二、Excellence in Visual Digital Storytelling（2020-2025）</a><ul>
+<li><a href="#2025">2025</a></li>
+<li><a href="#2024">2024</a></li>
+<li><a href="#2023">2023</a></li>
+<li><a href="#2022">2022</a></li>
+<li><a href="#2021">2021</a></li>
+<li><a href="#2020">2020</a></li>
+</ul>
+</li>
+<li><a href="#general-excellence2020-2025">三、General Excellence（2020-2025）— 編輯室榜單</a><ul>
+<li><a href="#large-newsroom">Large Newsroom（千人以上）</a></li>
+<li><a href="#medium-newsroom">Medium Newsroom</a></li>
+<li><a href="#small-newsroom">Small Newsroom</a></li>
+<li><a href="#micro-newsroom">Micro Newsroom</a></li>
+</ul>
+</li>
+<li><a href="#vibe-coding">四、依 vibe-coding 可行性的觀察</a></li>
+<li><a href="#_2">五、年代演化：什麼變了</a></li>
+<li><a href="#_3">相關</a></li>
+</ul>
+</div>
+</aside>
+<main class="content">
+<h1>digital narrative ONA awards 2020-2025</h1>
+<p class="meta">#digital_narrative　#ona_awards　#reference　#benchmark</p>
+<h2 id="digital-narrative-ona-awards-2020-2025">digital narrative ONA awards 2020-2025</h2>
+<p>整理 <a href="https://awards.journalists.org/">Online News Association Awards</a> 三個對「數位敘事」最相關的獎項，2020-2025 年得獎與入圍名單。本檔作為<strong>作品品質的年度指標</strong>，搭配 <a href="digital_narrative_teaching_25.html">digital narrative teaching 25</a> 與 <a href="digital_narrative_database_teaching.html">digital narrative database teaching</a> 使用。</p>
+<h3 id="_1">三個獎項的定位</h3>
+<table>
+<thead>
+<tr>
+<th>獎項</th>
+<th>評什麼</th>
+<th>對學生意義</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Excellence in AI Innovation</strong></td>
+<td>編輯室如何用 AI 改造新聞工作流（從調查、撰寫到分發）</td>
+<td>2026 年 vibe-coding 最直接的對標；多數作品技術門檻低、可仿做</td>
+</tr>
+<tr>
+<td><strong>Excellence in Visual Digital Storytelling</strong></td>
+<td>視覺、互動、滾動、地圖等敘事手法</td>
+<td>滾動敘事與資料新聞的年度標竿；部分為 3D / VFX 重型製作</td>
+</tr>
+<tr>
+<td><strong>General Excellence in Online Journalism</strong></td>
+<td>整個編輯室一年的成果（不是單篇作品）</td>
+<td>列出值得長期追蹤的編輯室榜單</td>
+</tr>
+</tbody>
+</table>
+<h3 id="excellence-in-ai-innovation2024">一、Excellence in AI Innovation（2024 起）</h3>
+<p>此獎是相對新的類別（2024 啟動），全部入圍作品都圍繞「AI 嵌入新聞工作流」。<strong>全部 vibe-coding 可仿做</strong>，因為作品本身就是 AI 工具或 AI 介面。</p>
+<h4 id="20255">2025（5 件）</h4>
+<ul>
+<li>🏆 Large｜DN WSJ AI Tools 2025｜Wall Street Journal — AI 工具標準化嵌入工作流</li>
+<li>🏆 Medium｜DN SF Chronicle AI 2025｜San Francisco Chronicle — 中型編輯室的 AI 採用</li>
+<li>🏆 Small｜DN The Pudding 2025 Small Newsroom｜The Pudding — AI 加速資料新聞 portfolio</li>
+<li>入圍 Large｜DN LA Nacion AI 2025｜LA NACION — 修辭分析 / 法律導讀 / 奧運即時</li>
+<li>入圍 Medium｜DN Mongabay Narco Airstrips 2025｜Mongabay — AI 影像分類找毒販機場</li>
+<li>入圍 Small｜DN ChatMigrante Factchequeado｜Factchequeado — 移民 AI 助理（RAG）</li>
+</ul>
+<h4 id="20243">2024（3 件）</h4>
+<ul>
+<li>🏆 DN They Call Us Meat BBC｜BBC — AI 配音保護受害者匿名</li>
+<li>入圍｜DN We Asked AI to Map Our Stories THE CITY｜THE CITY — AI 主題分類</li>
+<li>入圍｜DN YESEO｜Reynolds Journalism Institute — AI SEO Slack bot</li>
+</ul>
+<h4 id="2020-2023">2020-2023</h4>
+<p>此獎項應為 2024 年新設，較早年份未列於官方獎項頁面。</p>
+<h3 id="excellence-in-visual-digital-storytelling2020-2025">二、Excellence in Visual Digital Storytelling（2020-2025）</h3>
+<p>每年分 Large / Medium / Small Newsroom 三組。標 ✅ 為 vibe-coding 範圍內的代表作（已加入 wiki），標 ⚠️ 為 3D / VFX / 大型多媒體製作（學生重做需大幅簡化或拆解部分元件）。</p>
+<h4 id="2025">2025</h4>
+<ul>
+<li>🏆 Large｜⚠️ Israeli tactics in Gaza and their human toll｜Washington Post — 3D 武器路徑模擬</li>
+<li>🏆 Medium｜✅ DN How to Watch a Baby Verge｜The Verge — 互動隱私解析</li>
+<li>🏆 Small｜✅ DN The Pudding 2025 Small Newsroom｜The Pudding</li>
+<li>入圍 Large｜⚠️ A Hidden Paradise Under Threat｜AP — 大型多媒體</li>
+<li>入圍 Large｜✅ DN Bloomberg Social Media Right Wing｜Bloomberg — 社群資料 + scroll</li>
+<li>入圍 Large｜⚠️ Hurricane Helene｜Washington Post — 3D / VFX</li>
+<li>入圍 Medium｜⚠️ Goons｜Arizona Republic — 大型多媒體調查</li>
+<li>入圍 Medium｜✅ DN INSIDE DANIEL PERRY PHONE｜Houston Chronicle — 手機鑑識時間軸</li>
+<li>入圍 Small｜⚠️ Breaking the Nets｜The Wire — 板球資料故事（少數可重做的部分）</li>
+<li>入圍 Small｜⚠️ Shot From Above (Drone Journalists in Gaza)｜Bellingcat — 空拍 OSINT</li>
+</ul>
+<h4 id="2024">2024</h4>
+<ul>
+<li>🏆 Large｜⚠️ Inside the Deadly Maui Inferno, Hour by Hour｜The New York Times — 3D 火災重建</li>
+<li>🏆 Medium｜✅ DN SF Japantown Mass Incarceration｜San Francisco Chronicle — 歷史地圖</li>
+<li>🏆 Small｜⚠️ "We've Become Addicted to Explosions" (Bellingcat) — OSINT 影片分析</li>
+<li>入圍 Large｜✅ DN Long Covid 1374 Days｜Decimal/Pentagram — 個人時間軸</li>
+<li>入圍 Large｜✅ DN Lethal Restraint｜ASU/FRONTLINE/AP — 警察拘留死亡資料庫</li>
+<li>入圍 Large｜⚠️ Unearthing the Future｜Washington Post — 大型多媒體</li>
+<li>入圍 Medium｜✅ DN In Harms Way Marshall Project｜The Marshall Project — 監獄危險資料</li>
+<li>入圍 Medium｜✅ <a href="DN_Year_After_Denied_Abortion_ProPublica.html">DN Year After Denied Abortion ProPublica</a>｜ProPublica — 個案追蹤資料</li>
+<li>入圍 Small｜⚠️ Rest of World – Visual Storytelling — 編輯室作品集</li>
+<li>入圍 Small｜⚠️ The Pudding's Portfolio — 編輯室作品集</li>
+</ul>
+<h4 id="2023">2023</h4>
+<ul>
+<li>🏆 Large｜⚠️ AR-15: The Blast Effect｜Washington Post — 3D 物理模擬</li>
+<li>🏆 Medium｜⚠️ The Banality of Brutality (Bucha)｜OCCRP — OSINT 影像</li>
+<li>🏆 Small｜⚠️ The Pudding's Portfolio — 編輯室作品集</li>
+<li>入圍 Large｜✅ A lonely struggle: Nine mothers｜CNN — 個案敘事（簡化版可仿）</li>
+<li>入圍 Large｜⚠️ Inside the hospitals that concealed Russian casualties｜CNN — OSINT 衛星</li>
+<li>入圍 Large｜⚠️ Life Inside, Animated｜Marshall Project + VICE — 動畫紀錄</li>
+<li>入圍 Medium｜✅ DN Uranium Ghost Town ProPublica｜ProPublica — scroll 環境正義</li>
+<li>入圍 Medium｜⚠️ BURNED｜KUSA-TV — 影音調查</li>
+<li>入圍 Medium｜✅ DN Made in Miami Jovenel Moise｜Miami Herald — 跨國犯罪網絡圖</li>
+<li>入圍 Small｜✅ DN Welcome to Ambaniverse｜Rest of World — 商業帝國視覺化</li>
+<li>入圍 Small｜✅ DN 中國影視 Wainao｜歪腦 / RFA — 中國戰爭片資料分析</li>
+</ul>
+<h4 id="2022">2022</h4>
+<ul>
+<li>🏆 Large｜✅ <a href="DN_Apocalyptic_Tucker_Carlson_NYT.html">DN Apocalyptic Tucker Carlson NYT</a>｜NYT — 文本探勘 + 滾動</li>
+<li>🏆 Medium｜✅ DN Mapping Earth Uninhabitable FUNKE｜FUNKE — 氣候滾動地圖</li>
+<li>🏆 Small｜✅ DN For You Portugal Divergente｜Divergente — 個人敘事 + 滾動</li>
+<li>入圍 Large｜✅ DN Gender and Language Reuters｜Reuters — 全球語言性別資料</li>
+<li>入圍 Large｜⚠️ Inaccessible Cities｜AJ Contrast — AR/VR 多媒體</li>
+<li>入圍 Large｜⚠️ Ukraine Crisis｜Reuters — 戰爭多媒體報導</li>
+<li>入圍 Medium｜⚠️ Un(re)solved｜FRONTLINE — 大型多媒體調查</li>
+</ul>
+<h4 id="2021">2021</h4>
+<ul>
+<li>🏆 Large｜⚠️ Gone｜Globe and Mail — 視覺調查報告</li>
+<li>🏆 Medium｜✅ DN Inside Xinjiang Prison State New Yorker｜The New Yorker — 滾動 + 洩漏文件</li>
+<li>🏆 Small｜⚠️ Birth in the 21st Century｜À Punt Mèdia — VR / 360</li>
+<li>入圍 Large｜⚠️ A Cicada's Life｜Washington Post — 動畫</li>
+<li>入圍 Large｜⚠️ Lac-Mégantic: La Dernière Nuit｜CBC News — 多媒體</li>
+<li>入圍 Large｜✅ DN POLITICO 2020 Election Experience｜Politico — 選舉儀表板</li>
+<li>入圍 Medium｜⚠️ Blue to Red in 30 Miles｜LehighValleyLive</li>
+<li>入圍 Medium｜⚠️ George Floyd: A Leader in His Community｜Univision News Digital</li>
+<li>入圍 Small｜⚠️ No epicentro｜Agência Lupa — 巴西多媒體</li>
+<li>入圍 Small｜⚠️ Shield of Europe｜Jelle Krings — 攝影專題</li>
+</ul>
+<h4 id="2020">2020</h4>
+<ul>
+<li>🏆 Large｜✅ <a href="DN_Visualising_Hong_Kong_Protests_Reuters.html">DN Visualising Hong Kong Protests Reuters</a>｜Reuters — 抗爭資料 + 滾動</li>
+<li>🏆 Medium｜⚠️ The Zo｜Marshall Project + Topic — 多媒體</li>
+<li>🏆 Small｜⚠️ Living in the Unknown｜Al Jazeera Contrast — VR / 360</li>
+<li>入圍 Large｜⚠️ Companies in the Cosmos｜Washington Post — 3D 太空衣</li>
+<li>入圍 Large｜⚠️ The Designs Vary, The Technology is New｜NYT — 太空船 3D</li>
+<li>入圍 Large｜✅ DN Mueller Report Illustrated WaPo｜Washington Post — 互動文件</li>
+<li>入圍 Medium｜✅ DN Disappearing Daughters｜Seattle Times — 原民失蹤資料</li>
+<li>入圍 Medium｜⚠️ One Day, One City, No Relief｜SF Chronicle — 多媒體</li>
+<li>入圍 Small｜⚠️ Explorer, navigator, coloniser｜The Conversation Australia</li>
+<li>入圍 Small｜✅ DN Iraq Without Water｜Un Ponte Per — 環境滾動 NGO</li>
+</ul>
+<h3 id="general-excellence2020-2025">三、General Excellence（2020-2025）— 編輯室榜單</h3>
+<p>不是單篇作品，而是<strong>整個編輯室一年表現</strong>。把這些當作「值得追蹤的數位新聞編輯室」清單。</p>
+<h4 id="large-newsroom">Large Newsroom（千人以上）</h4>
+<ul>
+<li>🏆 2025: Washington Post｜🏆 2024: Boston Globe｜🏆 2023: Washington Post</li>
+<li>🏆 2022: Boston Globe｜🏆 2021: New York Times｜🏆 2020: South China Morning Post</li>
+</ul>
+<h4 id="medium-newsroom">Medium Newsroom</h4>
+<ul>
+<li>🏆 2025: CalMatters｜🏆 2024: ProPublica｜🏆 2023: The Marshall Project</li>
+<li>🏆 2022: LAist｜🏆 2021: ProPublica｜🏆 2020: San Francisco Chronicle</li>
+</ul>
+<h4 id="small-newsroom">Small Newsroom</h4>
+<ul>
+<li>🏆 2025: Spotlight PA｜🏆 2024: The Markup｜🏆 2023: Honolulu Civil Beat</li>
+<li>🏆 2022: The Trace｜🏆 2021: Grist｜🏆 2020: The Marshall Project</li>
+</ul>
+<h4 id="micro-newsroom">Micro Newsroom</h4>
+<ul>
+<li>🏆 2025: Documented｜🏆 2024: Mission Local｜🏆 2023: The Pudding</li>
+<li>🏆 2022: Mission Local｜🏆 2021: PublicSource｜🏆 2020: PublicSource</li>
+</ul>
+<p><strong>對學生的啟示</strong>：The Pudding、The Markup、ProPublica、Marshall Project 等小型編輯室持續得獎，證明<strong>好的數位敘事不需要大編輯室</strong>——這是 vibe-coding 時代學生最該學習的對象。</p>
+<h3 id="vibe-coding">四、依 vibe-coding 可行性的觀察</h3>
+<p>從 2020-2025 共 ~50 件 Visual Digital Storytelling 得獎/入圍中：</p>
+<table>
+<thead>
+<tr>
+<th>類型</th>
+<th>數量（粗估）</th>
+<th>學生可仿做程度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>滾動 + 資料 / 文本探勘</td>
+<td>~15</td>
+<td>🟢 高（多用 Scrollama + D3）</td>
+</tr>
+<tr>
+<td>互動地圖 + 公開資料</td>
+<td>~10</td>
+<td>🟢 高（Mapbox + GeoJSON）</td>
+</tr>
+<tr>
+<td>個案資料庫 / 調查報告</td>
+<td>~8</td>
+<td>🟢 高（Astro / Next.js + JSON）</td>
+</tr>
+<tr>
+<td>個人 / 紀念敘事</td>
+<td>~5</td>
+<td>🟡 中（敘事品質取決於採訪）</td>
+</tr>
+<tr>
+<td>3D 重建 / 動畫</td>
+<td>~7</td>
+<td>🔴 低（VFX 工具與時間）</td>
+</tr>
+<tr>
+<td>OSINT 影像 / 衛星</td>
+<td>~5</td>
+<td>🟡 中（資料取得門檻）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>結論</strong>：超過六成的 ONA Visual Digital Storytelling 得獎作品，<strong>核心技術都在 vibe-coding 範圍內</strong>。學生看到的「我做不到」往往是<strong>美術設計與採訪深度</strong>，不是工程技術。</p>
+<h3 id="_2">五、年代演化：什麼變了</h3>
+<ul>
+<li><strong>2020-2021</strong>：滾動敘事與長篇互動是主流；多媒體 + 影像深度是門檻</li>
+<li><strong>2022-2023</strong>：資料新聞 + 個案資料庫崛起；OSINT 與衛星影像進入主流獎項</li>
+<li><strong>2024</strong>：AI Innovation 獎成立，象徵 AI 工具進入評審視野</li>
+<li><strong>2025</strong>：AI 工具滲透到所有獎項，Visual Storytelling 也開始用 AI 加速製作</li>
+</ul>
+<p><strong>給 2026 年學生</strong>：你的競爭基準不再是「會不會用 D3」，而是「<strong>有沒有把 AI 工具嵌入流程</strong>讓你能用個人時間做出小編輯室的成果」。</p>
+<h3 id="_3">相關</h3>
+<ul>
+<li>純前端 25 件教材：<a href="digital_narrative_teaching_25.html">digital narrative teaching 25</a></li>
+<li>Firebase 後端教材：<a href="digital_narrative_database_teaching.html">digital narrative database teaching</a></li>
+<li>完整索引：digital narrative index</li>
+</ul>
+</main>
+</div>
+<script>
+(function () {
+  // ── Rebuild TOC with toggle buttons ──────────────────────────────────────
+  var toc = document.querySelector('.sidebar .toc');
+  if (toc) {
+    toc.querySelectorAll('li').forEach(function (li) {
+      var childUl = li.querySelector(':scope > ul');
+      var link    = li.querySelector(':scope > a');
+      if (!link) return;
+
+      var row = document.createElement('div');
+      row.className = 'toc-row';
+
+      if (childUl) {
+        var btn = document.createElement('button');
+        btn.className = 'toc-toggle';
+        btn.setAttribute('aria-expanded', 'true');
+        btn.textContent = '▾';          // ▾ open
+        btn.addEventListener('click', function () {
+          var open = childUl.hidden;
+          childUl.hidden = !open;
+          btn.textContent = open ? '▾' : '▸';   // ▾ / ▸
+          btn.setAttribute('aria-expanded', String(open));
+        });
+        row.appendChild(btn);
+      } else {
+        var spacer = document.createElement('span');
+        spacer.style.width = '1rem';
+        spacer.style.flexShrink = '0';
+        row.appendChild(spacer);
+      }
+
+      row.appendChild(link);
+      li.insertBefore(row, li.firstChild);
+    });
+  }
+
+  // ── Scroll spy ───────────────────────────────────────────────────────────
+  var headings = document.querySelectorAll('.content h2[id], .content h3[id], .content h4[id]');
+  var tocLinks = document.querySelectorAll('.sidebar .toc a');
+  if (!headings.length || !tocLinks.length) return;
+
+  var current = null;
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      var link = document.querySelector('.sidebar .toc a[href="#' + e.target.id + '"]');
+      if (!link) return;
+      if (current) current.classList.remove('active');
+      current = link;
+      current.classList.add('active');
+      // Scroll link into view within sidebar
+      current.scrollIntoView({ block: 'nearest' });
+    });
+  }, { rootMargin: '-5% 0px -75% 0px', threshold: 0 });
+
+  headings.forEach(function (h) { io.observe(h); });
+}());
+</script>
+</body>
+</html>

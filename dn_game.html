@@ -231,7 +231,7 @@ body {
       </div>
 
       <p class="result-note">
-        等老師開啟儀表板，看全班的選擇分布。<br>
+        等老師開啟儀表板，看整體讀者的選擇分布。<br>
         <a id="r-dash" href="#">→ 班級儀表板</a>
       </p>
     </div>
@@ -424,80 +424,78 @@ function generateArticle(ch, cmp) {
   const a = ch.a || 0, b = ch.b || 0, c = ch.c || 0;
   const aa = avgs.a || 0, ab = avgs.b || 0, ac = avgs.c || 0;
 
-  // classify(mine, avg) → { type, score }
-  function classify(mine, avg, hiTh, loTh) {
+  function cls(mine, avg, hiTh, loTh) {
     const d = mine - avg;
-    if (mine >= hiTh && avg >= hiTh) return { type: "BOTH_HI",   score: 7 };
-    if (mine <= loTh && avg <= loTh) return { type: "BOTH_LO",   score: 4 };
-    if (d >  12)                     return { type: "YOU_HI",    score: Math.abs(d) };
-    if (d < -12)                     return { type: "YOU_LO",    score: Math.abs(d) };
-    return                                  { type: "SIMILAR",   score: 2 };
+    if (mine >= hiTh && avg >= hiTh) return "BOTH_HI";
+    if (mine <= loTh && avg <= loTh) return "BOTH_LO";
+    if (d >  12) return "YOU_HI";
+    if (d < -12) return "YOU_LO";
+    return "SIMILAR";
   }
+  const ca = cls(a, aa, 22, 8);
+  const cb = cls(b, ab, 28, 10);
+  const cc = cls(c, ac, 14, 4);
 
-  const ca = classify(a, aa, 22, 8);
-  const cb = classify(b, ab, 28, 10);
-  const cc = classify(c, ac, 14, 4);
+  // ── 核電延役 ──────────────────────────────────────────────────
+  const tfA = {
+    BOTH_HI:  `你和多數讀者都認為核電延役有其必要，整體平均投入 ${aa} 點，立場一致。`,
+    BOTH_LO:  `你和多數讀者都對核電延役保持保留，整體平均僅 ${aa} 點，支持度偏低。`,
+    YOU_HI:   `你比多數讀者更支持核電延役，投入了 ${a} 點（整體平均 ${aa} 點）——這是相對少數的積極立場。`,
+    YOU_LO:   `你不希望核電延役，只投入 ${a} 點；然而整體平均達到 ${aa} 點——多數讀者的想法和你不同。`,
+    SIMILAR:  `在核電延役議題上，你的 ${a} 點與整體平均（${aa} 點）配置接近。`,
+  }[ca];
+  const rpA = {
+    BOTH_HI:  `你投入的 ${a} 點與整體走向相符，體現了對核電作為能源過渡橋樑的務實接受。`,
+    BOTH_LO:  `你的 ${a} 點與整體保守傾向一致，折射出多數讀者對核廢料處理尚無定案的共同疑慮。`,
+    YOU_HI:   `你的 ${a} 點遠超整體，是對這條路徑更積極的表態，對核電成本優勢與供電穩定性有更高的信任。`,
+    YOU_LO:   `你的 ${a} 點遠低於整體，顯示對核安風險的高度警惕，也可能認為資源應優先投入更具長遠性的方向。`,
+    SIMILAR:  `你的配置反映了整體讀者對核電政策謹慎接受的普遍態度——既不全力支持，也不完全否決。`,
+  }[ca];
+  const paraA = `${tfA}台灣核電政策在2025年5月迎來重大轉折，《核子反應器設施管制法》修正通過後，核電廠使用年限從40年延長至60年，最高可延役20年。核三廠2號機已於5月17日到期，依新法符合安全條件者可申請重啟；台電啟動自主安全評估，預計2026年3月向核安委員會送審，後續仍需耐震評估及核廢料存置解方。核電每度成本約1.5元，被支持者視為在再生能源補足缺口前穩定電網的關鍵依靠；反對者則憂心核安風險，以及核廢料最終處置地點至今懸而未決的政治難題。${rpA}`;
 
-  const snippets = [
-    {
-      score: ca.score,
-      text: {
-        BOTH_HI:  `你和多數同學都認為<span class="art-hi">核電延役</span>有其必要，班上平均投入 ${aa} 點，立場一致。`,
-        BOTH_LO:  `你和多數同學都對<span class="art-hi">核電延役</span>保持保守，這個選項在班上整體支持度偏低。`,
-        YOU_HI:   `你比多數同學更支持<span class="art-hi">核電延役</span>（你投入 ${a} 點，班均 ${aa} 點）——這在班上是相對少數的立場。`,
-        YOU_LO:   `你不希望<span class="art-hi">核電延役</span>，只投入 ${a} 點；然而班上平均達 ${aa} 點——其他同學的想法和你不同。`,
-        SIMILAR:  `核電延役方面，你（${a} 點）與班上平均（${aa} 點）的看法相近。`,
-      }[ca.type],
-    },
-    {
-      score: cb.score,
-      text: {
-        BOTH_HI:  `你和多數同學都把<span class="art-hi">加速再生能源</span>列為優先方向，班上平均 ${ab} 點，共識明確。`,
-        BOTH_LO:  `你和多數同學對<span class="art-hi">再生能源加速</span>的投入都相對保守，整體熱度在班上不高。`,
-        YOU_HI:   `你認為應該<span class="art-hi">加速再生能源</span>，投入了 ${b} 點；但班上平均只有 ${ab} 點——大部分同學對這條路更為謹慎。`,
-        YOU_LO:   `你對<span class="art-hi">再生能源加速</span>的投入（${b} 點）低於班上平均（${ab} 點）——班上多數同學比你更傾向這個方向。`,
-        SIMILAR:  `再生能源方面，你（${b} 點）與班上平均（${ab} 點）差距不大。`,
-      }[cb.type],
-    },
-    {
-      score: cc.score,
-      text: {
-        BOTH_HI:  `工業節電補貼方面，大部分同學跟你的看法一致，都認為這個方向值得投入，班均 ${ac} 點。`,
-        BOTH_LO:  `<span class="art-hi">工業節電補貼</span>在班上的整體支持度偏低，你和多數同學都沒有大量押注此選項。`,
-        YOU_HI:   `你比多數同學更看重<span class="art-hi">工業節電補貼</span>（${c} 點 vs 班均 ${ac} 點），對這條節能路徑更有信心。`,
-        YOU_LO:   `你在<span class="art-hi">工業節電補貼</span>的投入（${c} 點）低於班上平均（${ac} 點）。`,
-        SIMILAR:  `工業節電補貼方面，你（${c} 點）與班上平均（${ac} 點）看法接近。`,
-      }[cc.type],
-    },
-  ];
+  // ── 再生能源加速 ──────────────────────────────────────────────
+  const tfB = {
+    BOTH_HI:  `你和多數讀者都把加速再生能源列為首要任務，整體平均達 ${ab} 點，共識相當清晰。`,
+    BOTH_LO:  `你和多數讀者對再生能源加速都相對保守，整體平均僅 ${ab} 點，投入偏低。`,
+    YOU_HI:   `你認為應該加速再生能源，投入了 ${b} 點；然而整體平均只有 ${ab} 點——多數讀者對這條路更為謹慎。`,
+    YOU_LO:   `你對再生能源加速的投入（${b} 點）低於整體平均（${ab} 點），多數讀者比你更傾向這個方向。`,
+    SIMILAR:  `再生能源加速方面，你（${b} 點）與整體平均（${ab} 點）沒有明顯差距。`,
+  }[cb];
+  const rpB = {
+    BOTH_HI:  `你的 ${b} 點與整體走向一致，顯示對能源自主與脫碳目標的強烈認同，也意味著對電費短期上漲有較高的承受意願。`,
+    BOTH_LO:  `你的 ${b} 點與整體保守立場相符，可能是對電費上漲或電網穩定有所顧慮，傾向在其他選項尋求更快見效的解方。`,
+    YOU_HI:   `你的 ${b} 點遠超整體，體現了對綠色轉型的高度信心——接受短期電費上漲，換取長期的能源安全與減碳成果。`,
+    YOU_LO:   `你的 ${b} 點偏低，相較整體更不急於加速，可能對間歇性供電造成的電網穩定風險有更多保留。`,
+    SIMILAR:  `你的配置反映了對再生能源長期潛力認可、但對短期大幅擴張仍有所保留的平衡立場。`,
+  }[cb];
+  const paraB = `${tfB}台灣2025年再生能源裝置容量已突破40GW，離岸風電達5.6GW、太陽光電逾30GW，但間歇性供電問題持續考驗電網穩定。2024年春季多度限電，讓各界重新審視能源轉型的節奏與代價。政府持續提高躉購費率，透過「能源轉型基金」鼓勵企業購買綠電憑證（RECs）；批評者指出太陽能擴張恐衝擊農地、離岸風電高度仰賴進口零組件，成本轉嫁至電費的幅度仍不確定；支持者則認為這是擺脫燃料進口依賴、實現能源自主的唯一可持續路徑，且長期邊際成本只會持續下降。${rpB}`;
 
-  // Sort by interest, pick top 2
-  snippets.sort((x, y) => y.score - x.score);
-  const picks = snippets.slice(0, 2);
+  // ── 工業節電補貼 ──────────────────────────────────────────────
+  const tfC = {
+    BOTH_HI:  `你和多數讀者都認為工業節電補貼值得重視，整體平均投入 ${ac} 點，方向一致。`,
+    BOTH_LO:  `你和多數讀者對工業節電補貼的投入都相對保守，整體平均僅 ${ac} 點，是三個選項中支持度最低的。`,
+    YOU_HI:   `你比多數讀者更看重工業節電補貼，投入了 ${c} 點（整體平均 ${ac} 點），對透過工業節電舒緩電力壓力有更強的信心。`,
+    YOU_LO:   `你在工業節電補貼的投入（${c} 點）低於整體平均（${ac} 點），多數讀者比你更傾向透過工業節電來舒緩電力壓力。`,
+    SIMILAR:  `工業節電補貼方面，你（${c} 點）與整體平均（${ac} 點）的配置接近。`,
+  }[cc];
+  const rpC = {
+    BOTH_HI:  `你投入的 ${c} 點與整體走向一致，顯示對工業部門主動承擔節能責任的期待，認可補貼是推動結構調整的必要工具。`,
+    BOTH_LO:  `你的 ${c} 點與整體偏低支持度相符，或許反映了對補貼效果能否精準縮減尖峰用電、而非只是補助設備汰換的質疑。`,
+    YOU_HI:   `你的 ${c} 點遠超整體，對工業節電作為快速可量化的減碳路徑高度認同，視其為比新建電廠更務實的短期選項。`,
+    YOU_LO:   `你的 ${c} 點偏低，選擇把資源集中在其他方向，可能認為工業節電的邊際效益不如同等投入在核電或再生能源上。`,
+    SIMILAR:  `你的配置與整體接近，對工業節電補貼持「有用但非首要」的態度，視其為能源政策組合中的輔助而非主角。`,
+  }[cc];
+  const paraC = `${tfC}台灣工業部門消耗全國約52%的電力，鋼鐵、石化與半導體是高耗能的主要來源。經濟部工業局推動「工廠節能輔導計畫」，2024年補助金額達13億元，協助工廠汰換設備、導入能源管理系統（EnMS）。台積電承諾2030年達成100%再生能源使用，並將節電績效納入供應鏈評分；部分大型鋼廠亦自主設定2030年減碳30%目標。然而，中小型工廠普遍反映設備改裝回收期超過10年，難以自行承擔，補貼的覆蓋範圍是否足夠仍是政策瓶頸。補貼能否有效削減尖峰用電，取決於設計是否精準對應高耗能時段，而非只是補助設備汰換本身。${rpC}`;
 
-  // Lead sentence
-  const lbl   = calcLabel(ch).l;
-  const topOpt = [
-    { val: a, name: "核電延役" },
-    { val: b, name: "再生能源加速" },
-    { val: c, name: "工業節電補貼" },
-  ].sort((x, y) => y.val - x.val)[0];
-
-  const lead = topOpt.val === 0
-    ? `你這次沒有分配任何點數，選擇保持中立觀望。`
-    : `你將最多點數（${topOpt.val} 點）押在「<span class="art-hi">${topOpt.name}</span>」，整體歸類為「${lbl}」。`;
-
-  let html = `<p>${lead}</p>`;
-  picks.forEach(p => { html += `<p>${p.text}</p>`; });
-
-  if (n >= 2) {
-    html += `<p class="art-footer">以上分析根據目前 ${n} 位同學的資料，隨更多人提交持續更新。</p>`;
+  let html = `<p>${paraA}</p><p>${paraB}</p><p>${paraC}</p>`;
+  if (n >= 3) {
+    html += `<p class="art-footer">以上內容根據目前 ${n} 位讀者的回應個人化生成，隨更多人參與持續更新。</p>`;
   }
   return html;
 }
 
 function renderCompare(ch, cmp) {
-  document.getElementById("cmp-n").textContent = `${cmp.n} 人已提交`;
+  document.getElementById("cmp-n").textContent = `${cmp.n} 位讀者已回應`;
   document.getElementById("cmp-rows").innerHTML = OPTS.map(o => {
     const mine = ch[o.key] || 0;
     const avg  = cmp.avgs[o.key] || 0;
@@ -512,7 +510,7 @@ function renderCompare(ch, cmp) {
     <span class="cmp-pts" style="color:${o.color}">${mine} 點</span>
   </div>
   <div class="cmp-bar-row">
-    <span class="cmp-who">班均</span>
+    <span class="cmp-who">整體均</span>
     <div class="cmp-bar-wrap"><div class="cmp-bar-fill" style="width:${pctA}%;background:#bbb"></div></div>
     <span class="cmp-pts" style="color:#888">${avg} 點</span>
   </div>
