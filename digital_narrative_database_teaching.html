@@ -295,7 +295,7 @@ MathJax = {
 <tr>
 <td><strong>訊號 1：你的故事 + 我的故事 = 我們的故事</strong></td>
 <td>每位讀者的輸入或經驗，透過聚合成為更大的故事</td>
-<td>DN You Draw It NYT、DN Lost Mothers ProPublica</td>
+<td><a href="DN_You_Draw_It_NYT.html">DN You Draw It NYT</a>、DN Lost Mothers ProPublica</td>
 </tr>
 <tr>
 <td><strong>訊號 2：事件持續發生</strong></td>
@@ -310,7 +310,7 @@ MathJax = {
 <tr>
 <td><strong>訊號 4：比較我與群體</strong></td>
 <td>讀者寫入後想看自己和大家的差異</td>
-<td>DN You Draw It NYT、DN Climate Game FT（可擴充）</td>
+<td><a href="DN_You_Draw_It_NYT.html">DN You Draw It NYT</a>、<a href="DN_Climate_Game_FT.html">DN Climate Game FT</a>（可擴充）</td>
 </tr>
 <tr>
 <td><strong>訊號 5：協作驗證</strong></td>
@@ -393,7 +393,7 @@ collection: snapshots（聚合用）
 <p><strong>特徵</strong>：每個讀者有自己的歷史；用 anonymous auth 取得 uid。</p>
 <p><strong>代表作</strong>（可擴充）：
 - DN 餐桌上的碳排 出一張嘴救地球 — 加上「儲存我的飲食日記」
-- DN Climate Game FT — 加上「我的決策歷史」</p>
+- <a href="DN_Climate_Game_FT.html">DN Climate Game FT</a> — 加上「我的決策歷史」</p>
 <p><strong>Firestore 結構</strong>：</p>
 <pre><code>collection: users / {uid} / meals
   doc {id}:
@@ -410,7 +410,7 @@ collection: users / {uid} / decisions
 <h4 id="pattern-ecompare-with-crowd">Pattern E：群眾比較（Compare with Crowd）</h4>
 <p><strong>特徵</strong>：使用者寫入一個資料點，看到自己 vs 全體分布；後端要做 sampling/aggregation。</p>
 <p><strong>代表作</strong>：
-- DN You Draw It NYT — 你畫的曲線 vs 大家畫的
+- <a href="DN_You_Draw_It_NYT.html">DN You Draw It NYT</a> — 你畫的曲線 vs 大家畫的
 - DN 給你珊時萬 你想投給誰（可擴充）— 你的政治光譜 vs 大家的</p>
 <p><strong>Firestore 結構</strong>：</p>
 <pre><code>collection: drawings / {questionId}
@@ -469,11 +469,11 @@ collection: drawings_aggregate / {questionId}
 <h4 id="pattern-d-personal-log">Pattern D — Personal Log（可擴充）</h4>
 <ul>
 <li>DN 餐桌上的碳排 出一張嘴救地球（願景工程, 2022）</li>
-<li>DN Climate Game FT（FT, 2022）</li>
+<li><a href="DN_Climate_Game_FT.html">DN Climate Game FT</a>（FT, 2022）</li>
 </ul>
 <h4 id="pattern-e-compare-with-crowd1">Pattern E — Compare with Crowd（1 件）</h4>
 <ul>
-<li>DN You Draw It NYT（NYT, 2015）</li>
+<li><a href="DN_You_Draw_It_NYT.html">DN You Draw It NYT</a>（NYT, 2015）</li>
 </ul>
 <h4 id="pattern-f-moderation-pipeline2">Pattern F — Moderation Pipeline（2 件）</h4>
 <ul>
@@ -882,7 +882,7 @@ match /snapshots/{id} {
 </ul>
 <hr />
 <h4 id="5pattern-e3">練習 5：你畫看看（Pattern E，3 週）</h4>
-<p><strong>題目</strong>：仿 DN You Draw It NYT 做台灣版。讀者先畫「2015-2025 台灣出生人口」的猜測曲線，提交後看到真實答案 + 自己的線 + 群眾分布（p25/p50/p75 帶）疊加。</p>
+<p><strong>題目</strong>：仿 <a href="DN_You_Draw_It_NYT.html">DN You Draw It NYT</a> 做台灣版。讀者先畫「2015-2025 台灣出生人口」的猜測曲線，提交後看到真實答案 + 自己的線 + 群眾分布（p25/p50/p75 帶）疊加。</p>
 <h5 id="_17">原作技術拆解</h5>
 <p>NYT Upshot 版用的是 <strong>D3 + 後端聚合 endpoint</strong>：讀者用 SVG drag 畫線 → POST 到後端 → 後端把點存到資料庫 + <strong>預先計算好的 p25/p50/p75 帶</strong>回傳。每個讀者只看到聚合，<strong>不看到別人的個別曲線</strong>（隱私 + 載入量）。</p>
 <p>關鍵設計：個別曲線<strong>寫進去就鎖起來</strong>（讀不到），只有聚合是公開的。</p>
@@ -1036,11 +1036,11 @@ match /drawings_aggregate/{qid} {
 <li>入圍 2024｜DN YESEO｜RJI — Slack bot AI SEO 助理</li>
 <li>入圍 2025｜DN ChatMigrante Factchequeado｜Factchequeado — RAG 移民助理（Pattern B 的 AI 加強版）</li>
 </ul>
-<p>完整年代清單見 digital narrative ONA awards 2020-2025。</p>
+<p>完整年代清單見 <a href="digital_narrative_ONA_awards_2020-2025.html">digital narrative ONA awards 2020-2025</a>。</p>
 <h3 id="_23">相關</h3>
 <ul>
 <li>純前端教材：<a href="digital_narrative_teaching_25.html">digital narrative teaching 25</a></li>
-<li>ONA 獎項清單：digital narrative ONA awards 2020-2025</li>
+<li>ONA 獎項清單：<a href="digital_narrative_ONA_awards_2020-2025.html">digital narrative ONA awards 2020-2025</a></li>
 <li>完整索引：digital narrative index</li>
 <li>自動化新聞：computational narrative</li>
 </ul>
