@@ -119,6 +119,19 @@ body {
 .result-note a { color: #0055cc; text-decoration: none; }
 .result-note a:hover { text-decoration: underline; }
 
+/* ── Compare ── */
+.cmp-block { margin-top: 1.6rem; text-align: left; border-top: 1px solid #eee; padding-top: 1.2rem; }
+.cmp-hd { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: .85rem; }
+.cmp-hd-lbl { font-size: .82rem; font-weight: 700; color: #333; }
+.cmp-n { font-size: .72rem; color: #aaa; }
+.cmp-row { margin-bottom: .85rem; }
+.cmp-key { font-size: .78rem; color: #555; margin-bottom: .28rem; }
+.cmp-bar-row { display: flex; align-items: center; gap: .55rem; margin-bottom: .18rem; }
+.cmp-who { font-size: .68rem; color: #888; width: 2.4rem; flex-shrink: 0; text-align: right; }
+.cmp-bar-wrap { flex: 1; background: #eee; border-radius: 3px; height: 7px; }
+.cmp-bar-fill { height: 100%; border-radius: 3px; transition: width .7s ease; }
+.cmp-pts { font-size: .75rem; font-weight: 700; min-width: 2.8rem; }
+
 @media (max-width: 480px) {
   .hdr h1 { font-size: .88rem; }
   .bval { font-size: 1.4rem; }
@@ -191,6 +204,15 @@ body {
           <span class="snum" id="sn-stb">—</span>
         </div>
       </div>
+
+      <div class="cmp-block" id="cmp-block" style="display:none">
+        <div class="cmp-hd">
+          <span class="cmp-hd-lbl">你 vs 班級平均</span>
+          <span class="cmp-n" id="cmp-n">載入中…</span>
+        </div>
+        <div id="cmp-rows"></div>
+      </div>
+
       <p class="result-note">
         等老師開啟儀表板，看全班的選擇分布。<br>
         <a id="r-dash" href="#">→ 班級儀表板</a>
@@ -327,8 +349,8 @@ async function doSubmit() {
       body:    JSON.stringify(record),
     });
     if (!res.ok) throw new Error(res.status);
-    sessionStorage.setItem("dn_res_" + sid, JSON.stringify({ lbl, sc }));
-    showResult({ lbl, sc }, true);
+    sessionStorage.setItem("dn_res_" + sid, JSON.stringify({ lbl, sc, ch }));
+    showResult({ lbl, sc, ch }, true);
   } catch {
     btn.disabled = false;
     btn.textContent = "送出失敗，請再試";
@@ -336,7 +358,7 @@ async function doSubmit() {
 }
 
 // ── Show result ────────────────────────────────────────────────
-function showResult({ lbl, sc }, animate) {
+function showResult({ lbl, sc, ch }, animate) {
   document.getElementById("setup").classList.remove("show");
   document.getElementById("game").classList.remove("show");
   document.getElementById("result").classList.add("show");
@@ -359,6 +381,60 @@ function showResult({ lbl, sc }, animate) {
     document.getElementById("pb-cost").style.width = Math.min(100, Math.abs(sc.cost) / 15 * 100) + "%";
     document.getElementById("pb-stb").style.width  = sc.stb + "%";
   }, delay);
+  if (ch) loadCompare(ch);
+}
+
+// ── Compare with class ─────────────────────────────────────────
+async function fetchCompare() {
+  try {
+    const r = await fetch(`${DB}/${GKEY}/${sid}.json`);
+    if (!r.ok) return null;
+    const data = await r.json();
+    if (!data) return null;
+    const rows = Object.values(data);
+    const n = rows.length;
+    const avgs = {};
+    OPTS.forEach(o => {
+      avgs[o.key] = Math.round(rows.reduce((s, row) => s + (row[o.key] || 0), 0) / n);
+    });
+    return { n, avgs };
+  } catch { return null; }
+}
+
+function renderCompare(ch, cmp) {
+  document.getElementById("cmp-n").textContent = `${cmp.n} 人已提交`;
+  document.getElementById("cmp-rows").innerHTML = OPTS.map(o => {
+    const mine = ch[o.key] || 0;
+    const avg  = cmp.avgs[o.key] || 0;
+    const pctM = (mine / o.max * 100).toFixed(0);
+    const pctA = (avg  / o.max * 100).toFixed(0);
+    return `
+<div class="cmp-row">
+  <div class="cmp-key">${o.emoji} ${o.label}</div>
+  <div class="cmp-bar-row">
+    <span class="cmp-who">你</span>
+    <div class="cmp-bar-wrap"><div class="cmp-bar-fill" style="width:${pctM}%;background:${o.color}"></div></div>
+    <span class="cmp-pts" style="color:${o.color}">${mine} 點</span>
+  </div>
+  <div class="cmp-bar-row">
+    <span class="cmp-who">班均</span>
+    <div class="cmp-bar-wrap"><div class="cmp-bar-fill" style="width:${pctA}%;background:#bbb"></div></div>
+    <span class="cmp-pts" style="color:#888">${avg} 點</span>
+  </div>
+</div>`;
+  }).join("");
+}
+
+let cmpTimer = null;
+async function loadCompare(ch) {
+  document.getElementById("cmp-block").style.display = "block";
+  const cmp = await fetchCompare();
+  if (cmp) renderCompare(ch, cmp);
+  if (cmpTimer) clearInterval(cmpTimer);
+  cmpTimer = setInterval(async () => {
+    const c = await fetchCompare();
+    if (c) renderCompare(ch, c);
+  }, 5000);
 }
 
 // ── Auto-start if ?s= in URL ───────────────────────────────────

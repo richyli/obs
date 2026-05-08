@@ -193,13 +193,13 @@ MathJax = {
 <li><a href="#30">學生的製作流程（30 分鐘內）</a><ul>
 <li><a href="#step-15">Step 1：決定新聞情境（5 分鐘）</a></li>
 <li><a href="#step-2-ai-15">Step 2：讓 AI 生成基礎程式（15 分鐘）</a></li>
-<li><a href="#step-3-firebase-config10">Step 3：填入 Firebase config、測試（10 分鐘）</a></li>
+<li><a href="#step-3-firebase-10">Step 3：填入 Firebase 網址、測試（10 分鐘）</a></li>
 </ul>
 </li>
 <li><a href="#_4">基礎模板（老師課前提供）</a><ul>
 <li><a href="#gamehtml">遊戲頁 game.html</a></li>
 <li><a href="#dashboardhtml">儀表板頁 dashboard.html</a></li>
-<li><a href="#firestore-security-rules">Firestore Security Rules</a></li>
+<li><a href="#firebase-realtime-database">Firebase Realtime Database 規則</a></li>
 </ul>
 </li>
 <li><a href="#_5">老師課前準備</a></li>
@@ -224,6 +224,12 @@ MathJax = {
 <h2 id="dn-classroom-game-50min-firebase">DN classroom game 50min firebase</h2>
 <p>學生在 50 分鐘內，用 vibe coding 做出一個有 Firebase 後端的新聞遊戲原型——玩家的選擇即時寫入、任何人打開同一頁面都能看到聚合結果。</p>
 <p>這是 <a href="digital_narrative_database_teaching.html">digital narrative database teaching</a> Pattern E「Compare with Crowd」的<strong>課堂實作版</strong>，直接對標 <a href="DN_Climate_Game_FT.html">DN Climate Game FT</a> 與 <a href="DN_You_Draw_It_NYT.html">DN You Draw It NYT</a> 的核心機制。</p>
+<blockquote>
+<p><strong>老師示範版（可直接使用）</strong>
+- 遊戲頁：<code>[https://richyli.github.io/obs/dn_game.html</code>](https://richyli.github.io/obs/dn_game.html<code>)
+- 儀表板：</code>[https://richyli.github.io/obs/dn_dashboard.html<code>](https://richyli.github.io/obs/dn_dashboard.html</code>)
+- 使用方式：遊戲頁輸入課堂代碼 → 學生決策 → 送出後<strong>立即看到自己與班級平均的比較</strong>；儀表板輸入同一代碼 → 老師投影</p>
+</blockquote>
 <hr />
 <h3 id="_1">四個學習目標</h3>
 <p>這堂課圍繞四個具體的學習點設計，每個點都有對應的操作時刻：</p>
@@ -290,7 +296,7 @@ MathJax = {
 <hr />
 <h3 id="_3">新聞情境示範：核四重啟決策遊戲</h3>
 <p>（老師課前做好示範版，學生看完再做自己的主題）</p>
-<p><strong>設定</strong>：你有 100 點，分配給五個能源政策。每種分配產生不同的碳排 / 電費 / 穩定度結果。提交後看到：你的政策輪廓、班級平均、和政府現行政策的差距。</p>
+<p><strong>設定</strong>：你有 100 點，分配給三個能源政策。每種分配產生不同的碳排 / 電費 / 穩定度結果。提交後看到：你的政策輪廓、三個分數指標，以及<strong>你的選擇 vs 目前班級平均的即時比較圖</strong>（每 5 秒自動更新）。</p>
 <p><strong>為何好用作示範</strong>：
 - 5 分鐘就能理解規則
 - trade-off 明顯：想要低碳就要付錢，想便宜就要犧牲環境
@@ -347,16 +353,18 @@ MathJax = {
 計算結果的邏輯：[描述你想怎麼算出最終分數或標籤]
 </code></pre>
 <p>Claude 會改掉題目文字、slider 範圍、換算公式，其餘 Firebase 邏輯不動。</p>
-<h4 id="step-3-firebase-config10">Step 3：填入 Firebase config、測試（10 分鐘）</h4>
+<h4 id="step-3-firebase-10">Step 3：填入 Firebase 網址、測試（10 分鐘）</h4>
 <ul>
-<li>老師統一提供一個課堂用 Firebase 專案的 config（貼在黑板或共用文件）</li>
-<li>學生把 config 填入兩個 HTML 檔</li>
-<li>打開遊戲頁，提交一次，確認 Firestore 有收到資料</li>
-<li>打開儀表板頁，確認圖表出現</li>
+<li>老師統一提供課堂用 <strong>Firebase Realtime Database</strong> 的專案網址（格式：<code>[https://xxx-default-rtdb.firebaseio.com</code>），貼在黑板或共用文件](https://xxx-default-rtdb.firebaseio.com`），貼在黑板或共用文件)</li>
+<li>學生把網址填入兩個 HTML 檔的 <code>DB</code> 常數</li>
+<li>打開遊戲頁，輸入課堂代碼 → 提交一次</li>
+<li>確認出現「你 vs 班級平均」比較圖（代表寫入成功、讀取成功）</li>
+<li>打開儀表板頁，確認人數和圖表更新</li>
 </ul>
 <hr />
 <h3 id="_4">基礎模板（老師課前提供）</h3>
 <h4 id="gamehtml">遊戲頁 <code>game.html</code></h4>
+<p>使用 <strong>Firebase Realtime Database REST API</strong>（不需 SDK、不需 import）。</p>
 <pre><code class="language-html">&lt;!DOCTYPE html&gt;
 &lt;html lang=&quot;zh-TW&quot;&gt;
 &lt;head&gt;
@@ -367,147 +375,155 @@ MathJax = {
     body { font-family: sans-serif; max-width: 480px; margin: 0 auto; padding: 1rem; }
     .q { background: #f5f5f5; border-radius: 8px; padding: 1rem; margin: 0.8rem 0; }
     .hint { font-size: 0.85rem; color: #666; margin-top: 0.4rem; }
-    #left { font-size: 1.4rem; font-weight: bold; text-align: center; padding: 0.5rem;
-            color: #2563eb; }
+    #left { font-size: 1.4rem; font-weight: bold; color: #2563eb; }
     button { width: 100%; padding: 1rem; background: #2563eb; color: #fff;
              border: none; border-radius: 8px; font-size: 1rem; cursor: pointer; }
     button:disabled { background: #aaa; }
     #result { display: none; background: #e7f3e8; border-radius: 8px;
-              padding: 1.5rem; text-align: center; margin-top: 1rem; }
+              padding: 1.5rem; margin-top: 1rem; }
+    .cmp { background: #f9f9f9; border-radius: 6px; padding: 0.8rem; margin-top: 1rem; }
+    .cmp-row { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.3rem;
+               font-size: 0.82rem; }
+    .cmp-bar { flex: 1; background: #ddd; border-radius: 3px; height: 7px; }
+    .cmp-fill { height: 100%; border-radius: 3px; transition: width 0.5s; }
   &lt;/style&gt;
 &lt;/head&gt;
 &lt;body&gt;
 
-&lt;!-- ========= 學生只需修改這個區塊 ========= --&gt;
+&lt;!-- ========= 學生修改區：主題與選項 ========= --&gt;
 &lt;h1&gt;🗳️ 遊戲標題&lt;/h1&gt;
 &lt;p&gt;情境說明（一兩句話，為什麼要做這個決定）&lt;/p&gt;
-&lt;div id=&quot;budget-display&quot;&gt;剩餘：&lt;span id=&quot;left&quot;&gt;100&lt;/span&gt; 點&lt;/div&gt;
+&lt;p&gt;剩餘：&lt;span id=&quot;left&quot;&gt;100&lt;/span&gt; 點&lt;/p&gt;
 
 &lt;div class=&quot;q&quot;&gt;
   &lt;b&gt;選項 A 名稱&lt;/b&gt;
-  &lt;input type=&quot;range&quot; class=&quot;slider&quot; data-key=&quot;a&quot; min=&quot;0&quot; max=&quot;40&quot; value=&quot;0&quot; step=&quot;5&quot;&gt;
+  &lt;input type=&quot;range&quot; data-key=&quot;a&quot; min=&quot;0&quot; max=&quot;40&quot; value=&quot;0&quot; step=&quot;5&quot; oninput=&quot;sync(this)&quot;&gt;
   &lt;span class=&quot;val&quot;&gt;0 點&lt;/span&gt;
   &lt;div class=&quot;hint&quot;&gt;trade-off 說明&lt;/div&gt;
 &lt;/div&gt;
-
 &lt;div class=&quot;q&quot;&gt;
   &lt;b&gt;選項 B 名稱&lt;/b&gt;
-  &lt;input type=&quot;range&quot; class=&quot;slider&quot; data-key=&quot;b&quot; min=&quot;0&quot; max=&quot;40&quot; value=&quot;0&quot; step=&quot;5&quot;&gt;
+  &lt;input type=&quot;range&quot; data-key=&quot;b&quot; min=&quot;0&quot; max=&quot;40&quot; value=&quot;0&quot; step=&quot;5&quot; oninput=&quot;sync(this)&quot;&gt;
   &lt;span class=&quot;val&quot;&gt;0 點&lt;/span&gt;
   &lt;div class=&quot;hint&quot;&gt;trade-off 說明&lt;/div&gt;
 &lt;/div&gt;
-
 &lt;div class=&quot;q&quot;&gt;
   &lt;b&gt;選項 C 名稱&lt;/b&gt;
-  &lt;input type=&quot;range&quot; class=&quot;slider&quot; data-key=&quot;c&quot; min=&quot;0&quot; max=&quot;40&quot; value=&quot;0&quot; step=&quot;5&quot;&gt;
+  &lt;input type=&quot;range&quot; data-key=&quot;c&quot; min=&quot;0&quot; max=&quot;20&quot; value=&quot;0&quot; step=&quot;5&quot; oninput=&quot;sync(this)&quot;&gt;
   &lt;span class=&quot;val&quot;&gt;0 點&lt;/span&gt;
   &lt;div class=&quot;hint&quot;&gt;trade-off 說明&lt;/div&gt;
 &lt;/div&gt;
 
-&lt;!-- 計算「你的標籤」的邏輯，學生依主題修改 --&gt;
 &lt;script&gt;
-function calcLabel(choices) {
-  if (choices.a &gt;= 25) return &quot;類型 1&quot;;
-  if (choices.b &gt;= 25) return &quot;類型 2&quot;;
+// ↓ 依主題修改
+function calcLabel(ch) {
+  if (ch.a &gt;= 25) return &quot;類型 A&quot;;
+  if (ch.b &gt;= 25) return &quot;類型 B&quot;;
   return &quot;均衡型&quot;;
 }
-// 計算三個分數指標（0–100），學生依主題修改
-function calcScores(choices) {
-  return {
-    score1: Math.min(100, choices.a * 2),
-    score2: Math.min(100, choices.b * 2 + choices.c),
-    score3: Math.min(100, 100 - choices.a - choices.b),
-  };
-}
-const SCORE_LABELS = [&quot;指標名稱1&quot;, &quot;指標名稱2&quot;, &quot;指標名稱3&quot;];
+const KEYS   = [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;];
+const LABELS = [&quot;選項A&quot;, &quot;選項B&quot;, &quot;選項C&quot;];
+const MAXES  = [40, 40, 20];
 &lt;/script&gt;
 &lt;!-- ========= 以上是學生修改區 ========= --&gt;
 
 
 &lt;!-- ========= 以下不需修改 ========= --&gt;
-&lt;button id=&quot;btn&quot; onclick=&quot;submit()&quot;&gt;提交我的選擇&lt;/button&gt;
+&lt;button id=&quot;btn&quot; onclick=&quot;doSubmit()&quot;&gt;提交我的選擇&lt;/button&gt;
+
 &lt;div id=&quot;result&quot;&gt;
-  &lt;h2&gt;你的決策輪廓&lt;/h2&gt;
-  &lt;div id=&quot;label&quot; style=&quot;font-size:1.4rem; margin:0.5rem 0&quot;&gt;&lt;/div&gt;
-  &lt;div id=&quot;scores&quot;&gt;&lt;/div&gt;
-  &lt;p style=&quot;color:#666; font-size:0.9rem; margin-top:1rem&quot;&gt;
-    等老師開啟儀表板，看全班結果 →&lt;br&gt;
-    儀表板：&lt;a id=&quot;dashLink&quot; href=&quot;#&quot; target=&quot;_blank&quot;&gt;dashboard.html?s=&lt;/a&gt;
-  &lt;/p&gt;
+  &lt;h2 style=&quot;margin:0 0 .5rem&quot;&gt;你的決策輪廓：&lt;span id=&quot;lbl&quot;&gt;&lt;/span&gt;&lt;/h2&gt;
+  &lt;p id=&quot;dash-link&quot; style=&quot;font-size:.85rem;color:#555&quot;&gt;&lt;/p&gt;
+  &lt;div class=&quot;cmp&quot; id=&quot;cmp&quot; style=&quot;display:none&quot;&gt;
+    &lt;b style=&quot;font-size:.85rem&quot;&gt;你 vs 班級平均&lt;/b&gt;
+    &lt;div id=&quot;cmp-rows&quot; style=&quot;margin-top:.5rem&quot;&gt;&lt;/div&gt;
+    &lt;small id=&quot;cmp-n&quot; style=&quot;color:#888&quot;&gt;&lt;/small&gt;
+  &lt;/div&gt;
 &lt;/div&gt;
 
-&lt;script type=&quot;module&quot;&gt;
-import { initializeApp } from &quot;https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js&quot;;
-import { getFirestore, doc, setDoc, serverTimestamp }
-  from &quot;https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js&quot;;
-import { getAuth, signInAnonymously }
-  from &quot;https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js&quot;;
-
-// ← 貼入老師提供的 Firebase config
-const FIREBASE_CONFIG = { apiKey: &quot;&quot;, authDomain: &quot;&quot;, projectId: &quot;&quot; };
-
-const app = initializeApp(FIREBASE_CONFIG);
-const db  = getFirestore(app);
-const auth = getAuth(app);
-
+&lt;script&gt;
+// ← 填入老師提供的 Firebase Realtime Database 網址
+const DB   = &quot;https://YOUR-PROJECT-default-rtdb.firebaseio.com&quot;;
+const GKEY = &quot;classroom/dn_game&quot;;
 const TOTAL = 100;
-const ANIMALS = [&quot;水獺&quot;,&quot;水豚&quot;,&quot;貓熊&quot;,&quot;河豚&quot;,&quot;企鵝&quot;,&quot;無尾熊&quot;,&quot;蜜獾&quot;,&quot;土撥鼠&quot;];
-const COLORS  = [&quot;藍&quot;,&quot;紅&quot;,&quot;綠&quot;,&quot;橘&quot;,&quot;紫&quot;,&quot;黃&quot;,&quot;粉&quot;,&quot;灰&quot;];
-const nickname = COLORS[Math.floor(Math.random()*8)] + ANIMALS[Math.floor(Math.random()*8)];
+const ANIMALS = [&quot;水獺&quot;,&quot;水豚&quot;,&quot;貓熊&quot;,&quot;河豚&quot;,&quot;企鵝&quot;,&quot;無尾熊&quot;];
+const COLORS  = [&quot;藍&quot;,&quot;紅&quot;,&quot;綠&quot;,&quot;橘&quot;,&quot;紫&quot;,&quot;黃&quot;];
 
-// sessionId 從 URL 讀取，預設今天日期
-const sid = new URLSearchParams(location.search).get(&quot;s&quot;)
-            || new Date().toISOString().slice(0,10).replace(/-/g,&quot;&quot;);
-document.querySelector(&quot;#dashLink&quot;).href = `dashboard.html?s=${sid}`;
-document.querySelector(&quot;#dashLink&quot;).textContent += sid;
+const sid  = new URLSearchParams(location.search).get(&quot;s&quot;)
+             || new Date().toISOString().slice(0,10).replace(/-/g,&quot;&quot;);
+const nick = COLORS[~~(Math.random()*6)] + ANIMALS[~~(Math.random()*6)];
+let pid = sessionStorage.getItem(&quot;pid_&quot;+sid);
+if (!pid) { pid = Math.random().toString(36).slice(2,9); sessionStorage.setItem(&quot;pid_&quot;+sid, pid); }
 
-let uid;
-signInAnonymously(auth).then(r =&gt; uid = r.user.uid);
+document.getElementById(&quot;dash-link&quot;).innerHTML =
+  `等老師開啟儀表板 → &lt;a href=&quot;dashboard.html?s=${sid}">dashboard.html?s=${sid}&lt;/a&gt;`;
 
 function getChoices() {
-  const c = {};
-  document.querySelectorAll(&quot;.slider&quot;).forEach(el =&gt; {
-    c[el.dataset.key] = +el.value;
-  });
-  return c;
+  const ch = {};
+  document.querySelectorAll(&quot;[data-key]&quot;).forEach(el =&gt; ch[el.dataset.key] = +el.value);
+  return ch;
 }
-
-function syncUI() {
-  const choices = getChoices();
-  document.querySelectorAll(&quot;.slider&quot;).forEach(el =&gt; {
-    el.nextElementSibling.textContent = el.value + &quot; 點&quot;;
-  });
-  const used = Object.values(choices).reduce((s,v) =&gt; s+v, 0);
+function sync(el) {
+  el.nextElementSibling.textContent = el.value + &quot; 點&quot;;
+  const used = KEYS.reduce((s,k) =&gt; s + (+document.querySelector(`[data-key=${k}]`).value), 0);
   document.getElementById(&quot;left&quot;).textContent = TOTAL - used;
   document.getElementById(&quot;btn&quot;).disabled = used &gt; TOTAL;
-  document.getElementById(&quot;left&quot;).style.color = used &gt; TOTAL ? &quot;#e63&quot; : &quot;#2563eb&quot;;
 }
-document.querySelectorAll(&quot;.slider&quot;).forEach(el =&gt; el.addEventListener(&quot;input&quot;, syncUI));
 
-window.submit = async () =&gt; {
-  const choices = getChoices();
-  if (Object.values(choices).reduce((s,v)=&gt;s+v,0) &gt; TOTAL) return;
+async function doSubmit() {
+  const ch = getChoices();
+  if (KEYS.reduce((s,k) =&gt; s + ch[k], 0) &gt; TOTAL) return;
+  const lbl = calcLabel(ch);
   document.getElementById(&quot;btn&quot;).disabled = true;
-
-  const label  = calcLabel(choices);
-  const scores = calcScores(choices);
-
-  await setDoc(doc(db, `sessions/${sid}/players/${uid}`), {
-    nickname, choices, label, scores,
-    submitted_at: serverTimestamp(),
-  });
-
-  document.getElementById(&quot;label&quot;).textContent = label;
-  document.getElementById(&quot;scores&quot;).textContent =
-    SCORE_LABELS.map((l,i) =&gt; `${l} ${Object.values(scores)[i]}`).join(&quot;　&quot;);
+  const rec = { n: nick, lbl, ts: Date.now(), ...Object.fromEntries(KEYS.map(k =&gt; [k, ch[k]])) };
+  const r = await fetch(`${DB}/${GKEY}/${sid}/${pid}.json`,
+    { method: &quot;PUT&quot;, headers: {&quot;Content-Type&quot;:&quot;application/json&quot;}, body: JSON.stringify(rec) });
+  if (!r.ok) { alert(&quot;送出失敗 &quot; + r.status); document.getElementById(&quot;btn&quot;).disabled=false; return; }
+  sessionStorage.setItem(&quot;done_&quot;+sid, JSON.stringify({lbl, ch}));
+  document.getElementById(&quot;lbl&quot;).textContent = lbl;
   document.getElementById(&quot;result&quot;).style.display = &quot;block&quot;;
-  document.querySelectorAll(&quot;.q, #budget-display, #btn&quot;).forEach(e =&gt; e.style.display=&quot;none&quot;);
-};
+  document.getElementById(&quot;btn&quot;).style.display = &quot;none&quot;;
+  loadCompare(ch);
+}
+
+// ── 與班級比較（每 5 秒更新）──
+async function loadCompare(ch) {
+  const r = await fetch(`${DB}/${GKEY}/${sid}.json`);
+  if (!r.ok) return;
+  const data = await r.json();
+  if (!data) return;
+  const rows = Object.values(data), n = rows.length;
+  const avgs = KEYS.map(k =&gt; Math.round(rows.reduce((s,r) =&gt; s + (r[k]||0), 0) / n));
+  document.getElementById(&quot;cmp-n&quot;).textContent = `班上 ${n} 人已提交`;
+  document.getElementById(&quot;cmp-rows&quot;).innerHTML = KEYS.map((k,i) =&gt; {
+    const mine = ch[k]||0, avg = avgs[i], mx = MAXES[i];
+    return `&lt;div style=&quot;margin-bottom:.4rem&quot;&gt;&lt;div style=&quot;font-size:.78rem;color:#555&quot;&gt;${LABELS[i]}&lt;/div&gt;
+&lt;div class=&quot;cmp-row&quot;&gt;&lt;span style=&quot;width:1.8rem;font-size:.68rem;color:#888&quot;&gt;你&lt;/span&gt;
+&lt;div class=&quot;cmp-bar&quot;&gt;&lt;div class=&quot;cmp-fill&quot; style=&quot;width:${mine/mx*100}%;background:#2563eb&quot;&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;span style=&quot;font-size:.75rem;font-weight:700;min-width:2.5rem&quot;&gt;${mine} 點&lt;/span&gt;&lt;/div&gt;
+&lt;div class=&quot;cmp-row&quot;&gt;&lt;span style=&quot;width:1.8rem;font-size:.68rem;color:#888&quot;&gt;均&lt;/span&gt;
+&lt;div class=&quot;cmp-bar&quot;&gt;&lt;div class=&quot;cmp-fill&quot; style=&quot;width:${avg/mx*100}%;background:#aaa&quot;&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;span style=&quot;font-size:.75rem;font-weight:700;min-width:2.5rem;color:#888&quot;&gt;${avg} 點&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;`;
+  }).join(&quot;&quot;);
+  document.getElementById(&quot;cmp&quot;).style.display = &quot;block&quot;;
+  setTimeout(() =&gt; loadCompare(ch), 5000);
+}
+
+// 已提交過則直接顯示
+const done = sessionStorage.getItem(&quot;done_&quot;+sid);
+if (done) {
+  const {lbl, ch} = JSON.parse(done);
+  document.getElementById(&quot;lbl&quot;).textContent = lbl;
+  document.getElementById(&quot;result&quot;).style.display = &quot;block&quot;;
+  document.getElementById(&quot;btn&quot;).style.display = &quot;none&quot;;
+  loadCompare(ch);
+}
 &lt;/script&gt;
 &lt;/body&gt;
 &lt;/html&gt;
 </code></pre>
 <h4 id="dashboardhtml">儀表板頁 <code>dashboard.html</code></h4>
+<p>同樣使用 REST API，每 3 秒 polling。</p>
 <pre><code class="language-html">&lt;!DOCTYPE html&gt;
 &lt;html lang=&quot;zh-TW&quot;&gt;
 &lt;head&gt;
@@ -519,118 +535,68 @@ window.submit = async () =&gt; {
     .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0; }
     .card { background: #f9f9f9; border-radius: 8px; padding: 1rem; }
     #count { font-size: 2rem; font-weight: bold; color: #2563eb; }
-    table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
-    td, th { padding: 0.4rem 0.6rem; border-bottom: 1px solid #e5e5e5; text-align: left; }
-    .live { color: #10b981; font-size: 0.8rem; }
   &lt;/style&gt;
 &lt;/head&gt;
 &lt;body&gt;
   &lt;h1&gt;📊 班級決策儀表板&lt;/h1&gt;
-  &lt;p&gt;已提交：&lt;span id=&quot;count&quot;&gt;0&lt;/span&gt; 人 &lt;span class=&quot;live&quot;&gt;● 即時更新&lt;/span&gt;&lt;/p&gt;
-
+  &lt;p&gt;已提交：&lt;span id=&quot;count&quot;&gt;0&lt;/span&gt; 人 &lt;span style=&quot;color:#10b981;font-size:.85rem&quot;&gt;● 即時更新&lt;/span&gt;&lt;/p&gt;
   &lt;div class=&quot;grid&quot;&gt;
-    &lt;div class=&quot;card&quot;&gt;
-      &lt;h3&gt;各選項平均點數&lt;/h3&gt;
-      &lt;canvas id=&quot;barChart&quot;&gt;&lt;/canvas&gt;
-    &lt;/div&gt;
-    &lt;div class=&quot;card&quot;&gt;
-      &lt;h3&gt;決策輪廓分布&lt;/h3&gt;
-      &lt;canvas id=&quot;pieChart&quot;&gt;&lt;/canvas&gt;
-    &lt;/div&gt;
+    &lt;div class=&quot;card&quot;&gt;&lt;h3&gt;各選項平均點數&lt;/h3&gt;&lt;canvas id=&quot;bar&quot;&gt;&lt;/canvas&gt;&lt;/div&gt;
+    &lt;div class=&quot;card&quot;&gt;&lt;h3&gt;決策輪廓分布&lt;/h3&gt;&lt;canvas id=&quot;pie&quot;&gt;&lt;/canvas&gt;&lt;/div&gt;
   &lt;/div&gt;
 
-  &lt;div class=&quot;card&quot;&gt;
-    &lt;h3&gt;即時名單&lt;/h3&gt;
-    &lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;暱稱&lt;/th&gt;&lt;th&gt;標籤&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
-    &lt;tbody id=&quot;tbody&quot;&gt;&lt;/tbody&gt;&lt;/table&gt;
-  &lt;/div&gt;
-
-&lt;!-- ========= 學生填入：選項名稱、歷史資料 ========= --&gt;
+&lt;!-- ========= 學生修改：選項名稱 ========= --&gt;
 &lt;script&gt;
-const OPTION_LABELS = [&quot;選項A&quot;, &quot;選項B&quot;, &quot;選項C&quot;]; // 對應 data-key 的順序
-const OPTION_KEYS   = [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;];
-
-// 歷史資料：填入前幾屆的平均（可從空的開始，每學期補一筆）
-const HISTORY = [
-  // { cohort: &quot;2025-fall&quot;, n: 28, avgs: [22, 30, 18] },
-];
+const LABELS = [&quot;選項A&quot;, &quot;選項B&quot;, &quot;選項C&quot;];
+const KEYS   = [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;];
 &lt;/script&gt;
 &lt;!-- ========= 以上是學生修改區 ========= --&gt;
 
+&lt;script&gt;
+// ← 填入老師提供的 Firebase Realtime Database 網址
+const DB   = &quot;https://YOUR-PROJECT-default-rtdb.firebaseio.com&quot;;
+const GKEY = &quot;classroom/dn_game&quot;;
+const sid  = new URLSearchParams(location.search).get(&quot;s&quot;)
+             || new Date().toISOString().slice(0,10).replace(/-/g,&quot;&quot;);
 
-&lt;script type=&quot;module&quot;&gt;
-import { initializeApp } from &quot;https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js&quot;;
-import { getFirestore, collection, onSnapshot }
-  from &quot;https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js&quot;;
+const bar = new Chart(document.getElementById(&quot;bar&quot;), {
+  type: &quot;bar&quot;,
+  data: { labels: LABELS, datasets: [{ label: &quot;平均&quot;, data: KEYS.map(()=&gt;0), backgroundColor: &quot;#2563eb&quot; }] },
+  options: { scales: { y: { min: 0, max: 50 } }, plugins: { legend: { display: false } } }
+});
+const pie = new Chart(document.getElementById(&quot;pie&quot;), {
+  type: &quot;doughnut&quot;,
+  data: { labels: [], datasets: [{ data: [], backgroundColor: [&quot;#f59e0b&quot;,&quot;#10b981&quot;,&quot;#6366f1&quot;] }] }
+});
 
-const FIREBASE_CONFIG = { apiKey: &quot;&quot;, authDomain: &quot;&quot;, projectId: &quot;&quot; };
-const app = initializeApp(FIREBASE_CONFIG);
-const db  = getFirestore(app);
-
-const sid = new URLSearchParams(location.search).get(&quot;s&quot;)
-            || new Date().toISOString().slice(0,10).replace(/-/g,&quot;&quot;);
-
-let bar, pie;
-
-function initCharts() {
-  bar = new Chart(document.getElementById(&quot;barChart&quot;), {
-    type: &quot;bar&quot;,
-    data: {
-      labels: OPTION_LABELS,
-      datasets: [{ label: &quot;本班平均&quot;, data: OPTION_KEYS.map(()=&gt;0),
-                   backgroundColor: &quot;#2563eb&quot; }]
-    },
-    options: { scales: { y: { min: 0, max: 50 } }, plugins: { legend: { display: false } } }
-  });
-  pie = new Chart(document.getElementById(&quot;pieChart&quot;), {
-    type: &quot;doughnut&quot;,
-    data: { labels: [], datasets: [{ data: [], backgroundColor:
-      [&quot;#f59e0b&quot;,&quot;#10b981&quot;,&quot;#6366f1&quot;,&quot;#e63&quot;,&quot;#06b6d4&quot;] }] }
-  });
-}
-
-function update(docs) {
-  const n = docs.length;
+async function poll() {
+  const r = await fetch(`${DB}/${GKEY}/${sid}.json`);
+  if (!r.ok) return;
+  const data = await r.json();
+  if (!data) return;
+  const rows = Object.values(data), n = rows.length;
   document.getElementById(&quot;count&quot;).textContent = n;
-  if (!n) return;
-
-  // 平均
-  const avgs = OPTION_KEYS.map(k =&gt;
-    Math.round(docs.reduce((s,d) =&gt; s + (d.choices?.[k] || 0), 0) / n)
-  );
-  bar.data.datasets[0].data = avgs;
+  bar.data.datasets[0].data = KEYS.map(k =&gt; Math.round(rows.reduce((s,r) =&gt; s+(r[k]||0), 0)/n));
   bar.update();
-
-  // 輪廓分布
   const tally = {};
-  docs.forEach(d =&gt; { tally[d.label] = (tally[d.label] || 0) + 1; });
+  rows.forEach(r =&gt; tally[r.lbl] = (tally[r.lbl]||0)+1);
   pie.data.labels = Object.keys(tally);
   pie.data.datasets[0].data = Object.values(tally);
   pie.update();
-
-  // 名單
-  document.getElementById(&quot;tbody&quot;).innerHTML = docs
-    .sort((a,b) =&gt; (b.submitted_at?.seconds||0) - (a.submitted_at?.seconds||0))
-    .map(d =&gt; `&lt;tr&gt;&lt;td&gt;${d.nickname || "—"}</td><td>${d.label || &quot;—&quot;}&lt;/td&gt;&lt;/tr&gt;`)
-    .join(&quot;&quot;);
 }
-
-initCharts();
-onSnapshot(collection(db, `sessions/${sid}/players`), snap =&gt; {
-  update(snap.docs.map(d =&gt; d.data()));
-});
+poll();
+setInterval(poll, 3000);
 &lt;/script&gt;
 &lt;/body&gt;
 &lt;/html&gt;
 </code></pre>
-<h4 id="firestore-security-rules">Firestore Security Rules</h4>
-<pre><code class="language-javascript">rules_version = '2';
-service cloud.firestore {
-  match /databases/{database}/documents {
-    match /sessions/{sid}/players/{pid} {
-      allow create: if request.auth != null &amp;&amp; request.auth.uid == pid;
-      allow read:   if true;
-      allow update, delete: if false;
+<h4 id="firebase-realtime-database">Firebase Realtime Database 規則</h4>
+<p>課堂用途只需確保 <code>/classroom/</code> 路徑可讀寫（Firebase Console → Realtime Database → 規則）：</p>
+<pre><code class="language-json">{
+  &quot;rules&quot;: {
+    &quot;classroom&quot;: {
+      &quot;.read&quot;: true,
+      &quot;.write&quot;: true
     }
   }
 }
@@ -638,13 +604,16 @@ service cloud.firestore {
 <hr />
 <h3 id="_5">老師課前準備</h3>
 <ol>
-<li>建一個 Firebase 專案（2 分鐘，Console → 新增專案）</li>
-<li>啟用 <strong>Firestore</strong> 和 <strong>Anonymous Authentication</strong></li>
-<li>部署 Security Rules（複製貼上）</li>
-<li>把兩個 HTML 放上任何靜態主機（Firebase Hosting / GitHub Pages / Vercel）</li>
-<li>當天上課前：決定 sessionId（例如 <code>20260508</code>），公告給學生</li>
-<li>把 Firebase config 和 sessionId 貼在共用文件，學生 copy</li>
+<li>建一個 Firebase 專案（Console → 新增專案，2 分鐘）</li>
+<li>啟用 <strong>Realtime Database</strong>（選測試模式即可，或貼上上方規則）</li>
+<li>複製 Database URL（格式：<code>[https://xxx-default-rtdb.firebaseio.com</code>）](https://xxx-default-rtdb.firebaseio.com`）)</li>
+<li>把兩個 HTML 放上任何靜態主機（GitHub Pages / Vercel / Firebase Hosting）</li>
+<li>當天上課前：決定課堂代碼（例如 <code>20260508</code>），公告給學生</li>
+<li>把 Database URL 和課堂代碼貼在共用文件，學生 copy → 貼入 <code>DB</code> 常數</li>
 </ol>
+<blockquote>
+<p><strong>或直接使用示範版</strong>（不需自建 Firebase）：把遊戲頁 URL <code>[https://richyli.github.io/obs/dn_game.html?s=課堂代碼</code>](https://richyli.github.io/obs/dn_game.html?s=課堂代碼<code>) 傳給學生，儀表板</code>[https://richyli.github.io/obs/dn_dashboard.html?s=課堂代碼<code>](https://richyli.github.io/obs/dn_dashboard.html?s=課堂代碼</code>) 老師投影即可。</p>
+</blockquote>
 <hr />
 <h3 id="vibe-coding-prompt">學生 vibe coding prompt 示例</h3>
 <p>學生把模板貼給 Claude Code，加上：</p>
@@ -670,14 +639,14 @@ service cloud.firestore {
 <p><strong>這段是整堂課最重要的教學時刻。</strong> 在 Firebase Console 親眼看到自己的資料，是「寫入」概念從抽象變具體的關鍵。</p>
 <h4 id="_6">學生檢查清單</h4>
 <p><strong>驗證寫入</strong>：
-1. 打開 <a href="https://console.firebase.google.com">Firebase Console</a> → Firestore Database
-2. 找到 <code>sessions</code> → <code>{今日sessionId}</code> → <code>players</code>
-3. 確認看到自己的文件（以 uid 為名）
-4. 展開文件，核對 <code>choices</code> 裡的數字和你剛剛填的一樣</p>
-<p><strong>驗證讀取</strong>：
-1. 打開 <code>dashboard.html?s={sessionId}</code>
-2. 確認圖表出現、人數 = 已提交人數
-3. 請鄰座同學也提交一次，看儀表板數字有沒有即時更新</p>
+1. 打開 <a href="https://console.firebase.google.com">Firebase Console</a> → Realtime Database
+2. 找到 <code>classroom</code> → <code>dn_game</code> → <code>{課堂代碼}</code> → 展開
+3. 確認看到自己的記錄（以隨機 pid 為 key）
+4. 核對欄位 <code>a</code>, <code>b</code>, <code>c</code> 的數字和你剛剛拉的 slider 一樣</p>
+<p><strong>驗證讀取（最直接的方式）</strong>：
+1. 送出後，<strong>遊戲頁直接出現「你 vs 班級平均」的比較圖</strong> → 代表讀取成功
+2. 打開 <code>dashboard.html?s={課堂代碼}</code>，確認圖表出現、人數正確
+3. 請鄰座同學也提交一次，看比較圖和儀表板數字有沒有在 5 秒內更新</p>
 <p><strong>驗證失敗的常見原因</strong>：</p>
 <table>
 <thead>
@@ -688,16 +657,16 @@ service cloud.firestore {
 </thead>
 <tbody>
 <tr>
-<td>提交後 Console 沒有新文件</td>
-<td>config 貼錯或 Anonymous Auth 沒啟用</td>
+<td>提交後顯示「送出失敗」</td>
+<td>DB 網址貼錯，或 Realtime Database 規則不允許 <code>/classroom/</code></td>
+</tr>
+<tr>
+<td>比較圖沒出現</td>
+<td>課堂代碼不一致（遊戲和儀表板的 <code>?s=</code> 要一樣）</td>
 </tr>
 <tr>
 <td>儀表板圖表空白</td>
-<td>sessionId 不一致（game.html 和 dashboard.html 的 <code>?s=</code> 參數不同）</td>
-</tr>
-<tr>
-<td>圖表出現但資料不更新</td>
-<td>Security Rules 沒部署（Firestore 預設 30 天測試模式，之後全鎖）</td>
+<td>同上，或 DB 還沒有任何資料</td>
 </tr>
 </tbody>
 </table>
