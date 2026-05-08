@@ -132,6 +132,18 @@ body {
 .cmp-bar-fill { height: 100%; border-radius: 3px; transition: width .7s ease; }
 .cmp-pts { font-size: .75rem; font-weight: 700; min-width: 2.8rem; }
 
+/* ── Article ── */
+.art-block { margin-top: 1.6rem; border-top: 1px solid #eee; padding-top: 1.2rem; }
+.art-label {
+  font-size: .68rem; text-transform: uppercase; letter-spacing: .1em;
+  color: #aaa; margin-bottom: .65rem;
+}
+.art-body { font-size: .87rem; line-height: 1.9; color: #222; }
+.art-body p { margin: 0 0 .8rem; }
+.art-body p:last-child { margin-bottom: 0; }
+.art-hi { font-weight: 700; }
+.art-footer { font-size: .75rem; color: #aaa; margin-top: .6rem; }
+
 @media (max-width: 480px) {
   .hdr h1 { font-size: .88rem; }
   .bval { font-size: 1.4rem; }
@@ -211,6 +223,11 @@ body {
           <span class="cmp-n" id="cmp-n">載入中…</span>
         </div>
         <div id="cmp-rows"></div>
+      </div>
+
+      <div class="art-block" id="art-block" style="display:none">
+        <div class="art-label">你的立場報導</div>
+        <div class="art-body" id="art-body"></div>
       </div>
 
       <p class="result-note">
@@ -401,6 +418,84 @@ async function fetchCompare() {
   } catch { return null; }
 }
 
+function generateArticle(ch, cmp) {
+  const n    = cmp.n;
+  const avgs = cmp.avgs;
+  const a = ch.a || 0, b = ch.b || 0, c = ch.c || 0;
+  const aa = avgs.a || 0, ab = avgs.b || 0, ac = avgs.c || 0;
+
+  // classify(mine, avg) → { type, score }
+  function classify(mine, avg, hiTh, loTh) {
+    const d = mine - avg;
+    if (mine >= hiTh && avg >= hiTh) return { type: "BOTH_HI",   score: 7 };
+    if (mine <= loTh && avg <= loTh) return { type: "BOTH_LO",   score: 4 };
+    if (d >  12)                     return { type: "YOU_HI",    score: Math.abs(d) };
+    if (d < -12)                     return { type: "YOU_LO",    score: Math.abs(d) };
+    return                                  { type: "SIMILAR",   score: 2 };
+  }
+
+  const ca = classify(a, aa, 22, 8);
+  const cb = classify(b, ab, 28, 10);
+  const cc = classify(c, ac, 14, 4);
+
+  const snippets = [
+    {
+      score: ca.score,
+      text: {
+        BOTH_HI:  `你和多數同學都認為<span class="art-hi">核電延役</span>有其必要，班上平均投入 ${aa} 點，立場一致。`,
+        BOTH_LO:  `你和多數同學都對<span class="art-hi">核電延役</span>保持保守，這個選項在班上整體支持度偏低。`,
+        YOU_HI:   `你比多數同學更支持<span class="art-hi">核電延役</span>（你投入 ${a} 點，班均 ${aa} 點）——這在班上是相對少數的立場。`,
+        YOU_LO:   `你不希望<span class="art-hi">核電延役</span>，只投入 ${a} 點；然而班上平均達 ${aa} 點——其他同學的想法和你不同。`,
+        SIMILAR:  `核電延役方面，你（${a} 點）與班上平均（${aa} 點）的看法相近。`,
+      }[ca.type],
+    },
+    {
+      score: cb.score,
+      text: {
+        BOTH_HI:  `你和多數同學都把<span class="art-hi">加速再生能源</span>列為優先方向，班上平均 ${ab} 點，共識明確。`,
+        BOTH_LO:  `你和多數同學對<span class="art-hi">再生能源加速</span>的投入都相對保守，整體熱度在班上不高。`,
+        YOU_HI:   `你認為應該<span class="art-hi">加速再生能源</span>，投入了 ${b} 點；但班上平均只有 ${ab} 點——大部分同學對這條路更為謹慎。`,
+        YOU_LO:   `你對<span class="art-hi">再生能源加速</span>的投入（${b} 點）低於班上平均（${ab} 點）——班上多數同學比你更傾向這個方向。`,
+        SIMILAR:  `再生能源方面，你（${b} 點）與班上平均（${ab} 點）差距不大。`,
+      }[cb.type],
+    },
+    {
+      score: cc.score,
+      text: {
+        BOTH_HI:  `工業節電補貼方面，大部分同學跟你的看法一致，都認為這個方向值得投入，班均 ${ac} 點。`,
+        BOTH_LO:  `<span class="art-hi">工業節電補貼</span>在班上的整體支持度偏低，你和多數同學都沒有大量押注此選項。`,
+        YOU_HI:   `你比多數同學更看重<span class="art-hi">工業節電補貼</span>（${c} 點 vs 班均 ${ac} 點），對這條節能路徑更有信心。`,
+        YOU_LO:   `你在<span class="art-hi">工業節電補貼</span>的投入（${c} 點）低於班上平均（${ac} 點）。`,
+        SIMILAR:  `工業節電補貼方面，你（${c} 點）與班上平均（${ac} 點）看法接近。`,
+      }[cc.type],
+    },
+  ];
+
+  // Sort by interest, pick top 2
+  snippets.sort((x, y) => y.score - x.score);
+  const picks = snippets.slice(0, 2);
+
+  // Lead sentence
+  const lbl   = calcLabel(ch).l;
+  const topOpt = [
+    { val: a, name: "核電延役" },
+    { val: b, name: "再生能源加速" },
+    { val: c, name: "工業節電補貼" },
+  ].sort((x, y) => y.val - x.val)[0];
+
+  const lead = topOpt.val === 0
+    ? `你這次沒有分配任何點數，選擇保持中立觀望。`
+    : `你將最多點數（${topOpt.val} 點）押在「<span class="art-hi">${topOpt.name}</span>」，整體歸類為「${lbl}」。`;
+
+  let html = `<p>${lead}</p>`;
+  picks.forEach(p => { html += `<p>${p.text}</p>`; });
+
+  if (n >= 2) {
+    html += `<p class="art-footer">以上分析根據目前 ${n} 位同學的資料，隨更多人提交持續更新。</p>`;
+  }
+  return html;
+}
+
 function renderCompare(ch, cmp) {
   document.getElementById("cmp-n").textContent = `${cmp.n} 人已提交`;
   document.getElementById("cmp-rows").innerHTML = OPTS.map(o => {
@@ -423,6 +518,13 @@ function renderCompare(ch, cmp) {
   </div>
 </div>`;
   }).join("");
+
+  // Article
+  const artEl = document.getElementById("art-body");
+  if (artEl) {
+    artEl.innerHTML = generateArticle(ch, cmp);
+    document.getElementById("art-block").style.display = "block";
+  }
 }
 
 let cmpTimer = null;
