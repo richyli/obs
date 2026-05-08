@@ -1,0 +1,374 @@
+﻿<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2030 台灣能源決策遊戲</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: "Helvetica Neue", Arial, "Noto Sans TC", sans-serif;
+  background: #f0f2f5; min-height: 100vh; color: #1a1a1a;
+}
+
+/* ── Screens ── */
+.screen { display: none; }
+.screen.show { display: block; }
+
+/* ── Setup ── */
+.center-wrap {
+  min-height: 100vh; display: flex;
+  align-items: center; justify-content: center; padding: 1.5rem;
+}
+.setup-card {
+  background: #fff; border-radius: 14px; padding: 2.5rem;
+  max-width: 400px; width: 100%;
+  box-shadow: 0 4px 24px rgba(0,0,0,.12);
+}
+.setup-card .emoji { font-size: 2.5rem; text-align: center; display: block; margin-bottom: .8rem; }
+.setup-card h2 { font-size: 1.2rem; font-weight: 800; margin-bottom: .5rem; }
+.setup-card p  { font-size: .85rem; color: #666; line-height: 1.75; margin-bottom: 1.3rem; }
+.setup-card label { font-size: .8rem; color: #555; display: block; margin-bottom: .3rem; }
+.setup-card input {
+  width: 100%; padding: .7rem 1rem;
+  border: 1.5px solid #ddd; border-radius: 8px;
+  font-size: 1.05rem; font-family: monospace; letter-spacing: .08em;
+  margin-bottom: 1rem;
+}
+.setup-card input:focus { outline: none; border-color: #0055cc; }
+
+/* ── Header ── */
+.hdr {
+  background: #fff; padding: .9rem 1.4rem;
+  border-bottom: 1px solid #e4e4e4;
+  position: sticky; top: 0; z-index: 10;
+  box-shadow: 0 2px 8px rgba(0,0,0,.06);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.hdr h1 { font-size: .98rem; font-weight: 700; }
+.chip {
+  font-size: .72rem; font-weight: 700; letter-spacing: .04em;
+  padding: .2rem .7rem; border-radius: 20px;
+}
+.chip-blue  { background: #e8f0ff; color: #0055cc; }
+.chip-green { background: #e7f9f0; color: #007a3d; }
+
+/* ── Budget bar ── */
+.budget-bar {
+  background: #fff; margin: .9rem 1rem 0;
+  border-radius: 10px; padding: .85rem 1.3rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,.07);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.budget-bar .lbl { font-size: .82rem; color: #666; }
+.bval { font-size: 1.7rem; font-weight: 800; transition: color .2s; }
+.bval.ok   { color: #0055cc; }
+.bval.warn { color: #f59e0b; }
+.bval.over { color: #ef4444; }
+
+/* ── Option cards ── */
+.opts { padding: .5rem 1rem; }
+.ocard {
+  background: #fff; border-radius: 10px;
+  padding: 1.1rem 1.2rem; margin-bottom: .55rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,.07);
+  border-left: 4px solid transparent;
+  transition: border-left-color .2s;
+}
+.ocard.active { border-left-color: #0055cc; }
+.otitle {
+  font-size: .95rem; font-weight: 700; margin-bottom: .25rem;
+  display: flex; align-items: baseline; gap: .45rem;
+}
+.omax { font-size: .72rem; font-weight: 400; color: #aaa; }
+.ohint { font-size: .78rem; color: #888; line-height: 1.55; margin-bottom: .75rem; }
+.srow { display: flex; align-items: center; gap: .9rem; }
+.srow input[type=range] { flex: 1; cursor: pointer; height: 6px; }
+.sval { font-size: .95rem; font-weight: 700; min-width: 3.5rem; text-align: right; color: #0055cc; }
+
+/* ── Submit ── */
+.submit-wrap { padding: .5rem 1rem 1.8rem; }
+.btn {
+  width: 100%; padding: .9rem; border: none; border-radius: 9px;
+  font-size: .95rem; font-weight: 700; cursor: pointer; transition: all .15s;
+}
+.btn-primary { background: #0055cc; color: #fff; }
+.btn-primary:hover:not(:disabled) { background: #0044aa; transform: translateY(-1px); }
+.btn-primary:disabled { background: #c5cfe0; color: #fff; cursor: default; transform: none; }
+
+/* ── Result ── */
+.result-wrap { padding: 1.5rem 1rem; }
+.result-card {
+  background: #fff; border-radius: 14px;
+  padding: 2.2rem 1.6rem; text-align: center;
+  box-shadow: 0 2px 14px rgba(0,0,0,.1);
+}
+.r-title { font-size: .82rem; color: #999; margin-bottom: .4rem; }
+.r-lbl {
+  display: inline-block; padding: .45rem 1.4rem;
+  border-radius: 30px; font-size: 1.4rem; font-weight: 800;
+  margin-bottom: 1.4rem;
+}
+.score-block { text-align: left; margin-bottom: 1.4rem; }
+.sline { display: flex; align-items: center; gap: .7rem; margin-bottom: .6rem; }
+.sname { font-size: .8rem; color: #555; width: 75px; flex-shrink: 0; text-align: right; }
+.pbar { flex: 1; background: #eee; border-radius: 4px; height: 10px; overflow: hidden; }
+.pfill { height: 100%; border-radius: 4px; width: 0; transition: width .7s ease; }
+.snum { font-size: .85rem; font-weight: 700; min-width: 4rem; }
+.result-note { font-size: .8rem; color: #aaa; line-height: 1.75; }
+.result-note a { color: #0055cc; text-decoration: none; }
+.result-note a:hover { text-decoration: underline; }
+
+@media (max-width: 480px) {
+  .hdr h1 { font-size: .88rem; }
+  .bval { font-size: 1.4rem; }
+  .otitle { font-size: .88rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── Screen 1: Session input ── -->
+<div class="screen show" id="setup">
+  <div class="center-wrap">
+    <div class="setup-card">
+      <span class="emoji">🌏</span>
+      <h2>2030 台灣能源決策遊戲</h2>
+      <p>你有 <strong>100 點</strong>分配給三個政策方向。<br>
+         每種選擇都有代價——找到你認為對的答案。</p>
+      <label>課堂代碼（老師公告）</label>
+      <input id="sid-in" type="text" maxlength="20" placeholder="例如：20260508"
+             oninput="this.value=this.value.replace(/[^a-zA-Z0-9]/g,'').toUpperCase()"
+             onkeydown="if(event.key==='Enter') startSession()">
+      <button class="btn btn-primary" onclick="startSession()">開始決策</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Screen 2: Game ── -->
+<div class="screen" id="game">
+  <div class="hdr">
+    <h1>🌏 2030 能源決策遊戲</h1>
+    <span class="chip chip-blue" id="sid-chip">—</span>
+  </div>
+
+  <div class="budget-bar">
+    <span class="lbl">剩餘可分配點數</span>
+    <span class="bval ok" id="left-val">100</span>
+  </div>
+
+  <div class="opts" id="opts-wrap"></div>
+
+  <div class="submit-wrap">
+    <button class="btn btn-primary" id="sub-btn" onclick="doSubmit()">確認送出</button>
+  </div>
+</div>
+
+<!-- ── Screen 3: Result ── -->
+<div class="screen" id="result">
+  <div class="hdr">
+    <h1>🌏 2030 能源決策遊戲</h1>
+    <span class="chip chip-green">已提交</span>
+  </div>
+  <div class="result-wrap">
+    <div class="result-card">
+      <div class="r-title">你的政策輪廓</div>
+      <div class="r-lbl" id="r-lbl">—</div>
+      <div class="score-block">
+        <div class="sline">
+          <span class="sname">碳減量</span>
+          <div class="pbar"><div class="pfill" id="pb-co2" style="background:#10b981"></div></div>
+          <span class="snum" id="sn-co2">—</span>
+        </div>
+        <div class="sline">
+          <span class="sname">電費衝擊</span>
+          <div class="pbar"><div class="pfill" id="pb-cost" style="background:#f59e0b"></div></div>
+          <span class="snum" id="sn-cost">—</span>
+        </div>
+        <div class="sline">
+          <span class="sname">電力穩定</span>
+          <div class="pbar"><div class="pfill" id="pb-stb" style="background:#6366f1"></div></div>
+          <span class="snum" id="sn-stb">—</span>
+        </div>
+      </div>
+      <p class="result-note">
+        等老師開啟儀表板，看全班的選擇分布。<br>
+        <a id="r-dash" href="#">→ 班級儀表板</a>
+      </p>
+    </div>
+  </div>
+</div>
+
+<script>
+const DB    = "https://course-update-36460-default-rtdb.firebaseio.com";
+const GKEY  = "dn_game";
+const TOTAL = 100;
+
+const OPTS = [
+  { key: "a", emoji: "⚛️", label: "核電延役",     max: 40, color: "#6366f1",
+    hint: "每 10 點 → 電費 −3%、碳排 −6%，但核安風險 +10" },
+  { key: "b", emoji: "🌱", label: "再生能源加速", max: 50, color: "#10b981",
+    hint: "每 10 點 → 碳排 −10%、電費 +4%、電力穩定 −4" },
+  { key: "c", emoji: "💡", label: "工業節電補貼", max: 30, color: "#f59e0b",
+    hint: "每 10 點 → 電費 −2%、碳排 −3%、GDP −1%" },
+];
+
+const ANIMALS = ["水獺","水豚","貓熊","河豚","企鵝","無尾熊","蜜獾","羊駝","土撥鼠","狐狸"];
+const COLORS  = ["藍色","紅色","綠色","橘色","紫色","黃色","粉色","灰色","白色","黑色"];
+
+let sid = "";
+
+// ── Calculations ────────────────────────────────────────────────
+function calcLabel(ch) {
+  if (ch.a >= 25) return { l: "核能派", bg: "#e0e7ff", tc: "#3730a3" };
+  if (ch.b >= 35) return { l: "再生派", bg: "#d1fae5", tc: "#065f46" };
+  return               { l: "均衡派", bg: "#fef3c7", tc: "#78350f" };
+}
+function calcScores(ch) {
+  const co2  = Math.min(42, Math.round(ch.a * 0.5 + ch.b * 0.8 + ch.c * 0.3));
+  const cost = +(-ch.a * 0.2 + ch.b * 0.3 - ch.c * 0.1).toFixed(1);
+  const stb  = Math.min(100, Math.max(0, Math.round(50 + ch.a * 0.7 - ch.b * 0.3)));
+  return { co2, cost, stb };
+}
+function getChoices() {
+  const ch = {};
+  OPTS.forEach(o => { ch[o.key] = +(document.getElementById("sl_"+o.key)?.value || 0); });
+  return ch;
+}
+function totalUsed(ch) { return OPTS.reduce((s, o) => s + (ch[o.key] || 0), 0); }
+
+// ── Sync budget UI ─────────────────────────────────────────────
+function syncUI() {
+  const ch   = getChoices();
+  const used = totalUsed(ch);
+  const left = TOTAL - used;
+  const lv   = document.getElementById("left-val");
+  lv.textContent = left;
+  lv.className   = "bval " + (left < 0 ? "over" : left < 15 ? "warn" : "ok");
+  OPTS.forEach(o => {
+    const v = ch[o.key] || 0;
+    const vl = document.getElementById("vl_"+o.key);
+    if (vl) vl.textContent = v + " 點";
+    const oc = document.getElementById("oc_"+o.key);
+    if (oc) oc.classList.toggle("active", v > 0);
+  });
+  const btn = document.getElementById("sub-btn");
+  if (!btn) return;
+  btn.disabled = left < 0;
+  btn.textContent = left > 10 ? `確認送出（還剩 ${left} 點可分配）` : "✓ 確認送出";
+}
+
+// ── Build option sliders ───────────────────────────────────────
+function buildGame() {
+  document.getElementById("opts-wrap").innerHTML = OPTS.map(o => `
+<div class="ocard" id="oc_${o.key}">
+  <div class="otitle">
+    <span>${o.emoji} ${o.label}</span>
+    <span class="omax">最多 ${o.max} 點</span>
+  </div>
+  <div class="ohint">${o.hint}</div>
+  <div class="srow">
+    <input type="range" id="sl_${o.key}" min="0" max="${o.max}" value="0" step="5"
+           oninput="syncUI()" style="accent-color:${o.color}">
+    <span class="sval" id="vl_${o.key}">0 點</span>
+  </div>
+</div>`).join("");
+  syncUI();
+}
+
+// ── Session entry ──────────────────────────────────────────────
+function startSession() {
+  const v = (document.getElementById("sid-in")?.value || "").trim();
+  if (!v) { document.getElementById("sid-in")?.focus(); return; }
+  sid = v;
+
+  // Already submitted this session?
+  const saved = sessionStorage.getItem("dn_res_" + sid);
+  if (saved) { showResult(JSON.parse(saved), false); return; }
+
+  document.getElementById("setup").classList.remove("show");
+  document.getElementById("sid-chip").textContent = sid;
+  buildGame();
+  document.getElementById("game").classList.add("show");
+}
+
+// ── Submit to Firebase ─────────────────────────────────────────
+async function doSubmit() {
+  const ch  = getChoices();
+  if (totalUsed(ch) > TOTAL) return;
+
+  const lbl  = calcLabel(ch);
+  const sc   = calcScores(ch);
+  const nick = COLORS[~~(Math.random() * 10)] + ANIMALS[~~(Math.random() * 10)];
+
+  // Stable player ID per session (prevent double submit)
+  let pid = sessionStorage.getItem("dn_pid_" + sid);
+  if (!pid) {
+    pid = Math.random().toString(36).slice(2, 10);
+    sessionStorage.setItem("dn_pid_" + sid, pid);
+  }
+
+  const record = {
+    n:    nick,
+    a:    ch.a,   b: ch.b,   c: ch.c,
+    lbl:  lbl.l,
+    co2:  sc.co2, cost: sc.cost, stb: sc.stb,
+    ts:   Date.now(),
+  };
+
+  const btn = document.getElementById("sub-btn");
+  btn.disabled = true;
+  btn.textContent = "送出中…";
+
+  try {
+    const res = await fetch(`${DB}/${GKEY}/${sid}/${pid}.json`, {
+      method:  "PUT",
+      headers: { "Content-Type": "application/json" },
+      body:    JSON.stringify(record),
+    });
+    if (!res.ok) throw new Error(res.status);
+    sessionStorage.setItem("dn_res_" + sid, JSON.stringify({ lbl, sc }));
+    showResult({ lbl, sc }, true);
+  } catch {
+    btn.disabled = false;
+    btn.textContent = "送出失敗，請再試";
+  }
+}
+
+// ── Show result ────────────────────────────────────────────────
+function showResult({ lbl, sc }, animate) {
+  document.getElementById("setup").classList.remove("show");
+  document.getElementById("game").classList.remove("show");
+  document.getElementById("result").classList.add("show");
+
+  const rl = document.getElementById("r-lbl");
+  rl.textContent = lbl.l;
+  rl.style.background = lbl.bg;
+  rl.style.color = lbl.tc;
+
+  document.getElementById("sn-co2").textContent  = "−" + sc.co2 + "%";
+  document.getElementById("sn-cost").textContent = (sc.cost >= 0 ? "+" : "") + sc.cost + "%";
+  document.getElementById("sn-stb").textContent  = sc.stb + "/100";
+
+  const base = location.href.replace(/[^/]*$/, "");
+  document.getElementById("r-dash").href = base + "dn_dashboard.html?s=" + sid;
+
+  const delay = animate ? 100 : 0;
+  setTimeout(() => {
+    document.getElementById("pb-co2").style.width  = (sc.co2 / 42 * 100) + "%";
+    document.getElementById("pb-cost").style.width = Math.min(100, Math.abs(sc.cost) / 15 * 100) + "%";
+    document.getElementById("pb-stb").style.width  = sc.stb + "%";
+  }, delay);
+}
+
+// ── Auto-start if ?s= in URL ───────────────────────────────────
+(function () {
+  const s = new URLSearchParams(location.search).get("s");
+  if (s) {
+    const el = document.getElementById("sid-in");
+    if (el) { el.value = s; startSession(); }
+  }
+})();
+</script>
+</body>
+</html>
