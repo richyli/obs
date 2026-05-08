@@ -221,7 +221,15 @@ let local = JSON.parse(localStorage.getItem(LS_LOCAL) || '{"session":0,"done":{}
 const root = document.getElementById("root");
 
 // ── Firebase REST helpers ─────────────────────────────────────
-function dbPath() { return `${dbUrl}/classroom.json`; }
+// Course ID is derived from the filename so each course gets its own Firebase room.
+// progress.html / classroom.html / lesson.html → "classroom" (backward compat)
+// et2026_lesson.html → "et2026", ds2027_progress.html → "ds2027"
+const COURSE_ID = (function(){
+  const stem = location.pathname.split('/').pop().replace(/\.html$/, '');
+  if (['progress','classroom','lesson'].includes(stem)) return 'classroom';
+  return stem.replace(/_(progress|classroom|lesson)$/, '');
+})();
+function dbPath() { return `${dbUrl}/${COURSE_ID}.json`; }
 
 async function dbGet() {
   try {

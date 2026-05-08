@@ -489,7 +489,12 @@ let local = JSON.parse(localStorage.getItem(LS_LOCAL) || '{"session":0,"done":{}
 const root = document.getElementById("root");
 
 // ── Firebase REST ──────────────────────────────────
-function dbPath() { return `${dbUrl}/classroom.json`; }
+const COURSE_ID = (function(){
+  const stem = location.pathname.split('/').pop().replace(/\.html$/, '');
+  if (['progress','classroom','lesson'].includes(stem)) return 'classroom';
+  return stem.replace(/_(progress|classroom|lesson)$/, '');
+})();
+function dbPath() { return `${dbUrl}/${COURSE_ID}.json`; }
 async function dbGet() {
   try {
     const r = await fetch(dbPath());
