@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>能源決策 · 班級儀表板</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: "Helvetica Neue", Arial, "Noto Sans TC", sans-serif;
+  background: #f0f2f5; min-height: 100vh; color: #1a1a1a;
+}
+
+/* ── Header ── */
+.hdr {
+  background: #fff; padding: .85rem 1.6rem;
+  border-bottom: 1px solid #e4e4e4;
+  position: sticky; top: 0; z-index: 10;
+  box-shadow: 0 2px 8px rgba(0,0,0,.06);
+  display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
+}
+.hdr h1 { font-size: 1rem; font-weight: 700; margin-right: auto; }
+.chip {
+  font-size: .72rem; font-weight: 700; letter-spacing: .04em;
+  padding: .2rem .7rem; border-radius: 20px;
+}
+.chip-blue  { background: #e8f0ff; color: #0055cc; }
+.chip-live  { background: #fef3c7; color: #78350f; display: flex; align-items: center; gap: .35rem; }
+.dot-live {
+  width: 7px; height: 7px; border-radius: 50%; background: #22c55e;
+  animation: pulse 1.4s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: .4; transform: scale(.8); }
+}
+.count-badge {
+  font-size: 1.2rem; font-weight: 800; color: #0055cc;
+}
+
+/* ── Setup ── */
+.center-wrap {
+  min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 1.5rem;
+}
+.setup-card {
+  background: #fff; border-radius: 14px; padding: 2.5rem;
+  max-width: 400px; width: 100%; box-shadow: 0 4px 24px rgba(0,0,0,.12);
+}
+.setup-card h2 { font-size: 1.15rem; font-weight: 800; margin-bottom: .5rem; }
+.setup-card p  { font-size: .85rem; color: #666; line-height: 1.7; margin-bottom: 1.2rem; }
+.setup-card label { font-size: .8rem; color: #555; display: block; margin-bottom: .3rem; }
+.setup-card input {
+  width: 100%; padding: .7rem 1rem;
+  border: 1.5px solid #ddd; border-radius: 8px;
+  font-size: 1.05rem; font-family: monospace; letter-spacing: .08em;
+  margin-bottom: 1rem;
+}
+.setup-card input:focus { outline: none; border-color: #0055cc; }
+
+/* ── Main layout ── */
+.main { max-width: 960px; margin: 0 auto; padding: 1.2rem 1.4rem; }
+
+/* ── Summary chips ── */
+.summary-row { display: flex; gap: .8rem; flex-wrap: wrap; margin-bottom: 1.1rem; }
+.sum-chip {
+  background: #fff; border-radius: 10px; padding: .8rem 1.1rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,.08);
+  display: flex; flex-direction: column; gap: .15rem; min-width: 110px;
+}
+.sum-chip .s-label { font-size: .72rem; color: #888; }
+.sum-chip .s-val   { font-size: 1.3rem; font-weight: 800; }
+.sum-chip .s-val.blue   { color: #0055cc; }
+.sum-chip .s-val.green  { color: #059669; }
+.sum-chip .s-val.amber  { color: #d97706; }
+.sum-chip .s-val.indigo { color: #4338ca; }
+
+/* ── Charts grid ── */
+.charts-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;
+}
+@media (max-width: 620px) { .charts-grid { grid-template-columns: 1fr; } }
+
+.card {
+  background: #fff; border-radius: 10px; padding: 1.2rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,.08);
+}
+.card h3 { font-size: .85rem; font-weight: 700; color: #444; margin-bottom: .9rem; }
+.chart-box { position: relative; }
+
+/* ── Empty state ── */
+.empty {
+  text-align: center; padding: 2.5rem 1rem;
+  color: #aaa; font-size: .9rem; line-height: 1.8;
+}
+.empty .e-icon { font-size: 2.5rem; display: block; margin-bottom: .5rem; }
+
+/* ── Recent list ── */
+.recent-list { max-height: 240px; overflow-y: auto; }
+.r-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: .45rem .6rem; border-bottom: 1px solid #f3f3f3; font-size: .85rem;
+}
+.r-row:last-child { border-bottom: none; }
+.r-nick { color: #444; }
+.lbl-pill {
+  font-size: .72rem; font-weight: 700;
+  padding: .15rem .55rem; border-radius: 6px;
+}
+
+/* ── Button ── */
+.btn {
+  width: 100%; padding: .85rem; border: none; border-radius: 9px;
+  font-size: .95rem; font-weight: 700; cursor: pointer;
+  background: #0055cc; color: #fff; transition: background .15s;
+}
+.btn:hover { background: #0044aa; }
+</style>
+</head>
+<body>
+
+<!-- ── Session setup ── -->
+<div id="setup-screen">
+  <div class="center-wrap">
+    <div class="setup-card">
+      <h2>📊 班級儀表板</h2>
+      <p>輸入與遊戲頁相同的課堂代碼，即時看到全班的能源政策選擇。</p>
+      <label>課堂代碼</label>
+      <input id="sid-in" type="text" maxlength="20" placeholder="例如：20260508"
+             oninput="this.value=this.value.replace(/[^a-zA-Z0-9]/g,'').toUpperCase()"
+             onkeydown="if(event.key==='Enter') startDash()">
+      <button class="btn" onclick="startDash()">開始監看</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Dashboard ── -->
+<div id="dash-screen" style="display:none">
+  <div class="hdr">
+    <h1>📊 能源決策 · 班級儀表板</h1>
+    <span class="chip chip-blue" id="sid-chip">—</span>
+    <span>已提交：<span class="count-badge" id="count">0</span> 人</span>
+    <span class="chip chip-live">
+      <span class="dot-live"></span>即時更新
+    </span>
+  </div>
+
+  <div class="main">
+
+    <!-- Summary row -->
+    <div class="summary-row">
+      <div class="sum-chip">
+        <span class="s-label">提交人數</span>
+        <span class="s-val blue" id="sc-count">0</span>
+      </div>
+      <div class="sum-chip">
+        <span class="s-label">班級碳減量</span>
+        <span class="s-val green" id="sc-co2">—</span>
+      </div>
+      <div class="sum-chip">
+        <span class="s-label">電費衝擊</span>
+        <span class="s-val amber" id="sc-cost">—</span>
+      </div>
+      <div class="sum-chip">
+        <span class="s-label">電力穩定</span>
+        <span class="s-val indigo" id="sc-stb">—</span>
+      </div>
+      <div class="sum-chip">
+        <span class="s-label">多數輪廓</span>
+        <span class="s-val" id="sc-top">—</span>
+      </div>
+    </div>
+
+    <!-- Empty state -->
+    <div id="empty-state" class="card">
+      <div class="empty">
+        <span class="e-icon">⏳</span>
+        等待學生提交中⋯<br>
+        請確認遊戲頁網址包含正確的課堂代碼。
+      </div>
+    </div>
+
+    <!-- Charts (hidden until data arrives) -->
+    <div id="charts-area" style="display:none">
+      <div class="charts-grid">
+        <div class="card">
+          <h3>各政策平均分配（點）</h3>
+          <div class="chart-box" style="height:180px">
+            <canvas id="bar-chart"></canvas>
+          </div>
+        </div>
+        <div class="card">
+          <h3>政策輪廓分布</h3>
+          <div class="chart-box" style="height:180px">
+            <canvas id="pie-chart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>最近提交（最新在上）</h3>
+        <div class="recent-list" id="recent-list"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const DB   = "https://course-update-36460-default-rtdb.firebaseio.com";
+const GKEY = "dn_game";
+const POLL = 3000; // ms
+
+const OPTS = [
+  { key: "a", label: "核電延役",     color: "#6366f1" },
+  { key: "b", label: "再生能源加速", color: "#10b981" },
+  { key: "c", label: "工業節電補貼", color: "#f59e0b" },
+];
+const LBL_COLORS = { "核能派": "#e0e7ff", "再生派": "#d1fae5", "均衡派": "#fef3c7" };
+const LBL_TEXT   = { "核能派": "#3730a3", "再生派": "#065f46", "均衡派": "#78350f" };
+
+let barChart = null, pieChart = null;
+let pollTimer = null;
+let sid = "";
+
+// ── Fetch session data ─────────────────────────────────────────
+async function fetchRows() {
+  try {
+    const r = await fetch(`${DB}/${GKEY}/${sid}.json`);
+    if (!r.ok) return [];
+    const data = await r.json();
+    return data ? Object.values(data) : [];
+  } catch { return []; }
+}
+
+// ── Update UI ─────────────────────────────────────────────────
+function update(rows) {
+  const n = rows.length;
+  document.getElementById("count").textContent    = n;
+  document.getElementById("sc-count").textContent = n;
+
+  if (!n) {
+    document.getElementById("empty-state").style.display = "block";
+    document.getElementById("charts-area").style.display = "none";
+    return;
+  }
+  document.getElementById("empty-state").style.display = "none";
+  document.getElementById("charts-area").style.display = "block";
+
+  // Averages
+  const avgs = OPTS.map(o =>
+    Math.round(rows.reduce((s, r) => s + (r[o.key] || 0), 0) / n)
+  );
+  const avgCo2  = Math.round(rows.reduce((s, r) => s + (r.co2  || 0), 0) / n);
+  const avgCost = (rows.reduce((s, r) => s + (r.cost || 0), 0) / n).toFixed(1);
+  const avgStb  = Math.round(rows.reduce((s, r) => s + (r.stb  || 0), 0) / n);
+
+  // Label tally
+  const tally = {};
+  rows.forEach(r => { tally[r.lbl] = (tally[r.lbl] || 0) + 1; });
+  const topLbl = Object.entries(tally).sort((a, b) => b[1] - a[1])[0]?.[0] || "—";
+
+  // Update summary
+  document.getElementById("sc-co2").textContent  = "−" + avgCo2 + "%";
+  document.getElementById("sc-cost").textContent = (avgCost >= 0 ? "+" : "") + avgCost + "%";
+  document.getElementById("sc-stb").textContent  = avgStb;
+  document.getElementById("sc-top").textContent  = topLbl;
+
+  // Bar chart
+  barChart.data.datasets[0].data = avgs;
+  barChart.update("none");
+
+  // Pie chart
+  pieChart.data.labels = Object.keys(tally);
+  pieChart.data.datasets[0].data = Object.values(tally);
+  pieChart.data.datasets[0].backgroundColor = Object.keys(tally).map(l => LBL_COLORS[l] || "#eee");
+  pieChart.update("none");
+
+  // Recent list
+  const recent = [...rows].sort((a, b) => (b.ts || 0) - (a.ts || 0)).slice(0, 15);
+  document.getElementById("recent-list").innerHTML = recent.map(r => `
+<div class="r-row">
+  <span class="r-nick">${r.n || "—"}</span>
+  <span class="lbl-pill" style="background:${LBL_COLORS[r.lbl]||"#eee"};color:${LBL_TEXT[r.lbl]||"#333"}">${r.lbl || "—"}</span>
+</div>`).join("");
+}
+
+// ── Init charts ────────────────────────────────────────────────
+function initCharts() {
+  barChart = new Chart(document.getElementById("bar-chart"), {
+    type: "bar",
+    data: {
+      labels: OPTS.map(o => o.label),
+      datasets: [{
+        data: [0, 0, 0],
+        backgroundColor: OPTS.map(o => o.color + "bb"),
+        borderColor:     OPTS.map(o => o.color),
+        borderWidth: 1,
+        borderRadius: 5,
+      }]
+    },
+    options: {
+      indexAxis: "y",
+      responsive: true, maintainAspectRatio: false,
+      scales: {
+        x: { min: 0, max: 55, title: { display: true, text: "平均點數" } },
+      },
+      plugins: { legend: { display: false } },
+    }
+  });
+
+  pieChart = new Chart(document.getElementById("pie-chart"), {
+    type: "doughnut",
+    data: {
+      labels: ["核能派", "再生派", "均衡派"],
+      datasets: [{
+        data: [1, 1, 1],
+        backgroundColor: ["#e0e7ff", "#d1fae5", "#fef3c7"],
+        borderWidth: 1,
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { position: "bottom", labels: { font: { size: 11 } } } },
+    }
+  });
+}
+
+// ── Start dashboard ────────────────────────────────────────────
+function startDash() {
+  const v = (document.getElementById("sid-in")?.value || "").trim();
+  if (!v) { document.getElementById("sid-in")?.focus(); return; }
+  sid = v;
+  document.getElementById("setup-screen").style.display = "none";
+  document.getElementById("sid-chip").textContent = sid;
+  document.getElementById("dash-screen").style.display = "block";
+  initCharts();
+  poll();
+  pollTimer = setInterval(poll, POLL);
+}
+
+async function poll() {
+  const rows = await fetchRows();
+  update(rows);
+}
+
+// ── Auto-start if ?s= in URL ───────────────────────────────────
+(function () {
+  const s = new URLSearchParams(location.search).get("s");
+  if (s) {
+    const el = document.getElementById("sid-in");
+    if (el) { el.value = s; startDash(); }
+  }
+})();
+</script>
+</body>
+</html>
