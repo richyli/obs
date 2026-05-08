@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>2030 台灣能源決策遊戲</title>
+<title>能源政策由你決定</title>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 body {
@@ -103,18 +103,25 @@ body {
   padding: 2.2rem 1.6rem; text-align: center;
   box-shadow: 0 2px 14px rgba(0,0,0,.1);
 }
-.r-title { font-size: .82rem; color: #999; margin-bottom: .4rem; }
+.r-title { font-size: .7rem; color: #bbb; margin-bottom: .65rem; text-transform: uppercase; letter-spacing: .08em; }
 .r-lbl {
-  display: inline-block; padding: .45rem 1.4rem;
-  border-radius: 30px; font-size: 1.4rem; font-weight: 800;
-  margin-bottom: 1.4rem;
+  display: inline-block; padding: .55rem 1.8rem;
+  border-radius: 30px; font-size: 1.3rem; font-weight: 800;
+  margin-bottom: 1.8rem;
 }
-.score-block { text-align: left; margin-bottom: 1.4rem; }
-.sline { display: flex; align-items: center; gap: .7rem; margin-bottom: .6rem; }
-.sname { font-size: .8rem; color: #555; width: 75px; flex-shrink: 0; text-align: right; }
-.pbar { flex: 1; background: #eee; border-radius: 4px; height: 10px; overflow: hidden; }
-.pfill { height: 100%; border-radius: 4px; width: 0; transition: width .7s ease; }
-.snum { font-size: .85rem; font-weight: 700; min-width: 4rem; }
+.dash-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: .75rem; margin-bottom: 1.6rem;
+}
+.dash-card {
+  background: #f8f9fb; border-radius: 10px; padding: 1rem .75rem;
+  text-align: center; border: 1px solid #eef0f4;
+}
+.dash-icon { font-size: 1.2rem; margin-bottom: .35rem; }
+.dash-name { font-size: .68rem; color: #888; margin-bottom: .5rem; letter-spacing: .01em; }
+.dash-val { font-size: 1.1rem; font-weight: 800; margin-bottom: .55rem; }
+.dash-bar { height: 4px; background: #e8eaee; border-radius: 2px; overflow: hidden; }
+.dash-fill { height: 100%; border-radius: 2px; width: 0; transition: width .85s ease; }
 .result-note { font-size: .8rem; color: #aaa; line-height: 1.75; }
 .result-note a { color: #0055cc; text-decoration: none; }
 .result-note a:hover { text-decoration: underline; }
@@ -166,8 +173,8 @@ body {
 <div class="screen show" id="setup">
   <div class="center-wrap">
     <div class="setup-card">
-      <span class="emoji">🌏</span>
-      <h2>2030 台灣能源決策遊戲</h2>
+      <span class="emoji">⚡</span>
+      <h2>能源政策由你決定</h2>
       <p>你有 <strong>100 點</strong>分配給三個政策方向。<br>
          每種選擇都有代價——找到你認為對的答案。</p>
       <label>課堂代碼（老師公告）</label>
@@ -182,7 +189,7 @@ body {
 <!-- ── Screen 2: Game ── -->
 <div class="screen" id="game">
   <div class="hdr">
-    <h1>🌏 2030 能源決策遊戲</h1>
+    <h1>能源政策由你決定</h1>
     <span class="chip chip-blue" id="sid-chip">—</span>
   </div>
 
@@ -201,34 +208,37 @@ body {
 <!-- ── Screen 3: Result ── -->
 <div class="screen" id="result">
   <div class="hdr">
-    <h1>🌏 2030 能源決策遊戲</h1>
+    <h1>能源政策由你決定</h1>
     <span class="chip chip-green">已提交</span>
   </div>
   <div class="result-wrap">
     <div class="result-card">
       <div class="r-title">你的政策輪廓</div>
       <div class="r-lbl" id="r-lbl">—</div>
-      <div class="score-block">
-        <div class="sline">
-          <span class="sname">碳減量</span>
-          <div class="pbar"><div class="pfill" id="pb-co2" style="background:#10b981"></div></div>
-          <span class="snum" id="sn-co2">—</span>
+      <div class="dash-grid">
+        <div class="dash-card">
+          <div class="dash-icon">🌿</div>
+          <div class="dash-name">碳減量</div>
+          <div class="dash-val" id="sn-co2" style="color:#10b981">—</div>
+          <div class="dash-bar"><div class="dash-fill" id="pb-co2" style="background:#10b981"></div></div>
         </div>
-        <div class="sline">
-          <span class="sname">電費衝擊</span>
-          <div class="pbar"><div class="pfill" id="pb-cost" style="background:#f59e0b"></div></div>
-          <span class="snum" id="sn-cost">—</span>
+        <div class="dash-card">
+          <div class="dash-icon">💰</div>
+          <div class="dash-name">電費衝擊</div>
+          <div class="dash-val" id="sn-cost" style="color:#f59e0b">—</div>
+          <div class="dash-bar"><div class="dash-fill" id="pb-cost" style="background:#f59e0b"></div></div>
         </div>
-        <div class="sline">
-          <span class="sname">電力穩定</span>
-          <div class="pbar"><div class="pfill" id="pb-stb" style="background:#6366f1"></div></div>
-          <span class="snum" id="sn-stb">—</span>
+        <div class="dash-card">
+          <div class="dash-icon">⚡</div>
+          <div class="dash-name">電力穩定</div>
+          <div class="dash-val" id="sn-stb" style="color:#6366f1">—</div>
+          <div class="dash-bar"><div class="dash-fill" id="pb-stb" style="background:#6366f1"></div></div>
         </div>
       </div>
 
       <div class="cmp-block" id="cmp-block" style="display:none">
         <div class="cmp-hd">
-          <span class="cmp-hd-lbl">你 vs 班級平均</span>
+          <span class="cmp-hd-lbl">你與平均的比較</span>
           <span class="cmp-n" id="cmp-n">載入中…</span>
         </div>
         <div id="cmp-rows"></div>
@@ -395,7 +405,11 @@ function showResult({ lbl, sc, ch }, animate) {
   rl.style.color = lbl.tc;
 
   document.getElementById("sn-co2").textContent  = "−" + sc.co2 + "%";
-  document.getElementById("sn-cost").textContent = (sc.cost >= 0 ? "+" : "") + sc.cost + "%";
+  const costEl    = document.getElementById("sn-cost");
+  const costColor = sc.cost > 0 ? "#ef4444" : "#10b981";
+  costEl.textContent = (sc.cost >= 0 ? "+" : "") + sc.cost + "%";
+  costEl.style.color = costColor;
+  document.getElementById("pb-cost").style.background = costColor;
   document.getElementById("sn-stb").textContent  = sc.stb + "/100";
 
   const base = location.href.replace(/[^/]*$/, "");
