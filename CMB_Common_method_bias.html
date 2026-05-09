@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CMB Common method bias</title>
+<style>*, *::before, *::after { box-sizing: border-box; }
+
+/* ── Base ── */
+body {
+  font-family: "Helvetica Neue", Arial, "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+  font-size: 20px;
+  line-height: 1.9;
+  color: #111;
+  background: #fff;
+  margin: 0;
+}
+
+/* ── Two-column layout (note pages) ── */
+.layout { display: flex; align-items: flex-start; min-height: 100vh; }
+
+.sidebar {
+  width: 270px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 2rem 1rem 2rem 1.5rem;
+  border-right: 1px solid #e8e8e8;
+  background: #f9f9f9;
+}
+.sidebar-back {
+  display: block;
+  font-size: 0.82rem;
+  color: #999;
+  margin-bottom: 1.4rem;
+  text-decoration: none;
+}
+.sidebar-back:hover { color: #333; }
+.sidebar-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #bbb;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+/* ── TOC in sidebar ── */
+.toc { font-size: 0.82rem; line-height: 1.55; }
+.toc ul { list-style: none; margin: 0; padding: 0; }
+.toc ul ul { padding-left: 0.9rem; }
+.toc li { margin: 0; }
+.toc-row { display: flex; align-items: baseline; gap: 0.2rem; }
+.toc-row a {
+  flex: 1;
+  display: block;
+  padding: 0.18rem 0.3rem;
+  border-radius: 3px;
+  color: #555;
+  text-decoration: none;
+  word-break: break-word;
+}
+.toc-row a:hover { background: #ebebeb; color: #111; }
+.toc-row a.active { color: #0055cc; font-weight: 600; background: #e8f0ff; }
+.toc-toggle {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-size: 0.65rem;
+  color: #bbb;
+  line-height: 1;
+  width: 1rem;
+  text-align: center;
+}
+.toc-toggle:hover { color: #555; }
+
+/* ── Main content ── */
+.content {
+  flex: 1;
+  min-width: 0;
+  padding: 3rem 3rem 6rem;
+  max-width: 800px;
+}
+
+/* ── Single-column (index page) ── */
+.container { max-width: 800px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
+
+/* ── Typography ── */
+h1 {
+  font-size: 1.75rem; font-weight: 700;
+  margin: 0 0 0.15rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 2px solid #111;
+  line-height: 1.3;
+}
+h2 {
+  font-size: 1.3rem; font-weight: 700;
+  margin: 2.5rem 0 0.5rem;
+  padding-bottom: 0.2rem;
+  border-bottom: 1px solid #ddd;
+}
+h3 { font-size: 1.1rem; font-weight: 700; margin: 1.8rem 0 0.4rem; }
+h4 { font-size: 1rem; font-weight: 700; margin: 1.4rem 0 0.3rem; }
+p { margin: 0.9rem 0; }
+a { color: #0055cc; text-decoration: none; }
+a:hover { text-decoration: underline; }
+nav { margin-bottom: 2.5rem; font-size: 0.85rem; color: #999; }
+nav a { color: #999; }
+
+/* ── Code ── */
+code {
+  font-family: "SFMono-Regular", Consolas, monospace;
+  background: #f2f2f2;
+  padding: 0.1em 0.4em;
+  border-radius: 3px;
+  font-size: 0.85em;
+}
+pre {
+  background: #f2f2f2;
+  padding: 1.2rem 1.4rem;
+  border-radius: 5px;
+  overflow-x: auto;
+  font-size: 0.85em;
+  line-height: 1.6;
+}
+pre code { background: none; padding: 0; }
+
+/* ── Lists ── */
+ul, ol { padding-left: 1.6rem; margin: 0.8rem 0; }
+li { margin: 0.35rem 0; }
+li > ul, li > ol { margin: 0.2rem 0; }
+
+/* ── Other elements ── */
+blockquote {
+  border-left: 4px solid #ccc;
+  margin: 1.2rem 0;
+  padding: 0.3rem 1.2rem;
+  color: #444;
+  background: #fafafa;
+}
+table { border-collapse: collapse; width: 100%; margin: 1.2rem 0; font-size: 0.95em; }
+th, td { border: 1px solid #ccc; padding: 0.55rem 0.9rem; text-align: left; }
+th { background: #f5f5f5; font-weight: 700; }
+tr:nth-child(even) { background: #fafafa; }
+hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
+.meta { font-size: 0.8rem; color: #aaa; margin: 0.3rem 0 1.8rem; }
+.index-list { list-style: none; padding: 0; margin: 1rem 0; }
+.index-list li { padding: 0.55rem 0; border-bottom: 1px solid #eee; font-size: 1.05rem; }
+.index-list li:last-child { border-bottom: none; }
+.embed-block {
+  border-left: 3px solid #aaa;
+  padding: 0.5rem 1.2rem;
+  margin: 1.5rem 0;
+  background: #f8f8f8;
+}
+
+/* ── Mobile ── */
+@media (max-width: 800px) {
+  .layout { flex-direction: column; }
+  .sidebar {
+    position: static;
+    width: 100%;
+    height: auto;
+    max-height: 50vh;
+    border-right: none;
+    border-bottom: 1px solid #e8e8e8;
+    padding: 1rem 1.5rem;
+  }
+  .content { padding: 1.5rem 1.2rem 4rem; }
+}
+</style>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+<div class="toc">
+<ul>
+<li><a href="#1-cfa-marker-variable-techniqueitems">1. 加入「標記變數」題目 (CFA Marker Variable TechniqueItems)</a></li>
+<li><a href="#2-attention-checks-trap-questions">2. 加入「注意力檢測」題目 (Attention Checks / Trap Questions)</a></li>
+<li><a href="#3-social-desirability-scale">3. 加入「社會期許」量表 (Social Desirability Scale)</a></li>
+<li><a href="#4-procedural-remedies">4. 題項設計上的「程序性補救」 (Procedural Remedies)</a><ul>
+<li><a href="#a-change-scale-anchors">A. 轉換量尺錨點 (Change Scale Anchors)</a></li>
+<li><a href="#b-psychological-separation">B. 心理隔離 (Psychological Separation)</a></li>
+<li><a href="#c-reverse-coded-items">C. 反向題 (Reverse-Coded Items)</a></li>
+</ul>
+</li>
+<li><a href="#actionable-advice">總結建議 (Actionable Advice)</a></li>
+<li><a href="#_1">題目全文</a></li>
+<li><a href="#_2">題目類型</a></li>
+<li><a href="#_3">詳細解答（條列）</a></li>
+<li><a href="#_4">研究設計如何降低共同方法偏誤？並評估其限制</a><ul>
+<li><a href="#_5">題目全文</a></li>
+<li><a href="#_6">題目類型</a></li>
+<li><a href="#_7">詳細解答</a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+</aside>
+<main class="content">
+<h1>CMB Common method bias</h1>
+<p class="meta">#IS_Questions　#research　#Research/Book</p>
+<p><strong>偵測共同方法變異 (CMB)</strong>： 當問卷是<strong>「同一來源（Same Source）」</strong>（如同為受試者自填）、<strong>「同一情境（Same Context）」</strong>且<strong>「同一時間」</strong>收集時，受試者往往會因為當下的情緒、社會期許偏差（Social desirability bias）或作答慣性（如全部勾選同意），導致所有題目之間產生高度相關。這不是因為理論上的關聯，而是因為「測量方法」造成的假象。</p>
+<ul>
+<li><strong>目的</strong>：檢驗結果是否因「同一個人、同一時間、同一份問卷」填答而產生假性相關（膨脹的相關係數）。<ul>
+<li><strong>Harman 單因子檢定（Harman's Single Factor Test）</strong>：將所有變數放入因子分析，若第一個主因子的解釋變異量超過 50%，則可能存在嚴重的 CMB 問題
+<strong>檢測方法 2：全共線性檢定（Full Collinearity Test）</strong>：利用 PLS-SEM 計算所有構面的變異數擴張因子（<a href="VIF_Variance_Inflation_Factor.html">VIF Variance Inflation Factor</a>），若 VIF 值皆小於 3.3，則可認定無明顯偏差 。</li>
+</ul>
+</li>
+<li>
+<p><strong>如果不做 / 未檢驗的風險</strong>：</p>
+<ul>
+<li><strong>Reviewer 質疑點</strong>：「你的自變項與依變項相關係數這麼高，我看不是理論支持，而是因為受試者填答時的慣性（Halo Effect）造成的。如果你沒有做 Harman's Single Factor Test 或 VIF Collinearity test，我無法相信你的顯著性結果。」</li>
+</ul>
+</li>
+</ul>
+<p>Common Method Factor
+加入共同方法因素
+substantive variance
+method-based variance 0.0122
+實質性變異與方法變異的比例</p>
+<p>在問卷設計（Survey Design）中，Common Method Bias (CMB, 共同方法變異) 是一個大敵，它會導致變數之間的相關性被「人為誇大」，讓你誤以為兩個變數有關聯，但其實只是因為填答者用了同一種心態或習慣去填寫（例如：通通勾選「非常同意」）。</p>
+<p>為了避免 CMB，我們通常不會只靠「一道題目」來解決，而是透過<strong>加入特定的「功能性題目」</strong>以及<strong>調整題目的「呈現方式」</strong>。</p>
+<p>以下整理了在學術與實務 Survey 中，最常見用來偵測或抑制 CMB 的題目與設計技巧：</p>
+<h4 id="1-cfa-marker-variable-techniqueitems">1. 加入「標記變數」題目 (<a href="CFA_Marker_Variable_Technique.html">CFA Marker Variable Technique</a>Items)</h4>
+<p>這是目前最受推崇的方法之一。你會在問卷中加入一組<strong>「理論上與你研究主題完全無關」</strong>的題目。</p>
+<ul>
+<li>
+<p><strong>原理：</strong> 如果填答者在這些「無關題目」上的回答模式，竟然跟你研究的核心變數（如「工作滿意度」）高度相關，那就代表你的數據受到填答者個人習慣（如心情好就全勾高分）的影響，統計分析時可以將此變異剔除。</p>
+</li>
+<li>
+<p>最經典的例子：對藍色的態度 (Attitude Toward the Color Blue)</p>
+<p>這是 Simmering (2015) 提出的經典 Marker Variable，因為大多數的研究主題（如領導力、行銷）都跟「喜不喜歡藍色」無關。</p>
+<p><strong>題目範例（請填答者評分）：</strong></p>
+<blockquote>
+<ol>
+<li>我比較喜歡藍色勝過其他顏色。(I prefer blue to other colors.)    &gt;     </li>
+<li>我喜歡藍色。(I like the color blue.)    &gt;     </li>
+<li>我喜歡藍色的衣服。(I like blue clothes.)
+</li>
+</ol>
+</blockquote>
+<p><em>如果你的數據顯示「喜歡藍色」竟然跟「這家公司的產品很好用」有高度正相關，那就是明顯的 CMB 警訊。</em></p>
+</li>
+</ul>
+<h4 id="2-attention-checks-trap-questions">2. 加入「注意力檢測」題目 (Attention Checks / Trap Questions)</h4>
+<p>無效問卷（隨意填答、一直勾選同一個選項）是造成 CMB 的主要來源之一。加入這類題目可以篩選出不認真的填答者。</p>
+<ul>
+<li>
+<p><strong>直接指令型：</strong></p>
+<blockquote>
+<p>本題是為了確認您的填答狀況，請直接選擇「非常不同意」。(Please select 'Strongly Disagree' for this item.)</p>
+</blockquote>
+</li>
+<li>
+<p><strong>邏輯陷阱型：</strong></p>
+<blockquote>
+<p>我每天都會從地球飛到月球一次。</p>
+<p>(如果有人選「同意」，這份問卷通常會被視為無效。)</p>
+</blockquote>
+</li>
+</ul>
+<h4 id="3-social-desirability-scale">3. 加入「社會期許」量表 (Social Desirability Scale)</h4>
+<p>有些填答者會傾向回答「聽起來很道德、很正確」的答案，而非真實想法。加入這類題目可以作為控制變數。</p>
+<ul>
+<li>
+<p><strong>常見範例 (Marlowe-Crowne Short Form)：</strong></p>
+<blockquote>
+<ol>
+<li>
+<p>我從來沒有討厭過任何人。 (I have never intensely disliked anyone.)</p>
+</li>
+<li>
+<p>當我犯錯時，我總是願意承認。 (I'm always willing to admit it when I make a mistake.)
+</p>
+</li>
+</ol>
+</blockquote>
+<p><em>這類題目通常很極端，如果填答者每一題都答「是/非常同意」，代表他在過度美化自己。</em></p>
+</li>
+</ul>
+<hr />
+<h4 id="4-procedural-remedies">4. 題項設計上的「程序性補救」 (Procedural Remedies)</h4>
+<p>除了加題目，更重要的是<strong>「怎麼問」</strong>。以下是避免 CMB 的黃金法則：</p>
+<h5 id="a-change-scale-anchors">A. 轉換量尺錨點 (Change Scale Anchors)</h5>
+<p>不要讓整份問卷從第一題到最後一題都是「非常不同意 ~ 非常同意」。這會讓填答者進入「自動駕駛模式」。</p>
+<ul>
+<li>
+<p><strong>自變數 (X) 用同意度：</strong> 1 (非常不同意) ~ 7 (非常同意)</p>
+</li>
+<li>
+<p><strong>依變數 (Y) 改用頻率或重要性：</strong></p>
+<ul>
+<li>
+<p>改成：1 (從未發生) ~ 5 (總是發生)</p>
+</li>
+<li>
+<p>或是：1 (完全不重要) ~ 5 (至關重要)</p>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="b-psychological-separation">B. 心理隔離 (Psychological Separation)</h5>
+<p>透過引言或「故事包裝」，讓填答者覺得這兩部分的問卷是<strong>不相關</strong>的，切斷他們腦中想「保持一致」的念頭。</p>
+<ul>
+<li>
+<p><strong>範例引言：</strong></p>
+<blockquote>
+<p>「第一部分我們想了解公司的客觀環境與設施...（填答自變數）」</p>
+<p>（分頁或插入一段說明）</p>
+<p>「第二部分，我們想請教您關於個人主觀的工作感受...（填答依變數）」</p>
+</blockquote>
+</li>
+</ul>
+<h5 id="c-reverse-coded-items">C. 反向題 (Reverse-Coded Items)</h5>
+<p>適度使用反向題可以打破填答者的慣性（Straight-lining）。但要注意，題目語意必須非常清晰，否則會造成困擾。</p>
+<ul>
+<li>
+<p><strong>正向題：</strong> 我對這份工作感到滿意。</p>
+</li>
+<li>
+<p>反向題： 我經常想著要辭職。</p>
+<p>(注意：現代統計建議反向題不宜過多，約佔 10-15% 即可，過多反而會破壞信度。)</p>
+</li>
+</ul>
+<h4 id="actionable-advice">總結建議 (Actionable Advice)</h4>
+<p>如果你正在設計問卷，最簡單有效且不干擾填答者的組合是：</p>
+<ol>
+<li>
+<p><strong>物理隔離</strong>：將自變數 (IV) 和依變數 (DV) 放在問卷的不同分頁，不要擠在同一頁。</p>
+</li>
+<li>
+<p><strong>變換量尺</strong>：前半部用「同意程度」，後半部用「頻率」或「程度」。</p>
+</li>
+<li>
+<p><strong>加入 Marker</strong>：在最後的基本資料前，加入 3 題「藍色態度」量表。</p>
+</li>
+</ol>
+<p>這種組合在學術投稿時，通常已被視為有盡力處理 CMB 的良好證明。</p>
+<h4 id="_1">題目全文</h4>
+<p>若研究資料來自單一問卷，請說明「共同方法偏誤（common method bias）」的風險與至少兩種常見檢測/處理方式；並以本研究做法為例說明其結果應如何解讀。</p>
+<h4 id="_2">題目類型</h4>
+<p>研究方法／效度威脅</p>
+<h4 id="_3">詳細解答（條列）</h4>
+<ul>
+<li>
+<p>CMB 風險</p>
+<ul>
+<li>同一來源、同一時間、同一量測方式可能導致構念間關係被高估（假相關）。</li>
+</ul>
+</li>
+<li>
+<p>常見方式（本研究採用）</p>
+<ul>
+<li>
+<p>Harman's Single Factor Test：檢查是否單一因子解釋大部分變異（本研究：第一因子解釋 39.03%）</p>
+</li>
+<li>
+<p>加入 method factor（共同方法因子）：估計方法因子解釋的系統變異比例（本研究：focal factors 平均解釋 .83；method factor 平均 .003；比率 254:1）</p>
+</li>
+</ul>
+</li>
+<li>
+<p>解讀</p>
+<ul>
+<li>若第一因子未「壓倒性」解釋變異，且 method factor 解釋比例極小 → CMB 不太可能是主要威脅（仍可搭配程序性控管，如匿名、題項設計分散）。</li>
+</ul>
+</li>
+</ul>
+<h3 id="_4">研究設計如何降低共同方法偏誤？並評估其限制</h3>
+<h4 id="_5">題目全文</h4>
+<p>本研究使用「配對問卷」由不同角色分別填答自變數與依變數，以降低偏誤。請說明這種設計如何降低共同方法偏誤（common method bias / halo effect），並指出仍可能存在的 2–3 個研究限制。</p>
+<h4 id="_6">題目類型</h4>
+<p>研究設計＋方法論批判</p>
+<h4 id="_7">詳細解答</h4>
+<ul>
+<li>
+<p>如何降低共同方法偏誤</p>
+<ul>
+<li>將「實作因素」由最了解實作的人（如倉儲經理/負責人）填答；        </li>
+<li>將「成功/效益」由資料供應者填答（甚至鼓勵 1–2 位資料供應者），避免同一位受試者同時回答自變數與依變數而產生 halo effect。        </li>
+<li>透過多來源（multi-respondent）降低單一來源偏誤。</li>
+</ul>
+</li>
+<li>
+<p>可能限制（示範）</p>
+<ul>
+<li>
+<p>橫斷面（cross-sectional）設計：難以強因果推論，可能存在反向因果或同時性。</p>
+</li>
+<li>
+<p>仍以知覺量表為主：即使不同角色填答，仍可能有主觀偏誤或社會期許偏誤。</p>
+</li>
+<li>
+<p>樣本代表性：回收者可能偏向較成功或較成熟的倉儲專案（非回覆偏誤）。</p>
+</li>
+<li>
+<p>成功衡量偏重供應端觀點：終端使用者或高階管理者的價值認知可能不同，構面可能不完整。</p>
+</li>
+</ul>
+</li>
+</ul>
+</main>
+</div>
+<script>
+(function () {
+  // ── Rebuild TOC with toggle buttons ──────────────────────────────────────
+  var toc = document.querySelector('.sidebar .toc');
+  if (toc) {
+    toc.querySelectorAll('li').forEach(function (li) {
+      var childUl = li.querySelector(':scope > ul');
+      var link    = li.querySelector(':scope > a');
+      if (!link) return;
+
+      var row = document.createElement('div');
+      row.className = 'toc-row';
+
+      if (childUl) {
+        var btn = document.createElement('button');
+        btn.className = 'toc-toggle';
+        btn.setAttribute('aria-expanded', 'true');
+        btn.textContent = '▾';          // ▾ open
+        btn.addEventListener('click', function () {
+          var open = childUl.hidden;
+          childUl.hidden = !open;
+          btn.textContent = open ? '▾' : '▸';   // ▾ / ▸
+          btn.setAttribute('aria-expanded', String(open));
+        });
+        row.appendChild(btn);
+      } else {
+        var spacer = document.createElement('span');
+        spacer.style.width = '1rem';
+        spacer.style.flexShrink = '0';
+        row.appendChild(spacer);
+      }
+
+      row.appendChild(link);
+      li.insertBefore(row, li.firstChild);
+    });
+  }
+
+  // ── Scroll spy ───────────────────────────────────────────────────────────
+  var headings = document.querySelectorAll('.content h2[id], .content h3[id], .content h4[id]');
+  var tocLinks = document.querySelectorAll('.sidebar .toc a');
+  if (!headings.length || !tocLinks.length) return;
+
+  var current = null;
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      var link = document.querySelector('.sidebar .toc a[href="#' + e.target.id + '"]');
+      if (!link) return;
+      if (current) current.classList.remove('active');
+      current = link;
+      current.classList.add('active');
+      // Scroll link into view within sidebar
+      current.scrollIntoView({ block: 'nearest' });
+    });
+  }, { rootMargin: '-5% 0px -75% 0px', threshold: 0 });
+
+  headings.forEach(function (h) { io.observe(h); });
+}());
+</script>
+</body>
+</html>

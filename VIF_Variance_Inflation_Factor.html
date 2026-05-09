@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VIF Variance Inflation Factor</title>
+<style>*, *::before, *::after { box-sizing: border-box; }
+
+/* ── Base ── */
+body {
+  font-family: "Helvetica Neue", Arial, "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+  font-size: 20px;
+  line-height: 1.9;
+  color: #111;
+  background: #fff;
+  margin: 0;
+}
+
+/* ── Two-column layout (note pages) ── */
+.layout { display: flex; align-items: flex-start; min-height: 100vh; }
+
+.sidebar {
+  width: 270px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 2rem 1rem 2rem 1.5rem;
+  border-right: 1px solid #e8e8e8;
+  background: #f9f9f9;
+}
+.sidebar-back {
+  display: block;
+  font-size: 0.82rem;
+  color: #999;
+  margin-bottom: 1.4rem;
+  text-decoration: none;
+}
+.sidebar-back:hover { color: #333; }
+.sidebar-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #bbb;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+/* ── TOC in sidebar ── */
+.toc { font-size: 0.82rem; line-height: 1.55; }
+.toc ul { list-style: none; margin: 0; padding: 0; }
+.toc ul ul { padding-left: 0.9rem; }
+.toc li { margin: 0; }
+.toc-row { display: flex; align-items: baseline; gap: 0.2rem; }
+.toc-row a {
+  flex: 1;
+  display: block;
+  padding: 0.18rem 0.3rem;
+  border-radius: 3px;
+  color: #555;
+  text-decoration: none;
+  word-break: break-word;
+}
+.toc-row a:hover { background: #ebebeb; color: #111; }
+.toc-row a.active { color: #0055cc; font-weight: 600; background: #e8f0ff; }
+.toc-toggle {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-size: 0.65rem;
+  color: #bbb;
+  line-height: 1;
+  width: 1rem;
+  text-align: center;
+}
+.toc-toggle:hover { color: #555; }
+
+/* ── Main content ── */
+.content {
+  flex: 1;
+  min-width: 0;
+  padding: 3rem 3rem 6rem;
+  max-width: 800px;
+}
+
+/* ── Single-column (index page) ── */
+.container { max-width: 800px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
+
+/* ── Typography ── */
+h1 {
+  font-size: 1.75rem; font-weight: 700;
+  margin: 0 0 0.15rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 2px solid #111;
+  line-height: 1.3;
+}
+h2 {
+  font-size: 1.3rem; font-weight: 700;
+  margin: 2.5rem 0 0.5rem;
+  padding-bottom: 0.2rem;
+  border-bottom: 1px solid #ddd;
+}
+h3 { font-size: 1.1rem; font-weight: 700; margin: 1.8rem 0 0.4rem; }
+h4 { font-size: 1rem; font-weight: 700; margin: 1.4rem 0 0.3rem; }
+p { margin: 0.9rem 0; }
+a { color: #0055cc; text-decoration: none; }
+a:hover { text-decoration: underline; }
+nav { margin-bottom: 2.5rem; font-size: 0.85rem; color: #999; }
+nav a { color: #999; }
+
+/* ── Code ── */
+code {
+  font-family: "SFMono-Regular", Consolas, monospace;
+  background: #f2f2f2;
+  padding: 0.1em 0.4em;
+  border-radius: 3px;
+  font-size: 0.85em;
+}
+pre {
+  background: #f2f2f2;
+  padding: 1.2rem 1.4rem;
+  border-radius: 5px;
+  overflow-x: auto;
+  font-size: 0.85em;
+  line-height: 1.6;
+}
+pre code { background: none; padding: 0; }
+
+/* ── Lists ── */
+ul, ol { padding-left: 1.6rem; margin: 0.8rem 0; }
+li { margin: 0.35rem 0; }
+li > ul, li > ol { margin: 0.2rem 0; }
+
+/* ── Other elements ── */
+blockquote {
+  border-left: 4px solid #ccc;
+  margin: 1.2rem 0;
+  padding: 0.3rem 1.2rem;
+  color: #444;
+  background: #fafafa;
+}
+table { border-collapse: collapse; width: 100%; margin: 1.2rem 0; font-size: 0.95em; }
+th, td { border: 1px solid #ccc; padding: 0.55rem 0.9rem; text-align: left; }
+th { background: #f5f5f5; font-weight: 700; }
+tr:nth-child(even) { background: #fafafa; }
+hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
+.meta { font-size: 0.8rem; color: #aaa; margin: 0.3rem 0 1.8rem; }
+.index-list { list-style: none; padding: 0; margin: 1rem 0; }
+.index-list li { padding: 0.55rem 0; border-bottom: 1px solid #eee; font-size: 1.05rem; }
+.index-list li:last-child { border-bottom: none; }
+.embed-block {
+  border-left: 3px solid #aaa;
+  padding: 0.5rem 1.2rem;
+  margin: 1.5rem 0;
+  background: #f8f8f8;
+}
+
+/* ── Mobile ── */
+@media (max-width: 800px) {
+  .layout { flex-direction: column; }
+  .sidebar {
+    position: static;
+    width: 100%;
+    height: auto;
+    max-height: 50vh;
+    border-right: none;
+    border-bottom: 1px solid #e8e8e8;
+    padding: 1rem 1.5rem;
+  }
+  .content { padding: 1.5rem 1.2rem 4rem; }
+}
+</style>
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+<div class="toc">
+<ul>
+<li><a href="#collinearity">共線性（Collinearity）</a></li>
+<li><a href="#vif">研究如何檢查多重共線性？VIF 的判讀與管理研究的影響是什麼？</a><ul>
+<li><a href="#_1">題目類型</a></li>
+<li><a href="#_2">詳細解答（條列）</a></li>
+<li><a href="#vif_1">一、 VIF 的核心意義</a><ul>
+<li><a href="#_3">數學原理 (不用死背，懂邏輯就好)</a></li>
+</ul>
+</li>
+<li><a href="#thresholds-reviewer">二、 判斷標準 (Thresholds) - 這是 Reviewer 攻防重點</a></li>
+<li><a href="#pls-sem-vif">三、 PLS-SEM 中的兩種 VIF</a><ul>
+<li><a href="#1-outer-vif-vif-">1. Outer VIF (外部 VIF) - 測量模型</a></li>
+<li><a href="#2-inner-vif-vif-">2. Inner VIF (內部 VIF) - 結構模型</a></li>
+</ul>
+</li>
+<li><a href="#vif_2">四、 VIF 過高怎麼辦？ (解決方案)</a></li>
+<li><a href="#_4">總結</a></li>
+<li><a href="#_5">共線性與變數篩選</a></li>
+</ul>
+</li>
+<li><a href="#_6">題目全文</a></li>
+<li><a href="#_7">題目類型</a></li>
+<li><a href="#_8">詳細解答</a></li>
+</ul>
+</div>
+
+</aside>
+<main class="content">
+<h1>VIF Variance Inflation Factor</h1>
+
+<p>Variance Inflation</p>
+<p>Full Collinearity Assessment</p>
+<p><a href="VIF_Variance_Inflation_Factor.html">Full Collinearity Assessment</a></p>
+<p>現在通常要求跑</p>
+<h3 id="collinearity">共線性（Collinearity）</h3>
+<p><strong>判斷標準</strong>：一般而言，若 VIF &gt; 10 表示有嚴重的共線性問題；較嚴格的標準則設為 VIF &gt; 5 或 VIF &gt; 3。</p>
+<p>Multicollinearity 共線性</p>
+<h3 id="vif">研究如何檢查多重共線性？VIF 的判讀與管理研究的影響是什麼？</h3>
+<p>請說明：什麼是 VIF（variance inflation factor）？若你在直播電商模型中發現 VIF 偏高，對係數估計與研究結論可能造成什麼影響？</p>
+<h4 id="_1">題目類型</h4>
+<p>研究方法（診斷檢定）</p>
+<h4 id="_2">詳細解答（條列）</h4>
+<ul>
+<li>
+<p>VIF 定義：衡量某自變數可被其他自變數解釋的程度；越高表示共線性越嚴重、標準誤膨脹越大。</p>
+</li>
+<li>
+<p>VIF 偏高的影響：</p>
+<ul>
+<li>
+<p>係數可能仍無偏（在模型正確下），但標準誤變大 → 顯著性下降 → 重要變數可能變「不顯著」。</p>
+</li>
+<li>
+<p>係數符號與大小可能不穩定（對樣本切換敏感），削弱管理意涵的可解釋性。</p>
+</li>
+</ul>
+</li>
+<li>
+<p>常見處理：</p>
+<ul>
+<li>重新定義變數、刪減高度相關變數、主成分／因子化、或以理論導向保留關鍵變數。</li>
+</ul>
+</li>
+</ul>
+<p>針對博士資格考與學術研究，<strong>VIF (Variance Inflation Factor，變異數膨脹因子)</strong> 是檢測 <strong>「多重共線性 (Multicollinearity)」</strong> 的標準指標。</p>
+<p>簡單來說，它用來偵測你的<strong>自變數 (Independent Variables) 之間是否「打架」了</strong>。如果 VIF 太高，代表自變數彼此太像，導致模型分不清楚到底是誰在影響依變項。</p>
+<p>以下為您拆解 VIF 的原理、判斷標準與解決方案。</p>
+<hr />
+<h4 id="vif_1">一、 VIF 的核心意義</h4>
+<p><strong>一句話定義</strong>：</p>
+<blockquote>
+<p>「VIF 告訴你，因為你的自變數彼此高度相關，導致估計係數的『變異數 (Variance)』被『膨脹 (Inflated)』了幾倍。」</p>
+</blockquote>
+<ul>
+<li><strong>理想狀態 (VIF = 1)</strong>：自變數之間完全獨立，互不干擾。這是最乾淨的。    </li>
+<li><strong>共線性狀態 (VIF 高)</strong>：自變數 A 跟自變數 B 高度重疊（例如：「身高」跟「腿長」同時放入模型）。這會導致標準誤 (Standard Error) 變大，t 值變小，原本顯著的路徑變成不顯著。    </li>
+</ul>
+<h5 id="_3">數學原理 (不用死背，懂邏輯就好)</h5>
+<p>$$VIF_i = \frac{1}{1 - R_i^2}$$</p>
+<ul>
+<li>
+<p>這裡的 $R_i^2$ <strong>不是</strong>你主模型的 $R^2$。</p>
+</li>
+<li>
+<p>它是把 <strong>「第 $i$ 個自變數」當作依變項</strong>，去對 <strong>「其他所有自變數」</strong> 跑迴歸得到的 $R^2$。</p>
+</li>
+<li>
+<p><strong>邏輯</strong>：如果自變數 A 可以被自變數 B、C 完美預測 ($R^2 \approx 1$)，分母就會趨近於 0，VIF 就會趨近無限大 $\rightarrow$ <strong>嚴重共線性</strong>。</p>
+</li>
+</ul>
+<hr />
+<h4 id="thresholds-reviewer">二、 判斷標準 (Thresholds) - 這是 Reviewer 攻防重點</h4>
+<p>學術界對 VIF 的容忍度有分「寬鬆派」與「嚴謹派」。在 PLS-SEM 或高品質期刊中，建議採用<strong>嚴謹標準</strong>。</p>
+<table>
+<thead>
+<tr>
+<th><strong>VIF 數值</strong></th>
+<th><strong>狀態</strong></th>
+<th><strong>意義與建議</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>VIF &lt; 3 (或 3.3)</strong></td>
+<td><strong>🟢 完美 (Ideal)</strong></td>
+<td><strong>無共線性問題</strong>。<br><br>  <br><br>符合 Hair et al. (2022) 在 PLS-SEM 的嚴謹建議。</td>
+</tr>
+<tr>
+<td><strong>3 &lt; VIF &lt; 5</strong></td>
+<td><strong>🟡 可接受 (Acceptable)</strong></td>
+<td><strong>尚可接受</strong>。<br><br>  <br><br>在傳統社會科學迴歸分析中 (Hair et al., 2010)，5 以下通常不會被刁難。</td>
+</tr>
+<tr>
+<td><strong>5 &lt; VIF &lt; 10</strong></td>
+<td><strong>🟠 危險 (Concern)</strong></td>
+<td><strong>有明顯共線性</strong>。<br><br>  <br><br>係數估計開始不穩定，Reviewer 會要求解釋或處理。</td>
+</tr>
+<tr>
+<td><strong>VIF &gt; 10</strong></td>
+<td><strong>🔴 嚴重 (Critical)</strong></td>
+<td><strong>模型無效</strong>。<br><br>  <br><br>(Cohen et al., 2003) 這是絕對死刑，必須刪除變數或合併。</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>博士考場策略</strong>：</p>
+<p>如果你的 VIF 是 4.2，Reviewer 質疑時，請引用 <strong>Hair et al. (2010)</strong> 說 5 以下可接受。</p>
+<p>如果你的 VIF 是 2.5，請引用 <strong>Hair et al. (2022)</strong> 炫耀說你符合 3 以下的嚴格標準。</p>
+</blockquote>
+<hr />
+<h4 id="pls-sem-vif">三、 PLS-SEM 中的兩種 VIF</h4>
+<p>在 SmartPLS 中，VIF 會出現在兩個地方，請務必分清楚：</p>
+<h5 id="1-outer-vif-vif-">1. Outer VIF (外部 VIF) - 測量模型</h5>
+<ul>
+<li>
+<p><strong>位置</strong>：檢驗 <strong>形成性指標 (Formative Indicators)</strong> 時使用。</p>
+</li>
+<li>
+<p><strong>目的</strong>：檢查同一個構面下的題目是否太像？</p>
+</li>
+<li>
+<p><strong>標準</strong>：若 Outer VIF &gt; 5，代表題目冗餘，應刪除權重低且不顯著的題目。</p>
+</li>
+<li>
+<p><em>(註：反映性指標 Reflective 雖然也會算 VIF，但通常不重要，因為反映性指標本來就該高度相關。)</em></p>
+</li>
+</ul>
+<h5 id="2-inner-vif-vif-">2. Inner VIF (內部 VIF) - 結構模型</h5>
+<ul>
+<li><strong>位置</strong>：檢驗 <strong>結構路徑 (Structural Model)</strong> 時使用。    </li>
+<li><strong>目的</strong>：檢查指向同一個依變項的「多個自變項」之間是否有共線性。    </li>
+<li><strong>例子</strong>：如果你用「滿意度」和「愉悅度」同時去預測「忠誠度」，這兩個自變項的 Inner VIF 可能會爆表。</li>
+</ul>
+<hr />
+<h4 id="vif_2">四、 VIF 過高怎麼辦？ (解決方案)</h4>
+<p>如果你的 VIF 飆到 8 或 10，請採取以下步驟：</p>
+<ol>
+<li>
+<p><strong>刪除變數 (Eliminate)</strong>：</p>
+<ul>
+<li>
+<p>找出造成共線性的兩個變數（看相關係數矩陣）。</p>
+</li>
+<li>
+<p>保留理論上比較重要的那個，刪掉比較次要的那個。</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>合併變數 (Merge)</strong>：</p>
+<ul>
+<li>如果兩個變數真的太像（如「信任」與「信賴」），承認它們是同一件事。將它們合併成一個高階構面 (Higher-order Construct)。</li>
+</ul>
+</li>
+<li>
+<p><strong>使用不同指標</strong>：</p>
+<ul>
+<li>如果是形成性指標，嘗試換一個比較不相關的題目來測量。</li>
+</ul>
+</li>
+</ol>
+<h4 id="_4">總結</h4>
+<ul>
+<li>
+<p><strong>VIF</strong> 是「多重共線性」的警報器。</p>
+</li>
+<li>
+<p><strong>&lt; 3.3</strong> 是資優生。</p>
+</li>
+<li>
+<p><strong>&lt; 5</strong> 是及格邊緣。</p>
+</li>
+<li>
+<p><strong>&gt; 5</strong> 就要準備好理由或修模型了。</p>
+</li>
+</ul>
+<h4 id="_5">共線性與變數篩選</h4>
+<h2 id="_6">題目全文</h2>
+<p>在使用多元回歸分析探討影響銷售績效的因素時，研究者可能會同時放入「總觀看次數」、「按讚數」、「粉絲數」與「平均觀看時長」。請指出這類做法可能面臨什麼統計問題？請定義該問題，說明如何透過「變異數膨脹因子（VIF）」進行檢測（包含判斷標準），以及若發生此問題應如何處理？</p>
+<h2 id="_7">題目類型</h2>
+<p>信效度檢驗與統計問題（Reliability, Validity &amp; Statistical Issues）</p>
+<h2 id="_8">詳細解答</h2>
+<ul>
+<li>
+<p><strong>統計問題：多重共線性 (Multicollinearity)</strong>：</p>
+<ul>
+<li>
+<p><strong>定義</strong>：模型中的自變數之間存在高度相關性，導致無法精確估計個別自變數對應變數的獨立影響力。這會使回歸係數的標準誤（Standard Error）變大，降低檢定力（t值變小），導致變數不顯著即便其理論上重要。</p>
+</li>
+<li>
+<p><strong>情境</strong>：觀看次數、按讚數與粉絲數通常高度正相關（流量大通常讚數也多）。</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>VIF 檢測</strong>：</p>
+<ul>
+<li>
+<p><strong>定義</strong>：$VIF_i = 1 / (1 - R_i^2)$，其中 $R_i^2$ 是將第 $i$ 個自變數對其他自變數做回歸所得的判定係數。</p>
+</li>
+<li>
+<p><strong>判斷標準</strong>：一般而言，若 VIF &gt; 10 表示有嚴重的共線性問題；較嚴格的標準則設為 VIF &gt; 5 或 VIF &gt; 3。</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>處理方式</strong>：</p>
+<ul>
+<li><strong>移除變數</strong>：移除相關性過高且理論意義重複的變數。        </li>
+<li><strong>變數合併</strong>：將高度相關的變數組合成一個複合指標（如：互動指數）。        </li>
+<li><strong>逐步回歸</strong>：使用 Stepwise Regression 篩選變數（但需謹慎解釋）。</li>
+</ul>
+</li>
+</ul>
+</main>
+</div>
+<script>
+(function () {
+  // ── Rebuild TOC with toggle buttons ──────────────────────────────────────
+  var toc = document.querySelector('.sidebar .toc');
+  if (toc) {
+    toc.querySelectorAll('li').forEach(function (li) {
+      var childUl = li.querySelector(':scope > ul');
+      var link    = li.querySelector(':scope > a');
+      if (!link) return;
+
+      var row = document.createElement('div');
+      row.className = 'toc-row';
+
+      if (childUl) {
+        var btn = document.createElement('button');
+        btn.className = 'toc-toggle';
+        btn.setAttribute('aria-expanded', 'true');
+        btn.textContent = '▾';          // ▾ open
+        btn.addEventListener('click', function () {
+          var open = childUl.hidden;
+          childUl.hidden = !open;
+          btn.textContent = open ? '▾' : '▸';   // ▾ / ▸
+          btn.setAttribute('aria-expanded', String(open));
+        });
+        row.appendChild(btn);
+      } else {
+        var spacer = document.createElement('span');
+        spacer.style.width = '1rem';
+        spacer.style.flexShrink = '0';
+        row.appendChild(spacer);
+      }
+
+      row.appendChild(link);
+      li.insertBefore(row, li.firstChild);
+    });
+  }
+
+  // ── Scroll spy ───────────────────────────────────────────────────────────
+  var headings = document.querySelectorAll('.content h2[id], .content h3[id], .content h4[id]');
+  var tocLinks = document.querySelectorAll('.sidebar .toc a');
+  if (!headings.length || !tocLinks.length) return;
+
+  var current = null;
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      var link = document.querySelector('.sidebar .toc a[href="#' + e.target.id + '"]');
+      if (!link) return;
+      if (current) current.classList.remove('active');
+      current = link;
+      current.classList.add('active');
+      // Scroll link into view within sidebar
+      current.scrollIntoView({ block: 'nearest' });
+    });
+  }, { rootMargin: '-5% 0px -75% 0px', threshold: 0 });
+
+  headings.forEach(function (h) { io.observe(h); });
+}());
+</script>
+</body>
+</html>

@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HTMT</title>
+<style>*, *::before, *::after { box-sizing: border-box; }
+
+/* ── Base ── */
+body {
+  font-family: "Helvetica Neue", Arial, "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+  font-size: 20px;
+  line-height: 1.9;
+  color: #111;
+  background: #fff;
+  margin: 0;
+}
+
+/* ── Two-column layout (note pages) ── */
+.layout { display: flex; align-items: flex-start; min-height: 100vh; }
+
+.sidebar {
+  width: 270px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 2rem 1rem 2rem 1.5rem;
+  border-right: 1px solid #e8e8e8;
+  background: #f9f9f9;
+}
+.sidebar-back {
+  display: block;
+  font-size: 0.82rem;
+  color: #999;
+  margin-bottom: 1.4rem;
+  text-decoration: none;
+}
+.sidebar-back:hover { color: #333; }
+.sidebar-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #bbb;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+/* ── TOC in sidebar ── */
+.toc { font-size: 0.82rem; line-height: 1.55; }
+.toc ul { list-style: none; margin: 0; padding: 0; }
+.toc ul ul { padding-left: 0.9rem; }
+.toc li { margin: 0; }
+.toc-row { display: flex; align-items: baseline; gap: 0.2rem; }
+.toc-row a {
+  flex: 1;
+  display: block;
+  padding: 0.18rem 0.3rem;
+  border-radius: 3px;
+  color: #555;
+  text-decoration: none;
+  word-break: break-word;
+}
+.toc-row a:hover { background: #ebebeb; color: #111; }
+.toc-row a.active { color: #0055cc; font-weight: 600; background: #e8f0ff; }
+.toc-toggle {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-size: 0.65rem;
+  color: #bbb;
+  line-height: 1;
+  width: 1rem;
+  text-align: center;
+}
+.toc-toggle:hover { color: #555; }
+
+/* ── Main content ── */
+.content {
+  flex: 1;
+  min-width: 0;
+  padding: 3rem 3rem 6rem;
+  max-width: 800px;
+}
+
+/* ── Single-column (index page) ── */
+.container { max-width: 800px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
+
+/* ── Typography ── */
+h1 {
+  font-size: 1.75rem; font-weight: 700;
+  margin: 0 0 0.15rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 2px solid #111;
+  line-height: 1.3;
+}
+h2 {
+  font-size: 1.3rem; font-weight: 700;
+  margin: 2.5rem 0 0.5rem;
+  padding-bottom: 0.2rem;
+  border-bottom: 1px solid #ddd;
+}
+h3 { font-size: 1.1rem; font-weight: 700; margin: 1.8rem 0 0.4rem; }
+h4 { font-size: 1rem; font-weight: 700; margin: 1.4rem 0 0.3rem; }
+p { margin: 0.9rem 0; }
+a { color: #0055cc; text-decoration: none; }
+a:hover { text-decoration: underline; }
+nav { margin-bottom: 2.5rem; font-size: 0.85rem; color: #999; }
+nav a { color: #999; }
+
+/* ── Code ── */
+code {
+  font-family: "SFMono-Regular", Consolas, monospace;
+  background: #f2f2f2;
+  padding: 0.1em 0.4em;
+  border-radius: 3px;
+  font-size: 0.85em;
+}
+pre {
+  background: #f2f2f2;
+  padding: 1.2rem 1.4rem;
+  border-radius: 5px;
+  overflow-x: auto;
+  font-size: 0.85em;
+  line-height: 1.6;
+}
+pre code { background: none; padding: 0; }
+
+/* ── Lists ── */
+ul, ol { padding-left: 1.6rem; margin: 0.8rem 0; }
+li { margin: 0.35rem 0; }
+li > ul, li > ol { margin: 0.2rem 0; }
+
+/* ── Other elements ── */
+blockquote {
+  border-left: 4px solid #ccc;
+  margin: 1.2rem 0;
+  padding: 0.3rem 1.2rem;
+  color: #444;
+  background: #fafafa;
+}
+table { border-collapse: collapse; width: 100%; margin: 1.2rem 0; font-size: 0.95em; }
+th, td { border: 1px solid #ccc; padding: 0.55rem 0.9rem; text-align: left; }
+th { background: #f5f5f5; font-weight: 700; }
+tr:nth-child(even) { background: #fafafa; }
+hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
+.meta { font-size: 0.8rem; color: #aaa; margin: 0.3rem 0 1.8rem; }
+.index-list { list-style: none; padding: 0; margin: 1rem 0; }
+.index-list li { padding: 0.55rem 0; border-bottom: 1px solid #eee; font-size: 1.05rem; }
+.index-list li:last-child { border-bottom: none; }
+.embed-block {
+  border-left: 3px solid #aaa;
+  padding: 0.5rem 1.2rem;
+  margin: 1.5rem 0;
+  background: #f8f8f8;
+}
+
+/* ── Mobile ── */
+@media (max-width: 800px) {
+  .layout { flex-direction: column; }
+  .sidebar {
+    position: static;
+    width: 100%;
+    height: auto;
+    max-height: 50vh;
+    border-right: none;
+    border-bottom: 1px solid #e8e8e8;
+    padding: 1rem 1.5rem;
+  }
+  .content { padding: 1.5rem 1.2rem 4rem; }
+}
+</style>
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+<div class="toc">
+<ul>
+<li><a href="#htmt">一、 為什麼我們需要 HTMT？（它解決了什麼問題？）</a></li>
+<li><a href="#htmt_1">二、 HTMT 的兩種判讀標準</a><ul>
+<li><a href="#1-htmt-htmt-criterion">1. HTMT 數值標準 (HTMT Criterion)</a></li>
+<li><a href="#2-htmt-htmt-inference-">2. HTMT 推論檢定 (HTMT Inference) - 高分關鍵</a></li>
+</ul>
+</li>
+<li><a href="#htmt_2">三、 HTMT 檢驗流程圖與對策</a></li>
+<li><a href="#_1">四、 博士考場上的「話術」</a></li>
+<li><a href="#_2">總結</a></li>
+</ul>
+</div>
+
+</aside>
+<main class="content">
+<h1>HTMT</h1>
+<p class="meta">#Research/Book　#Research/Validity</p>
+<p>Heterotrait-Monotrait Ratio
+衡量構念間的差異，HTMT 值應小於 0.85 或 0.9。</p>
+<p><strong>HTMT (Heterotrait-Monotrait Ratio of Correlations)</strong> 是目前結構方程模型（特別是 PLS-SEM）中，用來檢驗 <strong>「區別效度 (Discriminant Validity 區別校度)」</strong> 的最新、最嚴謹的指標。</p>
+<p>簡單來說，它的唯一功用就是回答這個問題：<strong>「你的構面 A 和構面 B，在統計上真的是兩個不同的東西嗎？還是其實根本是一樣的？」</strong></p>
+<p>以下是針對博士資格考與回應 Reviewer 必備的 HTMT 完整解析：</p>
+<hr />
+<h4 id="htmt">一、 為什麼我們需要 HTMT？（它解決了什麼問題？）</h4>
+<p>在 2015 年 Henseler 等人提出 HTMT 之前，學術界通用 <strong><a href="Fornell-Larcker.html">Fornell-Larcker</a> Criterion</strong>。但後來的模擬研究發現了一個致命缺點：<strong>Fornell-Larcker 太遲鈍了（Lack of Sensitivity）。</strong></p>
+<ul>
+<li>
+<p><strong>Fornell-Larcker 的問題</strong>：即便兩個構面相關性極高（例如 0.95），Fornell-Larcker 經常還是會顯示「通過檢驗」。這導致研究者誤以為構面有區別，但其實是在測量同一件事。</p>
+</li>
+<li>
+<p><strong>HTMT 的優勢</strong>：它是基於題目間相關性的比率，能夠非常敏感地偵測出區別效度的問題。<strong>如果在 PLS-SEM 中沒報 HTMT，等於沒做區別效度檢驗。</strong></p>
+</li>
+</ul>
+<hr />
+<h4 id="htmt_1">二、 HTMT 的兩種判讀標準</h4>
+<p>博士生必須知道，HTMT 有兩種檢驗方式：一種是看數值（Criterion），一種是看信賴區間（Inference）。<strong>後者更嚴謹</strong>。</p>
+<h5 id="1-htmt-htmt-criterion">1. HTMT 數值標準 (HTMT Criterion)</h5>
+<p>這是最直觀的判斷法。</p>
+<ul>
+<li>
+<p><strong>嚴謹標準 (Conservative)</strong>： <strong>HTMT $< 0.85$</strong></p>
+<ul>
+<li>代表兩個構面確實不同。</li>
+</ul>
+</li>
+<li>
+<p><strong>寬鬆標準 (Liberal)</strong>： <strong>HTMT $< 0.90$</strong></p>
+<ul>
+<li>在概念比較接近的模型中（如「滿意度」與「忠誠度」），0.90 以下通常可被接受。</li>
+</ul>
+</li>
+<li>
+<p><strong>如果不通過 ($> 0.90$)</strong>：</p>
+<ul>
+<li>代表受試者認為這兩個構面是同一件事。你的模型結構有問題。</li>
+</ul>
+</li>
+</ul>
+<h5 id="2-htmt-htmt-inference-">2. HTMT 推論檢定 (HTMT Inference) - <strong>高分關鍵</strong></h5>
+<p>這是透過 <strong>Bootstrapping</strong> (拔靴法) 跑出來的信賴區間檢定，比單看數值更具說服力。</p>
+<ul>
+<li>
+<p><strong>檢驗邏輯</strong>：檢查 HTMT 的 <strong>90% 或 95% 信賴區間 (Confidence Interval, CI)</strong>。</p>
+</li>
+<li>
+<p><strong>通過標準</strong>：<strong>信賴區間不包含 1</strong>。</p>
+<ul>
+<li>
+<p><em>範例</em>：CI = $[0.75, 0.89]$ $\rightarrow$ 通過（最大值小於 1）。</p>
+</li>
+<li>
+<p><em>範例</em>：CI = $[0.85, 1.02]$ $\rightarrow$ 失敗（區間包含 1，代表在母體中兩者可能完全相關）。</p>
+</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h4 id="htmt_2">三、 HTMT 檢驗流程圖與對策</h4>
+<p>如果您的 HTMT 爆掉了（例如 0.95），Reviewer 肯定會質疑。以下是標準處理流程：</p>
+<table>
+<thead>
+<tr>
+<th><strong>檢驗情況</strong></th>
+<th><strong>判讀 (Diagnosis)</strong></th>
+<th><strong>解決方案 (Solution)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>HTMT &lt; 0.85</strong></td>
+<td><strong>完美</strong>。區別效度確立。</td>
+<td>直接報告，並強調符合 Henseler et al. (2015) 標準。</td>
+</tr>
+<tr>
+<td><strong>0.85 &lt; HTMT &lt; 0.90</strong></td>
+<td><strong>尚可</strong>。概念上雖有重疊但可區分。</td>
+<td>引用文獻（如 Gold et al., 2001）說明 0.90 是可接受門檻。</td>
+</tr>
+<tr>
+<td><strong>HTMT &gt; 0.90</strong></td>
+<td><strong>危險</strong>。區別效度失敗。</td>
+<td><strong>方案 A (合併)</strong>：既然分不開，就將兩個構面合併成一個高階構面。<br><strong>方案 B (刪題)</strong>：檢查題目，找出造成高相關的「雙重負荷題」並刪除。<br><strong>方案 C (切分)</strong>：將其中一個構面轉為形成性 (Formative) 或高階 (Second-order)。</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h4 id="_1">四、 博士考場上的「話術」</h4>
+<p>如果口試委員問：「你為什麼不用傳統的 Fornell-Larcker，而要強調這個沒聽過的 HTMT？」</p>
+<p><strong>請這樣回答：</strong></p>
+<blockquote>
+<p>「雖然 Fornell-Larcker 過去是主流標準，但根據 <strong>Henseler, Ringle, &amp; Sarstedt (2015)</strong> 的模擬研究指出，Fornell-Larcker 在偵測區別效度缺失時的敏感度極低（Low Sensitivity），容易產生型二錯誤（即明明沒有區別效度卻誤判為有）。</p>
+<p>為了確保本研究構面的獨立性與嚴謹度，我採用更具統計檢定力的 <strong>HTMT (Heterotrait-Monotrait Ratio)</strong>。本研究結果顯示所有構面間的 HTMT 值皆小於 0.85，且 Bootstrapping 信賴區間不包含 1，這比傳統方法提供了更強有力的區別效度證據。」</p>
+</blockquote>
+<h4 id="_2">總結</h4>
+<p>HTMT 的功用 = 當代最嚴格的照妖鏡。</p>
+<p>它用來證明你的 A 變數和 B 變數不是混在一起的麵團，而是兩塊獨立的磚頭。</p>
+<p>下一步</p>
+<p>方法論的檢驗指標我們已經談得非常透徹了。</p>
+<p>接下來，您是否需要針對<strong>「論文寫作 (Writing)」部分，例如：「如何撰寫 Discussion 章節的五段式架構」，或者「如何回應 Reviewer 的刁鑽提問 (Response Letter)」</strong>進行準備？這將是從分析通往發表的最後一步。</p>
+</main>
+</div>
+<script>
+(function () {
+  // ── Rebuild TOC with toggle buttons ──────────────────────────────────────
+  var toc = document.querySelector('.sidebar .toc');
+  if (toc) {
+    toc.querySelectorAll('li').forEach(function (li) {
+      var childUl = li.querySelector(':scope > ul');
+      var link    = li.querySelector(':scope > a');
+      if (!link) return;
+
+      var row = document.createElement('div');
+      row.className = 'toc-row';
+
+      if (childUl) {
+        var btn = document.createElement('button');
+        btn.className = 'toc-toggle';
+        btn.setAttribute('aria-expanded', 'true');
+        btn.textContent = '▾';          // ▾ open
+        btn.addEventListener('click', function () {
+          var open = childUl.hidden;
+          childUl.hidden = !open;
+          btn.textContent = open ? '▾' : '▸';   // ▾ / ▸
+          btn.setAttribute('aria-expanded', String(open));
+        });
+        row.appendChild(btn);
+      } else {
+        var spacer = document.createElement('span');
+        spacer.style.width = '1rem';
+        spacer.style.flexShrink = '0';
+        row.appendChild(spacer);
+      }
+
+      row.appendChild(link);
+      li.insertBefore(row, li.firstChild);
+    });
+  }
+
+  // ── Scroll spy ───────────────────────────────────────────────────────────
+  var headings = document.querySelectorAll('.content h2[id], .content h3[id], .content h4[id]');
+  var tocLinks = document.querySelectorAll('.sidebar .toc a');
+  if (!headings.length || !tocLinks.length) return;
+
+  var current = null;
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      var link = document.querySelector('.sidebar .toc a[href="#' + e.target.id + '"]');
+      if (!link) return;
+      if (current) current.classList.remove('active');
+      current = link;
+      current.classList.add('active');
+      // Scroll link into view within sidebar
+      current.scrollIntoView({ block: 'nearest' });
+    });
+  }, { rootMargin: '-5% 0px -75% 0px', threshold: 0 });
+
+  headings.forEach(function (h) { io.observe(h); });
+}());
+</script>
+</body>
+</html>

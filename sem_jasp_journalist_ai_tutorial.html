@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>sem_jasp_journalist_ai_tutorial</title>
+<style>*, *::before, *::after { box-sizing: border-box; }
+
+/* ── Base ── */
+body {
+  font-family: "Helvetica Neue", Arial, "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+  font-size: 20px;
+  line-height: 1.9;
+  color: #111;
+  background: #fff;
+  margin: 0;
+}
+
+/* ── Two-column layout (note pages) ── */
+.layout { display: flex; align-items: flex-start; min-height: 100vh; }
+
+.sidebar {
+  width: 270px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 2rem 1rem 2rem 1.5rem;
+  border-right: 1px solid #e8e8e8;
+  background: #f9f9f9;
+}
+.sidebar-back {
+  display: block;
+  font-size: 0.82rem;
+  color: #999;
+  margin-bottom: 1.4rem;
+  text-decoration: none;
+}
+.sidebar-back:hover { color: #333; }
+.sidebar-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #bbb;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+/* ── TOC in sidebar ── */
+.toc { font-size: 0.82rem; line-height: 1.55; }
+.toc ul { list-style: none; margin: 0; padding: 0; }
+.toc ul ul { padding-left: 0.9rem; }
+.toc li { margin: 0; }
+.toc-row { display: flex; align-items: baseline; gap: 0.2rem; }
+.toc-row a {
+  flex: 1;
+  display: block;
+  padding: 0.18rem 0.3rem;
+  border-radius: 3px;
+  color: #555;
+  text-decoration: none;
+  word-break: break-word;
+}
+.toc-row a:hover { background: #ebebeb; color: #111; }
+.toc-row a.active { color: #0055cc; font-weight: 600; background: #e8f0ff; }
+.toc-toggle {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-size: 0.65rem;
+  color: #bbb;
+  line-height: 1;
+  width: 1rem;
+  text-align: center;
+}
+.toc-toggle:hover { color: #555; }
+
+/* ── Main content ── */
+.content {
+  flex: 1;
+  min-width: 0;
+  padding: 3rem 3rem 6rem;
+  max-width: 800px;
+}
+
+/* ── Single-column (index page) ── */
+.container { max-width: 800px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
+
+/* ── Typography ── */
+h1 {
+  font-size: 1.75rem; font-weight: 700;
+  margin: 0 0 0.15rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 2px solid #111;
+  line-height: 1.3;
+}
+h2 {
+  font-size: 1.3rem; font-weight: 700;
+  margin: 2.5rem 0 0.5rem;
+  padding-bottom: 0.2rem;
+  border-bottom: 1px solid #ddd;
+}
+h3 { font-size: 1.1rem; font-weight: 700; margin: 1.8rem 0 0.4rem; }
+h4 { font-size: 1rem; font-weight: 700; margin: 1.4rem 0 0.3rem; }
+p { margin: 0.9rem 0; }
+a { color: #0055cc; text-decoration: none; }
+a:hover { text-decoration: underline; }
+nav { margin-bottom: 2.5rem; font-size: 0.85rem; color: #999; }
+nav a { color: #999; }
+
+/* ── Code ── */
+code {
+  font-family: "SFMono-Regular", Consolas, monospace;
+  background: #f2f2f2;
+  padding: 0.1em 0.4em;
+  border-radius: 3px;
+  font-size: 0.85em;
+}
+pre {
+  background: #f2f2f2;
+  padding: 1.2rem 1.4rem;
+  border-radius: 5px;
+  overflow-x: auto;
+  font-size: 0.85em;
+  line-height: 1.6;
+}
+pre code { background: none; padding: 0; }
+
+/* ── Lists ── */
+ul, ol { padding-left: 1.6rem; margin: 0.8rem 0; }
+li { margin: 0.35rem 0; }
+li > ul, li > ol { margin: 0.2rem 0; }
+
+/* ── Other elements ── */
+blockquote {
+  border-left: 4px solid #ccc;
+  margin: 1.2rem 0;
+  padding: 0.3rem 1.2rem;
+  color: #444;
+  background: #fafafa;
+}
+table { border-collapse: collapse; width: 100%; margin: 1.2rem 0; font-size: 0.95em; }
+th, td { border: 1px solid #ccc; padding: 0.55rem 0.9rem; text-align: left; }
+th { background: #f5f5f5; font-weight: 700; }
+tr:nth-child(even) { background: #fafafa; }
+hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
+.meta { font-size: 0.8rem; color: #aaa; margin: 0.3rem 0 1.8rem; }
+.index-list { list-style: none; padding: 0; margin: 1rem 0; }
+.index-list li { padding: 0.55rem 0; border-bottom: 1px solid #eee; font-size: 1.05rem; }
+.index-list li:last-child { border-bottom: none; }
+.embed-block {
+  border-left: 3px solid #aaa;
+  padding: 0.5rem 1.2rem;
+  margin: 1.5rem 0;
+  background: #f8f8f8;
+}
+
+/* ── Mobile ── */
+@media (max-width: 800px) {
+  .layout { flex-direction: column; }
+  .sidebar {
+    position: static;
+    width: 100%;
+    height: auto;
+    max-height: 50vh;
+    border-right: none;
+    border-bottom: 1px solid #e8e8e8;
+    padding: 1rem 1.5rem;
+  }
+  .content { padding: 1.5rem 1.2rem 4rem; }
+}
+</style>
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+<div class="toc">
+<ul>
+<li><a href="#1">第 1 講｜為什麼不只是「跑迴歸」？</a></li>
+<li><a href="#2">第 2 講｜把問卷對應成潛在構念</a></li>
+<li><a href="#3">第 3 講｜畫出假設模型</a></li>
+<li><a href="#4-jasp">第 4 講｜進 JASP 之前的資料整理</a><ul>
+<li><a href="#_1">學生操作步驟（資料前處理）</a></li>
+</ul>
+</li>
+<li><a href="#5-jasp-cfa">第 5 講｜JASP 操作 — 先跑 CFA（驗證性因素分析）</a><ul>
+<li><a href="#cfa">學生操作步驟（CFA 從零到完成）</a></li>
+</ul>
+</li>
+<li><a href="#6">第 6 講｜信效度三件套</a><ul>
+<li><a href="#_2">學生操作步驟（信效度）</a></li>
+</ul>
+</li>
+<li><a href="#7-jasp-sem">第 7 講｜JASP 操作 — 跑完整 SEM</a><ul>
+<li><a href="#sem">學生操作步驟（SEM 從零到完成）</a></li>
+</ul>
+</li>
+<li><a href="#8-jasp">第 8 講｜模型比較（在 JASP 中操作）</a><ul>
+<li><a href="#81-jasp">8.1 在 JASP 中加入多個模型</a><ul>
+<li><a href="#_3">學生操作步驟（多模型分頁）</a></li>
+</ul>
+</li>
+<li><a href="#82">8.2 必跑的四種比較</a><ul>
+<li><a href="#a-harman_single_factor_test">(A) 共同方法偏差檢驗 — Harman_single_factor_test</a></li>
+<li><a href="#b">(B) 區別效度比較</a></li>
+<li><a href="#c-vs-h4">(C) 全模型 vs. 完全中介模型（檢驗 H4）</a></li>
+<li><a href="#d">(D) 反向因果替代模型（理論辯護）</a></li>
+</ul>
+</li>
+<li><a href="#83-measurement_invariance">8.3 measurement_invariance 測量恆等性（多群組比較）</a><ul>
+<li><a href="#_4">學生操作步驟（多群組）</a></li>
+</ul>
+</li>
+<li><a href="#84">8.4 模型比較結果報告範本</a></li>
+</ul>
+</li>
+<li><a href="#9">第 9 講｜怎麼寫進論文</a></li>
+<li><a href="#10">第 10 講｜這份資料的限制（教學中要強調）</a></li>
+<li><a href="#11">第 11 講｜學生練習作業</a></li>
+</ul>
+</div>
+</aside>
+<main class="content">
+<h1>sem_jasp_journalist_ai_tutorial</h1>
+<p class="meta">#sem　#jasp　#cfa　#methodology_tutorial　#mediation　#model_comparison　#ai_journalism　#tam</p>
+<h2 id="sem_jasp_journalist_ai_tutorialsem-ai"><a href="sem_jasp_journalist_ai_tutorial.html">sem_jasp_journalist_ai_tutorial</a>（SEM 入門教學講義｜以政治記者 AI 使用意願資料為例）</h2>
+<p><strong>工具</strong>：JASP（內建 SEM 模組，底層為 R 的 lavaan）
+<strong>資料</strong>：N ≈ 95 位台灣政治記者問卷（political_journalist_ai_survey_2026）
+<strong>對象</strong>：傳播 / 新聞所碩士班、初次接觸 structural_equation_modeling 的學生</p>
+<hr />
+<h3 id="1">第 1 講｜為什麼不只是「跑迴歸」？</h3>
+<p>把問卷裡 3 題「使用意願」加總當依變項、用 OLS 迴歸跑，會踩三個雷：</p>
+<ol>
+<li><strong>忽略測量誤差</strong>：每一題 Likert_scale 都不是「完美」測到構念，迴歸假設依變項無誤差。</li>
+<li><strong>無法區分「題目」與「構念」</strong>：研究的是「使用意願」這個潛在構念，不是 BI1 這題本身。</li>
+<li><strong>多依變項要跑很多次</strong>：「risk_perception → 使用意願」「professional_norms → risk_perception → 使用意願」這種中介路徑迴歸要分兩次估計，係數彼此不一致。</li>
+</ol>
+<p>structural_equation_modeling 一次解決：<strong>測量模型</strong>（題目 ↔ 構念）+ <strong>結構模型</strong>（構念 ↔ 構念）同時估計。</p>
+<hr />
+<h3 id="2">第 2 講｜把問卷對應成潛在構念</h3>
+<p>從這份問卷可以萃取四個潛在變項（每個構念 ≥ 3 題才能識別）：</p>
+<table>
+<thead>
+<tr>
+<th>構念</th>
+<th>對應題目（建議重新命名）</th>
+<th>理論意涵</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>使用意願 BI</strong></td>
+<td>BI1 我願意使用 / BI2 工作變動下會考慮 / BI3 整體高度意願</td>
+<td>TAM 的 Behavioral Intention</td>
+</tr>
+<tr>
+<td><strong>風險認知 RP</strong></td>
+<td>RP1 錯誤資訊 / RP2 偏見框架 / RP3 媒體公信力</td>
+<td>perceived_risk</td>
+</tr>
+<tr>
+<td><strong>AI 自我效能 SE</strong></td>
+<td>SE1 寫清楚提示 / SE2 追問改寫 / SE3 查核修正</td>
+<td>ai_literacy / self_efficacy</td>
+</tr>
+<tr>
+<td><strong>專業規範 PN</strong></td>
+<td>PN1 事實查核召喚 / PN2 截稿仍要平衡 / PN3 記者承擔倫理責任</td>
+<td>professional_norms</td>
+</tr>
+</tbody>
+</table>
+<p>「工作規劃習慣」三題（Q10, Q15, Q21）這次當作可選的控制變項或不放入。</p>
+<hr />
+<h3 id="3">第 3 講｜畫出假設模型</h3>
+<pre><code>        PN ──(+)──▶ RP
+         │            │
+         │            │ (−)
+         ▼            ▼
+        BI ◀──(+)─── SE
+</code></pre>
+<ul>
+<li><strong>H1</strong>: SE → BI ($+$)　越能駕馭 AI，越想用</li>
+<li><strong>H2</strong>: RP → BI ($-$)　風險感受越強，越不想用</li>
+<li><strong>H3</strong>: PN → RP ($+$)　專業規範越強，越警覺 AI 風險（中介）</li>
+<li><strong>H4</strong>: PN → BI（直接效果，待檢驗）</li>
+</ul>
+<p>中介效果 PN → RP → BI 是這個模型最有趣的部分。</p>
+<hr />
+<h3 id="4-jasp">第 4 講｜進 JASP 之前的資料整理</h3>
+<p>CSV 的中文欄名 JASP 會吃，但 lavaan 語法不友善，<strong>先在 Excel / Python 把欄名改短</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>原欄名（中文）</th>
+<th>新欄名</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>在政治新聞工作中，我願意使用…</td>
+<td>BI1</td>
+</tr>
+<tr>
+<td>若工作有變動，我會考慮…</td>
+<td>BI2</td>
+</tr>
+<tr>
+<td>整體而言，我對…感到高度意願</td>
+<td>BI3</td>
+</tr>
+<tr>
+<td>若生成式 AI 產生錯誤資訊…</td>
+<td>RP1</td>
+</tr>
+<tr>
+<td>生成式 AI 放大偏見或不當框架…</td>
+<td>RP2</td>
+</tr>
+<tr>
+<td>生成式 AI 介入後…公信力…</td>
+<td>RP3</td>
+</tr>
+<tr>
+<td>我能把含糊的需求轉換成清楚的提示</td>
+<td>SE1</td>
+</tr>
+<tr>
+<td>我能透過追問、要求補充或改寫…</td>
+<td>SE2</td>
+</tr>
+<tr>
+<td>我能對 AI 輸出進行必要查核與修正…</td>
+<td>SE3</td>
+</tr>
+<tr>
+<td>政治記者以日復一日驗證事實…</td>
+<td>PN1</td>
+</tr>
+<tr>
+<td>即使在截稿壓力下…平衡與多元…</td>
+<td>PN2</td>
+</tr>
+<tr>
+<td>即使使用新工具…倫理與社會責任</td>
+<td>PN3</td>
+</tr>
+</tbody>
+</table>
+<p>存成新的 <code>journalist_ai_clean.csv</code>，UTF-8 with BOM。</p>
+<h4 id="_1">學生操作步驟（資料前處理）</h4>
+<p><strong>Step 1｜在 Excel 中重命名欄位</strong>
+1. 開啟 Google 表單下載的原始 CSV
+2. 在第 1 列把 12 個構念題目欄名改成 BI1, BI2, BI3, RP1, RP2, RP3, SE1, SE2, SE3, PN1, PN2, PN3
+3. 多餘欄位（時戳、email、自由填答）保留但不會用到</p>
+<p><strong>Step 2｜檢查資料品質</strong>
+- 在 Excel 用 <code>=COUNTA(A:A)</code> 確認每欄樣本數一致（應該都是 95）
+- 條件格式 → 標出超出 1–5 範圍的值（資料登錄錯誤）
+- 缺失值以空白保留（不要填 0），JASP 會自動辨識</p>
+<p><strong>Step 3｜加分組變項（為了第 8.3 講多群組分析）</strong>
+- 加一欄 <code>seniority</code>，公式：<code>=IF(政治年資欄&lt;7,"junior","senior")</code></p>
+<p><strong>Step 4｜另存新檔</strong>
+1. Excel → 另存新檔 → 檔案類型選「<strong>CSV UTF-8（逗號分隔）</strong>」
+2. 命名為 <code>journalist_ai_clean.csv</code>
+3. 存在桌面或專案資料夾，路徑不要有中文（避免 JASP 讀檔出錯）</p>
+<hr />
+<h3 id="5-jasp-cfa">第 5 講｜JASP 操作 — 先跑 CFA（驗證性因素分析）</h3>
+<p><strong>目的</strong>：確認「題目真的測到該構念」再走結構模型。</p>
+<h4 id="cfa">學生操作步驟（CFA 從零到完成）</h4>
+<p><strong>Step 1｜啟動 JASP</strong>
+- 雙擊 JASP icon。若未安裝，到 <a href="https://jasp-stats.org/">https://jasp-stats.org/</a> 下載 v0.19.3 以上版本（免費）
+- 介面：左上角 ☰ 是主選單，上方是分析模組 ribbon</p>
+<p><strong>Step 2｜載入資料</strong>
+1. 點左上角 <strong>☰</strong> → <strong>Open</strong> → <strong>Computer</strong> → <strong>Browse</strong>
+2. 選 <code>journalist_ai_clean.csv</code>
+3. 右側資料窗會顯示變項，左側是分析設定區（一開始空白）</p>
+<p><strong>Step 3｜檢查並修正變項類型</strong>
+- 每個變項欄名左邊有圖示：
+  - 橘色斜線 = <strong>Scale</strong>（連續）
+  - 黃色長條 = <strong>Ordinal</strong>
+  - 藍色三球 = <strong>Nominal</strong>
+- Likert 5 點本質是 ordinal，但 SEM/CFA 慣例以 Scale 處理
+- 若 JASP 自動判定錯誤：<strong>點該變項名旁的圖示 → 改成 Scale</strong>
+- 12 個構念題（BI1–PN3）應全部設為 Scale</p>
+<p><strong>Step 4｜開啟 CFA 模組</strong>
+1. 主選單點 <strong>Factor</strong>（CFA 在 Factor 模組裡，不在 SEM）
+2. 下拉選 <strong>Confirmatory Factor Analysis</strong>
+3. 出現左右兩欄設定畫面：左欄是變項清單，右欄是 Factors 設定區</p>
+<p><strong>Step 5｜定義 4 個因子</strong>
+1. 預設只有 Factor 1，<strong>點右上 ➕</strong> 新增到 Factor 4
+2. <strong>Factor 1</strong>：點名稱右側鉛筆 icon → 改名 <code>BI</code> → 從左側拖 BI1, BI2, BI3 進來
+3. <strong>Factor 2</strong>：改名 <code>RP</code> → 拖入 RP1, RP2, RP3
+4. <strong>Factor 3</strong>：改名 <code>SE</code> → 拖入 SE1, SE2, SE3
+5. <strong>Factor 4</strong>：改名 <code>PN</code> → 拖入 PN1, PN2, PN3</p>
+<p><strong>Step 6｜勾選輸出選項</strong></p>
+<p>展開以下面板（黑色三角箭頭點開）：</p>
+<ul>
+<li><strong>Output options</strong>（必勾）</li>
+<li>✅ Factor loadings</li>
+<li>✅ Standardized</li>
+<li>✅ Model fit</li>
+<li>✅ Additional fit measures（會列出 AIC, BIC，第 8 講要用）</li>
+<li>✅ Modification indices</li>
+<li>✅ R-squared</li>
+<li>✅ Implied covariance matrix</li>
+<li><strong>Estimation options</strong></li>
+<li>Estimator: 預設 ML 即可</li>
+<li>若資料嚴重偏態 → 改 <strong>MLR</strong>（穩健 ML）</li>
+</ul>
+<p><strong>Step 7｜執行（JASP 即時跑）</strong>
+- JASP 一勾選就立刻跑，不用按 run
+- 結果出現在右側結果區
+- 重點看三張表：<strong>Model fit</strong>, <strong>Factor loadings</strong>, <strong>Modification indices</strong></p>
+<p><strong>Step 8｜判讀（對照下方判讀表）</strong>
+- 先看 fit indices 是否達標
+- 若不達標 → 看 modification indices 找 MI &gt; 10 的項，考慮加 error covariance（如 <code>BI1 ~~ BI2</code>）或刪題</p>
+<p><strong>Step 9｜匯出結果</strong>
+- 結果區任一表 → 右上下拉箭頭 ▼ → <strong>Copy</strong> 或 <strong>Save Image As</strong>
+- 整份匯出：☰ → <strong>Export Results</strong> → <strong>HTML</strong> 或 <strong>PDF</strong></p>
+<p><strong>判讀指標</strong>（給學生背的口訣，每個都點進去看詳細定義）：</p>
+<table>
+<thead>
+<tr>
+<th>指標</th>
+<th>可接受</th>
+<th>良好</th>
+<th>在 JASP 哪看</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>chi_square_df_ratio（$\chi^2/df$）</td>
+<td>$< 3$</td>
+<td>$< 2$</td>
+<td>Model fit 表</td>
+</tr>
+<tr>
+<td><a href="CFI_Comparative_Fit_Index.html">CFI Comparative Fit Index</a>（Comparative Fit Index）</td>
+<td>$\geq .90$</td>
+<td>$\geq .95$</td>
+<td>Model fit 表</td>
+</tr>
+<tr>
+<td>TLI Tucker-Lewis Index（Tucker-Lewis Index）</td>
+<td>$\geq .90$</td>
+<td>$\geq .95$</td>
+<td>Model fit 表</td>
+</tr>
+<tr>
+<td><a href="RMSEA.html">RMSEA</a>（Root Mean Square Error of Approximation）</td>
+<td>$\leq .08$</td>
+<td>$\leq .06$</td>
+<td>Model fit 表</td>
+</tr>
+<tr>
+<td><a href="SRMR.html">SRMR</a>（Standardized Root Mean Residual）</td>
+<td>$\leq .08$</td>
+<td>$\leq .05$</td>
+<td>Model fit 表</td>
+</tr>
+<tr>
+<td>Factor Loading（標準化負荷量 $\lambda$）</td>
+<td>$\geq .50$</td>
+<td>$\geq .70$</td>
+<td>Factor loadings 表（Std. 欄）</td>
+</tr>
+<tr>
+<td><a href="AIC.html">AIC</a>（Akaike Information Criterion）</td>
+<td>越小越好</td>
+<td>—</td>
+<td>Additional fit measures</td>
+</tr>
+<tr>
+<td>BIC（Bayesian Information Criterion）</td>
+<td>越小越好</td>
+<td>—</td>
+<td>Additional fit measures</td>
+</tr>
+</tbody>
+</table>
+<p>如果某題 Factor Loading $< .5$，考慮刪題或加 error covariance（看 modification_index，MI &gt; 10 才考慮加）。</p>
+<hr />
+<h3 id="6">第 6 講｜信效度三件套</h3>
+<p>跑完 CFA 後在報告補上：</p>
+<table>
+<thead>
+<tr>
+<th>指標</th>
+<th>標準</th>
+<th>公式 / 計算來源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="Cronbach_alpha.html">Cronbach alpha</a>（$\alpha$）</td>
+<td>$\geq .70$</td>
+<td>JASP <strong>Reliability</strong> 模組另跑</td>
+</tr>
+<tr>
+<td>CR Composite Reliability（CR）</td>
+<td>$\geq .70$</td>
+<td>$CR = \dfrac{(\sum \lambda_i)^2}{(\sum \lambda_i)^2 + \sum \theta_i}$</td>
+</tr>
+<tr>
+<td>average_variance_extracted（AVE）</td>
+<td>$\geq .50$</td>
+<td>$AVE = \dfrac{\sum \lambda_i^2}{n}$</td>
+</tr>
+<tr>
+<td>discriminant_validity（區別效度）</td>
+<td>$\sqrt{AVE} >$ 構念相關</td>
+<td>Fornell_Larcker_criterion</td>
+</tr>
+</tbody>
+</table>
+<h4 id="_2">學生操作步驟（信效度）</h4>
+<p><strong>Step 1｜在 JASP 跑 Cronbach α</strong>
+1. 主選單 → <strong>Reliability</strong> → <strong>Single-Test Reliability Analysis</strong>
+2. 把 BI1, BI2, BI3 拖入 Variables → 看 <a href="Cronbach_alpha.html">Cronbach alpha</a> 值
+3. 對 RP, SE, PN 各重複一次（或一次跑四個構念，但分開比較清楚）</p>
+<p><strong>Step 2｜手算 CR 與 AVE</strong>
+1. 從 CFA 結果複製 <strong>Standardized factor loadings</strong>（$\lambda$）到 Excel
+2. 計算 $\theta_i = 1 - \lambda_i^2$（題目誤差變異）
+3. 套公式得 CR 與 AVE</p>
+<p><strong>Step 3｜畫區別效度表</strong>
+- 表的對角線填 $\sqrt{AVE}$，下三角填構念間相關（從 CFA 的 Factor covariances 取）
+- 對角線值應 &gt; 該列、該欄所有非對角值 → 通過 Fornell_Larcker_criterion</p>
+<p>JASP 沒有直接給 CR / AVE，需要從 standardized loadings 自己手算或寫個 Excel 表。</p>
+<hr />
+<h3 id="7-jasp-sem">第 7 講｜JASP 操作 — 跑完整 SEM</h3>
+<h4 id="sem">學生操作步驟（SEM 從零到完成）</h4>
+<p><strong>Step 1｜啟用 SEM 模組（首次使用必做）</strong>
+1. 點工具列右上角藍色 <strong>➕</strong> icon
+2. 在 advanced modules 清單中找 <strong>SEM</strong>（不是 Factor，那是 CFA）→ 勾選
+3. 主選單會多出 <strong>SEM</strong> 圖示</p>
+<blockquote>
+<p>提醒：JASP 預設不啟用 SEM 模組。CFA 在 Factor 模組裡，但完整 SEM（含結構路徑、中介、模型比較）必須開 SEM 模組。</p>
+</blockquote>
+<p><strong>Step 2｜開啟 SEM 分析</strong>
+1. 主選單點 <strong>SEM</strong> → <strong>Structural Equation Modeling</strong>
+2. 出現 <strong>Model syntax</strong> 語法輸入框（接受 lavaan 語法）</p>
+<p><strong>Step 3｜貼入完整 lavaan 語法</strong></p>
+<p>把以下整段複製貼進 Model syntax 框：</p>
+<pre><code># 測量模型（measurement model）
+BI =~ BI1 + BI2 + BI3
+RP =~ RP1 + RP2 + RP3
+SE =~ SE1 + SE2 + SE3
+PN =~ PN1 + PN2 + PN3
+
+# 結構模型（structural model）
+BI ~ b1*SE + b2*RP + b3*PN
+RP ~ a1*PN
+
+# 中介效果（user-defined parameters）
+indirect := a1 * b2
+total    := b3 + indirect
+</code></pre>
+<p><strong>Step 4｜勾選輸出選項</strong></p>
+<ul>
+<li><strong>Output options</strong></li>
+<li>✅ Standardized estimates（拿到 $\beta$）</li>
+<li>✅ Model fit</li>
+<li>✅ Additional fit measures（<a href="AIC.html">AIC</a>, BIC）</li>
+<li>✅ R-squared</li>
+<li>✅ Modification indices（如果 fit 不好用）</li>
+<li><strong>Estimation options</strong></li>
+<li>Estimator: ML（樣本 N=95 偏小可考慮 bootstrap 補強）</li>
+<li>✅ <strong>Bootstrap</strong> → 設 1000 ~ 2000 次（中介效果 95% CI 用）</li>
+</ul>
+<p><strong>Step 5｜執行與解讀</strong>
+- 結果區會出現 <strong>Regression coefficients</strong> 表 → 報告每條路徑的 $\beta$, $p$, 95% CI
+- <strong>Defined parameters</strong> 區會列出 <code>indirect</code> 與 <code>total</code> 行，含 bootstrap 95% CI（不能跨 0 才支持中介）
+- <strong>Model fit</strong> 表確認結構模型 fit 仍達標（<a href="CFI_Comparative_Fit_Index.html">CFI Comparative Fit Index</a>, <a href="RMSEA.html">RMSEA</a>, <a href="SRMR.html">SRMR</a>）
+- 看 <strong>R-Square</strong> 表了解每個內生變項被解釋的變異量</p>
+<p><strong>Step 6｜畫路徑圖（選擇性）</strong>
+- JASP 內建 <strong>Path diagram</strong> 選項（在 Plots 面板）
+- ✅ Show path diagram → 自動產生標準化路徑係數圖
+- 或另存為圖檔 → 用 PowerPoint / draw.io 美化</p>
+<hr />
+<h3 id="8-jasp">第 8 講｜模型比較（在 JASP 中操作）</h3>
+<p>只報告一個模型的適配度是不夠的；好的論文會跟「替代模型」比較，證明你選的這個比較好。JASP 的 <strong>SEM</strong> 模組（不是 CFA）支援同時跑多個模型並自動產生比較表。</p>
+<h4 id="81-jasp">8.1 在 JASP 中加入多個模型</h4>
+<h5 id="_3">學生操作步驟（多模型分頁）</h5>
+<p><strong>Step 1｜進入 SEM</strong>
+- 主選單 → <strong>SEM</strong> → <strong>Structural Equation Modeling</strong>
+- 確保已啟用 SEM 模組（見第 7 講 Step 1）</p>
+<p><strong>Step 2｜新增模型分頁</strong>
+1. 預設語法輸入區上方有個 <code>Model 1</code> 分頁
+2. <strong>點 <code>Model 1</code> 右側的「+」icon</strong> → 出現 <code>Model 2</code>
+3. 重複點 + 直到要比較的模型數量都建立好（例如 4 個模型）
+4. 每個分頁可獨立輸入 lavaan 語法，互不干擾</p>
+<p><strong>Step 3｜在每個分頁貼不同的 lavaan 語法</strong>
+- 點 <code>Model 1</code> → 貼 baseline 語法
+- 點 <code>Model 2</code> → 貼替代模型語法
+- 以此類推</p>
+<p><strong>Step 4｜全部勾選必要輸出</strong></p>
+<p>切到 <strong>Output options</strong>（每個 Model 分頁要分別檢查）：
+- ✅ Model fit
+- ✅ <strong>Additional fit measures</strong>（必須勾，否則沒有 <a href="AIC.html">AIC</a> / BIC）
+- ✅ Standardized estimates</p>
+<p><strong>Step 5｜檢視自動產生的 Model comparison 表</strong></p>
+<p>跑完所有模型後，結果區下方會自動出現 <strong>Model comparison</strong> 表，包含：
+- 每個模型的 $\chi^2$, df, <a href="AIC.html">AIC</a>, BIC, sample-size adjusted BIC
+- chi_square_difference_test（$\Delta\chi^2$ 檢定，自動偵測 nested 關係）
+- $\Delta$<a href="AIC.html">AIC</a>, $\Delta$BIC</p>
+<p><strong>Step 6｜判斷該用哪個指標</strong>
+- 若兩模型 <strong>nested</strong>（一個是另一個的限制版）→ 看 $\Delta\chi^2$ 是否顯著
+- 若 <strong>non-nested</strong>（不同方向、不同結構）→ 看 <a href="AIC.html">AIC</a> / BIC（小的勝）
+- 同時看 $\Delta$<a href="CFI_Comparative_Fit_Index.html">CFI Comparative Fit Index</a> 與 $\Delta$<a href="RMSEA.html">RMSEA</a> 補強判斷</p>
+<h4 id="82">8.2 必跑的四種比較</h4>
+<p>每個比較都列出<strong>完整 lavaan 語法</strong>，學生可以直接複製貼到 JASP 的不同 Model 分頁。</p>
+<h5 id="a-harman_single_factor_test">(A) 共同方法偏差檢驗 — Harman_single_factor_test</h5>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>設定</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>M0：單因子</td>
+<td>12 題全部 → 1 個 factor</td>
+</tr>
+<tr>
+<td>M1：四因子</td>
+<td>BI / RP / SE / PN 各 3 題</td>
+</tr>
+</tbody>
+</table>
+<p><strong>M0 語法</strong>（貼到 Model 1 分頁）：</p>
+<pre><code>GENERAL =~ BI1 + BI2 + BI3 + RP1 + RP2 + RP3 + SE1 + SE2 + SE3 + PN1 + PN2 + PN3
+</code></pre>
+<p><strong>M1 語法</strong>（貼到 Model 2 分頁）：</p>
+<pre><code>BI =~ BI1 + BI2 + BI3
+RP =~ RP1 + RP2 + RP3
+SE =~ SE1 + SE2 + SE3
+PN =~ PN1 + PN2 + PN3
+</code></pre>
+<p><strong>判讀</strong>：M1 的 fit 顯著優於 M0（chi_square_difference_test $\Delta\chi^2$ 顯著、$\Delta$<a href="CFI_Comparative_Fit_Index.html">CFI Comparative Fit Index</a> $> .01$、$\Delta$<a href="AIC.html">AIC</a> 大幅下降），代表 common_method_bias 不是嚴重問題。</p>
+<h5 id="b">(B) 區別效度比較</h5>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>設定</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>M2：四因子完全相關（$\phi = 1$）</td>
+<td>兩兩構念相關設為 1</td>
+</tr>
+<tr>
+<td>M3：四因子自由相關（baseline）</td>
+<td>預設</td>
+</tr>
+</tbody>
+</table>
+<p><strong>M2 語法</strong>：</p>
+<pre><code>BI =~ BI1 + BI2 + BI3
+RP =~ RP1 + RP2 + RP3
+SE =~ SE1 + SE2 + SE3
+PN =~ PN1 + PN2 + PN3
+
+# 強制所有構念相關 = 1
+BI ~~ 1*RP
+BI ~~ 1*SE
+BI ~~ 1*PN
+RP ~~ 1*SE
+RP ~~ 1*PN
+SE ~~ 1*PN
+</code></pre>
+<p>跑 $\Delta\chi^2$。M3 顯著優於 M2 → 構念可分（通過 discriminant_validity）。</p>
+<h5 id="c-vs-h4">(C) 全模型 vs. 完全中介模型（檢驗 H4）</h5>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>路徑</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>M4：全模型</td>
+<td>PN → BI 直接效果保留、PN → RP → BI 中介</td>
+</tr>
+<tr>
+<td>M5：完全中介</td>
+<td>PN → BI 限為 0；只剩 PN → RP → BI</td>
+</tr>
+</tbody>
+</table>
+<p><strong>M5 語法關鍵行</strong>：</p>
+<pre><code>BI ~ b1*SE + b2*RP + 0*PN   # 把 PN→BI 限為 0
+RP ~ a1*PN
+</code></pre>
+<p><strong>判讀邏輯</strong>：
+- $\Delta\chi^2$ <strong>不顯著</strong>（$p > .05$）→ 限制可接受，<strong>完全中介</strong>（full_mediation）成立，直接路徑可省
+- $\Delta\chi^2$ <strong>顯著</strong>（$p < .05$）→ 直接路徑必要，<strong>部分中介</strong>（<a href="partial_mediation.html">partial_mediation</a>）</p>
+<p>這是檢驗 H3 中介性質的關鍵步驟，論文裡常被審稿人問到。</p>
+<h5 id="d">(D) 反向因果替代模型（理論辯護）</h5>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>路徑方向</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>M6：理論模型</td>
+<td>SE → BI（會用 AI 才想用）</td>
+</tr>
+<tr>
+<td>M7：反向</td>
+<td>BI → SE（想用才會學技能）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>M7 語法關鍵行</strong>：</p>
+<pre><code>SE ~ BI + RP + PN   # 反過來，BI 變成預測 SE 的 IV
+</code></pre>
+<p>兩個模型 <strong>non-nested</strong>，不能用 $\Delta\chi^2$，改看 <strong><a href="AIC.html">AIC</a> / BIC 誰小誰勝</strong>。BIC 解釋慣例：</p>
+<ul>
+<li>$\Delta$BIC $> 10$：強證據</li>
+<li>$\Delta$BIC  $6 \sim 10$：明顯</li>
+<li>$\Delta$BIC  $2 \sim 6$：中等</li>
+<li>$\Delta$BIC $< 2$：差異微弱（理論辯護無力）</li>
+</ul>
+<h4 id="83-measurement_invariance">8.3 measurement_invariance 測量恆等性（多群組比較）</h4>
+<p>把樣本依「政治年資 $< 7$ 年 vs. $\geq 7$ 年」切兩組（用第 4 講 Step 3 建好的 <code>seniority</code> 欄），檢驗測量結構在資深 / 資淺記者之間是否相同。</p>
+<table>
+<thead>
+<tr>
+<th>階層</th>
+<th>限制</th>
+<th>可比較的東西</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>configural_invariance（M_config）</td>
+<td>兩組共用模型結構，參數自由</td>
+<td>因子結構是否相同</td>
+</tr>
+<tr>
+<td>metric_invariance（M_metric）</td>
+<td>加：因子負荷量跨組相等</td>
+<td>構念意義是否相同（可比相關）</td>
+</tr>
+<tr>
+<td>scalar_invariance（M_scalar）</td>
+<td>再加：截距跨組相等</td>
+<td>平均數是否可比</td>
+</tr>
+<tr>
+<td>strict_invariance（M_strict）</td>
+<td>再加：誤差變異跨組相等</td>
+<td>嚴格一致性</td>
+</tr>
+</tbody>
+</table>
+<h5 id="_4">學生操作步驟（多群組）</h5>
+<p><strong>Step 1｜在 JASP 載入含 seniority 欄的 CSV</strong>
+- 確認 seniority 是 <strong>Nominal</strong> 變項（藍色三球圖示）</p>
+<p><strong>Step 2｜逐階測試</strong></p>
+<p>每階用 lavaan 的 <code>group</code> 與 <code>group.equal</code> 參數。在 SEM 模組新增 4 個 Model 分頁：</p>
+<p><strong>Model 1（configural）</strong>：</p>
+<pre><code>BI =~ BI1 + BI2 + BI3
+RP =~ RP1 + RP2 + RP3
+SE =~ SE1 + SE2 + SE3
+PN =~ PN1 + PN2 + PN3
+</code></pre>
+<p>在 JASP <strong>SEM Options</strong> 找 <code>Group variable</code> → 選 <code>seniority</code></p>
+<p><strong>Model 2（metric）</strong>：相同語法 + 在 JASP 設定 <code>group.equal = "loadings"</code>
+（如果 JASP UI 沒有此選項，改在語法用 <code>cfa(model, group="seniority", group.equal="loadings")</code> 調整 R 命令）</p>
+<p><strong>Model 3（scalar）</strong>：<code>group.equal = c("loadings", "intercepts")</code></p>
+<p><strong>Model 4（strict）</strong>：<code>group.equal = c("loadings", "intercepts", "residuals")</code></p>
+<p><strong>Step 3｜判讀（Cheung_Rensvold_2002 慣例）</strong>
+- $\Delta\chi^2$ 不顯著 → 通過該階層
+- 但 $\Delta\chi^2$ 對 N 敏感，現代慣例改看：
+  - $\Delta$<a href="CFI_Comparative_Fit_Index.html">CFI Comparative Fit Index</a> $< .01$
+  - $\Delta$<a href="RMSEA.html">RMSEA</a> $< .015$</p>
+<p>達到 scalar_invariance 才能比較群組平均數差異；只到 metric_invariance 仍可比群組間結構係數。</p>
+<h4 id="84">8.4 模型比較結果報告範本</h4>
+<blockquote>
+<p>為檢驗測量結構，本研究比較四個巢狀模型（表 X）。四因子相關模型（M3）的適配指標（$\chi^2 = 88.4$, df $= 48$, CFI $= .94$, RMSEA $= .067$）顯著優於單因子模型（M0）（$\Delta\chi^2(6) = 142.7, p < .001$；$\Delta\text{AIC} = 130$），亦優於四因子完全相關模型（M2）（$\Delta\chi^2(6) = 47.3, p < .001$），支持構念之間的區別效度，並排除嚴重共同方法偏差。</p>
+<p>進一步檢驗中介結構：限制專業規範對使用意願直接路徑為零的完全中介模型（M5）與全模型（M4）相比，$\Delta\chi^2(1) = 1.83, p = .176$，無顯著差異，支持<strong>完全中介</strong>。專業規範對使用意願的影響完全透過風險認知傳遞。</p>
+</blockquote>
+<hr />
+<h3 id="9">第 9 講｜怎麼寫進論文</h3>
+<p><strong>結果寫法範例</strong>：</p>
+<blockquote>
+<p>測量模型適配良好（$\chi^2/df = 1.84$, CFI $= .94$, RMSEA $= .067$, SRMR $= .054$），各題標準化負荷量介於 $.61 \sim .89$，皆達顯著（$p < .001$）。各構念 CR 介於 $.78 \sim .88$，AVE 介於 $.54 \sim .71$，符合收斂效度標準。</p>
+<p>結構模型顯示，AI 自我效能正向預測使用意願（$\beta = .42, p < .001$），支持 H1；風險認知對使用意願有顯著負向效果（$\beta = -.21, p = .032$），支持 H2。專業規範透過風險認知對使用意願產生間接負向影響（indirect $\beta = -.11, 95\%\,\text{CI}\,[-.21, -.03]$），支持 H3 中介效果。模型比較顯示完全中介模型優於部分中介模型（見第 8 講）。</p>
+</blockquote>
+<hr />
+<h3 id="10">第 10 講｜這份資料的限制（教學中要強調）</h3>
+<ol>
+<li><strong>樣本量 N $\approx 95$ 偏小</strong>。SEM 經驗法則 $N > 200$ 或每估計參數 $\geq 10$ 觀察值；這份資料估計參數約 30，理想 $N \geq 300$。可以跑，但要在限制中明寫，並建議 Bayesian_SEM 或 PLS_SEM 做穩健性檢驗。</li>
+<li><strong>共同方法偏差 CMV</strong>：所有變項都用同一份自陳問卷收集，容易膨脹相關。可加 Harman_single_factor_test 或 marker_variable_technique。</li>
+<li><strong>橫斷面</strong>：不能下因果結論，只能說「結構關係相符」。</li>
+<li><strong>抽樣</strong>：政治記者母體小、滾雪球抽樣，外推到其他路線（社會、財經）需保留。</li>
+</ol>
+<hr />
+<h3 id="11">第 11 講｜學生練習作業</h3>
+<ol>
+<li>用 JASP 跑出 4-factor CFA，回報 fit indices 表。</li>
+<li>比較<strong>單因子模型</strong>（所有 12 題 $\to$ 1 個 factor）與 <strong>4-factor 模型</strong>的 $\Delta\chi^2$，論證構念區別效度。</li>
+<li>跑出完整 SEM，標出標準化路徑係數圖。</li>
+<li>比較<strong>全模型 vs. 完全中介模型</strong>，判斷專業規範是否完全透過風險認知作用於使用意願。</li>
+<li>把樣本依「政治年資 $< 7$ 年 vs. $\geq 7$ 年」切兩組，做 multi_group_SEM，檢驗 configural / metric / scalar invariance。</li>
+</ol>
+</main>
+</div>
+<script>
+(function () {
+  // ── Rebuild TOC with toggle buttons ──────────────────────────────────────
+  var toc = document.querySelector('.sidebar .toc');
+  if (toc) {
+    toc.querySelectorAll('li').forEach(function (li) {
+      var childUl = li.querySelector(':scope > ul');
+      var link    = li.querySelector(':scope > a');
+      if (!link) return;
+
+      var row = document.createElement('div');
+      row.className = 'toc-row';
+
+      if (childUl) {
+        var btn = document.createElement('button');
+        btn.className = 'toc-toggle';
+        btn.setAttribute('aria-expanded', 'true');
+        btn.textContent = '▾';          // ▾ open
+        btn.addEventListener('click', function () {
+          var open = childUl.hidden;
+          childUl.hidden = !open;
+          btn.textContent = open ? '▾' : '▸';   // ▾ / ▸
+          btn.setAttribute('aria-expanded', String(open));
+        });
+        row.appendChild(btn);
+      } else {
+        var spacer = document.createElement('span');
+        spacer.style.width = '1rem';
+        spacer.style.flexShrink = '0';
+        row.appendChild(spacer);
+      }
+
+      row.appendChild(link);
+      li.insertBefore(row, li.firstChild);
+    });
+  }
+
+  // ── Scroll spy ───────────────────────────────────────────────────────────
+  var headings = document.querySelectorAll('.content h2[id], .content h3[id], .content h4[id]');
+  var tocLinks = document.querySelectorAll('.sidebar .toc a');
+  if (!headings.length || !tocLinks.length) return;
+
+  var current = null;
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      var link = document.querySelector('.sidebar .toc a[href="#' + e.target.id + '"]');
+      if (!link) return;
+      if (current) current.classList.remove('active');
+      current = link;
+      current.classList.add('active');
+      // Scroll link into view within sidebar
+      current.scrollIntoView({ block: 'nearest' });
+    });
+  }, { rootMargin: '-5% 0px -75% 0px', threshold: 0 });
+
+  headings.forEach(function (h) { io.observe(h); });
+}());
+</script>
+</body>
+</html>

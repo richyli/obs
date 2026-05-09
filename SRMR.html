@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SRMR</title>
+<style>*, *::before, *::after { box-sizing: border-box; }
+
+/* ── Base ── */
+body {
+  font-family: "Helvetica Neue", Arial, "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+  font-size: 20px;
+  line-height: 1.9;
+  color: #111;
+  background: #fff;
+  margin: 0;
+}
+
+/* ── Two-column layout (note pages) ── */
+.layout { display: flex; align-items: flex-start; min-height: 100vh; }
+
+.sidebar {
+  width: 270px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 2rem 1rem 2rem 1.5rem;
+  border-right: 1px solid #e8e8e8;
+  background: #f9f9f9;
+}
+.sidebar-back {
+  display: block;
+  font-size: 0.82rem;
+  color: #999;
+  margin-bottom: 1.4rem;
+  text-decoration: none;
+}
+.sidebar-back:hover { color: #333; }
+.sidebar-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #bbb;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+/* ── TOC in sidebar ── */
+.toc { font-size: 0.82rem; line-height: 1.55; }
+.toc ul { list-style: none; margin: 0; padding: 0; }
+.toc ul ul { padding-left: 0.9rem; }
+.toc li { margin: 0; }
+.toc-row { display: flex; align-items: baseline; gap: 0.2rem; }
+.toc-row a {
+  flex: 1;
+  display: block;
+  padding: 0.18rem 0.3rem;
+  border-radius: 3px;
+  color: #555;
+  text-decoration: none;
+  word-break: break-word;
+}
+.toc-row a:hover { background: #ebebeb; color: #111; }
+.toc-row a.active { color: #0055cc; font-weight: 600; background: #e8f0ff; }
+.toc-toggle {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-size: 0.65rem;
+  color: #bbb;
+  line-height: 1;
+  width: 1rem;
+  text-align: center;
+}
+.toc-toggle:hover { color: #555; }
+
+/* ── Main content ── */
+.content {
+  flex: 1;
+  min-width: 0;
+  padding: 3rem 3rem 6rem;
+  max-width: 800px;
+}
+
+/* ── Single-column (index page) ── */
+.container { max-width: 800px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
+
+/* ── Typography ── */
+h1 {
+  font-size: 1.75rem; font-weight: 700;
+  margin: 0 0 0.15rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 2px solid #111;
+  line-height: 1.3;
+}
+h2 {
+  font-size: 1.3rem; font-weight: 700;
+  margin: 2.5rem 0 0.5rem;
+  padding-bottom: 0.2rem;
+  border-bottom: 1px solid #ddd;
+}
+h3 { font-size: 1.1rem; font-weight: 700; margin: 1.8rem 0 0.4rem; }
+h4 { font-size: 1rem; font-weight: 700; margin: 1.4rem 0 0.3rem; }
+p { margin: 0.9rem 0; }
+a { color: #0055cc; text-decoration: none; }
+a:hover { text-decoration: underline; }
+nav { margin-bottom: 2.5rem; font-size: 0.85rem; color: #999; }
+nav a { color: #999; }
+
+/* ── Code ── */
+code {
+  font-family: "SFMono-Regular", Consolas, monospace;
+  background: #f2f2f2;
+  padding: 0.1em 0.4em;
+  border-radius: 3px;
+  font-size: 0.85em;
+}
+pre {
+  background: #f2f2f2;
+  padding: 1.2rem 1.4rem;
+  border-radius: 5px;
+  overflow-x: auto;
+  font-size: 0.85em;
+  line-height: 1.6;
+}
+pre code { background: none; padding: 0; }
+
+/* ── Lists ── */
+ul, ol { padding-left: 1.6rem; margin: 0.8rem 0; }
+li { margin: 0.35rem 0; }
+li > ul, li > ol { margin: 0.2rem 0; }
+
+/* ── Other elements ── */
+blockquote {
+  border-left: 4px solid #ccc;
+  margin: 1.2rem 0;
+  padding: 0.3rem 1.2rem;
+  color: #444;
+  background: #fafafa;
+}
+table { border-collapse: collapse; width: 100%; margin: 1.2rem 0; font-size: 0.95em; }
+th, td { border: 1px solid #ccc; padding: 0.55rem 0.9rem; text-align: left; }
+th { background: #f5f5f5; font-weight: 700; }
+tr:nth-child(even) { background: #fafafa; }
+hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
+.meta { font-size: 0.8rem; color: #aaa; margin: 0.3rem 0 1.8rem; }
+.index-list { list-style: none; padding: 0; margin: 1rem 0; }
+.index-list li { padding: 0.55rem 0; border-bottom: 1px solid #eee; font-size: 1.05rem; }
+.index-list li:last-child { border-bottom: none; }
+.embed-block {
+  border-left: 3px solid #aaa;
+  padding: 0.5rem 1.2rem;
+  margin: 1.5rem 0;
+  background: #f8f8f8;
+}
+
+/* ── Mobile ── */
+@media (max-width: 800px) {
+  .layout { flex-direction: column; }
+  .sidebar {
+    position: static;
+    width: 100%;
+    height: auto;
+    max-height: 50vh;
+    border-right: none;
+    border-bottom: 1px solid #e8e8e8;
+    padding: 1rem 1.5rem;
+  }
+  .content { padding: 1.5rem 1.2rem 4rem; }
+}
+</style>
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+<div class="toc">
+<ul>
+<li><a href="#srmr">一、 核心概念：什麼是 SRMR？</a></li>
+<li><a href="#thresholds">二、 判斷標準 (Thresholds)</a></li>
+<li><a href="#srmr_1">三、 SRMR 在不同學派的重要性</a><ul>
+<li><a href="#1-cb-sem-amos-mplus">1. 在 CB-SEM (如 AMOS, Mplus)</a></li>
+<li><a href="#2-pls-sem-smartpls">2. 在 PLS-SEM (如 SmartPLS) (考點)</a></li>
+</ul>
+</li>
+<li><a href="#srmr_2">四、 如果不做 / SRMR 過高的風險</a><ul>
+<li><a href="#1">1. 質疑模型是「強行拼湊」的</a></li>
+<li><a href="#2">2. 質疑遺漏關鍵路徑</a></li>
+<li><a href="#3-pls-sem">3. (針對 PLS-SEM) 質疑只是在做數據挖掘</a></li>
+</ul>
+</li>
+<li><a href="#_1">五、 博士資格考作答範本</a></li>
+<li><a href="#rmsea">六、 與 RMSEA 的區別（進階考點）</a></li>
+</ul>
+</div>
+
+</aside>
+<main class="content">
+<h1>SRMR</h1>
+
+<p><strong>SRMR (Standardized Root Mean Square Residual，標準化殘差均方根)</strong> 是結構方程模型（r SEM）中最重要的<strong>「絕對適配指標 (Absolute Fit Index)」</strong>之一。</p>
+<p>Model Fit</p>
+<p>在博士資格考與論文答辯中，SRMR 的地位非常特殊，因為它是目前<strong>唯一</strong>同時被 CB-SEM（如 AMOS）與 PLS-SEM（如 SmartPLS）學界共同認可的關鍵適配度指標。</p>
+<hr />
+<h4 id="srmr">一、 核心概念：什麼是 SRMR？</h4>
+<p>簡單來說，SRMR 衡量的是<strong>「你的理論模型（預測值）」與「實際數據（觀察值）」之間的誤差平均值</strong>。</p>
+<ul>
+<li>
+<p><strong>數學邏輯</strong>：</p>
+<ol>
+<li>
+<p><strong>觀察矩陣 (Observed Correlation Matrix)</strong>：你的原始數據告訴你，變數 A 和變數 B 的相關係數是 0.6。</p>
+</li>
+<li>
+<p><strong>預測矩陣 (Implied/Predicted Correlation Matrix)</strong>：根據你畫的 Model，計算出來 A 和 B 的相關係數應該是 0.55。</p>
+</li>
+<li>
+<p><strong>殘差 (Residual)</strong>：兩者相減（$0.6 - 0.55 = 0.05$），這就是誤差。</p>
+</li>
+<li>
+<p><strong>SRMR</strong>：將所有變數配對的誤差平方、平均、再開根號。</p>
+</li>
+</ol>
+</li>
+<li>
+<p><strong>一句話解釋</strong>：</p>
+<blockquote>
+<p><strong>「SRMR 數值越小，代表模型越能精確地『還原』真實數據的結構。若 SRMR = 0，代表模型完美複製了數據。」</strong></p>
+</blockquote>
+</li>
+</ul>
+<hr />
+<h4 id="thresholds">二、 判斷標準 (Thresholds)</h4>
+<p>這是考試必背的數字（引用 <strong>Hu &amp; Bentler, 1999</strong>）：</p>
+<ul>
+<li>
+<p><strong>完美/優良標準</strong>： <strong>$< 0.08$</strong></p>
+<ul>
+<li>這是學術界公認的黃金門檻。低於 0.08 表示模型適配度良好。</li>
+</ul>
+</li>
+<li>
+<p><strong>可接受標準</strong>： <strong>$< 0.10$</strong></p>
+<ul>
+<li>在某些複雜模型或探索性研究中，部分學者認為小於 0.10 勉強可接受，但在頂級期刊中容易被挑戰。</li>
+</ul>
+</li>
+<li>
+<p><strong>過高 (&gt; 0.10)</strong>：</p>
+<ul>
+<li>代表模型有嚴重的<strong>錯誤設定 (Misspecification)</strong>，必須修正模型（如增加路徑或刪除變數）。</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h4 id="srmr_1">三、 SRMR 在不同學派的重要性</h4>
+<p>博士生必須知道 SRMR 在 CB-SEM 與 PLS-SEM 中的角色差異，這是展現「方法論深度」的關鍵。</p>
+<h5 id="1-cb-sem-amos-mplus">1. 在 CB-SEM (如 AMOS, Mplus)</h5>
+<ul>
+<li>
+<p><strong>角色</strong>：它是標準配備。通常與 <a href="CFI_Comparative_Fit_Index.html">CFI</a>, <a href="RMSEA.html">RMSEA</a> 一起報告。</p>
+</li>
+<li>
+<p><strong>特點</strong>：SRMR 不受樣本數（Sample Size）大小的懲罰，也不受模型複雜度（自由度）的影響太大。它就是很誠實地告訴你「誤差有多大」。</p>
+</li>
+</ul>
+<h5 id="2-pls-sem-smartpls">2. 在 PLS-SEM (如 SmartPLS) <strong>(考點)</strong></h5>
+<ul>
+<li>
+<p><strong>角色</strong>：<strong>至關重要</strong>。</p>
+</li>
+<li>
+<p><strong>背景</strong>：早期 PLS-SEM 被批評「沒有適配度指標」（只看預測力 $R^2$）。後來 Henseler 等學者引入 SRMR 作為 PLS 的適配指標。</p>
+</li>
+<li>
+<p><strong>現狀</strong>：現在投稿 PLS-SEM 的論文，Reviewer 幾乎都會要求看 SRMR。它是證明 PLS 模型不只是「預測準」，而且「結構正確」的主要證據。</p>
+</li>
+</ul>
+<hr />
+<h4 id="srmr_2">四、 如果不做 / SRMR 過高的風險</h4>
+<p>如果你的 SRMR 高達 0.12，或者你直接忽略不報，Reviewer 會提出以下質疑：</p>
+<h5 id="1">1. 質疑模型是「強行拼湊」的</h5>
+<ul>
+<li><strong>Reviewer 攻擊</strong>：「你的 SRMR 高於 0.08，這顯示你的理論模型所產生的相關矩陣，跟實際觀察到的數據差異很大。換句話說，<strong>你的理論無法解釋現實</strong>。請重新檢查你的模型架構。」   </li>
+</ul>
+<h5 id="2">2. 質疑遺漏關鍵路徑</h5>
+<ul>
+<li><strong>Reviewer 攻擊</strong>：「高 SRMR 通常意味著變數之間存在著『模型未設定的關聯』。也許變數 A 和 C 之間其實有直接關係，但你沒有畫這條線，導致模型產生巨大殘差。請參考 Modification Indices (MI) 進行修正。」</li>
+</ul>
+<h5 id="3-pls-sem">3. (針對 PLS-SEM) 質疑只是在做數據挖掘</h5>
+<ul>
+<li><strong>Reviewer 攻擊</strong>：「雖然你的 $R^2$ 很高，但這可能是過度擬合（Overfitting）。因為你沒有報告 SRMR，我無法確定這個模型是否真的符合數據結構，還是只是剛好湊出了高相關係數？」</li>
+</ul>
+<hr />
+<h4 id="_1">五、 博士資格考作答範本</h4>
+<p>若題目問及「如何評估模型的整體適配度？」，建議如下回答以涵蓋 SRMR：</p>
+<blockquote>
+<p>「在評估模型適配度時，除了參考相對適配指標（如 CFI &gt; 0.90）與近似誤差指標（如 RMSEA &lt; 0.08）外，本研究將特別重視 <strong>SRMR (Standardized Root Mean Square Residual)</strong> 的檢驗。</p>
+<p>SRMR 屬於絕對適配指標，直接衡量觀察矩陣與預測矩陣之間的標準化殘差平均值。根據 Hu &amp; Bentler (1999) 的建議，SRMR 應小於 <strong>0.08</strong>。</p>
+<p>尤其在 PLS-SEM 分析中，SRMR 是目前最被認可的適配度標準。若 SRMR 達標，即證明理論模型能有效還原觀察數據的相關結構，排除了模型嚴重錯誤設定（Misspecification）的可能性。」</p>
+</blockquote>
+<hr />
+<h4 id="rmsea">六、 與 RMSEA 的區別（進階考點）</h4>
+<p>學生常搞混 SRMR 與 RMSEA，兩者差異如下：</p>
+<table>
+<thead>
+<tr>
+<th><strong>指標</strong></th>
+<th><strong>SRMR (標準化殘差均方根)</strong></th>
+<th><strong><a href="RMSEA.html">RMSEA</a> (近似誤差均方根)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>類型</strong></td>
+<td><strong>絕對適配 (Absolute Fit)</strong></td>
+<td><strong>簡約適配 (Parsimony Fit)</strong></td>
+</tr>
+<tr>
+<td><strong>關注點</strong></td>
+<td>誤差有多大？(Residuals)</td>
+<td>模型有多簡約？(Correction for Complexity)</td>
+</tr>
+<tr>
+<td><strong>懲罰項</strong></td>
+<td><strong>無</strong> (模型越複雜 SRMR 越容易變好)</td>
+<td><strong>有</strong> (懲罰過度複雜的模型)</td>
+</tr>
+<tr>
+<td><strong>適用性</strong></td>
+<td>CB-SEM 與 <strong>PLS-SEM</strong> 皆適用</td>
+<td>主要用於 <strong>CB-SEM</strong> (PLS 中較少用)</td>
+</tr>
+</tbody>
+</table>
+<p>總結：</p>
+<p>SRMR 是最「誠實」的誤差測量計。如果 SRMR 爆掉，代表你的模型跟數據根本對不上，這時候解釋再多的理論意義都是徒勞。</p>
+<p>下一步</p>
+<p>為了讓您在考試中能快速區分這些指標，是否需要我為您整理一張<strong>「CB-SEM 與 PLS-SEM 的指標報告差異對照表」</strong>？（例如：做 AMOS 要報 CFI/RMSEA，做 SmartPLS 要報 SRMR/Q²）。</p>
+</main>
+</div>
+<script>
+(function () {
+  // ── Rebuild TOC with toggle buttons ──────────────────────────────────────
+  var toc = document.querySelector('.sidebar .toc');
+  if (toc) {
+    toc.querySelectorAll('li').forEach(function (li) {
+      var childUl = li.querySelector(':scope > ul');
+      var link    = li.querySelector(':scope > a');
+      if (!link) return;
+
+      var row = document.createElement('div');
+      row.className = 'toc-row';
+
+      if (childUl) {
+        var btn = document.createElement('button');
+        btn.className = 'toc-toggle';
+        btn.setAttribute('aria-expanded', 'true');
+        btn.textContent = '▾';          // ▾ open
+        btn.addEventListener('click', function () {
+          var open = childUl.hidden;
+          childUl.hidden = !open;
+          btn.textContent = open ? '▾' : '▸';   // ▾ / ▸
+          btn.setAttribute('aria-expanded', String(open));
+        });
+        row.appendChild(btn);
+      } else {
+        var spacer = document.createElement('span');
+        spacer.style.width = '1rem';
+        spacer.style.flexShrink = '0';
+        row.appendChild(spacer);
+      }
+
+      row.appendChild(link);
+      li.insertBefore(row, li.firstChild);
+    });
+  }
+
+  // ── Scroll spy ───────────────────────────────────────────────────────────
+  var headings = document.querySelectorAll('.content h2[id], .content h3[id], .content h4[id]');
+  var tocLinks = document.querySelectorAll('.sidebar .toc a');
+  if (!headings.length || !tocLinks.length) return;
+
+  var current = null;
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      var link = document.querySelector('.sidebar .toc a[href="#' + e.target.id + '"]');
+      if (!link) return;
+      if (current) current.classList.remove('active');
+      current = link;
+      current.classList.add('active');
+      // Scroll link into view within sidebar
+      current.scrollIntoView({ block: 'nearest' });
+    });
+  }, { rootMargin: '-5% 0px -75% 0px', threshold: 0 });
+
+  headings.forEach(function (h) { io.observe(h); });
+}());
+</script>
+</body>
+</html>

@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fornell-Larcker</title>
+<style>*, *::before, *::after { box-sizing: border-box; }
+
+/* ── Base ── */
+body {
+  font-family: "Helvetica Neue", Arial, "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+  font-size: 20px;
+  line-height: 1.9;
+  color: #111;
+  background: #fff;
+  margin: 0;
+}
+
+/* ── Two-column layout (note pages) ── */
+.layout { display: flex; align-items: flex-start; min-height: 100vh; }
+
+.sidebar {
+  width: 270px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 2rem 1rem 2rem 1.5rem;
+  border-right: 1px solid #e8e8e8;
+  background: #f9f9f9;
+}
+.sidebar-back {
+  display: block;
+  font-size: 0.82rem;
+  color: #999;
+  margin-bottom: 1.4rem;
+  text-decoration: none;
+}
+.sidebar-back:hover { color: #333; }
+.sidebar-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #bbb;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+/* ── TOC in sidebar ── */
+.toc { font-size: 0.82rem; line-height: 1.55; }
+.toc ul { list-style: none; margin: 0; padding: 0; }
+.toc ul ul { padding-left: 0.9rem; }
+.toc li { margin: 0; }
+.toc-row { display: flex; align-items: baseline; gap: 0.2rem; }
+.toc-row a {
+  flex: 1;
+  display: block;
+  padding: 0.18rem 0.3rem;
+  border-radius: 3px;
+  color: #555;
+  text-decoration: none;
+  word-break: break-word;
+}
+.toc-row a:hover { background: #ebebeb; color: #111; }
+.toc-row a.active { color: #0055cc; font-weight: 600; background: #e8f0ff; }
+.toc-toggle {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-size: 0.65rem;
+  color: #bbb;
+  line-height: 1;
+  width: 1rem;
+  text-align: center;
+}
+.toc-toggle:hover { color: #555; }
+
+/* ── Main content ── */
+.content {
+  flex: 1;
+  min-width: 0;
+  padding: 3rem 3rem 6rem;
+  max-width: 800px;
+}
+
+/* ── Single-column (index page) ── */
+.container { max-width: 800px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
+
+/* ── Typography ── */
+h1 {
+  font-size: 1.75rem; font-weight: 700;
+  margin: 0 0 0.15rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 2px solid #111;
+  line-height: 1.3;
+}
+h2 {
+  font-size: 1.3rem; font-weight: 700;
+  margin: 2.5rem 0 0.5rem;
+  padding-bottom: 0.2rem;
+  border-bottom: 1px solid #ddd;
+}
+h3 { font-size: 1.1rem; font-weight: 700; margin: 1.8rem 0 0.4rem; }
+h4 { font-size: 1rem; font-weight: 700; margin: 1.4rem 0 0.3rem; }
+p { margin: 0.9rem 0; }
+a { color: #0055cc; text-decoration: none; }
+a:hover { text-decoration: underline; }
+nav { margin-bottom: 2.5rem; font-size: 0.85rem; color: #999; }
+nav a { color: #999; }
+
+/* ── Code ── */
+code {
+  font-family: "SFMono-Regular", Consolas, monospace;
+  background: #f2f2f2;
+  padding: 0.1em 0.4em;
+  border-radius: 3px;
+  font-size: 0.85em;
+}
+pre {
+  background: #f2f2f2;
+  padding: 1.2rem 1.4rem;
+  border-radius: 5px;
+  overflow-x: auto;
+  font-size: 0.85em;
+  line-height: 1.6;
+}
+pre code { background: none; padding: 0; }
+
+/* ── Lists ── */
+ul, ol { padding-left: 1.6rem; margin: 0.8rem 0; }
+li { margin: 0.35rem 0; }
+li > ul, li > ol { margin: 0.2rem 0; }
+
+/* ── Other elements ── */
+blockquote {
+  border-left: 4px solid #ccc;
+  margin: 1.2rem 0;
+  padding: 0.3rem 1.2rem;
+  color: #444;
+  background: #fafafa;
+}
+table { border-collapse: collapse; width: 100%; margin: 1.2rem 0; font-size: 0.95em; }
+th, td { border: 1px solid #ccc; padding: 0.55rem 0.9rem; text-align: left; }
+th { background: #f5f5f5; font-weight: 700; }
+tr:nth-child(even) { background: #fafafa; }
+hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
+.meta { font-size: 0.8rem; color: #aaa; margin: 0.3rem 0 1.8rem; }
+.index-list { list-style: none; padding: 0; margin: 1rem 0; }
+.index-list li { padding: 0.55rem 0; border-bottom: 1px solid #eee; font-size: 1.05rem; }
+.index-list li:last-child { border-bottom: none; }
+.embed-block {
+  border-left: 3px solid #aaa;
+  padding: 0.5rem 1.2rem;
+  margin: 1.5rem 0;
+  background: #f8f8f8;
+}
+
+/* ── Mobile ── */
+@media (max-width: 800px) {
+  .layout { flex-direction: column; }
+  .sidebar {
+    position: static;
+    width: 100%;
+    height: auto;
+    max-height: 50vh;
+    border-right: none;
+    border-bottom: 1px solid #e8e8e8;
+    padding: 1rem 1.5rem;
+  }
+  .content { padding: 1.5rem 1.2rem 4rem; }
+}
+</style>
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+<div class="toc">
+<ul>
+<li><a href="#_1">一、 核心邏輯：構面的「自私」原則</a></li>
+<li><a href="#_2">二、 如何判讀報表？（考試必考）</a><ul>
+<li><a href="#_3">範例表格 (判讀教學)</a></li>
+</ul>
+</li>
+<li><a href="#fornell-larcker-htmt">三、 Fornell-Larcker 的致命弱點 (為什麼現在要用 HTMT？)</a></li>
+<li><a href="#reviewer">四、 博士生該如何應對 Reviewer？</a><ul>
+<li><a href="#afornell-larcker-htmt">情境 A：Fornell-Larcker 通過，HTMT 也通過</a></li>
+<li><a href="#bfornell-larcker-htmt-htmt-090">情境 B：Fornell-Larcker 通過，但 HTMT 沒過 (HTMT &gt; 0.90)</a></li>
+<li><a href="#cfornell-larcker">情境 C：Fornell-Larcker 沒過</a></li>
+</ul>
+</li>
+<li><a href="#_4">總結</a></li>
+</ul>
+</div>
+
+</aside>
+<main class="content">
+<h1>Fornell-Larcker</h1>
+
+<p><strong>Fornell-Larcker Criterion</strong> 是結構方程模型（SEM）中，用來檢驗 <strong>「區別效度 (Discriminant Validity 區別校度)」</strong> 最傳統、最經典的指標。</p>
+<p>雖然現在學術界推崇更嚴謹的 <strong>HTMT</strong>，但 Fornell-Larcker 依然是所有量化研究論文<strong>必備的「基本款」</strong>（Reviewer 還是會習慣先看這張表）。</p>
+<p>以下是針對博士資格考與論文寫作的詳細解析：</p>
+<hr />
+<h4 id="_1">一、 核心邏輯：構面的「自私」原則</h4>
+<p>Fornell-Larcker 的核心概念非常簡單直觀：</p>
+<p>「一個構面（爸爸）跟自己親生的小孩（題目）的關係，必須大於它跟隔壁老王（其他構面）的關係。」</p>
+<ul>
+<li>
+<p><strong>數學定義</strong>：潛在構面<strong>「平均變異萃取量 (AVE) 的開根號值」</strong>，必須大於該構面與<strong>「其他任何構面的相關係數」</strong>。</p>
+</li>
+<li>
+<p><strong>意義</strong>：如果構面 A 自己解釋變異的能力（AVE），還輸給它跟構面 B 的相關性，那代表 A 跟 B 根本分不開，區別效度失敗。</p>
+</li>
+</ul>
+<hr />
+<h4 id="_2">二、 如何判讀報表？（考試必考）</h4>
+<p>在論文中，這通常會呈現為一張 <strong>「相關係數矩陣表 (Correlation Matrix)」</strong>，其中對角線會被替換成 $\sqrt{AVE}$。</p>
+<h5 id="_3">範例表格 (判讀教學)</h5>
+<table>
+<thead>
+<tr>
+<th><strong>構面</strong></th>
+<th><strong>A (滿意度)</strong></th>
+<th><strong>B (忠誠度)</strong></th>
+<th><strong>C (信任)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>A (滿意度)</strong></td>
+<td><strong>0.75</strong> ($\sqrt{AVE}$)</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>B (忠誠度)</strong></td>
+<td>0.60</td>
+<td><strong>0.80</strong> ($\sqrt{AVE}$)</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>C (信任)</strong></td>
+<td>0.85 (危險!)</td>
+<td>0.55</td>
+<td><strong>0.72</strong> ($\sqrt{AVE}$)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>判讀規則：</strong></p>
+<ol>
+<li>
+<p><strong>看對角線 (粗體)</strong>：這是該構面的 $\sqrt{AVE}$。</p>
+</li>
+<li>
+<p><strong>看非對角線 (一般字)</strong>：這是構面間的相關係數。</p>
+</li>
+<li>
+<p><strong>檢驗標準</strong>：<strong>對角線的數字，必須大於其所在「行」與「列」的所有數字。</strong></p>
+</li>
+</ol>
+<p><strong>上表診斷：</strong></p>
+<ul>
+<li>
+<p><strong>A vs. B</strong>：$0.75 > 0.60$ (通過)。滿意度跟忠誠度可以分開。</p>
+</li>
+<li>
+<p><strong>B vs. C</strong>：$0.80 > 0.55$ (通過)。</p>
+</li>
+<li>
+<p><strong>A vs. C (失敗)</strong>：構面 A 的對角線是 <strong>0.75</strong>，但它跟 C 的相關係數高達 <strong>0.85</strong>。</p>
+<ul>
+<li><strong>結論</strong>：構面 A (滿意度) 與 C (信任) 重疊嚴重，無法區分。<strong>區別效度不足 (Lack of Discriminant Validity)。</strong></li>
+</ul>
+</li>
+</ul>
+<hr />
+<h4 id="fornell-larcker-htmt">三、 Fornell-Larcker 的致命弱點 (為什麼現在要用 HTMT？)</h4>
+<p>這是博士生必須展現「學術深度」的地方。為什麼這幾年 Reviewer 開始嫌棄 Fornell-Larcker？</p>
+<ol>
+<li>
+<p><strong>太過遲鈍 (Low Sensitivity)</strong>：</p>
+<ul>
+<li>
+<p>模擬研究 (Henseler et al., 2015) 發現，即便兩個構面在理論上幾乎完全一樣（例如相關性 0.90），Fornell-Larcker 有時候還是會顯示「通過」（例如 $\sqrt{AVE} = 0.91 > 0.90$）。</p>
+</li>
+<li>
+<p>這會產生 <strong>「型二錯誤 (Type II Error)」</strong>：明明沒過，卻誤判為過。</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>依賴 AVE</strong>：</p>
+<ul>
+<li>如果研究者透過刪除題目強行拉高 AVE，Fornell-Larcker 就會很容易通過，但这只是數據操作的假象。</li>
+</ul>
+</li>
+</ol>
+<hr />
+<h4 id="reviewer">四、 博士生該如何應對 Reviewer？</h4>
+<p>在論文中，您不能只報 Fornell-Larcker，也不能完全不報。<strong>最佳策略是「新舊並陳」</strong>。</p>
+<h5 id="afornell-larcker-htmt">情境 A：Fornell-Larcker 通過，HTMT 也通過</h5>
+<ul>
+<li>
+<p><strong>對策</strong>：完美。在表格下方註解：</p>
+<blockquote>
+<p>「區別效度透過 Fornell-Larcker Criterion (1981) 與 HTMT Ratio (Henseler et al., 2015) 雙重檢驗，結果顯示所有對角線數值皆大於其相關係數，且所有 HTMT 值皆小於 0.85。」</p>
+</blockquote>
+</li>
+</ul>
+<h5 id="bfornell-larcker-htmt-htmt-090">情境 B：Fornell-Larcker 通過，但 HTMT 沒過 (HTMT &gt; 0.90)</h5>
+<ul>
+<li>
+<p>這是最常見的狀況。</p>
+</li>
+<li>
+<p><strong>Reviewer 質疑</strong>：「雖然你的 Fornell-Larcker 顯示有區別，但 HTMT 顯示這兩個構面高度重疊。我傾向相信較嚴謹的 HTMT。」</p>
+</li>
+<li>
+<p><strong>對策</strong>：</p>
+<ol>
+<li>
+<p><strong>檢查題目</strong>：是否有語意不清導致受試者混淆？</p>
+</li>
+<li>
+<p><strong>合併構面</strong>：承認這兩者在受試者心中是一樣的。</p>
+</li>
+<li>
+<p><strong>辯護 (風險高)</strong>：引用文獻說明在特定情境下（如高度相關的態度變數），HTMT 放寬至 0.90 是可接受的，並強調 Fornell-Larcker 的支持證據。</p>
+</li>
+</ol>
+</li>
+</ul>
+<h5 id="cfornell-larcker">情境 C：Fornell-Larcker 沒過</h5>
+<ul>
+<li><strong>對策</strong>：這就是<strong>死刑</strong>。連最寬鬆的標準都沒過，代表你的構面定義有嚴重問題。請回到源頭重新檢視問卷或刪除重疊題目。</li>
+</ul>
+<hr />
+<h4 id="_4">總結</h4>
+<table>
+<thead>
+<tr>
+<th><strong>指標</strong></th>
+<th><strong>Fornell-Larcker Criterion</strong></th>
+<th><strong>HTMT</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>地位</strong></td>
+<td><strong>舊皇 (The Old King)</strong><br><br>  <br><br>傳統、必備、基本門檻。</td>
+<td><strong>新皇 (The New Standard)</strong><br><br>  <br><br>嚴謹、敏銳、Reviewer 的新寵。</td>
+</tr>
+<tr>
+<td><strong>比較對象</strong></td>
+<td>$\sqrt{AVE}$ vs. 潛在變項相關係數</td>
+<td>題目間相關性的比率</td>
+</tr>
+<tr>
+<td><strong>優點</strong></td>
+<td>簡單易懂，報表直觀。</td>
+<td>檢測力強，能抓出細微的重疊。</td>
+</tr>
+<tr>
+<td><strong>缺點</strong></td>
+<td>容易「放水」（敏感度低）。</td>
+<td>較為嚴格，容易讓數據不好看。</td>
+</tr>
+</tbody>
+</table>
+<p>下一步</p>
+<p>現在您已經掌握了從測量模型到結構模型的所有指標。</p>
+<p>針對論文寫作的最後一哩路，您是否需要我整理<strong>「Discussion (討論與結論)」章節的寫作模板</strong>？（包含如何將統計結果昇華為理論貢獻，這通常是決定論文能否被接受的關鍵）。</p>
+</main>
+</div>
+<script>
+(function () {
+  // ── Rebuild TOC with toggle buttons ──────────────────────────────────────
+  var toc = document.querySelector('.sidebar .toc');
+  if (toc) {
+    toc.querySelectorAll('li').forEach(function (li) {
+      var childUl = li.querySelector(':scope > ul');
+      var link    = li.querySelector(':scope > a');
+      if (!link) return;
+
+      var row = document.createElement('div');
+      row.className = 'toc-row';
+
+      if (childUl) {
+        var btn = document.createElement('button');
+        btn.className = 'toc-toggle';
+        btn.setAttribute('aria-expanded', 'true');
+        btn.textContent = '▾';          // ▾ open
+        btn.addEventListener('click', function () {
+          var open = childUl.hidden;
+          childUl.hidden = !open;
+          btn.textContent = open ? '▾' : '▸';   // ▾ / ▸
+          btn.setAttribute('aria-expanded', String(open));
+        });
+        row.appendChild(btn);
+      } else {
+        var spacer = document.createElement('span');
+        spacer.style.width = '1rem';
+        spacer.style.flexShrink = '0';
+        row.appendChild(spacer);
+      }
+
+      row.appendChild(link);
+      li.insertBefore(row, li.firstChild);
+    });
+  }
+
+  // ── Scroll spy ───────────────────────────────────────────────────────────
+  var headings = document.querySelectorAll('.content h2[id], .content h3[id], .content h4[id]');
+  var tocLinks = document.querySelectorAll('.sidebar .toc a');
+  if (!headings.length || !tocLinks.length) return;
+
+  var current = null;
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      var link = document.querySelector('.sidebar .toc a[href="#' + e.target.id + '"]');
+      if (!link) return;
+      if (current) current.classList.remove('active');
+      current = link;
+      current.classList.add('active');
+      // Scroll link into view within sidebar
+      current.scrollIntoView({ block: 'nearest' });
+    });
+  }, { rootMargin: '-5% 0px -75% 0px', threshold: 0 });
+
+  headings.forEach(function (h) { io.observe(h); });
+}());
+</script>
+</body>
+</html>

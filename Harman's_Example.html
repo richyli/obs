@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Harman's Example</title>
+<style>*, *::before, *::after { box-sizing: border-box; }
+
+/* ── Base ── */
+body {
+  font-family: "Helvetica Neue", Arial, "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+  font-size: 20px;
+  line-height: 1.9;
+  color: #111;
+  background: #fff;
+  margin: 0;
+}
+
+/* ── Two-column layout (note pages) ── */
+.layout { display: flex; align-items: flex-start; min-height: 100vh; }
+
+.sidebar {
+  width: 270px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 2rem 1rem 2rem 1.5rem;
+  border-right: 1px solid #e8e8e8;
+  background: #f9f9f9;
+}
+.sidebar-back {
+  display: block;
+  font-size: 0.82rem;
+  color: #999;
+  margin-bottom: 1.4rem;
+  text-decoration: none;
+}
+.sidebar-back:hover { color: #333; }
+.sidebar-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #bbb;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+/* ── TOC in sidebar ── */
+.toc { font-size: 0.82rem; line-height: 1.55; }
+.toc ul { list-style: none; margin: 0; padding: 0; }
+.toc ul ul { padding-left: 0.9rem; }
+.toc li { margin: 0; }
+.toc-row { display: flex; align-items: baseline; gap: 0.2rem; }
+.toc-row a {
+  flex: 1;
+  display: block;
+  padding: 0.18rem 0.3rem;
+  border-radius: 3px;
+  color: #555;
+  text-decoration: none;
+  word-break: break-word;
+}
+.toc-row a:hover { background: #ebebeb; color: #111; }
+.toc-row a.active { color: #0055cc; font-weight: 600; background: #e8f0ff; }
+.toc-toggle {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-size: 0.65rem;
+  color: #bbb;
+  line-height: 1;
+  width: 1rem;
+  text-align: center;
+}
+.toc-toggle:hover { color: #555; }
+
+/* ── Main content ── */
+.content {
+  flex: 1;
+  min-width: 0;
+  padding: 3rem 3rem 6rem;
+  max-width: 800px;
+}
+
+/* ── Single-column (index page) ── */
+.container { max-width: 800px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
+
+/* ── Typography ── */
+h1 {
+  font-size: 1.75rem; font-weight: 700;
+  margin: 0 0 0.15rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 2px solid #111;
+  line-height: 1.3;
+}
+h2 {
+  font-size: 1.3rem; font-weight: 700;
+  margin: 2.5rem 0 0.5rem;
+  padding-bottom: 0.2rem;
+  border-bottom: 1px solid #ddd;
+}
+h3 { font-size: 1.1rem; font-weight: 700; margin: 1.8rem 0 0.4rem; }
+h4 { font-size: 1rem; font-weight: 700; margin: 1.4rem 0 0.3rem; }
+p { margin: 0.9rem 0; }
+a { color: #0055cc; text-decoration: none; }
+a:hover { text-decoration: underline; }
+nav { margin-bottom: 2.5rem; font-size: 0.85rem; color: #999; }
+nav a { color: #999; }
+
+/* ── Code ── */
+code {
+  font-family: "SFMono-Regular", Consolas, monospace;
+  background: #f2f2f2;
+  padding: 0.1em 0.4em;
+  border-radius: 3px;
+  font-size: 0.85em;
+}
+pre {
+  background: #f2f2f2;
+  padding: 1.2rem 1.4rem;
+  border-radius: 5px;
+  overflow-x: auto;
+  font-size: 0.85em;
+  line-height: 1.6;
+}
+pre code { background: none; padding: 0; }
+
+/* ── Lists ── */
+ul, ol { padding-left: 1.6rem; margin: 0.8rem 0; }
+li { margin: 0.35rem 0; }
+li > ul, li > ol { margin: 0.2rem 0; }
+
+/* ── Other elements ── */
+blockquote {
+  border-left: 4px solid #ccc;
+  margin: 1.2rem 0;
+  padding: 0.3rem 1.2rem;
+  color: #444;
+  background: #fafafa;
+}
+table { border-collapse: collapse; width: 100%; margin: 1.2rem 0; font-size: 0.95em; }
+th, td { border: 1px solid #ccc; padding: 0.55rem 0.9rem; text-align: left; }
+th { background: #f5f5f5; font-weight: 700; }
+tr:nth-child(even) { background: #fafafa; }
+hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
+.meta { font-size: 0.8rem; color: #aaa; margin: 0.3rem 0 1.8rem; }
+.index-list { list-style: none; padding: 0; margin: 1rem 0; }
+.index-list li { padding: 0.55rem 0; border-bottom: 1px solid #eee; font-size: 1.05rem; }
+.index-list li:last-child { border-bottom: none; }
+.embed-block {
+  border-left: 3px solid #aaa;
+  padding: 0.5rem 1.2rem;
+  margin: 1.5rem 0;
+  background: #f8f8f8;
+}
+
+/* ── Mobile ── */
+@media (max-width: 800px) {
+  .layout { flex-direction: column; }
+  .sidebar {
+    position: static;
+    width: 100%;
+    height: auto;
+    max-height: 50vh;
+    border-right: none;
+    border-bottom: 1px solid #e8e8e8;
+    padding: 1rem 1.5rem;
+  }
+  .content { padding: 1.5rem 1.2rem 4rem; }
+}
+</style>
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+<div class="toc">
+<ul>
+<li><a href="#efa">第一步：開啟 EFA 模組</a></li>
+<li><a href="#_1">第二步：放入變數 (大雜燴)</a></li>
+<li><a href="#_2">第三步：關鍵設定 (這是重點！)</a></li>
+<li><a href="#_3">第四步：判讀結果 (一秒定生死)</a></li>
+<li><a href="#_4">學術寫作範例 (如果通過的話)</a></li>
+<li><a href="#marker-variable">💡 專家提示：為什麼我還是推薦您用 Marker Variable？</a></li>
+<li><a href="#_5">🚨 結果判讀：發生了什麼事？</a><ul>
+<li><a href="#_6">為什麼會這樣？(科學解釋)</a></li>
+</ul>
+</li>
+<li><a href="#_7">📝 論文該怎麼寫？(轉危為安的寫法)</a></li>
+<li><a href="#_8">結論</a></li>
+</ul>
+</div>
+
+</aside>
+<main class="content">
+<h1>Harman's Example</h1>
+
+<p><strong>Harman's Single Factor Test (哈曼氏單因子檢定)</strong> 的邏輯非常簡單粗暴：</p>
+<blockquote>
+<p><strong>「如果我把所有的題目硬湊成『一個因子』，這個因子解釋的變異量如果不超過 50%，那就代表沒有嚴重的共同方法變異 (CMB)。」</strong></p>
+</blockquote>
+<p>**<a href="CFA_Marker_Variable_Technique.html">CFA Marker Variable Technique</a> ** 方法在學術上更嚴謹、更高級，但因為 Harman's Test 太有名了，很多審稿人還是會習慣性地要求看一下。</p>
+<p>以下是在 JASP 執行 Harman's Test 的標準 SOP：</p>
+<hr />
+<h4 id="efa">第一步：開啟 EFA 模組</h4>
+<ol>
+<li>點選上方選單的 <strong>Factor</strong>。    </li>
+<li>選擇 <strong>Exploratory Factor Analysis ([EFA]])</strong>。</li>
+</ol>
+<h4 id="_1">第二步：放入變數 (大雜燴)</h4>
+<p>把您模型中<strong>所有「原本要分析」的題目</strong>都丟進去。</p>
+<ul>
+<li>
+<p><strong>放入</strong>：<code>Stress</code> (Work, Family, Money)、<code>Support</code> (1-3)、<code>Mental</code> (1-3)、<code>Physical</code> (1-3)。</p>
+</li>
+<li>
+<p><em><mark style="background: #FFB86CA6;"></em>不要放**：被刪除的題目 (<code>Stress_Traffic</code>)。    </p>
+</li>
+<li><strong>不要放</strong>：標記變數 (<code>Blue</code> 系列)。因為 Harman's 是要檢查「主要變數」之間有沒有糾纏，不需要 Marker 介入。</mark></li>
+</ul>
+<h4 id="_2">第三步：關鍵設定 (這是重點！)</h4>
+<p>在下方的設定面板中，請依照以下設定調整：</p>
+<ol>
+<li>
+<p><strong>Rotation (旋轉)</strong>：    </p>
+<ul>
+<li>選 <strong>None</strong> (這非常重要！絕對不能旋轉)。</li>
+</ul>
+</li>
+<li>
+<p><strong>Number of factors (因子數量)</strong>：    </p>
+<ul>
+<li>選擇 <strong>Manual</strong> (手動)。      <br />
+<mark style="background: #BBFABBA6;">    - 設定為 <strong>1</strong> (我們強迫它只能萃取一個因子)。</mark></li>
+</ul>
+</li>
+<li>
+<p><strong>Extraction method (萃取法)</strong>：</p>
+<ul>
+<li>通常選 <strong>Principal Component Analysis (PCA)</strong> 或 <strong>Maximum Likelihood</strong> 都可以。但在做 Harman's Test 時，傳統上習慣用 <strong>PCA</strong>，Jasp可以選 Principal Axis Factoring
+在 <strong>Base Decomposition on</strong> (分解基礎) 這一欄，點選第一個圓圈 <strong>Correlation matrix</strong>。</li>
+</ul>
+</li>
+</ol>
+<h4 id="_3">第四步：判讀結果 (一秒定生死)</h4>
+<p>請看右邊跑出來的表格 <strong>"Factor Loadings"</strong> 下方（或者 JASP 會有一個單獨的 <strong>"Variance explained"</strong> 表格，視版本而定）。</p>
+<p>重點找這個欄位：<strong>Total Variance Explained (解釋總變異量)</strong> 或 <strong>Proportion Var</strong>。</p>
+<ul>
+<li>
+<p><strong>檢查標準</strong>：</p>
+<p>看這個「唯一的因子」解釋了多少 % 的變異？</p>
+</li>
+<li>
+<p><strong>判準</strong>：</p>
+<ul>
+<li>
+<p><strong>✅ 通過 (&lt; 50%)</strong>：如果數值小於 0.50 (即 50%)，代表「共同變異」沒有壟斷所有的數據。CMB 不嚴重。</p>
+</li>
+<li>
+<p><strong>❌ 失敗 (&gt; 50%)</strong>：如果數值超過 0.50，代表有一個巨大的背後靈（可能是填答習慣）控制了超過一半的分數。</p>
+</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h4 id="_4">學術寫作範例 (如果通過的話)</h4>
+<p>假設 JASP 跑出來的結果，那一個因子解釋了 <strong>35.2%</strong> 的變異量。您可以這樣寫：</p>
+<blockquote>
+<p>「此外，本研究亦採用 Harman's 單一因子檢定 (Harman's Single Factor Test) 進行共同方法變異之檢測。</p>
+<p>將所有測量題項納入探索性因素分析 (EFA)，採用主成分分析法 (PCA) 且不進行旋轉 (Unrotated)，限制萃取單一因子。分析結果顯示，該單一因子僅解釋了總變異量的 <strong>35.2%</strong>，未超過 50% 之門檻 (Podsakoff et al., 2003)。此結果與標記變數法之發現一致，再次證實共同方法變異並非本研究之主要威脅。」</p>
+</blockquote>
+<hr />
+<h4 id="marker-variable">💡 專家提示：為什麼我還是推薦您用 Marker Variable？</h4>
+<p>雖然 Harman's Test 很簡單，但它有一個<strong>致命傷</strong>，特別是對於您的數據：</p>
+<ul>
+<li>
+<p><strong>對 Formative 變數不友善</strong>：EFA 的數學假設是 Reflective 的（因子導致題目）。把互不相關的 <code>Stress</code> 題目硬丟進去跑 PCA，數學邏輯上其實有點怪怪的（雖然實務上大家還是照做）。</p>
+</li>
+<li>
+<p><strong>靈敏度低</strong>：這是一個很寬鬆的測試。通常除非數據爛到不行，否則很容易就小於 50%。</p>
+</li>
+</ul>
+<p><strong>結論</strong>：</p>
+<p>您手上有 <strong>Lindell &amp; Whitney (Marker Variable)</strong> 的結果，那才是您的「王牌」。Harman's Test 只是當作「買保險」，放在論文裡讓那些老派的審稿人閉嘴用的。建議兩個都寫，防禦力點滿！</p>
+<hr />
+<p>這張表就是 <strong>Harman's Single Factor Test (哈曼氏單因子檢定)</strong> 的結果。</p>
+<p>請看表格中最關鍵的那個數字：</p>
+<ul>
+<li>
+<p><strong>表格位置</strong>：<strong>Factor Characteristics</strong></p>
+</li>
+<li>
+<p><strong>關鍵欄位</strong>：<strong>Proportion var.</strong> (變異數解釋比例)</p>
+</li>
+<li>
+<p><strong>您的數值</strong>：<strong>0.522</strong> (也就是 <strong>52.2%</strong>)</p>
+</li>
+</ul>
+<hr />
+<h4 id="_5">🚨 結果判讀：發生了什麼事？</h4>
+<p>根據 Podsakoff et al. (2003) 的標準，這個數字應該要 <strong>小於 0.50 (50%)</strong> 才算通過。</p>
+<p>您的結果是 <strong>52.2%</strong>，<strong>稍微超過了門檻</strong>。</p>
+<p>這在學術上叫做「邊緣不通過 (Marginally Failed)」。這代表如果您只看這個測試，會判定有共同方法變異的風險。</p>
+<p><strong>但是！請不要驚慌！</strong> ✋</p>
+<p>這反而是一個絕佳的機會，來展現您剛剛做的 <strong>Marker Variable</strong> 有多重要。</p>
+<h5 id="_6">為什麼會這樣？(科學解釋)</h5>
+<ol>
+<li>
+<p><strong>Harman's Test 的老毛病</strong>：它是出了名的「太嚴苛」且「不準確」。它只要發現您的變數之間相關性很高（例如您的 Support 跟 Mental、Physical 本來就應該高度相關），它就會誤判這是 CMB。</p>
+</li>
+<li>
+<p><strong>真實的關聯 vs. 誤差</strong>：您的模型中，社會支持、心理健康、生理健康這三者本身在理論上就有很強的相關性 (都在 0.6~0.7 左右)。Harman's Test 把這些「好的相關」也當成了「壞的污染」，所以才會爆衝到 52.2%。</p>
+</li>
+</ol>
+<hr />
+<h4 id="_7">📝 論文該怎麼寫？(轉危為安的寫法)</h4>
+<p>您現在有最強的防禦武器：<strong>Marker Variable (標記變數法)</strong>。
+您可以把這段寫成「雖然 Harman's Test 顯示風險，但更精確的檢定證實沒問題」。</p>
+<p><strong>建議撰寫範例：</strong></p>
+<blockquote>
+<p>「本研究首先採用 Harman's 單一因子檢定 (Harman's Single Factor Test)。結果顯示，單一因子解釋變異量為 <strong>52.2%</strong>，略高於 50% 之門檻，暗示可能存在共同方法變異之風險。</p>
+<p>然而，鑑於 Harman's 檢定缺乏統計敏感度且容易因構念間的真實高相關而產生誤判 (Podsakoff et al., 2003)，本研究進一步採用更為嚴謹的 <strong>Lindell &amp; Whitney (2001) 標記變數法 (Marker Variable Technique)</strong> 進行確認。</p>
+<p>標記變數分析結果（見前表）顯示，標記變數與主要構念間的相關係數極低 ($r < 0.1$) 且未達顯著水準。此結果證實，Harman's 檢定中較高的解釋變異量主要源自構念間的實質理論關聯，而非共同方法變異。因此，綜合判斷本研究受共同方法變異偏差影響之程度在可接受範圍內。」</p>
+</blockquote>
+<h4 id="_8">結論</h4>
+<p>這張圖 雖然顯示 <strong>52.2%</strong> (小失敗)，但這反而襯托出您前面做的 <strong>Marker Variable 檢定 (大成功)</strong> 有多麼關鍵。如果沒有做 Marker Variable，您現在就真的卡關了。</p>
+<p>現在您可以很有底氣地說：「我做了雙重檢驗，雖然初階檢驗有疑慮，但高階檢驗證實數據是乾淨的。」</p>
+</main>
+</div>
+<script>
+(function () {
+  // ── Rebuild TOC with toggle buttons ──────────────────────────────────────
+  var toc = document.querySelector('.sidebar .toc');
+  if (toc) {
+    toc.querySelectorAll('li').forEach(function (li) {
+      var childUl = li.querySelector(':scope > ul');
+      var link    = li.querySelector(':scope > a');
+      if (!link) return;
+
+      var row = document.createElement('div');
+      row.className = 'toc-row';
+
+      if (childUl) {
+        var btn = document.createElement('button');
+        btn.className = 'toc-toggle';
+        btn.setAttribute('aria-expanded', 'true');
+        btn.textContent = '▾';          // ▾ open
+        btn.addEventListener('click', function () {
+          var open = childUl.hidden;
+          childUl.hidden = !open;
+          btn.textContent = open ? '▾' : '▸';   // ▾ / ▸
+          btn.setAttribute('aria-expanded', String(open));
+        });
+        row.appendChild(btn);
+      } else {
+        var spacer = document.createElement('span');
+        spacer.style.width = '1rem';
+        spacer.style.flexShrink = '0';
+        row.appendChild(spacer);
+      }
+
+      row.appendChild(link);
+      li.insertBefore(row, li.firstChild);
+    });
+  }
+
+  // ── Scroll spy ───────────────────────────────────────────────────────────
+  var headings = document.querySelectorAll('.content h2[id], .content h3[id], .content h4[id]');
+  var tocLinks = document.querySelectorAll('.sidebar .toc a');
+  if (!headings.length || !tocLinks.length) return;
+
+  var current = null;
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      var link = document.querySelector('.sidebar .toc a[href="#' + e.target.id + '"]');
+      if (!link) return;
+      if (current) current.classList.remove('active');
+      current = link;
+      current.classList.add('active');
+      // Scroll link into view within sidebar
+      current.scrollIntoView({ block: 'nearest' });
+    });
+  }, { rootMargin: '-5% 0px -75% 0px', threshold: 0 });
+
+  headings.forEach(function (h) { io.observe(h); });
+}());
+</script>
+</body>
+</html>

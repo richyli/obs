@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lavaan</title>
+<style>*, *::before, *::after { box-sizing: border-box; }
+
+/* ── Base ── */
+body {
+  font-family: "Helvetica Neue", Arial, "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+  font-size: 20px;
+  line-height: 1.9;
+  color: #111;
+  background: #fff;
+  margin: 0;
+}
+
+/* ── Two-column layout (note pages) ── */
+.layout { display: flex; align-items: flex-start; min-height: 100vh; }
+
+.sidebar {
+  width: 270px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 2rem 1rem 2rem 1.5rem;
+  border-right: 1px solid #e8e8e8;
+  background: #f9f9f9;
+}
+.sidebar-back {
+  display: block;
+  font-size: 0.82rem;
+  color: #999;
+  margin-bottom: 1.4rem;
+  text-decoration: none;
+}
+.sidebar-back:hover { color: #333; }
+.sidebar-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #bbb;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+/* ── TOC in sidebar ── */
+.toc { font-size: 0.82rem; line-height: 1.55; }
+.toc ul { list-style: none; margin: 0; padding: 0; }
+.toc ul ul { padding-left: 0.9rem; }
+.toc li { margin: 0; }
+.toc-row { display: flex; align-items: baseline; gap: 0.2rem; }
+.toc-row a {
+  flex: 1;
+  display: block;
+  padding: 0.18rem 0.3rem;
+  border-radius: 3px;
+  color: #555;
+  text-decoration: none;
+  word-break: break-word;
+}
+.toc-row a:hover { background: #ebebeb; color: #111; }
+.toc-row a.active { color: #0055cc; font-weight: 600; background: #e8f0ff; }
+.toc-toggle {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-size: 0.65rem;
+  color: #bbb;
+  line-height: 1;
+  width: 1rem;
+  text-align: center;
+}
+.toc-toggle:hover { color: #555; }
+
+/* ── Main content ── */
+.content {
+  flex: 1;
+  min-width: 0;
+  padding: 3rem 3rem 6rem;
+  max-width: 800px;
+}
+
+/* ── Single-column (index page) ── */
+.container { max-width: 800px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
+
+/* ── Typography ── */
+h1 {
+  font-size: 1.75rem; font-weight: 700;
+  margin: 0 0 0.15rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 2px solid #111;
+  line-height: 1.3;
+}
+h2 {
+  font-size: 1.3rem; font-weight: 700;
+  margin: 2.5rem 0 0.5rem;
+  padding-bottom: 0.2rem;
+  border-bottom: 1px solid #ddd;
+}
+h3 { font-size: 1.1rem; font-weight: 700; margin: 1.8rem 0 0.4rem; }
+h4 { font-size: 1rem; font-weight: 700; margin: 1.4rem 0 0.3rem; }
+p { margin: 0.9rem 0; }
+a { color: #0055cc; text-decoration: none; }
+a:hover { text-decoration: underline; }
+nav { margin-bottom: 2.5rem; font-size: 0.85rem; color: #999; }
+nav a { color: #999; }
+
+/* ── Code ── */
+code {
+  font-family: "SFMono-Regular", Consolas, monospace;
+  background: #f2f2f2;
+  padding: 0.1em 0.4em;
+  border-radius: 3px;
+  font-size: 0.85em;
+}
+pre {
+  background: #f2f2f2;
+  padding: 1.2rem 1.4rem;
+  border-radius: 5px;
+  overflow-x: auto;
+  font-size: 0.85em;
+  line-height: 1.6;
+}
+pre code { background: none; padding: 0; }
+
+/* ── Lists ── */
+ul, ol { padding-left: 1.6rem; margin: 0.8rem 0; }
+li { margin: 0.35rem 0; }
+li > ul, li > ol { margin: 0.2rem 0; }
+
+/* ── Other elements ── */
+blockquote {
+  border-left: 4px solid #ccc;
+  margin: 1.2rem 0;
+  padding: 0.3rem 1.2rem;
+  color: #444;
+  background: #fafafa;
+}
+table { border-collapse: collapse; width: 100%; margin: 1.2rem 0; font-size: 0.95em; }
+th, td { border: 1px solid #ccc; padding: 0.55rem 0.9rem; text-align: left; }
+th { background: #f5f5f5; font-weight: 700; }
+tr:nth-child(even) { background: #fafafa; }
+hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
+.meta { font-size: 0.8rem; color: #aaa; margin: 0.3rem 0 1.8rem; }
+.index-list { list-style: none; padding: 0; margin: 1rem 0; }
+.index-list li { padding: 0.55rem 0; border-bottom: 1px solid #eee; font-size: 1.05rem; }
+.index-list li:last-child { border-bottom: none; }
+.embed-block {
+  border-left: 3px solid #aaa;
+  padding: 0.5rem 1.2rem;
+  margin: 1.5rem 0;
+  background: #f8f8f8;
+}
+
+/* ── Mobile ── */
+@media (max-width: 800px) {
+  .layout { flex-direction: column; }
+  .sidebar {
+    position: static;
+    width: 100%;
+    height: auto;
+    max-height: 50vh;
+    border-right: none;
+    border-bottom: 1px solid #e8e8e8;
+    padding: 1rem 1.5rem;
+  }
+  .content { padding: 1.5rem 1.2rem 4rem; }
+}
+</style>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+<div class="toc">
+<ul>
+<li><a href="#1-operators">1. 核心運算符號 (Operators)</a></li>
+<li><a href="#2-cheat-sheet">2. 完整模型語法範例 (Cheat Sheet)</a><ul>
+<li><a href="#a-cfa-sem">A. 基本 CFA (驗證性因素分析) 與 SEM (結構方程模型)</a></li>
+<li><a href="#b-mediation-labeling">B. 中介效果 (Mediation) 與 參數標籤 (Labeling)</a></li>
+<li><a href="#c-multiple-groups">C. 多群組分析 (Multiple Groups) 的限制語法</a></li>
+</ul>
+</li>
+<li><a href="#3-functions">3. 常用的執行函數 (Functions)</a></li>
+<li><a href="#4">4. 常見設定參數說明</a></li>
+</ul>
+</div>
+
+</aside>
+<main class="content">
+<h1>Lavaan</h1>
+
+<p>這是一份 <code>lavaan</code> (Latent Variable Analysis) 套件的核心語法速查表。<code>lavaan</code> 的模型語法是以 <strong>字串 (String)</strong> 的形式撰寫，透過不同的運算符號來定義變項之間的關係。</p>
+<h4 id="1-operators">1. 核心運算符號 (Operators)</h4>
+<p>這是建構模型最基礎的符號，請務必熟悉：</p>
+<p>Formative</p>
+<p>X &lt;~ X1 + X2 + X3</p>
+<table>
+<thead>
+<tr>
+<th><strong>符號</strong></th>
+<th><strong>意義</strong></th>
+<th><strong>說明</strong></th>
+<th><strong>範例</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>=~</td>
+<td><strong>測量 (Measured by)</strong></td>
+<td>用於定義潛在變項 (Latent Variable)</td>
+<td><code>F1 =~ x1 + x2 + x3</code> (F1 由 x1, x2, x3 測量)</td>
+</tr>
+<tr>
+<td><strong><code>~</code></strong></td>
+<td><strong>迴歸 (Regressed on)</strong></td>
+<td>用於定義路徑、因果關係 (Path)</td>
+<td><code>y ~ x1 + x2</code> (y 被 x1 和 x2 預測)</td>
+</tr>
+<tr>
+<td><strong><code>~~</code></strong></td>
+<td><strong>共變/變異 (Covariance)</strong></td>
+<td>相關性或殘差變異</td>
+<td><code>x1 ~~ x2</code> (x1 與 x2 相關)；<code>x1 ~~ x1</code> (x1 的變異數)</td>
+</tr>
+<tr>
+<td><strong><code>~1</code></strong></td>
+<td><strong>截距 (Intercept)</strong></td>
+<td>平均數或截距項</td>
+<td><code>x1 ~ 1</code> (估計 x1 的截距/平均數)</td>
+</tr>
+<tr>
+<td><strong><code>|</code></strong></td>
+<td><strong>閾值 (Threshold)</strong></td>
+<td>用於處理類別/有序變項</td>
+<td></td>
+</tr>
+<tr>
+<td><strong><code>:=</code></strong></td>
+<td><strong>定義參數 (Defined as)</strong></td>
+<td>定義新的參數 (常用於中介效果)</td>
+<td><code>ab := a * b</code> (計算間接效果)</td>
+</tr>
+<tr>
+<td>==</td>
+<td><strong>限制 (Constraint)</strong></td>
+<td>設定參數相等限制</td>
+<td><code>p1 == p2</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h4 id="2-cheat-sheet">2. 完整模型語法範例 (Cheat Sheet)</h4>
+<p>您可以將以下語法結構複製到 R 中進行修改。</p>
+<h5 id="a-cfa-sem">A. 基本 CFA (驗證性因素分析) 與 SEM (結構方程模型)</h5>
+<p>R</p>
+<pre><code>model &lt;- '
+  # 1. 測量模型 (Measurement Model) - 定義潛在變項
+    Visual   =~ x1 + x2 + x3      # 潛在變項 Visual 由 x1-x3 測量
+    Textual  =~ x4 + x5 + x6      # 預設會將第一個指標的負荷量固定為 1
+    Speed    =~ x7 + x8 + x9
+
+  # 2. 結構模型 (Structural Model) - 定義迴歸路徑
+    Visual   ~ Textual + Speed    # Visual 被 Textual 和 Speed 預測
+    Speed    ~ Textual            # Speed 被 Textual 預測
+
+  # 3. 殘差相關 (Residual Correlations)
+    x1 ~~ x2                      # 允許 x1 與 x2 的殘差相關
+    x7 ~~ x8
+
+  # 4. 固定參數 (Fixing Parameters)
+    Visual =~ 1*x1                # 顯式固定因素負荷量為 1 (雖然預設已有)
+    x2 ~~ 0.5*x2                  # 將 x2 的殘差變異數固定為 0.5
+'
+</code></pre>
+<h5 id="b-mediation-labeling">B. 中介效果 (Mediation) 與 參數標籤 (Labeling)</h5>
+<p>若要測試中介效果（如 Bootstrap 檢定），需要使用標籤（<code>label</code>）與 <code>:=</code> 運算子。</p>
+<p>R</p>
+<pre><code>mediation_model &lt;- '
+  # 直接路徑 (給予標籤 a, b, c)
+    M ~ a*X           # X 到 M 的路徑，係數標記為 a
+    Y ~ b*M + c*X     # M 到 Y 標記為 b；X 到 Y (直接效果) 標記為 c
+
+  # 定義新參數 (計算間接與總效果)
+    indirect := a * b       # 間接效果 (a 乘 b)
+    total    := c + (a*b)   # 總效果 (直接 + 間接)
+'
+</code></pre>
+<h5 id="c-multiple-groups">C. 多群組分析 (Multiple Groups) 的限制語法</h5>
+<p>在進行測量恆等性 (Measurement Invariance) 檢定時，常需要對不同群組設定標籤。</p>
+<p>R</p>
+<pre><code>group_model &lt;- '
+  # 設定因素負荷量：使用 vector c() 針對不同群組設定
+  # c(群組1參數, 群組2參數)
+
+  F1 =~ c(L1, L1)*x1 +    # 強制兩群組 x1 的負荷量相等 (都叫 L1)
+        c(L2, L2)*x2 +    # 強制兩群組 x2 的負荷量相等 (都叫 L2)
+        c(L3a, L3b)*x3    # 允許兩群組 x3 的負荷量不同 (分別叫 L3a, L3b)
+'
+</code></pre>
+<hr />
+<h4 id="3-functions">3. 常用的執行函數 (Functions)</h4>
+<p>定義好字串模型後，需搭配正確的函數來執行分析：</p>
+<ol>
+<li>
+<p><strong><code>cfa()</code></strong>: 專門用於驗證性因素分析 (預設 <code>std.lv = FALSE</code>, 潛在變項間預設相關)。</p>
+</li>
+<li>
+<p><strong><code>sem()</code></strong>: 用於完整的結構方程模型 (預設 <code>fixed.x = TRUE</code>)。</p>
+</li>
+<li>
+<p><strong><code>growth()</code></strong>: 用於潛在成長模型 (Growth Curve Models)。</p>
+</li>
+</ol>
+<p><strong>標準執行程式碼：</strong></p>
+<p>R</p>
+<pre><code># 假設您的資料框叫做 Data
+fit &lt;- sem(model, data = Data)
+
+# 查看結果 (包含標準化係數、R-square、配適度指標)
+summary(fit, standardized = TRUE, fit.measures = TRUE, rsquare = TRUE)
+
+# 取得修改指標 (Modification Indices)，例如 mi &gt; 10
+modindices(fit, sort = TRUE, minimum.value = 10)
+</code></pre>
+<h4 id="4">4. 常見設定參數說明</h4>
+<p>在 <code>sem()</code> 或 <code>cfa()</code> 函數中，幾個常用的參數設定：</p>
+<ul>
+<li>
+<p><code>std.lv = TRUE</code>: 將潛在變項的變異數固定為 1 (標準化潛在變項)，而不是將第一個指標固定為 1。</p>
+</li>
+<li>
+<p><code>missing = "fiml"</code>: 使用全訊息最大概似估計法 (FIML) 處理遺漏值。</p>
+</li>
+<li>
+<p><code>estimator = "MLR"</code>: 使用 Robust Maximum Likelihood，適用於資料非常態 (Non-normal) 的情況 (提供 Robust 標準誤與 Scaled Chi-square)。</p>
+</li>
+<li>
+<p><code>group = "Gender"</code>: 指定分組變項進行多群組分析。</p>
+</li>
+</ul>
+<hr />
+<p>請問您目前需要處理的是哪一類型的模型（例如：<strong>中介分析</strong>、<strong>多群組比較</strong> 或是 <strong>二階 CFA</strong>）？我可以針對該類型提供更具體的語法範本。</p>
+</main>
+</div>
+<script>
+(function () {
+  // ── Rebuild TOC with toggle buttons ──────────────────────────────────────
+  var toc = document.querySelector('.sidebar .toc');
+  if (toc) {
+    toc.querySelectorAll('li').forEach(function (li) {
+      var childUl = li.querySelector(':scope > ul');
+      var link    = li.querySelector(':scope > a');
+      if (!link) return;
+
+      var row = document.createElement('div');
+      row.className = 'toc-row';
+
+      if (childUl) {
+        var btn = document.createElement('button');
+        btn.className = 'toc-toggle';
+        btn.setAttribute('aria-expanded', 'true');
+        btn.textContent = '▾';          // ▾ open
+        btn.addEventListener('click', function () {
+          var open = childUl.hidden;
+          childUl.hidden = !open;
+          btn.textContent = open ? '▾' : '▸';   // ▾ / ▸
+          btn.setAttribute('aria-expanded', String(open));
+        });
+        row.appendChild(btn);
+      } else {
+        var spacer = document.createElement('span');
+        spacer.style.width = '1rem';
+        spacer.style.flexShrink = '0';
+        row.appendChild(spacer);
+      }
+
+      row.appendChild(link);
+      li.insertBefore(row, li.firstChild);
+    });
+  }
+
+  // ── Scroll spy ───────────────────────────────────────────────────────────
+  var headings = document.querySelectorAll('.content h2[id], .content h3[id], .content h4[id]');
+  var tocLinks = document.querySelectorAll('.sidebar .toc a');
+  if (!headings.length || !tocLinks.length) return;
+
+  var current = null;
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      var link = document.querySelector('.sidebar .toc a[href="#' + e.target.id + '"]');
+      if (!link) return;
+      if (current) current.classList.remove('active');
+      current = link;
+      current.classList.add('active');
+      // Scroll link into view within sidebar
+      current.scrollIntoView({ block: 'nearest' });
+    });
+  }, { rootMargin: '-5% 0px -75% 0px', threshold: 0 });
+
+  headings.forEach(function (h) { io.observe(h); });
+}());
+</script>
+</body>
+</html>
