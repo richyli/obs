@@ -264,7 +264,7 @@ MathJax = {
 <p class="meta">#jasp　#pls_sem　#interface_guide　#2026lu</p>
 <h2 id="jasp-pls-sem">JASP PLS-SEM 模組介面操作指南</h2>
 <blockquote>
-<p><strong>目的</strong>：依實際 JASP 0.19.3 PLS-SEM Modeling 模組介面截圖，逐欄說明選項作用與呂欣論文建議設定。配合 <a href="handout_pls_sem_final.md">handout_pls_sem_final.md</a> 的 lavaan 語法使用。</p>
+<p><strong>目的</strong>：依實際 JASP 0.19.3 PLS-SEM Modeling 模組介面截圖，逐欄說明選項作用與呂欣論文建議設定。配合 <a href="handout_pls_sem_final.html">handout_pls_sem_final.md</a> 的 lavaan 語法使用。</p>
 <p><strong>本指南僅描述截圖可見內容</strong>；不確定的部分明確標註，呂欣可邊測試邊更新。</p>
 </blockquote>
 <hr />
@@ -611,7 +611,7 @@ total    := c + indirect
 <h4 id="_7">一鍵清單</h4>
 <p>跑每個 Phase 時依此設定：</p>
 <p><strong>Model 面板</strong>：
-- Model syntax: 貼入 <a href="handout_pls_sem_final.md">handout_pls_sem_final.md</a> 對應 Phase 的語法
+- Model syntax: 貼入 <a href="handout_pls_sem_final.html">handout_pls_sem_final.md</a> 對應 Phase 的語法
 - Grouping Variable: <code>&lt;no choice&gt;</code>（除非跑 Phase 9 PLS-MGA，再拖入 <code>seniority_group</code>）</p>
 <p><strong>Estimation 面板</strong>：
 - ☐ <strong>取消勾選</strong> Consistent partial least squares（呂欣本研究 2026-05-09 確認 PLSc 失控；改用傳統 PLS Mode A，PLSc 版本作 robustness。理由見 §3.1）
@@ -1001,7 +1001,7 @@ total    := c + indirect
 <pre><code>APT ~ JPB + ASE + ASExJPB
 BI  ~ JPB + APT
 </code></pre>
-<p>從 Regression Coefficients 表抄五個 β 對應論文符號（$a_1$ = β(APT←JPB)、$a_3$ = β(APT←ASExJPB)、$b$ = β(BI←APT) 等），<strong>於 Excel 用 Sobel_test 公式手算</strong> IMM = $a_3 \times b$ 與其 95% CI（呂欣本研究堅持 JASP-only 工作流；不依賴 R）。詳細步驟見 <a href="handout_pls_sem_final.md">handout Phase 4/6</a>。</p>
+<p>從 Regression Coefficients 表抄五個 β 對應論文符號（$a_1$ = β(APT←JPB)、$a_3$ = β(APT←ASExJPB)、$b$ = β(BI←APT) 等），<strong>於 Excel 用 Sobel_test 公式手算</strong> IMM = $a_3 \times b$ 與其 95% CI（呂欣本研究堅持 JASP-only 工作流；不依賴 R）。詳細步驟見 <a href="handout_pls_sem_final.html">handout Phase 4/6</a>。</p>
 <p><strong>情境 3</strong>：結果完全沒跑出來 → 改用無標籤版本（情境 2 的 syntax），重跑。</p>
 <p><strong>Phase 4 / 5 / 6 的因應</strong>（JASP-only 工作流）：
 - Phase 4 中介：indirect 與 total 改從 Total Effects 表回推（$\text{indirect} = \text{total} - c'$），CI 用 Sobel 近似
@@ -1032,7 +1032,7 @@ BI  ~ JPB + APT
 <p><strong>解法</strong>：移除非理論預期的 <code>~</code> 行；外生變項之間的相關性 PLS 自動處理，不需要也不能用 <code>~</code> 補。</p>
 <p><strong>規則</strong>：每條 <code>~</code> 都要對應一個你願意在論文中假設、有理論方向的結構關係。沒有方向的不要寫。</p>
 <h4 id="q5htmt">Q5：HTMT 沒看到</h4>
-<p>A：可能在「Reliability measures」勾選後出現；或在 Output 面板下方有獨立「Discriminant validity」選項；若仍無，用 R <code>seminr</code> 計算（見 <a href="handout_pls_sem_final.md">handout_pls_sem_final.md 附錄 A</a>）</p>
+<p>A：可能在「Reliability measures」勾選後出現；或在 Output 面板下方有獨立「Discriminant validity」選項；若仍無，用 R <code>seminr</code> 計算（見 <a href="handout_pls_sem_final.html">handout_pls_sem_final.md 附錄 A</a>）</p>
 <h4 id="q6">Q6：路徑係數出現負值，但理論預期正向</h4>
 <p>A：<strong>Sign indeterminacy</strong> 問題；改 Estimation 中找 <strong>Sign change</strong> 選項設為 <code>Construct level changes</code>（若截圖中沒看到，可能在某個展開項中）</p>
 <h4 id="q7">Q7：估計不收斂</h4>

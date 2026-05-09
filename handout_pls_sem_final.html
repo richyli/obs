@@ -427,8 +427,8 @@ MathJax = {
 <strong>目標</strong>：依提案版模型完成 H1–H7 完整分析
 <strong>學位定位</strong>：碩士論文（非期刊發表），求<strong>數據合理 + 誠實揭露</strong>，不過度追求顯著性。<strong>ns 結果亦為合法結果</strong>，只要計算正確、限制誠實寫即可。</p>
 <p><strong>建議閱讀順序</strong>：第 1 章理論 → 第 2 章準備 → 第 3–11 章按 Phase 順序操作 → 第 12 章寫進論文</p>
-<p>📄 <strong>論文章節草稿</strong>：本手冊每個 Phase 的數值結果，已整合為 <strong><a href="paper_method_result_finding.md">paper_method_result_finding.md</a></strong> — 內含完整的「研究方法 / 研究結果 / 研究發現」三章學術寫法草稿（含表格、引用、討論段落），可直接複製改寫進論文第三、四、五章。建議先依本手冊操作 JASP，再對照論文草稿補入實際數值。</p>
-<p>🔧 <strong>JASP 介面操作</strong>：本手冊提供 lavaan 語法；JASP PLS-SEM 模組的具體勾選項目（Estimation、Output 等面板）見 <strong><a href="jasp_pls_sem_guide.md">jasp_pls_sem_guide.md</a></strong> — 依實際 JASP 0.19.3 介面截圖整理的逐欄說明。</p>
+<p>📄 <strong>論文章節草稿</strong>：本手冊每個 Phase 的數值結果，已整合為 <strong><a href="paper_method_result_finding.html">paper_method_result_finding.md</a></strong> — 內含完整的「研究方法 / 研究結果 / 研究發現」三章學術寫法草稿（含表格、引用、討論段落），可直接複製改寫進論文第三、四、五章。建議先依本手冊操作 JASP，再對照論文草稿補入實際數值。</p>
+<p>🔧 <strong>JASP 介面操作</strong>：本手冊提供 lavaan 語法；JASP PLS-SEM 模組的具體勾選項目（Estimation、Output 等面板）見 <strong><a href="jasp_pls_sem_guide.html">jasp_pls_sem_guide.md</a></strong> — 依實際 JASP 0.19.3 介面截圖整理的逐欄說明。</p>
 </blockquote>
 <hr />
 <h3 id="_1">目錄</h3>
@@ -559,7 +559,7 @@ MathJax = {
 <blockquote>
 <p><strong>✅ 題目來源已對齊真實問卷</strong>（2026-05-09 更新）</p>
 <p>本手冊內所有題目文字已對齊呂欣實際問卷（<code>政治記者AI使用意願 (Responses) - Form Responses 1.csv</code>）。15 題 Likert 構念分配為：BI×3 + APT×3 + ASE×3 + <strong>JPB×3</strong> + MARKER×3。</p>
-<p><a href="results_findings.md">results_findings.md</a> 與 <a href="paper_method_result_finding.md">paper_method_result_finding.md</a> 中所有數值來自 Python plspm 預跑，與真實 CSV 各題均值完全一致；JASP 重跑應得到極接近結果。</p>
+<p>results_findings.md 與 <a href="paper_method_result_finding.html">paper_method_result_finding.md</a> 中所有數值來自 Python plspm 預跑，與真實 CSV 各題均值完全一致；JASP 重跑應得到極接近結果。</p>
 <p><strong>🟡 重要：JASP 的 PLS-SEM 模組是「語法輸入式」</strong></p>
 <p>JASP PLS-SEM Modeling <strong>不是</strong> 拖入欄位的圖形 UI，而是<strong>靠 lavaan 語法輸入</strong>模型（後端 <a href="seminr.html">seminr</a> 會把 lavaan 語法翻譯為 PLS 估計）。</p>
 <p>因此本手冊每個 Phase 都會給一段<strong>完整 lavaan 語法</strong>，呂欣只要：</p>
@@ -1557,7 +1557,7 @@ work_type, AI_freq, paid_AI, AI_tools, AI_tasks
 - ✅ Reliability measures
 - ✅ Observed indicator correlations</p>
 <p><strong>Estimation 面板</strong>：
-- ☐ <strong>Consistent partial least squares 取消勾選</strong>（理由見步驟 1 與 <a href="jasp_pls_sem_guide.md">jasp_pls_sem_guide.md §3.1</a>）
+- ☐ <strong>Consistent partial least squares 取消勾選</strong>（理由見步驟 1 與 <a href="jasp_pls_sem_guide.html">jasp_pls_sem_guide.md §3.1</a>）
 - Inner weighting scheme: <strong>Path</strong>
 - Convergence criterion: <strong>Absolute difference</strong> / Tolerance: 1e-05
 - Error calculation method: <strong>Bootstrap</strong>
@@ -3977,7 +3977,7 @@ BI  ~ JPB + APT + ASE         # 加入 ASE → BI 直接路徑
 <hr />
 <h2 id="13_2">13. 論文寫作對應</h2>
 <blockquote>
-<p>📄 <strong>完整論文章節草稿</strong>：<a href="paper_method_result_finding.md">paper_method_result_finding.md</a> — 已含「研究方法 / 研究結果 / 研究發現」三章完整學術寫法，含 10 張表格、$f^2$ / IMM / Conditional Indirect 數值、五項獲支持假設的理論討論、政策實務意涵、研究限制、未來研究方向。可直接複製改寫進論文第三、四、五章。</p>
+<p>📄 <strong>完整論文章節草稿</strong>：<a href="paper_method_result_finding.html">paper_method_result_finding.md</a> — 已含「研究方法 / 研究結果 / 研究發現」三章完整學術寫法，含 10 張表格、$f^2$ / IMM / Conditional Indirect 數值、五項獲支持假設的理論討論、政策實務意涵、研究限制、未來研究方向。可直接複製改寫進論文第三、四、五章。</p>
 </blockquote>
 <h3 id="131">13.1 第三章「研究方法」對應</h3>
 <table>
@@ -3992,27 +3992,27 @@ BI  ~ JPB + APT + ASE         # 加入 ASE → BI 直接路徑
 <tr>
 <td>3.1 研究設計與流程</td>
 <td>第 1 章</td>
-<td><a href="paper_method_result_finding.md#31-研究設計">paper §3.1</a></td>
+<td><a href="paper_method_result_finding.html#31-研究設計">paper §3.1</a></td>
 </tr>
 <tr>
 <td>3.2 抽樣與樣本（含 FPC）</td>
 <td>Phase 8</td>
-<td><a href="paper_method_result_finding.md#32-抽樣與樣本">paper §3.2</a></td>
+<td><a href="paper_method_result_finding.html#32-抽樣與樣本">paper §3.2</a></td>
 </tr>
 <tr>
 <td>3.3 變項操作化與測量</td>
 <td>§2.2</td>
-<td><a href="paper_method_result_finding.md#33-變項操作化與測量">paper §3.3</a></td>
+<td><a href="paper_method_result_finding.html#33-變項操作化與測量">paper §3.3</a></td>
 </tr>
 <tr>
 <td>3.4 研究假設</td>
 <td>§1.3</td>
-<td><a href="paper_method_result_finding.md#34-研究假設">paper §3.4</a></td>
+<td><a href="paper_method_result_finding.html#34-研究假設">paper §3.4</a></td>
 </tr>
 <tr>
 <td>3.5 分析工具與流程</td>
 <td>Phase 1 – Phase 10</td>
-<td><a href="paper_method_result_finding.md#35-分析工具與流程">paper §3.5</a></td>
+<td><a href="paper_method_result_finding.html#35-分析工具與流程">paper §3.5</a></td>
 </tr>
 </tbody>
 </table>
@@ -4050,7 +4050,7 @@ BI  ~ JPB + APT + ASE         # 加入 ASE → BI 直接路徑
 </ul>
 <h4 id="48-robustnessphase-9-phase-10">4.8 預測力與 Robustness（Phase 9, Phase 10）</h4>
 <blockquote>
-<p>📄 第四章 11 個小節的完整草稿（含表 4.1–4.10）見 <a href="paper_method_result_finding.md#第四章研究結果results">paper §4</a></p>
+<p>📄 第四章 11 個小節的完整草稿（含表 4.1–4.10）見 <a href="paper_method_result_finding.html#第四章研究結果results">paper §4</a></p>
 </blockquote>
 <h3 id="133">13.3 第五章「研究發現與討論」推薦結構</h3>
 <table>
@@ -4065,37 +4065,37 @@ BI  ~ JPB + APT + ASE         # 加入 ASE → BI 直接路徑
 <tr>
 <td>5.1 主要發現摘要</td>
 <td>七項假設五項支持的整體圖像</td>
-<td><a href="paper_method_result_finding.md#51-主要發現摘要">paper §5.1</a></td>
+<td><a href="paper_method_result_finding.html#51-主要發現摘要">paper §5.1</a></td>
 </tr>
 <tr>
 <td>5.2 H2+H3+H5 完全中介機制</td>
 <td>風險閾值假設 + 邊界工作</td>
-<td><a href="paper_method_result_finding.md#52">paper §5.2</a></td>
+<td><a href="paper_method_result_finding.html#52">paper §5.2</a></td>
 </tr>
 <tr>
 <td>5.3 H6+H7 能力放大批判</td>
 <td>三種理論詮釋（深入理解 / 雙重武裝 / Dunning-Kruger 反向）</td>
-<td><a href="paper_method_result_finding.md#53">paper §5.3</a></td>
+<td><a href="paper_method_result_finding.html#53">paper §5.3</a></td>
 </tr>
 <tr>
 <td>5.4 H1 / H4 不支持的啟示</td>
 <td>制度同形 + 雙重後果</td>
-<td><a href="paper_method_result_finding.md#54">paper §5.4</a></td>
+<td><a href="paper_method_result_finding.html#54">paper §5.4</a></td>
 </tr>
 <tr>
 <td>5.5 政策與實務意涵</td>
 <td>對編輯部 / 對新聞研究</td>
-<td><a href="paper_method_result_finding.md#55">paper §5.5</a></td>
+<td><a href="paper_method_result_finding.html#55">paper §5.5</a></td>
 </tr>
 <tr>
 <td>5.6 研究限制</td>
 <td>7 項限制</td>
-<td><a href="paper_method_result_finding.md#56">paper §5.6</a></td>
+<td><a href="paper_method_result_finding.html#56">paper §5.6</a></td>
 </tr>
 <tr>
 <td>5.7 未來研究</td>
 <td>5 項建議</td>
-<td><a href="paper_method_result_finding.md#57">paper §5.7</a></td>
+<td><a href="paper_method_result_finding.html#57">paper §5.7</a></td>
 </tr>
 </tbody>
 </table>
