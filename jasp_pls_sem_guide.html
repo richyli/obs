@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JASP PLS-SEM 模組介面操作指南</title>
+<style>*, *::before, *::after { box-sizing: border-box; }
+
+/* ── Base ── */
+body {
+  font-family: "Helvetica Neue", Arial, "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+  font-size: 20px;
+  line-height: 1.9;
+  color: #111;
+  background: #fff;
+  margin: 0;
+}
+
+/* ── Two-column layout (note pages) ── */
+.layout { display: flex; align-items: flex-start; min-height: 100vh; }
+
+.sidebar {
+  width: 270px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 2rem 1rem 2rem 1.5rem;
+  border-right: 1px solid #e8e8e8;
+  background: #f9f9f9;
+}
+.sidebar-back {
+  display: block;
+  font-size: 0.82rem;
+  color: #999;
+  margin-bottom: 1.4rem;
+  text-decoration: none;
+}
+.sidebar-back:hover { color: #333; }
+.sidebar-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #bbb;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+/* ── TOC in sidebar ── */
+.toc { font-size: 0.82rem; line-height: 1.55; }
+.toc ul { list-style: none; margin: 0; padding: 0; }
+.toc ul ul { padding-left: 0.9rem; }
+.toc li { margin: 0; }
+.toc-row { display: flex; align-items: baseline; gap: 0.2rem; }
+.toc-row a {
+  flex: 1;
+  display: block;
+  padding: 0.18rem 0.3rem;
+  border-radius: 3px;
+  color: #555;
+  text-decoration: none;
+  word-break: break-word;
+}
+.toc-row a:hover { background: #ebebeb; color: #111; }
+.toc-row a.active { color: #0055cc; font-weight: 600; background: #e8f0ff; }
+.toc-toggle {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-size: 0.65rem;
+  color: #bbb;
+  line-height: 1;
+  width: 1rem;
+  text-align: center;
+}
+.toc-toggle:hover { color: #555; }
+
+/* ── Main content ── */
+.content {
+  flex: 1;
+  min-width: 0;
+  padding: 3rem 3rem 6rem;
+  max-width: 800px;
+}
+
+/* ── Single-column (index page) ── */
+.container { max-width: 800px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
+
+/* ── Typography ── */
+h1 {
+  font-size: 1.75rem; font-weight: 700;
+  margin: 0 0 0.15rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 2px solid #111;
+  line-height: 1.3;
+}
+h2 {
+  font-size: 1.3rem; font-weight: 700;
+  margin: 2.5rem 0 0.5rem;
+  padding-bottom: 0.2rem;
+  border-bottom: 1px solid #ddd;
+}
+h3 { font-size: 1.1rem; font-weight: 700; margin: 1.8rem 0 0.4rem; }
+h4 { font-size: 1rem; font-weight: 700; margin: 1.4rem 0 0.3rem; }
+p { margin: 0.9rem 0; }
+a { color: #0055cc; text-decoration: none; }
+a:hover { text-decoration: underline; }
+nav { margin-bottom: 2.5rem; font-size: 0.85rem; color: #999; }
+nav a { color: #999; }
+
+/* ── Code ── */
+code {
+  font-family: "SFMono-Regular", Consolas, monospace;
+  background: #f2f2f2;
+  padding: 0.1em 0.4em;
+  border-radius: 3px;
+  font-size: 0.85em;
+}
+pre {
+  background: #f2f2f2;
+  padding: 1.2rem 1.4rem;
+  border-radius: 5px;
+  overflow-x: auto;
+  font-size: 0.85em;
+  line-height: 1.6;
+}
+pre code { background: none; padding: 0; }
+
+/* ── Lists ── */
+ul, ol { padding-left: 1.6rem; margin: 0.8rem 0; }
+li { margin: 0.35rem 0; }
+li > ul, li > ol { margin: 0.2rem 0; }
+
+/* ── Other elements ── */
+blockquote {
+  border-left: 4px solid #ccc;
+  margin: 1.2rem 0;
+  padding: 0.3rem 1.2rem;
+  color: #444;
+  background: #fafafa;
+}
+table { border-collapse: collapse; width: 100%; margin: 1.2rem 0; font-size: 0.95em; }
+th, td { border: 1px solid #ccc; padding: 0.55rem 0.9rem; text-align: left; }
+th { background: #f5f5f5; font-weight: 700; }
+tr:nth-child(even) { background: #fafafa; }
+hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
+.meta { font-size: 0.8rem; color: #aaa; margin: 0.3rem 0 1.8rem; }
+.index-list { list-style: none; padding: 0; margin: 1rem 0; }
+.index-list li { padding: 0.55rem 0; border-bottom: 1px solid #eee; font-size: 1.05rem; }
+.index-list li:last-child { border-bottom: none; }
+.embed-block {
+  border-left: 3px solid #aaa;
+  padding: 0.5rem 1.2rem;
+  margin: 1.5rem 0;
+  background: #f8f8f8;
+}
+
+/* ── Mobile ── */
+@media (max-width: 800px) {
+  .layout { flex-direction: column; }
+  .sidebar {
+    position: static;
+    width: 100%;
+    height: auto;
+    max-height: 50vh;
+    border-right: none;
+    border-bottom: 1px solid #e8e8e8;
+    padding: 1rem 1.5rem;
+  }
+  .content { padding: 1.5rem 1.2rem 4rem; }
+}
+</style>
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+<div class="toc">
+<ul>
+<li><a href="#1">1. 介面總覽（三大面板）</a></li>
+<li><a href="#2-model">2. Model 面板</a><ul>
+<li><a href="#21-variables-indicators">2.1 Variables / Indicators 指派區（推測）</a></li>
+<li><a href="#22-latent-variables">2.2 Latent Variables 區（推測）</a></li>
+<li><a href="#23-model-syntax">2.3 Model syntax 框</a></li>
+<li><a href="#24-grouping-variable">2.4 Grouping Variable</a></li>
+<li><a href="#25-bootstrap">2.5 解決 Bootstrap 不跑的步驟</a></li>
+</ul>
+</li>
+<li><a href="#3-estimation">3. Estimation 面板</a><ul>
+<li><a href="#31-consistent-partial-least-squaresplsc">3.1 ☑ Consistent partial least squares（PLSc）</a><ul>
+<li><a href="#_1">它在解決什麼問題？</a></li>
+<li><a href="#plsc">PLSc 怎麼修正？</a></li>
+<li><a href="#_2">何時建議勾選？</a></li>
+<li><a href="#plsc-2026-05-09">⚠️ PLSc 失控警告（呂欣 2026-05-09 親身踩到）</a></li>
+<li><a href="#_3">取消勾選後的代價（誠實揭露）</a></li>
+</ul>
+</li>
+<li><a href="#32-inner-weighting-scheme">3.2 Inner weighting scheme</a></li>
+<li><a href="#33-ignore-structural-model">3.3 ☐ Ignore structural model（截圖中灰色）</a></li>
+<li><a href="#34-convergence-criterion">3.4 Convergence criterion</a></li>
+<li><a href="#35-tolerance">3.5 Tolerance</a></li>
+<li><a href="#36-error-calculation-method">3.6 Error calculation method（重要）</a><ul>
+<li><a href="#none">○ None</a></li>
+<li><a href="#bootstrap">● Bootstrap（呂欣必選）</a></li>
+</ul>
+</li>
+<li><a href="#37-repeatability">3.7 Repeatability（重要）</a></li>
+</ul>
+</li>
+<li><a href="#4-output">4. Output 面板（必勾項）</a><ul>
+<li><a href="#_4">左欄</a></li>
+<li><a href="#_5">右欄</a></li>
+<li><a href="#_6">⚠️ 截圖中沒有看到的常見輸出選項</a></li>
+</ul>
+</li>
+<li><a href="#5">5. 呂欣論文的建議完整設定</a><ul>
+<li><a href="#_7">一鍵清單</a></li>
+</ul>
+</li>
+<li><a href="#6-jasp-0193-html">6. 結果區判讀（依實際 JASP 0.19.3 HTML 輸出整理）</a><ul>
+<li><a href="#61-r-squared">6.1 R-Squared 表</a></li>
+<li><a href="#62-additional-fit-measures">6.2 Additional Fit Measures 表</a></li>
+<li><a href="#63-reliability-measures">6.3 Reliability Measures 表（核心信度三件套）</a></li>
+<li><a href="#64-weights-pls">6.4 Weights 表（指標權重，PLS 特有）</a></li>
+<li><a href="#65-loadings-reflective">6.5 Loadings 表（標準化負荷量，reflective 模型主看）</a></li>
+<li><a href="#66-regression-coefficients">6.6 Regression Coefficients 表（結構路徑，最重要的假設檢驗表）</a></li>
+<li><a href="#67-total-effects">6.7 Total Effects 表</a></li>
+<li><a href="#68-observed-indicator-correlation-matrix">6.8 Observed indicator correlation matrix</a></li>
+<li><a href="#69-descriptive-statistics-pls-sem">6.9 Descriptive Statistics 表（在 PLS-SEM 上方）</a></li>
+</ul>
+</li>
+<li><a href="#7-jasp">7. JASP 標籤 ↔ 論文學術術語對照表（一頁速查）</a></li>
+<li><a href="#8">8. 結果區判讀（簡版速查）</a></li>
+<li><a href="#9">9. 常見錯誤排除</a><ul>
+<li><a href="#q1-ci-t-p">Q1：跑出來只有點估計沒有 CI / t / p</a></li>
+<li><a href="#q15-2026-05-09-bootstrap-error-in-model-model-estimation-failed-message-nas-are-not-allowed-in-subscripted-assignments">Q1.5（呂欣 2026-05-09 確認解法）：跑 bootstrap 跳「Error in model 'Model' - Estimation failed Message: NAs are not allowed in subscripted assignments」</a></li>
+<li><a href="#q2">Q2：每次重跑數值都略不同</a></li>
+<li><a href="#q3bootstrap">Q3：bootstrap 跑很慢</a></li>
+<li><a href="#q372026-05-09-only-a-subset-of-population-values-given-please-specify-all-population-values-or-none">Q3.7（2026-05-09 新增）：跳警告 Only a subset of population values given. please specify all population values or none</a></li>
+<li><a href="#q4-all-construct-correlations-must-be-supplied-explicitly">Q4：跳警告 All construct correlations must be supplied explicitly</a></li>
+<li><a href="#q352026-05-09-11se-20_a-_c">Q3.5（2026-05-09 新增）：路徑係數超出 [-1,+1]、SE 爆 &gt; 20、ρ_A 異常高於 ρ_c</a></li>
+<li><a href="#q452026-05-09-reordering-the-structure-equations-was-not-successful">Q4.5（2026-05-09 新增）：跳錯誤 Reordering the structure equations was not successful</a></li>
+<li><a href="#q5htmt">Q5：HTMT 沒看到</a></li>
+<li><a href="#q6">Q6：路徑係數出現負值，但理論預期正向</a></li>
+<li><a href="#q7">Q7：估計不收斂</a></li>
+</ul>
+</li>
+<li><a href="#10-python-plspm">10. 與 Python plspm 預跑結果對照</a></li>
+<li><a href="#11-2026-05-09">11. 經 2026-05-09 實跑確認的事項</a></li>
+</ul>
+</div>
+</aside>
+<main class="content">
+<h1>JASP PLS-SEM 模組介面操作指南</h1>
+<p class="meta">#jasp　#pls_sem　#interface_guide　#2026lu</p>
+<h2 id="jasp-pls-sem">JASP PLS-SEM 模組介面操作指南</h2>
+<blockquote>
+<p><strong>目的</strong>：依實際 JASP 0.19.3 PLS-SEM Modeling 模組介面截圖，逐欄說明選項作用與呂欣論文建議設定。配合 <a href="handout_pls_sem_final.md">handout_pls_sem_final.md</a> 的 lavaan 語法使用。</p>
+<p><strong>本指南僅描述截圖可見內容</strong>；不確定的部分明確標註，呂欣可邊測試邊更新。</p>
+</blockquote>
+<hr />
+<h3 id="1">1. 介面總覽（三大面板）</h3>
+<p>JASP PLS-SEM Modeling 介面分三大可摺疊面板：</p>
+<ol>
+<li><strong>Model</strong> — 模型語法輸入 + Grouping Variable</li>
+<li><strong>Estimation</strong> — 估計方法、bootstrap 設定、收斂條件</li>
+<li><strong>Output</strong> — 結果輸出選項（勾哪些表會出現在右側結果區）</li>
+</ol>
+<p>每個面板左側有黑色三角箭頭可摺疊／展開。</p>
+<hr />
+<h3 id="2-model">2. Model 面板</h3>
+<blockquote>
+<p><strong>⚠️ 重要（2026-05-09 補充）</strong>：呂欣回報，光在 syntax 框寫 lavaan 語法<strong>還不夠</strong>，bootstrap 不會跑。<strong>Model 面板必須先指派變數</strong>（類似 JASP CB-SEM 的「Variables」框）。</p>
+<p>JASP PLS-SEM 的 Model 面板可能有以下子區（待呂欣截圖確認）：</p>
+</blockquote>
+<h4 id="21-variables-indicators">2.1 Variables / Indicators 指派區（推測）</h4>
+<p>很可能 Model 面板的最上方有一個<strong>變數列表 + 指派框</strong>：</p>
+<ul>
+<li><strong>左側</strong>：所有可用變項清單（CSV 中所有欄位）</li>
+<li><strong>右側</strong>：必須把要分析的變項拖入指派框（例如 <code>Variables</code> 或 <code>Indicators</code>）</li>
+<li><strong>動作</strong>：把 12 題構念題（BI1–JPB3）+ 9 題互動產品（ASExJPB_11 至 _33，若做調節）全部拖入</li>
+</ul>
+<p>→ <strong>變項沒拖入 = JASP 不知道分析誰 = bootstrap 跑不了</strong></p>
+<h4 id="22-latent-variables">2.2 Latent Variables 區（推測）</h4>
+<p>可能類似 JASP CB-SEM 的 Latent Factors 區：</p>
+<ul>
+<li>點 ➕ 新增 Latent Variable（命名 JPB、APT、ASE、BI）</li>
+<li>對每個 Latent Variable，把對應指標拖入</li>
+</ul>
+<p><strong>這個 UI 操作可能與 syntax 框並存</strong>：
+- 拖入 UI = 自動產生 <code>=~</code> 測量模型語法
+- 結構路徑 <code>~</code>、標籤 <code>*</code>、derived <code>:=</code> 仍在 syntax 框寫</p>
+<h4 id="23-model-syntax">2.3 Model syntax 框</h4>
+<p>語法輸入區。<strong>結構路徑、構念相關、derived parameters</strong> 寫在此：</p>
+<pre><code># 結構路徑（lavaan 語法）
+APT ~ a*JPB + ASE
+BI  ~ c*JPB + b*APT
+
+# 構念相關
+JPB ~ ASE
+ASE ~ BI
+
+# Derived
+indirect := a*b
+total    := c + indirect
+</code></pre>
+<blockquote>
+<p>注意：若 Latent Variables 已在 UI 區指派，<strong>不需要重複寫 <code>=~</code> 行</strong>（會衝突）。</p>
+<p>若 UI 無法處理結構（例如 PLS-SEM 預設只做 measurement），則所有 <code>=~</code>、<code>~</code>、<code>:=</code> 都寫在 syntax。</p>
+<p><strong>此點需呂欣實測截圖確認</strong>。</p>
+</blockquote>
+<h4 id="24-grouping-variable">2.4 Grouping Variable</h4>
+<ul>
+<li><strong>預設</strong>：<code>&lt;no choice&gt;</code></li>
+<li><strong>用途</strong>：多群組分析（<a href="PLS_MGA.html">PLS_MGA</a>）時把分組變項拖入此框</li>
+<li><strong>呂欣的應用</strong>：Phase 9 的 PLS-MGA 比較資深 vs 資淺記者時，把 <code>seniority_group</code> 拖入</li>
+</ul>
+<h4 id="25-bootstrap">2.5 解決 Bootstrap 不跑的步驟</h4>
+<p>依優先順序試：</p>
+<ol>
+<li><strong>確認所有 Likert 變項都拖入 Model 面板的 Variables / Indicators 框</strong>（最可能原因）</li>
+<li>確認所有變項類型為 <strong>Scale</strong>（橘色斜線）</li>
+<li>確認 Estimation → Error calculation method 勾 <strong>Bootstrap</strong></li>
+<li>確認 Bootstrap samples 不為 0</li>
+<li>若 syntax 寫了 <code>=~</code> 又同時 UI 拖入，<strong>移除其中一個</strong>避免衝突</li>
+<li>若仍跑不出來，把 Bootstrap samples 暫時調為 100 測試（成功後再調 5000）</li>
+</ol>
+<hr />
+<h3 id="3-estimation">3. Estimation 面板</h3>
+<h4 id="31-consistent-partial-least-squaresplsc">3.1 ☑ Consistent partial least squares（<a href="PLSc.html">PLSc</a>）</h4>
+<ul>
+<li><strong>截圖預設</strong>：✅ 已勾選（呂欣本研究 2026-05-09 改取消勾選，原因見下文「失控警告」）</li>
+</ul>
+<h5 id="_1">它在解決什麼問題？</h5>
+<p><strong>傳統 PLS（Mode A）的偏誤</strong>：把每個構念當作<strong>指標的線性組合（composite）</strong>估計，等於假設指標<strong>沒有測量誤差</strong>。但 reflective 模型理論上認為「構念導致指標」（指標有測量誤差），所以傳統 PLS 系統性產生：</p>
+<ul>
+<li><strong>外部負荷量 $\lambda$ 被低估</strong>（measurement attenuation）</li>
+<li><strong>結構路徑 $\beta$ 被高估</strong>（因為構念變異被低估，路徑被相對放大）</li>
+<li>與 CB_SEM（factor-based）的估計不一致</li>
+</ul>
+<p>這個偏誤在傳統 PLS 文獻中稱為 <strong>PLS bias</strong>（Dijkstra, 2014）。</p>
+<h5 id="plsc">PLSc 怎麼修正？</h5>
+<p><strong><a href="Dijkstra_Henseler.html">Dijkstra_Henseler</a> 2015</strong> 提出的 Consistent PLS 對每個 reflective 構念的負荷量做一次 disattenuation：</p>
+<p>$$\lambda_{\text{PLSc}} = \lambda_{\text{PLS}} \times \sqrt{\frac{\rho_A}{\rho_{\text{PLS}}}}$$</p>
+<p>其中 $\rho_A$ 即 <a href="rho_A.html">rho_A</a>（Dijkstra-Henseler's $\rho$，JASP 表中的「Dijkstra-Henseler's ρ」），$\rho_{\text{PLS}}$ 為傳統 PLS 估計的合成信度。</p>
+<p><strong>結果</strong>：
+- 負荷量被「拉高」回 reflective 模型應有的水準
+- 構念分數變異隨之調整
+- 結構路徑被「壓低」回理論值
+- 估計值近似 CB-SEM；與 lavaan 對照時兩者通常差 &lt; .03</p>
+<p><strong>直觀理解</strong>：把傳統 PLS 的每個 reflective 構念都「修一次測量誤差」，使結果像 factor-based 模型一樣可信。</p>
+<h5 id="_2">何時建議勾選？</h5>
+<table>
+<thead>
+<tr>
+<th>情境</th>
+<th>建議</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>全部 reflective 構念 + 樣本充足（N &gt; 200）+ 信度全部達標（α、$\rho_A$ ≥ .80）</td>
+<td>✅ 勾，標準作法</td>
+</tr>
+<tr>
+<td>全部 reflective 構念 + 樣本中等（100-200）+ 信度達標</td>
+<td>✅ 勾，但建議同時跑關閉版作 robustness</td>
+</tr>
+<tr>
+<td>含 formative 構念</td>
+<td>❌ 不勾（PLSc 數學上不適用 formative）</td>
+</tr>
+<tr>
+<td>信度邊緣（$\rho_c < .70$ 或某構念 $\rho_A$ 與 $\rho_c$ 差距 &gt; .10）</td>
+<td>⚠️ <strong>注意失控風險</strong>，先試關閉再決定</td>
+</tr>
+<tr>
+<td>小樣本 N &lt; 100 + 邊緣信度</td>
+<td>❌ 高失控風險（呂欣本資料）</td>
+</tr>
+</tbody>
+</table>
+<h5 id="plsc-2026-05-09">⚠️ PLSc 失控警告（呂欣 2026-05-09 親身踩到）</h5>
+<p>當下列條件<strong>多項同時成立</strong>時，PLSc 的 disattenuation 會失控、放大估計不穩定性：</p>
+<ol>
+<li>某構念 $\rho_c < .70$</li>
+<li>該構念的 $\rho_A$ 顯著高於 $\rho_c$ 與 $\alpha$（差距 &gt; .10）</li>
+<li>樣本量小（N &lt; 150）</li>
+<li>構念之間有複雜符號型態（部分指標跨構念呈正/負混合相關）</li>
+</ol>
+<p><strong>失控徵狀</strong>：
+- 結構路徑 $|\beta| > 1$（標準化下數學上不可能）
+- bootstrap SE &gt; 5（健康時 &lt; 0.3）
+- 部分構念的指標 loadings 全部不顯著
+- SRMR / CFI / GoF 等擬合指標大幅惡化</p>
+<p><strong>呂欣本研究 2026-05-09 實跑結果</strong>：
+- ASE 構念 $\rho_c = .672$，$\rho_A = .855$（差距 .183）
+- 觸發 PLSc 失控：BI ← JPB 路徑 $\beta = 1.263$、SE = 21.75
+- ASE loadings 全部 $p > .10$
+- SRMR = .152、CFI = .766</p>
+<p><strong>因此呂欣本研究決定取消勾選 PLSc</strong>，改用標準 PLS Mode A，理論討論時引述：</p>
+<blockquote>
+<p>「考量本研究樣本量（$n = 96$）偏小、ASE 構念 $\rho_c$ 處於 .70 邊緣，採用 <a href="Dijkstra_Henseler.html">Dijkstra_Henseler</a> 之 PLSc 修正會觸發 disattenuation 失控（路徑係數逾越標準化邊界），故主分析採傳統 PLS Mode A，並於 robustness check 中報告 PLSc 對照（Sarstedt_2020）。」</p>
+</blockquote>
+<h5 id="_3">取消勾選後的代價（誠實揭露）</h5>
+<ul>
+<li>結構路徑 $\beta$ 可能略<strong>高估</strong>（PLS bias 問題本身仍存在）</li>
+<li>與 CB-SEM 對照可能略有差距（&lt; .05）</li>
+<li>論文 Methods 章節必須明確說明使用「傳統 PLS Mode A」而非 PLSc，並引上述失控原因</li>
+<li>補做 CB-SEM（lavaan）作為主要 robustness check 平衡 PLS bias 疑慮</li>
+</ul>
+<h4 id="32-inner-weighting-scheme">3.2 Inner weighting scheme</h4>
+<p>下拉選單，預設 <strong>Path</strong>。三個選項：</p>
+<table>
+<thead>
+<tr>
+<th>選項</th>
+<th>說明</th>
+<th>何時用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Path</strong>（預設）</td>
+<td>路徑加權法；穩定且推薦</td>
+<td>一般情境（<a href="Hair_2022_PLS.html">Hair_2022_PLS</a> 推薦）</td>
+</tr>
+<tr>
+<td>Centroid</td>
+<td>重心加權；最早期 PLS 預設</td>
+<td>純探索性、無方向假設時</td>
+</tr>
+<tr>
+<td>Factorial</td>
+<td>因子加權；對共變數較敏感</td>
+<td>與 CB-SEM 比較時</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>呂欣建議</strong>：保持 <strong>Path</strong>（業界標準）</li>
+</ul>
+<h4 id="33-ignore-structural-model">3.3 ☐ Ignore structural model（截圖中灰色）</h4>
+<ul>
+<li>截圖中此選項<strong>呈灰色不可勾選</strong>，可能因為 PLSc 已啟用導致鎖定</li>
+<li><strong>作用</strong>：若勾選會跳過結構模型估計，只跑外模型</li>
+<li><strong>呂欣建議</strong>：不需動，保持原狀</li>
+</ul>
+<h4 id="34-convergence-criterion">3.4 Convergence criterion</h4>
+<p>下拉選單，預設 <strong>Absolute difference</strong>。常見選項：
+- <strong>Absolute difference</strong>（預設）：權重變化小於 tolerance 即停
+- Squared difference：權重平方差小於 tolerance</p>
+<ul>
+<li><strong>呂欣建議</strong>：保持預設</li>
+</ul>
+<h4 id="35-tolerance">3.5 Tolerance</h4>
+<ul>
+<li><strong>預設</strong>：1e-05（即 $10^{-5}$）</li>
+<li><strong>作用</strong>：收斂閾值；越小越嚴格</li>
+<li><strong>呂欣建議</strong>：保持預設（<a href="Hair_2022_PLS.html">Hair_2022_PLS</a> 標準）</li>
+</ul>
+<h4 id="36-error-calculation-method">3.6 Error calculation method（重要）</h4>
+<p>兩個選項（互斥）：</p>
+<h5 id="none">○ None</h5>
+<ul>
+<li>不算 SE / CI；只跑點估計</li>
+<li>呂欣<strong>不要選</strong>（無法做假設檢驗）</li>
+</ul>
+<h5 id="bootstrap">● Bootstrap（<strong>呂欣必選</strong>）</h5>
+<ul>
+<li><strong>Samples</strong>：截圖預設 <strong>200</strong> ⚠️</li>
+<li><strong>呂欣本研究改為 1000</strong>（<a href="Hair_2022_PLS.html">Hair_2022_PLS</a> 列為最低可接受標準）</li>
+<li>200 太少，bootstrap CI 不穩定</li>
+<li><strong>本資料無法跑 5000</strong>：呂欣實測 5000 即使設 Ignore/Drop 仍失敗，可能是 JPB1 天花板效應導致退化 sample 累積過多（5000 次中近半失敗 → 觸發 JASP 內部錯誤）；1000 次成功</li>
+<li>期刊主流 5000，但 1000 完全可接受，論文中註明即可</li>
+<li><strong>Confidence intervals</strong>：預設 <strong>95</strong> %</li>
+<li>呂欣保持 95%</li>
+<li><strong>Handling of inadmissibles</strong>（怎麼處理 bootstrap 中估計失敗的 sample）：</li>
+<li>○ Replace（截圖預設）：失敗就重抽一次</li>
+<li>● <strong>Ignore</strong>（<strong>呂欣論文必選</strong>）：失敗的 sample 直接跳過</li>
+<li>○ Drop：丟掉整個 boot set</li>
+<li><strong>本研究強制改 Ignore 的原因</strong>：JPB1 有強烈天花板效應（$M = 4.93$, $SD = 0.30$），bootstrap 在某些子樣本中可能抽到 JPB1 變異為 0，導致估計失敗。<strong>Replace 會反覆重抽同類退化樣本</strong>，最終卡死跳「NAs are not allowed」錯誤。<strong>Ignore 跳過這些失敗 sample</strong>，bootstrap 能順利跑完，CI 略不穩但實務上完全可用</li>
+</ul>
+<h4 id="37-repeatability">3.7 Repeatability（重要）</h4>
+<ul>
+<li>☐ <strong>Set seed</strong>：截圖預設<strong>未勾選</strong></li>
+<li>預設值：1</li>
+</ul>
+<p><strong>呂欣必須勾選並改 seed = 42</strong>（或任意固定數）：
+- 不勾的話每次跑結果略有差異（bootstrap 隨機）
+- 設 seed 確保論文結果可重現
+- 用 seed = <strong>42</strong>（與 Python plspm 預跑相同，方便對照）</p>
+<hr />
+<h3 id="4-output">4. Output 面板（必勾項）</h3>
+<p>截圖顯示 8 個輸出選項，左欄 4 個 + 右欄 4 個。<strong>呂欣應全部勾選</strong>：</p>
+<h4 id="_4">左欄</h4>
+<table>
+<thead>
+<tr>
+<th>選項</th>
+<th>內容</th>
+<th>呂欣論文用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>☐ <strong>R-squared</strong></td>
+<td>$R^2$、$R^2_{adj}$</td>
+<td>✅ 勾（Phase 3 R² = .20）</td>
+</tr>
+<tr>
+<td>☐ <strong>Additional fit measures</strong></td>
+<td>SRMR、NFI、$d_{ULS}$、$d_G$ 等</td>
+<td>✅ 勾（PLS-SEM fit indicator）</td>
+</tr>
+<tr>
+<td>☐ Mardia's coefficient</td>
+<td>多變量常態檢驗</td>
+<td>⚪ 可選（PLS 不要求常態，但寫進論文敘述方法時可附）</td>
+</tr>
+<tr>
+<td>☐ <strong>Reliability measures</strong></td>
+<td>$\alpha$、$\rho_A$、$\rho_c$、AVE</td>
+<td>✅ <strong>必勾</strong>（Phase 2 信效度核心）</td>
+</tr>
+</tbody>
+</table>
+<h4 id="_5">右欄</h4>
+<table>
+<thead>
+<tr>
+<th>選項</th>
+<th>內容</th>
+<th>呂欣論文用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>☐ Observed indicator correlations</td>
+<td>題目兩兩相關矩陣</td>
+<td>⚪ 可選（描述統計時可附）</td>
+</tr>
+<tr>
+<td>☐ Implied indicator correlations</td>
+<td>模型預測的題目相關</td>
+<td>⚪ 可選</td>
+</tr>
+<tr>
+<td>☐ Observed construct correlations</td>
+<td>構念兩兩相關（Fornell-Larcker 用）</td>
+<td>✅ <strong>必勾</strong></td>
+</tr>
+<tr>
+<td>☐ Implied construct correlations</td>
+<td>模型預測的構念相關</td>
+<td>⚪ 可選</td>
+</tr>
+</tbody>
+</table>
+<h4 id="_6">⚠️ 截圖中<strong>沒有看到的常見輸出選項</strong></h4>
+<p><a href="Hair_2022_PLS.html">Hair_2022_PLS</a> 標準要求的以下指標，可能在 Output 面板下方（未截到）或預設輸出：</p>
+<table>
+<thead>
+<tr>
+<th>指標</th>
+<th>預期出現位置</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Outer Loadings</strong>（標準化負荷量）</td>
+<td>應為預設輸出</td>
+</tr>
+<tr>
+<td><strong>HTMT 矩陣</strong></td>
+<td>可能需另一個勾選；若無，看看「Reliability measures」是否包含</td>
+</tr>
+<tr>
+<td><strong>f² Effect Sizes</strong></td>
+<td>可能在某個進階選項下</td>
+</tr>
+<tr>
+<td><strong>Inner VIF Values</strong></td>
+<td>可能在某個進階選項下</td>
+</tr>
+<tr>
+<td><strong>Path Coefficients with bootstrap</strong></td>
+<td>應為預設（前提是 Error method = Bootstrap）</td>
+</tr>
+<tr>
+<td><strong>Specific Indirect Effects</strong></td>
+<td>應在 Output 面板下方未截到處</td>
+</tr>
+</tbody>
+</table>
+<p>→ 呂欣執行後若上述指標<strong>沒出現</strong>，請：
+1. 滾動 Output 面板看下方是否有更多選項
+2. 或在 Estimation 面板找展開選項
+3. 截圖回傳，本指南再補充</p>
+<hr />
+<h3 id="5">5. 呂欣論文的建議完整設定</h3>
+<h4 id="_7">一鍵清單</h4>
+<p>跑每個 Phase 時依此設定：</p>
+<p><strong>Model 面板</strong>：
+- Model syntax: 貼入 <a href="handout_pls_sem_final.md">handout_pls_sem_final.md</a> 對應 Phase 的語法
+- Grouping Variable: <code>&lt;no choice&gt;</code>（除非跑 Phase 9 PLS-MGA，再拖入 <code>seniority_group</code>）</p>
+<p><strong>Estimation 面板</strong>：
+- ☐ <strong>取消勾選</strong> Consistent partial least squares（呂欣本研究 2026-05-09 確認 PLSc 失控；改用傳統 PLS Mode A，PLSc 版本作 robustness。理由見 §3.1）
+- Inner weighting scheme: <strong>Path</strong>
+- Convergence criterion: Absolute difference
+- Tolerance: 1e-05
+- Error calculation method: <strong>Bootstrap</strong>
+  - Samples: <strong>1000</strong>（改！本資料 5000 失敗，1000 為 <a href="Hair_2022_PLS.html">Hair_2022_PLS</a> 最低可接受標準）
+  - Confidence intervals: 95
+  - Handling of inadmissibles: <strong>Ignore</strong>（改！避免「NAs are not allowed」錯誤）
+- ✅ <strong>Set seed: 42</strong>（改！）</p>
+<p><strong>Output 面板</strong>：
+- ✅ R-squared
+- ✅ Additional fit measures
+- ✅ Reliability measures
+- ✅ Observed construct correlations
+- （Mardia's, indicator correlations, implied 視需要）</p>
+<hr />
+<h3 id="6-jasp-0193-html">6. 結果區判讀（依實際 JASP 0.19.3 HTML 輸出整理）</h3>
+<blockquote>
+<p><strong>本節依呂欣 2026-05-09 實跑 JASP 後 export 的 HTML 結果整理</strong>，所有表格名稱、欄位名與顯示格式以 JASP 介面為準。</p>
+</blockquote>
+<p>跑完後右側結果區依勾選順序顯示，<strong>頂層架構為</strong>：</p>
+<pre><code>Results
+├─ Descriptive Statistics
+│   └─ Distribution Plots（每題一張）
+└─ Partial Least Squares SEM
+    ├─ Parameter Estimates
+    │   ├─ R-Squared
+    │   ├─ Additional Fit Measures
+    │   ├─ Reliability Measures
+    │   ├─ Weights
+    │   ├─ Loadings
+    │   ├─ Regression Coefficients
+    │   └─ Total Effects
+    └─ Correlation tables
+        └─ Observed indicator correlation matrix
+</code></pre>
+<h4 id="61-r-squared">6.1 R-Squared 表</h4>
+<p>JASP 欄位：</p>
+<p>| Outcome | R² | Adjusted R² |</p>
+<p>→ 對應論文「<strong>內生潛在變項解釋變異</strong>」/「$R^2$」/「Cohen 效果量判讀」。</p>
+<h4 id="62-additional-fit-measures">6.2 Additional Fit Measures 表</h4>
+<p>JASP 直接列出的指標（Index | Value 兩欄）：</p>
+<table>
+<thead>
+<tr>
+<th>JASP 欄位名稱</th>
+<th>簡稱</th>
+<th>論文用法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Comparative Fit Index (CFI)</td>
+<td>CFI</td>
+<td>（PLS-SEM 通常不報，CB-SEM 才標準）</td>
+</tr>
+<tr>
+<td>Goodness of fit index (GFI)</td>
+<td>GFI</td>
+<td>同上</td>
+</tr>
+<tr>
+<td>Hoelter's critical N (CN)</td>
+<td>CN</td>
+<td>樣本足量門檻</td>
+</tr>
+<tr>
+<td>Bollen's Incremental Fit Index (IFI)</td>
+<td>IFI</td>
+<td>（CB-SEM 用）</td>
+</tr>
+<tr>
+<td>Bentler-Bonett Non-normed Fit Index (NNFI)</td>
+<td>TLI/NNFI</td>
+<td>（CB-SEM 用）</td>
+</tr>
+<tr>
+<td>Bentler-Bonett Normed Fit Index (NFI)</td>
+<td>NFI</td>
+<td><strong>PLS-SEM 可報，&gt; .90 為佳</strong></td>
+</tr>
+<tr>
+<td>Root mean square error of approximation (RMSEA)</td>
+<td>RMSEA</td>
+<td>（CB-SEM 用，PLS 不嚴格）</td>
+</tr>
+<tr>
+<td>Root mean square residual covariance (RMS theta)</td>
+<td>RMS_θ</td>
+<td><strong>PLS-SEM 用，&lt; .12 為佳</strong></td>
+</tr>
+<tr>
+<td>Standardized root mean square residual (SRMR)</td>
+<td>SRMR</td>
+<td><strong>PLS-SEM 主要看這個，&lt; .08 嚴格 / &lt; .10 寬鬆</strong></td>
+</tr>
+<tr>
+<td>Goodness of Fit (GoF)</td>
+<td>GoF</td>
+<td>Tenenhaus 整體擬合，&gt; .36 大效果</td>
+</tr>
+<tr>
+<td>Geodesic distance</td>
+<td>$d_G$</td>
+<td>Bootstrap-based fit；CI 上限低於 95% bootstrap quantile 即通過</td>
+</tr>
+<tr>
+<td>Squared Euclidean distance</td>
+<td>$d_{ULS}$</td>
+<td>同上</td>
+</tr>
+<tr>
+<td>Maximum likelihood-based distance</td>
+<td>$d_{ML}$</td>
+<td>同上</td>
+</tr>
+</tbody>
+</table>
+<p>→ <strong>⚠️ HTMT 警告會出現在這個表的 Note</strong>（若構念內外相關有正負混雜）。呂欣實跑顯示：</p>
+<blockquote>
+<p>"The following warning occured in the calculateHTMT() function: Intra-block and inter-block correlations between indicators must be either all-positive or all-negative."</p>
+</blockquote>
+<h4 id="63-reliability-measures">6.3 Reliability Measures 表（核心信度三件套）</h4>
+<p><strong>JASP 實際欄位</strong>（與論文常用名對照）：</p>
+<table>
+<thead>
+<tr>
+<th>JASP 欄位</th>
+<th>論文/教科書術語</th>
+<th>標準</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Latent</strong></td>
+<td>構念名稱</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Cronbach's α</strong></td>
+<td>Cronbach_alpha（內部一致性）</td>
+<td>≥ .70</td>
+</tr>
+<tr>
+<td><strong>Jöreskog's ρ</strong></td>
+<td><strong>CR_Composite_Reliability $\rho_c$</strong>（組合信度／合成信度）</td>
+<td>.70–.95</td>
+</tr>
+<tr>
+<td><strong>Dijkstra-Henseler's ρ</strong></td>
+<td><strong><a href="rho_A.html">rho_A</a></strong>（PLSc 一致信度，<a href="Dijkstra_Henseler.html">Dijkstra_Henseler</a> 推薦）</td>
+<td>≥ .70</td>
+</tr>
+</tbody>
+</table>
+<p>→ <strong>論文寫作關鍵對應</strong>：JASP 標 <code>Jöreskog's ρ</code> 即 <a href="Hair_2022_PLS.html">Hair_2022_PLS</a> 所稱的 $\rho_c$ 或 CR；JASP 標 <code>Dijkstra-Henseler's ρ</code> 即一般文獻的 $\rho_A$。論文敘述時建議寫：「組合信度（$\rho_c$，JASP 顯示為 Jöreskog's $\rho$）介於 …」首次出現時做一次標註，之後直接用 $\rho_c$。</p>
+<p>→ <strong>AVE 不在此表</strong>：JASP 0.19.3 PLS-SEM 模組未直接輸出 AVE，需手動計算 $\text{AVE} = \frac{1}{k} \sum \lambda_i^2$（用下節 Loadings 表平方後平均）。</p>
+<h4 id="64-weights-pls">6.4 Weights 表（指標權重，PLS 特有）</h4>
+<p>JASP 欄位：</p>
+<p>| Construct | Indicator | Estimate | Std. Error | z-value | p | Lower | Upper |</p>
+<p><strong>末欄 95% Confidence Interval 標頭</strong>（合併 Lower/Upper 兩欄）。</p>
+<p>→ 對應論文「指標權重」/「outer weights」；formative 模型主看此表，reflective 主看下節 Loadings 表，但兩者同時報以呈現完整測量資訊。</p>
+<h4 id="65-loadings-reflective">6.5 Loadings 表（標準化負荷量，reflective 模型主看）</h4>
+<p><strong>與 Weights 表完全相同欄位</strong>：</p>
+<p>| Construct | Indicator | Estimate | Std. Error | z-value | p | Lower | Upper |</p>
+<p>→ 對應論文「指標信度」/「標準化外部負荷量 $\lambda$」/「indicator reliability $\lambda^2$」。
+→ <strong>判讀標準</strong>（<a href="Hair_2022_PLS.html">Hair_2022_PLS</a>）：$\lambda \geq .708$（即 $\lambda^2 \geq .50$）保留；.40–.708 視 CR/AVE 影響再決定；&lt; .40 刪除。</p>
+<h4 id="66-regression-coefficients">6.6 Regression Coefficients 表（結構路徑，最重要的假設檢驗表）</h4>
+<p><strong>JASP 欄位</strong>（含 95% CI 與 PLS 專屬指標）：</p>
+<p>| Outcome | Predictor | Estimate | Std. Error | z-value | p | Lower | Upper | f² | VIF |</p>
+<p>→ 論文術語對照：
+- <strong>Estimate</strong> = 標準化路徑係數 $\beta$
+- <strong>Std. Error</strong> = SE
+- <strong>z-value</strong> = 檢定統計量（PLS bootstrap 用 z 而非 t；論文中可寫 "$|z| > 1.96$ 視為顯著"，與 t 數值幾近相同）
+- <strong>p</strong> = 雙尾 p 值（小於 .001 顯示為 <code>&lt; .001</code>）
+- <strong>Lower / Upper</strong> = 95% BCa Bootstrap CI 上下界
+- <strong>f²</strong> = f_squared_effect_size（Cohen 1988：.02 小、.15 中、.35 大）
+- <strong>VIF</strong> = VIF（內模型共線性，&lt; 5 安全 / &lt; 3 嚴格）</p>
+<p>→ 對應論文「假設檢定 H1–H6」/「path_coefficient 與 bootstrap_BCa CI」。</p>
+<h4 id="67-total-effects">6.7 Total Effects 表</h4>
+<p>同 Regression Coefficients 欄位（少 f² 與 VIF）：</p>
+<p>| Outcome | Predictor | Estimate | Std. Error | z-value | p | Lower | Upper |</p>
+<p>→ 對應論文「總效果」（直接 + 間接）。<strong>注意</strong>：JASP 把間接效果合併在 Total Effects 內呈現，<strong>並不獨立輸出 Specific Indirect Effects 表</strong>。若論文需要報告 specific indirect、IMM、conditional indirect，必須在 lavaan syntax 中用 <code>:=</code> 自行定義（見 handout Phase 4、6），定義的 derived parameters 也會出現在 Regression Coefficients 表內以該命名顯示。</p>
+<h4 id="68-observed-indicator-correlation-matrix">6.8 Observed indicator correlation matrix</h4>
+<p>下三角相關矩陣，欄位為 12 題指標。
+→ 對應論文「觀察指標相關矩陣」（附錄表）。</p>
+<h4 id="69-descriptive-statistics-pls-sem">6.9 Descriptive Statistics 表（在 PLS-SEM 上方）</h4>
+<p><strong>JASP 欄位</strong>：</p>
+<p>| Valid | Missing | Median | Mean (arithmetic) | Std. Deviation | Skewness | Std. Error of Skewness | Kurtosis | Std. Error of Kurtosis | Minimum | Maximum |</p>
+<p>→ 對應論文「樣本敘述統計」表。<strong>注意</strong>：JASP 標 <code>Mean (arithmetic)</code> 而非 <code>Mean</code>；論文寫 $M$ 即可，方法章節可註「以算術平均（arithmetic mean）報告」。</p>
+<hr />
+<h3 id="7-jasp">7. JASP 標籤 ↔ 論文學術術語對照表（一頁速查）</h3>
+<table>
+<thead>
+<tr>
+<th>JASP 介面/輸出顯示</th>
+<th>論文撰寫術語</th>
+<th>數學符號</th>
+<th>相關 wikilink</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Mean (arithmetic)</td>
+<td>平均數／算術平均</td>
+<td>$M$</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Std. Deviation</td>
+<td>標準差</td>
+<td>$SD$</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Cronbach's α</td>
+<td>Cronbach's α／內部一致性</td>
+<td>$\alpha$</td>
+<td>Cronbach_alpha</td>
+</tr>
+<tr>
+<td>Jöreskog's ρ</td>
+<td>組合信度／合成信度（CR）</td>
+<td>$\rho_c$</td>
+<td>CR_Composite_Reliability</td>
+</tr>
+<tr>
+<td>Dijkstra-Henseler's ρ</td>
+<td>一致信度／rho_A</td>
+<td>$\rho_A$</td>
+<td><a href="rho_A.html">rho_A</a>, <a href="Dijkstra_Henseler.html">Dijkstra_Henseler</a></td>
+</tr>
+<tr>
+<td>Loadings → Estimate</td>
+<td>標準化外部負荷量</td>
+<td>$\lambda$</td>
+<td>outer_loadings</td>
+</tr>
+<tr>
+<td>Weights → Estimate</td>
+<td>指標權重</td>
+<td>$w$</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Regression Coefficients → Estimate</td>
+<td>路徑係數</td>
+<td>$\beta$</td>
+<td>path_coefficient</td>
+</tr>
+<tr>
+<td>Regression Coefficients → z-value</td>
+<td>bootstrap z 值（≈t）</td>
+<td>$z$</td>
+<td>bootstrap_BCa</td>
+</tr>
+<tr>
+<td>Regression Coefficients → p</td>
+<td>p 值</td>
+<td>$p$</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Regression Coefficients → Lower / Upper</td>
+<td>95% BCa 信賴區間下／上界</td>
+<td>95% CI</td>
+<td>bootstrap_BCa</td>
+</tr>
+<tr>
+<td>Regression Coefficients → f²</td>
+<td>個別預測者效果量</td>
+<td>$f^2$</td>
+<td>f_squared_effect_size</td>
+</tr>
+<tr>
+<td>Regression Coefficients → VIF</td>
+<td>內模型共線性</td>
+<td>VIF</td>
+<td>VIF</td>
+</tr>
+<tr>
+<td>R-Squared → R²</td>
+<td>決定係數</td>
+<td>$R^2$</td>
+<td>—</td>
+</tr>
+<tr>
+<td>R-Squared → Adjusted R²</td>
+<td>調整後決定係數</td>
+<td>$R^2_{adj}$</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Additional Fit Measures → SRMR</td>
+<td>標準化均方根殘差</td>
+<td>SRMR</td>
+<td><a href="SRMR.html">SRMR</a></td>
+</tr>
+<tr>
+<td>Additional Fit Measures → GoF</td>
+<td>Tenenhaus GoF 整體擬合</td>
+<td>GoF</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Additional Fit Measures → RMS theta</td>
+<td>外模型殘差均方根</td>
+<td>$\text{RMS}_\theta$</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Total Effects → Estimate</td>
+<td>總效果（直接 + 間接）</td>
+<td>$\beta_{total}$</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Defined parameter（如 <code>IMM := a3*b</code>，出現於 Regression Coefficients）</td>
+<td>衍生參數／調節中介指標</td>
+<td>IMM</td>
+<td>index_of_moderated_mediation</td>
+</tr>
+<tr>
+<td>Observed indicator correlation matrix</td>
+<td>觀察指標相關矩陣</td>
+<td>$r$</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p>→ <strong>論文撰寫建議</strong>：表格腳註首次標明 JASP 原始欄位，例如：</p>
+<blockquote>
+<p><em>註</em>：$\rho_c$ 為 Jöreskog 之組合信度（JASP 0.19.3 PLS-SEM 模組標示為 Jöreskog's ρ）；$\rho_A$ 為 Dijkstra-Henseler 之一致信度（JASP 標示為 Dijkstra-Henseler's ρ）。</p>
+</blockquote>
+<hr />
+<h3 id="8">8. 結果區判讀（簡版速查）</h3>
+<p>呂欣對照 handout_pls_sem_final 各 Phase 的「預期結果」表逐一檢查（注意：handout 內表頭已對齊 JASP 欄位）。</p>
+<hr />
+<h3 id="9">9. 常見錯誤排除</h3>
+<h4 id="q1-ci-t-p">Q1：跑出來只有點估計沒有 CI / t / p</h4>
+<p>A：Estimation → Error calculation method 確認<strong>勾 Bootstrap</strong>（不是 None）</p>
+<h4 id="q15-2026-05-09-bootstrap-error-in-model-model-estimation-failed-message-nas-are-not-allowed-in-subscripted-assignments">Q1.5（呂欣 2026-05-09 確認解法）：跑 bootstrap 跳「Error in model 'Model' - Estimation failed Message: NAs are not allowed in subscripted assignments」</h4>
+<p>A：<strong>Estimation → Bootstrap → Handling of inadmissibles 從預設 Replace 改 Ignore</strong>，問題即解決。</p>
+<p><strong>原因</strong>：本研究 JPB1 指標有強烈天花板效應（$M = 4.93$, $SD = 0.30$），96 位受訪者中絕大多數答 5。Bootstrap 抽樣時某些子樣本可能剛好抽到 JPB1 全為 5，導致該指標變異為 0，進而觸發以下兩種數值問題：
+1. <strong>PLSc 修正分母為零</strong>（rho_A 計算失敗）
+2. <strong>構念負荷量無法估計</strong>（變異為 0 的指標無法計算 standardised loading）</p>
+<p>當「Handling of inadmissibles」設為 Replace（預設）時，JASP 會反覆重抽，但同類退化樣本會持續出現，最終估計卡死跳 NA 錯誤。改為 <strong>Ignore</strong> 後，JASP 跳過失敗 sample，剩下成功的 sample 仍可估計 CI（多數 sample 會成功）。</p>
+<p><strong>對 bootstrap 結果的影響</strong>：實際有效 boot 次數略小於設定值，CI 略不穩定但實務上可接受。</p>
+<p><strong>呂欣 2026-05-09 後續實測</strong>：即使設 Ignore/Drop，<strong>5000 次 bootstrap 仍失敗，1000 次成功</strong>。可能原因：5000 次中累積失敗率過高（推估約 30-50% sample 退化），剩餘成功 sample 數過少觸發 JASP 內部其他錯誤。<strong>最終採用 1000 次 bootstrap</strong>——這是 <a href="Hair_2022_PLS.html">Hair_2022_PLS</a> 列為「最低可接受」的標準（5000 為主流但非強制）。</p>
+<p><strong>論文限制寫法建議</strong>：</p>
+<blockquote>
+<p>由於 JPB1 指標呈強烈天花板效應（$M = 4.93$, $SD = 0.30$），導致 bootstrap 重抽過程中部分子樣本之 JPB1 變異趨近於零、估計失敗。經測試，在 5000 次重抽下失敗 sample 累積過多致無法收斂，故依 Hair et al. (2022) 對 PLS-SEM bootstrap 之最低標準建議，採 <strong>1000 次 BCa bootstrap</strong>，並於 Handling of inadmissibles 設定 Ignore 以跳過退化 sample。1000 次重抽足以穩健估計路徑係數之 95% 信賴區間（Streukens &amp; Leroi-Werelds, 2016）。</p>
+</blockquote>
+<h4 id="q2">Q2：每次重跑數值都略不同</h4>
+<p>A：Repeatability → ✅ <strong>Set seed</strong>（必勾），固定 seed 為任意數（推薦 42）</p>
+<h4 id="q3bootstrap">Q3：bootstrap 跑很慢</h4>
+<p>A：Samples 預設 200，改為 5000 約 30-90 秒；若超過 5 分鐘，檢查模型是否過於複雜（互動項過多）</p>
+<h4 id="q372026-05-09-only-a-subset-of-population-values-given-please-specify-all-population-values-or-none">Q3.7（2026-05-09 新增）：跳警告 <em>Only a subset of population values given. please specify all population values or none</em></h4>
+<p>A：發生於 syntax 使用 lavaan 風格的路徑標籤（如 <code>a1*JPB</code>）時。<strong>根因是 seminr 對 <code>*</code> 算子的解讀與 lavaan 不同</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>算子</th>
+<th>標準 lavaan 解讀</th>
+<th>seminr / JASP PLS-SEM 解讀</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>a1*JPB</code></td>
+<td>把路徑標籤命名為 <code>a1</code>（用於 <code>:=</code>）</td>
+<td>把路徑的<strong>母體真值</strong>（population value）設為 a1</td>
+</tr>
+<tr>
+<td><code>0.5*JPB</code></td>
+<td>把路徑固定在 0.5</td>
+<td>同上</td>
+</tr>
+</tbody>
+</table>
+<p>當 syntax 內<strong>只有部分路徑</strong>標 <code>*</code> 而其他構念對自由相關（沒有 <code>*</code>），seminr 認為「你只給了一部分母體值」就跳此警告。</p>
+<p><strong>先確認是否致命</strong>：看右側結果區是否有 Regression Coefficients 表，以及是否有 <code>indirect</code> 與 <code>total</code> 兩列。</p>
+<p><strong>情境 1</strong>：結果有跑且 <code>indirect</code> / <code>total</code> 兩列出現 → 警告無害，可直接判讀。</p>
+<p><strong>情境 2</strong>：結果有跑但沒有 derived parameter 兩列 → <code>:=</code> 在 JASP PLS-SEM 不被支援。改用以下無標籤版本：</p>
+<pre><code>APT ~ JPB + ASE + ASExJPB
+BI  ~ JPB + APT
+</code></pre>
+<p>從 Regression Coefficients 表抄五個 β 對應論文符號（$a_1$ = β(APT←JPB)、$a_3$ = β(APT←ASExJPB)、$b$ = β(BI←APT) 等），<strong>於 Excel 用 Sobel_test 公式手算</strong> IMM = $a_3 \times b$ 與其 95% CI（呂欣本研究堅持 JASP-only 工作流；不依賴 R）。詳細步驟見 <a href="handout_pls_sem_final.md">handout Phase 4/6</a>。</p>
+<p><strong>情境 3</strong>：結果完全沒跑出來 → 改用無標籤版本（情境 2 的 syntax），重跑。</p>
+<p><strong>Phase 4 / 5 / 6 的因應</strong>（JASP-only 工作流）：
+- Phase 4 中介：indirect 與 total 改從 Total Effects 表回推（$\text{indirect} = \text{total} - c'$），CI 用 Sobel 近似
+- Phase 5 互動：a3 直接從 Regression Coefficients 看（β(APT←ASExJPB)），無需衍生參數
+- Phase 6 IMM 與 conditional indirect：用 Sobel 與 Aroian 公式於 Excel 算，論文中註明 Sobel 之常態假設限制</p>
+<h4 id="q4-all-construct-correlations-must-be-supplied-explicitly">Q4：跳警告 <em>All construct correlations must be supplied explicitly</em></h4>
+<p>A：syntax 是純測量模型（只有 <code>=~</code>、沒有任何 <code>~</code> 結構路徑）時出現。<strong>解法是加上理論結構路徑</strong>（不是補相關）；Loadings / Reliability / HTMT 只取決於外模型，加結構路徑不影響其值。</p>
+<h4 id="q352026-05-09-11se-20_a-_c">Q3.5（2026-05-09 新增）：路徑係數超出 [-1,+1]、SE 爆 &gt; 20、ρ_A 異常高於 ρ_c</h4>
+<p>A：<strong>PLSc（Consistent PLS）估計爆炸</strong>。標準化路徑係數應在 [-1,+1] 之間；當你看到 β = 1.263、SE = 21.75 這類數字，代表 PLSc 對邊緣信度構念過度 disattenuation，放大了構念相關矩陣的條件數，逆矩陣失控。</p>
+<p><strong>徵狀組合</strong>（同時出現多項即確認）：
+- 結構路徑 |β| &gt; 1（標準化下不可能）
+- SE &gt; 5（PLS bootstrap SE 通常 &lt; 0.3）
+- ρ_A 顯著高於 ρ_c 與 α（健康時三者接近）
+- 部分構念的指標 loadings 全部不顯著（即使 raw correlation 顯示構念正常）
+- 整體擬合（SRMR、CFI、GoF）大幅惡化</p>
+<p><strong>解法（依序試）</strong>：</p>
+<ol>
+<li><strong>取消 Estimation 面板的 ☑ Consistent partial least squares</strong>：改用標準 PLS Mode A。多數 PLS 論文 PLSc on/off 並存報告作 robustness</li>
+<li><strong>若關 PLSc 仍異常</strong>：找信度最弱、loadings 最低的構念，考慮刪除最弱指標（保留 ≥ 2 題）</li>
+<li><strong>最終手段</strong>：改 CB-SEM（lavaan）為主分析，PLS 作 robustness</li>
+</ol>
+<p><strong>呂欣本資料的觸發原因</strong>：ASE 構念 ρ_c = .672 略低於 .70 門檻，PLSc 試圖把 loadings disattenuate 到 ρ_A = .855，造成構念相關矩陣 near-singular。</p>
+<h4 id="q452026-05-09-reordering-the-structure-equations-was-not-successful">Q4.5（2026-05-09 新增）：跳錯誤 <em>Reordering the structure equations was not successful</em></h4>
+<p>A：<strong>結構模型有循環（cycle），不是 DAG</strong>。後端 seminr 用拓撲排序處理結構方程，模型必須是有向無循環圖。</p>
+<p><strong>最常見原因</strong>：誤把外生變項之間或從終點反向連回的「相關性」當結構路徑寫，例如：
+- <code>JPB ~ ASE</code> + <code>APT ~ ASE</code> + <code>APT ~ JPB</code>（看似補相關，實際讓 ASE 同時是 JPB 與 APT 的前因）
+- <code>ASE ~ BI</code> + <code>APT ~ ASE</code> + <code>BI ~ APT</code>（造成 BI → ASE → APT → BI 循環）</p>
+<p><strong>解法</strong>：移除非理論預期的 <code>~</code> 行；外生變項之間的相關性 PLS 自動處理，不需要也不能用 <code>~</code> 補。</p>
+<p><strong>規則</strong>：每條 <code>~</code> 都要對應一個你願意在論文中假設、有理論方向的結構關係。沒有方向的不要寫。</p>
+<h4 id="q5htmt">Q5：HTMT 沒看到</h4>
+<p>A：可能在「Reliability measures」勾選後出現；或在 Output 面板下方有獨立「Discriminant validity」選項；若仍無，用 R <code>seminr</code> 計算（見 <a href="handout_pls_sem_final.md">handout_pls_sem_final.md 附錄 A</a>）</p>
+<h4 id="q6">Q6：路徑係數出現負值，但理論預期正向</h4>
+<p>A：<strong>Sign indeterminacy</strong> 問題；改 Estimation 中找 <strong>Sign change</strong> 選項設為 <code>Construct level changes</code>（若截圖中沒看到，可能在某個展開項中）</p>
+<h4 id="q7">Q7：估計不收斂</h4>
+<p>A：
+1. 增加 Tolerance（如改成 1e-04，較寬鬆）
+2. 確認資料無極端 outliers
+3. 互動項與主效果共線性過高 → 改用 mean-centered indicators</p>
+<hr />
+<h3 id="10-python-plspm">10. 與 Python plspm 預跑結果對照</h3>
+<p>呂欣執行後可對照本專案先前的 plspm 預跑結果：</p>
+<table>
+<thead>
+<tr>
+<th>指標</th>
+<th>plspm 預跑</th>
+<th>JASP 預期</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BI Cronbach α</td>
+<td>.918</td>
+<td>接近</td>
+</tr>
+<tr>
+<td>APT Cronbach α</td>
+<td>.657</td>
+<td>接近</td>
+</tr>
+<tr>
+<td>ASE Cronbach α</td>
+<td>.730</td>
+<td>接近</td>
+</tr>
+<tr>
+<td>JPB Cronbach α</td>
+<td>.700</td>
+<td>接近</td>
+</tr>
+<tr>
+<td>H2 (JPB→APT) β</td>
+<td>.32 / .39</td>
+<td>接近</td>
+</tr>
+<tr>
+<td>H3 (APT→BI) β</td>
+<td>-.35</td>
+<td>接近</td>
+</tr>
+<tr>
+<td>H6 互動項 β</td>
+<td>.19, p = .013</td>
+<td>接近</td>
+</tr>
+<tr>
+<td>IMM</td>
+<td>-.090, CI [-.189, -.019]</td>
+<td>接近</td>
+</tr>
+</tbody>
+</table>
+<p>JASP（PLSc 開啟）數值可能略高於 plspm（PLSc 修正讓 loadings 略升、paths 略降），但<strong>結論方向應一致</strong>。</p>
+<hr />
+<h3 id="11-2026-05-09">11. 經 2026-05-09 實跑確認的事項</h3>
+<p>依呂欣 2026-05-09 export HTML 結果（純測量＋結構模型，未含互動項）已確認：</p>
+<ol>
+<li>✅ <strong>Output 面板</strong>勾選的四項：R-squared / Additional fit measures / Reliability measures / Observed indicator correlations 各自獨立成表</li>
+<li>✅ <strong>f² 與 VIF</strong> 直接顯示在 <strong>Regression Coefficients</strong> 表的最後兩欄（不需另勾選項）</li>
+<li>✅ <strong>Loadings 與 Weights</strong> 為兩張獨立表（Construct | Indicator | Estimate | Std. Error | z-value | p | Lower | Upper）</li>
+<li>✅ <strong>HTMT</strong> 不獨立成表，但在 Additional Fit Measures 的 Note 區會出現 calculateHTMT() 警告（若構念內外相關正負混雜）</li>
+<li>✅ <strong>AVE</strong> 不直接輸出，需手動 <code>mean(λ_i^2)</code> 計算（用 Loadings 表 Estimate 欄）</li>
+<li>✅ <strong>Specific Indirect Effects</strong> 不獨立成表；需在 syntax 中以 <code>:=</code> 定義 derived parameter，會出現在 Regression Coefficients 表內以該命名顯示</li>
+</ol>
+<p>仍待後續實跑確認：</p>
+<ol>
+<li>⏳ 含互動項的 Phase 5 模型輸出格式（ASExJPB 構念是否獨立列出於 Loadings 表）</li>
+<li>⏳ Phase 6 IMM 與 conditional indirect 的 derived parameters 在哪一張表呈現</li>
+<li>⏳ Multi-group / PLS-MGA 的 Grouping Variable 子選項細節</li>
+<li>⏳ Simple Slopes Plot 是否內建（若無則手動畫）</li>
+</ol>
+<p>呂欣執行 Phase 5 / 6 時，<strong>請再 export HTML 回傳</strong>，本指南會依此補上互動模型的實際輸出格式。</p>
+</main>
+</div>
+<script>
+(function () {
+  // ── Rebuild TOC with toggle buttons ──────────────────────────────────────
+  var toc = document.querySelector('.sidebar .toc');
+  if (toc) {
+    toc.querySelectorAll('li').forEach(function (li) {
+      var childUl = li.querySelector(':scope > ul');
+      var link    = li.querySelector(':scope > a');
+      if (!link) return;
+
+      var row = document.createElement('div');
+      row.className = 'toc-row';
+
+      if (childUl) {
+        var btn = document.createElement('button');
+        btn.className = 'toc-toggle';
+        btn.setAttribute('aria-expanded', 'true');
+        btn.textContent = '▾';          // ▾ open
+        btn.addEventListener('click', function () {
+          var open = childUl.hidden;
+          childUl.hidden = !open;
+          btn.textContent = open ? '▾' : '▸';   // ▾ / ▸
+          btn.setAttribute('aria-expanded', String(open));
+        });
+        row.appendChild(btn);
+      } else {
+        var spacer = document.createElement('span');
+        spacer.style.width = '1rem';
+        spacer.style.flexShrink = '0';
+        row.appendChild(spacer);
+      }
+
+      row.appendChild(link);
+      li.insertBefore(row, li.firstChild);
+    });
+  }
+
+  // ── Scroll spy ───────────────────────────────────────────────────────────
+  var headings = document.querySelectorAll('.content h2[id], .content h3[id], .content h4[id]');
+  var tocLinks = document.querySelectorAll('.sidebar .toc a');
+  if (!headings.length || !tocLinks.length) return;
+
+  var current = null;
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      var link = document.querySelector('.sidebar .toc a[href="#' + e.target.id + '"]');
+      if (!link) return;
+      if (current) current.classList.remove('active');
+      current = link;
+      current.classList.add('active');
+      // Scroll link into view within sidebar
+      current.scrollIntoView({ block: 'nearest' });
+    });
+  }, { rootMargin: '-5% 0px -75% 0px', threshold: 0 });
+
+  headings.forEach(function (h) { io.observe(h); });
+}());
+</script>
+</body>
+</html>

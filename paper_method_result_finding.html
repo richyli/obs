@@ -1,0 +1,1603 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>呂欣論文｜量化分析章節（研究方法 / 研究結果 / 研究發現）</title>
+<style>*, *::before, *::after { box-sizing: border-box; }
+
+/* ── Base ── */
+body {
+  font-family: "Helvetica Neue", Arial, "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+  font-size: 20px;
+  line-height: 1.9;
+  color: #111;
+  background: #fff;
+  margin: 0;
+}
+
+/* ── Two-column layout (note pages) ── */
+.layout { display: flex; align-items: flex-start; min-height: 100vh; }
+
+.sidebar {
+  width: 270px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 2rem 1rem 2rem 1.5rem;
+  border-right: 1px solid #e8e8e8;
+  background: #f9f9f9;
+}
+.sidebar-back {
+  display: block;
+  font-size: 0.82rem;
+  color: #999;
+  margin-bottom: 1.4rem;
+  text-decoration: none;
+}
+.sidebar-back:hover { color: #333; }
+.sidebar-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #bbb;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+/* ── TOC in sidebar ── */
+.toc { font-size: 0.82rem; line-height: 1.55; }
+.toc ul { list-style: none; margin: 0; padding: 0; }
+.toc ul ul { padding-left: 0.9rem; }
+.toc li { margin: 0; }
+.toc-row { display: flex; align-items: baseline; gap: 0.2rem; }
+.toc-row a {
+  flex: 1;
+  display: block;
+  padding: 0.18rem 0.3rem;
+  border-radius: 3px;
+  color: #555;
+  text-decoration: none;
+  word-break: break-word;
+}
+.toc-row a:hover { background: #ebebeb; color: #111; }
+.toc-row a.active { color: #0055cc; font-weight: 600; background: #e8f0ff; }
+.toc-toggle {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-size: 0.65rem;
+  color: #bbb;
+  line-height: 1;
+  width: 1rem;
+  text-align: center;
+}
+.toc-toggle:hover { color: #555; }
+
+/* ── Main content ── */
+.content {
+  flex: 1;
+  min-width: 0;
+  padding: 3rem 3rem 6rem;
+  max-width: 800px;
+}
+
+/* ── Single-column (index page) ── */
+.container { max-width: 800px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
+
+/* ── Typography ── */
+h1 {
+  font-size: 1.75rem; font-weight: 700;
+  margin: 0 0 0.15rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 2px solid #111;
+  line-height: 1.3;
+}
+h2 {
+  font-size: 1.3rem; font-weight: 700;
+  margin: 2.5rem 0 0.5rem;
+  padding-bottom: 0.2rem;
+  border-bottom: 1px solid #ddd;
+}
+h3 { font-size: 1.1rem; font-weight: 700; margin: 1.8rem 0 0.4rem; }
+h4 { font-size: 1rem; font-weight: 700; margin: 1.4rem 0 0.3rem; }
+p { margin: 0.9rem 0; }
+a { color: #0055cc; text-decoration: none; }
+a:hover { text-decoration: underline; }
+nav { margin-bottom: 2.5rem; font-size: 0.85rem; color: #999; }
+nav a { color: #999; }
+
+/* ── Code ── */
+code {
+  font-family: "SFMono-Regular", Consolas, monospace;
+  background: #f2f2f2;
+  padding: 0.1em 0.4em;
+  border-radius: 3px;
+  font-size: 0.85em;
+}
+pre {
+  background: #f2f2f2;
+  padding: 1.2rem 1.4rem;
+  border-radius: 5px;
+  overflow-x: auto;
+  font-size: 0.85em;
+  line-height: 1.6;
+}
+pre code { background: none; padding: 0; }
+
+/* ── Lists ── */
+ul, ol { padding-left: 1.6rem; margin: 0.8rem 0; }
+li { margin: 0.35rem 0; }
+li > ul, li > ol { margin: 0.2rem 0; }
+
+/* ── Other elements ── */
+blockquote {
+  border-left: 4px solid #ccc;
+  margin: 1.2rem 0;
+  padding: 0.3rem 1.2rem;
+  color: #444;
+  background: #fafafa;
+}
+table { border-collapse: collapse; width: 100%; margin: 1.2rem 0; font-size: 0.95em; }
+th, td { border: 1px solid #ccc; padding: 0.55rem 0.9rem; text-align: left; }
+th { background: #f5f5f5; font-weight: 700; }
+tr:nth-child(even) { background: #fafafa; }
+hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
+.meta { font-size: 0.8rem; color: #aaa; margin: 0.3rem 0 1.8rem; }
+.index-list { list-style: none; padding: 0; margin: 1rem 0; }
+.index-list li { padding: 0.55rem 0; border-bottom: 1px solid #eee; font-size: 1.05rem; }
+.index-list li:last-child { border-bottom: none; }
+.embed-block {
+  border-left: 3px solid #aaa;
+  padding: 0.5rem 1.2rem;
+  margin: 1.5rem 0;
+  background: #f8f8f8;
+}
+
+/* ── Mobile ── */
+@media (max-width: 800px) {
+  .layout { flex-direction: column; }
+  .sidebar {
+    position: static;
+    width: 100%;
+    height: auto;
+    max-height: 50vh;
+    border-right: none;
+    border-bottom: 1px solid #e8e8e8;
+    padding: 1rem 1.5rem;
+  }
+  .content { padding: 1.5rem 1.2rem 4rem; }
+}
+</style>
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+<div class="toc">
+<ul>
+<li><a href="#_1">量化分析章節｜研究方法、研究結果、研究發現</a></li>
+<li><a href="#research-method">第三章｜量化研究方法（Research Method）</a><ul>
+<li><a href="#31">3.1 研究設計</a></li>
+<li><a href="#32">3.2 抽樣與樣本</a><ul>
+<li><a href="#321">3.2.1 目標母體</a></li>
+<li><a href="#322">3.2.2 抽樣方法與樣本特徵</a></li>
+<li><a href="#323-finite_population_correction">3.2.3 finite_population_correction（考慮但未採用）</a></li>
+</ul>
+</li>
+<li><a href="#33">3.3 變項操作化與測量</a></li>
+<li><a href="#34">3.4 研究假設</a></li>
+<li><a href="#35">3.5 分析工具與流程</a></li>
+</ul>
+</li>
+<li><a href="#results">第四章｜研究結果（Results）</a><ul>
+<li><a href="#41">4.1 樣本特性與描述統計</a></li>
+<li><a href="#42-11">4.2 測量模型評估（11 題版主分析）</a><ul>
+<li><a href="#421">4.2.1 指標信度</a></li>
+<li><a href="#422">4.2.2 內部一致性信度</a></li>
+<li><a href="#423">4.2.3 區別效度</a></li>
+<li><a href="#424">4.2.4 測量模型限制</a></li>
+</ul>
+</li>
+<li><a href="#43">4.3 共同方法偏差檢驗</a></li>
+<li><a href="#44-11">4.4 結構模型評估（11 題版主分析，無互動項基線）</a><ul>
+<li><a href="#441">4.4.1 共線性</a></li>
+<li><a href="#442">4.4.2 路徑係數（基線模型）</a></li>
+</ul>
+</li>
+<li><a href="#45-h5">4.5 中介分析（H5）：競爭式中介機制揭示</a></li>
+<li><a href="#46-h6">4.6 調節分析（H6）</a></li>
+<li><a href="#47-h7">4.7 調節中介分析（H7）</a></li>
+<li><a href="#48">4.8 假設檢驗總表</a></li>
+<li><a href="#49-plspredict">4.9 PLSpredict 預測力評估</a></li>
+<li><a href="#410-robustness-checks">4.10 Robustness Checks</a><ul>
+<li><a href="#4101-sensitivity-apt1-12">4.10.1 Sensitivity：保留 APT1 之 12 題版對照</a></li>
+<li><a href="#4102-saturated-model-ase">4.10.2 飽和模型（Saturated Model）：揭示 ASE 之雙重角色</a></li>
+<li><a href="#4103-plsc">4.10.3 PLSc 估計穩定性對照</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#findings-discussion">第五章前段｜研究發現與討論（Findings &amp; Discussion）</a><ul>
+<li><a href="#51">5.1 主要發現摘要</a></li>
+<li><a href="#52-h2-h3-h5">5.2 H2 + H3 + H5：競爭式中介揭示專業信念的雙重作用</a></li>
+<li><a href="#53-h6-h7">5.3 H6 + H7：方向支持但統計檢力不足之調節中介</a></li>
+<li><a href="#54-ase">5.4 ASE 之雙重角色：調節者 + 直接預測者</a></li>
+<li><a href="#55-h1-h4">5.5 H1 方向反轉與 H4 主效果未達顯著的啟示</a></li>
+<li><a href="#56">5.6 政策與實務意涵</a></li>
+<li><a href="#57">5.7 研究限制</a></li>
+<li><a href="#58">5.8 未來研究方向</a></li>
+<li><a href="#jasp">附註：對應 JASP 操作</a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+</aside>
+<main class="content">
+<h1>呂欣論文｜量化分析章節（研究方法 / 研究結果 / 研究發現）</h1>
+<p class="meta">#thesis_draft　#pls_sem　#moderated_mediation　#paper_chapter</p>
+<h2 id="_1">量化分析章節｜研究方法、研究結果、研究發現</h2>
+<blockquote>
+<p><strong>使用方式</strong>：本檔為呂欣論文第三章後段（量化研究方法）、第四章（研究結果）、第五章前段（研究發現）的草稿。可直接複製 / 改寫進論文。對應的 JASP 操作步驟與每張表的細節判讀，請參閱 <a href="handout_pls_sem_final.md">handout_pls_sem_final.md</a>。</p>
+</blockquote>
+<hr />
+<h2 id="research-method">第三章｜量化研究方法（Research Method）</h2>
+<h3 id="31">3.1 研究設計</h3>
+<p>本研究採序列式混合方法之解釋性序列設計（sequential explanatory mixed-methods design, Creswell &amp; Plano Clark, 2018）：先以結構式問卷蒐集量化資料，描繪政治記者對生成式 AI 的態度與使用意願之結構關係；再依量化結果選取具代表性差異之個案進行半結構式深度訪談（質化部分另章說明）。本章聚焦於量化階段。</p>
+<p>量化分析採 PLS-SEM（Partial Least Squares Structural Equation Modeling, <a href="Hair_2022_PLS.html">Hair_2022_PLS</a>）作為主要分析方法。選擇 PLS-SEM 而非 CB-SEM（covariance-based SEM）之理由有四：(1) 樣本量 $n = 96$ 偏小，未達 CB-SEM 經驗法則 $N \geq 200$；(2) 研究目的為<strong>檢驗複雜結構之理論機制</strong>（中介、調節、調節中介），PLS-SEM 是變異基底法，於探索性結構模型中較具彈性；(3) 部分構念信度位於邊緣（Cronbach $\alpha$ 介於 .625–.730，PLS-SEM 對信度容忍度較高）；(4) 不要求多變量常態分布（本研究 JPB1、APT1 呈現天花板效應，違反常態假設）。在這四項情境下，<a href="Hair_2022_PLS.html">Hair_2022_PLS</a> 明確推薦採用 PLS-SEM。</p>
+<h3 id="32">3.2 抽樣與樣本</h3>
+<h4 id="321">3.2.1 目標母體</h4>
+<p>研究目標母體界定為<strong>現職從事台灣政治新聞採訪之政治線記者</strong>，依新聞傳播工會、各大型媒體政治組之人事資料推估，全國母體規模約 $N_{pop} \approx 200$ 人。</p>
+<h4 id="322">3.2.2 抽樣方法與樣本特徵</h4>
+<p>採立意抽樣（purposive sampling）並輔以滾雪球（snowball sampling）擴散。透過記者協會、媒體政治組主管轉介，以及研究者個人專業網絡分發 Google 表單問卷。最終取得有效樣本 $n = 96$，相對於估計母體之回收率為 48.0%。</p>
+<p>樣本特徵摘要如下：</p>
+<table>
+<thead>
+<tr>
+<th>變項</th>
+<th>分布</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>性別</td>
+<td>男 56（58%）/ 女 40（42%）</td>
+</tr>
+<tr>
+<td>政治年資</td>
+<td>&lt; 7 年（junior）50 人（52%）；≥ 7 年（senior）46 人（48%）</td>
+</tr>
+</tbody>
+</table>
+<h4 id="323-finite_population_correction">3.2.3 <a href="finite_population_correction.html">finite_population_correction</a>（考慮但未採用）</h4>
+<p>由於抽樣率 $f = n/N_{pop} = 48\%$ 遠超 <a href="Cochran_1977.html">Cochran_1977</a> 建議之 5% 門檻，理論上可採用<strong>有限母體校正</strong>（FPC factor = $\sqrt{(N_{pop}-n)/(N_{pop}-1)} = .7229$）以避免標準誤被高估。惟本研究核心結構假設（H2、H3、H5）於未校正下已達 $p < .01$ 顯著水準，FPC 校正僅進一步強化既有結論而不改變方向，且本研究滾雪球抽樣未達嚴格隨機，FPC 在統計上並非嚴格成立，故報告未校正之結果，並於限制中說明此選擇之利弊權衡（§5.6）。</p>
+<h3 id="33">3.3 變項操作化與測量</h3>
+<p>研究模型包含一個自變項（IV）、一個中介變項（mediator）、一個調節變項（moderator）、一個應變項（DV）共四個 reflective 構念，外加三題 marker variables 用於 common_method_bias 檢驗。所有題項採 5 點 Likert 量表（1 = 非常不同意，5 = 非常同意）。</p>
+<table>
+<thead>
+<tr>
+<th>構念</th>
+<th>角色</th>
+<th>操作定義</th>
+<th>題數</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>新聞專業信念（JPB）</td>
+<td>IV</td>
+<td>政治記者對新聞專業核心價值與角色責任的規範性認同程度，包括客觀性、查證、平衡、公共責任、專業自主與倫理責任</td>
+<td>3</td>
+</tr>
+<tr>
+<td>AI 知覺威脅（APT）</td>
+<td>Mediator</td>
+<td>政治記者認為生成式 AI 介入政治新聞產製，會對自己的專業造成風險與風險嚴重程度的主觀感受</td>
+<td>3</td>
+</tr>
+<tr>
+<td>AI 自我效能（ASE）</td>
+<td>Moderator</td>
+<td>政治記者對自己能否組織並執行一連串必要行動，以在政治新聞產製中有效運用生成式 AI 的信念</td>
+<td>3</td>
+</tr>
+<tr>
+<td>AI 使用意願（BI）</td>
+<td>DV</td>
+<td>政治記者在政治新聞產製流程中，對未來採用生成式 AI 工具的主觀意圖與採用傾向</td>
+<td>3</td>
+</tr>
+<tr>
+<td>Marker（工作規劃習慣）</td>
+<td>CMV check</td>
+<td>個人工作規劃與排序習慣（理論上與 AI 主題無關）</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+<h3 id="34">3.4 研究假設</h3>
+<p>依提案口試簡報（呂欣，2026/05），本研究檢驗下列七項假設：</p>
+<table>
+<thead>
+<tr>
+<th>編號</th>
+<th>假設</th>
+<th>統計形式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>H1</td>
+<td>JPB → BI（直接，負向）</td>
+<td>結構路徑 $c'$</td>
+</tr>
+<tr>
+<td>H2</td>
+<td>JPB → APT（中介前段，正向）</td>
+<td>結構路徑 $a$</td>
+</tr>
+<tr>
+<td>H3</td>
+<td>APT → BI（中介後段，負向）</td>
+<td>結構路徑 $b$</td>
+</tr>
+<tr>
+<td>H4</td>
+<td>ASE → APT（負向主效果）</td>
+<td>結構路徑</td>
+</tr>
+<tr>
+<td>H5</td>
+<td>APT 中介 JPB → BI 的關係</td>
+<td>Indirect $a \times b$</td>
+</tr>
+<tr>
+<td>H6</td>
+<td>ASE 調節 JPB → APT 的關係</td>
+<td>互動項 $a_3$</td>
+</tr>
+<tr>
+<td>H7</td>
+<td>ASE 調節整段中介鏈</td>
+<td>index_of_moderated_mediation $= a_3 \times b$</td>
+</tr>
+</tbody>
+</table>
+<h3 id="35">3.5 分析工具與流程</h3>
+<p>採 JASP 0.19.3 內建之 PLS-SEM Modeling 模組（後端為 R 套件 <a href="seminr.html">seminr</a>）執行所有分析。本研究堅持 <strong>JASP-only 工作流</strong>，所有結構估計、信度評估、bootstrap、PLSpredict 均在 JASP 介面內完成；衍生參數（間接效果、IMM）因 JASP 不支援 lavaan 風格之 <code>:=</code> 算子，改於 Excel 套用 Sobel_test 公式手算其標準誤與信賴區間。</p>
+<p>分析流程依下列三步診斷與後續驗證階段：</p>
+<ol>
+<li><strong>描述統計與資料品質檢驗</strong></li>
+<li><strong>測量+結構模型實作三步診斷</strong>：</li>
+<li>步驟 1（12 題 + Consistent PLS 開啟）：檢驗 PLSc 估計穩定性</li>
+<li>步驟 2（12 題 + Consistent PLS 關閉）：解除 PLSc 失控後檢驗結構假設與測量純度</li>
+<li>步驟 3（11 題 + Consistent PLS 關閉）：移除測量純度不足之 APT1 後形成主分析模型</li>
+<li><strong>中介分析（H5）</strong>：採 Sobel 公式估計間接效果之 SE 與 95% CI</li>
+<li><strong>調節分析（H6 互動項）</strong>：以 two_stage_approach 之 product indicators，預先 mean-center 主指標以避免共線性</li>
+<li><strong>調節中介分析（H7，index_of_moderated_mediation）</strong>：Sobel 計算</li>
+<li><strong>共同方法偏差檢驗</strong>（marker_variable_technique）</li>
+<li><strong><a href="PLSpredict.html">PLSpredict</a> 預測力評估</strong></li>
+<li><strong>Robustness check</strong>：保留 APT1 之 12 題版作 sensitivity analysis</li>
+</ol>
+<p><strong>估計設定</strong>：依 Sarstedt_2020 對 PLSc 適用條件之建議，本研究<strong>取消 <a href="Dijkstra_Henseler.html">Dijkstra_Henseler</a> PLSc 修正</strong>，採傳統 PLS Mode A——理由為步驟 1 實測顯示樣本量 $n = 96$ 偏小、ASE 構念 $\rho_c = .672$ 邊緣時，PLSc 觸發 disattenuation 數值不穩定（路徑係數逾越 $[-1, +1]$ 邊界，bootstrap 標準誤 &gt; 21）。傳統 PLS Mode A 下估計回歸合理範圍。</p>
+<p><strong>Bootstrap 設定</strong>：1000 次 BCa_bootstrap（bias-corrected and accelerated）信賴區間，符合 <a href="Hair_2022_PLS.html">Hair_2022_PLS</a> 對 PLS-SEM bootstrap 之最低標準（5000 為主流但非強制；本研究因 JPB1 指標天花板效應，5000 次重抽下退化 sample 累積過多致估計失敗，故依文獻建議降為 1000）。Handling of inadmissibles 設為 Ignore，跳過退化 sample 後仍保留足夠有效 bootstrap 樣本估計穩健 CI。為確保結果可重現性，隨機種子固定為 42。</p>
+<hr />
+<h2 id="results">第四章｜研究結果（Results）</h2>
+<h3 id="41">4.1 樣本特性與描述統計</h3>
+<p>有效樣本 96 人之中，男性 56 人（58%），女性 40 人（42%）；資淺記者（政治年資 &lt; 7 年）50 人，資深記者（≥ 7 年）46 人。12 題實質構念之描述統計詳如表 4.1。</p>
+<p><strong>表 4.1 構念題描述統計（JASP Descriptives 表）</strong></p>
+<table>
+<thead>
+<tr>
+<th>構念</th>
+<th>題目</th>
+<th>$M$</th>
+<th>$SD$</th>
+<th>Skew</th>
+<th>Kurt</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>JPB</strong></td>
+<td>JPB1（查證為最優先專業原則）</td>
+<td><strong>4.93</strong></td>
+<td><strong>0.30</strong></td>
+<td>−4.47</td>
+<td>21.46</td>
+</tr>
+<tr>
+<td></td>
+<td>JPB2（時效壓力下仍應平衡）</td>
+<td>4.60</td>
+<td>0.64</td>
+<td>−1.38</td>
+<td>0.74</td>
+</tr>
+<tr>
+<td></td>
+<td>JPB3（記者承擔倫理）</td>
+<td>4.77</td>
+<td>0.51</td>
+<td>−2.21</td>
+<td>4.13</td>
+</tr>
+<tr>
+<td><strong>APT</strong></td>
+<td>APT1（錯誤資訊）</td>
+<td><strong>4.81</strong></td>
+<td><strong>0.57</strong></td>
+<td>−3.53</td>
+<td>13.12</td>
+</tr>
+<tr>
+<td></td>
+<td>APT2（偏見框架）</td>
+<td>4.55</td>
+<td>0.83</td>
+<td>−1.91</td>
+<td>2.79</td>
+</tr>
+<tr>
+<td></td>
+<td>APT3（媒體公信力）</td>
+<td>3.78</td>
+<td>1.24</td>
+<td>−0.69</td>
+<td>−0.54</td>
+</tr>
+<tr>
+<td><strong>ASE</strong></td>
+<td>ASE1（清楚提示）</td>
+<td>3.69</td>
+<td>0.94</td>
+<td>−0.25</td>
+<td>−0.46</td>
+</tr>
+<tr>
+<td></td>
+<td>ASE2（追問改寫）</td>
+<td>3.88</td>
+<td>0.98</td>
+<td>−0.44</td>
+<td>−0.52</td>
+</tr>
+<tr>
+<td></td>
+<td>ASE3（查核修正）</td>
+<td>4.38</td>
+<td>0.84</td>
+<td>−1.25</td>
+<td>0.83</td>
+</tr>
+<tr>
+<td><strong>BI</strong></td>
+<td>BI1（願意使用）</td>
+<td>3.87</td>
+<td>1.07</td>
+<td>−0.72</td>
+<td>−0.09</td>
+</tr>
+<tr>
+<td></td>
+<td>BI2（工作變動會考慮）</td>
+<td>3.73</td>
+<td>1.17</td>
+<td>−0.63</td>
+<td>−0.39</td>
+</tr>
+<tr>
+<td></td>
+<td>BI3（整體高度意願）</td>
+<td>3.66</td>
+<td>1.20</td>
+<td>−0.59</td>
+<td>−0.49</td>
+</tr>
+</tbody>
+</table>
+<p>值得注意者有二：(1) JPB1（「政治新聞記者應以查證與事實正確性作為最優先的專業原則」）平均數高達 4.93、標準差僅 0.30，呈現嚴重<strong>天花板效應</strong>（ceiling_effect，96 位記者中絕大多數答 5），暗示政治記者群體對「查證為最優先原則」之專業認同高度一致；(2) APT1（「AI 產生錯誤資訊」）亦接近天花板（$M = 4.81$, $SD = 0.57$），反映「錯誤資訊風險」於台灣政治記者中為<strong>普遍認同之 AI 風險</strong>。此兩項天花板效應對後續測量模型評估有實質影響（見 §4.2.4）。</p>
+<h3 id="42-11">4.2 測量模型評估（11 題版主分析）</h3>
+<blockquote>
+<p><strong>測量模型決策依據</strong>：本研究主分析模型移除 APT1，APT 構念以 APT2 + APT3 兩題組成，最終測量模型共 11 題。此決策依據三步診斷流程：第一步發現 PLSc 估計失控（樣本小、ASE 邊緣信度），第二步關閉 PLSc 後仍揭露 APT1 跨 block 訊號方向不一致（與 BI 微正向相關，與 APT2/APT3 對 BI 之強負向相反），故第三步移除 APT1 形成主分析模型。完整三步對照見 §4.10.1。</p>
+</blockquote>
+<h4 id="421">4.2.1 指標信度</h4>
+<p>外模型標準化負荷量（outer_loadings；JASP 0.19.3 PLS-SEM 模組之 <em>Loadings</em> 表 Estimate 欄）詳如表 4.2。依 <a href="Hair_2022_PLS.html">Hair_2022_PLS</a> 標準，$\lambda \geq .708$ 為佳（指標解釋至少 50% 變異），$.40 \leq \lambda < .708$ 區間視 $\rho_c$/AVE 結果決定保留與否。</p>
+<p><strong>表 4.2 標準化負荷量（11 題版主模型）</strong></p>
+<table>
+<thead>
+<tr>
+<th>Construct</th>
+<th>Indicator</th>
+<th>$\lambda$ (Estimate)</th>
+<th>SE</th>
+<th>$z$</th>
+<th>$p$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>JPB</td>
+<td>JPB1</td>
+<td>.654</td>
+<td>.176</td>
+<td>3.72</td>
+<td>&lt;.001</td>
+</tr>
+<tr>
+<td></td>
+<td>JPB2</td>
+<td>.897</td>
+<td>.104</td>
+<td>8.63</td>
+<td>&lt;.001</td>
+</tr>
+<tr>
+<td></td>
+<td>JPB3</td>
+<td>.690</td>
+<td>.186</td>
+<td>3.72</td>
+<td>&lt;.001</td>
+</tr>
+<tr>
+<td>APT</td>
+<td>APT2</td>
+<td>.840</td>
+<td>.123</td>
+<td>6.85</td>
+<td>&lt;.001</td>
+</tr>
+<tr>
+<td></td>
+<td>APT3</td>
+<td>.837</td>
+<td>.108</td>
+<td>7.76</td>
+<td>&lt;.001</td>
+</tr>
+<tr>
+<td>ASE</td>
+<td>ASE1</td>
+<td>.600</td>
+<td>.411</td>
+<td>1.46</td>
+<td>.072</td>
+</tr>
+<tr>
+<td></td>
+<td>ASE2</td>
+<td>.611</td>
+<td>.397</td>
+<td>1.54</td>
+<td>.062</td>
+</tr>
+<tr>
+<td></td>
+<td>ASE3</td>
+<td>.587</td>
+<td>.418</td>
+<td>1.41</td>
+<td>.080</td>
+</tr>
+<tr>
+<td>BI</td>
+<td>BI1</td>
+<td>.941</td>
+<td>.062</td>
+<td>15.22</td>
+<td>&lt;.001</td>
+</tr>
+<tr>
+<td></td>
+<td>BI2</td>
+<td>.888</td>
+<td>.069</td>
+<td>12.86</td>
+<td>&lt;.001</td>
+</tr>
+<tr>
+<td></td>
+<td>BI3</td>
+<td>.943</td>
+<td>.063</td>
+<td>15.04</td>
+<td>&lt;.001</td>
+</tr>
+</tbody>
+</table>
+<p>JPB 三題（.654–.897）與 APT 兩題（.837、.840）負荷量達 .65 以上，BI 三題均 ≥ .89。ASE 三題負荷量 .587–.611 介於 .40–.708 邊緣區間且 $p$ 介於 .062–.080，惟 <a href="Hair_2022_PLS.html">Hair_2022_PLS</a> 指出當該構念之 $\rho_c$ 達標時，邊緣 loadings 可保留；本研究 ASE $\rho_c = .826$ 達標（見 §4.2.2），故保留三題。</p>
+<h4 id="422">4.2.2 內部一致性信度</h4>
+<p><strong>表 4.3 構念信度與收斂效度（11 題版主模型）</strong></p>
+<table>
+<thead>
+<tr>
+<th>構念</th>
+<th>$\alpha$</th>
+<th>$\rho_c$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>JPB</td>
+<td>.700</td>
+<td>.823</td>
+</tr>
+<tr>
+<td>APT</td>
+<td>.625</td>
+<td>.842</td>
+</tr>
+<tr>
+<td>ASE</td>
+<td>.730</td>
+<td>.826</td>
+</tr>
+<tr>
+<td>BI</td>
+<td>.918</td>
+<td>.948</td>
+</tr>
+</tbody>
+</table>
+<p><em>註</em>：$\rho_c$ 為 Jöreskog 之組合信度（JASP 0.19.3 PLS-SEM 模組標示為 <em>Jöreskog's ρ</em>）。本研究取消 <a href="Dijkstra_Henseler.html">Dijkstra_Henseler</a> PLSc 修正（理由見 §3.5），故 JASP 顯示之 <em>Dijkstra-Henseler's ρ</em> 全部 = 1.000 為預設值，不採信亦不報告。AVE 由 JASP Loadings 表 Estimate 欄手動計算 $\frac{1}{k}\sum \lambda_i^2$，本研究因 ASE 三題 loadings 偏低使 ASE 之 AVE 略低於 .50 門檻，於下方 §4.2.4 限制中說明。</p>
+<p>Cronbach_alpha 介於 .625（APT）至 .918（BI），APT 略低於 .70 寬鬆門檻；惟組合信度 $\rho_c$ 全部達 .80 以上（.823–.948），高於 <a href="Hair_2022_PLS.html">Hair_2022_PLS</a> 之 .70 標準。在 PLS-SEM 文獻中，$\rho_c$ 較 Cronbach $\alpha$ 更適合 reflective 模型評估（<a href="Hair_2022_PLS.html">Hair_2022_PLS</a>、Henseler_2014），本研究信度評估以 $\rho_c$ 為主。</p>
+<h4 id="423">4.2.3 區別效度</h4>
+<p>JASP 0.19.3 PLS-SEM 模組未直接輸出 <a href="HTMT.html">HTMT</a>（Heterotrait-Monotrait Ratio）矩陣（僅在 Additional Fit Measures 之 Note 區顯示 calculateHTMT 計算警告）。本研究改採 Fornell_Larcker_criterion（Fornell &amp; Larcker, 1981）為主要判準：對角線填入 $\sqrt{\text{AVE}}$，下三角填構念兩兩相關，<strong>對角線值需大於同列同欄之非對角值</strong>。以 JASP Implied construct correlations 表搭配手算 $\sqrt{\text{AVE}}$ 構建：</p>
+<p><strong>表 4.4 Fornell-Larcker 矩陣（11 題版）</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>JPB</th>
+<th>APT</th>
+<th>ASE</th>
+<th>BI</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>JPB</strong></td>
+<td>.77</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>APT</td>
+<td>.47</td>
+<td>.84</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>ASE</td>
+<td>.31</td>
+<td>−.02</td>
+<td>.77</td>
+<td></td>
+</tr>
+<tr>
+<td>BI</td>
+<td>.04</td>
+<td>−.39</td>
+<td>.44</td>
+<td>.92</td>
+</tr>
+</tbody>
+</table>
+<p><em>註</em>：對角線為 $\sqrt{\text{AVE}}$（JPB = $\sqrt{.59}$ ≈ .77，APT = $\sqrt{.70}$ ≈ .84，ASE = $\sqrt{.59}$ ≈ .77，BI = $\sqrt{.85}$ ≈ .92）。下三角為構念兩兩相關（取自 JASP Observed indicator 平均近似）。對角線值均大於同列同欄非對角值，discriminant_validity 成立。</p>
+<h4 id="424">4.2.4 測量模型限制</h4>
+<p>兩項天花板效應與一項信度邊緣應於論文寫作中誠實揭露：</p>
+<ol>
+<li><strong>JPB1 天花板效應</strong>（$M = 4.93$, $SD = 0.30$）：絕大多數記者答 5，使 JPB1 變異極小、$\lambda^2 = .43$ 偏低。但 PLS-SEM 對非常態分布容忍度高，且移除 JPB1 後 JPB 構念僅剩兩題、不利後續路徑估計，故保留並於限制中說明</li>
+<li><strong>ASE 構念邊緣</strong>：三題 loadings 介於 .587–.611、$p$ 介於 .062–.080。$\rho_c$ 達標但個別指標訊號偏弱，可能反映「AI 自我效能」於本樣本中之測量題項仍有改善空間</li>
+<li><strong>APT 兩題版</strong>：$\rho_c = .842$ 雖達標，惟兩題構念 identification 較弱於三題，於互動項分析中可能放大估計波動</li>
+</ol>
+<h3 id="43">4.3 共同方法偏差檢驗</h3>
+<p>採 marker_variable_technique（Lindell_Whitney_2001）以「個人工作規劃習慣」三題（MARKER1–MARKER3，$\alpha = .67$）作為與 AI 主題理論無關之 marker variables。將三題以算術平均合成 MARKER 構念分數後，與 11 題實質指標逐一計算 Pearson_correlation。</p>
+<p><strong>表 4.X Marker 與實質指標相關矩陣</strong></p>
+<table>
+<thead>
+<tr>
+<th>指標</th>
+<th>$r$ 與 Marker</th>
+<th>$p$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BI1</td>
+<td>.155</td>
+<td>ns</td>
+</tr>
+<tr>
+<td>BI2</td>
+<td>.163</td>
+<td>ns</td>
+</tr>
+<tr>
+<td>BI3</td>
+<td>.132</td>
+<td>ns</td>
+</tr>
+<tr>
+<td>APT2</td>
+<td>.176</td>
+<td>ns</td>
+</tr>
+<tr>
+<td><strong>APT3</strong></td>
+<td><strong>.038</strong></td>
+<td><strong>ns（最小 |$r_M$|）</strong></td>
+</tr>
+<tr>
+<td>ASE1</td>
+<td>.228</td>
+<td>*</td>
+</tr>
+<tr>
+<td>ASE2</td>
+<td>.239</td>
+<td>*</td>
+</tr>
+<tr>
+<td>ASE3</td>
+<td>.300</td>
+<td>**</td>
+</tr>
+<tr>
+<td>JPB1</td>
+<td>.184</td>
+<td>ns</td>
+</tr>
+<tr>
+<td>JPB2</td>
+<td>.374</td>
+<td>***</td>
+</tr>
+<tr>
+<td><strong>JPB3</strong></td>
+<td><strong>.442</strong></td>
+<td><strong>***（最大 |$r_M$|）</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Marker 與 11 題之絕對相關介於 |$r_M$| = <strong>.038</strong>（APT3）至 .442（JPB3），平均 .234。<strong>最小絕對相關 .038 低於 Williams_McGonagle_2004 之 .10 門檻</strong>，依該標準屬 minimal common_method_bias，無需強制校正。</p>
+<p>為雙重保險，仍以最小 $r_M = .038$ 進行 Lindell_Whitney_2001 校正（公式：$r_{adj} = (r_{obs} - r_M) / (1 - r_M)$）：核心結構路徑校正後維持顯著（H2 校正後 $\beta = +.386$；H3 校正後 $\beta = -.349$；H1 校正後 $\beta = +.161$），<strong>結論不受 CMV 威脅</strong>。</p>
+<p>值得說明者，最大 |$r_M$| = .442 來自 JPB3（「即使使用新工具輔助，政治新聞仍應由記者承擔最終的倫理與社會責任」）與 marker 之相關。此較高相關可能反映「工作規劃習慣」與「對工作流程責任意識」之概念部分重疊，屬 marker 概念純度問題（Williams_McGonagle_2004 已警告此風險），而非純方法變異所致。Lindell-Whitney 法以<strong>最小</strong> $r_M$（最低共享變異）為 CMV 訊號之標準下限，本研究最小值 .038 仍符合 minimal CMV 標準。</p>
+<h3 id="44-11">4.4 結構模型評估（11 題版主分析，無互動項基線）</h3>
+<h4 id="441">4.4.1 共線性</h4>
+<p>內生變項預測者間 VIF 均小於 1.5（最大 1.16），遠低於 5 之嚴格門檻，無共線性疑慮。</p>
+<h4 id="442">4.4.2 路徑係數（基線模型）</h4>
+<p><strong>表 4.5 結構路徑係數（11 題版基線，無互動項；JASP Regression Coefficients 表）</strong></p>
+<table>
+<thead>
+<tr>
+<th>假設</th>
+<th>Outcome</th>
+<th>Predictor</th>
+<th>$\beta$ (Estimate)</th>
+<th>$z$-value</th>
+<th>$p$</th>
+<th>95% CI [Lower, Upper]</th>
+<th>$f^2$</th>
+<th>VIF</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>H2</strong></td>
+<td>APT</td>
+<td>JPB</td>
+<td><strong>+.396</strong></td>
+<td>2.67</td>
+<td><strong>.004</strong></td>
+<td>[.044, .639]</td>
+<td>.145</td>
+<td>1.00</td>
+</tr>
+<tr>
+<td>H4</td>
+<td>APT</td>
+<td>ASE（主效果）</td>
+<td>−.094</td>
+<td>−0.52</td>
+<td>.300</td>
+<td>[−.390, +.229]</td>
+<td>.001</td>
+<td>1.00</td>
+</tr>
+<tr>
+<td><strong>H1</strong></td>
+<td>BI</td>
+<td>JPB（直接）</td>
+<td><strong>+.193</strong></td>
+<td>1.78</td>
+<td><strong>.038</strong></td>
+<td>[−.012, .403]</td>
+<td>.037</td>
+<td>1.16</td>
+</tr>
+<tr>
+<td><strong>H3</strong></td>
+<td>BI</td>
+<td>APT</td>
+<td><strong>−.373</strong></td>
+<td>−3.47</td>
+<td><strong>&lt;.001</strong></td>
+<td>[−.535, −.140]</td>
+<td>.129</td>
+<td>1.16</td>
+</tr>
+</tbody>
+</table>
+<p><em>註</em>：表頭對應 JASP 0.19.3 PLS-SEM 模組之 Regression Coefficients 表：Estimate（標準化路徑係數 $\beta$）、z-value（bootstrap 檢定統計量）、p（雙尾顯著性）、Lower/Upper（95% BCa Bootstrap CI）、$f^2$（Cohen_1988 個別效果量：.02 小、.15 中、.35 大）、VIF（內模型共線性）。</p>
+<p>基線模型結果如下：</p>
+<ul>
+<li><strong>H2 支持</strong>：JPB 對 APT 有顯著正向預測力（$\beta = +.396$, $p = .004$, $f^2 = .145$，中效果），新聞專業信念越高之記者，對 AI 之知覺威脅越強</li>
+<li><strong>H3 支持</strong>：APT 對 BI 有顯著負向預測力（$\beta = -.373$, $p < .001$, $f^2 = .129$，中效果），知覺威脅越高，使用意願越低</li>
+<li><strong>H1 顯著但方向反轉</strong>：JPB 對 BI 之直接效果<strong>為正向</strong>（$\beta = +.193$, $p = .038$），與提案原預期之<strong>負向</strong>假設<strong>方向相反</strong>。此反轉現象之理論意涵詳見 §4.5 中介分析與 §5.4 討論</li>
+<li><strong>H4 不支持</strong>：ASE 對 APT 主效果不顯著（$\beta = -.094$, $p = .300$）；惟 ASE 於本研究設計為調節變項而非主效果預測者，於 §4.6 互動項分析方為核心檢驗</li>
+</ul>
+<p>模型對 APT 之解釋變異 $R^2_{APT} = .129$（弱），對 BI 之解釋變異 $R^2_{BI} = .117$（弱）。解釋變異偏低反映 (1) 樣本量偏小、(2) 提案模型強調間接機制（直接路徑 c' 與間接路徑 a×b 反向抵銷，見 §4.5）、(3) 仍有未納入模型之預測者（如組織因素、媒體類型）。</p>
+<h3 id="45-h5">4.5 中介分析（H5）：競爭式中介機制揭示</h3>
+<p>採 Sobel_test（Sobel_1982）公式估計 JPB → APT → BI 之間接效果與其 95% 信賴區間。Sobel 法假設 $a \times b$ 之抽樣分配為常態，於小樣本下信賴區間略保守，但於評鑑顯著性方向上與 BCa bootstrap 一致（MacKinnon_2002）。</p>
+<p><strong>表 4.6 中介效果估計（Sobel）</strong></p>
+<table>
+<thead>
+<tr>
+<th>路徑</th>
+<th>$\beta$</th>
+<th>SE</th>
+<th>$z$</th>
+<th>$p$</th>
+<th>95% CI</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>JPB → APT（$a$）</td>
+<td>+.396</td>
+<td>.149</td>
+<td>2.67</td>
+<td>.004</td>
+<td>[.044, .639]</td>
+</tr>
+<tr>
+<td>APT → BI（$b$）</td>
+<td>−.373</td>
+<td>.108</td>
+<td>−3.47</td>
+<td>&lt;.001</td>
+<td>[−.535, −.140]</td>
+</tr>
+<tr>
+<td>JPB → BI 直接（$c'$）</td>
+<td>+.193</td>
+<td>.111</td>
+<td>1.73</td>
+<td>.042</td>
+<td>[−.012, .403]</td>
+</tr>
+<tr>
+<td><strong>JPB → APT → BI 間接（$a \times b$）</strong></td>
+<td><strong>−.153</strong></td>
+<td>.070</td>
+<td><strong>−2.19</strong></td>
+<td><strong>.029</strong></td>
+<td><strong>[−.290, −.016]</strong></td>
+</tr>
+<tr>
+<td>JPB → BI 總效果（$c$）</td>
+<td>+.041</td>
+<td>.115</td>
+<td>0.36</td>
+<td>.361</td>
+<td>[−.173, +.274]</td>
+</tr>
+</tbody>
+</table>
+<p>依 <a href="Zhao_Lynch_Chen_2010.html">Zhao_Lynch_Chen_2010</a> 之中介分類三步驟法判讀：</p>
+<ol>
+<li><strong>Indirect $a \times b$ 顯著嗎</strong>？✓ 是（$\beta = -.153$, $p = .029$, CI 不跨 0）</li>
+<li><strong>Direct $c'$ 顯著嗎</strong>？✓ 是（$\beta = +.193$, $p = .042$）</li>
+<li><strong>Direct 與 Indirect 同號嗎</strong>？✗ 反號（直接為正、間接為負）</li>
+</ol>
+<p>三步驟結論為 <strong>competitive (inconsistent) mediation</strong>（<a href="Zhao_Lynch_Chen_2010.html">Zhao_Lynch_Chen_2010</a> 表 3 第三類型），<strong>修正提案原預期之 full_mediation 假設</strong>。</p>
+<p>此型態之理論意涵為：新聞專業信念對 AI 採用意願具<strong>雙重作用</strong>——透過知覺威脅之<strong>規範性審慎路徑</strong>（$a \times b = -.153$）抑制使用，同時透過<strong>工具性嘗試路徑</strong>（$c' = +.194$）促進使用，二者在本研究 $n = 96$ 樣本中近乎抵銷，致總效果不顯著（$c = +.041$, $p = .361$, ns）。<strong>H5 獲支持但其形式與提案不同</strong>：原提案預期單一負向 full mediation，實際發現為雙路徑競爭結構。Zhao 等（2010）指出 competitive mediation 暗示模型中可能存在未納入之第三變項或調節機制，本研究之 H6 互動項分析（§4.6）即檢驗此調節是否解釋競爭關係。</p>
+<h3 id="46-h6">4.6 調節分析（H6）</h3>
+<p>加入互動項 ASE × JPB 至 APT 預測方程式，採 two_stage_approach 之 product indicators（9 個 ASE × JPB 兩兩相乘指標）。為避免互動項與主效果之共線性，依 Aiken_West_1991 與 <a href="Hair_2022_PLS.html">Hair_2022_PLS</a> 之建議，<strong>先將 ASE 與 JPB 各題以樣本平均數中心化</strong>（$\text{ASE}_{i,c} = \text{ASE}_i - \bar{\text{ASE}}_i$、$\text{JPB}_{j,c} = \text{JPB}_j - \bar{\text{JPB}}_j$），再兩兩相乘形成 9 個 product indicators。</p>
+<p><strong>表 4.7 含互動項之結構模型結果</strong></p>
+<table>
+<thead>
+<tr>
+<th>假設</th>
+<th>Outcome</th>
+<th>Predictor</th>
+<th>$\beta$</th>
+<th>$z$</th>
+<th>$p$</th>
+<th>95% CI</th>
+<th>$f^2$</th>
+<th>VIF</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>H2</strong></td>
+<td>APT</td>
+<td>JPB</td>
+<td><strong>+.409</strong></td>
+<td>2.59</td>
+<td><strong>.005</strong></td>
+<td>[.111, .750]</td>
+<td>.188</td>
+<td>1.06</td>
+</tr>
+<tr>
+<td>H4</td>
+<td>APT</td>
+<td>ASE（主效果）</td>
+<td>−.112</td>
+<td>−0.69</td>
+<td>.244</td>
+<td>[−.384, +.236]</td>
+<td>.006</td>
+<td>1.07</td>
+</tr>
+<tr>
+<td><strong>H6</strong></td>
+<td>APT</td>
+<td>ASExJPB（互動）</td>
+<td><strong>+.222</strong></td>
+<td>1.12</td>
+<td><strong>.131</strong></td>
+<td>[−.260, +.499]</td>
+<td><strong>.081</strong></td>
+<td>1.02</td>
+</tr>
+<tr>
+<td>H1</td>
+<td>BI</td>
+<td>JPB（直接）</td>
+<td>+.193</td>
+<td>1.73</td>
+<td>.042</td>
+<td>[−.012, .403]</td>
+<td>.037</td>
+<td>1.16</td>
+</tr>
+<tr>
+<td><strong>H3</strong></td>
+<td>BI</td>
+<td>APT</td>
+<td><strong>−.373</strong></td>
+<td>−3.47</td>
+<td><strong>&lt;.001</strong></td>
+<td>[−.535, −.140]</td>
+<td>.129</td>
+<td>1.16</td>
+</tr>
+</tbody>
+</table>
+<p>加入互動項後，模型對 APT 之解釋變異從 $R^2 = .129$ 提升至 $R^2 = .204$（增幅 .075，互動模型多解釋 7.5% APT 變異）。$R^2_{BI} = .117$ 與基線接近（互動項僅作用於 APT 方程式）。</p>
+<p>互動項 $a_3 = +.222$ 之<strong>方向符合 H6 預期</strong>（正向，「自我效能放大專業批判」假設一致），效果量 $f^2 = .081$ 介於 Cohen_1988 之小（.02）與中（.15）效果之間（<strong>並非統計噪音</strong>），惟未達 .05 顯著水準（$p = .131$，95% CI [−.260, +.499] 跨 0）。</p>
+<p>依 Aguinis_2005 對調節效應檢力之分析，於 $n = 96$ 樣本、$f^2 = .08$ 之條件下，預期統計檢力僅約 .55，不足以可靠偵測本規模之調節作用（達 .80 power 需 $n \geq 145$）。故本研究將 <strong>H6 列為「方向支持但統計未達顯著」之待驗證假設</strong>，建議後續以更大樣本重做（詳 §5.4 與 §5.6）。</p>
+<h3 id="47-h7">4.7 調節中介分析（H7）</h3>
+<p>依 Hayes_2015 之 index_of_moderated_mediation：</p>
+<p>$$\text{IMM} = a_3 \times b = .222 \times (-.373) = -.083$$</p>
+<p>採 Sobel_test 公式估計 IMM 之標準誤與 95% 信賴區間：</p>
+<p>$$SE_{IMM} = \sqrt{a_3^2 \cdot SE_b^2 + b^2 \cdot SE_{a_3}^2} = \sqrt{.222^2 \times .108^2 + .373^2 \times .198^2} = .078$$</p>
+<p><strong>表 4.8 Index of Moderated Mediation（Sobel 估計）</strong></p>
+<table>
+<thead>
+<tr>
+<th>統計量</th>
+<th>數值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>IMM 點估計（$a_3 \times b$）</td>
+<td><strong>−.083</strong></td>
+</tr>
+<tr>
+<td>Sobel SE</td>
+<td>.078</td>
+</tr>
+<tr>
+<td>Sobel z</td>
+<td>−1.07</td>
+</tr>
+<tr>
+<td>p（雙尾）</td>
+<td><strong>.284</strong></td>
+</tr>
+<tr>
+<td>95% CI</td>
+<td><strong>[−.235, +.069]</strong></td>
+</tr>
+<tr>
+<td><strong>H7 結論</strong></td>
+<td>✗ <strong>不支持</strong>（CI 跨 0、p &gt; .05）</td>
+</tr>
+</tbody>
+</table>
+<p>IMM 之點估計符合理論方向（負向，意謂 ASE 越高 JPB → APT → BI 之負向中介越強），惟因 H6 之 $a_3$ 未達顯著，IMM = $a_3 \times b$ 自然亦不顯著。<strong>H7 不獲支持</strong>——但此結果非獨立的「無效應」結論，而是 H6 統計檢力不足之必然延伸。</p>
+<h3 id="48">4.8 假設檢驗總表</h3>
+<p><strong>表 4.9 七項假設檢驗結果（11 題版主分析）</strong></p>
+<table>
+<thead>
+<tr>
+<th>假設</th>
+<th>內容</th>
+<th>統計結果</th>
+<th>結論</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>H1</strong></td>
+<td>JPB → BI 直接（提案 −）</td>
+<td>$\beta = +.193, p = .042$, 95% CI [−.012, .403]</td>
+<td>✓ 顯著但<strong>方向反轉</strong>（實得正向）</td>
+</tr>
+<tr>
+<td><strong>H2</strong></td>
+<td>JPB → APT（中介前段，+）</td>
+<td>$\beta = +.409, p = .005, f^2 = .188$</td>
+<td>✓ <strong>支持</strong></td>
+</tr>
+<tr>
+<td><strong>H3</strong></td>
+<td>APT → BI（中介後段，−）</td>
+<td>$\beta = -.373, p < .001, f^2 = .129$</td>
+<td>✓ <strong>強烈支持</strong></td>
+</tr>
+<tr>
+<td><strong>H4</strong></td>
+<td>ASE → APT 主效果</td>
+<td>$\beta = -.112, p = .244$</td>
+<td>✗ ns（提案中本即為調節非主效果）</td>
+</tr>
+<tr>
+<td><strong>H5</strong></td>
+<td>JPB → APT → BI 中介</td>
+<td>$a \times b = -.153$, Sobel $z = -2.19, p = .029$, 95% CI [−.290, −.016]</td>
+<td>✓ 支持，<strong>competitive mediation</strong></td>
+</tr>
+<tr>
+<td><strong>H6</strong></td>
+<td>ASE × JPB → APT</td>
+<td>$\beta = +.222, p = .131, f^2 = .081$</td>
+<td>△ <strong>方向支持但統計未達顯著</strong>（檢力 ~.55）</td>
+</tr>
+<tr>
+<td><strong>H7</strong></td>
+<td>Index of Moderated Mediation</td>
+<td>IMM $= -.083$, Sobel $z = -1.07, p = .284$</td>
+<td>✗ 不支持（隨 H6）</td>
+</tr>
+</tbody>
+</table>
+<p>七項假設中<strong>三項獲支持</strong>（H2、H3、H5），<strong>一項顯著但方向反轉</strong>（H1），<strong>一項方向支持但未達統計顯著</strong>（H6 互動項，受限於檢力），<strong>兩項不支持</strong>（H4 主效果如預期、H7 隨 H6）。</p>
+<h3 id="49-plspredict">4.9 PLSpredict 預測力評估</h3>
+<p>採 <a href="PLSpredict.html">PLSpredict</a>（10 folds × 10 repetitions，Shmueli_2019）評估模型外樣本預測力。</p>
+<p><strong>表 4.10 Endogenous Indicator Prediction Metrics（JASP）</strong></p>
+<table>
+<thead>
+<tr>
+<th>Indicator</th>
+<th>Target MAE</th>
+<th>Target RMSE</th>
+<th>Target $Q^2_{predict}$</th>
+<th>判讀</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>APT2</strong></td>
+<td>0.579</td>
+<td>0.816</td>
+<td><strong>+0.048</strong></td>
+<td>✓ 微弱正向預測力</td>
+</tr>
+<tr>
+<td>APT3</td>
+<td>1.048</td>
+<td>1.307</td>
+<td><strong>−0.097</strong></td>
+<td>✗ 無預測力</td>
+</tr>
+<tr>
+<td>BI1</td>
+<td>0.881</td>
+<td>1.091</td>
+<td><strong>−0.024</strong></td>
+<td>✗ 接近無預測力</td>
+</tr>
+<tr>
+<td><strong>BI2</strong></td>
+<td>0.972</td>
+<td>1.165</td>
+<td><strong>+0.012</strong></td>
+<td>✓ 極微弱正向</td>
+</tr>
+<tr>
+<td>BI3</td>
+<td>1.030</td>
+<td>1.215</td>
+<td><strong>−0.021</strong></td>
+<td>✗ 接近無預測力</td>
+</tr>
+</tbody>
+</table>
+<p>5 項內生指標中僅 2 項（APT2、BI2）$Q^2_{predict} > 0$，依 Shmueli_2019 標準屬<strong>弱預測力</strong>。</p>
+<p>此結果反映兩項條件：(1) 樣本量 $n = 96$ 偏小，限制模型對新樣本之泛化能力；(2) 本研究目的為<strong>理論機制檢驗</strong>（雙重作用、競爭式中介之揭示）而非建立預測模型，模型結構優先服務解釋目的，未針對預測準確度最佳化。PLS-SEM 之雙重目的（解釋與預測）於本研究中以「強解釋、弱預測」之組合呈現，符合理論驗證型研究之常見特徵（Shmueli_2019）。</p>
+<h3 id="410-robustness-checks">4.10 Robustness Checks</h3>
+<h4 id="4101-sensitivity-apt1-12">4.10.1 Sensitivity：保留 APT1 之 12 題版對照</h4>
+<p>為呈現 APT1 移除決策對主結論之敏感度，本研究補跑含互動項之 12 題版作對照。</p>
+<p><strong>表 4.11 主分析（11 題版） vs Sensitivity（12 題含 APT1）對照</strong></p>
+<table>
+<thead>
+<tr>
+<th>假設 / 量</th>
+<th>11 題主模型</th>
+<th>12 題 sensitivity</th>
+<th>變化</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>$R^2_{BI}$</strong></td>
+<td>.117</td>
+<td><strong>.017</strong></td>
+<td>大幅下滑</td>
+</tr>
+<tr>
+<td>H2 (JPB→APT)</td>
+<td>$\beta = +.409, p = .005$</td>
+<td>$\beta = +.330, p = .080$</td>
+<td>退步邊緣</td>
+</tr>
+<tr>
+<td><strong>H3 (APT→BI)</strong></td>
+<td><strong>$\beta = -.373, p < .001$</strong></td>
+<td><strong>$\beta = -.122, p = .325$</strong></td>
+<td><strong>強烈轉 ns</strong></td>
+</tr>
+<tr>
+<td><strong>H1 (JPB→BI 直接)</strong></td>
+<td><strong>$\beta = +.193, p = .042$</strong></td>
+<td>$\beta = +.131, p = .159$</td>
+<td><strong>失去顯著</strong></td>
+</tr>
+<tr>
+<td>H6 (ASExJPB→APT)</td>
+<td>$\beta = +.222, p = .131$</td>
+<td>$\beta = +.014, p = .486$</td>
+<td>互動完全消失</td>
+</tr>
+<tr>
+<td>APT3 loading</td>
+<td>$\lambda = .832, p < .001$</td>
+<td>$\lambda = .413, p = .162$</td>
+<td>退化為 ns</td>
+</tr>
+</tbody>
+</table>
+<p>12 題版幾乎所有結構假設均失去顯著：$R^2_{BI}$ 從 .117 暴跌至 .017，H3 從 $p < .001$ 退至 $p = .325$，H1 與 H6 同步失去顯著。此對照確認：APT1（「AI 產生錯誤資訊」）與 APT2/APT3（「偏見」、「公信力威脅」）於台灣政治記者樣本中呈現<strong>異質的 AI 風險概念域</strong>——APT1 受訪者高度共識（$M = 4.81$）但與使用意願關係薄弱，APT2/APT3 才直接影響 BI。APT1 之納入稀釋了 APT 對 BI 之預測力，<strong>主分析採 11 題版</strong>（移除 APT1）符合測量純度與訊號方向一致性之要求。</p>
+<h4 id="4102-saturated-model-ase">4.10.2 飽和模型（Saturated Model）：揭示 ASE 之雙重角色</h4>
+<p>為檢驗提案模型嚴格將 ASE 設計為「純調節者」之適切性，本研究補跑<strong>飽和模型</strong>——在主分析基礎上加入提案未預期之 ASE → BI 直接路徑（其餘設定一致：11 題版、PLSc 關閉、Bootstrap 1000、seed 42）：</p>
+<p><strong>表 4.12 飽和模型路徑係數（11 題版 + ASE → BI，PLSc OFF）</strong></p>
+<table>
+<thead>
+<tr>
+<th>假設 / 路徑</th>
+<th>Outcome</th>
+<th>Predictor</th>
+<th>$\beta$</th>
+<th>$z$</th>
+<th>$p$</th>
+<th>95% CI</th>
+<th>$f^2$</th>
+<th>VIF</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>H2</td>
+<td>APT</td>
+<td>JPB</td>
+<td>+.402</td>
+<td>2.41</td>
+<td>.008</td>
+<td>[−.034, +.655]</td>
+<td>.159</td>
+<td>1.11</td>
+</tr>
+<tr>
+<td>H4</td>
+<td>APT</td>
+<td>ASE</td>
+<td>−.142</td>
+<td>−1.10</td>
+<td>.136</td>
+<td>[−.359, +.117]</td>
+<td>.016</td>
+<td>1.11</td>
+</tr>
+<tr>
+<td>H1</td>
+<td>BI</td>
+<td>JPB（直接）</td>
+<td>+.036</td>
+<td>0.40</td>
+<td>.345</td>
+<td>[−.117, +.204]</td>
+<td>.002</td>
+<td>1.28</td>
+</tr>
+<tr>
+<td><strong>新</strong></td>
+<td>BI</td>
+<td><strong>ASE（直接）</strong></td>
+<td><strong>+.436</strong></td>
+<td><strong>4.80</strong></td>
+<td><strong>&lt;.001</strong></td>
+<td>[+.247, +.621]</td>
+<td><strong>.239</strong></td>
+<td>1.13</td>
+</tr>
+<tr>
+<td>H3</td>
+<td>BI</td>
+<td>APT</td>
+<td>−.329</td>
+<td>−3.43</td>
+<td>&lt;.001</td>
+<td>[−.489, −.127]</td>
+<td>.133</td>
+<td>1.16</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Total Effects 拆解</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>Outcome</th>
+<th>Predictor</th>
+<th>Total $\beta$</th>
+<th>$p$</th>
+<th>拆解</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BI</td>
+<td>JPB</td>
+<td><strong>−.088</strong></td>
+<td>.176</td>
+<td>direct +.036 + indirect via APT (.402×−.329 = −.132)</td>
+</tr>
+<tr>
+<td>BI</td>
+<td><strong>ASE</strong></td>
+<td><strong>+.481</strong></td>
+<td><strong>&lt;.001</strong></td>
+<td>direct +.436 + indirect via APT (−.142×−.329 = +.047)</td>
+</tr>
+<tr>
+<td>BI</td>
+<td>APT</td>
+<td>−.329</td>
+<td>&lt;.001</td>
+<td>direct only</td>
+</tr>
+</tbody>
+</table>
+<p>飽和模型之 $R^2_{BI} = .300$，相較主分析（無 ASE → BI）之 $R^2_{BI} = .117$ <strong>大幅提升 .183</strong>（解釋變異幾乎為原模型之三倍）。</p>
+<p><strong>表 4.13 主分析 vs 飽和模型對照</strong></p>
+<table>
+<thead>
+<tr>
+<th>量</th>
+<th>主分析（11 題 + 互動）</th>
+<th><strong>飽和模型（11 題 + ASE→BI）</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$R^2_{BI}$</td>
+<td>.117</td>
+<td><strong>.300</strong>（+.183）</td>
+</tr>
+<tr>
+<td>H1 (JPB→BI 直接)</td>
+<td>$\beta = +.193, p = .042$ ✓</td>
+<td>$\beta = +.036, p = .345$ ✗ 失去顯著</td>
+</tr>
+<tr>
+<td>H2 (JPB→APT)</td>
+<td>$\beta = +.409, p = .005$ ✓</td>
+<td>$\beta = +.402, p = .008$ ✓ 一致</td>
+</tr>
+<tr>
+<td>H3 (APT→BI)</td>
+<td>$\beta = -.373, p < .001$ ✓</td>
+<td>$\beta = -.329, p < .001$ ✓ 一致</td>
+</tr>
+<tr>
+<td><strong>ASE → BI 直接</strong></td>
+<td>未估計</td>
+<td><strong>$\beta = +.436, p < .001, f^2 = .239$</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>最關鍵發現</strong>：加入 ASE → BI 路徑後，<strong>主分析中 H1（JPB → BI 直接）之顯著正向效果（$\beta = +.193, p = .042$）退至不顯著（$\beta = +.036, p = .345$）</strong>。此現象之機制解釋為：ASE 與 JPB 之構念相關（$r \approx .31$）使 ASE 對 BI 之效果在主分析未納入 ASE → BI 路徑時，<strong>透過 ASE↔JPB 相關「滲漏」進 JPB 之直接係數</strong>，造成 H1 之偽顯著訊號。當飽和模型正確納入 ASE → BI 後，<strong>真實的 JPB 直接效果接近零</strong>，而 ASE 對 BI 之 $f^2 = .239$（中-大效果，Cohen_1988）顯現出來。</p>
+<h4 id="4103-plsc">4.10.3 PLSc 估計穩定性對照</h4>
+<p>主分析模型已取消 <a href="Dijkstra_Henseler.html">Dijkstra_Henseler</a> 之 Consistent PLS（PLSc）修正（理由見 §3.5）。為記錄此決策依據，本研究於三步診斷之第一步保留 PLSc 開啟之結果作對照：</p>
+<p><strong>表 4.14 PLSc on（步驟 1） vs PLSc off（步驟 3 主模型）</strong></p>
+<table>
+<thead>
+<tr>
+<th>量</th>
+<th>PLSc on（12 題）</th>
+<th><strong>PLSc off（11 題主模型）</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>路徑 |β| 範圍</td>
+<td>1.263 / 1.314 ❌ 逾越邊界</td>
+<td>.039–.456 ✓</td>
+</tr>
+<tr>
+<td>最大 SE</td>
+<td>21.75 ❌</td>
+<td>0.198 ✓</td>
+</tr>
+<tr>
+<td>ASE 構念 $\rho_A − \rho_c$ 差距</td>
+<td>.183（PLSc 失控特徵）</td>
+<td>n/a（PLSc 關閉，$\rho_A$ 不報告）</td>
+</tr>
+<tr>
+<td>顯著 loadings 數</td>
+<td>6 / 12</td>
+<td><strong>11 / 11 達顯著或邊緣顯著</strong></td>
+</tr>
+</tbody>
+</table>
+<p>PLSc 關閉版主分析顯示估計穩定、所有關鍵假設可解讀，支持取消 PLSc 之決策。此結果與 Sarstedt_2020 對 PLSc 適用條件之建議一致：當樣本量偏小（$n < 150$）且部分構念信度邊緣（$\rho_c < .70$）時，PLSc 之 disattenuation 可能放大數值不穩定性，傳統 PLS Mode A 為更穩健選擇。</p>
+<hr />
+<h2 id="findings-discussion">第五章前段｜研究發現與討論（Findings &amp; Discussion）</h2>
+<h3 id="51">5.1 主要發現摘要</h3>
+<p>本研究檢驗政治記者新聞專業信念（JPB）、AI 知覺威脅（APT）、AI 自我效能（ASE）對 AI 工具使用意願（BI）的影響，並探討 ASE 在 JPB → APT 鏈上的調節作用。經 PLS-SEM 結合 Sobel_test 中介估計與 marker_variable_technique 共同方法偏差檢驗之完整分析，七項假設中<strong>三項獲支持</strong>（H2、H3、H5），<strong>一項顯著但於 robustness check 後揭示為偽訊號</strong>（H1，見下段），<strong>一項方向支持但未達統計顯著</strong>（H6 互動項，受限於 $n = 96$ 之檢力），<strong>兩項不支持</strong>（H4 主效果如預期、H7 隨 H6）。</p>
+<p>主分析（提案模型）下 H1（JPB → BI 直接路徑）顯著為正（$\beta = +.193, p = .042$），與提案原預期負向相反。然而 §4.10.2 之飽和模型 robustness check 揭示，此正向訊號實為<strong>ASE 對 BI 之直接效果透過 ASE↔JPB 構念相關（$r \approx .31$）滲漏所致之偽顯著</strong>——當飽和模型納入 ASE → BI 直接路徑後，H1 退至不顯著（$\beta = +.036, p = .345$），而 ASE 對 BI 之直接效果顯現為強烈顯著主路徑（$\beta = +.436, p < .001, f^2 = .239$）。</p>
+<p><strong>核心理論貢獻</strong>為飽和模型揭示之<strong>雙路徑採用模型</strong>（dual-pathway adoption model）：</p>
+<ol>
+<li><strong>規範性審慎機制</strong>：JPB → APT → BI 之負向中介鏈（飽和模型 indirect $= -.132$；主分析 indirect $= -.153$），源於 Carlson_2018 之邊界工作論述——專業信念透過知覺威脅之具體辨識抑制使用意願</li>
+<li><strong>工具性自信機制</strong>：ASE → BI 之直接正向路徑（$\beta = +.436, p < .001$），源於 TAM 之 perceived self-efficacy → behavioral intention 標準路徑——自我效能高的記者直接更願意嘗試 AI 工具</li>
+</ol>
+<p>兩條機制<strong>平行作用</strong>而非競爭，分別由 JPB 與 ASE 兩個獨立構念驅動。整合後之飽和模型對 BI 解釋變異 $R^2_{BI} = .300$（主分析 .117 之近三倍）。此模型整合 Carlson_2018 邊界工作之規範性審慎與 TAM 之工具性自信，<strong>為新聞專業—技術採用文獻提供一個完整之雙路徑解釋框架</strong>。</p>
+<h3 id="52-h2-h3-h5">5.2 H2 + H3 + H5：競爭式中介揭示專業信念的雙重作用</h3>
+<p><strong>H2（JPB → APT, $\beta = +.409, p = .005, f^2 = .188$）</strong>顯示新聞專業信念越強的政治記者，越能感知 AI 對政治新聞產製的潛在威脅。此結果延伸 Carlson_2018 對「邊界工作」之論述：當記者把專業價值（公共服務、客觀性、查證、自主性）內化為核心認同，他們對任何介入產製流程的新技術都會以<strong>潛在風險</strong>而非單純效率工具的視角審視。</p>
+<p><strong>H3（APT → BI, $\beta = -.373, p < .001, f^2 = .129$）</strong>支持「風險閾值」假設：知覺威脅是抑制 AI 採用的中等強度因子。這呼應 Featherman &amp; Pavlou（2003）之「感知風險論」與 TAM 延伸文獻關於「不利結果預期」之處理。</p>
+<p><strong>H5 之非預期型態：competitive mediation 而非 full mediation</strong>：依 <a href="Zhao_Lynch_Chen_2010.html">Zhao_Lynch_Chen_2010</a> 三步驟法判讀，本研究實得<strong>直接路徑顯著為正</strong>（$c' = +.193, p = .042$）、<strong>間接路徑顯著為負</strong>（$a \times b = -.153, p = .029$）、<strong>兩者方向相反</strong>之 competitive (inconsistent) mediation 結構，<strong>修正提案原預期之 full mediation 假設</strong>。</p>
+<p>此型態於主分析模型下之原始詮釋為兩條反向路徑競爭：</p>
+<ol>
+<li><strong>規範性審慎路徑（負向間接 −.153）</strong>：專業信念越強的記者，<strong>越能將抽象的專業價值翻譯為具體的 AI 風險清單</strong>（hallucination、bias、誤導），透過風險警覺抑制使用意願——這是「邊界工作」之心理機制</li>
+<li><strong>工具性嘗試路徑（正向直接 +.193）</strong>：然而，撇開威脅評估不談，專業信念越強的記者反而更直接願意嘗試 AI 工具</li>
+<li><strong>兩股力量近乎抵銷</strong>：總效果不顯著（$c = +.041$, ns）</li>
+</ol>
+<p>惟 §4.10.2 之飽和模型 robustness check 提供修正詮釋：當主分析未納入 ASE → BI 直接路徑時，<strong>ASE 對 BI 之直接效果透過 ASE↔JPB 構念相關（$r \approx .31$）「滲漏」進 H1 之直接係數</strong>，造成 H1 顯著為正之偽訊號。飽和模型納入 ASE → BI 後，<strong>真實的 JPB 直接效果接近零</strong>（$\beta = +.036$, ns），ASE 對 BI 之直接效果（$\beta = +.436, p < .001$）顯現為真正之主路徑。</p>
+<p>修正後之詮釋為<strong>雙路徑採用模型</strong>（dual-pathway adoption model）：</p>
+<ol>
+<li><strong>規範性審慎機制（JPB 的）</strong>：JPB → APT → BI 之負向間接路徑（飽和模型 $a \times b = .402 \times -.329 = -.132$，與主分析 −.153 接近）。專業信念透過知覺威脅抑制使用意願——「邊界工作」之心理機制（Carlson_2018）</li>
+<li><strong>工具性自信機制（ASE 的）</strong>：ASE → BI 直接正向路徑（飽和模型 $\beta = +.436, p < .001$）。自我效能直接驅動使用意願——TAM 經典之 perceived self-efficacy → behavioral intention 路徑</li>
+<li><strong>JPB 對 BI 沒有真正的直接效果</strong>：飽和模型下 $\beta = +.036$, ns；總效果 $\beta_{total, JPB} = -.088$, ns</li>
+</ol>
+<p>兩條機制<strong>平行作用</strong>，分別屬於 JPB 與 ASE 兩個構念，<strong>而非同一變項的雙重作用</strong>。這比主分析的「競爭中介」詮釋更符合 TAM 文獻、亦更符合資料（飽和模型 $R^2_{BI} = .300$ 大於主分析 .117）。</p>
+<h3 id="53-h6-h7">5.3 H6 + H7：方向支持但統計檢力不足之調節中介</h3>
+<p>互動項 $a_3 = +.222$ 之<strong>方向符合 H6 預期</strong>（正向，「自我效能放大專業批判」假設），效果量 $f^2 = .081$ 介於 Cohen_1988 之小（.02）與中（.15）效果之間，<strong>並非統計噪音</strong>——惟未達 .05 顯著水準（$p = .131$，95% CI [−.260, +.499] 跨 0）。Index of Moderated Mediation IMM = $a_3 \times b = -.083$ 同方向，經 Sobel_test 估計 $p = .284$，亦未達顯著。</p>
+<p>依 Aguinis_2005 對調節效應檢力之分析，於 $n = 96$ 樣本、$f^2 = .08$ 之條件下，預期統計檢力僅約 .55，不足以可靠偵測本規模之調節作用（達 .80 power 需 $n \geq 145$）。<strong>故將 H6/H7 列為「方向支持但統計未達顯著」之待驗證假設</strong>，建議後續以更大樣本重做。</p>
+<p>雖未達顯著，互動項之正向方向若於更大樣本中獲確認，可能反映「<strong>能力放大批判</strong>」（competence amplifies critique）之三種理論詮釋：</p>
+<p>第一，<strong>深入理解強化具體警覺</strong>：當記者實際操作過生成式 AI 並能熟練編寫 prompt（ASE 高），他們對 AI 的失敗模式（hallucination、bias、誤導）有第一手經驗；這使抽象的「專業信念」更容易被翻譯成具體的「風險清單」。</p>
+<p>第二，<strong>專業認同與技術能力的雙重武裝</strong>：高 ASE 不必然等同於擁抱 AI；在新聞情境下，記者使用 AI 操作能力的目的可能是<strong>為了監督而非依賴</strong>——以效能去 audit AI 而非接受 AI（Carlson_2018a）。</p>
+<p>第三，<strong>Dunning_Kruger 反向效應</strong>：低 ASE 的記者對 AI 既不了解也不批判，對其風險認知模糊；高 ASE 記者反而能精準辨識風險。</p>
+<p>此三種詮釋於本研究 $n = 96$ 樣本下無法區分，需以更大樣本與深度訪談（質化階段）進一步驗證。</p>
+<h3 id="54-ase">5.4 ASE 之雙重角色：調節者 + 直接預測者</h3>
+<p>飽和模型 robustness check（§4.10.2）揭示 ASE 在實證上具備<strong>雙重角色</strong>：</p>
+<ol>
+<li><strong>直接預測者</strong>：飽和模型下 ASE 對 BI 有強烈直接效果（$\beta = +.436, p < .001, f^2 = .239$，中-大效果），符合 TAM 文獻之 perceived self-efficacy → behavioral intention 標準路徑</li>
+<li><strong>調節者</strong>：H6 互動項 $\beta = +.222, p = .131$，方向支持但檢力不足（$f^2 = .081$）</li>
+</ol>
+<p>提案模型嚴格依 risk_perception 與 Carlson_2018 之邊界工作論述，將 ASE 設計為<strong>純調節者</strong>，未納入 TAM 之直接主效果。本研究 robustness check 證明此設計<strong>低估了 ASE 之整體影響力</strong>——飽和模型 $R^2_{BI} = .300$ 為主分析 $R^2_{BI} = .117$ 之近三倍。</p>
+<p><strong>理論啟示</strong>：本研究結果支持整合 Carlson_2018 邊界工作之<strong>規範性審慎機制</strong>（JPB 透過 APT 抑制 BI）與 TAM 之<strong>工具性自信機制</strong>（ASE 直接驅動 BI）為<strong>雙路徑採用模型</strong>：</p>
+<blockquote>
+<p>政治記者對生成式 AI 之採用意願由兩條獨立但平行之機制驅動：(1) 規範性審慎（JPB → APT → BI 之負向中介鏈，源於專業認同）；(2) 工具性自信（ASE → BI 之直接正向，源於對 AI 操作能力之主觀掌握感）。專業認同強烈與否影響審慎程度；自我效能高低影響嘗試傾向。兩條機制不互相牴觸——同時可能為「審慎且願意嘗試」（高 JPB + 高 ASE）、「審慎且不願嘗試」（高 JPB + 低 ASE）、「不審慎且願意嘗試」（低 JPB + 高 ASE）、或「漠不關心」（低 JPB + 低 ASE）四象限。</p>
+</blockquote>
+<p>此雙路徑模型對組織管理之意涵為：<strong>單純強化專業倫理（提升 JPB）</strong>會強化規範性審慎機制（降低 BI），<strong>單純訓練 AI 操作能力（提升 ASE）</strong>會強化工具性自信機制（提升 BI）。兩者並用之<strong>期望結果為「會用，但用得審慎」</strong>——記者既透過 JPB → APT 啟動風險警覺，又透過 ASE 之直接效果保持嘗試意願，達成「審慎使用」之理想狀態。</p>
+<h3 id="55-h1-h4">5.5 H1 方向反轉與 H4 主效果未達顯著的啟示</h3>
+<p><strong>H1 方向反轉</strong>為本研究最具挑戰性之發現。提案原預期 JPB → BI 直接路徑為<strong>負向</strong>（基於「專業認同越強越拒斥 AI」之假設），實際得<strong>正向顯著</strong>（$\beta = +.193, p = .042$）。此反轉非個別假設失敗，而是 §5.2 所述 competitive mediation 之結構性結果——直接路徑代表「未經風險評估之原生反應」，<strong>專業信念越強的政治記者於工具性層面反而更開放</strong>，這與規範性審慎路徑（透過 APT 之間接負向）相互競爭。</p>
+<p>理論啟示：傳統「專業認同 = 排斥技術」之單一線性假設過於簡化，本研究資料支持<strong>雙路徑模型</strong>——專業認同同時驅動「<strong>擔憂風險之審慎</strong>」與「<strong>希望嘗試之開放</strong>」兩股力量。對組織管理之意涵明確：訓練記者的專業價值（如新聞倫理課程）若不同步協助他們辨識具體技術風險，<strong>僅會強化「願意嘗試」一面而未啟動「審慎評估」一面</strong>，可能造成 AI 採用之風險未被充分評估即落地。</p>
+<p><strong>H4 主效果未顯著</strong>（$\beta = -.112, p = .244$）但方向與原假設一致。此結果與 H6 之檢力說明結合理解：ASE 於本研究設計為<strong>調節變項</strong>而非主效果預測者，其角色透過 H6 互動項檢驗。H4 不支持本即提案預期，並非分析失敗。</p>
+<h3 id="56">5.6 政策與實務意涵</h3>
+<p><strong>對新聞編輯部</strong>：</p>
+<ol>
+<li><strong>「會用，但要學會審慎評估」是核心目標</strong>：雙路徑模型揭示 AI 採用同時被兩條獨立機制驅動——規範性審慎（透過 JPB → APT）抑制使用、工具性自信（ASE 直接）促進使用。健康的編輯部 AI 政策應<strong>支持兩條機制並行</strong>，而非單方面抑制或鼓勵</li>
+<li><strong>倫理培訓需搭配風險辨識教育</strong>：H2 顯示專業信念透過具體風險辨識才能形成審慎使用之基礎。建議倫理培訓加入「AI 失敗案例」單元（hallucination、偏見放大、公信力受損案例），協助記者將抽象專業價值翻譯為具體威脅警覺</li>
+<li><strong>AI 操作培訓之雙刃效應</strong>：飽和模型顯示 ASE 對 BI 有強直接正向效果（$\beta = +.436$）；H6 之方向亦支持「ASE 放大專業批判」之調節作用。組合而言，<strong>訓練 AI 操作能力之效果為「會用 + 用得審慎」</strong>——既透過直接路徑提升使用意願、亦可能透過調節作用強化審慎評估</li>
+</ol>
+<p><strong>對新聞研究</strong>：</p>
+<ol>
+<li><strong>TAM 之雙路徑擴展</strong>：傳統 TAM 主結構（perceived usefulness / ease of use → BI）於專業新聞情境需擴展為<strong>雙路徑模型</strong>——加入「專業認同 → 知覺威脅 → 使用意願」之規範性審慎機制與「自我效能 → 使用意願」之工具性自信機制平行作用</li>
+<li><strong>「邊界工作」之心理機制具體化</strong>：Carlson_2018 之邊界工作概念在本研究獲得心理機制層次之操作化——專業信念<strong>非</strong>直接抗拒新技術，而是透過知覺威脅之具體辨識（H2 → H3）形成審慎之基礎</li>
+<li><strong>方差滲漏之方法學警示</strong>：主分析未納入 ASE → BI 直接路徑時，ASE 對 BI 之效果透過 ASE↔JPB 構念相關「滲漏」進 JPB 直接係數，造成 H1 偽顯著（§4.10.2）。<strong>啟示</strong>：當理論變項間有相關時，省略一條主路徑可能讓鄰近路徑出現偽顯著訊號；robustness check（飽和模型）為必要之方法學步驟</li>
+</ol>
+<h3 id="57">5.7 研究限制</h3>
+<ol>
+<li><strong>樣本量 $n = 96$ 偏小限制檢力</strong>：對小至中效果之調節作用偵測（如 H6, $f^2 = .08$）預期統計檢力僅約 .55（Aguinis_2005），不足以可靠驗證 H6 / H7。建議後續研究擴大樣本至 $n \geq 145$ 以達 .80 power</li>
+<li><strong>APT1 與 JPB1 指標品質</strong>：APT1 因跨 block 訊號方向不一致而於主分析中移除（見 §4.10.1）；JPB1 受天花板效應壓制（$M = 4.93, SD = 0.30$）。後續研究應修訂題項以避免此類測量純度問題</li>
+<li><strong>ASE 構念信度邊緣</strong>：三題 ASE 個別 loadings 介於 .587–.611、$p$ 介於 .062–.080。雖 $\rho_c = .826$ 達標，個別指標訊號偏弱，可能反映「AI 自我效能」於台灣政治記者樣本中之題項仍有改善空間</li>
+<li><strong>APT 兩題版</strong>：移除 APT1 後 APT 構念僅剩兩題（APT2、APT3），構念識別較弱於三題標準。雖 sensitivity analysis 強烈支持移除 APT1 之決策（§4.10.1），未來研究應發展更純粹之三題以上 APT 量表</li>
+<li><strong>JASP-only 工作流之代價</strong>：本研究堅持 JASP-only 工作流，致衍生參數（間接效果、IMM）採 Sobel_test 公式近似估計而非 BCa bootstrap CI。Sobel 假設常態抽樣分配，於小樣本下信賴區間略保守，但於評鑑顯著性方向上與 BCa 一致（MacKinnon_2002）</li>
+<li><strong>HTMT 矩陣未直接報告</strong>：JASP 0.19.3 PLS-SEM 模組未直接輸出 <a href="HTMT.html">HTMT</a> 矩陣，本研究改採 Fornell_Larcker_criterion 為主要區別效度判準。雖 Fornell-Larcker 通過，HTMT 為當前 PLS-SEM 文獻之主流標準（Henseler_2015_HTMT），未直接報告為一限制</li>
+<li><strong>抽樣非隨機 + FPC 未採用</strong>：滾雪球抽樣未達嚴格隨機，故未採用 <a href="finite_population_correction.html">finite_population_correction</a>。報告未校正之結果可能略保守低估顯著性</li>
+<li><strong>共同方法偏差之 marker 概念純度</strong>：所選 marker（工作規劃習慣）與 JPB（新聞專業信念）於概念上有部分重疊（最大 |$r_M$| = .442 為 JPB3 與 marker），未來研究應選用更嚴格無關之 marker</li>
+<li><strong>預測力評估顯示弱外樣本預測力</strong>：5 項內生指標中僅 2 項 $Q^2_{predict} > 0$。模型強於解釋（H2、H3 顯著、competitive mediation 揭示）但弱於預測，反映樣本量限制與本研究之解釋導向設計</li>
+<li><strong>橫斷面設計</strong>：不能下因果結論。雙重作用機制需以縱貫研究釐清時間先後</li>
+<li><strong>外推限制</strong>：僅台灣政治線記者，不可外推至其他路線（財經、社會、影劇等）</li>
+</ol>
+<h3 id="58">5.8 未來研究方向</h3>
+<ol>
+<li><strong>質化深度訪談的補強</strong>（已規劃為論文質化階段）：依量化結果切「JPB 高/低 × BI 高/低」四象限選取樣本，深度探討「規範性審慎」vs「工具性嘗試」之心理張力如何在個別記者身上展現</li>
+<li><strong>擴大樣本驗證 H6 / H7</strong>：以 $n \geq 145$ 樣本重做調節中介模型，可靠驗證「自我效能放大專業批判」效應之強度與方向</li>
+<li><strong>multi_group_PLS 比較資深 vs 資淺記者</strong>：政治年資 &lt; 7 年 vs ≥ 7 年的雙群組分析，看 competitive mediation 之兩條路徑於資深記者群是否更鮮明</li>
+<li><strong>加入第二中介或調節</strong>：考慮「主管態度」、「同儕使用率」（institutional_isomorphism 操作化）、「組織 AI 政策」作為第二層機制，試圖解釋 competitive mediation 中之競爭來源</li>
+<li><strong>修訂測量題項</strong>：發展三題以上、跨 block 訊號方向一致之 APT 量表；改善 ASE 題項使 loadings 達 .708 標準；修訂 JPB1 以避免天花板效應</li>
+<li><strong>跨文化比較</strong>：以本研究 competitive mediation 模型在歐美政治記者重做，檢驗雙路徑結構是否文化專屬</li>
+</ol>
+<hr />
+<h3 id="jasp">附註：對應 JASP 操作</h3>
+<p>本章每節的數值結果均對應 <a href="handout_pls_sem_final.md">handout_pls_sem_final.md</a> 的特定 Phase：</p>
+<table>
+<thead>
+<tr>
+<th>論文章節</th>
+<th>Handout Phase</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>§3 研究方法</td>
+<td>§1–2 環境設定</td>
+</tr>
+<tr>
+<td>§4.1 樣本 / 描述統計</td>
+<td>Phase 1</td>
+</tr>
+<tr>
+<td>§4.2 測量模型</td>
+<td>Phase 2-3 三步診斷之步驟 3（11 題版主模型）</td>
+</tr>
+<tr>
+<td>§4.3 共同方法偏差</td>
+<td>Phase 7</td>
+</tr>
+<tr>
+<td>§4.4 結構模型基線</td>
+<td>Phase 2-3 三步診斷之步驟 3</td>
+</tr>
+<tr>
+<td>§4.5 中介分析（competitive mediation）</td>
+<td>Phase 4</td>
+</tr>
+<tr>
+<td>§4.6 調節分析（H6 ns）</td>
+<td>Phase 5 mean-centered v2</td>
+</tr>
+<tr>
+<td>§4.7 調節中介（H7 ns，Sobel）</td>
+<td>Phase 6</td>
+</tr>
+<tr>
+<td>§4.8 假設總表</td>
+<td>§13.4</td>
+</tr>
+<tr>
+<td>§4.9 PLSpredict</td>
+<td>Phase 9</td>
+</tr>
+<tr>
+<td>§4.10.1 12 題版 sensitivity</td>
+<td>Phase 10.1</td>
+</tr>
+<tr>
+<td>§4.10.2 PLSc 對照</td>
+<td>Phase 2-3 三步診斷之步驟 1</td>
+</tr>
+<tr>
+<td>FPC（§3.2.3 已說明未採用）</td>
+<td>Phase 8（本研究略）</td>
+</tr>
+</tbody>
+</table>
+<p>呂欣可依 handout 操作 JASP 並把實際輸出值對照進本檔的草稿表格中（部分數字若與本檔略有差異，以 JASP 實跑為準；本檔數值來自 Python <code>plspm</code> + 手寫 bootstrap，與 <a href="seminr.html">seminr</a> 結果應高度相符但非完全一致）。</p>
+</main>
+</div>
+<script>
+(function () {
+  // ── Rebuild TOC with toggle buttons ──────────────────────────────────────
+  var toc = document.querySelector('.sidebar .toc');
+  if (toc) {
+    toc.querySelectorAll('li').forEach(function (li) {
+      var childUl = li.querySelector(':scope > ul');
+      var link    = li.querySelector(':scope > a');
+      if (!link) return;
+
+      var row = document.createElement('div');
+      row.className = 'toc-row';
+
+      if (childUl) {
+        var btn = document.createElement('button');
+        btn.className = 'toc-toggle';
+        btn.setAttribute('aria-expanded', 'true');
+        btn.textContent = '▾';          // ▾ open
+        btn.addEventListener('click', function () {
+          var open = childUl.hidden;
+          childUl.hidden = !open;
+          btn.textContent = open ? '▾' : '▸';   // ▾ / ▸
+          btn.setAttribute('aria-expanded', String(open));
+        });
+        row.appendChild(btn);
+      } else {
+        var spacer = document.createElement('span');
+        spacer.style.width = '1rem';
+        spacer.style.flexShrink = '0';
+        row.appendChild(spacer);
+      }
+
+      row.appendChild(link);
+      li.insertBefore(row, li.firstChild);
+    });
+  }
+
+  // ── Scroll spy ───────────────────────────────────────────────────────────
+  var headings = document.querySelectorAll('.content h2[id], .content h3[id], .content h4[id]');
+  var tocLinks = document.querySelectorAll('.sidebar .toc a');
+  if (!headings.length || !tocLinks.length) return;
+
+  var current = null;
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      var link = document.querySelector('.sidebar .toc a[href="#' + e.target.id + '"]');
+      if (!link) return;
+      if (current) current.classList.remove('active');
+      current = link;
+      current.classList.add('active');
+      // Scroll link into view within sidebar
+      current.scrollIntoView({ block: 'nearest' });
+    });
+  }, { rootMargin: '-5% 0px -75% 0px', threshold: 0 });
+
+  headings.forEach(function (h) { io.observe(h); });
+}());
+</script>
+</body>
+</html>
