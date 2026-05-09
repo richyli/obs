@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>HTMT</title>
+<title>Discriminant Validity 區別校度</title>
 <style>*, *::before, *::after { box-sizing: border-box; }
 
 /* ── Base ── */
@@ -186,90 +186,100 @@ MathJax = {
 <aside class="sidebar">
 <div class="toc">
 <ul>
-<li><a href="#_1">一、定義與計算邏輯</a></li>
-<li><a href="#_2">二、判斷門檻</a></li>
-<li><a href="#fornell-larcker">三、為何取代 Fornell-Larcker？</a></li>
-<li><a href="#htmt">四、若 HTMT 不過關的處理</a></li>
-<li><a href="#_3">五、與其他效度檢定的關係</a></li>
-<li><a href="#_4">六、論文中的呈現</a></li>
+<li><a href="#_1">一、為何重要</a></li>
+<li><a href="#_2">二、三大檢定指標</a><ul>
+<li><a href="#1-fornell-larcker-criterion">1. Fornell-Larcker Criterion（傳統標準）</a></li>
+<li><a href="#2-cross-loadings">2. Cross-Loadings（交叉載荷檢驗）</a></li>
+<li><a href="#3-htmtheterotraitmonotrait-ratio">3. HTMT（Heterotrait–Monotrait Ratio，當代主流）</a></li>
+</ul>
+</li>
+<li><a href="#_3">三、論文要求的判讀順序</a></li>
+<li><a href="#_4">四、若三項皆不過關</a></li>
+<li><a href="#_5">五、與量測模型其他指標的位置</a></li>
 </ul>
 </div>
 </aside>
 <main class="content">
-<h1>HTMT</h1>
-<p class="meta">#Validity　#research　#Research_Book　#HTMT　#discriminant_validity　#PLS_SEM</p>
-<h2 id="htmtheterotraitmonotrait-ratio">HTMT（Heterotrait–Monotrait Ratio）</h2>
-<p><a href="HTMT.html">HTMT</a>（<strong>異質性—同質性比率</strong>, Heterotrait–Monotrait Ratio of Correlations）由 Henseler, Ringle, &amp; Sarstedt (2015) 提出，是 PLS-SEM 與 CB-SEM 中<strong>評估區別效度（<a href="Discriminant_Validity_%E5%8D%80%E5%88%A5%E6%A0%A1%E5%BA%A6.html">Discriminant Validity 區別校度</a>）的當代主流指標</strong>。</p>
-<h3 id="_1">一、定義與計算邏輯</h3>
-<p>HTMT 用一句話講：<strong>「兩個構念之間題項的平均相關（heterotrait）」除以「同一構念內題項的平均相關（monotrait）」</strong>。</p>
+<h1>Discriminant Validity 區別校度</h1>
+<p class="meta">#Validity　#research　#Research_Book　#discriminant_validity　#measurement_model　#PLS_SEM</p>
+<h2 id="discriminant-validity">區別效度（Discriminant Validity）</h2>
+<p><a href="Discriminant_Validity_%E5%8D%80%E5%88%A5%E6%A0%A1%E5%BA%A6.html">Discriminant Validity 區別校度</a> 確保<strong>不同構念在量測上能被有效區分</strong>——亦即量表測到的不只是同一件事換包裝。它是構念效度（construct validity）的兩大支柱之一（另一支為 convergent validity）。</p>
+<h3 id="_1">一、為何重要</h3>
+<p>若區別效度不足，研究中的兩個變項實際上量測的是同一個潛在向度：</p>
 <ul>
-<li><strong>Monotrait correlations</strong>：同一構念底下題項彼此的相關（內部一致性）</li>
-<li><strong>Heterotrait correlations</strong>：跨兩個構念之間題項的相關（構念間相似性）</li>
+<li><strong>理論層級</strong>：研究結論失去意義（兩個「不同的概念」其實是同一個）</li>
+<li><strong>統計層級</strong>：路徑係數被人為灌水（因為 X、Y 高度相關來自共同方法或構念重疊，而非理論機制）</li>
+<li><strong>與 <a href="CMB_Common_method_bias.html">CMB Common method bias</a> 的混淆</strong>：HTMT 偏高有時來自 CMB 而非構念真重疊，需配合 <a href="Harman%27s_Single_Factor_Test.html">Harman's Single Factor Test</a>、<a href="CFA_Marker_Variable_Technique.html">CFA Marker Variable Technique</a> 區辨</li>
 </ul>
-<p>公式概念：</p>
-<p>$$HTMT_{ij} = \frac{\text{平均跨構念題項相關}_{ij}}{\sqrt{\text{平均構念} i\text{內題項相關} \times \text{平均構念} j\text{內題項相關}}}$$</p>
-<p>若兩個構念真的不同，跨構念相關應該明顯低於同構念相關，HTMT 接近 0；若兩構念其實在量測同一件事，HTMT 接近 1。</p>
-<h3 id="_2">二、判斷門檻</h3>
+<h3 id="_2">二、三大檢定指標</h3>
+<h4 id="1-fornell-larcker-criterion">1. <a href="Fornell-Larcker.html">Fornell-Larcker</a> Criterion（傳統標準）</h4>
+<ul>
+<li><strong>規則</strong>：每個構念的 AVE 平方根 &gt; 該構念與所有其他構念的相關係數</li>
+<li><strong>呈現</strong>：對角線為 $\sqrt{AVE}$，下三角為構念間相關係數，對角線數值需大於同列同欄所有相關</li>
+<li><strong>限制</strong>：模擬研究顯示其偵測力不足，已被 HTMT 取代為輔助指標</li>
+</ul>
+<h4 id="2-cross-loadings">2. Cross-Loadings（交叉載荷檢驗）</h4>
+<ul>
+<li><strong>規則</strong>：每個題項在「所屬構念」上的因子載荷應<strong>明顯高於</strong>它在其他構念上的載荷（建議差距 ≥ 0.1）</li>
+<li><strong>用途</strong>：判斷哪些<strong>個別題項</strong>造成區別效度問題；可逐題定位後刪題</li>
+</ul>
+<h4 id="3-htmtheterotraitmonotrait-ratio">3. <a href="HTMT.html">HTMT</a>（Heterotrait–Monotrait Ratio，當代主流）</h4>
+<ul>
+<li><strong>規則</strong>：構念對之間的 $HTMT < 0.85$（嚴格）或 $< 0.90$（寬鬆）</li>
+<li><strong>進階</strong>：bootstrap CI 上界不含 1 即通過</li>
+<li><strong>優勢</strong>：偵測力顯著高於 <a href="Fornell-Larcker.html">Fornell-Larcker</a>，現為 PLS-SEM 標準做法（Henseler et al. 2015）</li>
+</ul>
+<h3 id="_3">三、論文要求的判讀順序</h3>
 <table>
 <thead>
 <tr>
-<th>情境</th>
-<th>門檻</th>
-<th>判讀</th>
+<th>檢定</th>
+<th>角色</th>
+<th>通過門檻</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>構念<strong>理論上接近</strong></td>
-<td>$HTMT < 0.90$</td>
-<td>可接受</td>
+<td><a href="HTMT.html">HTMT</a></td>
+<td>主指標</td>
+<td>&lt; 0.85（對角線<strong>上半部</strong>呈現）</td>
 </tr>
 <tr>
-<td>構念<strong>理論上明顯不同</strong></td>
-<td>$HTMT < 0.85$</td>
-<td>嚴格標準，建議優先採用</td>
+<td><a href="Fornell-Larcker.html">Fornell-Larcker</a></td>
+<td>輔助</td>
+<td>$\sqrt{AVE}$ &gt; 構念相關</td>
 </tr>
 <tr>
-<td>進階：HTMT 信賴區間檢定</td>
-<td>bootstrap CI 上界不含 1</td>
-<td>區別效度成立</td>
+<td>Cross-Loadings</td>
+<td>診斷</td>
+<td>自構念載荷 &gt; 跨構念載荷 + 0.1</td>
 </tr>
 </tbody>
 </table>
-<h3 id="fornell-larcker">三、為何取代 Fornell-Larcker？</h3>
-<p>傳統的 <a href="Fornell-Larcker.html">Fornell-Larcker</a> 標準（要求構念 AVE 平方根 &gt; 與其他構念的相關係數）在過去二十年是預設選項，但 Henseler 等人模擬顯示：</p>
+<h3 id="_4">四、若三項皆不過關</h3>
+<p>若對角線（$\sqrt{AVE}$）與其他相關係數很接近，或對角線外相關 &gt; 0.7，這代表<strong>構念間量測上難以區分</strong>，連帶會引發 <a href="Multicollinearity_%E5%85%B1%E7%B7%9A%E6%80%A7.html">Multicollinearity 共線性</a> 問題：</p>
 <ol>
-<li><strong>Fornell-Larcker 對缺乏區別效度的偵測力低</strong>——當兩個構念實質上幾乎重疊時，AVE 平方根仍可能略高於相關，因而誤判為「通過」</li>
-<li><strong>HTMT 模擬下的 Type II error 率顯著較低</strong>，能更可靠地揭發構念過度相似</li>
+<li><strong>跑共線性檢定</strong>：<a href="VIF_Variance_Inflation_Factor.html">VIF Variance Inflation Factor</a> 是否 &gt; 3.3 或 &gt; 5？若是，表示構念在迴歸結構中彼此「淹沒」彼此</li>
+<li><strong>檢查題項</strong>：刪除高跨載荷題項，或合併冗餘構念</li>
+<li><strong>重思理論</strong>：兩構念是否該整合為高階構念？（second-order construct）</li>
+<li><strong>重新設計量表</strong>：採用文獻已驗證具區別效度的成熟量表</li>
 </ol>
-<p>因此 SmartPLS 與多數方法論教科書（Hair et al. 2017、Henseler 2015）已將 HTMT 列為<strong>主檢定</strong>，<a href="Fornell-Larcker.html">Fornell-Larcker</a> 與<strong>交叉載荷檢驗（Cross-Loadings）</strong> 退為輔助。</p>
-<h3 id="htmt">四、若 HTMT 不過關的處理</h3>
-<p>當 $HTMT \geq 0.85$（或 0.90）時，代表兩個構念在受訪者眼中過於相似。常見處置：</p>
+<h3 id="_5">五、與量測模型其他指標的位置</h3>
+<p>完整 SEM 量測模型評估流程：</p>
 <ol>
-<li><strong>檢查題項措辭</strong>：兩構念的題項是否語意過度重疊？刪除高度跨載荷的題項</li>
-<li><strong>檢查 <a href="Multicollinearity_%E5%85%B1%E7%B7%9A%E6%80%A7.html">Multicollinearity 共線性</a></strong>：跑 <a href="VIF_Variance_Inflation_Factor.html">VIF Variance Inflation Factor</a> 確認結構變項共線性是否同時出問題（HTMT 高常伴隨 VIF 高）</li>
-<li><strong>理論層級的合併</strong>：若兩構念測量上無法區分，是否該在理論上合併為單一高階構念？</li>
-<li><strong>重新設計量表</strong>：尋找文獻中區別效度已驗證的替代量表</li>
+<li><strong>信度</strong>：Cronbach's α ≥ .70、Composite Reliability ≥ .70</li>
+<li><strong>收斂效度</strong>：因子載荷 ≥ .70、AVE ≥ .50</li>
+<li><strong>區別效度</strong>：本檔所述（<a href="HTMT.html">HTMT</a> / <a href="Fornell-Larcker.html">Fornell-Larcker</a> / Cross-Loadings）</li>
+<li><strong>共線性</strong>：<a href="VIF_Variance_Inflation_Factor.html">VIF Variance Inflation Factor</a> &lt; 3.3（同時用於 <a href="CMB_Common_method_bias.html">CMB Common method bias</a> 的 Full Collinearity Test）</li>
+<li><strong>方法偏誤檢定</strong>：<a href="Harman%27s_Single_Factor_Test.html">Harman's Single Factor Test</a>、<a href="CFA_Marker_Variable_Technique.html">CFA Marker Variable Technique</a>、<a href="Lindell_Exercise.html">Lindell Exercise</a></li>
 </ol>
-<h3 id="_3">五、與其他效度檢定的關係</h3>
-<p>HTMT 屬於<strong>量測模型評估</strong>流程中的最後一道驗證。完整流程通常是：</p>
-<ol>
-<li>信度：Cronbach's α、Composite Reliability ≥ .70</li>
-<li>收斂效度：因子負荷 ≥ .70；AVE ≥ .50</li>
-<li><strong>區別效度：HTMT &lt; .85（主）+ <a href="Fornell-Larcker.html">Fornell-Larcker</a>（輔）+ Cross-Loadings（輔）</strong></li>
-<li>共線性：<a href="VIF_Variance_Inflation_Factor.html">VIF Variance Inflation Factor</a> &lt; 3.3（同時用於 <a href="CMB_Common_method_bias.html">CMB Common method bias</a> 的 Full Collinearity Test）</li>
-</ol>
-<h3 id="_4">六、論文中的呈現</h3>
-<p>HTMT 矩陣通常以下三角或上三角呈現於信效度表格（與 <a href="Fornell-Larcker.html">Fornell-Larcker</a> 矩陣同表，例如 Fornell-Larcker 在下三角、HTMT 在上三角，對角線為 AVE 平方根）。</p>
-<blockquote>
-<p>範例敘述：「本研究依 Henseler et al. (2015) 建議採 HTMT 作為主要區別效度指標。表 X 上三角顯示所有構念對的 HTMT 值介於 0.42–0.78，皆低於嚴格門檻 0.85；bootstrap 99% 信賴區間上界亦皆不含 1，區別效度成立。」</p>
-</blockquote>
 <hr />
 <p><strong>相關概念</strong>
-- 上位概念：<a href="Discriminant_Validity_%E5%8D%80%E5%88%A5%E6%A0%A1%E5%BA%A6.html">Discriminant Validity 區別校度</a>
-- 互補指標：<a href="Fornell-Larcker.html">Fornell-Larcker</a>、Cross-Loadings
-- 共線性檢定：<a href="Multicollinearity_%E5%85%B1%E7%B7%9A%E6%80%A7.html">Multicollinearity 共線性</a>、<a href="VIF_Variance_Inflation_Factor.html">VIF Variance Inflation Factor</a>
-- 同流程的方法論議題：<a href="CMB_Common_method_bias.html">CMB Common method bias</a>、<a href="Harman%27s_Single_Factor_Test.html">Harman's Single Factor Test</a>、<a href="CFA_Marker_Variable_Technique.html">CFA Marker Variable Technique</a></p>
+- 主指標：<a href="HTMT.html">HTMT</a>
+- 傳統指標：<a href="Fornell-Larcker.html">Fornell-Larcker</a>
+- 共線性連動：<a href="Multicollinearity_%E5%85%B1%E7%B7%9A%E6%80%A7.html">Multicollinearity 共線性</a>、<a href="VIF_Variance_Inflation_Factor.html">VIF Variance Inflation Factor</a>
+- 方法論姊妹議題：<a href="CMB_Common_method_bias.html">CMB Common method bias</a>、<a href="Harman%27s_Single_Factor_Test.html">Harman's Single Factor Test</a>、<a href="CFA_Marker_Variable_Technique.html">CFA Marker Variable Technique</a>、<a href="Lindell_Exercise.html">Lindell Exercise</a></p>
+<hr />
 </main>
 </div>
 <script>

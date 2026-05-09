@@ -899,7 +899,7 @@ MathJax = {
 <h4 id="38">3.8 模型選擇與資訊準則</h4>
 <p>AIC、BIC、CAIC 為 conjoint 模型比較的三大資訊準則，應用於：(a) latent class 群數選擇、(b) 判斷是否納入 scale heterogeneity（G-MNL vs MIXL）、(c) 非巢套模型間比較（BBC K=2 vs K=0、holistic vs standard）、(d) 屬性參數化方式比較（linear vs dummy）。三準則的 penalty 強度不同：AIC 最寬鬆、BIC 中等、CAIC 最嚴格。實務建議同時報告 BIC 與 CAIC，搭配 §4.4 的 holdout 作 in-sample + out-of-sample 雙重驗證。</p>
 <ul>
-<li><strong>AIC</strong>：$\text{AIC} = -2 \ln L + 2k$，Akaike（1974）提出，近似 Kullback-Leibler divergence 最小化；固定 penalty $2k$ 在樣本不夠大時<strong>過度接受複雜模型</strong>（Akaike, 1974; Fiebig et al., 2010; AIC）。</li>
+<li><strong>AIC</strong>：$\text{AIC} = -2 \ln L + 2k$，Akaike（1974）提出，近似 Kullback-Leibler divergence 最小化；固定 penalty $2k$ 在樣本不夠大時<strong>過度接受複雜模型</strong>（Akaike, 1974; Fiebig et al., 2010; <a href="AIC.html">AIC</a>）。</li>
 <li><strong>BIC</strong>：$\text{BIC} = -2 \ln L + k \cdot \ln N$，Schwarz（1978）提出，近似 Bayesian marginal likelihood 的 negative log；在 $N > 8$ 時 penalty 嚴於 AIC，偏好較簡潔模型（Schwarz, 1978; BIC）。</li>
 <li><strong>CAIC</strong>：$\text{CAIC} = -2 \ln L + k(\ln n + 1)$，Bozdogan（1987）提出；懲罰比 AIC 重，在大樣本下更傾向簡約模型；DeSarbo et al.（1995）在 CBC 市場區隔研究中採 CAIC 決定最佳潛在類別數（4 群，CAIC = 29,528.5）（Bozdogan, 1987; DeSarbo et al., 1995; CAIC; CAIC Selects Optimal Number of Segments）。</li>
 <li><strong>Fiebig et al.（2010）Monte Carlo 結果</strong>：當真實 DGP 含 scale heterogeneity 時，BIC 與 CAIC 能穩定選出 G-MNL/S-MNL，AIC 常錯誤偏好參數更多的 MIXL-correlated；實務意涵：在 conjoint/DCE 模型比較應報告 BIC 或 CAIC 而非僅 AIC（Fiebig et al., 2010; BIC and CAIC Outperform AIC for Scale Heterogeneity Detection）。</li>

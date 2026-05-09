@@ -208,7 +208,7 @@ hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
 <p><strong>偵測共同方法變異 (CMB)</strong>： 當問卷是<strong>「同一來源（Same Source）」</strong>（如同為受試者自填）、<strong>「同一情境（Same Context）」</strong>且<strong>「同一時間」</strong>收集時，受試者往往會因為當下的情緒、社會期許偏差（Social desirability bias）或作答慣性（如全部勾選同意），導致所有題目之間產生高度相關。這不是因為理論上的關聯，而是因為「測量方法」造成的假象。</p>
 <ul>
 <li><strong>目的</strong>：檢驗結果是否因「同一個人、同一時間、同一份問卷」填答而產生假性相關（膨脹的相關係數）。<ul>
-<li><strong>Harman 單因子檢定（Harman's Single Factor Test）</strong>：將所有變數放入因子分析，若第一個主因子的解釋變異量超過 50%，則可能存在嚴重的 CMB 問題
+<li><strong>Harman 單因子檢定（<a href="Harman%27s_Single_Factor_Test.html">Harman's Single Factor Test</a>）</strong>：將所有變數放入因子分析，若第一個主因子的解釋變異量超過 50%，則可能存在嚴重的 CMB 問題
 <strong>檢測方法 2：全共線性檢定（Full Collinearity Test）</strong>：利用 PLS-SEM 計算所有構面的變異數擴張因子（<a href="VIF_Variance_Inflation_Factor.html">VIF Variance Inflation Factor</a>），若 VIF 值皆小於 3.3，則可認定無明顯偏差 。</li>
 </ul>
 </li>
@@ -358,7 +358,7 @@ method-based variance 0.0122
 <p>常見方式（本研究採用）</p>
 <ul>
 <li>
-<p>Harman's Single Factor Test：檢查是否單一因子解釋大部分變異（本研究：第一因子解釋 39.03%）</p>
+<p><a href="Harman%27s_Single_Factor_Test.html">Harman's Single Factor Test</a>：檢查是否單一因子解釋大部分變異（本研究：第一因子解釋 39.03%）</p>
 </li>
 <li>
 <p>加入 method factor（共同方法因子）：估計方法因子解釋的系統變異比例（本研究：focal factors 平均解釋 .83；method factor 平均 .003；比率 254:1）</p>
@@ -402,6 +402,49 @@ method-based variance 0.0122
 <li>
 <p>成功衡量偏重供應端觀點：終端使用者或高階管理者的價值認知可能不同，構面可能不完整。</p>
 </li>
+</ul>
+</li>
+</ul>
+<p>若你以問卷測量多個潛在構念（例如社會資本、強迫性使用、衝動購買），並以 SEM 進行分析，請說明「量測模型評估」的完整流程：你會如何檢驗信度、收斂效度、區辨效度，以及如何處理/檢查 common method bias（CMB）？ <a href="CMB_Common_method_bias.html">CMB Common method bias</a></p>
+<p><strong>參考解答（要點）：</strong></p>
+<ul>
+<li>
+<p>前置：確認量表來源、翻譯回譯/前測（可提）</p>
+</li>
+<li>
+<p>信度（reliability）</p>
+<ul>
+<li>Cronbach’s α（內部一致性；常用門檻 ≥ .70）        </li>
+<li>Composite Reliability, CR（常用門檻 ≥ .70）</li>
+</ul>
+</li>
+<li>
+<p>收斂效度（convergent validity）</p>
+<ul>
+<li>標準化因子負荷量（factor loading；常見 ≥ .70，或 ≥ .50 視情況）        </li>
+<li>AVE（Average Variance Extracted；常用門檻 ≥ .50）</li>
+</ul>
+</li>
+<li>
+<p>區辨效度（discriminant validity）</p>
+<ul>
+<li>Fornell–Larcker：各構念 AVE 的平方根需大於其與其他構念相關        </li>
+<li>HTMT（Heterotrait–Monotrait ratio；常用門檻 &lt; .85 或 &lt; .90）        </li>
+<li>同時檢查多重共線性（如 VIF，或以 HTMT/相關係數輔助）</li>
+</ul>
+</li>
+<li>
+<p>量測模型整體適配度（CFA fit indices）</p>
+<ul>
+<li>χ²/df、CFI、TLI、RMSEA、SRMR（說明需達可接受門檻）</li>
+</ul>
+</li>
+<li>
+<p>CMB 檢查/控制</p>
+<ul>
+<li><a href="Harman%27s_Single_Factor_Test.html">Harman's Single Factor Test</a>（第一因子解釋變異不宜過高）        </li>
+<li><a href="CFA_Marker_Variable_Technique.html">CFA Marker Variable Technique</a> approach（加入理論上不相關變數檢查相關性）        </li>
+<li>程序性控制（匿名、題項混排、不同量尺端點、時間分隔等）</li>
 </ul>
 </li>
 </ul>

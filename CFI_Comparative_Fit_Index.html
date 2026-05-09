@@ -173,16 +173,68 @@ hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
   .content { padding: 1.5rem 1.2rem 4rem; }
 }
 </style>
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
 </head>
 <body>
 <div class="layout">
 <aside class="sidebar">
-
+<div class="toc">
+<ul>
+<li><a href="#_1">解讀準則</a></li>
+<li><a href="#_2">與其他適配指標的關係</a></li>
+<li><a href="#conjoint">在 conjoint / 量表研究中的應用</a></li>
+<li><a href="#_3">限制與爭議</a></li>
+</ul>
+</div>
 </aside>
 <main class="content">
 <h1>CFI Comparative Fit Index</h1>
-
-
+<p class="meta">#fit_index　#SEM　#CFA　#structural_equation_modeling　#psychometrics</p>
+<h2 id="cficomparative-fit-index">CFI（Comparative Fit Index，比較適配指標）</h2>
+<p><strong>定義</strong>：<a href="CFI_Comparative_Fit_Index.html">CFI</a> 是 SEM / CFA 中最常用的<strong>增量適配指標</strong>（incremental fit index），由 Bentler（1990）提出。它比較<strong>目標模型</strong>與<strong>獨立模型</strong>（null/baseline model，假設所有觀測變項彼此獨立、無共變）的相對適配，衡量目標模型相較於最差基準改善了多少。</p>
+<p><strong>公式</strong>：</p>
+<p>$$
+\text{CFI} = 1 - \frac{\max(\chi^2_{T} - df_T, 0)}{\max(\chi^2_{T} - df_T, \chi^2_{B} - df_B, 0)}
+$$</p>
+<p>其中 $\chi^2_T, df_T$ 為目標模型的卡方與自由度，$\chi^2_B, df_B$ 為基準（獨立）模型的卡方與自由度。CFI 介於 0 至 1，數值越大表示模型相對基準改善越多。</p>
+<hr />
+<h3 id="_1">解讀準則</h3>
+<p>不同學派的截斷標準不一致：</p>
+<ul>
+<li><strong>Hu &amp; Bentler（1999）的嚴格雙截斷</strong>：CFI ≥ 0.95 表示適配良好，並建議與 RMSEA ≤ 0.06、SRMR ≤ 0.08 同時滿足</li>
+<li><strong>Bentler（1990）的寬鬆標準</strong>：CFI ≥ 0.90 已可接受</li>
+<li><strong>量表開發 / 行為研究實務</strong>：CFI ≥ 0.95 為佳；0.90–0.95 為可接受；&lt; 0.90 應考慮模型修正</li>
+<li>在 Alamer 2025 SEM 的 reporting checklist 中，作者建議同時報告 CFI 與 TLI，並以 CFI/TLI ≥ .90/.95 為雙重門檻</li>
+</ul>
+<hr />
+<h3 id="_2">與其他適配指標的關係</h3>
+<p>CFI 與 TLI（Tucker-Lewis Index，又稱 NNFI）同為比較模型與獨立模型的指標，但 TLI 對自由度更敏感、對模型複雜度的懲罰更強，故 TLI 通常略低於 CFI。Alamer（2025）指出在小樣本與複雜模型下兩者可能背離，應同時報告。</p>
+<p>CFI 與 <a href="RMSEA.html">RMSEA</a> 屬不同家族——前者為<strong>比較適配</strong>（comparative），後者為<strong>絕對適配</strong>（absolute，看殘差大小），兩者並用較能避免單一指標的偏誤。</p>
+<p>CFI 計算依賴卡方統計量，因此估計子（ML、Maximum Likelihood Robust、WLSMV）的選擇會影響 CFI 數值；非常態資料若以 ML 估計可能高估適配，建議改用 MLR（MLR 估計法應為 Likert 4 點以上資料的預設）。</p>
+<hr />
+<h3 id="conjoint">在 conjoint / 量表研究中的應用</h3>
+<p>CFI 主要出現在三類研究：</p>
+<ol>
+<li><strong>量表驗證的測量模型</strong>：CFA 階段以 CFI 判斷因素結構與資料是否吻合（Alamer 2025 SEM、CFA）</li>
+<li><strong>結構方程的整體模型評估</strong>：SEM 的測量模型 + 結構模型整體適配（如 SEM 評估準則）</li>
+<li><strong>多群組測量不變性</strong>：跨群組比較時觀察 ΔCFI；Cheung &amp; Rensvold（2002）建議 ΔCFI ≤ 0.01 表示測量不變性成立</li>
+</ol>
+<hr />
+<h3 id="_3">限制與爭議</h3>
+<ul>
+<li>CFI 對<strong>樣本量</strong>敏感：小樣本下偏低、可能拒絕本應接受的模型</li>
+<li>CFI 對<strong>模型錯設類型</strong>敏感度不對稱：對 factor covariance 錯設較敏感、對 factor loading 錯設較不敏感（Hu &amp; Bentler, 1998）</li>
+<li>高 CFI 不保證模型正確，僅表示相對基準有改善——應與 RMSEA、SRMR、卡方、殘差矩陣與理論合理性綜合判斷</li>
+</ul>
+<hr />
+<p><strong>相關概念</strong>：<a href="RMSEA.html">RMSEA</a>、<a href="SRMR.html">SRMR</a>、Tucker-Lewis Index、fit indices、CFA、SEM、MLR、FIML 使 SEM 在 MCAR MAR 下優於 listwise 刪除</p>
+<p><strong>相關論文</strong>：Alamer 2025 SEM、Alamer 2025 Methods</p>
 </main>
 </div>
 <script>

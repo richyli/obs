@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Factor Loading</title>
+<style>*, *::before, *::after { box-sizing: border-box; }
+
+/* ── Base ── */
+body {
+  font-family: "Helvetica Neue", Arial, "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+  font-size: 20px;
+  line-height: 1.9;
+  color: #111;
+  background: #fff;
+  margin: 0;
+}
+
+/* ── Two-column layout (note pages) ── */
+.layout { display: flex; align-items: flex-start; min-height: 100vh; }
+
+.sidebar {
+  width: 270px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 2rem 1rem 2rem 1.5rem;
+  border-right: 1px solid #e8e8e8;
+  background: #f9f9f9;
+}
+.sidebar-back {
+  display: block;
+  font-size: 0.82rem;
+  color: #999;
+  margin-bottom: 1.4rem;
+  text-decoration: none;
+}
+.sidebar-back:hover { color: #333; }
+.sidebar-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #bbb;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+/* ── TOC in sidebar ── */
+.toc { font-size: 0.82rem; line-height: 1.55; }
+.toc ul { list-style: none; margin: 0; padding: 0; }
+.toc ul ul { padding-left: 0.9rem; }
+.toc li { margin: 0; }
+.toc-row { display: flex; align-items: baseline; gap: 0.2rem; }
+.toc-row a {
+  flex: 1;
+  display: block;
+  padding: 0.18rem 0.3rem;
+  border-radius: 3px;
+  color: #555;
+  text-decoration: none;
+  word-break: break-word;
+}
+.toc-row a:hover { background: #ebebeb; color: #111; }
+.toc-row a.active { color: #0055cc; font-weight: 600; background: #e8f0ff; }
+.toc-toggle {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-size: 0.65rem;
+  color: #bbb;
+  line-height: 1;
+  width: 1rem;
+  text-align: center;
+}
+.toc-toggle:hover { color: #555; }
+
+/* ── Main content ── */
+.content {
+  flex: 1;
+  min-width: 0;
+  padding: 3rem 3rem 6rem;
+  max-width: 800px;
+}
+
+/* ── Single-column (index page) ── */
+.container { max-width: 800px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
+
+/* ── Typography ── */
+h1 {
+  font-size: 1.75rem; font-weight: 700;
+  margin: 0 0 0.15rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 2px solid #111;
+  line-height: 1.3;
+}
+h2 {
+  font-size: 1.3rem; font-weight: 700;
+  margin: 2.5rem 0 0.5rem;
+  padding-bottom: 0.2rem;
+  border-bottom: 1px solid #ddd;
+}
+h3 { font-size: 1.1rem; font-weight: 700; margin: 1.8rem 0 0.4rem; }
+h4 { font-size: 1rem; font-weight: 700; margin: 1.4rem 0 0.3rem; }
+p { margin: 0.9rem 0; }
+a { color: #0055cc; text-decoration: none; }
+a:hover { text-decoration: underline; }
+nav { margin-bottom: 2.5rem; font-size: 0.85rem; color: #999; }
+nav a { color: #999; }
+
+/* ── Code ── */
+code {
+  font-family: "SFMono-Regular", Consolas, monospace;
+  background: #f2f2f2;
+  padding: 0.1em 0.4em;
+  border-radius: 3px;
+  font-size: 0.85em;
+}
+pre {
+  background: #f2f2f2;
+  padding: 1.2rem 1.4rem;
+  border-radius: 5px;
+  overflow-x: auto;
+  font-size: 0.85em;
+  line-height: 1.6;
+}
+pre code { background: none; padding: 0; }
+
+/* ── Lists ── */
+ul, ol { padding-left: 1.6rem; margin: 0.8rem 0; }
+li { margin: 0.35rem 0; }
+li > ul, li > ol { margin: 0.2rem 0; }
+
+/* ── Other elements ── */
+blockquote {
+  border-left: 4px solid #ccc;
+  margin: 1.2rem 0;
+  padding: 0.3rem 1.2rem;
+  color: #444;
+  background: #fafafa;
+}
+table { border-collapse: collapse; width: 100%; margin: 1.2rem 0; font-size: 0.95em; }
+th, td { border: 1px solid #ccc; padding: 0.55rem 0.9rem; text-align: left; }
+th { background: #f5f5f5; font-weight: 700; }
+tr:nth-child(even) { background: #fafafa; }
+hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
+.meta { font-size: 0.8rem; color: #aaa; margin: 0.3rem 0 1.8rem; }
+.index-list { list-style: none; padding: 0; margin: 1rem 0; }
+.index-list li { padding: 0.55rem 0; border-bottom: 1px solid #eee; font-size: 1.05rem; }
+.index-list li:last-child { border-bottom: none; }
+.embed-block {
+  border-left: 3px solid #aaa;
+  padding: 0.5rem 1.2rem;
+  margin: 1.5rem 0;
+  background: #f8f8f8;
+}
+
+/* ── Mobile ── */
+@media (max-width: 800px) {
+  .layout { flex-direction: column; }
+  .sidebar {
+    position: static;
+    width: 100%;
+    height: auto;
+    max-height: 50vh;
+    border-right: none;
+    border-bottom: 1px solid #e8e8e8;
+    padding: 1rem 1.5rem;
+  }
+  .content { padding: 1.5rem 1.2rem 4rem; }
+}
+</style>
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+<div class="toc">
+<ul>
+<li><a href="#factor-loading-outer-loading">因素負荷量（Factor Loading / Outer Loading）</a><ul>
+<li><a href="#_1">一、核心定義與數學意義</a><ul>
+<li><a href="#1">1. 定義</a></li>
+<li><a href="#2">2. 數學意義（博士考點）</a></li>
+</ul>
+</li>
+<li><a href="#hair-et-al">二、判斷標準（Hair et al. 黃金法則）</a></li>
+<li><a href="#loading">三、Loading 與其他指標的連動關係</a></li>
+<li><a href="#qa">四、口試情境題（Q&amp;A）</a></li>
+</ul>
+</li>
+<li><a href="#loading_1">Loading 完整實戰範例</a><ul>
+<li><a href="#_2">案例背景</a></li>
+<li><a href="#initial-outer-loadings">第一階段：初始掃描（Initial Outer Loadings）</a></li>
+<li><a href="#item-deletion-strategy">第二階段：刪題決策（Item Deletion Strategy）</a><ul>
+<li><a href="#peou_5loading-032">🚩 第一刀：處決 PEOU_5（Loading = 0.32）</a></li>
+<li><a href="#peou_6loading-065">🚩 第二刀：審視 PEOU_6（Loading = 0.65）</a></li>
+<li><a href="#peou_4loading-055">🚩 第三刀：抉擇 PEOU_4（Loading = 0.55）</a></li>
+</ul>
+</li>
+<li><a href="#final-assessment">第三階段：最終模型檢驗（Final Assessment）</a><ul>
+<li><a href="#1-convergent-validity-ave">1. 收斂效度（Convergent Validity 收斂效度）— 檢查 AVE</a></li>
+<li><a href="#2-internal-consistency-cr-alpha">2. 內部一致性（Internal Consistency）— CR 與 Alpha</a></li>
+<li><a href="#3-discriminant-validity-htmt">3. 區別效度（Discriminant Validity 區別校度）— 檢查 HTMT</a></li>
+</ul>
+</li>
+<li><a href="#_3">第四階段：寫作總結（論文範本）</a></li>
+<li><a href="#mental-checklist">流程總結圖（Mental Checklist）</a><ul>
+<li><a href="#_4">一句話心法</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+</aside>
+<main class="content">
+<h1>Factor Loading</h1>
+<p class="meta">#Research_Book　#factor_loading　#measurement_model　#PLS_SEM　#convergent_validity</p>
+<h2 id="factor-loading-outer-loading">因素負荷量（Factor Loading / Outer Loading）</h2>
+<p><a href="Factor_Loading.html">Factor Loading</a>（在 PLS-SEM 中常稱為 <strong>外部負荷量 Outer Loading</strong>）是評估量測模型（Measurement Model）最基礎、也最重要的第一道關卡。它代表了<strong>「題目（觀察變項）」與「構面（潛在變項）」之間的相關係數</strong>。</p>
+<blockquote>
+<p><strong>資管領域常用門檻</strong>：通常以 <strong>0.7</strong> 為標準；落在「黃燈區」需「刪除後再重新跑」確認 AVE 是否提升；<strong>0.4</strong> 為絕對最低標。</p>
+</blockquote>
+<h3 id="_1">一、核心定義與數學意義</h3>
+<h4 id="1">1. 定義</h4>
+<p>Loading（$\lambda$）是一個標準化的數值（介於 −1 到 1 之間），衡量某一道題目（Item / Indicator）在多大程度上「反映」它所屬的構面（Construct）。</p>
+<ul>
+<li><strong>直觀理解</strong>：這條題目跟這個概念「有多熟」？</li>
+<li><strong>高 Loading</strong>：題目能精準測量到該概念</li>
+<li><strong>低 Loading</strong>：題目在測量雜訊，或測到了別的概念</li>
+</ul>
+<h4 id="2">2. 數學意義（博士考點）</h4>
+<p>為什麼大家都說標準是 <strong>0.7</strong>？更精確地說是 <strong>0.708</strong>？這基於 <strong>$R^2$（解釋變異量）</strong> 的概念：</p>
+<ul>
+<li><strong>指標信度（Indicator Reliability）</strong> = $Loading^2$</li>
+<li>當 $Loading = 0.708$，則 $Loading^2 = 0.708 \times 0.708 \approx 0.50$</li>
+<li><strong>意義</strong>：當 Loading 達到 0.708，該潛在構面解釋了這道題目 <strong>50% 的變異量</strong>——「訊號（Signal）」終於大於「誤差（Noise）」</li>
+</ul>
+<h3 id="hair-et-al">二、判斷標準（Hair et al. 黃金法則）</h3>
+<p>請引用 <strong>Hair et al. (2022)</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>Loading 數值</th>
+<th>狀態</th>
+<th>決策建議</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>$\geq 0.708$</strong></td>
+<td>🟢 綠燈（優良）</td>
+<td><strong>保留</strong>。題目信度良好，解釋力超過 50%</td>
+</tr>
+<tr>
+<td><strong>$0.40 \sim 0.708$</strong></td>
+<td>🟡 黃燈（觀察區）</td>
+<td><strong>停、看、聽</strong>。不可直接刪除！僅在「刪除該題能顯著提升 AVE 或 CR」時才刪除；若 AVE 與 CR 已達標，則基於內容效度（Content Validity）應予保留</td>
+</tr>
+<tr>
+<td><strong>$< 0.40$</strong></td>
+<td>🔴 紅燈（淘汰）</td>
+<td><strong>刪除</strong>。此題目主要由誤差構成，留著會汙染構面</td>
+</tr>
+</tbody>
+</table>
+<h3 id="loading">三、Loading 與其他指標的連動關係</h3>
+<p>Loading 不是孤立的數字，是計算後續所有效度指標的<strong>基石</strong>：</p>
+<ol>
+<li><strong>與 AVE（Convergent Validity 收斂效度）的關係</strong>：</li>
+<li>$AVE = \frac{\sum (Loading^2)}{N}$——AVE 就是所有題目 $Loading^2$ 的平均值</li>
+<li>
+<p><strong>考點</strong>：如果你有一題 Loading 只有 0.5，它會把平均值拉低；為了讓 AVE 超過 0.5，可能需要刪掉這題</p>
+</li>
+<li>
+<p><strong>與 CR（複合信度）的關係</strong>：CR 也基於 Loading 計算，Loading 越高 CR 越高</p>
+</li>
+<li>
+<p><strong>與 <a href="Discriminant_Validity_%E5%8D%80%E5%88%A5%E6%A0%A1%E5%BA%A6.html">Discriminant Validity 區別校度</a> 的關係（交叉負荷量 Cross-Loadings）</strong>：</p>
+</li>
+<li><strong>原則</strong>：題目對本命構面的 Loading，必須<strong>大於</strong>它對其他任何構面的 Loading</li>
+<li><strong>Reviewer 質疑示例</strong>：「你的滿意度第 3 題（Sat3）對『滿意度』的 Loading 是 0.75，但對『忠誠度』也有 0.72。這題是不是分不清楚？」→ 區別效度有問題，可能需刪題（也應檢查 <a href="HTMT.html">HTMT</a>）</li>
+</ol>
+<h3 id="qa">四、口試情境題（Q&amp;A）</h3>
+<p><strong>Q1：你的某個題目 Loading 只有 0.65，Reviewer 要求你刪除，你刪不刪？</strong></p>
+<blockquote>
+<p><strong>回答策略（防禦性）</strong>：
+「根據 Hair et al. 的建議，0.40 到 0.70 屬於考量區間。我檢查了刪除該題後的影響：發現刪除後，該構面的 AVE 僅從 0.53 上升到 0.54（原本就已達標）。考量該題目在理論上具有獨特的內容效度（Content Validity），且不影響整體收斂效度，本研究決定<strong>予以保留</strong>，以維持構面內涵的完整性。」</p>
+</blockquote>
+<p><strong>Q2：Formative Indicator（形成性指標）也要看 Loading 嗎？</strong></p>
+<blockquote>
+<p><strong>回答策略</strong>：
+「在形成性模型中，主要看的是<strong>權重（Weights）</strong> 及其顯著性。但若某指標的權重不顯著，會輔助檢查其 Loading：若 $\geq 0.50$，代表該指標雖相對貢獻低，但絕對貢獻仍足夠，通常<strong>保留</strong>；若 $< 0.50$ 且權重不顯著，才考慮刪除。」（並參 <a href="VIF_Variance_Inflation_Factor.html">VIF Variance Inflation Factor</a> 之 Outer VIF 判讀）</p>
+</blockquote>
+<hr />
+<h2 id="loading_1">Loading 完整實戰範例</h2>
+<p>以一個具體的 <strong>「知覺易用性（Perceived Ease of Use, PEOU）」</strong> 構面為例，走過從 Loading 檢視到最終定案的完整分析流程。</p>
+<h3 id="_2">案例背景</h3>
+<ul>
+<li><strong>構面</strong>：知覺易用性（PEOU）</li>
+<li><strong>定義</strong>：使用者認為操作該 AI 系統是不費力氣的程度</li>
+<li><strong>初始題目</strong>：6 題（PEOU_1 ~ PEOU_6）</li>
+<li><strong>分析軟體</strong>：SmartPLS（PLS-SEM）</li>
+</ul>
+<h3 id="initial-outer-loadings">第一階段：初始掃描（Initial Outer Loadings）</h3>
+<p>跑完第一次 PLS Algorithm 後，得到報表：</p>
+<table>
+<thead>
+<tr>
+<th>題目代號</th>
+<th>題目內容</th>
+<th>Loading</th>
+<th>狀態判定</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>PEOU_1</strong></td>
+<td>學習操作這個 AI 系統很容易</td>
+<td><strong>0.88</strong></td>
+<td>🟢 優良 (&gt; 0.708)</td>
+</tr>
+<tr>
+<td><strong>PEOU_2</strong></td>
+<td>我覺得這個系統的操作介面很清楚</td>
+<td><strong>0.85</strong></td>
+<td>🟢 優良 (&gt; 0.708)</td>
+</tr>
+<tr>
+<td><strong>PEOU_3</strong></td>
+<td>我能靈活地與這個系統互動</td>
+<td><strong>0.78</strong></td>
+<td>🟢 優良 (&gt; 0.708)</td>
+</tr>
+<tr>
+<td><strong>PEOU_4</strong></td>
+<td>我覺得要熟練這個系統需要一點時間（反向題）</td>
+<td><strong>0.55</strong></td>
+<td>🟡 觀察區 (0.40~0.70)</td>
+</tr>
+<tr>
+<td><strong>PEOU_5</strong></td>
+<td>這個系統的介面配色很好看</td>
+<td><strong>0.32</strong></td>
+<td>🔴 不合格 (&lt; 0.40)</td>
+</tr>
+<tr>
+<td><strong>PEOU_6</strong></td>
+<td>使用這個系統能讓我的工作表現更好</td>
+<td><strong>0.65</strong></td>
+<td>🟡 觀察區 (0.40~0.70)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="item-deletion-strategy">第二階段：刪題決策（Item Deletion Strategy）</h3>
+<p>考試中要展現邏輯：不能只說「刪」，要說「為什麼刪」。</p>
+<h4 id="peou_5loading-032">🚩 第一刀：處決 PEOU_5（Loading = 0.32）</h4>
+<ul>
+<li><strong>判斷</strong>：低於 0.40</li>
+<li><strong>理由</strong>：「配色好看」跟「好不好用（易用性）」是兩回事，這題測量的是美感、屬於雜訊</li>
+<li><strong>動作</strong>：<strong>直接刪除</strong></li>
+</ul>
+<h4 id="peou_6loading-065">🚩 第二刀：審視 PEOU_6（Loading = 0.65）</h4>
+<ul>
+<li><strong>判斷</strong>：介於 0.40 與 0.70 之間，不能直接刪，要看內容效度</li>
+<li><strong>理由</strong>：題目是「讓工作表現更好」，這聽起來像是「知覺有用性（Usefulness）」而非「易用性」。Loading 尚可，但<strong>跑錯棚了（Concept Drift）</strong></li>
+<li><strong>動作</strong>：基於內容效度不符，<strong>刪除</strong></li>
+</ul>
+<h4 id="peou_4loading-055">🚩 第三刀：抉擇 PEOU_4（Loading = 0.55）</h4>
+<ul>
+<li><strong>判斷</strong>：介於 0.40 與 0.70 之間</li>
+<li><strong>理由</strong>：反向題，雖然已轉分，但 Loading 仍不高，顯示受試者理解有落差</li>
+<li><strong>試算</strong>：</li>
+<li>不刪 PEOU_4：4 題（1,2,3,4）的 AVE 約 <strong>0.58</strong>（雖然及格，但不好看）</li>
+<li>刪除 PEOU_4：剩 3 題（1,2,3）AVE 飆升到 <strong>0.70 以上</strong></li>
+<li><strong>動作</strong>：為追求更純淨的測量模型，且 3 題已足夠代表構面，<strong>刪除</strong></li>
+</ul>
+<h3 id="final-assessment">第三階段：最終模型檢驗（Final Assessment）</h3>
+<p>刪除 PEOU_4, 5, 6 後，剩 PEOU_1, 2, 3。<strong>重新執行（Recalculate）</strong> PLS Algorithm 並檢驗：</p>
+<h4 id="1-convergent-validity-ave">1. 收斂效度（Convergent Validity 收斂效度）— 檢查 AVE</h4>
+<p>手算驗證：</p>
+<ul>
+<li>$AVE = \frac{0.88^2 + 0.85^2 + 0.78^2}{3} = \frac{0.7744 + 0.7225 + 0.6084}{3} = \frac{2.1053}{3} \approx \mathbf{0.701}$</li>
+<li><strong>結果</strong>：<strong>0.701 &gt; 0.50</strong> → 構面解釋題目 70% 變異，收斂效度<strong>通過</strong></li>
+</ul>
+<h4 id="2-internal-consistency-cr-alpha">2. 內部一致性（Internal Consistency）— CR 與 Alpha</h4>
+<ul>
+<li><strong>Composite Reliability (CR)</strong>：Loading 都很高，CR 通常 &gt; 0.85（標準 &gt; 0.70）→ <strong>通過</strong></li>
+<li><strong>rho_A</strong>：介於 Alpha 與 CR 之間，預計約 0.82（標準 &gt; 0.70）→ <strong>通過</strong></li>
+</ul>
+<h4 id="3-discriminant-validity-htmt">3. 區別效度（<a href="Discriminant_Validity_%E5%8D%80%E5%88%A5%E6%A0%A1%E5%BA%A6.html">Discriminant Validity 區別校度</a>）— 檢查 <a href="HTMT.html">HTMT</a></h4>
+<p>引入「知覺有用性（PU）」比較：</p>
+<ul>
+<li>假設 PEOU 與 PU 的 <a href="HTMT.html">HTMT</a> 值為 <strong>0.65</strong>（標準 &lt; 0.85 嚴謹／&lt; 0.90 寬鬆）</li>
+<li><strong>CI 信賴區間</strong>：[0.55, 0.72]，不含 1</li>
+<li><strong>結果</strong>：<strong>通過</strong>——受試者分得清「好用」跟「有用」是兩回事</li>
+</ul>
+<h3 id="_3">第四階段：寫作總結（論文範本）</h3>
+<blockquote>
+<p>"Initially, the construct 'Perceived Ease of Use' consisted of six items. Upon examining the outer loadings, item <strong>PEOU_5</strong> was removed due to a low loading of 0.32 (&lt;0.40). Item <strong>PEOU_6</strong> (0.65) was also removed as it conceptually reflected 'perceived usefulness' rather than ease of use, indicating a lack of content validity. Item <strong>PEOU_4</strong> (0.55) was subsequently dropped to improve the Average Variance Extracted (AVE).</p>
+<p>The final measurement model, comprising three items (<strong>PEOU_1, PEOU_2, PEOU_3</strong>), demonstrated satisfactory reliability and validity. All remaining outer loadings exceeded <strong>0.708</strong>, the <strong>AVE was 0.701</strong> (&gt;0.50), and the <strong>Composite Reliability was 0.88</strong> (&gt;0.70). Discriminant validity was confirmed with an <strong>HTMT ratio of 0.65</strong> (&lt;0.85)."</p>
+</blockquote>
+<h3 id="mental-checklist">流程總結圖（Mental Checklist）</h3>
+<ol>
+<li><strong>看 Loading</strong>：殺掉 &lt; 0.4 的垃圾（PEOU_5）</li>
+<li><strong>看內容</strong>：殺掉 Loading 普通且語意不對的間諜（PEOU_6）</li>
+<li><strong>看 AVE</strong>：如果 AVE 不夠高，殺掉 Loading 0.4~0.7 的拖油瓶（PEOU_4）</li>
+<li><strong>最終確認</strong>：剩下精銳部隊（1, 2, 3），算出漂亮的 CR 與 AVE</li>
+</ol>
+<h4 id="_4">一句話心法</h4>
+<p><strong>Loading 是量化研究的「磚塊」</strong>：磚塊不夠硬（&lt; 0.4）→ 丟掉；磚塊普通（0.4 ~ 0.7）→ 只要整面牆（AVE）沒倒就留著；磚塊很硬（&gt; 0.708）→ 完美。</p>
+<hr />
+<p><strong>相關概念</strong>
+- 上位概念：Convergent Validity 收斂效度、AVE
+- 區別效度連動：<a href="Discriminant_Validity_%E5%8D%80%E5%88%A5%E6%A0%A1%E5%BA%A6.html">Discriminant Validity 區別校度</a>、<a href="HTMT.html">HTMT</a>、<a href="Fornell-Larcker.html">Fornell-Larcker</a>
+- 共線性連動：<a href="VIF_Variance_Inflation_Factor.html">VIF Variance Inflation Factor</a>、<a href="Multicollinearity_%E5%85%B1%E7%B7%9A%E6%80%A7.html">Multicollinearity 共線性</a>
+- 方法偏誤連動：<a href="CMB_Common_method_bias.html">CMB Common method bias</a>、<a href="Harman%27s_Single_Factor_Test.html">Harman's Single Factor Test</a>、<a href="CFA_Marker_Variable_Technique.html">CFA Marker Variable Technique</a>、<a href="Lindell_Exercise.html">Lindell Exercise</a></p>
+</main>
+</div>
+<script>
+(function () {
+  // ── Rebuild TOC with toggle buttons ──────────────────────────────────────
+  var toc = document.querySelector('.sidebar .toc');
+  if (toc) {
+    toc.querySelectorAll('li').forEach(function (li) {
+      var childUl = li.querySelector(':scope > ul');
+      var link    = li.querySelector(':scope > a');
+      if (!link) return;
+
+      var row = document.createElement('div');
+      row.className = 'toc-row';
+
+      if (childUl) {
+        var btn = document.createElement('button');
+        btn.className = 'toc-toggle';
+        btn.setAttribute('aria-expanded', 'true');
+        btn.textContent = '▾';          // ▾ open
+        btn.addEventListener('click', function () {
+          var open = childUl.hidden;
+          childUl.hidden = !open;
+          btn.textContent = open ? '▾' : '▸';   // ▾ / ▸
+          btn.setAttribute('aria-expanded', String(open));
+        });
+        row.appendChild(btn);
+      } else {
+        var spacer = document.createElement('span');
+        spacer.style.width = '1rem';
+        spacer.style.flexShrink = '0';
+        row.appendChild(spacer);
+      }
+
+      row.appendChild(link);
+      li.insertBefore(row, li.firstChild);
+    });
+  }
+
+  // ── Scroll spy ───────────────────────────────────────────────────────────
+  var headings = document.querySelectorAll('.content h2[id], .content h3[id], .content h4[id]');
+  var tocLinks = document.querySelectorAll('.sidebar .toc a');
+  if (!headings.length || !tocLinks.length) return;
+
+  var current = null;
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      var link = document.querySelector('.sidebar .toc a[href="#' + e.target.id + '"]');
+      if (!link) return;
+      if (current) current.classList.remove('active');
+      current = link;
+      current.classList.add('active');
+      // Scroll link into view within sidebar
+      current.scrollIntoView({ block: 'nearest' });
+    });
+  }, { rootMargin: '-5% 0px -75% 0px', threshold: 0 });
+
+  headings.forEach(function (h) { io.observe(h); });
+}());
+</script>
+</body>
+</html>

@@ -234,7 +234,7 @@ MathJax = {
 <h1>sem_jasp_journalist_ai_tutorial</h1>
 <p class="meta">#sem　#jasp　#cfa　#methodology_tutorial　#mediation　#model_comparison　#ai_journalism　#tam</p>
 <h2 id="sem_jasp_journalist_ai_tutorialsem-ai"><a href="sem_jasp_journalist_ai_tutorial.html">sem_jasp_journalist_ai_tutorial</a>（SEM 入門教學講義｜以政治記者 AI 使用意願資料為例）</h2>
-<p><strong>工具</strong>：JASP（內建 SEM 模組，底層為 R 的 lavaan）
+<p><strong>工具</strong>：JASP（內建 SEM 模組，底層為 R 的 <a href="Lavaan.html">Lavaan</a>）
 <strong>資料</strong>：N ≈ 95 位台灣政治記者問卷（political_journalist_ai_survey_2026）
 <strong>對象</strong>：傳播 / 新聞所碩士班、初次接觸 structural_equation_modeling 的學生</p>
 <hr />
@@ -298,7 +298,7 @@ MathJax = {
 <p>中介效果 PN → RP → BI 是這個模型最有趣的部分。</p>
 <hr />
 <h3 id="4-jasp">第 4 講｜進 JASP 之前的資料整理</h3>
-<p>CSV 的中文欄名 JASP 會吃，但 lavaan 語法不友善，<strong>先在 Excel / Python 把欄名改短</strong>：</p>
+<p>CSV 的中文欄名 JASP 會吃，但 <a href="Lavaan.html">Lavaan</a> 語法不友善，<strong>先在 Excel / Python 把欄名改短</strong>：</p>
 <table>
 <thead>
 <tr>
@@ -469,7 +469,7 @@ MathJax = {
 <td>Model fit 表</td>
 </tr>
 <tr>
-<td>Factor Loading（標準化負荷量 $\lambda$）</td>
+<td><a href="Factor_Loading.html">Factor Loading</a>（標準化負荷量 $\lambda$）</td>
 <td>$\geq .50$</td>
 <td>$\geq .70$</td>
 <td>Factor loadings 表（Std. 欄）</td>
@@ -488,7 +488,7 @@ MathJax = {
 </tr>
 </tbody>
 </table>
-<p>如果某題 Factor Loading $< .5$，考慮刪題或加 error covariance（看 modification_index，MI &gt; 10 才考慮加）。</p>
+<p>如果某題 <a href="Factor_Loading.html">Factor Loading</a> $< .5$，考慮刪題或加 error covariance（看 modification_index，MI &gt; 10 才考慮加）。</p>
 <hr />
 <h3 id="6">第 6 講｜信效度三件套</h3>
 <p>跑完 CFA 後在報告補上：</p>
@@ -548,8 +548,8 @@ MathJax = {
 </blockquote>
 <p><strong>Step 2｜開啟 SEM 分析</strong>
 1. 主選單點 <strong>SEM</strong> → <strong>Structural Equation Modeling</strong>
-2. 出現 <strong>Model syntax</strong> 語法輸入框（接受 lavaan 語法）</p>
-<p><strong>Step 3｜貼入完整 lavaan 語法</strong></p>
+2. 出現 <strong>Model syntax</strong> 語法輸入框（接受 <a href="Lavaan.html">Lavaan</a> 語法）</p>
+<p><strong>Step 3｜貼入完整 <a href="Lavaan.html">Lavaan</a> 語法</strong></p>
 <p>把以下整段複製貼進 Model syntax 框：</p>
 <pre><code># 測量模型（measurement model）
 BI =~ BI1 + BI2 + BI3
@@ -598,8 +598,8 @@ total    := b3 + indirect
 1. 預設語法輸入區上方有個 <code>Model 1</code> 分頁
 2. <strong>點 <code>Model 1</code> 右側的「+」icon</strong> → 出現 <code>Model 2</code>
 3. 重複點 + 直到要比較的模型數量都建立好（例如 4 個模型）
-4. 每個分頁可獨立輸入 lavaan 語法，互不干擾</p>
-<p><strong>Step 3｜在每個分頁貼不同的 lavaan 語法</strong>
+4. 每個分頁可獨立輸入 <a href="Lavaan.html">Lavaan</a> 語法，互不干擾</p>
+<p><strong>Step 3｜在每個分頁貼不同的 <a href="Lavaan.html">Lavaan</a> 語法</strong>
 - 點 <code>Model 1</code> → 貼 baseline 語法
 - 點 <code>Model 2</code> → 貼替代模型語法
 - 以此類推</p>
@@ -618,7 +618,7 @@ total    := b3 + indirect
 - 若 <strong>non-nested</strong>（不同方向、不同結構）→ 看 <a href="AIC.html">AIC</a> / BIC（小的勝）
 - 同時看 $\Delta$<a href="CFI_Comparative_Fit_Index.html">CFI Comparative Fit Index</a> 與 $\Delta$<a href="RMSEA.html">RMSEA</a> 補強判斷</p>
 <h4 id="82">8.2 必跑的四種比較</h4>
-<p>每個比較都列出<strong>完整 lavaan 語法</strong>，學生可以直接複製貼到 JASP 的不同 Model 分頁。</p>
+<p>每個比較都列出<strong>完整 <a href="Lavaan.html">Lavaan</a> 語法</strong>，學生可以直接複製貼到 JASP 的不同 Model 分頁。</p>
 <h5 id="a-harman_single_factor_test">(A) 共同方法偏差檢驗 — Harman_single_factor_test</h5>
 <table>
 <thead>
@@ -775,7 +775,7 @@ RP ~ a1*PN
 <p><strong>Step 1｜在 JASP 載入含 seniority 欄的 CSV</strong>
 - 確認 seniority 是 <strong>Nominal</strong> 變項（藍色三球圖示）</p>
 <p><strong>Step 2｜逐階測試</strong></p>
-<p>每階用 lavaan 的 <code>group</code> 與 <code>group.equal</code> 參數。在 SEM 模組新增 4 個 Model 分頁：</p>
+<p>每階用 <a href="Lavaan.html">Lavaan</a> 的 <code>group</code> 與 <code>group.equal</code> 參數。在 SEM 模組新增 4 個 Model 分頁：</p>
 <p><strong>Model 1（configural）</strong>：</p>
 <pre><code>BI =~ BI1 + BI2 + BI3
 RP =~ RP1 + RP2 + RP3

@@ -192,22 +192,23 @@ MathJax = {
 </ul>
 </li>
 <li><a href="#fornell-larcker-htmt">三、 Fornell-Larcker 的致命弱點 (為什麼現在要用 HTMT？)</a></li>
-<li><a href="#reviewer">四、 博士生該如何應對 Reviewer？</a><ul>
+<li><a href="#reviewer">四、 如何應對 Reviewer？</a><ul>
 <li><a href="#afornell-larcker-htmt">情境 A：Fornell-Larcker 通過，HTMT 也通過</a></li>
 <li><a href="#bfornell-larcker-htmt-htmt-090">情境 B：Fornell-Larcker 通過，但 HTMT 沒過 (HTMT &gt; 0.90)</a></li>
 <li><a href="#cfornell-larcker">情境 C：Fornell-Larcker 沒過</a></li>
 </ul>
 </li>
 <li><a href="#_4">總結</a></li>
+<li><a href="#_5">五、與量測模型其他指標的位置</a></li>
 </ul>
 </div>
-
 </aside>
 <main class="content">
 <h1>Fornell-Larcker</h1>
-
-<p><strong>Fornell-Larcker Criterion</strong> 是結構方程模型（SEM）中，用來檢驗 <strong>「區別效度 (Discriminant Validity 區別校度)」</strong> 最傳統、最經典的指標。</p>
-<p>雖然現在學術界推崇更嚴謹的 <strong>HTMT</strong>，但 Fornell-Larcker 依然是所有量化研究論文<strong>必備的「基本款」</strong>（Reviewer 還是會習慣先看這張表）。</p>
+<p class="meta">#Research_Book　#Fornell_Larcker　#discriminant_validity　#measurement_model　#PLS_SEM</p>
+<h2 id="fornell-larcker-criterion">Fornell-Larcker Criterion</h2>
+<p><a href="Fornell-Larcker.html">Fornell-Larcker</a> Criterion 由 Fornell &amp; Larcker (1981) 提出，是結構方程模型（SEM）中，用來檢驗 <strong><a href="Discriminant_Validity_%E5%8D%80%E5%88%A5%E6%A0%A1%E5%BA%A6.html">Discriminant Validity 區別校度</a></strong> 最傳統、最經典的指標。</p>
+<p>雖然現在學術界推崇更嚴謹的 <a href="HTMT.html">HTMT</a>，但 Fornell-Larcker 依然是所有量化研究論文<strong>必備的「基本款」</strong>（Reviewer 還是會習慣先看這張表）。</p>
 <p>以下是針對博士資格考與論文寫作的詳細解析：</p>
 <hr />
 <h4 id="_1">一、 核心邏輯：構面的「自私」原則</h4>
@@ -215,7 +216,7 @@ MathJax = {
 <p>「一個構面（爸爸）跟自己親生的小孩（題目）的關係，必須大於它跟隔壁老王（其他構面）的關係。」</p>
 <ul>
 <li>
-<p><strong>數學定義</strong>：潛在構面<strong>「平均變異萃取量 (AVE) 的開根號值」</strong>，必須大於該構面與<strong>「其他任何構面的相關係數」</strong>。</p>
+<p><strong>數學定義</strong>：潛在構面 <strong>AVE（平均變異萃取量）的開根號值</strong>，必須大於該構面與<strong>「其他任何構面的相關係數」</strong>。$\sqrt{AVE_i} > \max(r_{ij})$ for all $j \neq i$</p>
 </li>
 <li>
 <p><strong>意義</strong>：如果構面 A 自己解釋變異的能力（AVE），還輸給它跟構面 B 的相關性，那代表 A 跟 B 根本分不開，區別效度失敗。</p>
@@ -283,7 +284,7 @@ MathJax = {
 </li>
 </ul>
 <hr />
-<h4 id="fornell-larcker-htmt">三、 Fornell-Larcker 的致命弱點 (為什麼現在要用 HTMT？)</h4>
+<h4 id="fornell-larcker-htmt">三、 Fornell-Larcker 的致命弱點 (為什麼現在要用 <a href="HTMT.html">HTMT</a>？)</h4>
 <p>這是博士生必須展現「學術深度」的地方。為什麼這幾年 Reviewer 開始嫌棄 Fornell-Larcker？</p>
 <ol>
 <li>
@@ -300,19 +301,19 @@ MathJax = {
 <li>
 <p><strong>依賴 AVE</strong>：</p>
 <ul>
-<li>如果研究者透過刪除題目強行拉高 AVE，Fornell-Larcker 就會很容易通過，但这只是數據操作的假象。</li>
+<li>如果研究者透過刪除題目強行拉高 AVE（透過 <a href="Factor_Loading.html">Factor Loading</a> 篩題），Fornell-Larcker 就會很容易通過，但这只是數據操作的假象。</li>
 </ul>
 </li>
 </ol>
 <hr />
-<h4 id="reviewer">四、 博士生該如何應對 Reviewer？</h4>
+<h4 id="reviewer">四、 如何應對 Reviewer？</h4>
 <p>在論文中，您不能只報 Fornell-Larcker，也不能完全不報。<strong>最佳策略是「新舊並陳」</strong>。</p>
 <h5 id="afornell-larcker-htmt">情境 A：Fornell-Larcker 通過，HTMT 也通過</h5>
 <ul>
 <li>
 <p><strong>對策</strong>：完美。在表格下方註解：</p>
 <blockquote>
-<p>「區別效度透過 Fornell-Larcker Criterion (1981) 與 HTMT Ratio (Henseler et al., 2015) 雙重檢驗，結果顯示所有對角線數值皆大於其相關係數，且所有 HTMT 值皆小於 0.85。」</p>
+<p>「區別效度透過 Fornell-Larcker Criterion (1981) 與 <a href="HTMT.html">HTMT</a> Ratio (Henseler et al., 2015) 雙重檢驗，結果顯示所有對角線數值皆大於其相關係數，且所有 HTMT 值皆小於 0.85。」</p>
 </blockquote>
 </li>
 </ul>
@@ -350,7 +351,7 @@ MathJax = {
 <tr>
 <th><strong>指標</strong></th>
 <th><strong>Fornell-Larcker Criterion</strong></th>
-<th><strong>HTMT</strong></th>
+<th><strong><a href="HTMT.html">HTMT</a></strong></th>
 </tr>
 </thead>
 <tbody>
@@ -376,9 +377,22 @@ MathJax = {
 </tr>
 </tbody>
 </table>
-<p>下一步</p>
-<p>現在您已經掌握了從測量模型到結構模型的所有指標。</p>
-<p>針對論文寫作的最後一哩路，您是否需要我整理<strong>「Discussion (討論與結論)」章節的寫作模板</strong>？（包含如何將統計結果昇華為理論貢獻，這通常是決定論文能否被接受的關鍵）。</p>
+<h3 id="_5">五、與量測模型其他指標的位置</h3>
+<p>Fornell-Larcker 屬於量測模型評估流程的<strong>區別效度層</strong>：</p>
+<ol>
+<li>信度：Cronbach's α、Composite Reliability ≥ .70</li>
+<li>收斂效度：<a href="Factor_Loading.html">Factor Loading</a> ≥ .70；AVE ≥ .50</li>
+<li><strong>區別效度：<a href="HTMT.html">HTMT</a> &lt; .85（主）+ Fornell-Larcker（輔）+ Cross-Loadings（診斷）</strong></li>
+<li>共線性：<a href="VIF_Variance_Inflation_Factor.html">VIF Variance Inflation Factor</a> &lt; 3.3、<a href="Multicollinearity_%E5%85%B1%E7%B7%9A%E6%80%A7.html">Multicollinearity 共線性</a></li>
+<li>方法偏誤：<a href="CMB_Common_method_bias.html">CMB Common method bias</a>、<a href="Harman%27s_Single_Factor_Test.html">Harman's Single Factor Test</a>、<a href="CFA_Marker_Variable_Technique.html">CFA Marker Variable Technique</a>、<a href="Lindell_Exercise.html">Lindell Exercise</a></li>
+</ol>
+<hr />
+<p><strong>相關概念</strong>
+- 上位概念：<a href="Discriminant_Validity_%E5%8D%80%E5%88%A5%E6%A0%A1%E5%BA%A6.html">Discriminant Validity 區別校度</a>
+- 主流替代指標：<a href="HTMT.html">HTMT</a>
+- 收斂效度連動：AVE、<a href="Factor_Loading.html">Factor Loading</a>
+- 共線性連動：<a href="VIF_Variance_Inflation_Factor.html">VIF Variance Inflation Factor</a>、<a href="Multicollinearity_%E5%85%B1%E7%B7%9A%E6%80%A7.html">Multicollinearity 共線性</a>
+- 方法偏誤連動：<a href="CMB_Common_method_bias.html">CMB Common method bias</a>、<a href="Harman%27s_Single_Factor_Test.html">Harman's Single Factor Test</a>、<a href="CFA_Marker_Variable_Technique.html">CFA Marker Variable Technique</a>、<a href="Lindell_Exercise.html">Lindell Exercise</a></p>
 </main>
 </div>
 <script>

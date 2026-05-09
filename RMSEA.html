@@ -173,16 +173,75 @@ hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
   .content { padding: 1.5rem 1.2rem 4rem; }
 }
 </style>
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
 </head>
 <body>
 <div class="layout">
 <aside class="sidebar">
-
+<div class="toc">
+<ul>
+<li><a href="#_1">解讀準則</a></li>
+<li><a href="#_2">與其他適配指標的關係</a></li>
+<li><a href="#_3">應用情境</a></li>
+<li><a href="#_4">限制與爭議</a></li>
+</ul>
+</div>
 </aside>
 <main class="content">
 <h1>RMSEA</h1>
-
-
+<p class="meta">#fit_index　#SEM　#CFA　#structural_equation_modeling　#psychometrics</p>
+<h2 id="rmsearoot-mean-square-error-of-approximation">RMSEA（Root Mean Square Error of Approximation，近似誤差均方根）</h2>
+<p><strong>定義</strong>：<a href="RMSEA.html">RMSEA</a> 是 SEM / CFA 中最常用的<strong>絕對適配指標</strong>（absolute fit index），由 Steiger &amp; Lind（1980）提出，衡量模型在母體中的近似誤差大小，並對自由度與樣本量做校正。RMSEA 不像比較性指標（<a href="CFI_Comparative_Fit_Index.html">CFI</a>、TLI）依賴一個基準模型，而是直接評估目標模型本身的殘差結構。</p>
+<p><strong>公式</strong>：</p>
+<p>$$
+\text{RMSEA} = \sqrt{\frac{\max(\chi^2 - df, 0)}{df \cdot (N - 1)}}
+$$</p>
+<p>其中 $\chi^2$ 為模型卡方、$df$ 為自由度、$N$ 為樣本量。RMSEA = 0 表示完美適配；數值越大代表近似誤差越大。</p>
+<hr />
+<h3 id="_1">解讀準則</h3>
+<ul>
+<li><strong>Hu &amp; Bentler（1999）</strong>：RMSEA ≤ 0.06 為良好適配</li>
+<li><strong>Browne &amp; Cudeck（1993）的傳統三段式</strong>：</li>
+<li>RMSEA &lt; 0.05：close fit（緊密適配）</li>
+<li>0.05 ≤ RMSEA ≤ 0.08：reasonable fit（合理適配）</li>
+<li>0.08 &lt; RMSEA ≤ 0.10：mediocre fit（普通適配）</li>
+<li>RMSEA &gt; 0.10：poor fit（不可接受）</li>
+<li><strong>MacCallum, Browne &amp; Sugawara（1996）的假設檢定</strong>：可檢定 RMSEA ≤ 0.05 是否成立（test of close fit），p &gt; 0.05 表示無法拒絕緊密適配</li>
+<li>Alamer 2025 SEM 的 reporting checklist 建議報告 RMSEA 點估計、90% CI 與 close fit p 值，並以 RMSEA/SRMR ≤ .08/.05 為雙重門檻</li>
+</ul>
+<p>報告慣例：除點估計外應同時報告 <strong>90% 信賴區間</strong>（lower / upper），上限若超過 0.10 應視為證據不足。</p>
+<hr />
+<h3 id="_2">與其他適配指標的關係</h3>
+<ul>
+<li><strong>與 <a href="CFI_Comparative_Fit_Index.html">CFI</a> 並用</strong>：CFI 為比較性、RMSEA 為絕對性，兩者偵測不同類型的錯設。Hu &amp; Bentler（1999）的「two-index strategy」建議 CFI ≥ 0.95 與 RMSEA ≤ 0.06（或 SRMR ≤ 0.08）同時成立才宣告良好適配</li>
+<li><strong>與 SRMR 並用</strong>：SRMR（standardized root mean square residual）為觀察與隱含相關矩陣的標準化殘差，與 RMSEA 互補——RMSEA 對模型錯設整體敏感，SRMR 則對 factor loading 錯設特別敏感</li>
+<li><strong>與 χ² 的關係</strong>：當 $\chi^2 \le df$ 時 RMSEA 設為 0；RMSEA 等於從卡方剝除自由度與樣本量後的「每個自由度上的殘差」</li>
+</ul>
+<hr />
+<h3 id="_3">應用情境</h3>
+<ol>
+<li><strong>CFA 測量模型驗證</strong>：與 CFI、SRMR 並列為標準三件組（CFA、Alamer 2025 SEM）</li>
+<li><strong>SEM 整體模型評估</strong>：SEM 評估準則明確列入 RMSEA ≤ 0.06</li>
+<li><strong>巢套模型比較</strong>：RMSEA 不像卡方差異檢定那麼容易因樣本量大而拒絕，故較適合大樣本的模型比較</li>
+<li><strong>多群組測量不變性</strong>：可觀察 ΔRMSEA；常與 ΔCFI 並用</li>
+</ol>
+<hr />
+<h3 id="_4">限制與爭議</h3>
+<ul>
+<li><strong>小樣本偏誤</strong>：N &lt; 200 時 RMSEA 容易高估，建議加報 90% CI</li>
+<li><strong>低自由度模型偏誤</strong>：當 $df$ 很小（如僅一個 factor 兩個 indicator 的模型）時 RMSEA 可能過大；Kenn et al. 建議在低 $df$ 時對 RMSEA 持保留態度</li>
+<li><strong>估計子敏感</strong>：以 MLR 估計時 RMSEA 應使用 robust 版本（scaled RMSEA）；類別資料下使用 WLSMV 時亦有對應的 robust 統計量</li>
+<li><strong>不可單獨判讀</strong>：RMSEA 通過不保證模型正確，需結合 CFI、SRMR、殘差矩陣、modification indices 與理論合理性綜合判斷</li>
+</ul>
+<hr />
+<p><strong>相關概念</strong>：<a href="CFI_Comparative_Fit_Index.html">CFI Comparative Fit Index</a>、<a href="SRMR.html">SRMR</a>、Tucker-Lewis Index、fit indices、CFA、SEM、MLR、FIML 使 SEM 在 MCAR MAR 下優於 listwise 刪除</p>
+<p><strong>相關論文</strong>：Alamer 2025 SEM、Alamer 2025 Methods</p>
 </main>
 </div>
 <script>
