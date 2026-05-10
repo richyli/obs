@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ANOVA</title>
+<style>*, *::before, *::after { box-sizing: border-box; }
+
+/* ── Base ── */
+body {
+  font-family: "Helvetica Neue", Arial, "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+  font-size: 20px;
+  line-height: 1.9;
+  color: #111;
+  background: #fff;
+  margin: 0;
+}
+
+/* ── Two-column layout (note pages) ── */
+.layout { display: flex; align-items: flex-start; min-height: 100vh; }
+
+.sidebar {
+  width: 270px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 2rem 1rem 2rem 1.5rem;
+  border-right: 1px solid #e8e8e8;
+  background: #f9f9f9;
+}
+.sidebar-back {
+  display: block;
+  font-size: 0.82rem;
+  color: #999;
+  margin-bottom: 1.4rem;
+  text-decoration: none;
+}
+.sidebar-back:hover { color: #333; }
+.sidebar-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #bbb;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+/* ── TOC in sidebar ── */
+.toc { font-size: 0.82rem; line-height: 1.55; }
+.toc ul { list-style: none; margin: 0; padding: 0; }
+.toc ul ul { padding-left: 0.9rem; }
+.toc li { margin: 0; }
+.toc-row { display: flex; align-items: baseline; gap: 0.2rem; }
+.toc-row a {
+  flex: 1;
+  display: block;
+  padding: 0.18rem 0.3rem;
+  border-radius: 3px;
+  color: #555;
+  text-decoration: none;
+  word-break: break-word;
+}
+.toc-row a:hover { background: #ebebeb; color: #111; }
+.toc-row a.active { color: #0055cc; font-weight: 600; background: #e8f0ff; }
+.toc-toggle {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-size: 0.65rem;
+  color: #bbb;
+  line-height: 1;
+  width: 1rem;
+  text-align: center;
+}
+.toc-toggle:hover { color: #555; }
+
+/* ── Main content ── */
+.content {
+  flex: 1;
+  min-width: 0;
+  padding: 3rem 3rem 6rem;
+  max-width: 800px;
+}
+
+/* ── Single-column (index page) ── */
+.container { max-width: 800px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
+
+/* ── Typography ── */
+h1 {
+  font-size: 1.75rem; font-weight: 700;
+  margin: 0 0 0.15rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 2px solid #111;
+  line-height: 1.3;
+}
+h2 {
+  font-size: 1.3rem; font-weight: 700;
+  margin: 2.5rem 0 0.5rem;
+  padding-bottom: 0.2rem;
+  border-bottom: 1px solid #ddd;
+}
+h3 { font-size: 1.1rem; font-weight: 700; margin: 1.8rem 0 0.4rem; }
+h4 { font-size: 1rem; font-weight: 700; margin: 1.4rem 0 0.3rem; }
+p { margin: 0.9rem 0; }
+a { color: #0055cc; text-decoration: none; }
+a:hover { text-decoration: underline; }
+nav { margin-bottom: 2.5rem; font-size: 0.85rem; color: #999; }
+nav a { color: #999; }
+
+/* ── Code ── */
+code {
+  font-family: "SFMono-Regular", Consolas, monospace;
+  background: #f2f2f2;
+  padding: 0.1em 0.4em;
+  border-radius: 3px;
+  font-size: 0.85em;
+}
+pre {
+  background: #f2f2f2;
+  padding: 1.2rem 1.4rem;
+  border-radius: 5px;
+  overflow-x: auto;
+  font-size: 0.85em;
+  line-height: 1.6;
+}
+pre code { background: none; padding: 0; }
+
+/* ── Lists ── */
+ul, ol { padding-left: 1.6rem; margin: 0.8rem 0; }
+li { margin: 0.35rem 0; }
+li > ul, li > ol { margin: 0.2rem 0; }
+
+/* ── Other elements ── */
+blockquote {
+  border-left: 4px solid #ccc;
+  margin: 1.2rem 0;
+  padding: 0.3rem 1.2rem;
+  color: #444;
+  background: #fafafa;
+}
+table { border-collapse: collapse; width: 100%; margin: 1.2rem 0; font-size: 0.95em; }
+th, td { border: 1px solid #ccc; padding: 0.55rem 0.9rem; text-align: left; }
+th { background: #f5f5f5; font-weight: 700; }
+tr:nth-child(even) { background: #fafafa; }
+hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
+.meta { font-size: 0.8rem; color: #aaa; margin: 0.3rem 0 1.8rem; }
+.index-list { list-style: none; padding: 0; margin: 1rem 0; }
+.index-list li { padding: 0.55rem 0; border-bottom: 1px solid #eee; font-size: 1.05rem; }
+.index-list li:last-child { border-bottom: none; }
+.embed-block {
+  border-left: 3px solid #aaa;
+  padding: 0.5rem 1.2rem;
+  margin: 1.5rem 0;
+  background: #f8f8f8;
+}
+
+/* ── Mobile ── */
+@media (max-width: 800px) {
+  .layout { flex-direction: column; }
+  .sidebar {
+    position: static;
+    width: 100%;
+    height: auto;
+    max-height: 50vh;
+    border-right: none;
+    border-bottom: 1px solid #e8e8e8;
+    padding: 1rem 1.5rem;
+  }
+  .content { padding: 1.5rem 1.2rem 4rem; }
+}
+</style>
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+<div class="toc">
+<ul>
+<li><a href="#_1">方法說明</a><ul>
+<li><a href="#_2">目的</a></li>
+<li><a href="#_3">流程</a></li>
+<li><a href="#_4">適用範圍</a></li>
+<li><a href="#_5">代表性研究</a></li>
+<li><a href="#_6">相關學者</a></li>
+<li><a href="#anova">ANOVA 與迴歸的區別</a></li>
+<li><a href="#1">1. 目的</a></li>
+<li><a href="#2">2. 變數類型</a></li>
+<li><a href="#3">3. 數學框架</a></li>
+<li><a href="#4">4. 假設檢定</a></li>
+<li><a href="#5">5. 輸出與解釋</a></li>
+<li><a href="#6">6. 應用場景</a></li>
+<li><a href="#7">7. 擴展方法</a></li>
+<li><a href="#8-anova">8. ANOVA 與迴歸的交集</a></li>
+<li><a href="#9">9. 重點區別</a></li>
+<li><a href="#_7">總結</a></li>
+<li><a href="#10-anova-glm">10. ANOVA 作為 GLM 特例</a></li>
+<li><a href="#11-post-hoc">11. Post-hoc 比較家族</a></li>
+<li><a href="#12">12. 違反假設時的替代方案</a></li>
+<li><a href="#13-power">13. 效果量與 Power</a></li>
+<li><a href="#14-wiki-anova">14. wiki 中的 ANOVA 應用案例</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</aside>
+<main class="content">
+<h1>ANOVA</h1>
+<p class="meta">#statistics　#ANOVA　#experiment_design　#hypothesis_testing　#methodology</p>
+<h2 id="anovaanalysis-of-variance"><a href="ANOVA.html">ANOVA</a>（Analysis of Variance，變異數分析）</h2>
+<p><strong>定義</strong>：比較三個或更多組均值是否有顯著差異的統計方法。透過分解總變異為「組間變異」與「組內變異」，計算 F 統計量判斷差異是否超過偶然水準：</p>
+<p>$$F = \frac{MS_{between}}{MS_{within}}$$</p>
+<p><strong>來源</strong>：Sir Ronald Fisher 於 1920 年代發展，是實驗設計研究的核心統計工具（Fisher, 1925）。</p>
+<p><strong>常見形式</strong>：
+- <strong>One-way ANOVA</strong>：單因子，比較多組均值
+- <strong>Two-way ANOVA</strong>：雙因子，同時分析主效應與交互效應
+- <strong>ANCOVA</strong>：加入協變量控制（如 pre-test 分數）
+- <strong>Repeated-measures ANOVA</strong>：同一受試者跨條件比較</p>
+<hr />
+<h3 id="_1">方法說明</h3>
+<h4 id="_2">目的</h4>
+<ul>
+<li>主要研究目的：檢驗多組均值是否存在統計上顯著差異，並量化主效應與交互效應的相對貢獻（Mainardi, 2022；Mainardi 2022 Fundamental Concepts）</li>
+<li>次要用途：因子實驗設計的標準分析工具；事前檢定力分析的基礎模型</li>
+</ul>
+<h4 id="_3">流程</h4>
+<ol>
+<li>確認因變量為連續、自變量為類別（單因子或多因子）</li>
+<li>檢視假設：常態性（Shapiro–Wilk）、變異數同質性（Levene's test）、獨立性</li>
+<li>計算 $SS_{total} = SS_{between} + SS_{within}$，求 F 統計量</li>
+<li>顯著時執行 post-hoc 比較（Tukey HSD、Bonferroni、Scheffé）</li>
+<li>報告 $\eta^2$ 或 $\omega^2$ 效果量；繪製交互效應圖（two-way 情境）</li>
+</ol>
+<h4 id="_4">適用範圍</h4>
+<ul>
+<li><strong>適用</strong>：3+ 組獨立樣本均值比較；2×2、2×3 因子設計；前測–後測 between-within 混合設計</li>
+<li><strong>不適用</strong>：兩組比較（用 t 檢定）；類別因變量（用 logistic regression / chi-square）；嚴重違反常態性與變異數同質（改用 Welch's ANOVA、Kruskal–Wallis）</li>
+<li><strong>樣本規模建議</strong>：每組至少 20–30；2×2 設計建議 N ≥ 80 達到 power 0.8 偵測中等效應（暫無 wiki/ 資料）</li>
+<li><strong>資料類型要求</strong>：連續因變量；類別自變量（含因子實驗設計）</li>
+</ul>
+<h4 id="_5">代表性研究</h4>
+<ul>
+<li><strong>奠基文獻</strong>：Fisher, R. A. (1925). <em>Statistical methods for research workers</em> — ANOVA 與 F 分配的奠基</li>
+<li><strong>方法發展里程碑</strong>：Tukey（1949）— HSD 事後比較；Cohen（1988）— $\eta^2$ 效果量</li>
+<li><strong>wiki 中應用案例</strong>：Chen 2024 Consumer Attitudes — Two-way ANOVA 分析 AI 來源 × 訴求類型交互；Mainardi 2022 Fundamental Concepts — ANOVA 與相關比較程序的概念釐清</li>
+<li><strong>相關 wiki 筆記</strong>：（延伸：Bonferroni、effect size、experimental design）</li>
+</ul>
+<h4 id="_6">相關學者</h4>
+<ul>
+<li><strong>奠基者</strong>：Sir Ronald A. Fisher（Rothamsted, 1925）— ANOVA 與隨機化原則</li>
+<li><strong>主要推廣者</strong>：John Tukey（Princeton）— 事後比較；George Box — 因子設計</li>
+<li><strong>現代教科書</strong>：Geoffrey Keppel、Thomas D. Wickens — <em>Design and Analysis</em></li>
+</ul>
+<hr />
+<p><strong>相關論文</strong>：Mainardi 2022 Fundamental Concepts、Chen 2024 Consumer Attitudes
+<strong>相關概念</strong>：factorial design、response surface methodology、mixed effects modeling、Bonferroni、effect size</p>
+<p>另見：methodology_book 中的「第 3 章 統計分析方法」段落
+另見：social_science_statistics_book 中的「第 5.2 章 變異數分析（ANOVA）」段落</p>
+<p>單因子變異數分析（ANOVA）**</p>
+<ul>
+<li><strong>目的</strong>：<ul>
+<li>檢測推薦類型（獨立變數，兩組）是否顯著影響三個依變數的平均值。</li>
+</ul>
+</li>
+<li><strong>F 值的解釋</strong>：<ul>
+<li>F 值越大，說明組間變異相對於組內變異越大，表示推薦類型對依變數的影響越顯著。</li>
+</ul>
+</li>
+<li><strong>顯著性檢驗 (p 值)</strong>：<ul>
+<li>p 值小於 0.05，表示推薦類型對依變數的影響具有統計顯著性。</li>
+</ul>
+</li>
+<li>one-way Anova</li>
+<li>one-way Anova Repeated measures</li>
+<li>two-way Anova</li>
+<li><a href="Reading_ANOVA_Table.html">Reading ANOVA Table</a></li>
+<li><a href="ANCOVA.html">ANCOVA</a></li>
+</ul>
+<h4 id="anova"><strong>ANOVA 與迴歸的區別</strong></h4>
+<p>ANOVA（變異數分析）與迴歸分析都是用來研究變數之間關係的重要統計方法，但它們在目的、變數類型、分析焦點與應用場景上有明顯不同。</p>
+<hr />
+<h4 id="1"><strong>1. 目的</strong></h4>
+<ul>
+<li>
+<p><strong>ANOVA（變異數分析）</strong>：</p>
+<ul>
+<li>用於比較兩組或多組的平均數是否存在顯著差異。</li>
+<li><strong>主要目標</strong>：判斷不同組別之間的均值是否有統計顯著的差異。</li>
+<li><strong>範例</strong>：測試三種教學方法對學生成績的影響是否不同。</li>
+<li>
+<p><strong>迴歸分析</strong>：</p>
+</li>
+<li>
+<p>用於探討一個因變數（dependent variable）與一個或多個自變數（independent variables）之間的關係。</p>
+</li>
+<li><strong>主要目標</strong>：預測或解釋因變數，並量化自變數的影響。</li>
+<li><strong>範例</strong>：預測房價（因變數），根據房屋面積和地點（自變數）。</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h4 id="2"><strong>2. 變數類型</strong></h4>
+<ul>
+<li><strong>ANOVA</strong>：<ul>
+<li>自變數是<strong>類別變數</strong>（categorical variable，例如「教學方法」分為三組）。</li>
+<li>因變數是<strong>連續變數</strong>（continuous variable，例如學生分數）。</li>
+</ul>
+</li>
+<li><strong>迴歸分析</strong>：<ul>
+<li>自變數可以是<strong>連續變數</strong>（如收入、年齡）或<strong>類別變數</strong>（如性別）。</li>
+<li>因變數是<strong>連續變數</strong>（如銷售額、溫度）。</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h4 id="3"><strong>3. 數學框架</strong></h4>
+<ul>
+<li>
+<p><strong>ANOVA</strong>：</p>
+<ul>
+<li>分析因變數總變異（total variance）中有多少是來自於：<ol>
+<li><strong>組間變異（Between-Group Variance）</strong>：不同組別的均值差異。</li>
+<li><strong>組內變異（Within-Group Variance）</strong>：同組內個體的差異。</li>
+</ol>
+</li>
+<li>使用 F 統計量檢驗組間變異是否顯著大於組內變異。</li>
+<li>
+<p><strong>迴歸分析</strong>：</p>
+</li>
+<li>
+<p>通過線性方程描述自變數和因變數之間的關係： Y=β0+β1X1+β2X2+⋯+ϵY = \beta_0 + \beta_1X_1 + \beta_2X_2 + \dots + \epsilon</p>
+</li>
+<li>目的是估計參數（如 β1,β2\beta_1, \beta_2），並檢驗每個自變數對因變數的影響是否顯著。</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h4 id="4"><strong>4. 假設檢定</strong></h4>
+<ul>
+<li>
+<p><strong>ANOVA</strong>：</p>
+<ul>
+<li><strong>虛無假設（H0H_0）</strong>：所有組別的均值相等。</li>
+<li><strong>備擇假設（HaH_a）</strong>：至少有一組的均值不同。</li>
+<li><strong>範例</strong>：假設 H0:μ1=μ2=μ3H_0: \mu_1 = \mu_2 = \mu_3。</li>
+<li>
+<p><strong>迴歸分析</strong>：</p>
+</li>
+<li>
+<p><strong>虛無假設（H0H_0）</strong>：每個自變數的回歸係數為 0（即該變數對因變數沒有影響）。</p>
+</li>
+<li><strong>備擇假設（HaH_a）</strong>：至少有一個回歸係數不為 0。</li>
+<li><strong>範例</strong>：假設 H0:β1=0H_0: \beta_1 = 0。</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h4 id="5"><strong>5. 輸出與解釋</strong></h4>
+<ul>
+<li>
+<p><strong>ANOVA</strong>：</p>
+<ul>
+<li>輸出 F 值和 p 值。</li>
+<li>如果 p 值小於顯著水準（例如 0.05），則拒絕虛無假設，表示組間平均數有顯著差異。</li>
+<li>如果差異顯著，可進一步進行事後檢定（如 Tukey's HSD）來確定哪一組均值不同。</li>
+<li>
+<p><strong>迴歸分析</strong>：</p>
+</li>
+<li>
+<p>輸出每個自變數的回歸係數（β\beta）、標準誤（Standard Error）、t 值和 p 值。</p>
+</li>
+<li>解釋自變數對因變數的影響方向（正或負）和影響程度。</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h4 id="6"><strong>6. 應用場景</strong></h4>
+<ul>
+<li>
+<p><strong>ANOVA</strong>：</p>
+<ul>
+<li>比較多組均值差異。</li>
+<li><strong>範例</strong>：測試不同廣告形式（如視覺型、文字型）對消費者點擊率的影響。</li>
+<li>
+<p><strong>迴歸分析</strong>：</p>
+</li>
+<li>
+<p>預測或量化因變數與多個自變數的關係。</p>
+</li>
+<li><strong>範例</strong>：分析廣告預算（自變數）如何影響銷售額（因變數）。</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h4 id="7"><strong>7. 擴展方法</strong></h4>
+<ul>
+<li>
+<p><strong>ANOVA</strong>：</p>
+<ul>
+<li>單因子 ANOVA：只有一個自變數。</li>
+<li>雙因子 ANOVA：有兩個自變數，可檢測交互作用。</li>
+<li>多變量 ANOVA（MANOVA）：分析多個因變數。</li>
+<li>
+<p><strong>迴歸分析</strong>：</p>
+</li>
+<li>
+<p>多元迴歸：多個自變數。</p>
+</li>
+<li>邏輯迴歸：用於二元因變數（如購買與否）。</li>
+<li>非線性迴歸：適用於非線性關係。</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h4 id="8-anova"><strong>8. ANOVA 與迴歸的交集</strong></h4>
+<p>ANOVA 可以看作迴歸的一種特例：</p>
+<ul>
+<li>當自變數是類別變數時，ANOVA 等價於對這些類別變數進行迴歸分析（例如使用虛擬變數）。</li>
+</ul>
+<hr />
+<h4 id="9"><strong>9. 重點區別</strong></h4>
+<table>
+<thead>
+<tr>
+<th><strong>項目</strong></th>
+<th><strong>ANOVA</strong></th>
+<th><strong>迴歸分析</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>主要目標</strong></td>
+<td>比較多組平均數</td>
+<td>預測或解釋因變數</td>
+</tr>
+<tr>
+<td><strong>自變數類型</strong></td>
+<td>類別變數</td>
+<td>連續或類別變數</td>
+</tr>
+<tr>
+<td><strong>因變數類型</strong></td>
+<td>連續變數</td>
+<td>連續變數</td>
+</tr>
+<tr>
+<td><strong>輸出</strong></td>
+<td>F 值與 p 值</td>
+<td>回歸係數、R²、t 值與 p 值</td>
+</tr>
+<tr>
+<td><strong>主要應用</strong></td>
+<td>分析群體均值差異</td>
+<td>分析變數之間的線性關係</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h4 id="_7"><strong>總結</strong></h4>
+<ul>
+<li><strong>ANOVA</strong>：適合用於檢測不同組別之間的均值是否存在顯著差異。</li>
+<li><strong>迴歸分析</strong>：適合用於預測因變數，並量化自變數對因變數的影響。</li>
+</ul>
+<p>選擇使用 ANOVA 或迴歸分析，取決於研究目標和數據特性。如果自變數是類別變數且關注均值差異，選擇 ANOVA；如果需要分析多種自變數對因變數的影響，則選擇迴歸分析。</p>
+<p><a href="Reading_ANOVA_Table.html">Reading ANOVA Table</a></p>
+<hr />
+<h4 id="10-anova-glm"><strong>10. ANOVA 作為 GLM 特例</strong></h4>
+<p>ANOVA 並非獨立的統計家族，而是 General Linear Model（GLM）在「自變量為類別」情境下的特例。把類別變量編成 dummy（或 effect coding），ANOVA 的 $F$ 檢定等於對「所有 dummy 係數同時為 0」的迴歸 $F$ 檢定。這也是現代統計軟體（<a href="Lavaan.html">Lavaan</a>、JASP、<a href="seminr.html">seminr</a>）內部把 ANOVA 統一以 <code>lm()</code> / <code>glm()</code> 實作的原因。實務影響：</p>
+<ul>
+<li><strong>不平衡設計</strong>：類別組樣本數不一致時，two-way Anova 的 Type I / II / III sum of squares 會給出不同結果；GLM 觀點直接揭示這是「設計矩陣非正交」造成的多重解</li>
+<li><strong>連續 × 類別交互</strong>：把連續變量加入 ANOVA 即得到 <a href="ANCOVA.html">ANCOVA</a>，再進一步即一般迴歸，沒有統計學上的斷層</li>
+</ul>
+<h4 id="11-post-hoc"><strong>11. Post-hoc 比較家族</strong></h4>
+<p>當整體 $F$ 顯著且組數 ≥ 3，需執行 post-hoc 比較確定差異所在。常見選項與適用情境：</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>控制錯誤</th>
+<th>特點</th>
+<th>適用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bonferroni</td>
+<td>family-wise（FWER）</td>
+<td>最保守</td>
+<td>比較數少（&lt; 10）</td>
+</tr>
+<tr>
+<td>Tukey HSD</td>
+<td>FWER（all pairwise）</td>
+<td>平衡保守與 power</td>
+<td>所有兩兩比較</td>
+</tr>
+<tr>
+<td>Scheffé</td>
+<td>FWER（任何對比）</td>
+<td>最保守、最彈性</td>
+<td>事後決定 contrast</td>
+</tr>
+<tr>
+<td>Dunnett</td>
+<td>FWER（vs. control）</td>
+<td>比 Tukey 高 power</td>
+<td>多組對單一控制組</td>
+</tr>
+<tr>
+<td>BH</td>
+<td>FDR</td>
+<td>高 power</td>
+<td>探索式、多比較</td>
+</tr>
+</tbody>
+</table>
+<p>ANOVA 主流期刊習慣 Tukey HSD；探索性研究或基因表達等大量比較情境改用 BH（FDR 控制）。</p>
+<h4 id="12"><strong>12. 違反假設時的替代方案</strong></h4>
+<table>
+<thead>
+<tr>
+<th>違反</th>
+<th>替代</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>變異數不等</td>
+<td>Welch's ANOVA、Brown–Forsythe</td>
+</tr>
+<tr>
+<td>嚴重非常態</td>
+<td>Kruskal-Wallis test（無母數版本）</td>
+</tr>
+<tr>
+<td>同一受試者重複測量</td>
+<td>one-way Anova Repeated measures、Mixed-effects model</td>
+</tr>
+<tr>
+<td>多個依變量</td>
+<td>MANOVA、Multivariate GLM</td>
+</tr>
+</tbody>
+</table>
+<h4 id="13-power"><strong>13. 效果量與 Power</strong></h4>
+<p>只報 $F$ 與 $p$ 已不被多數頂刊接受。報告：</p>
+<ul>
+<li><strong>$\eta^2$</strong>：$SS_{between}/SS_{total}$（總變異被組別解釋的比例）</li>
+<li><strong>$\omega^2$</strong>：對小樣本偏誤更小，建議優先使用</li>
+<li><strong>partial $\eta^2$</strong>：多因子設計時排除其他因子變異後的偏比例</li>
+</ul>
+<p>Cohen（1988）建議基準：小 0.01、中 0.06、大 0.14（partial $\eta^2$）。事前 power 分析以 G*Power 或 JASP_ANOVA_effect_size 計算所需樣本（Survey Experiment Effect Size Benchmarks）。</p>
+<h4 id="14-wiki-anova"><strong>14. wiki 中的 ANOVA 應用案例</strong></h4>
+<ul>
+<li>Chen 2024 Consumer Attitudes：Two-way ANOVA（AI 來源 × 訴求類型）</li>
+<li>Gutwin 2023 Methods、Gutwin 2023 Showing Flow：Repeated-measures ANOVA 比較 Sankey 與 Chord 的完成時間與錯誤率</li>
+<li>Mainardi 2022 Fundamental Concepts：ANOVA 與相關比較程序的概念釐清</li>
+<li>Median Effect Size in Survey Experiments Is Much Smaller Than Expected：實驗 ANOVA 報告效果量的基準</li>
+</ul>
+<hr />
+<p><strong>延伸相關概念</strong>：General Linear Model、regression、t-test、Kruskal-Wallis test、<a href="Welch_Satterthwaite.html">Welch_Satterthwaite</a>、<a href="ANCOVA.html">ANCOVA</a>、Levene's Test、<a href="Type_I_and_Type_II_errors.html">Type I and Type II errors</a></p>
+</main>
+</div>
+<script>
+(function () {
+  // ── Rebuild TOC with toggle buttons ──────────────────────────────────────
+  var toc = document.querySelector('.sidebar .toc');
+  if (toc) {
+    toc.querySelectorAll('li').forEach(function (li) {
+      var childUl = li.querySelector(':scope > ul');
+      var link    = li.querySelector(':scope > a');
+      if (!link) return;
+
+      var row = document.createElement('div');
+      row.className = 'toc-row';
+
+      if (childUl) {
+        var btn = document.createElement('button');
+        btn.className = 'toc-toggle';
+        btn.setAttribute('aria-expanded', 'true');
+        btn.textContent = '▾';          // ▾ open
+        btn.addEventListener('click', function () {
+          var open = childUl.hidden;
+          childUl.hidden = !open;
+          btn.textContent = open ? '▾' : '▸';   // ▾ / ▸
+          btn.setAttribute('aria-expanded', String(open));
+        });
+        row.appendChild(btn);
+      } else {
+        var spacer = document.createElement('span');
+        spacer.style.width = '1rem';
+        spacer.style.flexShrink = '0';
+        row.appendChild(spacer);
+      }
+
+      row.appendChild(link);
+      li.insertBefore(row, li.firstChild);
+    });
+  }
+
+  // ── Scroll spy ───────────────────────────────────────────────────────────
+  var headings = document.querySelectorAll('.content h2[id], .content h3[id], .content h4[id]');
+  var tocLinks = document.querySelectorAll('.sidebar .toc a');
+  if (!headings.length || !tocLinks.length) return;
+
+  var current = null;
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      var link = document.querySelector('.sidebar .toc a[href="#' + e.target.id + '"]');
+      if (!link) return;
+      if (current) current.classList.remove('active');
+      current = link;
+      current.classList.add('active');
+      // Scroll link into view within sidebar
+      current.scrollIntoView({ block: 'nearest' });
+    });
+  }, { rootMargin: '-5% 0px -75% 0px', threshold: 0 });
+
+  headings.forEach(function (h) { io.observe(h); });
+}());
+</script>
+</body>
+</html>

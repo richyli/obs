@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wymer 2021 Antecedents Charity</title>
+<style>*, *::before, *::after { box-sizing: border-box; }
+
+/* ── Base ── */
+body {
+  font-family: "Helvetica Neue", Arial, "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+  font-size: 20px;
+  line-height: 1.9;
+  color: #111;
+  background: #fff;
+  margin: 0;
+}
+
+/* ── Two-column layout (note pages) ── */
+.layout { display: flex; align-items: flex-start; min-height: 100vh; }
+
+.sidebar {
+  width: 270px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 2rem 1rem 2rem 1.5rem;
+  border-right: 1px solid #e8e8e8;
+  background: #f9f9f9;
+}
+.sidebar-back {
+  display: block;
+  font-size: 0.82rem;
+  color: #999;
+  margin-bottom: 1.4rem;
+  text-decoration: none;
+}
+.sidebar-back:hover { color: #333; }
+.sidebar-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #bbb;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+/* ── TOC in sidebar ── */
+.toc { font-size: 0.82rem; line-height: 1.55; }
+.toc ul { list-style: none; margin: 0; padding: 0; }
+.toc ul ul { padding-left: 0.9rem; }
+.toc li { margin: 0; }
+.toc-row { display: flex; align-items: baseline; gap: 0.2rem; }
+.toc-row a {
+  flex: 1;
+  display: block;
+  padding: 0.18rem 0.3rem;
+  border-radius: 3px;
+  color: #555;
+  text-decoration: none;
+  word-break: break-word;
+}
+.toc-row a:hover { background: #ebebeb; color: #111; }
+.toc-row a.active { color: #0055cc; font-weight: 600; background: #e8f0ff; }
+.toc-toggle {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-size: 0.65rem;
+  color: #bbb;
+  line-height: 1;
+  width: 1rem;
+  text-align: center;
+}
+.toc-toggle:hover { color: #555; }
+
+/* ── Main content ── */
+.content {
+  flex: 1;
+  min-width: 0;
+  padding: 3rem 3rem 6rem;
+  max-width: 800px;
+}
+
+/* ── Single-column (index page) ── */
+.container { max-width: 800px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
+
+/* ── Typography ── */
+h1 {
+  font-size: 1.75rem; font-weight: 700;
+  margin: 0 0 0.15rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 2px solid #111;
+  line-height: 1.3;
+}
+h2 {
+  font-size: 1.3rem; font-weight: 700;
+  margin: 2.5rem 0 0.5rem;
+  padding-bottom: 0.2rem;
+  border-bottom: 1px solid #ddd;
+}
+h3 { font-size: 1.1rem; font-weight: 700; margin: 1.8rem 0 0.4rem; }
+h4 { font-size: 1rem; font-weight: 700; margin: 1.4rem 0 0.3rem; }
+p { margin: 0.9rem 0; }
+a { color: #0055cc; text-decoration: none; }
+a:hover { text-decoration: underline; }
+nav { margin-bottom: 2.5rem; font-size: 0.85rem; color: #999; }
+nav a { color: #999; }
+
+/* ── Code ── */
+code {
+  font-family: "SFMono-Regular", Consolas, monospace;
+  background: #f2f2f2;
+  padding: 0.1em 0.4em;
+  border-radius: 3px;
+  font-size: 0.85em;
+}
+pre {
+  background: #f2f2f2;
+  padding: 1.2rem 1.4rem;
+  border-radius: 5px;
+  overflow-x: auto;
+  font-size: 0.85em;
+  line-height: 1.6;
+}
+pre code { background: none; padding: 0; }
+
+/* ── Lists ── */
+ul, ol { padding-left: 1.6rem; margin: 0.8rem 0; }
+li { margin: 0.35rem 0; }
+li > ul, li > ol { margin: 0.2rem 0; }
+
+/* ── Other elements ── */
+blockquote {
+  border-left: 4px solid #ccc;
+  margin: 1.2rem 0;
+  padding: 0.3rem 1.2rem;
+  color: #444;
+  background: #fafafa;
+}
+table { border-collapse: collapse; width: 100%; margin: 1.2rem 0; font-size: 0.95em; }
+th, td { border: 1px solid #ccc; padding: 0.55rem 0.9rem; text-align: left; }
+th { background: #f5f5f5; font-weight: 700; }
+tr:nth-child(even) { background: #fafafa; }
+hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
+.meta { font-size: 0.8rem; color: #aaa; margin: 0.3rem 0 1.8rem; }
+.index-list { list-style: none; padding: 0; margin: 1rem 0; }
+.index-list li { padding: 0.55rem 0; border-bottom: 1px solid #eee; font-size: 1.05rem; }
+.index-list li:last-child { border-bottom: none; }
+.embed-block {
+  border-left: 3px solid #aaa;
+  padding: 0.5rem 1.2rem;
+  margin: 1.5rem 0;
+  background: #f8f8f8;
+}
+
+/* ── Mobile ── */
+@media (max-width: 800px) {
+  .layout { flex-direction: column; }
+  .sidebar {
+    position: static;
+    width: 100%;
+    height: auto;
+    max-height: 50vh;
+    border-right: none;
+    border-bottom: 1px solid #e8e8e8;
+    padding: 1rem 1.5rem;
+  }
+  .content { padding: 1.5rem 1.2rem 4rem; }
+}
+</style>
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+<div class="toc">
+<ul>
+<li><a href="#_1">基本資訊</a></li>
+<li><a href="#_2">中文摘要</a></li>
+<li><a href="#_3">大綱</a><ul>
+<li><a href="#1">1. 概念架構</a></li>
+<li><a href="#2">2. 方法</a></li>
+<li><a href="#3">3. 核心結果摘要</a></li>
+<li><a href="#4">4. 理論貢獻</a></li>
+<li><a href="#5">5. 管理意涵</a></li>
+</ul>
+</li>
+<li><a href="#_4">子文件連結</a></li>
+<li><a href="#_5">相關連結</a></li>
+</ul>
+</div>
+</aside>
+<main class="content">
+<h1>Wymer 2021 Antecedents Charity</h1>
+<p class="meta">#paper　#donation　#charity_trust　#nonprofit　#PLS_SEM　#transparency</p>
+<h2 id="wymer-becker-boenigk-2021-the-antecedents-of-charity-trust">Wymer, Becker &amp; Boenigk (2021) — The Antecedents of Charity Trust</h2>
+<h3 id="_1">基本資訊</h3>
+<ul>
+<li><strong>作者</strong>：Walter Wymer（University of Lethbridge）、Annika Becker（Universität Hamburg）、Silke Boenigk（Universität Hamburg）</li>
+<li><strong>年份</strong>：2021</li>
+<li><strong>期刊</strong>：<em>International Journal of Nonprofit and Voluntary Sector Marketing</em>, 26, e1690</li>
+<li><strong>DOI</strong>：10.1002/nvsm.1690</li>
+<li><strong>主題</strong>：慈善信任（charity trust）的 8 個前置因素及其對志願服務與捐款的影響</li>
+</ul>
+<h3 id="_2">中文摘要</h3>
+<p>本研究以澳洲全國性調查（澳洲慈善及非營利委員會 ACNC 2015 年資料，N = 1,377）為次級資料，運用 PLS 路徑分析建立並檢驗慈善信任的前置因素模型。</p>
+<p><strong>核心發現</strong>：
+- <strong>最強前置因素</strong>：organizational transparency（透明度），路徑係數 $\beta = 0.41$（$p < 0.001$）
+- <strong>第二強</strong>：awareness level（品牌知名度），$\beta = 0.20$
+- <strong>組織年齡</strong>：$\beta = 0.18$（歷史越悠久越被信任）
+- <strong>個人連結</strong>：$\beta = 0.14$（與機構有個人關係者信任度更高）
+- <strong>口碑（WOM）</strong>：不顯著（$\beta = -0.02$），唯一不支持的假設
+- <strong>慈善信任 → 慈善支持</strong>（捐款 + 志願服務）：$\beta = 0.16$（$p < 0.001$）
+- <strong>模型解釋力</strong>：慈善信任方差的 71% 可由前置因素解釋（$R^2 = 0.71$）；慈善支持方差僅 3%
+- <strong>性別調節</strong>：未發現顯著的性別調節效應</p>
+<h3 id="_3">大綱</h3>
+<h4 id="1">1. 概念架構</h4>
+<p><img alt="page2_img1_Im1" src="../../_Citavi/Projects/Media_Research/Citavi%20Attachments/../../../Zettel/wiki/img/Wymer_2021/page2_img1_Im1.png" /></p>
+<p><strong>個人前置因素（4 項）</strong>：
+- H1a 個人連結（personal connection）
+- H1b 意識程度/知名度（awareness level）
+- H1c 價值一致性（value congruence with cause）
+- H1d 口碑（WOM referrals）— ✗ 不支持</p>
+<p><strong>組織前置因素（4 項）</strong>：
+- H1e 組織年齡（org age）
+- H1f 組織聲譽（reputation）
+- H1g 透明度（transparency）— 最強
+- H1h 名人代言（celebrity）</p>
+<h4 id="2">2. 方法</h4>
+<p>見 Wymer 2021 Methods</p>
+<h4 id="3">3. 核心結果摘要</h4>
+<table>
+<thead>
+<tr>
+<th>前置因素</th>
+<th>路徑係數</th>
+<th>t 值</th>
+<th>顯著</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>個人連結</td>
+<td>0.14</td>
+<td>5.30</td>
+<td>***</td>
+</tr>
+<tr>
+<td>知名度</td>
+<td>0.20</td>
+<td>4.95</td>
+<td>***</td>
+</tr>
+<tr>
+<td>價值一致</td>
+<td>0.05</td>
+<td>3.48</td>
+<td>***</td>
+</tr>
+<tr>
+<td>口碑</td>
+<td>-0.02</td>
+<td>1.34</td>
+<td>n.s.</td>
+</tr>
+<tr>
+<td>組織年齡</td>
+<td>0.18</td>
+<td>4.29</td>
+<td>***</td>
+</tr>
+<tr>
+<td>聲譽</td>
+<td>0.03</td>
+<td>2.26</td>
+<td>*</td>
+</tr>
+<tr>
+<td>透明度</td>
+<td><strong>0.41</strong></td>
+<td>16.26</td>
+<td>***</td>
+</tr>
+<tr>
+<td>名人代言</td>
+<td>0.06</td>
+<td>2.69</td>
+<td>**</td>
+</tr>
+<tr>
+<td>信任→支持</td>
+<td>0.16</td>
+<td>7.62</td>
+<td>***</td>
+</tr>
+</tbody>
+</table>
+<h4 id="4">4. 理論貢獻</h4>
+<ul>
+<li>首次同時考量個人與組織兩類前置因素的慈善信任模型</li>
+<li>將慈善信任延伸至志願服務（不只是捐款）</li>
+<li>確認透明度是最重要的信任建構工具</li>
+</ul>
+<h4 id="5">5. 管理意涵</h4>
+<ol>
+<li><strong>首要</strong>：公開說明資源使用方式（透明度溝通）</li>
+<li>增加品牌知名度（尤其小型機構）</li>
+<li>強調組織歷史（長期存在增加信任）</li>
+<li>加強關係行銷（個人連結培育）</li>
+<li>善用名人效應（效應偏弱但仍顯著）</li>
+</ol>
+<h3 id="_4">子文件連結</h3>
+<ul>
+<li>Transparency is the strongest antecedent of charity trust</li>
+<li>Charity brand awareness predicts public trust more than WOM</li>
+<li>Charity trust explains only 3 percent variance in supportive behavior</li>
+<li>Eight antecedents of charity trust tested via PLS-SEM</li>
+<li>Wymer 2021 Methods</li>
+</ul>
+<h3 id="_5">相關連結</h3>
+<ul>
+<li>charity trust — 核心概念</li>
+<li>Boenigk 2016 Acquiring Potential — 同一研究群（Boenigk 是共同作者）</li>
+<li>organizational transparency — 最關鍵前置因素</li>
+<li>Dictator Game generosity correlates with trust game trustworthiness — 信任相關</li>
+</ul>
+<hr />
+</main>
+</div>
+<script>
+(function () {
+  // ── Rebuild TOC with toggle buttons ──────────────────────────────────────
+  var toc = document.querySelector('.sidebar .toc');
+  if (toc) {
+    toc.querySelectorAll('li').forEach(function (li) {
+      var childUl = li.querySelector(':scope > ul');
+      var link    = li.querySelector(':scope > a');
+      if (!link) return;
+
+      var row = document.createElement('div');
+      row.className = 'toc-row';
+
+      if (childUl) {
+        var btn = document.createElement('button');
+        btn.className = 'toc-toggle';
+        btn.setAttribute('aria-expanded', 'true');
+        btn.textContent = '▾';          // ▾ open
+        btn.addEventListener('click', function () {
+          var open = childUl.hidden;
+          childUl.hidden = !open;
+          btn.textContent = open ? '▾' : '▸';   // ▾ / ▸
+          btn.setAttribute('aria-expanded', String(open));
+        });
+        row.appendChild(btn);
+      } else {
+        var spacer = document.createElement('span');
+        spacer.style.width = '1rem';
+        spacer.style.flexShrink = '0';
+        row.appendChild(spacer);
+      }
+
+      row.appendChild(link);
+      li.insertBefore(row, li.firstChild);
+    });
+  }
+
+  // ── Scroll spy ───────────────────────────────────────────────────────────
+  var headings = document.querySelectorAll('.content h2[id], .content h3[id], .content h4[id]');
+  var tocLinks = document.querySelectorAll('.sidebar .toc a');
+  if (!headings.length || !tocLinks.length) return;
+
+  var current = null;
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      var link = document.querySelector('.sidebar .toc a[href="#' + e.target.id + '"]');
+      if (!link) return;
+      if (current) current.classList.remove('active');
+      current = link;
+      current.classList.add('active');
+      // Scroll link into view within sidebar
+      current.scrollIntoView({ block: 'nearest' });
+    });
+  }, { rootMargin: '-5% 0px -75% 0px', threshold: 0 });
+
+  headings.forEach(function (h) { io.observe(h); });
+}());
+</script>
+</body>
+</html>

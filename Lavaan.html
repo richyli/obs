@@ -173,6 +173,13 @@ hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
   .content { padding: 1.5rem 1.2rem 4rem; }
 }
 </style>
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
 </head>
 <body>
 <div class="layout">
@@ -188,6 +195,25 @@ hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
 </li>
 <li><a href="#3-functions">3. 常用的執行函數 (Functions)</a></li>
 <li><a href="#4">4. 常見設定參數說明</a></li>
+<li><a href="#5-jasp-pls-sem-lavaan">5. JASP PLS-SEM 的 lavaan 語法（六大模型範本）</a><ul>
+<li><a href="#jasp-r-lavaan">⚠️ JASP 與 R lavaan 的關鍵差異</a></li>
+<li><a href="#a-cfa">範例 A — 一般模型（純 CFA 量測模型）</a></li>
+<li><a href="#b-direct-effects">範例 B — 主效果模型（Direct Effects）</a></li>
+<li><a href="#c-mediationh2-h3-h5">範例 C — Mediation（中介，H2 + H3 + H5）</a></li>
+<li><a href="#d-moderationh6-product-indicator">範例 D — Moderation（調節，H6）— Product Indicator 法</a><ul>
+<li><a href="#step-1-csv-mean-centered-product-indicators">Step 1：在 CSV 預先計算 mean-centered product indicators</a></li>
+<li><a href="#step-2jasp-model-syntax">Step 2：JASP Model syntax</a></li>
+</ul>
+</li>
+<li><a href="#e-mediated-moderation">範例 E — Mediated Moderation（中介式調節）</a></li>
+<li><a href="#f-moderated-mediationh7">範例 F — Moderated Mediation（調節中介，H7）</a><ul>
+<li><a href="#excel-immindex-of-moderated-mediation-hayes-2015">Excel 手算 IMM（Index of Moderated Mediation, Hayes 2015）</a></li>
+<li><a href="#conditional-indirect-effects-ase">Conditional Indirect Effects（高低 ASE 下的間接效果）</a></li>
+</ul>
+</li>
+<li><a href="#_1">六範例對照速查表</a></li>
+</ul>
+</li>
 </ul>
 </div>
 
@@ -345,7 +371,300 @@ modindices(fit, sort = TRUE, minimum.value = 10)
 </li>
 </ul>
 <hr />
-<p>請問您目前需要處理的是哪一類型的模型（例如：<strong>中介分析</strong>、<strong>多群組比較</strong> 或是 <strong>二階 CFA</strong>）？我可以針對該類型提供更具體的語法範本。</p>
+<h3 id="5-jasp-pls-sem-lavaan">5. JASP PLS-SEM 的 lavaan 語法（六大模型範本）</h3>
+<p>JASP 0.19+ 的 <strong>SEM → PLS-SEM</strong> 模組使用 <strong>seminr 後端</strong>，Model syntax 框接受 lavaan 風格的核心語法（<code>=~</code>、<code>~</code>、<code>~~</code>），但有兩個<strong>重要限制</strong>必須先理解，否則整個模型會跑錯或衍生參數失效：</p>
+<h4 id="jasp-r-lavaan">⚠️ JASP 與 R lavaan 的關鍵差異</h4>
+<table>
+<thead>
+<tr>
+<th>語法</th>
+<th>R lavaan</th>
+<th>JASP PLS-SEM (seminr)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>=~</code>、<code>~</code>、<code>~~</code></td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><code>a*X</code> 路徑標籤</td>
+<td>✅ 標籤</td>
+<td>❌ <strong>不是標籤</strong>——seminr 解讀為「母體真值（population value）」，部分路徑加 <code>*</code> 會跳警告 <em>Only a subset of population values given</em></td>
+</tr>
+<tr>
+<td><code>indirect := a*b</code> 衍生參數</td>
+<td>✅</td>
+<td>❌ <strong>失效</strong>（標籤未定義，此段被忽略）</td>
+</tr>
+<tr>
+<td>Bootstrap CI</td>
+<td>✅</td>
+<td>✅（在 Estimation 面板勾選）</td>
+</tr>
+<tr>
+<td>多群組</td>
+<td><code>group=</code> 參數</td>
+<td>✅ Grouping Variable 框</td>
+</tr>
+<tr>
+<td>互動項</td>
+<td>可用 <code>:</code> 或乘積指標</td>
+<td>✅ <strong>必須用乘積指標法</strong>（pre-compute 後當新構念）</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>JASP-only 工作流的鐵律</strong>：所有需要間接效果、IMM、conditional indirect 的數字，<strong>必須從 <code>Regression Coefficients</code> 表抄出來，到 Excel 用 Sobel 公式手算</strong>；不能依賴 lavaan 的 <code>:=</code>。</p>
+<p>此外：JASP 還要求<strong>所有要分析的變項先拖入 Model 面板的 Variables / Indicators 框</strong>，否則 bootstrap 跑不出結果（seminr 不會自動掃描 syntax 內的變項）。</p>
+</blockquote>
+<p>以下六個範例皆以「JPB（專業信念）→ APT（威脅感）→ BI（使用意願）+ ASE（自我效能）」這組變項為例，可直接貼入 JASP Model syntax 框。</p>
+<hr />
+<h4 id="a-cfa">範例 A — 一般模型（純 CFA 量測模型）</h4>
+<p>驗證 4 個構念的因素結構，無結構路徑。</p>
+<pre><code class="language-r"># Pure CFA: 只測量、不跑結構
+JPB =~ JPB1 + JPB2 + JPB3
+APT =~ APT1 + APT2 + APT3
+ASE =~ ASE1 + ASE2 + ASE3
+BI  =~ BI1  + BI2  + BI3
+</code></pre>
+<ul>
+<li><strong>看什麼</strong>：<a href="Factor_Loading.html">Factor Loading</a>（≥ .70）、AVE（≥ .50）、<a href="HTMT.html">HTMT</a>（&lt; .85）、Cronbach's α / <a href="rho_A.html">rho_A</a> / $\rho_c$（≥ .70）</li>
+<li><strong>此階段不看</strong>：β、$R^2$、間接效果（這些屬結構模型）</li>
+<li><strong>Output 面板必勾</strong>：Reliability measures、Observed construct correlations</li>
+</ul>
+<hr />
+<h4 id="b-direct-effects">範例 B — 主效果模型（Direct Effects）</h4>
+<p>H1 / H4：JPB 與 ASE 對 BI 與 APT 的直接效果。</p>
+<pre><code class="language-r"># Measurement
+JPB =~ JPB1 + JPB2 + JPB3
+APT =~ APT1 + APT2 + APT3
+ASE =~ ASE1 + ASE2 + ASE3
+BI  =~ BI1  + BI2  + BI3
+
+# Structural（無中介、無調節）
+APT ~ JPB + ASE
+BI  ~ JPB + ASE
+</code></pre>
+<ul>
+<li><strong>看什麼</strong>：每個 path 的 β、95% CI、p、<a href="VIF_Variance_Inflation_Factor.html">VIF Variance Inflation Factor</a>（Inner VIF &lt; 3.3）</li>
+<li><strong>論文符號</strong>：<code>Outcome=APT, Predictor=JPB</code> 那一行 = $a_1$；<code>Outcome=BI, Predictor=JPB</code> = $c'$（直接效果）</li>
+<li><strong>不要</strong>寫 <code>BI ~ a*JPB</code>——JASP 會把 <code>a</code> 當成 0~1 之間的母體真值並跳警告</li>
+</ul>
+<hr />
+<h4 id="c-mediationh2-h3-h5">範例 C — Mediation（中介，H2 + H3 + H5）</h4>
+<p>JPB → APT → BI 的部分中介模型。</p>
+<pre><code class="language-r"># Measurement
+JPB =~ JPB1 + JPB2 + JPB3
+APT =~ APT2 + APT3                # 假設 APT1 已因 loading &lt; .40 刪題
+ASE =~ ASE1 + ASE2 + ASE3
+BI  =~ BI1  + BI2  + BI3
+
+# Structural — 無標籤、無 := 衍生參數
+APT ~ JPB + ASE                   # H2: a 路徑；H4: ASE → APT
+BI  ~ JPB + APT                   # H5: c'（direct）；H3: b 路徑
+</code></pre>
+<p><strong>JASP 跑完後，從 Regression Coefficients 表手動抄出</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>JASP 表格行（Outcome / Predictor）</th>
+<th>論文符號</th>
+<th>對應假設</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>APT / JPB</td>
+<td>$a$</td>
+<td>H2</td>
+</tr>
+<tr>
+<td>BI / APT</td>
+<td>$b$</td>
+<td>H3</td>
+</tr>
+<tr>
+<td>BI / JPB</td>
+<td>$c'$</td>
+<td>H5</td>
+</tr>
+</tbody>
+</table>
+<p><strong>到 Excel 算 Sobel 間接效果</strong>（z 與 95% CI）：</p>
+<p>$$\text{Indirect} = a \times b, \quad SE_{ab} = \sqrt{a^2 \cdot SE_b^2 + b^2 \cdot SE_a^2}$$</p>
+<p>$$z = \frac{a \times b}{SE_{ab}}, \quad 95\%\,\text{CI} = (a \times b) \pm 1.96 \times SE_{ab}$$</p>
+<blockquote>
+<p>Bootstrap CI（BCa）優於 Sobel（後者假設常態），但 JASP-only 流程必須用 Sobel；論文需註明此限制。</p>
+</blockquote>
+<hr />
+<h4 id="d-moderationh6-product-indicator">範例 D — Moderation（調節，H6）— Product Indicator 法</h4>
+<p>ASE 調節 JPB → APT 的關係。<strong>核心關鍵：seminr 不會自動建互動項，必須在 CSV 預先計算好乘積指標再讀進 JASP</strong>。</p>
+<h5 id="step-1-csv-mean-centered-product-indicators">Step 1：在 CSV 預先計算 mean-centered product indicators</h5>
+<p>對 ASE（3 題）與 JPB（3 題）的所有題目：</p>
+<ol>
+<li>各題減去自身樣本平均：$\text{ASE}_{i,c} = \text{ASE}_i - \overline{\text{ASE}_i}$、$\text{JPB}_{j,c} = \text{JPB}_j - \overline{\text{JPB}_j}$</li>
+<li>兩兩相乘 → 9 個 product indicators：$\text{ASExJPB}_{ij} = \text{ASE}_{i,c} \times \text{JPB}_{j,c}$（命名：<code>ASExJPB_11</code>、<code>ASExJPB_12</code>、… <code>ASExJPB_33</code>）</li>
+<li>存檔，JASP File → Open 重新讀檔</li>
+</ol>
+<blockquote>
+<p><strong>為何要中心化</strong>：未中心化會造成互動項與主效果嚴重共線性（實測 inter-block $r$ 可達 .977，APT 方程式 SE 爆 4 倍）。依 Aiken &amp; West (1991) 與 <a href="Hair_2022_PLS.html">Hair_2022_PLS</a> 必須先中心化。</p>
+</blockquote>
+<h5 id="step-2jasp-model-syntax">Step 2：JASP Model syntax</h5>
+<pre><code class="language-r"># Measurement + interaction construct
+JPB     =~ JPB1 + JPB2 + JPB3
+APT     =~ APT2 + APT3
+ASE     =~ ASE1 + ASE2 + ASE3
+BI      =~ BI1  + BI2  + BI3
+ASExJPB =~ ASExJPB_11 + ASExJPB_12 + ASExJPB_13 +
+           ASExJPB_21 + ASExJPB_22 + ASExJPB_23 +
+           ASExJPB_31 + ASExJPB_32 + ASExJPB_33
+
+# Structural — 互動項以新構念身分加進預測式
+APT ~ JPB + ASE + ASExJPB         # H6: 互動項本身的 β = a_3
+BI  ~ JPB + APT
+</code></pre>
+<blockquote>
+<p>⚠️ <strong>不要</strong>寫 <code>ASExJPB ~ JPB + ASE</code>——seminr 把互動構念當外生構念，自動允許與 JPB / ASE 相關，再寫會造成 DAG 循環。</p>
+</blockquote>
+<ul>
+<li><strong>看什麼</strong>：<code>Outcome=APT, Predictor=ASExJPB</code> 行的 β / SE / p / 95% CI 即 H6 結論</li>
+<li><strong>f² 解讀</strong>：互動項 f² ≥ .025 為小效果、≥ .15 中、≥ .35 大（<a href="Hair_2022_PLS.html">Hair_2022_PLS</a>）</li>
+<li><strong>報告寫法</strong>：「以 product indicator approach（Chin 2003、Henseler 2010）構成單一互動構念 ASExJPB（reflective Mode A）」</li>
+</ul>
+<hr />
+<h4 id="e-mediated-moderation">範例 E — Mediated Moderation（中介式調節）</h4>
+<blockquote>
+<p><strong>概念釐清</strong>：Mediated moderation 問的是「<strong>X 與 W 的互動效果，是否透過 M 影響 Y</strong>」——亦即互動項 (X×W) → M → Y。互動發生在前段，中介在後段。</p>
+</blockquote>
+<pre><code class="language-r"># Measurement（同範例 D，含 ASExJPB 9 個 product indicators）
+JPB     =~ JPB1 + JPB2 + JPB3
+APT     =~ APT2 + APT3
+ASE     =~ ASE1 + ASE2 + ASE3
+BI      =~ BI1  + BI2  + BI3
+ASExJPB =~ ASExJPB_11 + ASExJPB_12 + ASExJPB_13 +
+           ASExJPB_21 + ASExJPB_22 + ASExJPB_23 +
+           ASExJPB_31 + ASExJPB_32 + ASExJPB_33
+
+# Structural — 互動項透過 APT 中介到 BI
+APT ~ JPB + ASE + ASExJPB         # 互動項影響 M（APT）
+BI  ~ APT + JPB                   # M 影響 Y；JPB 直接效果保留以判斷部分 vs 完全中介
+</code></pre>
+<ul>
+<li><strong>抄這三個係數做 Sobel</strong>：</li>
+<li>$a_3$ = <code>Outcome=APT, Predictor=ASExJPB</code> 的 β（互動 → M）</li>
+<li>$b$ = <code>Outcome=BI, Predictor=APT</code> 的 β（M → Y）</li>
+<li><strong>Mediated moderation 效果</strong> = $a_3 \times b$</li>
+<li><strong>判讀</strong>：若 $a_3$ 顯著且 $a_3 \times b$ Sobel CI 不跨 0 → mediated moderation 成立（互動效果是「透過 APT 傳遞」到 BI）</li>
+<li><strong>與範例 D 的差別</strong>：範例 D 只看互動項對 APT 的直接效果；本範例追蹤該互動效果<strong>是否進一步傳到 BI</strong></li>
+</ul>
+<hr />
+<h4 id="f-moderated-mediationh7">範例 F — Moderated Mediation（調節中介，H7）</h4>
+<blockquote>
+<p><strong>概念釐清</strong>：Moderated mediation 問的是「<strong>間接效果 a × b 的強度，是否被調節變項 W 改變</strong>」。Hayes (2015) 的 Index of Moderated Mediation（IMM）= $a_3 \times b$，其中 $a_3$ 是「W 調節 X→M」的互動係數。</p>
+</blockquote>
+<p>JPB → APT → BI 的中介，被 ASE 調節「JPB → APT」這一段：</p>
+<pre><code class="language-r"># Measurement（同範例 D，含 ASExJPB 9 個 product indicators）
+JPB     =~ JPB1 + JPB2 + JPB3
+APT     =~ APT2 + APT3
+ASE     =~ ASE1 + ASE2 + ASE3
+BI      =~ BI1  + BI2  + BI3
+ASExJPB =~ ASExJPB_11 + ASExJPB_12 + ASExJPB_13 +
+           ASExJPB_21 + ASExJPB_22 + ASExJPB_23 +
+           ASExJPB_31 + ASExJPB_32 + ASExJPB_33
+
+# Structural
+APT ~ JPB + ASE + ASExJPB         # a 路徑被 ASE 調節
+BI  ~ APT + JPB                   # b 路徑與直接效果
+</code></pre>
+<blockquote>
+<p>語法上 E 與 F 完全相同；<strong>差別只在研究問題與 Excel 後處理的解讀方式</strong>。E 問「互動效果有沒有被中介」，F 問「中介效果有沒有被調節」——兩者其實是同一個 statistical model 的兩種理論詮釋。</p>
+</blockquote>
+<h5 id="excel-immindex-of-moderated-mediation-hayes-2015">Excel 手算 IMM（Index of Moderated Mediation, Hayes 2015）</h5>
+<p>從 Regression Coefficients 表抄：
+- $a_3$（互動 → APT 的 β + SE）
+- $b$（APT → BI 的 β + SE）</p>
+<p>$$\text{IMM} = a_3 \times b$$</p>
+<p>$$SE_{\text{IMM}} = \sqrt{a_3^2 \cdot SE_b^2 + b^2 \cdot SE_{a_3}^2}$$</p>
+<p>$$z = \text{IMM} / SE_{\text{IMM}}, \quad p = \texttt{=2*(1-NORM.S.DIST(ABS(z),TRUE))}$$</p>
+<p>$$95\%\,\text{CI} = \text{IMM} \pm 1.96 \times SE_{\text{IMM}}$$</p>
+<p><strong>判讀</strong>：
+- CI <strong>不跨 0</strong> + p &lt; .05 → 調節中介成立（W 顯著改變間接效果強度）
+- CI 跨 0 → 不支持 H7。常見原因是 $a_3$ 本身就不顯著（IMM 為兩者乘積）</p>
+<h5 id="conditional-indirect-effects-ase">Conditional Indirect Effects（高低 ASE 下的間接效果）</h5>
+<p>在 ASE 的 +1 SD 與 −1 SD 兩個水準上，分別計算間接效果：</p>
+<p>$$\text{Indirect}|_{\text{High ASE}} = (a_1 + a_3 \cdot SD_{\text{ASE}}) \times b$$
+$$\text{Indirect}|_{\text{Low ASE}} = (a_1 - a_3 \cdot SD_{\text{ASE}}) \times b$$</p>
+<p>報告於論文時，搭配 Johnson-Neyman 區間（若需精準的「W 在哪個值之上 / 之下調節顯著」）。</p>
+<hr />
+<h4 id="_1">六範例對照速查表</h4>
+<table>
+<thead>
+<tr>
+<th>範例</th>
+<th>模型</th>
+<th>互動項</th>
+<th>需 Sobel 後處理</th>
+<th>JASP 抄表後計算項目</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>純 CFA</td>
+<td>×</td>
+<td>×</td>
+<td>無，只看信效度</td>
+</tr>
+<tr>
+<td>B</td>
+<td>主效果</td>
+<td>×</td>
+<td>×</td>
+<td>直接讀 β / CI</td>
+</tr>
+<tr>
+<td>C</td>
+<td>Mediation</td>
+<td>×</td>
+<td>✅</td>
+<td>$a \times b$ 與 SE</td>
+</tr>
+<tr>
+<td>D</td>
+<td>Moderation</td>
+<td>✅（產品指標）</td>
+<td>×</td>
+<td>互動項 β / f²</td>
+</tr>
+<tr>
+<td>E</td>
+<td>Mediated moderation</td>
+<td>✅</td>
+<td>✅</td>
+<td>$a_3 \times b$（透過 M 傳遞的互動效果）</td>
+</tr>
+<tr>
+<td>F</td>
+<td>Moderated mediation</td>
+<td>✅</td>
+<td>✅</td>
+<td>IMM = $a_3 \times b$ + conditional indirect</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>共同 Estimation 設定</strong>：取消 PLSc（小樣本邊緣信度時）/ Path weighting / Bootstrap 1000+ samples / Set seed = 42 / Handling of inadmissibles = Ignore（若有天花板效應變項）。詳見 jasp 模組設定與 <code>_obs_site/jasp_pls_sem_guide.html</code> / <code>_obs_site/handout_pls_sem_final.html</code>。</p>
+</blockquote>
+<hr />
+<p><strong>相關概念</strong>
+- 平行工具：jasp、<a href="seminr.html">seminr</a>、<a href="composite_based_SEM.html">composite_based_SEM</a>、<a href="PLSc.html">PLSc</a>
+- 量測模型評估：<a href="Factor_Loading.html">Factor Loading</a>、AVE、<a href="HTMT.html">HTMT</a>、<a href="Fornell-Larcker.html">Fornell-Larcker</a>、<a href="Discriminant_Validity_%E5%8D%80%E5%88%A5%E6%A0%A1%E5%BA%A6.html">Discriminant Validity 區別校度</a>、<a href="VIF_Variance_Inflation_Factor.html">VIF Variance Inflation Factor</a>、<a href="Multicollinearity_%E5%85%B1%E7%B7%9A%E6%80%A7.html">Multicollinearity 共線性</a>
+- 方法偏誤：<a href="CMB_Common_method_bias.html">CMB Common method bias</a>、<a href="Harman%27s_Single_Factor_Test.html">Harman's Single Factor Test</a>、<a href="CFA_Marker_Variable_Technique.html">CFA Marker Variable Technique</a>、<a href="Lindell_Exercise.html">Lindell Exercise</a>
+- 中介 / 調節：<a href="partial_mediation.html">partial_mediation</a>、<a href="Baron_Kenny_1986.html">Baron_Kenny_1986</a>、<a href="Zhao_Lynch_Chen_2010.html">Zhao_Lynch_Chen_2010</a>、Index of Moderated Mediation (IMM, Hayes 2015)
+- 多群組 / 進階：<a href="MICOM.html">MICOM</a>、<a href="PLS_MGA.html">PLS_MGA</a>、<a href="Henseler_PLS_MGA.html">Henseler_PLS_MGA</a>、<a href="parametric_MGA.html">parametric_MGA</a>
+- Bootstrap / 預測：<a href="PLSpredict.html">PLSpredict</a>、<a href="Q_squared_predict.html">Q_squared_predict</a>（BCa CI 為 lavaan 與 seminr 共同建議）</p>
 </main>
 </div>
 <script>

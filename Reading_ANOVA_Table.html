@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reading ANOVA Table</title>
+<style>*, *::before, *::after { box-sizing: border-box; }
+
+/* ── Base ── */
+body {
+  font-family: "Helvetica Neue", Arial, "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+  font-size: 20px;
+  line-height: 1.9;
+  color: #111;
+  background: #fff;
+  margin: 0;
+}
+
+/* ── Two-column layout (note pages) ── */
+.layout { display: flex; align-items: flex-start; min-height: 100vh; }
+
+.sidebar {
+  width: 270px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 2rem 1rem 2rem 1.5rem;
+  border-right: 1px solid #e8e8e8;
+  background: #f9f9f9;
+}
+.sidebar-back {
+  display: block;
+  font-size: 0.82rem;
+  color: #999;
+  margin-bottom: 1.4rem;
+  text-decoration: none;
+}
+.sidebar-back:hover { color: #333; }
+.sidebar-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #bbb;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+/* ── TOC in sidebar ── */
+.toc { font-size: 0.82rem; line-height: 1.55; }
+.toc ul { list-style: none; margin: 0; padding: 0; }
+.toc ul ul { padding-left: 0.9rem; }
+.toc li { margin: 0; }
+.toc-row { display: flex; align-items: baseline; gap: 0.2rem; }
+.toc-row a {
+  flex: 1;
+  display: block;
+  padding: 0.18rem 0.3rem;
+  border-radius: 3px;
+  color: #555;
+  text-decoration: none;
+  word-break: break-word;
+}
+.toc-row a:hover { background: #ebebeb; color: #111; }
+.toc-row a.active { color: #0055cc; font-weight: 600; background: #e8f0ff; }
+.toc-toggle {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-size: 0.65rem;
+  color: #bbb;
+  line-height: 1;
+  width: 1rem;
+  text-align: center;
+}
+.toc-toggle:hover { color: #555; }
+
+/* ── Main content ── */
+.content {
+  flex: 1;
+  min-width: 0;
+  padding: 3rem 3rem 6rem;
+  max-width: 800px;
+}
+
+/* ── Single-column (index page) ── */
+.container { max-width: 800px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
+
+/* ── Typography ── */
+h1 {
+  font-size: 1.75rem; font-weight: 700;
+  margin: 0 0 0.15rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 2px solid #111;
+  line-height: 1.3;
+}
+h2 {
+  font-size: 1.3rem; font-weight: 700;
+  margin: 2.5rem 0 0.5rem;
+  padding-bottom: 0.2rem;
+  border-bottom: 1px solid #ddd;
+}
+h3 { font-size: 1.1rem; font-weight: 700; margin: 1.8rem 0 0.4rem; }
+h4 { font-size: 1rem; font-weight: 700; margin: 1.4rem 0 0.3rem; }
+p { margin: 0.9rem 0; }
+a { color: #0055cc; text-decoration: none; }
+a:hover { text-decoration: underline; }
+nav { margin-bottom: 2.5rem; font-size: 0.85rem; color: #999; }
+nav a { color: #999; }
+
+/* ── Code ── */
+code {
+  font-family: "SFMono-Regular", Consolas, monospace;
+  background: #f2f2f2;
+  padding: 0.1em 0.4em;
+  border-radius: 3px;
+  font-size: 0.85em;
+}
+pre {
+  background: #f2f2f2;
+  padding: 1.2rem 1.4rem;
+  border-radius: 5px;
+  overflow-x: auto;
+  font-size: 0.85em;
+  line-height: 1.6;
+}
+pre code { background: none; padding: 0; }
+
+/* ── Lists ── */
+ul, ol { padding-left: 1.6rem; margin: 0.8rem 0; }
+li { margin: 0.35rem 0; }
+li > ul, li > ol { margin: 0.2rem 0; }
+
+/* ── Other elements ── */
+blockquote {
+  border-left: 4px solid #ccc;
+  margin: 1.2rem 0;
+  padding: 0.3rem 1.2rem;
+  color: #444;
+  background: #fafafa;
+}
+table { border-collapse: collapse; width: 100%; margin: 1.2rem 0; font-size: 0.95em; }
+th, td { border: 1px solid #ccc; padding: 0.55rem 0.9rem; text-align: left; }
+th { background: #f5f5f5; font-weight: 700; }
+tr:nth-child(even) { background: #fafafa; }
+hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
+.meta { font-size: 0.8rem; color: #aaa; margin: 0.3rem 0 1.8rem; }
+.index-list { list-style: none; padding: 0; margin: 1rem 0; }
+.index-list li { padding: 0.55rem 0; border-bottom: 1px solid #eee; font-size: 1.05rem; }
+.index-list li:last-child { border-bottom: none; }
+.embed-block {
+  border-left: 3px solid #aaa;
+  padding: 0.5rem 1.2rem;
+  margin: 1.5rem 0;
+  background: #f8f8f8;
+}
+
+/* ── Mobile ── */
+@media (max-width: 800px) {
+  .layout { flex-direction: column; }
+  .sidebar {
+    position: static;
+    width: 100%;
+    height: auto;
+    max-height: 50vh;
+    border-right: none;
+    border-bottom: 1px solid #e8e8e8;
+    padding: 1rem 1.5rem;
+  }
+  .content { padding: 1.5rem 1.2rem 4rem; }
+}
+</style>
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+<div class="toc">
+<ul>
+<li><a href="#_1"></a></li>
+<li><a href="#1">1. 表格結構與內容</a></li>
+<li><a href="#2">2. 各依變數的結果解讀</a><ul>
+<li><a href="#1-choice-confidence">(1) Choice confidence</a></li>
+<li><a href="#2-extent-of-product-search">(2) Extent of product search</a></li>
+<li><a href="#3-perceived-cognitive-effort">(3) Perceived cognitive effort</a></li>
+</ul>
+</li>
+<li><a href="#3-anova">3. 統計方法：單因子變異數分析（ANOVA）</a></li>
+<li><a href="#4">4. 結論與應用</a><ul>
+<li><a href="#1_1">(1) 結論</a></li>
+<li><a href="#2_1">(2) 實際應用</a></li>
+</ul>
+</li>
+<li><a href="#_2">總結</a></li>
+<li><a href="#5-reviewer">5. 此表的常見缺漏與 Reviewer 會挑剔的地方</a><ul>
+<li><a href="#1_2">(1) 缺乏效果量</a></li>
+<li><a href="#2_2">(2) 未檢驗變異數同質性</a></li>
+<li><a href="#3-t">(3) 兩組情境其實可改用 t 檢定</a></li>
+<li><a href="#4-post-hoc">(4) 無 post-hoc 比較</a></li>
+<li><a href="#5">(5) 未檢視常態性與獨立觀察</a></li>
+</ul>
+</li>
+<li><a href="#6-wiki-anova">6. 與 wiki 其他 ANOVA 筆記的關係</a></li>
+</ul>
+</div>
+
+</aside>
+<main class="content">
+<h1>Reading ANOVA Table</h1>
+<p class="meta">#ANOVA　#statistics　#reading_guide　#methodology</p>
+<p><a href="ANOVA.html">ANOVA</a>
+Table</p>
+<h4 id="_1"><img alt="Pasted image 20250106225518" src="img/Pasted%20image%2020250106225518.png" /></h4>
+<p>Table 8 展示了單因子變異數分析（ANOVA）的結果，研究了「<strong>推薦類型（Type of recommendations）</strong>」對三個依變數的影響，依變數包括：</p>
+<ol>
+<li><strong>Choice confidence</strong>（選擇信心）</li>
+<li><strong>Extent of product search</strong>（產品搜索範圍）</li>
+<li><strong>Perceived cognitive effort</strong>（感知的認知努力）</li>
+</ol>
+<p>以下是詳細解釋：</p>
+<hr />
+<h4 id="1"><strong>1. 表格結構與內容</strong></h4>
+<ul>
+<li>
+<p><strong>Dependent variable</strong>（依變數）：</p>
+<ul>
+<li>依變數是被測試的變量，分別是「Choice confidence」、「Extent of product search」和「Perceived cognitive effort」。</li>
+<li>
+<p><strong>Sum of squares</strong>（平方和）：</p>
+</li>
+<li>
+<p><strong>Between groups</strong>：組間的平方和，反映了不同推薦類型（組別）對依變數的變異影響。</p>
+</li>
+<li><strong>Within groups</strong>：組內的平方和，反映了每組內部變異。</li>
+<li><strong>Total</strong>：總平方和，組間與組內平方和的總和。</li>
+<li>
+<p><strong>df (Degrees of freedom)</strong>（自由度）：</p>
+</li>
+<li>
+<p><strong>Between groups</strong>：自由度為 1，因為只有兩種類型的推薦（個性化與非個性化）。</p>
+</li>
+<li><strong>Within groups</strong>：自由度為 57（總樣本數 58 減去組數 1）。</li>
+<li>
+<p><strong>Mean square</strong>（均方差）：</p>
+</li>
+<li>
+<p>平方和除以相應的自由度，表示變異的平均值。</p>
+</li>
+<li>
+<p><strong>F</strong>：</p>
+</li>
+<li>
+<p>ANOVA 的 F 檢驗統計值，計算公式為組間均方差（Mean Square Between Groups）除以組內均方差（Mean Square Within Groups）。</p>
+</li>
+<li>
+<p><strong>Sig.</strong>（顯著性值）：</p>
+</li>
+<li>
+<p>p 值表示檢驗的顯著性。</p>
+</li>
+<li>如果 p 值小於 0.05，則可以認為推薦類型對依變數有顯著影響。</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h4 id="2"><strong>2. 各依變數的結果解讀</strong></h4>
+<h5 id="1-choice-confidence"><strong>(1) Choice confidence</strong></h5>
+<ul>
+<li><strong>Sum of squares</strong>：<ul>
+<li>Between groups: 2.762，Within groups: 36.666，Total: 39.428。</li>
+</ul>
+</li>
+<li><strong>F 值</strong>：4.293</li>
+<li><strong>Sig. 值</strong>：0.043（&lt; 0.05）</li>
+<li><strong>解釋</strong>：<ul>
+<li>推薦類型對「選擇信心」有顯著影響。</li>
+<li>這意味著個性化推薦和非個性化推薦可能會導致用戶在選擇產品時的信心水平不同。</li>
+</ul>
+</li>
+</ul>
+<h5 id="2-extent-of-product-search"><strong>(2) Extent of product search</strong></h5>
+<ul>
+<li><strong>Sum of squares</strong>：<ul>
+<li>Between groups: 10.410，Within groups: 75.225，Total: 85.636。</li>
+</ul>
+</li>
+<li><strong>F 值</strong>：7.888</li>
+<li><strong>Sig. 值</strong>：0.007（&lt; 0.01）</li>
+<li><strong>解釋</strong>：<ul>
+<li>推薦類型對「產品搜索範圍」有高度顯著影響。</li>
+<li>這表明不同的推薦策略會顯著改變用戶搜索產品的行為，個性化推薦可能會縮小用戶的搜索範圍。</li>
+</ul>
+</li>
+</ul>
+<h5 id="3-perceived-cognitive-effort"><strong>(3) Perceived cognitive effort</strong></h5>
+<ul>
+<li><strong>Sum of squares</strong>：<ul>
+<li>Between groups: 607.680，Within groups: 8001.201，Total: 8608.881。</li>
+</ul>
+</li>
+<li><strong>F 值</strong>：4.329</li>
+<li><strong>Sig. 值</strong>：0.042（&lt; 0.05）</li>
+<li><strong>解釋</strong>：<ul>
+<li>推薦類型對「感知的認知努力」有顯著影響。</li>
+<li>這意味著個性化推薦可能降低用戶在決策過程中的認知負擔。</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h4 id="3-anova"><strong>3. 統計方法：單因子變異數分析（ANOVA）</strong></h4>
+<ul>
+<li><strong>目的</strong>：<ul>
+<li>檢測推薦類型（獨立變數，兩組）是否顯著影響三個依變數的平均值。</li>
+</ul>
+</li>
+<li><strong>F 值的解釋</strong>：<ul>
+<li>F 值越大，說明組間變異相對於組內變異越大，表示推薦類型對依變數的影響越顯著。</li>
+</ul>
+</li>
+<li><strong>顯著性檢驗 (p 值)</strong>：<ul>
+<li>p 值小於 0.05，表示推薦類型對依變數的影響具有統計顯著性。</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h4 id="4"><strong>4. 結論與應用</strong></h4>
+<h5 id="1_1"><strong>(1) 結論</strong></h5>
+<ul>
+<li><strong>推薦類型顯著影響了以下三個依變數</strong>：<ol>
+<li><strong>Choice confidence</strong>（p = 0.043）：個性化推薦提升或改變用戶選擇的信心。</li>
+<li><strong>Extent of product search</strong>（p = 0.007）：個性化推薦可能減少用戶的搜索範圍。</li>
+<li><strong>Perceived cognitive effort</strong>（p = 0.042）：個性化推薦降低用戶在決策過程中的認知努力。</li>
+</ol>
+</li>
+</ul>
+<h5 id="2_1"><strong>(2) 實際應用</strong></h5>
+<ul>
+<li>
+<p><strong>電子商務中的推薦系統</strong>：</p>
+<ul>
+<li>個性化推薦策略不僅能影響用戶的產品選擇，還能提升購物體驗，減少認知負擔。</li>
+<li>平台可以針對不同的用戶群體調整推薦策略，以提升選擇信心和降低搜索負擔。</li>
+<li>
+<p><strong>用戶體驗設計</strong>：</p>
+</li>
+<li>
+<p>此研究結果可以幫助設計更加有效的用戶介面，特別是針對搜索行為和決策支持的優化。</p>
+</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h4 id="_2"><strong>總結</strong></h4>
+<p>Table 8 的結果表明，推薦類型對選擇信心、搜索範圍和認知努力均有顯著影響。通過單因子變異數分析，我們可以明確推薦系統在用戶行為與體驗中的核心作用，並為電子商務平台的策略設計提供數據支持。</p>
+<hr />
+<h4 id="5-reviewer"><strong>5. 此表的常見缺漏與 Reviewer 會挑剔的地方</strong></h4>
+<p>此 Table 8 屬於最基本的 ANOVA 報表，若投稿至期刊，仍有幾項常被 reviewer 要求補充：</p>
+<h5 id="1_2"><strong>(1) 缺乏效果量</strong></h5>
+<p>只報 $F$ 與 $p$，未報 $\eta^2$、$\omega^2$ 或 partial $\eta^2$（effect size）。$p < 0.05$ 只說明差異「不是隨機」，沒有回答「差異多大」。建議補：</p>
+<p>$$\eta^2 = \frac{SS_{between}}{SS_{total}}$$</p>
+<p>例如 Choice confidence：$\eta^2 = 2.762/39.428 \approx 0.070$，屬於小到中等效應（Cohen, 1988）。可參考 JASP_ANOVA_effect_size 的計算流程。</p>
+<h5 id="2_2"><strong>(2) 未檢驗變異數同質性</strong></h5>
+<p>ANOVA 假設各組變異數相等。若 Levene's Test 顯著（變異數不相等），應改用 <a href="Welch_Satterthwaite.html">Welch's correction</a> 或 Brown–Forsythe 修正版 ANOVA（JASP_welch_correction）。樣本不平衡時尤其重要。</p>
+<h5 id="3-t"><strong>(3) 兩組情境其實可改用 t 檢定</strong></h5>
+<p>文中提到「個性化 vs. 非個性化」共兩組（df = 1）。雙組差異比較傳統上用 t-test（與 ANOVA 數學等價：$F = t^2$，當 df = 1 時），但 t 檢定能直接報效應方向（哪一組高），ANOVA 在此設計下提供的資訊較少。</p>
+<h5 id="4-post-hoc"><strong>(4) 無 post-hoc 比較</strong></h5>
+<p>雖然 df = 1 不需要 post-hoc，但若是三組以上（例如「個性化 / 非個性化 / 混合」），全體 $F$ 顯著之後仍須以 Bonferroni、Tukey HSD 或 Scheffé 比對哪幾組顯著相異。</p>
+<h5 id="5"><strong>(5) 未檢視常態性與獨立觀察</strong></h5>
+<p>ANOVA 對常態性（中央極限定理保護下，N &gt; 30 各組通常足夠）與觀察獨立性（同一受試者跨組測量需改用 one-way Anova Repeated measures）敏感。這兩項假設不檢驗，reviewer 會直接退稿。</p>
+<hr />
+<h4 id="6-wiki-anova"><strong>6. 與 wiki 其他 ANOVA 筆記的關係</strong></h4>
+<ul>
+<li>主筆記：<a href="ANOVA.html">ANOVA</a>（定義、F 公式、流程、Fisher 1925 來源）</li>
+<li>設計變體：one-way Anova、one-way Anova Repeated measures、two-way Anova、<a href="ANCOVA.html">ANCOVA</a></li>
+<li>替代框架：t-test（兩組）、regression（連續自變量）；ANOVA 為類別自變量的 GLM 特例</li>
+<li>報表延伸：JASP_ANOVA_effect_size、JASP_welch_correction</li>
+<li>多重比較校正：Bonferroni、Benjamini-Hochberg controls FDR with higher power than Bonferroni</li>
+</ul>
+<hr />
+<p><strong>相關論文</strong>：Mainardi 2022 Fundamental Concepts
+<strong>相關概念</strong>：<a href="ANOVA.html">ANOVA</a>、effect size、Bonferroni、<a href="Welch_Satterthwaite.html">Welch_Satterthwaite</a>、t-test、Levene's Test、one-way Anova、two-way Anova、<a href="ANCOVA.html">ANCOVA</a></p>
+<p>另見：<a href="ANOVA.html">ANOVA</a> 中「方法說明」段落</p>
+</main>
+</div>
+<script>
+(function () {
+  // ── Rebuild TOC with toggle buttons ──────────────────────────────────────
+  var toc = document.querySelector('.sidebar .toc');
+  if (toc) {
+    toc.querySelectorAll('li').forEach(function (li) {
+      var childUl = li.querySelector(':scope > ul');
+      var link    = li.querySelector(':scope > a');
+      if (!link) return;
+
+      var row = document.createElement('div');
+      row.className = 'toc-row';
+
+      if (childUl) {
+        var btn = document.createElement('button');
+        btn.className = 'toc-toggle';
+        btn.setAttribute('aria-expanded', 'true');
+        btn.textContent = '▾';          // ▾ open
+        btn.addEventListener('click', function () {
+          var open = childUl.hidden;
+          childUl.hidden = !open;
+          btn.textContent = open ? '▾' : '▸';   // ▾ / ▸
+          btn.setAttribute('aria-expanded', String(open));
+        });
+        row.appendChild(btn);
+      } else {
+        var spacer = document.createElement('span');
+        spacer.style.width = '1rem';
+        spacer.style.flexShrink = '0';
+        row.appendChild(spacer);
+      }
+
+      row.appendChild(link);
+      li.insertBefore(row, li.firstChild);
+    });
+  }
+
+  // ── Scroll spy ───────────────────────────────────────────────────────────
+  var headings = document.querySelectorAll('.content h2[id], .content h3[id], .content h4[id]');
+  var tocLinks = document.querySelectorAll('.sidebar .toc a');
+  if (!headings.length || !tocLinks.length) return;
+
+  var current = null;
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      var link = document.querySelector('.sidebar .toc a[href="#' + e.target.id + '"]');
+      if (!link) return;
+      if (current) current.classList.remove('active');
+      current = link;
+      current.classList.add('active');
+      // Scroll link into view within sidebar
+      current.scrollIntoView({ block: 'nearest' });
+    });
+  }, { rootMargin: '-5% 0px -75% 0px', threshold: 0 });
+
+  headings.forEach(function (h) { io.observe(h); });
+}());
+</script>
+</body>
+</html>

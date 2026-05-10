@@ -186,295 +186,254 @@ MathJax = {
 <aside class="sidebar">
 <div class="toc">
 <ul>
-<li><a href="#marker-variable">一、 核心邏輯：什麼是「標記變數 (Marker Variable)」？</a></li>
-<li><a href="#_1">二、 操作步驟：三階段模型比較法</a><ul>
-<li><a href="#1-baseline-model">步驟 1：建立 Baseline Model（基準模型）</a></li>
-<li><a href="#2-method-c-model">步驟 2：建立 Method-C Model（共同方法模型）</a></li>
-<li><a href="#3">步驟 3：比較與判讀</a></li>
+<li><a href="#marker-variable">一、核心邏輯：什麼是「標記變數 (Marker Variable)」？</a></li>
+<li><a href="#williams-hartman-cavazotte-2010">二、操作步驟：三階段模型比較法（Williams, Hartman &amp; Cavazotte, 2010）</a><ul>
+<li><a href="#1baseline-model">步驟 1：Baseline Model（基準模型）</a></li>
+<li><a href="#2method-c-model">步驟 2：Method-C Model（共同方法模型）</a></li>
+<li><a href="#3chi-square-difference-test">步驟 3：比較與判讀（Chi-square difference test）</a></li>
 </ul>
 </li>
-<li><a href="#reviewer-harmans">三、 為什麼 Reviewer 喜歡這個方法？（與 Harman's 的比較）</a></li>
-<li><a href="#_2">四、 挑選「標記變數」的眉角（陷阱題）</a></li>
-<li><a href="#_3">五、 口試作答範例（話術）</a></li>
-<li><a href="#_4">總結</a></li>
-<li><a href="#the-eye-ball-test">第一階段：相關係數矩陣檢視 (The Eye-ball Test)</a></li>
+<li><a href="#reviewer-harmans">三、為什麼 Reviewer 偏好此方法？（與 Harman's 對比）</a></li>
+<li><a href="#_1">四、挑選「標記變數」的眉角（陷阱題）</a></li>
+<li><a href="#_2">五、數值檢驗的三階段流程（事後驗證）</a><ul>
+<li><a href="#eye-ball-test">第一階段：相關係數矩陣檢視（Eye-ball Test）</a><ul>
+<li><a href="#_3">跨研究實證</a></li>
+</ul>
+</li>
 <li><a href="#lindell-whitney-2001">第二階段：Lindell &amp; Whitney (2001) 校正法</a></li>
-<li><a href="#-cmb">- 失敗：如果校正後變不顯著，代表原本的顯著都是 CMB 造成的假象。</a><ul>
-<li><a href="#cfa-cfa-with-marker-variable">第三階段：CFA 模型法 (CFA with Marker Variable)</a></li>
-<li><a href="#_5">總結：如何在論文中報告？</a></li>
+<li><a href="#cfa-cfa-with-marker-variable">第三階段：CFA 模型法（CFA with Marker Variable）</a></li>
 </ul>
 </li>
+<li><a href="#_4">六、口試作答與論文書寫範例</a><ul>
+<li><a href="#_5">口試話術</a></li>
+<li><a href="#_6">論文方法／結果章節寫法</a></li>
+</ul>
+</li>
+<li><a href="#cmb">七、與其他 CMB 防禦方法的位置</a></li>
+<li><a href="#_7">總結</a></li>
 </ul>
 </div>
 
 </aside>
 <main class="content">
 <h1>CFA Marker Variable Technique</h1>
-<p class="meta">#Research/Book</p>
+<p class="meta">#Research/Book　#CMB　#marker_variable　#measurement_model　#SEM　#PLS_SEM</p>
 <p>for <a href="CMB_Common_method_bias.html">CMB Common method bias</a></p>
-<p><strong>CFA Marker Variable Technique（驗證性因素分析標記變數法）</strong> 是目前解決共同方法變異（CMB）最嚴謹、最具說服力的「統計控制」手段之一。
-相較於 <a href="Harman%27s_Single_Factor_Test.html">Harman's Single Factor Test</a>  只能「診斷」有無問題，Marker Variable Technique 能夠進一步<strong>「控制」並「剔除」</strong>這些誤差，看看在排除誤差後，原本的研究假設是否依然成立。
-以下是針對博士班資格考與回應 Reviewer 質疑的詳細解析：</p>
+<p><strong>CFA Marker Variable Technique（驗證性因素分析標記變數法）</strong> 是目前處理 <a href="CMB_Common_method_bias.html">CMB Common method bias</a> 最嚴謹、最具說服力的「統計控制」手段。相較於 <a href="Harman%27s_Single_Factor_Test.html">Harman's Single Factor Test</a> 只能「診斷」有無問題，Marker Variable Technique 能進一步<strong>「控制」並「剔除」</strong>方法變異，檢驗在排除誤差後原本的研究假設是否仍成立。</p>
+<p>它在 CMB 三層級防禦中位居「控制」層，下游搭配 <a href="Lindell_Exercise.html">Lindell Exercise</a> 進行事後敏感度校正，構成完整的偵測—控制—校正三段式（Williams, Hartman &amp; Cavazotte, 2010；Lindell &amp; Whitney, 2001）。</p>
 <hr />
-<h4 id="marker-variable">一、 核心邏輯：什麼是「標記變數 (Marker Variable)」？</h4>
-<p>這個方法的精髓在於引入一個<strong>「理論上與原本研究變項毫無關聯」</strong>的變數，稱之為「標記變數」。</p>
+<h3 id="marker-variable">一、核心邏輯：什麼是「標記變數 (Marker Variable)」？</h3>
+<p>精髓在於引入一個<strong>理論上與原本研究變項毫無關聯</strong>的變數，稱為「標記變數」。</p>
 <ul>
-<li>
-<p><strong>邏輯假設</strong>：</p>
-<ol>
-<li>既然這個標記變數（例如：「對藍色的喜好程度」）與你的研究變數（例如：「工作滿意度」）在理論上毫無關係，那麼它們之間的<strong>相關係數理應為 0</strong>。        </li>
-<li>如果統計跑出來發現它們之間竟然有顯著相關（例如 $r = 0.3$），那麼這 $0.3$ 的相關性肯定不是來自理論，而是來自<strong>「方法偏差」</strong>（例如：受試者當下的情緒、填答風格、問卷排版等）。        </li>
-<li>我們可以把這 $0.3$ 當作「噪音（CMB）」，在統計模型中將其扣除，剩下的才是「真實的關係」。</li>
+<li><strong>邏輯假設</strong>：<ol>
+<li>既然標記變數（例如「對藍色的喜好程度」）與研究變數（例如「工作滿意度」）在理論上毫無關係，那麼它們的<strong>相關係數理應為 0</strong></li>
+<li>若統計跑出來竟有顯著相關（例如 $r = 0.3$），這 $0.3$ 不可能來自理論，而是來自<strong>方法偏差</strong>（受試者當下的情緒、填答風格、問卷排版等）</li>
+<li>我們將這 $0.3$ 視為「噪音（CMB）」，在統計模型中扣除，剩下的才是「真實關係」</li>
 </ol>
 </li>
 </ul>
 <hr />
-<h4 id="_1">二、 操作步驟：三階段模型比較法</h4>
-<p>這是博士生必須能描述的流程（通常引用 <strong>Williams, Hartman, &amp; Cavazotte, 2010</strong> 或 <strong>Lindell &amp; Whitney, 2001</strong>）。
-我們需要在 SEM 軟體（如 AMOS, Mplus, SmartPLS）中建立不同的模型進行比較：</p>
-<h5 id="1-baseline-model">步驟 1：建立 Baseline Model（基準模型）</h5>
+<h3 id="williams-hartman-cavazotte-2010">二、操作步驟：三階段模型比較法（Williams, Hartman &amp; Cavazotte, 2010）</h3>
+<p>博士生必須能描述的標準流程，於 SEM 軟體（AMOS、Mplus、SmartPLS）中建構並比較三組巢套模型：</p>
+<h4 id="1baseline-model">步驟 1：Baseline Model（基準模型）</h4>
 <ul>
-<li>這是正常的 CFA 模型，包含自變項、依變項與標記變數。    </li>
-<li><strong>關鍵設定</strong>：允許自變項與依變項之間有相關，但<strong>強迫</strong>標記變數與其他變項的相關係數為 <strong>0</strong>（因為理論上無關）。</li>
+<li>正常 CFA 模型，包含自變項、依變項與標記變數</li>
+<li><strong>關鍵設定</strong>：允許自變項與依變項之間有相關，但<strong>強迫</strong>標記變數與其他變項的相關係數為 <strong>0</strong>（理論上無關）</li>
 </ul>
-<h5 id="2-method-c-model">步驟 2：建立 Method-C Model（共同方法模型）</h5>
-<ul>
-<li>
-<p>在此模型中，加入一個潛在變項稱為<strong>「方法因子 (Method Factor)」</strong>。</p>
-</li>
-<li>
-<p><strong>關鍵設定</strong>：</p>
+<h4 id="2method-c-model">步驟 2：Method-C Model（共同方法模型）</h4>
+<p>加入一個潛在變項稱為<strong>「方法因子 (Method Factor)」</strong>：</p>
 <ol>
-<li>用標記變數的題目來定義這個方法因子。        </li>
-<li>讓這個方法因子去影響（指向）模型中<strong>所有的</strong>題目（包含自變項與依變項的題目）。        </li>
-<li>這意味著：每一道題目的分數，現在被拆解成「原本構面的影響」+「方法因子的影響（誤差）」。</li>
+<li>用標記變數的題目來定義這個方法因子</li>
+<li>讓方法因子去影響（指向）模型中<strong>所有題目</strong>（包含自變項與依變項）</li>
+<li>每道題目的分數現在被拆解成「原本構面的影響」+「方法因子的影響（誤差）」</li>
 </ol>
-</li>
-</ul>
-<h5 id="3">步驟 3：比較與判讀</h5>
-<p>比較上述兩個模型的適配度（Chi-square difference test）：</p>
+<h4 id="3chi-square-difference-test">步驟 3：比較與判讀（Chi-square difference test）</h4>
 <ol>
-<li>
-<p><strong>檢驗 CMB 是否存在</strong>：</p>
-<ul>
-<li>如果 Model-C（有方法因子）的適配度<strong>顯著優於</strong> Baseline Model，代表「方法因子」確實解釋了相當大比例的變異量。$\rightarrow$ <strong>承認資料存在 CMB。</strong></li>
-</ul>
-</li>
-<li>
-<p><strong>檢驗 CMB 是否致命（關鍵救命步驟）</strong>：</p>
-<ul>
-<li>在控制了方法因子後，重新檢視自變項與依變項的<strong>路徑係數（Path Coefficients）</strong>。        </li>
-<li>如果原本顯著的路徑，在扣除方法變異後<strong>依然顯著</strong>，這就是研究者的勝利。        </li>
-<li><strong>結論</strong>：「雖然存在些微的共同方法變異，但在統計控制後，不影響本研究的主要結論。」</li>
-</ul>
-</li>
+<li><strong>檢驗 CMB 是否存在</strong>：若 Method-C Model 適配度<strong>顯著優於</strong> Baseline Model，代表方法因子確實解釋了相當大比例的變異 → 承認資料存在 CMB</li>
+<li><strong>檢驗 CMB 是否致命（救命步驟）</strong>：在控制方法因子後，重新檢視自變項—依變項的<strong>路徑係數</strong>。若原本顯著的路徑在扣除方法變異後<strong>依然顯著</strong>，可宣稱「雖存在些微 CMB，但不影響本研究主要結論」</li>
 </ol>
 <hr />
-<h4 id="reviewer-harmans">三、 為什麼 Reviewer 喜歡這個方法？（與 Harman's 的比較）</h4>
+<h3 id="reviewer-harmans">三、為什麼 Reviewer 偏好此方法？（與 Harman's 對比）</h3>
 <table>
 <thead>
 <tr>
-<th><strong>特性</strong></th>
-<th><strong>Harman's Single Factor Test</strong></th>
-<th><strong>CFA Marker Variable Technique</strong></th>
+<th>特性</th>
+<th><a href="Harman%27s_Single_Factor_Test.html">Harman's Single Factor Test</a></th>
+<th>CFA Marker Variable Technique</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><strong>性質</strong></td>
-<td><strong>診斷性</strong>（只能看有沒有病）</td>
-<td><strong>補救性</strong>（有病可以試著治療）</td>
+<td>診斷性（只能看有無病）</td>
+<td>補救性（有病可試著治療）</td>
 </tr>
 <tr>
 <td><strong>嚴謹度</strong></td>
-<td>低（粗略的 EFA）</td>
-<td>高（精確的 SEM/CFA）</td>
+<td>低（粗略 EFA）</td>
+<td>高（精確 SEM/CFA）</td>
 </tr>
 <tr>
 <td><strong>檢測邏輯</strong></td>
 <td>假設單一因子解釋 &gt;50% 才有問題</td>
-<td>只要有非理論的共變異數即被捕捉</td>
+<td>任何非理論的共變異數都被捕捉</td>
 </tr>
 <tr>
 <td><strong>結果處理</strong></td>
-<td>若沒過，文章通常會被拒稿</td>
-<td>若沒過，可以控制誤差後證明假設仍成立，<strong>保住文章</strong></td>
+<td>若沒過，文章通常被拒稿</td>
+<td>若沒過，可控制誤差後證明假設仍成立，<strong>保住文章</strong></td>
 </tr>
 </tbody>
 </table>
 <hr />
-<h4 id="_2">四、 挑選「標記變數」的眉角（陷阱題）</h4>
-<p>博士生常被問：「那你怎麼選這個標記變數？」如果選錯，整個檢定無效。</p>
+<h3 id="_1">四、挑選「標記變數」的眉角（陷阱題）</h3>
+<p>博士生常被問：「你怎麼選這個標記變數？」選錯則整個檢定無效。</p>
 <ul>
-<li>
-<p><strong>正確選法</strong>：選擇一個與研究主題<strong>完全無關</strong>的變數。</p>
-<ul>
-<li><em>例子</em>：若研究「科技接受度（TAM）」，可以選「時尚意識（Fashion Consciousness）」或「對天氣的態度」作為標記變數。</li>
+<li><strong>正確選法</strong>：選擇與研究主題<strong>完全無關</strong>的變數<ul>
+<li>範例：研究「科技接受度（TAM）」可選「時尚意識（Fashion Consciousness）」或「對天氣的態度」</li>
+<li>經典 Marker：Simmering et al. (2015) 提出的「對藍色的態度（Attitude Toward the Color Blue）」，因大多數研究主題（領導力、行銷）都與此無關</li>
 </ul>
 </li>
-<li>
-<p><strong>錯誤選法</strong>：選擇一個「看起來有點像」的變數。</p>
-<ul>
-<li>
-<p><em>錯誤例子</em>：若研究「員工滿意度」，選了「組織承諾」當標記變數。</p>
-</li>
-<li>
-<p><em>後果</em>：因為這兩者理論上本來就有相關，你把它當作誤差扣掉，會把「真實的解釋力」也扣掉（Over-correction），導致原本顯著的假設變成不顯著。</p>
-</li>
+<li><strong>錯誤選法</strong>：選擇「看起來有點像」的變數<ul>
+<li>錯誤範例：研究「員工滿意度」卻選「組織承諾」當標記</li>
+<li>後果：兩者理論上本就有相關，當作誤差扣掉會把「真實解釋力」也扣掉（Over-correction），導致原本顯著的假設變成不顯著</li>
 </ul>
 </li>
 </ul>
 <hr />
-<h4 id="_3">五、 口試作答範例（話術）</h4>
-<p>若題目問：「如何嚴謹處理共同方法變異？」建議回答架構如下：</p>
-<blockquote>
-<p>「雖然 Harman's Single Factor Test 是常見的初步檢測，但考量其敏感度不足且無法分離誤差變異，本研究建議採用更嚴謹的 <strong>CFA Marker Variable Technique</strong>。</p>
-<p>具體作法為：在問卷設計階段預先置入一個與研究構面理論無關的『標記變數』（如：社會期許量表或無關態度題）。</p>
-<p>在分析階段，我將比較『基準模型』與『加入方法因子模型』的適配度差異。若發現方法因子顯著改善了模型適配度，我將進一步檢視在控制該方法變異後，主要研究假設的路徑係數是否依然顯著。這能確保研究結論的穩健性（Robustness），有效回應 Reviewer 對於自填式問卷偏差的質疑。」</p>
-</blockquote>
-<h4 id="_4">總結</h4>
-<p><strong>Marker Variable Technique</strong> 是將「黑盒子（未知的誤差）」變成「白盒子（可測量的誤差）」的過程。它不僅能防禦攻擊，更是證明研究結果具有<strong>強韌性（Robustness）</strong>的高級技巧。</p>
-<p>這是一個非常專業的防禦策略。您提到的應該是 <strong>"Marker Variable"（標記變數）</strong>（有時因為拼寫相近會被誤稱為 Market Variable，但在 CMB 脈絡下我們稱之為 Marker）。</p>
-<p>在博士論文或高品質期刊中，僅僅「放了」這個變數是不夠的，您必須透過統計數據證明「它發揮了作用」且「CMB 不嚴重」。</p>
-<p>以下是檢驗 Marker Variable 數值的完整三階段流程：</p>
-<h4 id="the-eye-ball-test">第一階段：相關係數矩陣檢視 (The Eye-ball Test)</h4>
-<p>這是最直觀的第一步。</p>
+<h3 id="_2">五、數值檢驗的三階段流程（事後驗證）</h3>
+<p>僅僅「放了」Marker Variable 並不夠，必須透過統計數據證明「它發揮了作用」且「CMB 不嚴重」。</p>
+<h4 id="eye-ball-test">第一階段：相關係數矩陣檢視（Eye-ball Test）</h4>
+<p>最直觀的第一步。</p>
 <ul>
-<li>
-<p><strong>操作</strong>：跑出所有變數（包含您的自變數 X、依變數 Y 與 Marker Variable M）的 <strong>Pearson 相關係數矩陣</strong>。</p>
-</li>
-<li>
-<p><strong>檢驗標準</strong>：</p>
-<ol>
-<li>
-<p><strong>理論上無關</strong>：Marker Variable 與您的 X 或 Y 之間的相關係數 ($r$) 應該要 <strong>非常低</strong> 且 <strong>不顯著</strong> (non-significant)。</p>
-</li>
-<li>
-<p><strong>理想數值</strong>：$r$ 最好接近 <strong>0</strong> (例如 0.01 ~ 0.10)。</p>
-</li>
+<li><strong>操作</strong>：跑出所有變數（自變數 X、依變數 Y、Marker M）的 <strong>Pearson 相關係數矩陣</strong></li>
+<li><strong>檢驗標準</strong>：<ol>
+<li><strong>理論上無關</strong>：Marker 與 X、Y 之間的 $r$ 應<strong>非常低</strong>且<strong>不顯著</strong></li>
+<li><strong>理想數值</strong>：$r$ 接近 <strong>0</strong>（例如 0.01 ~ 0.10）</li>
 </ol>
 </li>
-<li>
-<p><strong>判讀</strong>：</p>
+<li><strong>判讀</strong>：<ul>
+<li>$r \geq 0.3$：選錯 Marker 或 CMB 嚴重</li>
+<li>$r \leq 0.1$：好消息，初步證明無嚴重共同方法變異</li>
+</ul>
+</li>
+</ul>
+<h5 id="_3">跨研究實證</h5>
+<p><strong>Example 1：社交媒體與衝動購買（Arghashi, 2025）</strong> Arghashi 2025 - Compulsive Social Media Use.pdf</p>
 <ul>
-<li>
-<p>如果 Marker 跟您的主要變數相關係數高達 0.3 或 0.4，代表選錯 Marker 了（它跟構念有關），或者 CMB 已經嚴重到把不相關的東西都拉在一起了。</p>
-</li>
-<li>
-<p>如果相關係數很低（例如 $r = 0.05$），這是好消息，初步證明沒有嚴重的共同方法變異。</p>
-</li>
+<li><strong>標記變數</strong>：「每天花在社交媒體上的平均時間（average time spent on social media per day）」</li>
+<li><strong>操作方式</strong>：將其視為與模型中其他構念（強迫性社交媒體使用、衝動購買行為）不相關的變數放入 SEM 模型</li>
+<li><strong>結果</strong>：標記變數與其他任何構念之間沒有顯著相關（$r \leq 0.10$），數據中沒有因測量方法本身而產生普遍高相關性，CMB 不是嚴重問題</li>
 </ul>
-</li>
+<p><img alt="Pasted image 20260128155731" src="img/Pasted%20image%2020260128155731.png" /></p>
+<p><strong>Example 2：手機遊戲（Pokémon GO）行為研究</strong> How to Achieve Goals in Digital Games -- An Empirical Test of a Goal-Oriented Model in Pokemon GO, Kwak 2022</p>
+<ul>
+<li><strong>標記變數</strong>：「時尚涉入度（fashion involvement）」——理論上與遊戲目標完全無關</li>
+<li><strong>結果</strong>：平均相關係數接近 0（$r = 0.04$）；與「遊戲內付費」的相關僅 0.01，與「目標導向努力」為 -0.02 → CMB 不太可能造成問題</li>
 </ul>
-<p>Example</p>
-<p>社交媒體與衝動購買研究 (Arghashi 2025)  Arghashi 2025 - Compulsive Social Media Use.pdf
-    ◦ 標記變數： 研究者選擇了 「每天花在社交媒體上的平均時間」（the average time spent on social media per day） 作為標記變數。
-    ◦ 操作方式： 他們將此變數視為與模型中其他構念（如強迫性社交媒體使用、衝動購買行為等）不相關的變數放入 SEM 模型中進行估計。
-    ◦ 結果說明： 分析結果顯示，這個標記變數與其他任何構念之間沒有顯著的相關性（相關係數 ≤0.10）。這意味著數據中並沒有因为測量方法本身而產生普遍的高相關性，從而證實 CMB 在該研究中不是嚴重的問題。</p>
-<p>例子二：手機遊戲（Pokémon GO）行為研究 (How to Achieve Goals in Digital Games -- An Empirical Test of a Goal-Oriented Model in Pokemon GO, Kwak 2022)</p>
-<pre><code>◦ 標記變數： 研究者加入了一個理論上與遊戲目標完全無關的變數——「時尚涉入度」（fashion involvement）。
-◦ 操作方式： 他們測試了該變數與研究中其他變數（如目標可行性、遊戲內付費、目標導向的努力等）之間的相關性。
-◦ 結果說明： 預期中該變數與研究構念不應有相關。結果顯示，平均相關係數接近於 0 (r=0.04)。具體來看，它與「遊戲內付費」的相關係數僅為 0.01，與「目標導向努力」的相關係數為 -0.02。基於這些極低的相關性，研究者得出結論，CMB 不太可能造成問題。
-</code></pre>
-<hr />
+<p><img alt="Pasted image 20260128160149" src="img/Pasted%20image%2020260128160149.png" /></p>
 <h4 id="lindell-whitney-2001">第二階段：Lindell &amp; Whitney (2001) 校正法</h4>
-<p>這是最經典的數學檢驗法，用來回答：「如果扣掉這個 Marker 抓到的雜訊，我的研究假設還成立嗎？」</p>
+<p>最經典的數學檢驗法（詳見 <a href="Lindell_Exercise.html">Lindell Exercise</a>），回答：「扣掉這個 Marker 抓到的雜訊後，研究假設還成立嗎？」</p>
 <ul>
-<li>
-<p><strong>邏輯</strong>：假設 Marker Variable 與其他變數之間的相關，純粹是來自於 CMB（因為理論上它們不該相關）。我們把這個相關係數當作 <strong>「誤差基線 ($r_M$)」</strong>。</p>
+<li><strong>邏輯</strong>：假設 Marker 與其他變數的相關純粹來自 CMB，將此係數作為<strong>誤差基線 ($r_M$)</strong></li>
+<li><strong>操作步驟</strong>：<ol>
+<li>找出 Marker 與所有實質變數中<strong>最小的正相關係數</strong>作為 $r_M$（CMB 的最小影響力代理值）</li>
+<li>套用偏相關公式從原本的 $r_{XY}$ 中扣除：
+    $$r_{XY.M} = \frac{r_{XY} - r_M}{1 - r_M}$$</li>
+<li>檢查 $r_{XY.M}$ 的 t / p 值</li>
+</ol>
 </li>
-<li>
-<p><strong>操作步驟</strong>：</p>
-<ol>
-<li>
-<p>找出 Marker Variable 與所有實質變數中 <strong>「最小的正相關係數」</strong>，記為 $r_M$（這代表 CMB 的最小影響力）。</p>
+<li><strong>判決</strong>：<ul>
+<li><strong>過關</strong>：校正後 X-Y 相關<strong>依然顯著</strong> → CMB 雖存在但不足以推翻結論</li>
+<li><strong>失敗</strong>：校正後變不顯著 → 原本的顯著皆為 CMB 假象</li>
+</ul>
 </li>
-<li>
-<p>使用 <strong>偏相關 (Partial Correlation)</strong> 公式，將這個 $r_M$ 從您原本的 X-Y 相關係數 ($r_{XY}$) 中扣除。</p>
-</li>
-<li>
-<p><strong>公式 (校正後的相關)</strong>：</p>
-<p>$$r_{XY.M} = \frac{r_{XY} - r_M}{1 - r_M}$$</p>
+</ul>
+<p><img alt="Pasted image 20260128173658" src="img/Pasted%20image%2020260128173658.png" /></p>
+<h4 id="cfa-cfa-with-marker-variable">第三階段：CFA 模型法（CFA with Marker Variable）</h4>
+<p>最嚴謹、Reviewer 最偏好的方法（特別是用 AMOS 或 Mplus）。本質上即第二節「三階段模型比較法」的數值化判讀。</p>
+<ul>
+<li><strong>操作邏輯</strong>：<ol>
+<li>建立 CFA 模型，包含所有實質構念與 Marker</li>
+<li><strong>模型 A (Baseline)</strong>：所有構念依標準方式自由相關</li>
+<li><strong>模型 B (Method Model)</strong>：<ul>
+<li>加入 Marker 作為一個潛在因子</li>
+<li>畫箭頭從 Marker 指向<strong>每一個</strong>實質變數的題目（Indicators）</li>
+<li>將 Marker 與其他構念的相關設為 0（Orthogonal）</li>
+</ul>
 </li>
 </ol>
 </li>
-<li>
-<p><strong>檢驗判決</strong>：</p>
-<ul>
-<li>
-<p>計算出 $r_{XY.M}$ 後，檢查它的 <strong>t 值</strong> 或 <strong>P 值</strong>。</p>
-</li>
-<li>
-<p><strong>過關</strong>：如果校正後，X 對 Y 的相關 <strong>依然顯著</strong>，代表 CMB 雖然存在，但不足以推翻您的研究結論。</p>
+<li><strong>檢驗數值</strong>：比較模型 A 與 B 的<strong>標準化路徑係數（Standardized Regression Weights）</strong></li>
+<li><strong>判決標準</strong>：<ul>
+<li>加入 Marker 後，原本 X $\rightarrow$ Y 的結構係數改變<strong>小於 0.2</strong>（或差異不顯著）→ 宣稱 CMB 不嚴重</li>
+<li>Marker 指向各題目的 Loading 普遍很低（例如 &lt; 0.2）→ 方法變異解釋力低</li>
+</ul>
 </li>
 </ul>
-<h3 id="-cmb">- <strong>失敗</strong>：如果校正後變不顯著，代表原本的顯著都是 CMB 造成的假象。</h3>
-<p><a href="Lindell_Exercise.html">Lindell Exercise</a></p>
-</li>
-</ul>
+<p><img alt="Pasted image 20260128173833" src="img/Pasted%20image%2020260128173833.png" /></p>
+<p><img alt="Pasted image 20260128173854" src="img/Pasted%20image%2020260128173854.png" /></p>
 <hr />
-<h4 id="cfa-cfa-with-marker-variable">第三階段：CFA 模型法 (CFA with Marker Variable)</h4>
-<p>這是目前最嚴謹、Reviewer 最喜歡的方法（特別是如果您用 AMOS 或 Mplus）。</p>
-<ul>
-<li>
-<p><strong>操作邏輯</strong>：</p>
-<ol>
-<li>
-<p>建立一個 <strong>CFA 模型</strong>，包含所有實質構念與 Marker Variable。</p>
-</li>
-<li>
-<p><strong>模型 A (Baseline)</strong>：讓所有構念依標準方式自由相關。</p>
-</li>
-<li>
-<p><strong>模型 B (Method Model)</strong>：</p>
-<ul>
-<li>
-<p>加入 Marker Variable 作為一個潛在因子。</p>
-</li>
-<li>
-<p>畫箭頭從 Marker 指向 <strong>「每一個」</strong> 實質變數的題目 (Indicators)。</p>
-</li>
-<li>
-<p>將 Marker 與其他構念的相關設為 0 (Orthogonal)。</p>
-</li>
-</ul>
-</li>
-</ol>
-</li>
-<li>
-<p><strong>檢驗數值</strong>：</p>
-<ul>
-<li>比較 <strong>模型 A</strong> 與 <strong>模型 B</strong> 的 <strong>標準化路徑係數 (Standardized Regression Weights)</strong>。</li>
-</ul>
-</li>
-<li>
-<p><strong>判決標準</strong>：</p>
-<ul>
-<li>
-<p>如果加入 Marker 後，原本 X $\rightarrow$ Y 的結構係數改變 <strong>小於 0.2</strong> (或差異不顯著)，則宣稱 CMB 不嚴重。</p>
-</li>
-<li>
-<p>查看 Marker 指向各題目的 Loading，如果普遍很低 (e.g., &lt; 0.2)，代表方法變異解釋力很低。</p>
-</li>
-</ul>
-</li>
-</ul>
-<h4 id="_5">總結：如何在論文中報告？</h4>
-<p>您可以在「方法論」或「結果」章節中這樣寫：</p>
+<h3 id="_4">六、口試作答與論文書寫範例</h3>
+<h4 id="_5">口試話術</h4>
+<p>若題目問：「如何嚴謹處理共同方法變異？」建議架構：</p>
+<blockquote>
+<p>「雖然 <a href="Harman%27s_Single_Factor_Test.html">Harman's Single Factor Test</a> 是常見的初步檢測，但考量其敏感度不足且無法分離誤差變異，本研究採用更嚴謹的 <strong>CFA Marker Variable Technique</strong>。</p>
+<p>具體作法為：在問卷設計階段預先置入一個與研究構面理論無關的『標記變數』（如社會期許量表或無關態度題）。在分析階段，比較『基準模型』與『加入方法因子模型』的適配度差異。若方法因子顯著改善模型適配度，進一步檢視在控制該方法變異後，主要研究假設的路徑係數是否依然顯著。這能確保研究結論的穩健性（Robustness），有效回應 Reviewer 對於自填式問卷偏差的質疑。」</p>
+</blockquote>
+<h4 id="_6">論文方法／結果章節寫法</h4>
 <blockquote>
 <p>"To assess the potential threat of Common Method Bias (CMB), a <strong>Marker Variable</strong> (theoretically unrelated to the substantive constructs) was included in the survey.</p>
 <ol>
-<li>
-<p><strong>Correlation Analysis</strong>: The correlations between the marker variable and the study variables were low and non-significant (ranging from 0.01 to 0.08), indicating minimal method variance.</p>
-</li>
-<li>
-<p><strong>Lindell &amp; Whitney (2001) Test</strong>: We applied the marker variable technique to adjust the correlations. Even after controlling for the method variance proxied by the marker ($r_M = 0.05$), all significant relationships in the hypothesized model remained significant.</p>
-</li>
+<li><strong>Correlation Analysis</strong>: The correlations between the marker variable and the study variables were low and non-significant (ranging from 0.01 to 0.08), indicating minimal method variance.</li>
+<li><strong>Lindell &amp; Whitney (2001) Test</strong>: We applied the marker variable technique to adjust the correlations. Even after controlling for the method variance proxied by the marker ($r_M = 0.05$), all significant relationships in the hypothesized model remained significant.</li>
 </ol>
 <p>Therefore, CMB is not a pervasive issue in this study."</p>
 </blockquote>
-<p><strong>一句話心法：</strong></p>
-<p>Marker Variable 的數值檢驗重點在於 <strong>「比較」</strong> —— 比較「扣除它之前」與「扣除它之後」，您的結論是否依然穩如泰山。</p>
+<hr />
+<h3 id="cmb">七、與其他 CMB 防禦方法的位置</h3>
+<table>
+<thead>
+<tr>
+<th>層級</th>
+<th>方法</th>
+<th>角色</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. 診斷</td>
+<td><a href="Harman%27s_Single_Factor_Test.html">Harman's Single Factor Test</a></td>
+<td>看有沒有問題；不能修正</td>
+</tr>
+<tr>
+<td>2. 控制</td>
+<td><strong>CFA Marker Variable Technique</strong></td>
+<td>用 SEM 控制方法變異</td>
+</tr>
+<tr>
+<td>3. 校正</td>
+<td><a href="Lindell_Exercise.html">Lindell Exercise</a></td>
+<td>數學校正後測試結論穩健性</td>
+</tr>
+</tbody>
+</table>
+<p>並與量測模型其他效度檢定共構：
+- 共線性連動：<a href="VIF_Variance_Inflation_Factor.html">VIF Variance Inflation Factor</a> &lt; 3.3 的 Full Collinearity Test 為平行證據；同時超標則 <a href="Multicollinearity_%E5%85%B1%E7%B7%9A%E6%80%A7.html">Multicollinearity 共線性</a> 與 CMB 同時警訊
+- 區別效度連動：<a href="HTMT.html">HTMT</a>（&lt; 0.85/0.90）、<a href="Discriminant_Validity_%E5%8D%80%E5%88%A5%E6%A0%A1%E5%BA%A6.html">Discriminant Validity 區別校度</a>、<a href="Fornell-Larcker.html">Fornell-Larcker</a> 確認構念實質可分；HTMT 偏高有時來自 CMB 而非真構念重疊</p>
+<hr />
+<h3 id="_7">總結</h3>
+<p><strong>Marker Variable Technique</strong> 是把「黑盒子（未知誤差）」變成「白盒子（可測量誤差）」的過程。它不僅能防禦攻擊，更是證明研究結果具有<strong>強韌性（Robustness）</strong>的高級技巧。</p>
+<p><strong>一句話心法</strong>：Marker Variable 的數值檢驗重點在於<strong>「比較」</strong>——比較「扣除前」與「扣除後」，結論是否依然穩如泰山。</p>
+<hr />
+<p><strong>相關概念</strong>
+- 上位概念：<a href="CMB_Common_method_bias.html">CMB Common method bias</a>
+- 同層方法：<a href="Harman%27s_Single_Factor_Test.html">Harman's Single Factor Test</a>、<a href="Lindell_Exercise.html">Lindell Exercise</a>
+- 共線性脈絡：<a href="VIF_Variance_Inflation_Factor.html">VIF Variance Inflation Factor</a>、<a href="Multicollinearity_%E5%85%B1%E7%B7%9A%E6%80%A7.html">Multicollinearity 共線性</a>
+- 區別效度脈絡：<a href="HTMT.html">HTMT</a>、<a href="Discriminant_Validity_%E5%8D%80%E5%88%A5%E6%A0%A1%E5%BA%A6.html">Discriminant Validity 區別校度</a>、<a href="Fornell-Larcker.html">Fornell-Larcker</a></p>
+<p><strong>相關論文</strong>
+- Arghashi 2025 - Compulsive Social Media Use.pdf——以「每日社群媒體使用時間」作 Marker
+- How to Achieve Goals in Digital Games -- An Empirical Test of a Goal-Oriented Model in Pokemon GO, Kwak 2022——以「時尚涉入度」作 Marker</p>
 </main>
 </div>
 <script>

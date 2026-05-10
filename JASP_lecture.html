@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JASP_lecture</title>
+<style>*, *::before, *::after { box-sizing: border-box; }
+
+/* ── Base ── */
+body {
+  font-family: "Helvetica Neue", Arial, "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+  font-size: 20px;
+  line-height: 1.9;
+  color: #111;
+  background: #fff;
+  margin: 0;
+}
+
+/* ── Two-column layout (note pages) ── */
+.layout { display: flex; align-items: flex-start; min-height: 100vh; }
+
+.sidebar {
+  width: 270px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 2rem 1rem 2rem 1.5rem;
+  border-right: 1px solid #e8e8e8;
+  background: #f9f9f9;
+}
+.sidebar-back {
+  display: block;
+  font-size: 0.82rem;
+  color: #999;
+  margin-bottom: 1.4rem;
+  text-decoration: none;
+}
+.sidebar-back:hover { color: #333; }
+.sidebar-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #bbb;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+/* ── TOC in sidebar ── */
+.toc { font-size: 0.82rem; line-height: 1.55; }
+.toc ul { list-style: none; margin: 0; padding: 0; }
+.toc ul ul { padding-left: 0.9rem; }
+.toc li { margin: 0; }
+.toc-row { display: flex; align-items: baseline; gap: 0.2rem; }
+.toc-row a {
+  flex: 1;
+  display: block;
+  padding: 0.18rem 0.3rem;
+  border-radius: 3px;
+  color: #555;
+  text-decoration: none;
+  word-break: break-word;
+}
+.toc-row a:hover { background: #ebebeb; color: #111; }
+.toc-row a.active { color: #0055cc; font-weight: 600; background: #e8f0ff; }
+.toc-toggle {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-size: 0.65rem;
+  color: #bbb;
+  line-height: 1;
+  width: 1rem;
+  text-align: center;
+}
+.toc-toggle:hover { color: #555; }
+
+/* ── Main content ── */
+.content {
+  flex: 1;
+  min-width: 0;
+  padding: 3rem 3rem 6rem;
+  max-width: 800px;
+}
+
+/* ── Single-column (index page) ── */
+.container { max-width: 800px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
+
+/* ── Typography ── */
+h1 {
+  font-size: 1.75rem; font-weight: 700;
+  margin: 0 0 0.15rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 2px solid #111;
+  line-height: 1.3;
+}
+h2 {
+  font-size: 1.3rem; font-weight: 700;
+  margin: 2.5rem 0 0.5rem;
+  padding-bottom: 0.2rem;
+  border-bottom: 1px solid #ddd;
+}
+h3 { font-size: 1.1rem; font-weight: 700; margin: 1.8rem 0 0.4rem; }
+h4 { font-size: 1rem; font-weight: 700; margin: 1.4rem 0 0.3rem; }
+p { margin: 0.9rem 0; }
+a { color: #0055cc; text-decoration: none; }
+a:hover { text-decoration: underline; }
+nav { margin-bottom: 2.5rem; font-size: 0.85rem; color: #999; }
+nav a { color: #999; }
+
+/* ── Code ── */
+code {
+  font-family: "SFMono-Regular", Consolas, monospace;
+  background: #f2f2f2;
+  padding: 0.1em 0.4em;
+  border-radius: 3px;
+  font-size: 0.85em;
+}
+pre {
+  background: #f2f2f2;
+  padding: 1.2rem 1.4rem;
+  border-radius: 5px;
+  overflow-x: auto;
+  font-size: 0.85em;
+  line-height: 1.6;
+}
+pre code { background: none; padding: 0; }
+
+/* ── Lists ── */
+ul, ol { padding-left: 1.6rem; margin: 0.8rem 0; }
+li { margin: 0.35rem 0; }
+li > ul, li > ol { margin: 0.2rem 0; }
+
+/* ── Other elements ── */
+blockquote {
+  border-left: 4px solid #ccc;
+  margin: 1.2rem 0;
+  padding: 0.3rem 1.2rem;
+  color: #444;
+  background: #fafafa;
+}
+table { border-collapse: collapse; width: 100%; margin: 1.2rem 0; font-size: 0.95em; }
+th, td { border: 1px solid #ccc; padding: 0.55rem 0.9rem; text-align: left; }
+th { background: #f5f5f5; font-weight: 700; }
+tr:nth-child(even) { background: #fafafa; }
+hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
+.meta { font-size: 0.8rem; color: #aaa; margin: 0.3rem 0 1.8rem; }
+.index-list { list-style: none; padding: 0; margin: 1rem 0; }
+.index-list li { padding: 0.55rem 0; border-bottom: 1px solid #eee; font-size: 1.05rem; }
+.index-list li:last-child { border-bottom: none; }
+.embed-block {
+  border-left: 3px solid #aaa;
+  padding: 0.5rem 1.2rem;
+  margin: 1.5rem 0;
+  background: #f8f8f8;
+}
+
+/* ── Mobile ── */
+@media (max-width: 800px) {
+  .layout { flex-direction: column; }
+  .sidebar {
+    position: static;
+    width: 100%;
+    height: auto;
+    max-height: 50vh;
+    border-right: none;
+    border-bottom: 1px solid #e8e8e8;
+    padding: 1rem 1.5rem;
+  }
+  .content { padding: 1.5rem 1.2rem 4rem; }
+}
+</style>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+<div class="toc">
+<ul>
+<li><a href="#_1">目錄</a><ul>
+<li><a href="#part-1-jasp">Part 1. JASP 環境與資料處理</a></li>
+<li><a href="#part-2">Part 2. 敘述統計</a></li>
+<li><a href="#part-3">Part 3. 視覺化</a></li>
+<li><a href="#part-4">Part 4. 資料完整性與假設檢查</a></li>
+<li><a href="#part-5">Part 5. 效應量與單樣本檢定</a></li>
+<li><a href="#part-6">Part 6. 兩組比較</a></li>
+<li><a href="#part-7">Part 7. 相關與迴歸</a></li>
+<li><a href="#part-8-anova">Part 8. ANOVA 家族</a></li>
+<li><a href="#part-9-meta">Part 9. 卡方關聯與 Meta 分析</a></li>
+<li><a href="#part-10">Part 10. 頻率派概念與檢定選擇</a></li>
+</ul>
+</li>
+<li><a href="#wiki">概念對應 ↔ wiki 既有筆記</a></li>
+<li><a href="#_2">教學使用建議</a></li>
+<li><a href="#_3">來源</a></li>
+</ul>
+</div>
+</aside>
+<main class="content">
+<h1>JASP_lecture</h1>
+<p class="meta">#jasp　#statistics　#lecture　#handbook　#toc</p>
+<h2 id="jasp-2025">JASP 統計分析講義（學生指南 2025）</h2>
+<blockquote>
+<p>本講義改寫自 Goss-Sampson, M. A. (2025). <em>Statistical Analysis in JASP: A Guide for Students</em> (7th Ed., JASP v0.19.3). Licenced as CC BY 4.0.</p>
+<p><strong>本講義定位</strong>：以 JASP 軟體<strong>操作</strong>為主軸；統計理論細節（公式推導、歷史脈絡、研究範例）一律連回 social_science_statistics_book 與 wiki 既有概念 note。</p>
+<p><strong>配套圖片</strong>：所有 JASP 截圖以整頁渲染存放於 <a href="img/jasp_lecture/">wiki/img/jasp_lecture/</a>，每篇 note 嵌入對應頁面。</p>
+<p><strong>官方資源</strong>：JASP 下載 <a href="https://jasp-stats.org/">https://jasp-stats.org/</a> ｜ 範例資料集 <a href="https://osf.io/bx6uv/">https://osf.io/bx6uv/</a></p>
+</blockquote>
+<hr />
+<h3 id="_1">目錄</h3>
+<h4 id="part-1-jasp">Part 1. JASP 環境與資料處理</h4>
+<ul>
+<li>JASP_environment — JASP 介面、預設設定、深淺主題</li>
+<li>JASP_data_file_types — 支援的資料格式（.jasp / .csv / .xlsx / .sav 等）</li>
+<li>JASP_analysis_menu — 分析選單地圖（T-Tests / ANOVA / Regression / Frequencies / Factor / Meta-Analysis）</li>
+<li><a href="JASP_data_handling.html">JASP_data_handling</a> — 變數型態（nominal / ordinal / continuous）、編碼、標籤</li>
+<li>JASP_data_filtering — 資料篩選與隱藏類別</li>
+<li><a href="JASP_data_editing.html">JASP_data_editing</a> — 直接編輯儲存格、與外部 Excel 同步</li>
+<li><a href="JASP_data_transformation.html">JASP_data_transformation</a> — 計算欄位、log/sqrt 轉換</li>
+<li>JASP_split_files — 依分組變數切分敘述統計</li>
+</ul>
+<h4 id="part-2">Part 2. 敘述統計</h4>
+<ul>
+<li>JASP_descriptive_statistics — Descriptives 主面板總覽</li>
+<li><a href="JASP_central_tendency.html">JASP_central_tendency</a> — 平均、中位數、眾數</li>
+<li>JASP_dispersion — SD、SE、變異數、MAD、IQR、CV</li>
+<li>JASP_confidence_intervals — 95% CI 計算與報告</li>
+<li>JASP_quartiles — 四分位數與百分位</li>
+<li>JASP_skewness_kurtosis — 偏態、峰度與其 z 檢定</li>
+</ul>
+<h4 id="part-3">Part 3. 視覺化</h4>
+<ul>
+<li>JASP_distribution_plots — 直方圖、密度、dot、interval plot</li>
+<li>JASP_boxplots — 箱形圖元素拆解</li>
+<li>JASP_QQ_plots — Q-Q 圖判讀</li>
+<li>JASP_raincloud_violin_plots — Violin、jitter、Raincloud</li>
+<li>JASP_scatter_heatmap_plots — 散佈圖、tile heatmap、Pareto、Likert</li>
+<li>JASP_editing_plots — 圖形編輯與輸出</li>
+</ul>
+<h4 id="part-4">Part 4. 資料完整性與假設檢查</h4>
+<ul>
+<li>JASP_outliers — 離群值偵測、保留 / 刪除 / 修正 / winsorize</li>
+<li>JASP_bias — 樣本偏誤類型</li>
+<li>JASP_normality_test — Shapiro-Wilk + skew/kurt z 檢定</li>
+<li>JASP_levene_test — 變異數同質性檢定</li>
+<li>JASP_homoscedasticity — 殘差同質性</li>
+<li>JASP_central_limit_theorem — 中央極限定理在 JASP 假設檢查中的角色</li>
+</ul>
+<h4 id="part-5">Part 5. 效應量與單樣本檢定</h4>
+<ul>
+<li>JASP_effect_size — JASP 各檢定支援的效應量總表</li>
+<li><a href="JASP_one_sample_ttest.html">JASP_one_sample_ttest</a> — 單樣本 t 檢定</li>
+<li>JASP_binomial_test — 二項式檢定</li>
+<li>JASP_multinomial_test — 多項式檢定</li>
+<li>JASP_chisquare_goodness_of_fit — 卡方適合度檢定</li>
+</ul>
+<h4 id="part-6">Part 6. 兩組比較</h4>
+<ul>
+<li>JASP_independent_ttest — 獨立樣本 t 檢定</li>
+<li>JASP_welch_correction — Welch 校正</li>
+<li>JASP_mann_whitney — Mann-Whitney U 檢定</li>
+<li>JASP_paired_ttest — 配對樣本 t 檢定</li>
+<li>JASP_wilcoxon — Wilcoxon 符號等級檢定</li>
+</ul>
+<h4 id="part-7">Part 7. 相關與迴歸</h4>
+<ul>
+<li>JASP_correlation — Pearson 相關</li>
+<li>JASP_nonparametric_correlation — Spearman、Kendall's tau</li>
+<li>JASP_coefficient_determination — R² 解釋變異</li>
+<li>JASP_spurious_correlation — 偽相關警示</li>
+<li>JASP_regression_overview — 迴歸總覽與假設</li>
+<li>JASP_sums_of_squares — SST / SSM / SSR</li>
+<li>JASP_simple_regression — 簡單線性迴歸</li>
+<li>JASP_multiple_regression — 多元迴歸</li>
+<li>JASP_regression_entry_methods — Enter / Backward / Forward / Stepwise / Hierarchical</li>
+<li>JASP_logistic_regression — 邏輯迴歸</li>
+<li>JASP_confusion_matrix — 混淆矩陣、敏感度、特異度</li>
+</ul>
+<h4 id="part-8-anova">Part 8. ANOVA 家族</h4>
+<ul>
+<li>JASP_oneway_ANOVA — 單因子獨立 ANOVA</li>
+<li>JASP_familywise_error — 家族錯誤率</li>
+<li>JASP_ANOVA_contrasts — 計畫對比（Deviation / Simple / Helmert / Polynomial 等）</li>
+<li>JASP_post_hoc_tests — Tukey / Bonferroni / Holm / Scheffé / Sidak / Games-Howell / Dunnett / Dunn</li>
+<li>JASP_ANOVA_effect_size — η²、partial η²、ω²</li>
+<li>JASP_kruskal_wallis — Kruskal-Wallis 無母數 ANOVA</li>
+<li>JASP_RMANOVA — 重複量數 ANOVA</li>
+<li>JASP_sphericity — 球形性與 Mauchly 檢定、Greenhouse-Geisser / Huynh-Feldt 校正</li>
+<li>JASP_friedman_test — Friedman 重複量數無母數</li>
+<li>JASP_ANCOVA — 共變數分析</li>
+<li>JASP_twoway_independent_ANOVA — 二因子獨立 ANOVA</li>
+<li>JASP_twoway_repeated_ANOVA — 二因子重複量數 ANOVA</li>
+<li>JASP_mixed_factor_ANOVA — 混合因子 ANOVA</li>
+<li>JASP_simple_main_effects — 簡單主效應</li>
+<li>JASP_interaction_effects — 交互作用判讀</li>
+</ul>
+<h4 id="part-9-meta">Part 9. 卡方關聯與 Meta 分析</h4>
+<ul>
+<li>JASP_chisquare_association — 卡方獨立性／關聯性檢定</li>
+<li>JASP_cramers_v — Cramer's V、Phi 效應量</li>
+<li>JASP_odds_ratio — 勝算比</li>
+<li>JASP_pearson_residual — 標準化殘差作為 post hoc</li>
+<li>JASP_meta_analysis — Meta-analysis 模組</li>
+<li>JASP_heterogeneity — Q、tau²、I²、H² 異質性指標</li>
+<li><a href="JASP_forest_plot.html">JASP_forest_plot</a> — 森林圖</li>
+<li>JASP_funnel_plot — 漏斗圖與發表偏誤</li>
+<li>JASP_effect_size_computation — 從各種統計量計算 ES + SE</li>
+</ul>
+<h4 id="part-10">Part 10. 頻率派概念與檢定選擇</h4>
+<ul>
+<li>JASP_hypothesis_testing — 虛無假設、對立假設、α、p</li>
+<li>JASP_type_I_II_errors — 第一型、第二型錯誤</li>
+<li>JASP_pvalue — p 值的正確詮釋</li>
+<li>JASP_parametric_nonparametric — 母數 vs 無母數檢定對照</li>
+<li><a href="JASP_test_selection.html">JASP_test_selection</a> — 「我該用哪個檢定？」流程圖</li>
+<li>JASP_data_layout — Excel 資料排版範例（依檢定方法）</li>
+</ul>
+<hr />
+<h3 id="wiki">概念對應 ↔ wiki 既有筆記</h3>
+<table>
+<thead>
+<tr>
+<th>JASP 講義 note</th>
+<th>統計概念 note / 手冊章節</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>JASP_hypothesis_testing</td>
+<td>social_science_statistics_book §4.1</td>
+</tr>
+<tr>
+<td>JASP_type_I_II_errors</td>
+<td>social_science_statistics_book §4.3</td>
+</tr>
+<tr>
+<td>JASP_pvalue</td>
+<td>social_science_statistics_book §4.2</td>
+</tr>
+<tr>
+<td>JASP_effect_size</td>
+<td>social_science_statistics_book §4.4</td>
+</tr>
+<tr>
+<td><a href="JASP_one_sample_ttest.html">JASP_one_sample_ttest</a> / JASP_independent_ttest / JASP_paired_ttest</td>
+<td>social_science_statistics_book §5.1</td>
+</tr>
+<tr>
+<td>JASP_oneway_ANOVA / JASP_RMANOVA / JASP_ANCOVA</td>
+<td>social_science_statistics_book §5.2</td>
+</tr>
+<tr>
+<td>JASP_chisquare_goodness_of_fit / JASP_chisquare_association</td>
+<td>social_science_statistics_book §5.3</td>
+</tr>
+<tr>
+<td>JASP_mann_whitney / JASP_wilcoxon / JASP_kruskal_wallis / JASP_friedman_test</td>
+<td>social_science_statistics_book §5.4</td>
+</tr>
+<tr>
+<td>JASP_correlation / JASP_nonparametric_correlation</td>
+<td>social_science_statistics_book §6.1 ｜ statistical power</td>
+</tr>
+<tr>
+<td>JASP_simple_regression / JASP_multiple_regression</td>
+<td>social_science_statistics_book §7</td>
+</tr>
+<tr>
+<td>JASP_logistic_regression</td>
+<td>social_science_statistics_book §8.1</td>
+</tr>
+<tr>
+<td>JASP_meta_analysis</td>
+<td>social_science_statistics_book 第 14 章相關</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="_2">教學使用建議</h3>
+<ol>
+<li><strong>零基礎讀者</strong>：先讀 Part 1（環境）→ Part 2（敘述）→ Part 4（假設檢查）→ Part 10（頻率派概念）建立全局觀。</li>
+<li><strong>直接做實驗</strong>：依研究設計到 <a href="JASP_test_selection.html">JASP_test_selection</a> 找對應檢定，跳到該 note 跟著操作。</li>
+<li><strong>報告撰寫</strong>：每篇檢定 note 末段都附 APA 報告範本。</li>
+<li><strong>與既有手冊搭配</strong>：操作步驟看本講義；公式、符號、跨領域研究範例請查 social_science_statistics_book。</li>
+</ol>
+<hr />
+<h3 id="_3">來源</h3>
+<ul>
+<li>Goss-Sampson, M. A. (2025). <em>Statistical Analysis in JASP: A Guide for Students</em>. 7th Ed., JASP v0.19.3.</li>
+<li>原書 PDF：<a href="Image/Statistical-Analysis-in-JASP-A-guide-for-students-2025.pdf">Image/Statistical-Analysis-in-JASP-A-guide-for-students-2025.pdf</a></li>
+<li>CC BY 4.0 — 本講義為改寫版，遵守原授權。</li>
+</ul>
+</main>
+</div>
+<script>
+(function () {
+  // ── Rebuild TOC with toggle buttons ──────────────────────────────────────
+  var toc = document.querySelector('.sidebar .toc');
+  if (toc) {
+    toc.querySelectorAll('li').forEach(function (li) {
+      var childUl = li.querySelector(':scope > ul');
+      var link    = li.querySelector(':scope > a');
+      if (!link) return;
+
+      var row = document.createElement('div');
+      row.className = 'toc-row';
+
+      if (childUl) {
+        var btn = document.createElement('button');
+        btn.className = 'toc-toggle';
+        btn.setAttribute('aria-expanded', 'true');
+        btn.textContent = '▾';          // ▾ open
+        btn.addEventListener('click', function () {
+          var open = childUl.hidden;
+          childUl.hidden = !open;
+          btn.textContent = open ? '▾' : '▸';   // ▾ / ▸
+          btn.setAttribute('aria-expanded', String(open));
+        });
+        row.appendChild(btn);
+      } else {
+        var spacer = document.createElement('span');
+        spacer.style.width = '1rem';
+        spacer.style.flexShrink = '0';
+        row.appendChild(spacer);
+      }
+
+      row.appendChild(link);
+      li.insertBefore(row, li.firstChild);
+    });
+  }
+
+  // ── Scroll spy ───────────────────────────────────────────────────────────
+  var headings = document.querySelectorAll('.content h2[id], .content h3[id], .content h4[id]');
+  var tocLinks = document.querySelectorAll('.sidebar .toc a');
+  if (!headings.length || !tocLinks.length) return;
+
+  var current = null;
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      var link = document.querySelector('.sidebar .toc a[href="#' + e.target.id + '"]');
+      if (!link) return;
+      if (current) current.classList.remove('active');
+      current = link;
+      current.classList.add('active');
+      // Scroll link into view within sidebar
+      current.scrollIntoView({ block: 'nearest' });
+    });
+  }, { rootMargin: '-5% 0px -75% 0px', threshold: 0 });
+
+  headings.forEach(function (h) { io.observe(h); });
+}());
+</script>
+</body>
+</html>

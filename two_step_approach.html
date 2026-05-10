@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>two step approach</title>
+<style>*, *::before, *::after { box-sizing: border-box; }
+
+/* ── Base ── */
+body {
+  font-family: "Helvetica Neue", Arial, "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+  font-size: 20px;
+  line-height: 1.9;
+  color: #111;
+  background: #fff;
+  margin: 0;
+}
+
+/* ── Two-column layout (note pages) ── */
+.layout { display: flex; align-items: flex-start; min-height: 100vh; }
+
+.sidebar {
+  width: 270px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 2rem 1rem 2rem 1.5rem;
+  border-right: 1px solid #e8e8e8;
+  background: #f9f9f9;
+}
+.sidebar-back {
+  display: block;
+  font-size: 0.82rem;
+  color: #999;
+  margin-bottom: 1.4rem;
+  text-decoration: none;
+}
+.sidebar-back:hover { color: #333; }
+.sidebar-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #bbb;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+/* ── TOC in sidebar ── */
+.toc { font-size: 0.82rem; line-height: 1.55; }
+.toc ul { list-style: none; margin: 0; padding: 0; }
+.toc ul ul { padding-left: 0.9rem; }
+.toc li { margin: 0; }
+.toc-row { display: flex; align-items: baseline; gap: 0.2rem; }
+.toc-row a {
+  flex: 1;
+  display: block;
+  padding: 0.18rem 0.3rem;
+  border-radius: 3px;
+  color: #555;
+  text-decoration: none;
+  word-break: break-word;
+}
+.toc-row a:hover { background: #ebebeb; color: #111; }
+.toc-row a.active { color: #0055cc; font-weight: 600; background: #e8f0ff; }
+.toc-toggle {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-size: 0.65rem;
+  color: #bbb;
+  line-height: 1;
+  width: 1rem;
+  text-align: center;
+}
+.toc-toggle:hover { color: #555; }
+
+/* ── Main content ── */
+.content {
+  flex: 1;
+  min-width: 0;
+  padding: 3rem 3rem 6rem;
+  max-width: 800px;
+}
+
+/* ── Single-column (index page) ── */
+.container { max-width: 800px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
+
+/* ── Typography ── */
+h1 {
+  font-size: 1.75rem; font-weight: 700;
+  margin: 0 0 0.15rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 2px solid #111;
+  line-height: 1.3;
+}
+h2 {
+  font-size: 1.3rem; font-weight: 700;
+  margin: 2.5rem 0 0.5rem;
+  padding-bottom: 0.2rem;
+  border-bottom: 1px solid #ddd;
+}
+h3 { font-size: 1.1rem; font-weight: 700; margin: 1.8rem 0 0.4rem; }
+h4 { font-size: 1rem; font-weight: 700; margin: 1.4rem 0 0.3rem; }
+p { margin: 0.9rem 0; }
+a { color: #0055cc; text-decoration: none; }
+a:hover { text-decoration: underline; }
+nav { margin-bottom: 2.5rem; font-size: 0.85rem; color: #999; }
+nav a { color: #999; }
+
+/* ── Code ── */
+code {
+  font-family: "SFMono-Regular", Consolas, monospace;
+  background: #f2f2f2;
+  padding: 0.1em 0.4em;
+  border-radius: 3px;
+  font-size: 0.85em;
+}
+pre {
+  background: #f2f2f2;
+  padding: 1.2rem 1.4rem;
+  border-radius: 5px;
+  overflow-x: auto;
+  font-size: 0.85em;
+  line-height: 1.6;
+}
+pre code { background: none; padding: 0; }
+
+/* ── Lists ── */
+ul, ol { padding-left: 1.6rem; margin: 0.8rem 0; }
+li { margin: 0.35rem 0; }
+li > ul, li > ol { margin: 0.2rem 0; }
+
+/* ── Other elements ── */
+blockquote {
+  border-left: 4px solid #ccc;
+  margin: 1.2rem 0;
+  padding: 0.3rem 1.2rem;
+  color: #444;
+  background: #fafafa;
+}
+table { border-collapse: collapse; width: 100%; margin: 1.2rem 0; font-size: 0.95em; }
+th, td { border: 1px solid #ccc; padding: 0.55rem 0.9rem; text-align: left; }
+th { background: #f5f5f5; font-weight: 700; }
+tr:nth-child(even) { background: #fafafa; }
+hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
+.meta { font-size: 0.8rem; color: #aaa; margin: 0.3rem 0 1.8rem; }
+.index-list { list-style: none; padding: 0; margin: 1rem 0; }
+.index-list li { padding: 0.55rem 0; border-bottom: 1px solid #eee; font-size: 1.05rem; }
+.index-list li:last-child { border-bottom: none; }
+.embed-block {
+  border-left: 3px solid #aaa;
+  padding: 0.5rem 1.2rem;
+  margin: 1.5rem 0;
+  background: #f8f8f8;
+}
+
+/* ── Mobile ── */
+@media (max-width: 800px) {
+  .layout { flex-direction: column; }
+  .sidebar {
+    position: static;
+    width: 100%;
+    height: auto;
+    max-height: 50vh;
+    border-right: none;
+    border-bottom: 1px solid #e8e8e8;
+    padding: 1rem 1.5rem;
+  }
+  .content { padding: 1.5rem 1.2rem 4rem; }
+}
+</style>
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+<div class="toc">
+<ul>
+<li><a href="#_1">為什麼分兩步</a></li>
+<li><a href="#step-1measurement-model">Step 1：測量模型評估（Measurement Model）</a></li>
+<li><a href="#step-2structural-model">Step 2：結構模型評估（Structural Model）</a></li>
+<li><a href="#cb-sem-pls-sem">在 CB-SEM 與 PLS-SEM 的差別</a></li>
+<li><a href="#_2">常見錯誤</a></li>
+<li><a href="#three-step-approach">延伸：Three-Step Approach</a></li>
+</ul>
+</div>
+</aside>
+<main class="content">
+<h1>two step approach</h1>
+<p class="meta">#methodology　#SEM　#measurement_model　#structural_model　#Anderson_Gerbing</p>
+<h2 id="two-step-approach">Two-Step Approach（兩階段建模）</h2>
+<p><strong>定義</strong>：在 SEM 框架下分<strong>測量模型</strong>與<strong>結構模型</strong>兩階段估計與評估的標準作法。先確認測量模型（指標—潛在構念對應）達到信效度，再以已驗證的測量模型為基礎估計結構路徑（潛在構念之間的因果關係）。</p>
+<p><strong>奠基文獻</strong>：Anderson, J. C., &amp; Gerbing, D. W. (1988). Structural equation modeling in practice: A review and recommended two-step approach. <em>Psychological Bulletin</em>, 103(3), 411–423.</p>
+<h3 id="_1">為什麼分兩步</h3>
+<p>如果一次估計整個模型（one-step），測量誤差與結構誤差混在一起：</p>
+<ul>
+<li>結構路徑不顯著時，無法判斷是「構念測量不準」還是「理論假設錯誤」</li>
+<li>模型適配不佳時，修改方向不明（要拉誤差相關？刪題？改路徑？）</li>
+</ul>
+<p>分兩步允許<strong>先排除測量問題</strong>，再以乾淨的構念分數推估理論關係，能定位問題來源。</p>
+<h3 id="step-1measurement-model">Step 1：測量模型評估（Measurement Model）</h3>
+<p>以 <a href="CFA_Marker_Variable_Technique.html">CFA</a> 或 PLS 外模型估計，確認：</p>
+<table>
+<thead>
+<tr>
+<th>評估項</th>
+<th>指標</th>
+<th>標準</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>指標信度</td>
+<td>factor loading</td>
+<td>$> 0.708$（PLS）/ $> 0.5$（CB）</td>
+</tr>
+<tr>
+<td>內部一致性</td>
+<td><a href="Cronbach_alpha.html">Cronbach alpha</a>、composite reliability、<a href="rho_A.html">rho_A</a></td>
+<td>$> 0.7$</td>
+</tr>
+<tr>
+<td>收斂效度</td>
+<td>AVE</td>
+<td>$> 0.5$</td>
+</tr>
+<tr>
+<td>區辨效度</td>
+<td><a href="Fornell-Larcker.html">Fornell-Larcker</a>、HTMT</td>
+<td>HTMT $< 0.85$</td>
+</tr>
+<tr>
+<td>整體適配</td>
+<td><a href="CFI_Comparative_Fit_Index.html">CFI Comparative Fit Index</a>、<a href="RMSEA.html">RMSEA</a>、<a href="SRMR.html">SRMR</a></td>
+<td>依 Model Fit 標準</td>
+</tr>
+</tbody>
+</table>
+<p>未通過的構念需修正（刪題、合併、重新概念化）後重估，直到所有構念都達標。</p>
+<h3 id="step-2structural-model">Step 2：結構模型評估（Structural Model）</h3>
+<p>測量模型穩定後，再加入結構路徑：</p>
+<table>
+<thead>
+<tr>
+<th>評估項</th>
+<th>指標</th>
+<th>標準</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>共線性</td>
+<td>inner VIF</td>
+<td>$< 3.3$</td>
+</tr>
+<tr>
+<td>路徑顯著性</td>
+<td>$\beta$、t 值、bootstrap CI</td>
+<td>t &gt; 1.96 / CI 不含 0</td>
+</tr>
+<tr>
+<td>解釋力</td>
+<td>$R^2$</td>
+<td>領域標準（0.25 / 0.50 / 0.75）</td>
+</tr>
+<tr>
+<td>預測力</td>
+<td>$Q^2$、$Q^2_{predict}$（<a href="Q_squared_predict.html">Q_squared_predict</a>）</td>
+<td>$> 0$</td>
+</tr>
+<tr>
+<td>效果量</td>
+<td>$f^2$</td>
+<td>0.02 / 0.15 / 0.35</td>
+</tr>
+</tbody>
+</table>
+<h3 id="cb-sem-pls-sem">在 <a href="CB-SEM.html">CB-SEM</a> 與 <a href="PLS-SEM.html">PLS-SEM</a> 的差別</h3>
+<p>兩家都採 two-step approach，但細節不同：</p>
+<ul>
+<li><strong><a href="CB-SEM.html">CB-SEM</a></strong>：Step 1 用 CFA，Step 2 用 SEM；兩者都重 $\chi^2$ 與 fit indices；Anderson &amp; Gerbing 1988 即為 CB-SEM 框架的原始建議</li>
+<li><strong><a href="PLS-SEM.html">PLS-SEM</a></strong>：Step 1 用 outer model，Step 2 用 inner model；fit 退居次要，重點是 $R^2$ 與 $Q^2_{predict}$；<a href="Hair_2022_PLS.html">Hair_2022_PLS</a> 把兩階段擴展為完整 checklist</li>
+</ul>
+<h3 id="_2">常見錯誤</h3>
+<ol>
+<li><strong>跳過 Step 1</strong>：只看路徑顯著性，未報告測量信效度——必被 reviewer 退稿</li>
+<li><strong>Step 1 用整體 fit 替代 <a href="Discriminant_Validity_%E5%8D%80%E5%88%A5%E6%A0%A1%E5%BA%A6.html">Discriminant Validity 區別校度</a></strong>：fit 好不代表構念分得開</li>
+<li><strong>Step 1 通過後就不再重檢</strong>：加入結構路徑後若構念相關性大幅變化，需重檢 discriminant validity</li>
+<li><strong>未先在 Step 1 處理 Common Method Bias</strong>：CMB 在測量階段就應檢驗，而非結構階段才補救</li>
+</ol>
+<h3 id="three-step-approach">延伸：Three-Step Approach</h3>
+<p>近年針對潛在類別模型（latent class）出現 three-step approach（Vermunt, 2010）：先估計類別、再分配個體類別、最後檢驗類別與外部變量關係，避免類別劃分受外部變量影響而扭曲。這是 two-step approach 在類別資料上的延伸。</p>
+<hr />
+<p><strong>相關概念</strong>：<a href="CB-SEM.html">CB-SEM</a>、<a href="PLS-SEM.html">PLS-SEM</a>、Model Fit、<a href="Cronbach_alpha.html">Cronbach alpha</a>、<a href="rho_A.html">rho_A</a>、<a href="Fornell-Larcker.html">Fornell-Larcker</a>、<a href="CFI_Comparative_Fit_Index.html">CFI Comparative Fit Index</a>、<a href="RMSEA.html">RMSEA</a>、<a href="SRMR.html">SRMR</a>、<a href="Q_squared_predict.html">Q_squared_predict</a>、<a href="Discriminant_Validity_%E5%8D%80%E5%88%A5%E6%A0%A1%E5%BA%A6.html">Discriminant Validity 區別校度</a>、Common Method Bias、<a href="Hair_2022_PLS.html">Hair_2022_PLS</a>、<a href="CFA_Marker_Variable_Technique.html">CFA Marker Variable Technique</a>、<a href="Multicollinearity_%E5%85%B1%E7%B7%9A%E6%80%A7.html">Multicollinearity 共線性</a>
+另見：<a href="PLS-SEM.html">PLS-SEM</a> 的 5 階段 checklist、<a href="CB-SEM.html">CB-SEM</a> 的 fit 評估</p>
+</main>
+</div>
+<script>
+(function () {
+  // ── Rebuild TOC with toggle buttons ──────────────────────────────────────
+  var toc = document.querySelector('.sidebar .toc');
+  if (toc) {
+    toc.querySelectorAll('li').forEach(function (li) {
+      var childUl = li.querySelector(':scope > ul');
+      var link    = li.querySelector(':scope > a');
+      if (!link) return;
+
+      var row = document.createElement('div');
+      row.className = 'toc-row';
+
+      if (childUl) {
+        var btn = document.createElement('button');
+        btn.className = 'toc-toggle';
+        btn.setAttribute('aria-expanded', 'true');
+        btn.textContent = '▾';          // ▾ open
+        btn.addEventListener('click', function () {
+          var open = childUl.hidden;
+          childUl.hidden = !open;
+          btn.textContent = open ? '▾' : '▸';   // ▾ / ▸
+          btn.setAttribute('aria-expanded', String(open));
+        });
+        row.appendChild(btn);
+      } else {
+        var spacer = document.createElement('span');
+        spacer.style.width = '1rem';
+        spacer.style.flexShrink = '0';
+        row.appendChild(spacer);
+      }
+
+      row.appendChild(link);
+      li.insertBefore(row, li.firstChild);
+    });
+  }
+
+  // ── Scroll spy ───────────────────────────────────────────────────────────
+  var headings = document.querySelectorAll('.content h2[id], .content h3[id], .content h4[id]');
+  var tocLinks = document.querySelectorAll('.sidebar .toc a');
+  if (!headings.length || !tocLinks.length) return;
+
+  var current = null;
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      var link = document.querySelector('.sidebar .toc a[href="#' + e.target.id + '"]');
+      if (!link) return;
+      if (current) current.classList.remove('active');
+      current = link;
+      current.classList.add('active');
+      // Scroll link into view within sidebar
+      current.scrollIntoView({ block: 'nearest' });
+    });
+  }, { rootMargin: '-5% 0px -75% 0px', threshold: 0 });
+
+  headings.forEach(function (h) { io.observe(h); });
+}());
+</script>
+</body>
+</html>

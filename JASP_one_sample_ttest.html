@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JASP_one_sample_ttest</title>
+<style>*, *::before, *::after { box-sizing: border-box; }
+
+/* ── Base ── */
+body {
+  font-family: "Helvetica Neue", Arial, "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+  font-size: 20px;
+  line-height: 1.9;
+  color: #111;
+  background: #fff;
+  margin: 0;
+}
+
+/* ── Two-column layout (note pages) ── */
+.layout { display: flex; align-items: flex-start; min-height: 100vh; }
+
+.sidebar {
+  width: 270px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 2rem 1rem 2rem 1.5rem;
+  border-right: 1px solid #e8e8e8;
+  background: #f9f9f9;
+}
+.sidebar-back {
+  display: block;
+  font-size: 0.82rem;
+  color: #999;
+  margin-bottom: 1.4rem;
+  text-decoration: none;
+}
+.sidebar-back:hover { color: #333; }
+.sidebar-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #bbb;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+/* ── TOC in sidebar ── */
+.toc { font-size: 0.82rem; line-height: 1.55; }
+.toc ul { list-style: none; margin: 0; padding: 0; }
+.toc ul ul { padding-left: 0.9rem; }
+.toc li { margin: 0; }
+.toc-row { display: flex; align-items: baseline; gap: 0.2rem; }
+.toc-row a {
+  flex: 1;
+  display: block;
+  padding: 0.18rem 0.3rem;
+  border-radius: 3px;
+  color: #555;
+  text-decoration: none;
+  word-break: break-word;
+}
+.toc-row a:hover { background: #ebebeb; color: #111; }
+.toc-row a.active { color: #0055cc; font-weight: 600; background: #e8f0ff; }
+.toc-toggle {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-size: 0.65rem;
+  color: #bbb;
+  line-height: 1;
+  width: 1rem;
+  text-align: center;
+}
+.toc-toggle:hover { color: #555; }
+
+/* ── Main content ── */
+.content {
+  flex: 1;
+  min-width: 0;
+  padding: 3rem 3rem 6rem;
+  max-width: 800px;
+}
+
+/* ── Single-column (index page) ── */
+.container { max-width: 800px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
+
+/* ── Typography ── */
+h1 {
+  font-size: 1.75rem; font-weight: 700;
+  margin: 0 0 0.15rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 2px solid #111;
+  line-height: 1.3;
+}
+h2 {
+  font-size: 1.3rem; font-weight: 700;
+  margin: 2.5rem 0 0.5rem;
+  padding-bottom: 0.2rem;
+  border-bottom: 1px solid #ddd;
+}
+h3 { font-size: 1.1rem; font-weight: 700; margin: 1.8rem 0 0.4rem; }
+h4 { font-size: 1rem; font-weight: 700; margin: 1.4rem 0 0.3rem; }
+p { margin: 0.9rem 0; }
+a { color: #0055cc; text-decoration: none; }
+a:hover { text-decoration: underline; }
+nav { margin-bottom: 2.5rem; font-size: 0.85rem; color: #999; }
+nav a { color: #999; }
+
+/* ── Code ── */
+code {
+  font-family: "SFMono-Regular", Consolas, monospace;
+  background: #f2f2f2;
+  padding: 0.1em 0.4em;
+  border-radius: 3px;
+  font-size: 0.85em;
+}
+pre {
+  background: #f2f2f2;
+  padding: 1.2rem 1.4rem;
+  border-radius: 5px;
+  overflow-x: auto;
+  font-size: 0.85em;
+  line-height: 1.6;
+}
+pre code { background: none; padding: 0; }
+
+/* ── Lists ── */
+ul, ol { padding-left: 1.6rem; margin: 0.8rem 0; }
+li { margin: 0.35rem 0; }
+li > ul, li > ol { margin: 0.2rem 0; }
+
+/* ── Other elements ── */
+blockquote {
+  border-left: 4px solid #ccc;
+  margin: 1.2rem 0;
+  padding: 0.3rem 1.2rem;
+  color: #444;
+  background: #fafafa;
+}
+table { border-collapse: collapse; width: 100%; margin: 1.2rem 0; font-size: 0.95em; }
+th, td { border: 1px solid #ccc; padding: 0.55rem 0.9rem; text-align: left; }
+th { background: #f5f5f5; font-weight: 700; }
+tr:nth-child(even) { background: #fafafa; }
+hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
+.meta { font-size: 0.8rem; color: #aaa; margin: 0.3rem 0 1.8rem; }
+.index-list { list-style: none; padding: 0; margin: 1rem 0; }
+.index-list li { padding: 0.55rem 0; border-bottom: 1px solid #eee; font-size: 1.05rem; }
+.index-list li:last-child { border-bottom: none; }
+.embed-block {
+  border-left: 3px solid #aaa;
+  padding: 0.5rem 1.2rem;
+  margin: 1.5rem 0;
+  background: #f8f8f8;
+}
+
+/* ── Mobile ── */
+@media (max-width: 800px) {
+  .layout { flex-direction: column; }
+  .sidebar {
+    position: static;
+    width: 100%;
+    height: auto;
+    max-height: 50vh;
+    border-right: none;
+    border-bottom: 1px solid #e8e8e8;
+    padding: 1rem 1.5rem;
+  }
+  .content { padding: 1.5rem 1.2rem 4rem; }
+}
+</style>
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+<div class="toc">
+<ul>
+<li><a href="#_1">對應統計概念</a></li>
+<li><a href="#_2">用途</a></li>
+<li><a href="#_3">假設</a></li>
+<li><a href="#jasp">JASP 操作</a></li>
+<li><a href="#_4">輸出三表二圖</a></li>
+<li><a href="#_5">範例結果</a></li>
+<li><a href="#apa">APA 報告範例</a></li>
+<li><a href="#_6">違反常態時</a></li>
+<li><a href="#_7">對應類別資料</a></li>
+<li><a href="#_8">延伸</a></li>
+</ul>
+</div>
+</aside>
+<main class="content">
+<h1>JASP_one_sample_ttest</h1>
+<p class="meta">#jasp　#t_test　#one_sample　#parametric　#lecture</p>
+<h2 id="t-one-sample-t-test">單樣本 t 檢定（One-sample t-test）</h2>
+<blockquote>
+<p><a href="JASP_lecture.html">JASP_lecture</a> ←→ JASP_independent_ttest JASP_paired_ttest JASP_binomial_test</p>
+</blockquote>
+<h3 id="_1">對應統計概念</h3>
+<p><a href="one-sample_t-test.html">one-sample t-test</a> · t-test · normality test · <a href="Shapiro-Wilk_test.html">Shapiro-Wilk test</a></p>
+<h3 id="_2">用途</h3>
+<p>檢定<strong>樣本均數</strong>是否與<strong>已知或假設的母體均數</strong>不同。</p>
+<p>$H_{0}$：樣本均數 = 母體均數</p>
+<h3 id="_3">假設</h3>
+<ol>
+<li>應變項為連續尺度</li>
+<li>觀測值彼此獨立</li>
+<li>資料近似常態分配（JASP_normality_test）</li>
+<li>沒有顯著離群值（JASP_outliers）</li>
+</ol>
+<h3 id="jasp">JASP 操作</h3>
+<ol>
+<li>Open <code>one sample t-test.csv</code></li>
+<li><strong>T-Tests &gt; One-Sample t-test</strong></li>
+<li>將連續變數拖入分析框</li>
+<li>在 <strong>Test value</strong> 輸入比較基準（例如 UK 男性平均身高 178 cm）</li>
+<li>勾 Descriptive、Effect size、Assumption check (Shapiro-Wilk)、Descriptive plot</li>
+</ol>
+<p><img alt="" src="img/jasp_lecture/page_044.png" /></p>
+<h3 id="_4">輸出三表二圖</h3>
+<ol>
+<li>Shapiro-Wilk → 確認常態</li>
+<li>t 統計量 + 自由度 + p 值</li>
+<li>描述統計（M、SD、SE）</li>
+<li>Interval plot：黑點 = 樣本均數，誤差線 = 95% CI，虛線 = 比較值</li>
+<li>Raincloud plot</li>
+</ol>
+<p><img alt="" src="img/jasp_lecture/page_045.png" /></p>
+<h3 id="_5">範例結果</h3>
+<p>書中範例 1（身高）：t(22) = -0.382, p = .706 → 與 178 cm 無顯著差異
+範例 2（體重）：t(22) = -7.159, p &lt; .001 → 樣本顯著輕於 83.4 kg</p>
+<h3 id="apa">APA 報告範例</h3>
+<blockquote>
+<p>A one-sample t-test showed no significant difference in height compared to the population mean, t(22) = -0.382, p = .706. However, participants were significantly lighter than the UK male population average, t(22) = -7.159, p &lt; .001.</p>
+</blockquote>
+<h3 id="_6">違反常態時</h3>
+<p>改用 <strong>Wilcoxon's signed-rank test 對母體中位數</strong>檢定（JASP_wilcoxon）。</p>
+<h3 id="_7">對應類別資料</h3>
+<p>二項類別 → JASP_binomial_test；多類別 → JASP_multinomial_test。</p>
+<h3 id="_8">延伸</h3>
+<ul>
+<li>概念詳解：social_science_statistics_book §5.1</li>
+</ul>
+</main>
+</div>
+<script>
+(function () {
+  // ── Rebuild TOC with toggle buttons ──────────────────────────────────────
+  var toc = document.querySelector('.sidebar .toc');
+  if (toc) {
+    toc.querySelectorAll('li').forEach(function (li) {
+      var childUl = li.querySelector(':scope > ul');
+      var link    = li.querySelector(':scope > a');
+      if (!link) return;
+
+      var row = document.createElement('div');
+      row.className = 'toc-row';
+
+      if (childUl) {
+        var btn = document.createElement('button');
+        btn.className = 'toc-toggle';
+        btn.setAttribute('aria-expanded', 'true');
+        btn.textContent = '▾';          // ▾ open
+        btn.addEventListener('click', function () {
+          var open = childUl.hidden;
+          childUl.hidden = !open;
+          btn.textContent = open ? '▾' : '▸';   // ▾ / ▸
+          btn.setAttribute('aria-expanded', String(open));
+        });
+        row.appendChild(btn);
+      } else {
+        var spacer = document.createElement('span');
+        spacer.style.width = '1rem';
+        spacer.style.flexShrink = '0';
+        row.appendChild(spacer);
+      }
+
+      row.appendChild(link);
+      li.insertBefore(row, li.firstChild);
+    });
+  }
+
+  // ── Scroll spy ───────────────────────────────────────────────────────────
+  var headings = document.querySelectorAll('.content h2[id], .content h3[id], .content h4[id]');
+  var tocLinks = document.querySelectorAll('.sidebar .toc a');
+  if (!headings.length || !tocLinks.length) return;
+
+  var current = null;
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      var link = document.querySelector('.sidebar .toc a[href="#' + e.target.id + '"]');
+      if (!link) return;
+      if (current) current.classList.remove('active');
+      current = link;
+      current.classList.add('active');
+      // Scroll link into view within sidebar
+      current.scrollIntoView({ block: 'nearest' });
+    });
+  }, { rootMargin: '-5% 0px -75% 0px', threshold: 0 });
+
+  headings.forEach(function (h) { io.observe(h); });
+}());
+</script>
+</body>
+</html>

@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ANCOVA</title>
+<style>*, *::before, *::after { box-sizing: border-box; }
+
+/* ── Base ── */
+body {
+  font-family: "Helvetica Neue", Arial, "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+  font-size: 20px;
+  line-height: 1.9;
+  color: #111;
+  background: #fff;
+  margin: 0;
+}
+
+/* ── Two-column layout (note pages) ── */
+.layout { display: flex; align-items: flex-start; min-height: 100vh; }
+
+.sidebar {
+  width: 270px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 2rem 1rem 2rem 1.5rem;
+  border-right: 1px solid #e8e8e8;
+  background: #f9f9f9;
+}
+.sidebar-back {
+  display: block;
+  font-size: 0.82rem;
+  color: #999;
+  margin-bottom: 1.4rem;
+  text-decoration: none;
+}
+.sidebar-back:hover { color: #333; }
+.sidebar-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #bbb;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+/* ── TOC in sidebar ── */
+.toc { font-size: 0.82rem; line-height: 1.55; }
+.toc ul { list-style: none; margin: 0; padding: 0; }
+.toc ul ul { padding-left: 0.9rem; }
+.toc li { margin: 0; }
+.toc-row { display: flex; align-items: baseline; gap: 0.2rem; }
+.toc-row a {
+  flex: 1;
+  display: block;
+  padding: 0.18rem 0.3rem;
+  border-radius: 3px;
+  color: #555;
+  text-decoration: none;
+  word-break: break-word;
+}
+.toc-row a:hover { background: #ebebeb; color: #111; }
+.toc-row a.active { color: #0055cc; font-weight: 600; background: #e8f0ff; }
+.toc-toggle {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-size: 0.65rem;
+  color: #bbb;
+  line-height: 1;
+  width: 1rem;
+  text-align: center;
+}
+.toc-toggle:hover { color: #555; }
+
+/* ── Main content ── */
+.content {
+  flex: 1;
+  min-width: 0;
+  padding: 3rem 3rem 6rem;
+  max-width: 800px;
+}
+
+/* ── Single-column (index page) ── */
+.container { max-width: 800px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
+
+/* ── Typography ── */
+h1 {
+  font-size: 1.75rem; font-weight: 700;
+  margin: 0 0 0.15rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 2px solid #111;
+  line-height: 1.3;
+}
+h2 {
+  font-size: 1.3rem; font-weight: 700;
+  margin: 2.5rem 0 0.5rem;
+  padding-bottom: 0.2rem;
+  border-bottom: 1px solid #ddd;
+}
+h3 { font-size: 1.1rem; font-weight: 700; margin: 1.8rem 0 0.4rem; }
+h4 { font-size: 1rem; font-weight: 700; margin: 1.4rem 0 0.3rem; }
+p { margin: 0.9rem 0; }
+a { color: #0055cc; text-decoration: none; }
+a:hover { text-decoration: underline; }
+nav { margin-bottom: 2.5rem; font-size: 0.85rem; color: #999; }
+nav a { color: #999; }
+
+/* ── Code ── */
+code {
+  font-family: "SFMono-Regular", Consolas, monospace;
+  background: #f2f2f2;
+  padding: 0.1em 0.4em;
+  border-radius: 3px;
+  font-size: 0.85em;
+}
+pre {
+  background: #f2f2f2;
+  padding: 1.2rem 1.4rem;
+  border-radius: 5px;
+  overflow-x: auto;
+  font-size: 0.85em;
+  line-height: 1.6;
+}
+pre code { background: none; padding: 0; }
+
+/* ── Lists ── */
+ul, ol { padding-left: 1.6rem; margin: 0.8rem 0; }
+li { margin: 0.35rem 0; }
+li > ul, li > ol { margin: 0.2rem 0; }
+
+/* ── Other elements ── */
+blockquote {
+  border-left: 4px solid #ccc;
+  margin: 1.2rem 0;
+  padding: 0.3rem 1.2rem;
+  color: #444;
+  background: #fafafa;
+}
+table { border-collapse: collapse; width: 100%; margin: 1.2rem 0; font-size: 0.95em; }
+th, td { border: 1px solid #ccc; padding: 0.55rem 0.9rem; text-align: left; }
+th { background: #f5f5f5; font-weight: 700; }
+tr:nth-child(even) { background: #fafafa; }
+hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
+.meta { font-size: 0.8rem; color: #aaa; margin: 0.3rem 0 1.8rem; }
+.index-list { list-style: none; padding: 0; margin: 1rem 0; }
+.index-list li { padding: 0.55rem 0; border-bottom: 1px solid #eee; font-size: 1.05rem; }
+.index-list li:last-child { border-bottom: none; }
+.embed-block {
+  border-left: 3px solid #aaa;
+  padding: 0.5rem 1.2rem;
+  margin: 1.5rem 0;
+  background: #f8f8f8;
+}
+
+/* ── Mobile ── */
+@media (max-width: 800px) {
+  .layout { flex-direction: column; }
+  .sidebar {
+    position: static;
+    width: 100%;
+    height: auto;
+    max-height: 50vh;
+    border-right: none;
+    border-bottom: 1px solid #e8e8e8;
+    padding: 1rem 1.5rem;
+  }
+  .content { padding: 1.5rem 1.2rem 4rem; }
+}
+</style>
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+<div class="toc">
+<ul>
+<li><a href="#_1">定義</a></li>
+<li><a href="#_2">用途</a></li>
+<li><a href="#anova">額外假設（在 ANOVA 之上）</a></li>
+<li><a href="#jasp">JASP 操作</a></li>
+<li><a href="#_3">延伸</a></li>
+<li><a href="#_4">方法學定位</a></li>
+<li><a href="#_5">三項額外假設與檢驗</a></li>
+<li><a href="#rbdblock-design">與 RBD、Block Design 的比較</a></li>
+<li><a href="#pls-semcb-sem">與 PLS-SEM、CB-SEM 的延伸</a></li>
+<li><a href="#_6">報告建議</a></li>
+</ul>
+</div>
+</aside>
+<main class="content">
+<h1>ANCOVA</h1>
+<p class="meta">#statistics　#ancova　#covariate</p>
+<h2 id="ancova">共變數分析（ANCOVA）</h2>
+<h3 id="_1">定義</h3>
+<p><a href="ANOVA.html">ANOVA</a> 結合迴歸：比較組均數，<strong>同時控制連續共變數的影響</strong>。比較的是「調整後均數」（marginal / adjusted means）。</p>
+<h3 id="_2">用途</h3>
+<p>例：比較 3 種 diet 的減重量，但起始體重會影響減重 → 把起始體重當共變數扣除。</p>
+<h3 id="anova">額外假設（在 ANOVA 之上）</h3>
+<ul>
+<li>共變數與應變項呈線性</li>
+<li><strong>Homogeneity of regression slopes</strong>：每組迴歸斜率相同</li>
+</ul>
+<h3 id="jasp">JASP 操作</h3>
+<p>→ JASP_ANCOVA</p>
+<h3 id="_3">延伸</h3>
+<ul>
+<li>social_science_statistics_book §5.2</li>
+<li>相關：<a href="ANOVA.html">ANOVA</a> multiple regression</li>
+</ul>
+<p>Yij = miu +alpha i + epsilon ij</p>
+<p>y = x beta + epsilon</p>
+<p>[ 100]  [miu]
+[ 100]  [alpha 1]
+[ 100] 
+[010] </p>
+<p>迴歸</p>
+<p>y = beta_0 + beta_1 Xi + epsilon i
+X 是 continous 比較</p>
+<p>4-7
+Ancova</p>
+<p>共變異數分析模式
+y ij = miu + alpha 1 + epsilon ij + r X ij</p>
+<p>Y ij = 3個月後測量血壓
+X 是 continous </p>
+<p>看 alpha 的效果 
+檢定 H0: alpha 1 = alpha 2 = 0</p>
+<p>未用藥
+用藥</p>
+<p>i = 1, 2 (有吃、沒吃)
+j = 1,2,3 - 20</p>
+<p>x (之前) = covariate Variance</p>
+<p>EX 
+Excel 4-1 / 4-1-2</p>
+<p>DF 2 2847
+要拆兩個
+DF
+1
+1</p>
+<p>類型III SS = 1166.36
+X = 2847-1166 = 1680</p>
+<p>要看 Table III</p>
+<p>X 的 F = 1680.67 平方和 / 21.43 均方</p>
+<p><img alt="Pasted image 20250423193725" src="img/Pasted%20image%2020250423193725.png" /></p>
+<p>Ancova</p>
+<p>3 組</p>
+<p>Y i = beta 0 + beta 1 X1i + beta 2 X2i + epsilon i  （精簡式）</p>
+<p>i = 1 - 60</p>
+<p>X 1 = 0 非甲 / 1 甲藥
+X 2 = 0 非乙 /  1 乙</p>
+<p>x 1  x 2
+0 , 0 = 
+1, 0
+0, 1</p>
+<p>yi甲 = beta 0 + beta 1 + epsilon i 甲
+yi乙 = beta 0 + 0 + beta 2 + epsiloni 乙
+yi丙 = beta 0 + 0 + 0 + epsiloni丙</p>
+<p>==重要==</p>
+<p>SAS 跑 Ancova
+Covariance X 要放模型前面</p>
+<p><img alt="Pasted image 20250423211829" src="img/Pasted%20image%2020250423211829.png" /></p>
+<p><img alt="Pasted image 20250423211947" src="img/Pasted%20image%2020250423211947.png" /></p>
+<p><img alt="Pasted image 20250423211927" src="img/Pasted%20image%2020250423211927.png" /></p>
+<p><img alt="Pasted image 20250430201017" src="img/Pasted%20image%2020250430201017.png" /></p>
+<p>Yij = miu + rXij +alpha i + epsilon</p>
+<p><img alt="Pasted image 20250430191853" src="img/Pasted%20image%2020250430191853.png" /></p>
+<p>Yij = miu + rXij +alpha i + epsilon</p>
+<p>Y head ij = 41.61 + 0.637 Xij + alpha i</p>
+<p>Y head ij = 41.61 + 0.637 X -6.26 x1 - 3.09 x2</p>
+<p>整個模型顯著，即便 A2 稍微不顯著，還是可以納入</p>
+<p>Y 1 = 41.61 + 0.637 * 138  -6.26 x1
+Y 2 = 41.61 + 0.637* 138 - 3.09
+Y 3 =  41.61 + 0.637 * 138 </p>
+<p>前測可以當成共變異數</p>
+<p>Total Sum of Square TSS = SST + SSE
+yij = miu + alpha1 + epsilon_ij</p>
+<p><img alt="Pasted image 20250430200241" src="img/Pasted%20image%2020250430200241.png" /></p>
+<p>CRD 下</p>
+<p>TSS = SST + SSB(lock) + SSE*</p>
+<p>要把 SSE 變小，才能解釋、顯著</p>
+<p><img alt="Pasted image 20250430200523" src="img/Pasted%20image%2020250430200523.png" />
+TSS 不變，所以後面的拆分很重要</p>
+<p>TSS = SST + Covariate SS + SSE3</p>
+<p>block design</p>
+<p>RBD 的 Block 都是 categorical variable
+Ancova 是 numeric variable</p>
+<p>TSS = SST + SSB + SSE
+Block 不是分析重點
+重點是 SST</p>
+<p>Two Factors Design, Ex 溫度 (A) * 肥料 (D)</p>
+<p>TSS = SSA + SSD + SSAD （交互作用） + SSE</p>
+<p>SSA 肥料
+SSD 溫度</p>
+<p>TSS = (SSA + SSD + SSAD)(=SST) + SSB (Block) + SSE </p>
+<p>因子不可能與Block有交互作用
+但因子與因子會有交互作用
+SST 主效用</p>
+<p>有交互作用，比主效用重要
+但沒有交互作用，只看主效用</p>
+<p>Nested Design</p>
+<hr />
+<h3 id="_4">方法學定位</h3>
+<p>ANCOVA 是 <a href="ANOVA.html">ANOVA</a> 與 regression 的混合產物，可視為 General Linear Model（GLM）的特例：在 ANOVA 模型中加入連續共變量（covariate）以<strong>事前控制</strong>已知干擾變量，提升組間差異檢定的 power。其數學形式為</p>
+<p>$$Y_{ij} = \mu + \tau_i + \beta(X_{ij} - \bar{X}) + \varepsilon_{ij}$$</p>
+<p>其中 $\tau_i$ 為第 $i$ 組的處理效應、$\beta$ 為共變量斜率、$X_{ij}$ 為共變量觀察值。模型先以共變量解釋變異，再檢驗剩餘變異中的組間差異——這正是「TSS = Covariate SS + SST + SSE」拆解的統計意義。</p>
+<h3 id="_5">三項額外假設與檢驗</h3>
+<p>ANCOVA 在 <a href="ANOVA.html">ANOVA</a> 假設之上多三條，違反任一條都可能讓組間比較失效：</p>
+<ol>
+<li><strong>共變量與依變量線性相關</strong>：以散布圖目測或 lack-of-fit 檢定確認</li>
+<li><strong>Homogeneity of regression slopes（迴歸斜率同質）</strong>：每組的 $\beta$ 應相同。若交互項 $\tau_i \times X_{ij}$ 顯著，代表斜率異質，傳統 ANCOVA 不適用，應改用 <strong>Johnson–Neyman</strong> 程序找出組間差異顯著的共變量範圍</li>
+<li><strong>共變量為前測量、不受處理影響</strong>：若共變量在處理後測得，會吸收部分處理效應而低估 $\tau_i$（Miller &amp; Chapman, 2001 對「ANCOVA 控制群組差異」的批評）</li>
+</ol>
+<h3 id="rbdblock-design">與 RBD、Block Design 的比較</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>共變量類型</th>
+<th>處理變異方式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ANCOVA</td>
+<td>連續變數</td>
+<td>以迴歸扣除</td>
+</tr>
+<tr>
+<td>Randomized Block Design（block design）</td>
+<td>類別變數</td>
+<td>以區組劃分</td>
+</tr>
+<tr>
+<td>Repeated-measures（one-way Anova Repeated measures）</td>
+<td>受試者本身</td>
+<td>以受試者為 block</td>
+</tr>
+</tbody>
+</table>
+<p>三者目標相同：<strong>降低 SSE，放大組間差異的統計顯著性</strong>。選擇取決於共變量的測量尺度與設計類型。</p>
+<h3 id="pls-semcb-sem">與 PLS-SEM、CB-SEM 的延伸</h3>
+<p>當共變量本身是潛在構念時，傳統 ANCOVA 無法處理測量誤差。此時應改用 <a href="CB-SEM.html">CB-SEM</a> 或 <a href="PLS-SEM.html">PLS-SEM</a> 中的 <strong>structural ANCOVA</strong>：把共變量設為潛在構念、處理組設為虛擬變量，路徑係數即「調整後組間效應」。這在實驗 + 量表混合設計（如教育介入研究）尤其重要。</p>
+<h3 id="_6">報告建議</h3>
+<ul>
+<li>報告<strong>未調整均數</strong>與<strong>調整後均數（adjusted means）</strong>並列，便於讀者比較</li>
+<li>共變量斜率 $\beta$ 與其顯著性需報告；不顯著代表共變量無控制價值</li>
+<li>若 homogeneity of slopes 違反，明確說明改用 Johnson–Neyman</li>
+<li>報告 partial $\eta^2$ 而非 $\eta^2$（effect size）：扣除共變量影響後的處理效應大小</li>
+</ul>
+<hr />
+<p><strong>相關論文</strong>：Mainardi 2022 Fundamental Concepts、Chen 2024 Consumer Attitudes
+<strong>相關概念</strong>：<a href="ANOVA.html">ANOVA</a>、regression、General Linear Model、block design、Nested Design、one-way Anova Repeated measures、two-way Anova、<a href="CB-SEM.html">CB-SEM</a>、<a href="PLS-SEM.html">PLS-SEM</a>、effect size、multiple regression、JASP_ANCOVA
+另見：<a href="ANOVA.html">ANOVA</a> 中「§10 ANOVA 作為 GLM 特例」、social_science_statistics_book §5.2</p>
+</main>
+</div>
+<script>
+(function () {
+  // ── Rebuild TOC with toggle buttons ──────────────────────────────────────
+  var toc = document.querySelector('.sidebar .toc');
+  if (toc) {
+    toc.querySelectorAll('li').forEach(function (li) {
+      var childUl = li.querySelector(':scope > ul');
+      var link    = li.querySelector(':scope > a');
+      if (!link) return;
+
+      var row = document.createElement('div');
+      row.className = 'toc-row';
+
+      if (childUl) {
+        var btn = document.createElement('button');
+        btn.className = 'toc-toggle';
+        btn.setAttribute('aria-expanded', 'true');
+        btn.textContent = '▾';          // ▾ open
+        btn.addEventListener('click', function () {
+          var open = childUl.hidden;
+          childUl.hidden = !open;
+          btn.textContent = open ? '▾' : '▸';   // ▾ / ▸
+          btn.setAttribute('aria-expanded', String(open));
+        });
+        row.appendChild(btn);
+      } else {
+        var spacer = document.createElement('span');
+        spacer.style.width = '1rem';
+        spacer.style.flexShrink = '0';
+        row.appendChild(spacer);
+      }
+
+      row.appendChild(link);
+      li.insertBefore(row, li.firstChild);
+    });
+  }
+
+  // ── Scroll spy ───────────────────────────────────────────────────────────
+  var headings = document.querySelectorAll('.content h2[id], .content h3[id], .content h4[id]');
+  var tocLinks = document.querySelectorAll('.sidebar .toc a');
+  if (!headings.length || !tocLinks.length) return;
+
+  var current = null;
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      var link = document.querySelector('.sidebar .toc a[href="#' + e.target.id + '"]');
+      if (!link) return;
+      if (current) current.classList.remove('active');
+      current = link;
+      current.classList.add('active');
+      // Scroll link into view within sidebar
+      current.scrollIntoView({ block: 'nearest' });
+    });
+  }, { rootMargin: '-5% 0px -75% 0px', threshold: 0 });
+
+  headings.forEach(function (h) { io.observe(h); });
+}());
+</script>
+</body>
+</html>

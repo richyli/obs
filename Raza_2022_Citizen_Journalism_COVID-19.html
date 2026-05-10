@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Raza 2022 Citizen Journalism COVID-19</title>
+<style>*, *::before, *::after { box-sizing: border-box; }
+
+/* ── Base ── */
+body {
+  font-family: "Helvetica Neue", Arial, "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+  font-size: 20px;
+  line-height: 1.9;
+  color: #111;
+  background: #fff;
+  margin: 0;
+}
+
+/* ── Two-column layout (note pages) ── */
+.layout { display: flex; align-items: flex-start; min-height: 100vh; }
+
+.sidebar {
+  width: 270px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 2rem 1rem 2rem 1.5rem;
+  border-right: 1px solid #e8e8e8;
+  background: #f9f9f9;
+}
+.sidebar-back {
+  display: block;
+  font-size: 0.82rem;
+  color: #999;
+  margin-bottom: 1.4rem;
+  text-decoration: none;
+}
+.sidebar-back:hover { color: #333; }
+.sidebar-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #bbb;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+/* ── TOC in sidebar ── */
+.toc { font-size: 0.82rem; line-height: 1.55; }
+.toc ul { list-style: none; margin: 0; padding: 0; }
+.toc ul ul { padding-left: 0.9rem; }
+.toc li { margin: 0; }
+.toc-row { display: flex; align-items: baseline; gap: 0.2rem; }
+.toc-row a {
+  flex: 1;
+  display: block;
+  padding: 0.18rem 0.3rem;
+  border-radius: 3px;
+  color: #555;
+  text-decoration: none;
+  word-break: break-word;
+}
+.toc-row a:hover { background: #ebebeb; color: #111; }
+.toc-row a.active { color: #0055cc; font-weight: 600; background: #e8f0ff; }
+.toc-toggle {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-size: 0.65rem;
+  color: #bbb;
+  line-height: 1;
+  width: 1rem;
+  text-align: center;
+}
+.toc-toggle:hover { color: #555; }
+
+/* ── Main content ── */
+.content {
+  flex: 1;
+  min-width: 0;
+  padding: 3rem 3rem 6rem;
+  max-width: 800px;
+}
+
+/* ── Single-column (index page) ── */
+.container { max-width: 800px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
+
+/* ── Typography ── */
+h1 {
+  font-size: 1.75rem; font-weight: 700;
+  margin: 0 0 0.15rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 2px solid #111;
+  line-height: 1.3;
+}
+h2 {
+  font-size: 1.3rem; font-weight: 700;
+  margin: 2.5rem 0 0.5rem;
+  padding-bottom: 0.2rem;
+  border-bottom: 1px solid #ddd;
+}
+h3 { font-size: 1.1rem; font-weight: 700; margin: 1.8rem 0 0.4rem; }
+h4 { font-size: 1rem; font-weight: 700; margin: 1.4rem 0 0.3rem; }
+p { margin: 0.9rem 0; }
+a { color: #0055cc; text-decoration: none; }
+a:hover { text-decoration: underline; }
+nav { margin-bottom: 2.5rem; font-size: 0.85rem; color: #999; }
+nav a { color: #999; }
+
+/* ── Code ── */
+code {
+  font-family: "SFMono-Regular", Consolas, monospace;
+  background: #f2f2f2;
+  padding: 0.1em 0.4em;
+  border-radius: 3px;
+  font-size: 0.85em;
+}
+pre {
+  background: #f2f2f2;
+  padding: 1.2rem 1.4rem;
+  border-radius: 5px;
+  overflow-x: auto;
+  font-size: 0.85em;
+  line-height: 1.6;
+}
+pre code { background: none; padding: 0; }
+
+/* ── Lists ── */
+ul, ol { padding-left: 1.6rem; margin: 0.8rem 0; }
+li { margin: 0.35rem 0; }
+li > ul, li > ol { margin: 0.2rem 0; }
+
+/* ── Other elements ── */
+blockquote {
+  border-left: 4px solid #ccc;
+  margin: 1.2rem 0;
+  padding: 0.3rem 1.2rem;
+  color: #444;
+  background: #fafafa;
+}
+table { border-collapse: collapse; width: 100%; margin: 1.2rem 0; font-size: 0.95em; }
+th, td { border: 1px solid #ccc; padding: 0.55rem 0.9rem; text-align: left; }
+th { background: #f5f5f5; font-weight: 700; }
+tr:nth-child(even) { background: #fafafa; }
+hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
+.meta { font-size: 0.8rem; color: #aaa; margin: 0.3rem 0 1.8rem; }
+.index-list { list-style: none; padding: 0; margin: 1rem 0; }
+.index-list li { padding: 0.55rem 0; border-bottom: 1px solid #eee; font-size: 1.05rem; }
+.index-list li:last-child { border-bottom: none; }
+.embed-block {
+  border-left: 3px solid #aaa;
+  padding: 0.5rem 1.2rem;
+  margin: 1.5rem 0;
+  background: #f8f8f8;
+}
+
+/* ── Mobile ── */
+@media (max-width: 800px) {
+  .layout { flex-direction: column; }
+  .sidebar {
+    position: static;
+    width: 100%;
+    height: auto;
+    max-height: 50vh;
+    border-right: none;
+    border-bottom: 1px solid #e8e8e8;
+    padding: 1rem 1.5rem;
+  }
+  .content { padding: 1.5rem 1.2rem 4rem; }
+}
+</style>
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+<div class="toc">
+<ul>
+<li><a href="#_1">摘要</a></li>
+<li><a href="#_2">研究框架</a></li>
+<li><a href="#_3">研究結果</a></li>
+<li><a href="#_4">方法</a></li>
+<li><a href="#_5">統計結果摘要</a></li>
+</ul>
+</div>
+</aside>
+<main class="content">
+<h1>Raza 2022 Citizen Journalism COVID-19</h1>
+<p class="meta">#citizen_journalism　#COVID-19　#social_media　#trust　#user_generated_content　#government_communication　#paper</p>
+<h2 id="raza-et-al-2022-citizen-journalism-practices-during-covid-19-in-spotlight-influence-of-user-generated-contents-about-economic-policies-in-perceiving-government-performance">Raza et al. (2022). Citizen journalism practices during COVID-19 in spotlight: influence of user-generated contents about economic policies in perceiving government performance</h2>
+<p><strong>作者</strong>：Syed Hassan Raza, Ogadimma C. Emenyeonu, Muhammad Yousaf, Moneeba Iftikhar
+<strong>機構</strong>：Bahauddin Zakariya University（巴基斯坦）、University of Sharjah（UAE）
+<strong>期刊</strong>：Online Information Review（Emerald）
+<strong>出版年份</strong>：2022</p>
+<h3 id="_1">摘要</h3>
+<p>本研究檢驗 COVID-19 疫情期間，社群媒體上的公民新聞（citizen journalism）實踐如何影響公眾對政府績效的感知，並探討對公民新聞的信任（TCJP）在此關係中的調節角色。以巴基斯坦為研究場景，使用 ELM（精細加工可能性模型）作為理論基礎。</p>
+<h3 id="_2">研究框架</h3>
+<ul>
+<li><strong>IV</strong>：用戶生成資訊（UGI）——包含<strong>正向政策</strong>（UGG）與<strong>模糊政策</strong>（UGA）</li>
+<li><strong>DV</strong>：感知政府績效（PGP）</li>
+<li><strong>調節變項</strong>：對公民新聞實踐的信任（TCJP）</li>
+<li><strong>理論</strong>：ELM（Elaboration Likelihood Model）——信任增加訊息精細加工</li>
+</ul>
+<h3 id="_3">研究結果</h3>
+<ul>
+<li>UGC about good government economic policies positively predicts perceived government performance</li>
+<li>trust in citizen journalism moderates UGC effects on government performance perception</li>
+<li>citizen journalism content not perceived as fake news in Pakistani COVID-19 context</li>
+<li>ELM predicts source trustworthiness strengthens influence of UGI on government perception</li>
+</ul>
+<h3 id="_4">方法</h3>
+<ul>
+<li>Methods Note</li>
+<li>線上問卷調查，N=464 巴基斯坦成人</li>
+<li>PLS-PM（PLS-SEM）於 ADANCO 軟體進行分析</li>
+<li>四個 hypotheses 全部獲支持</li>
+</ul>
+<h3 id="_5">統計結果摘要</h3>
+<table>
+<thead>
+<tr>
+<th>路徑</th>
+<th>β</th>
+<th>$f^2$</th>
+<th>支持</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>UGG → PGP</td>
+<td>0.22***</td>
+<td>0.31</td>
+<td>H1 ✓</td>
+</tr>
+<tr>
+<td>UGA → PGP</td>
+<td>0.18***</td>
+<td>0.23</td>
+<td>H2 ✓</td>
+</tr>
+<tr>
+<td>TCJP × UGG → PGP</td>
+<td>0.34***</td>
+<td>0.46</td>
+<td>H3 ✓</td>
+</tr>
+<tr>
+<td>TCJP × UGA → PGP</td>
+<td>0.16***</td>
+<td>0.29</td>
+<td>H4 ✓</td>
+</tr>
+<tr>
+<td>TCJP 直接效果</td>
+<td>0.29***</td>
+<td>0.37</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Model 2 $R^2$</td>
+<td>0.490</td>
+<td>—</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><strong>相關概念</strong>：citizen journalism、user_generated_content、ELM、source credibility、Trust</p>
+<hr />
+<p><img alt="Figure 1 — Research framework: UGC and trust in citizen journalism" src="img/Raza_2022/Figure1_research_framework_UGC_trust.jpg" /></p>
+<p>Figure 1 呈現本研究的理論框架，說明 UGI（好經濟/模糊政策）→ PGP 的直接路徑，以及 TCJP 的調節效果。</p>
+<p><img alt="Figure 2 — Full SEM results" src="img/Raza_2022/Figure2_SEM_results_full.jpg" /></p>
+<p>Figure 2 呈現 PLS-SEM 全模型結果，包含路徑係數與顯著性。</p>
+<p><img alt="Figure 3 — Moderation analysis SEM results" src="img/Raza_2022/Figure3_SEM_results_moderation.jpg" /></p>
+<p>Figure 3 呈現 TCJP 調節效果的 SEM 結果圖。</p>
+<p><img alt="Figure 4 — Slope test for interaction effects" src="img/Raza_2022/Figure4_slope_test_interaction.jpg" /></p>
+<p>Figure 4 呈現斜率測試（slope test），說明 TCJP 高/低組在 UGI 對 PGP 影響上的差異。</p>
+</main>
+</div>
+<script>
+(function () {
+  // ── Rebuild TOC with toggle buttons ──────────────────────────────────────
+  var toc = document.querySelector('.sidebar .toc');
+  if (toc) {
+    toc.querySelectorAll('li').forEach(function (li) {
+      var childUl = li.querySelector(':scope > ul');
+      var link    = li.querySelector(':scope > a');
+      if (!link) return;
+
+      var row = document.createElement('div');
+      row.className = 'toc-row';
+
+      if (childUl) {
+        var btn = document.createElement('button');
+        btn.className = 'toc-toggle';
+        btn.setAttribute('aria-expanded', 'true');
+        btn.textContent = '▾';          // ▾ open
+        btn.addEventListener('click', function () {
+          var open = childUl.hidden;
+          childUl.hidden = !open;
+          btn.textContent = open ? '▾' : '▸';   // ▾ / ▸
+          btn.setAttribute('aria-expanded', String(open));
+        });
+        row.appendChild(btn);
+      } else {
+        var spacer = document.createElement('span');
+        spacer.style.width = '1rem';
+        spacer.style.flexShrink = '0';
+        row.appendChild(spacer);
+      }
+
+      row.appendChild(link);
+      li.insertBefore(row, li.firstChild);
+    });
+  }
+
+  // ── Scroll spy ───────────────────────────────────────────────────────────
+  var headings = document.querySelectorAll('.content h2[id], .content h3[id], .content h4[id]');
+  var tocLinks = document.querySelectorAll('.sidebar .toc a');
+  if (!headings.length || !tocLinks.length) return;
+
+  var current = null;
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      var link = document.querySelector('.sidebar .toc a[href="#' + e.target.id + '"]');
+      if (!link) return;
+      if (current) current.classList.remove('active');
+      current = link;
+      current.classList.add('active');
+      // Scroll link into view within sidebar
+      current.scrollIntoView({ block: 'nearest' });
+    });
+  }, { rootMargin: '-5% 0px -75% 0px', threshold: 0 });
+
+  headings.forEach(function (h) { io.observe(h); });
+}());
+</script>
+</body>
+</html>

@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Offermann van Heek 2018 CCU Trust</title>
+<style>*, *::before, *::after { box-sizing: border-box; }
+
+/* ── Base ── */
+body {
+  font-family: "Helvetica Neue", Arial, "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+  font-size: 20px;
+  line-height: 1.9;
+  color: #111;
+  background: #fff;
+  margin: 0;
+}
+
+/* ── Two-column layout (note pages) ── */
+.layout { display: flex; align-items: flex-start; min-height: 100vh; }
+
+.sidebar {
+  width: 270px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 2rem 1rem 2rem 1.5rem;
+  border-right: 1px solid #e8e8e8;
+  background: #f9f9f9;
+}
+.sidebar-back {
+  display: block;
+  font-size: 0.82rem;
+  color: #999;
+  margin-bottom: 1.4rem;
+  text-decoration: none;
+}
+.sidebar-back:hover { color: #333; }
+.sidebar-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #bbb;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+/* ── TOC in sidebar ── */
+.toc { font-size: 0.82rem; line-height: 1.55; }
+.toc ul { list-style: none; margin: 0; padding: 0; }
+.toc ul ul { padding-left: 0.9rem; }
+.toc li { margin: 0; }
+.toc-row { display: flex; align-items: baseline; gap: 0.2rem; }
+.toc-row a {
+  flex: 1;
+  display: block;
+  padding: 0.18rem 0.3rem;
+  border-radius: 3px;
+  color: #555;
+  text-decoration: none;
+  word-break: break-word;
+}
+.toc-row a:hover { background: #ebebeb; color: #111; }
+.toc-row a.active { color: #0055cc; font-weight: 600; background: #e8f0ff; }
+.toc-toggle {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-size: 0.65rem;
+  color: #bbb;
+  line-height: 1;
+  width: 1rem;
+  text-align: center;
+}
+.toc-toggle:hover { color: #555; }
+
+/* ── Main content ── */
+.content {
+  flex: 1;
+  min-width: 0;
+  padding: 3rem 3rem 6rem;
+  max-width: 800px;
+}
+
+/* ── Single-column (index page) ── */
+.container { max-width: 800px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
+
+/* ── Typography ── */
+h1 {
+  font-size: 1.75rem; font-weight: 700;
+  margin: 0 0 0.15rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 2px solid #111;
+  line-height: 1.3;
+}
+h2 {
+  font-size: 1.3rem; font-weight: 700;
+  margin: 2.5rem 0 0.5rem;
+  padding-bottom: 0.2rem;
+  border-bottom: 1px solid #ddd;
+}
+h3 { font-size: 1.1rem; font-weight: 700; margin: 1.8rem 0 0.4rem; }
+h4 { font-size: 1rem; font-weight: 700; margin: 1.4rem 0 0.3rem; }
+p { margin: 0.9rem 0; }
+a { color: #0055cc; text-decoration: none; }
+a:hover { text-decoration: underline; }
+nav { margin-bottom: 2.5rem; font-size: 0.85rem; color: #999; }
+nav a { color: #999; }
+
+/* ── Code ── */
+code {
+  font-family: "SFMono-Regular", Consolas, monospace;
+  background: #f2f2f2;
+  padding: 0.1em 0.4em;
+  border-radius: 3px;
+  font-size: 0.85em;
+}
+pre {
+  background: #f2f2f2;
+  padding: 1.2rem 1.4rem;
+  border-radius: 5px;
+  overflow-x: auto;
+  font-size: 0.85em;
+  line-height: 1.6;
+}
+pre code { background: none; padding: 0; }
+
+/* ── Lists ── */
+ul, ol { padding-left: 1.6rem; margin: 0.8rem 0; }
+li { margin: 0.35rem 0; }
+li > ul, li > ol { margin: 0.2rem 0; }
+
+/* ── Other elements ── */
+blockquote {
+  border-left: 4px solid #ccc;
+  margin: 1.2rem 0;
+  padding: 0.3rem 1.2rem;
+  color: #444;
+  background: #fafafa;
+}
+table { border-collapse: collapse; width: 100%; margin: 1.2rem 0; font-size: 0.95em; }
+th, td { border: 1px solid #ccc; padding: 0.55rem 0.9rem; text-align: left; }
+th { background: #f5f5f5; font-weight: 700; }
+tr:nth-child(even) { background: #fafafa; }
+hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
+.meta { font-size: 0.8rem; color: #aaa; margin: 0.3rem 0 1.8rem; }
+.index-list { list-style: none; padding: 0; margin: 1rem 0; }
+.index-list li { padding: 0.55rem 0; border-bottom: 1px solid #eee; font-size: 1.05rem; }
+.index-list li:last-child { border-bottom: none; }
+.embed-block {
+  border-left: 3px solid #aaa;
+  padding: 0.5rem 1.2rem;
+  margin: 1.5rem 0;
+  background: #f8f8f8;
+}
+
+/* ── Mobile ── */
+@media (max-width: 800px) {
+  .layout { flex-direction: column; }
+  .sidebar {
+    position: static;
+    width: 100%;
+    height: auto;
+    max-height: 50vh;
+    border-right: none;
+    border-bottom: 1px solid #e8e8e8;
+    padding: 1rem 1.5rem;
+  }
+  .content { padding: 1.5rem 1.2rem 4rem; }
+}
+</style>
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+<div class="toc">
+<ul>
+<li><a href="#_1">摘要</a></li>
+<li><a href="#_2">論文大綱</a></li>
+<li><a href="#research-gap-methodology">Research Gap 與 Methodology 的關係</a></li>
+<li><a href="#_3">研究問題</a></li>
+<li><a href="#_4">主要發現</a></li>
+<li><a href="#_5">研究方法</a></li>
+<li><a href="#rq5">關聯結構（RQ5）</a></li>
+<li><a href="#_6">相關論文</a></li>
+<li><a href="#_7">相關概念</a></li>
+</ul>
+</div>
+</aside>
+<main class="content">
+<h1>Offermann van Heek 2018 CCU Trust</h1>
+<p class="meta">#paper　#CCU　#carbon_capture　#trust　#distrust　#consumer_acceptance　#credibility　#online_survey</p>
+<h2 id="offermann-van-heek-arning-linzenich-ziefle-2018-trust-and-distrust-in-carbon-capture-and-utilization-industry-as-relevant-factors-for-the-acceptance-of-carbon-based-products">Offermann-van Heek, Arning, Linzenich &amp; Ziefle (2018). Trust and Distrust in Carbon Capture and Utilization Industry as Relevant Factors for the Acceptance of Carbon-Based Products</h2>
+<p><strong>作者</strong>：Julia Offermann-van Heek、Katrin Arning、Anika Linzenich、Martina Ziefle
+<strong>機構</strong>：Human-Computer Interaction Center, RWTH Aachen University, Germany
+<strong>年份</strong>：2018
+<strong>期刊</strong>：<em>Frontiers in Energy Research</em>, 6:73
+<strong>DOI</strong>：10.3389/fenrg.2018.00073</p>
+<h3 id="_1">摘要</h3>
+<p>本研究探究德國消費者對 Carbon Capture and Utilization 產業之 Trust 與 distrust 作為 carbon-based plastic 產品接受度的前置因子。採兩階段探索性設計：第一階段以 semi-standardized 訪談（$n=10$ laypeople）萃取 trust/distrust criteria 與 CCU 產品感知維度；第二階段以 online survey（$n=127$，德國）量化 20 項 trust items 與 13 項 distrust items，並評估 CCU 產品感知、資訊來源 source credibility、行銷需求。主要發現：(1) 參與者對 CCU 抱持微偏正面態度，environmental、sustainability、economic benefits 獲肯定；(2) CCU fuels &gt; CCU mattresses ≈ CO$_2$ 碳酸化飲料 的產品偏好序；(3) 在資訊來源信任排序上，研究機構 ($M=4.7$) &gt; 環保組織 ($M=4.5$) &gt; NGOs ($M=4.1$) &gt; 政府 ($M=3.7$) &gt; 公司 ($M=3.4$)——企業信任度顯著最低；(4) PCA 揭示 4 個 trust 維度（customer relationship、company's transparency、moral values、company's reputation）與 4 個 distrust 維度（customer deception、bad customer orientation、bad working conditions、negative image），與 McKnight trust model 的 trust/distrust 並存主張一致；(5) (dis)trust 維度<strong>間接透過</strong> perceived benefits、barriers、credibility、marketing 連結 CCU 產品接受度。company's reputation 是唯一同時與 credibility、benefits、barriers 均顯著相關的 trust 維度。</p>
+<h3 id="_2">論文大綱</h3>
+<ol>
+<li>Introduction——CCU 作為 CO$_2$ 減排技術；trust 為 CCU 產品接受度尚未被研究之議題</li>
+<li>The Acceptance of CCU——CCU 技術步驟、sustainable energy tech 接受度、CCU 現有研究、研究問題 RQ1–RQ5</li>
+<li>Methodology——empirical approach、qualitative pre-study、quantitative survey design、sample (n=127)、statistical methods（bivariate correlation、univariate ANOVA、PCA、Cronbach α）</li>
+<li>Results——CCU 技術/產品感知 (RQ1)、資訊來源 credibility (RQ2)、資訊與行銷需求 (RQ3)、trust/distrust 維度 (RQ4)、關聯分析 (RQ5)</li>
+<li>Discussion——trust 模型化、資訊與溝通策略、限制與未來研究、文化影響</li>
+<li>Conclusion</li>
+</ol>
+<h3 id="research-gap-methodology">Research Gap 與 Methodology 的關係</h3>
+<p>過去 CCU 研究（Jones et al., 2014, 2015; van Heek et al., 2017a,b; Arning et al., 2017）聚焦 public perception、risk perception、product acceptance，但<strong>未處理企業 (dis)trust</strong> 如何影響 CCU 產品接受度。傳統 technology acceptance model（Davis, 1989）針對既有 job-related IT，不適用 novel energy technology。Siegrist (2000) 與 Huijts et al. (2012) 擴大框架納入 trust，但 (a) 只模型 institution-level trust、(b) 未區分 trust 與 distrust、(c) 未對 CCU 產業進行 industry-level 操作化。本研究以兩階段 exploratory design 建構 industry-specific (dis)trust items，並以 PCA 在 empirical data 上辨識維度——補上「CCU 產業 trust → 產品接受」的 micro-theory 與 measurement。</p>
+<h3 id="_3">研究問題</h3>
+<ul>
+<li><strong>RQ1</strong>：消費者如何評估不同 CCU 產品的 benefits、barriers、acceptance？</li>
+<li><strong>RQ2</strong>：不同資訊來源的 credibility 評估如何？</li>
+<li><strong>RQ3</strong>：消費者對 CCU 產品與企業的資訊需求與行銷偏好為何？</li>
+<li><strong>RQ4</strong>：CCU 企業 trust 與 distrust 由哪些維度構成？</li>
+<li><strong>RQ5</strong>：(dis)trust、credibility、CCU 感知、acceptance 之間的關聯結構？</li>
+</ul>
+<h3 id="_4">主要發現</h3>
+<ul>
+<li>CCU fuels are most preferred product option among carbon-based products</li>
+<li>Companies receive lowest credibility among information sources in CCU context</li>
+<li>Four trust dimensions emerge for CCU companies via PCA</li>
+<li>Four distrust dimensions emerge distinct from trust dimensions</li>
+<li>Company reputation is only trust dimension correlated with both benefits and barriers</li>
+<li>Trust and distrust indirectly affect CCU acceptance through perception of benefits and marketing</li>
+<li>Product quality and price-performance ratio dominate information needs over manufacturing details</li>
+<li>Simplified representation and integrity dominate marketing preferences for CCU products</li>
+</ul>
+<h3 id="_5">研究方法</h3>
+<p>完整方法討論見 Offermann van Heek 2018 Methods。</p>
+<ul>
+<li>兩階段 mixed-method 設計：qualitative pre-study (semi-standardized interview, $n=10$) → quantitative online survey ($n=127$)</li>
+<li>六點 Likert 測量所有 benefit、barrier、acceptance、trust、distrust、credibility 構念</li>
+<li>Cronbach α 檢驗內部一致性（多數構念 $\alpha > 0.77$）</li>
+<li>Principal Component Analysis 以 Varimax 旋轉獨立計算 trust 與 distrust 維度（Bartlett $p<0.001$, KMO = 0.896 / 0.831）</li>
+<li>Bivariate correlation 分析 (dis)trust、credibility、perception、acceptance 之線性關聯</li>
+<li>依據 McKnight trust model 主張，將 trust 與 distrust <strong>分別</strong> 做 PCA</li>
+</ul>
+<h3 id="rq5">關聯結構（RQ5）</h3>
+<p>Bivariate correlation 揭示：</p>
+<ul>
+<li>Acceptance $\leftrightarrow$ Benefits $r=0.444^{**}$、Barriers $r=-0.329^{**}$、Credibility $r=0.376^{**}$、Marketing $r=0.302^{**}$</li>
+<li>Benefits $\leftrightarrow$ Credibility $r=0.501^{**}$</li>
+<li>Marketing $\leftrightarrow$ Benefits $r=0.696^{**}$</li>
+<li>Trust「company's reputation」與 Benefits $r=0.407^{**}$、Marketing $r=0.598^{**}$、Barriers $r=-0.233^{**}$、Credibility $r=0.385^{**}$</li>
+<li>Distrust「negative image」與 Credibility $r=-0.389^{**}$、Barriers $r=0.258^{**}$、Marketing $r=0.392^{**}$</li>
+</ul>
+<p>顯示 (dis)trust 非直接影響 acceptance，而是<strong>間接透過</strong> benefits、barriers、credibility、marketing 的感知。</p>
+<h3 id="_6">相關論文</h3>
+<ul>
+<li>Simons, Engelmann, Arning &amp; Ziefle (2021)：同一 RWTH Aachen 團隊後續以 PLS-SEM 檢驗四國 CCU aviation fuel 接受度，將本研究的 industry-trust 發現擴展為 production vs. product evaluation 雙層模型。</li>
+<li>Siegrist (2000) 基因技術信任接受模型、Huijts et al. (2012) 永續能源技術接受框架——均納入 trust 作為 benefits/barriers 的前置因子。</li>
+<li>McKnight, Kacmar &amp; Choudhury (2004) 提供 trust/distrust 分立的理論基礎。</li>
+</ul>
+<h3 id="_7">相關概念</h3>
+<p>CCU、Trust、distrust、source credibility、consumer trust、technology acceptance、McKnight trust model、risk perception、principal component analysis、social acceptance、climate change、greenwashing、CCS</p>
+<hr />
+</main>
+</div>
+<script>
+(function () {
+  // ── Rebuild TOC with toggle buttons ──────────────────────────────────────
+  var toc = document.querySelector('.sidebar .toc');
+  if (toc) {
+    toc.querySelectorAll('li').forEach(function (li) {
+      var childUl = li.querySelector(':scope > ul');
+      var link    = li.querySelector(':scope > a');
+      if (!link) return;
+
+      var row = document.createElement('div');
+      row.className = 'toc-row';
+
+      if (childUl) {
+        var btn = document.createElement('button');
+        btn.className = 'toc-toggle';
+        btn.setAttribute('aria-expanded', 'true');
+        btn.textContent = '▾';          // ▾ open
+        btn.addEventListener('click', function () {
+          var open = childUl.hidden;
+          childUl.hidden = !open;
+          btn.textContent = open ? '▾' : '▸';   // ▾ / ▸
+          btn.setAttribute('aria-expanded', String(open));
+        });
+        row.appendChild(btn);
+      } else {
+        var spacer = document.createElement('span');
+        spacer.style.width = '1rem';
+        spacer.style.flexShrink = '0';
+        row.appendChild(spacer);
+      }
+
+      row.appendChild(link);
+      li.insertBefore(row, li.firstChild);
+    });
+  }
+
+  // ── Scroll spy ───────────────────────────────────────────────────────────
+  var headings = document.querySelectorAll('.content h2[id], .content h3[id], .content h4[id]');
+  var tocLinks = document.querySelectorAll('.sidebar .toc a');
+  if (!headings.length || !tocLinks.length) return;
+
+  var current = null;
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      var link = document.querySelector('.sidebar .toc a[href="#' + e.target.id + '"]');
+      if (!link) return;
+      if (current) current.classList.remove('active');
+      current = link;
+      current.classList.add('active');
+      // Scroll link into view within sidebar
+      current.scrollIntoView({ block: 'nearest' });
+    });
+  }, { rootMargin: '-5% 0px -75% 0px', threshold: 0 });
+
+  headings.forEach(function (h) { io.observe(h); });
+}());
+</script>
+</body>
+</html>

@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CB-SEM</title>
+<style>*, *::before, *::after { box-sizing: border-box; }
+
+/* ── Base ── */
+body {
+  font-family: "Helvetica Neue", Arial, "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+  font-size: 20px;
+  line-height: 1.9;
+  color: #111;
+  background: #fff;
+  margin: 0;
+}
+
+/* ── Two-column layout (note pages) ── */
+.layout { display: flex; align-items: flex-start; min-height: 100vh; }
+
+.sidebar {
+  width: 270px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 2rem 1rem 2rem 1.5rem;
+  border-right: 1px solid #e8e8e8;
+  background: #f9f9f9;
+}
+.sidebar-back {
+  display: block;
+  font-size: 0.82rem;
+  color: #999;
+  margin-bottom: 1.4rem;
+  text-decoration: none;
+}
+.sidebar-back:hover { color: #333; }
+.sidebar-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #bbb;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+/* ── TOC in sidebar ── */
+.toc { font-size: 0.82rem; line-height: 1.55; }
+.toc ul { list-style: none; margin: 0; padding: 0; }
+.toc ul ul { padding-left: 0.9rem; }
+.toc li { margin: 0; }
+.toc-row { display: flex; align-items: baseline; gap: 0.2rem; }
+.toc-row a {
+  flex: 1;
+  display: block;
+  padding: 0.18rem 0.3rem;
+  border-radius: 3px;
+  color: #555;
+  text-decoration: none;
+  word-break: break-word;
+}
+.toc-row a:hover { background: #ebebeb; color: #111; }
+.toc-row a.active { color: #0055cc; font-weight: 600; background: #e8f0ff; }
+.toc-toggle {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-size: 0.65rem;
+  color: #bbb;
+  line-height: 1;
+  width: 1rem;
+  text-align: center;
+}
+.toc-toggle:hover { color: #555; }
+
+/* ── Main content ── */
+.content {
+  flex: 1;
+  min-width: 0;
+  padding: 3rem 3rem 6rem;
+  max-width: 800px;
+}
+
+/* ── Single-column (index page) ── */
+.container { max-width: 800px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
+
+/* ── Typography ── */
+h1 {
+  font-size: 1.75rem; font-weight: 700;
+  margin: 0 0 0.15rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 2px solid #111;
+  line-height: 1.3;
+}
+h2 {
+  font-size: 1.3rem; font-weight: 700;
+  margin: 2.5rem 0 0.5rem;
+  padding-bottom: 0.2rem;
+  border-bottom: 1px solid #ddd;
+}
+h3 { font-size: 1.1rem; font-weight: 700; margin: 1.8rem 0 0.4rem; }
+h4 { font-size: 1rem; font-weight: 700; margin: 1.4rem 0 0.3rem; }
+p { margin: 0.9rem 0; }
+a { color: #0055cc; text-decoration: none; }
+a:hover { text-decoration: underline; }
+nav { margin-bottom: 2.5rem; font-size: 0.85rem; color: #999; }
+nav a { color: #999; }
+
+/* ── Code ── */
+code {
+  font-family: "SFMono-Regular", Consolas, monospace;
+  background: #f2f2f2;
+  padding: 0.1em 0.4em;
+  border-radius: 3px;
+  font-size: 0.85em;
+}
+pre {
+  background: #f2f2f2;
+  padding: 1.2rem 1.4rem;
+  border-radius: 5px;
+  overflow-x: auto;
+  font-size: 0.85em;
+  line-height: 1.6;
+}
+pre code { background: none; padding: 0; }
+
+/* ── Lists ── */
+ul, ol { padding-left: 1.6rem; margin: 0.8rem 0; }
+li { margin: 0.35rem 0; }
+li > ul, li > ol { margin: 0.2rem 0; }
+
+/* ── Other elements ── */
+blockquote {
+  border-left: 4px solid #ccc;
+  margin: 1.2rem 0;
+  padding: 0.3rem 1.2rem;
+  color: #444;
+  background: #fafafa;
+}
+table { border-collapse: collapse; width: 100%; margin: 1.2rem 0; font-size: 0.95em; }
+th, td { border: 1px solid #ccc; padding: 0.55rem 0.9rem; text-align: left; }
+th { background: #f5f5f5; font-weight: 700; }
+tr:nth-child(even) { background: #fafafa; }
+hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
+.meta { font-size: 0.8rem; color: #aaa; margin: 0.3rem 0 1.8rem; }
+.index-list { list-style: none; padding: 0; margin: 1rem 0; }
+.index-list li { padding: 0.55rem 0; border-bottom: 1px solid #eee; font-size: 1.05rem; }
+.index-list li:last-child { border-bottom: none; }
+.embed-block {
+  border-left: 3px solid #aaa;
+  padding: 0.5rem 1.2rem;
+  margin: 1.5rem 0;
+  background: #f8f8f8;
+}
+
+/* ── Mobile ── */
+@media (max-width: 800px) {
+  .layout { flex-direction: column; }
+  .sidebar {
+    position: static;
+    width: 100%;
+    height: auto;
+    max-height: 50vh;
+    border-right: none;
+    border-bottom: 1px solid #e8e8e8;
+    padding: 1rem 1.5rem;
+  }
+  .content { padding: 1.5rem 1.2rem 4rem; }
+}
+</style>
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+<div class="toc">
+<ul>
+<li><a href="#cb-sem">適合使用 CB SEM 的研究場景</a><ul>
+<li><a href="#_1">場景三：驗證服務品質對顧客忠誠度的理論模型</a></li>
+<li><a href="#_2">場景四：企業創新能力與績效之間的關係研究</a></li>
+</ul>
+</li>
+<li><a href="#cb-sem-advantages">一、 CB-SEM 的優點 (Advantages)</a><ul>
+<li><a href="#1-global-goodness-of-fit">1. 全面性的模型適配評估 (Global Goodness-of-Fit)</a></li>
+<li><a href="#2-unbiased-and-consistent-estimates">2. 參數估計的無偏性與一致性 (Unbiased and Consistent Estimates)</a></li>
+<li><a href="#3-non-recursive-models">3. 處理非遞迴模型 (Non-recursive Models) 的能力</a></li>
+</ul>
+</li>
+<li><a href="#cb-sem-disadvantages">二、 CB-SEM 的缺點 (Disadvantages)</a><ul>
+<li><a href="#1-strict-assumptions-on-normality">1. 對資料分配的嚴格要求 (Strict Assumptions on Normality)</a></li>
+<li><a href="#2-sample-size-requirements">2. 對樣本數的高門檻 (Sample Size Requirements)</a></li>
+<li><a href="#3-formative-indicator">3. 處理「形成性指標 (Formative Indicator)」的困難</a></li>
+<li><a href="#4">4. 模型複雜度的限制</a></li>
+</ul>
+</li>
+<li><a href="#cb-sem-pls-sem">三、 資格考必備：CB-SEM 與 PLS-SEM 的決策對照表</a></li>
+<li><a href="#decision-tree">四、 博士生的決策建議 (Decision Tree)</a></li>
+<li><a href="#_3">總結</a></li>
+<li><a href="#_4">五、 估計失敗的常見徵兆</a></li>
+<li><a href="#pls-sem">六、 與 PLS-SEM 的等價條件與整合</a></li>
+<li><a href="#fit-cutoff-reviewer">七、 fit cutoff 的爭議與 reviewer 因應</a></li>
+</ul>
+</div>
+</aside>
+<main class="content">
+<h1>CB-SEM</h1>
+<p class="meta">#statistics　#structural_equation_modeling　#CB_SEM　#SEM　#methodology</p>
+<p>Under SEM
+Diff: <a href="PLS-SEM.html">PLS-SEM</a>
+Compare PLS-SEM vs CB-SEM
+Compare SEM vs OLS Test</p>
+<h2 id="cb-semcovariance-based-structural-equation-modeling">什麼是 CB SEM（Covariance-Based Structural Equation Modeling）？</h2>
+<p>資料要常態
+但如果有非常態的資料，使用 <a href="PLS-SEM.html">PLS-SEM</a></p>
+<ul>
+<li><strong>核心概念</strong>：CB SEM 是一種基於「共變異數」進行估計的結構方程模式，用來檢驗理論假設與觀察到的資料是否相符。</li>
+<li><strong>做什麼</strong>：它會先建立理論模型，包含各個潛在變項及它們之間的關係，然後根據樣本資料的「共變異數矩陣」，去評估這個模型的整體適配度（例如是否符合理論預測、指標是否達到一定標準等）。</li>
+<li><strong>適用情境</strong>：在研究重視模型的「整體適配度」與「理論驗證」時，CB SEM 是常見的選擇。</li>
+</ul>
+<h4 id="cb-sem"><strong>適合使用 CB SEM 的研究場景</strong></h4>
+<h5 id="_1"><strong>場景三：驗證服務品質對顧客忠誠度的理論模型</strong></h5>
+<ul>
+<li><strong>背景</strong>：根據SERVQUAL理論，研究服務品質的五個維度（可靠性、反應性、保證性、同理心、有形性）如何影響顧客滿意度，進而影響顧客忠誠度。研究目的是驗證這一既有理論模型的適配度。</li>
+<li><strong>為何適合 CB SEM</strong>：<ul>
+<li><strong>理論驗證</strong>：CB SEM 適合用於驗證既有的理論模型，檢查理論假設與實際資料的吻合程度。</li>
+<li><strong>大型樣本</strong>：此類研究通常需要較大的樣本來確保模型的穩健性，CB SEM 在大樣本下表現優異。</li>
+<li><strong>整體模型適配度</strong>：重視模型整體的適配度指標，如CFI、TLI、<a href="RMSEA.html">RMSEA</a> 等，CB SEM 能提供詳細的適配度評估。</li>
+</ul>
+</li>
+</ul>
+<h5 id="_2"><strong>場景四：企業創新能力與績效之間的關係研究</strong></h5>
+<ul>
+<li><strong>背景</strong>：研究企業的創新能力（包括研發投入、創新文化、員工技能等）如何影響其市場績效和財務績效。模型基於既有的創新理論構建，旨在驗證創新能力對績效的直接和間接影響。</li>
+<li><strong>為何適合 CB SEM</strong>：<ul>
+<li><strong>理論驅動</strong>：研究基於明確的理論框架，CB SEM 能有效檢驗理論假設。</li>
+<li><strong>複雜的因果關係</strong>：包含多個潛在變項及其之間的複雜關係，CB SEM 能夠精確估計這些關係並評估模型適配度。</li>
+<li><strong>資料質量要求高</strong>：需確保測量指標的信度和效度，CB SEM 提供詳細的測量模型評估，有助於提升研究的嚴謹性。</li>
+</ul>
+</li>
+</ul>
+<p>針對博士資格考與學術研究，<strong>CB-SEM (Covariance-Based SEM，如 AMOS, LISREL, Mplus)</strong> 被視為「正統派」的結構方程模型。它的核心邏輯是<strong>「理論驗證 (Theory Confirmation)」</strong>，這與 PLS-SEM 的「預測導向」有本質上的不同。</p>
+<p>CB-SEM 的目標是：<strong>尋找一組參數，使得「模型導出的共變異數矩陣」與「實際樣本的共變異數矩陣」差異最小化。</strong></p>
+<p>以下是 CB-SEM 在學術審查（Review）中的優勢與劣勢分析，以及面對考試時的攻防重點：</p>
+<hr />
+<h4 id="cb-sem-advantages">一、 CB-SEM 的優點 (Advantages)</h4>
+<p>Reviewer 之所以喜歡 CB-SEM，是因為它<strong>嚴謹</strong>。</p>
+<h5 id="1-global-goodness-of-fit">1. 全面性的模型適配評估 (Global Goodness-of-Fit)</h5>
+<p>這是 CB-SEM 最大的王牌。</p>
+<ul>
+<li>
+<p><strong>優勢</strong>：它能提供一系列成熟的指標（$\chi^2$, CFI, TLI, RMSEA, SRMR）來告訴你「你的理論模型跟現實數據合不合」。</p>
+</li>
+<li>
+<p><strong>意義</strong>：如果你的 CB-SEM 模型適配度很好，這是一個強而有力的證據，證明你的理論架構是正確的。相比之下，PLS-SEM 早期缺乏這些指標（雖然後來有了 SRMR，但仍非其強項）。</p>
+</li>
+</ul>
+<h5 id="2-unbiased-and-consistent-estimates">2. 參數估計的無偏性與一致性 (Unbiased and Consistent Estimates)</h5>
+<ul>
+<li>
+<p><strong>優勢</strong>：在滿足「常態分配」與「大樣本」的前提下，CB-SEM 使用 <strong>最大概似估計法 (Maximum Likelihood, ML)</strong> 所算出的參數，在統計學上是最精確、無偏誤的。</p>
+</li>
+<li>
+<p><strong>意義</strong>：==對於成熟的理論（如 TAM, TPB），CB-SEM 能提供最精準的參數估計值。</p>
+</li>
+</ul>
+<h5 id="3-non-recursive-models">3. 處理非遞迴模型 (Non-recursive Models) 的能力</h5>
+<ul>
+<li>
+<p><strong>優勢</strong>：CB-SEM 能夠處理<strong>雙向因果關係</strong>（如 A 影響 B，同時 B 也影響 A）的迴圈模型。</p>
+</li>
+<li>
+<p><strong>意義</strong>：在某些複雜的社會科學理論中（如「滿意度」與「績效」互為因果），只有 CB-SEM 能處理，PLS-SEM 基本上只能處理單向（遞迴）路徑。</p>
+</li>
+</ul>
+<hr />
+<h4 id="cb-sem-disadvantages">二、 CB-SEM 的缺點 (Disadvantages)</h4>
+<p>這通常是博士生<strong>「棄 CB-SEM 轉投 PLS-SEM」</strong>的主要原因，也是 Reviewer 攻擊的痛點。</p>
+<h5 id="1-strict-assumptions-on-normality">1. 對資料分配的嚴格要求 (Strict Assumptions on Normality)</h5>
+<ul>
+<li>
+<p><strong>劣勢</strong>：CB-SEM 預設資料必須符合<strong>多變量常態分配 (Multivariate Normality)</strong>。</p>
+</li>
+<li>
+<p><strong>痛點</strong>：現實世界的問卷數據通常都是偏態的（Skewed），例如滿意度通常大家都填很高。如果資料非常態，CB-SEM 的卡方值會膨脹，導致適配度指標（如 CFI, RMSEA）變得很難看，甚至算不出來。</p>
+</li>
+</ul>
+<h5 id="2-sample-size-requirements">2. 對樣本數的高門檻 (Sample Size Requirements)</h5>
+<ul>
+<li>
+<p><strong>劣勢</strong>：CB-SEM 需要較大的樣本才能穩定運算。</p>
+</li>
+<li>
+<p><strong>痛點</strong>：</p>
+<ul>
+<li>
+<p>一般建議 $N > 200$。</p>
+</li>
+<li>
+<p>嚴謹標準是 <strong>N:q &gt; 10:1</strong>（樣本數要是估計參數的 10 倍以上）。</p>
+</li>
+<li>
+<p>如果樣本數只有 80 或 100，CB-SEM 經常會無法收斂（Non-convergence）或產生不合理的結果（Heywood cases，如負的變異數）。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="3-formative-indicator">3. 處理「形成性指標 (Formative Indicator)」的困難</h5>
+<ul>
+<li>
+<p><strong>劣勢</strong>：==CB-SEM 的數學邏輯是基於反映性（Reflective）的共變異數==。要跑形成性指標，必須加上極其複雜的識別限制（Identification Rules），非常容易報錯。</p>
+</li>
+<li>
+<p><strong>痛點</strong>：如果您的模型包含形成性構面，用 AMOS 跑簡直是自找麻煩。</p>
+</li>
+</ul>
+<h5 id="4">4. 模型複雜度的限制</h5>
+<ul>
+<li>
+<p><strong>劣勢</strong>：當模型變得很複雜（例如 10 個構面、50 個題目）時，CB-SEM 的適配度很難達標。</p>
+</li>
+<li>
+<p><strong>痛點</strong>：這就是所謂的「適配度兩難」——模型越複雜越接近真實世界，但 CB-SEM 的指標卻會懲罰複雜模型，導致很難發表。</p>
+</li>
+</ul>
+<hr />
+<h4 id="cb-sem-pls-sem">三、 資格考必備：CB-SEM 與 PLS-SEM 的決策對照表</h4>
+<p>在口試中，老師常問：<strong>「為什麼你的研究選用 AMOS (CB-SEM) 而不是 SmartPLS (PLS-SEM)？」</strong> 或者反過來問。</p>
+<p>請使用這張表來進行防禦：</p>
+<table>
+<thead>
+<tr>
+<th><strong>比較維度</strong></th>
+<th><strong>CB-SEM (如 AMOS)</strong></th>
+<th><strong>PLS-SEM (如 SmartPLS)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>研究目標</strong></td>
+<td><strong>理論驗證 (Theory Testing)</strong><br><br>  <br><br>確認既有理論是否適配。</td>
+<td><strong>理論預測 (Theory Prediction)</strong><br><br>  <br><br>最大化 $R^2$，或發展新理論。</td>
+</tr>
+<tr>
+<td><strong>資料分配</strong></td>
+<td>必須符合<strong>常態分配</strong>。</td>
+<td><strong>無母數 (Non-parametric)</strong><br><br>  <br><br>不需常態分配，適應性強。</td>
+</tr>
+<tr>
+<td><strong>樣本數</strong></td>
+<td>需大樣本 ($N > 200$ 或更多)。</td>
+<td>對小樣本友善 (但在 Power 分析下仍需一定數量)。</td>
+</tr>
+<tr>
+<td><strong>測量模式</strong></td>
+<td>擅長 <strong>Reflective (反映性)</strong>。</td>
+<td>擅長 <strong>Formative (形成性)</strong> 與 Reflective。</td>
+</tr>
+<tr>
+<td><strong>適配度指標</strong></td>
+<td><strong>強項</strong> (CFI, RMSEA, etc.)。</td>
+<td>弱項 (主要看 SRMR，重點在 $R^2, Q^2$)。</td>
+</tr>
+<tr>
+<td><strong>統計檢定力</strong></td>
+<td>在小樣本下檢定力較弱。</td>
+<td>在小樣本下具有較高的統計檢定力 (Statistical Power)。</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h4 id="decision-tree">四、 博士生的決策建議 (Decision Tree)</h4>
+<p>在 Methodology 章節中，您必須根據以下邏輯撰寫<strong>「選擇分析工具的理由」</strong>：</p>
+<ol>
+<li>
+<p><strong>理由一：理論成熟度</strong></p>
+<ul>
+<li>
+<p>如果是驗證經典理論（如 TAM），且模型單純 $\rightarrow$ 選 <strong>CB-SEM</strong>（Reviewer 覺得你嚴謹）。</p>
+</li>
+<li>
+<p>如果是探索新構面、新路徑，或理論還在發展中 $\rightarrow$ 選 <strong>PLS-SEM</strong>。</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>理由二：資料特性</strong></p>
+<ul>
+<li>
+<p>如果樣本數夠大 ($>250$) 且資料常態 $\rightarrow$ 選 <strong>CB-SEM</strong>。</p>
+</li>
+<li>
+<p>如果樣本數少 ($<150$) 或資料嚴重偏態 $\rightarrow$ 選 <strong>PLS-SEM</strong>。</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>理由三：測量模型</strong></p>
+<ul>
+<li>如果包含<strong>形成性指標 (Formative Indicators)</strong> $\rightarrow$ <strong>秒選 PLS-SEM</strong>。這是最強的理由，Reviewer 無法反駁。</li>
+</ul>
+</li>
+</ol>
+<h4 id="_3">總結</h4>
+<ul>
+<li>
+<p><strong>CB-SEM 的優點</strong> = <strong>嚴謹度</strong> (適合做理論的終審法官)。</p>
+</li>
+<li>
+<p><strong>CB-SEM 的缺點</strong> = <strong>嬌貴</strong> (吃軟不吃硬，需要完美的數據跟大樣本)。</p>
+</li>
+</ul>
+<p>下一步</p>
+<p>比較完這兩大門派後，針對實際操作或考試，您是否需要我為您生成一個<strong>「方法論章節 (Methodology) 的寫作範本」</strong>？我可以示範如何用學術語言寫出：「因為本研究樣本數有限且包含形成性指標，故選用 PLS-SEM...」這類防禦性文字。</p>
+<hr />
+<h4 id="_4">五、 估計失敗的常見徵兆</h4>
+<p>CB-SEM 並非每次都能順利收斂。當資料、樣本、模型三方面有任一項不佳時，Maximum Likelihood 估計常出現：</p>
+<ul>
+<li><strong>Non-convergence</strong>：迭代達上限但未收斂；通常代表模型 underidentified、資料嚴重共線或樣本過小</li>
+<li><strong>Heywood case</strong>：估計出<strong>負的誤差變異</strong>或標準化負荷量大於 1。多半因小樣本、構念測量題目過少（&lt; 3）、或構念彼此高度相關（&gt; 0.85）造成，需檢視 <a href="Discriminant_Validity_%E5%8D%80%E5%88%A5%E6%A0%A1%E5%BA%A6.html">Discriminant Validity 區別校度</a></li>
+<li><strong>不合理的標準誤</strong>：路徑係數的標準誤異常大（如 &gt; 10），代表 <a href="Multicollinearity_%E5%85%B1%E7%B7%9A%E6%80%A7.html">Multicollinearity 共線性</a> 或模型 misspecification</li>
+<li><strong>適配度與參數矛盾</strong>：整體 fit 看似達標但個別路徑係數不顯著，反之亦然——通常是 power 不足或 Modification Indices 過度修正後 <a href="capitalize_on_chance.html">capitalization on chance</a> 的副作用</li>
+</ul>
+<h4 id="pls-sem">六、 與 PLS-SEM 的等價條件與整合</h4>
+<p>近年 <a href="PLSc.html">PLSc</a>（consistent PLS）演算法（Dijkstra &amp; Henseler, 2015；<a href="Dijkstra_Henseler.html">Dijkstra_Henseler</a>）證明：當量表為純反映性、樣本足夠時，PLSc 的參數估計可在大樣本下逼近 CB-SEM 的 ML 結果。實務含義：</p>
+<ol>
+<li>CB-SEM 與 <a href="PLS-SEM.html">PLS-SEM</a> 不再是「對立」陣營，而是針對不同情境（理論驗證 vs 預測導向）的互補工具</li>
+<li><a href="Hair_2022_PLS.html">Hair_2022_PLS</a> 建議：先用 PLSc 估參、再以 CB-SEM 在獨立樣本驗證，可兼顧穩健與嚴謹</li>
+<li>跨組比較時 <a href="MICOM.html">MICOM</a>、<a href="Henseler_PLS_MGA.html">Henseler_PLS_MGA</a>、<a href="parametric_MGA.html">parametric_MGA</a> 也可補充傳統 CB-SEM multigroup 的彈性</li>
+</ol>
+<h4 id="fit-cutoff-reviewer">七、 fit cutoff 的爭議與 reviewer 因應</h4>
+<p>CB-SEM 慣用的 <a href="CFI_Comparative_Fit_Index.html">CFI Comparative Fit Index</a> $> 0.95$、<a href="RMSEA.html">RMSEA</a> $< 0.06$ 等門檻來自 Hu &amp; Bentler（1999）的 Monte Carlo simulation。Marsh、Hau 與 Wen（2004）提醒這些 cutoff 不是「金科玉律」——在小樣本、不平衡 loading、或正確但稍微錯設的模型下，嚴格遵守可能導致誤拒。實務上：</p>
+<ul>
+<li>在方法章節<strong>主動引用 Marsh et al. 2004</strong>，預先化解 reviewer 機械化要求 $\chi^2$ 不顯著的壓力</li>
+<li>同時報告多個指標（<a href="CFI_Comparative_Fit_Index.html">CFI Comparative Fit Index</a>、<a href="RMSEA.html">RMSEA</a>、<a href="SRMR.html">SRMR</a>）並交代 90% CI</li>
+<li>若 fit 未達標，優先以 Modification Indices 加上<strong>理論依據</strong>作修改，再以 holdout sample 驗證（Cross-validation）</li>
+</ul>
+<hr />
+<p><strong>相關論文</strong>：<a href="Hair_2022_PLS.html">Hair_2022_PLS</a>、<a href="Henseler_2016_MICOM.html">Henseler_2016_MICOM</a>、<a href="Dijkstra_Henseler.html">Dijkstra_Henseler</a>
+<strong>相關概念</strong>：SEM、<a href="PLS-SEM.html">PLS-SEM</a>、PLS-SEM vs CB-SEM、<a href="PLSc.html">PLSc</a>、Maximum Likelihood、Modification Indices、Heywood case、<a href="capitalize_on_chance.html">capitalize_on_chance</a>、<a href="Multicollinearity_%E5%85%B1%E7%B7%9A%E6%80%A7.html">Multicollinearity 共線性</a>、<a href="Discriminant_Validity_%E5%8D%80%E5%88%A5%E6%A0%A1%E5%BA%A6.html">Discriminant Validity 區別校度</a>、<a href="CFI_Comparative_Fit_Index.html">CFI Comparative Fit Index</a>、<a href="RMSEA.html">RMSEA</a>、<a href="SRMR.html">SRMR</a>、Model Fit、<a href="MICOM.html">MICOM</a>、<a href="Henseler_PLS_MGA.html">Henseler_PLS_MGA</a>、<a href="parametric_MGA.html">parametric_MGA</a>、Cross-validation
+另見：Model Fit 中「Cutoff 來源與爭議」段落</p>
+</main>
+</div>
+<script>
+(function () {
+  // ── Rebuild TOC with toggle buttons ──────────────────────────────────────
+  var toc = document.querySelector('.sidebar .toc');
+  if (toc) {
+    toc.querySelectorAll('li').forEach(function (li) {
+      var childUl = li.querySelector(':scope > ul');
+      var link    = li.querySelector(':scope > a');
+      if (!link) return;
+
+      var row = document.createElement('div');
+      row.className = 'toc-row';
+
+      if (childUl) {
+        var btn = document.createElement('button');
+        btn.className = 'toc-toggle';
+        btn.setAttribute('aria-expanded', 'true');
+        btn.textContent = '▾';          // ▾ open
+        btn.addEventListener('click', function () {
+          var open = childUl.hidden;
+          childUl.hidden = !open;
+          btn.textContent = open ? '▾' : '▸';   // ▾ / ▸
+          btn.setAttribute('aria-expanded', String(open));
+        });
+        row.appendChild(btn);
+      } else {
+        var spacer = document.createElement('span');
+        spacer.style.width = '1rem';
+        spacer.style.flexShrink = '0';
+        row.appendChild(spacer);
+      }
+
+      row.appendChild(link);
+      li.insertBefore(row, li.firstChild);
+    });
+  }
+
+  // ── Scroll spy ───────────────────────────────────────────────────────────
+  var headings = document.querySelectorAll('.content h2[id], .content h3[id], .content h4[id]');
+  var tocLinks = document.querySelectorAll('.sidebar .toc a');
+  if (!headings.length || !tocLinks.length) return;
+
+  var current = null;
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      var link = document.querySelector('.sidebar .toc a[href="#' + e.target.id + '"]');
+      if (!link) return;
+      if (current) current.classList.remove('active');
+      current = link;
+      current.classList.add('active');
+      // Scroll link into view within sidebar
+      current.scrollIntoView({ block: 'nearest' });
+    });
+  }, { rootMargin: '-5% 0px -75% 0px', threshold: 0 });
+
+  headings.forEach(function (h) { io.observe(h); });
+}());
+</script>
+</body>
+</html>
