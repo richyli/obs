@@ -352,11 +352,11 @@
 <td><strong>Opus 4.7</strong></td>
 <td>複雜推理、長對話、寫作、debug 邏輯難題</td>
 <td>寫論文、設計 skill、跑 <code>/daily</code> 整套 pipeline</td>
-<td>最貴（約 Sonnet 5×）</td>
+<td>最貴（約 Sonnet 5×）<br>20美金幾乎一天用完</td>
 </tr>
 <tr>
 <td><strong>Sonnet 4.6</strong></td>
-<td>平衡型，快速且夠聰明</td>
+<td>平衡型，快速且夠聰明，不會自作聰明</td>
 <td>日常 90% 任務、寫程式、抓資料</td>
 <td>中等</td>
 </tr>
@@ -412,12 +412,12 @@
 </thead>
 <tbody>
 <tr>
-<td><strong>default</strong></td>
+<td><strong>default</strong> Ask before Edits</td>
 <td>每個寫入、Bash 都問你「Allow / Always / Deny」</td>
 <td>第一週、不熟悉時</td>
 </tr>
 <tr>
-<td><strong>acceptEdits</strong></td>
+<td>Edit automatically</td>
 <td>自動同意檔案編輯，但 Bash 仍問</td>
 <td>跑熟的 skill、不會傷檔的任務</td>
 </tr>
@@ -428,7 +428,7 @@
 </tr>
 <tr>
 <td><strong>bypassPermissions</strong></td>
-<td>全自動，什麼都不問（<strong>危險</strong>）</td>
+<td>全自動，什麼都不問（<mark style="background: #FF5582A6;"><strong>危險</strong></mark>）</td>
 <td>Cron 排程、CI 跑批次</td>
 </tr>
 </tbody>
@@ -448,32 +448,32 @@
 <tr>
 <td>寫論文 / 改架構</td>
 <td><strong>Opus</strong></td>
-<td><strong>high</strong></td>
-<td>default（每步看著）</td>
+<td>high</td>
+<td>bypassPermissions</td>
 </tr>
 <tr>
 <td>跑 <code>/daily</code> 自動化</td>
 <td><strong>Opus</strong></td>
-<td><strong>high</strong></td>
-<td><strong>acceptEdits</strong></td>
+<td>high</td>
+<td>bypassPermissions</td>
 </tr>
 <tr>
 <td>白天小問題</td>
-<td><strong>Sonnet</strong></td>
-<td>medium</td>
-<td>default</td>
+<td><strong>Opus</strong></td>
+<td>high</td>
+<td>bypassPermissions</td>
 </tr>
 <tr>
 <td>大型重構前先看計畫</td>
 <td><strong>Opus</strong></td>
-<td><strong>high</strong></td>
+<td>high</td>
 <td><strong>plan</strong></td>
 </tr>
 <tr>
 <td>半夜跑批次 cron</td>
-<td><strong>Sonnet</strong></td>
-<td>medium</td>
-<td><strong>bypassPermissions</strong></td>
+<td><strong>Opus</strong></td>
+<td>high</td>
+<td>bypassPermissions</td>
 </tr>
 </tbody>
 </table>
@@ -1082,6 +1082,11 @@ for line in last_content.splitlines():
 <li>Claude Code 可以直接讀寫</li>
 <li>你的資料<strong>沒有</strong>鎖在第三方服務裡</li>
 <li>你關掉 Obsidian、用任何 markdown 編輯器都能看</li>
+</ul>
+<p>以員工的角度來看：</p>
+<ul>
+<li>直接請AI回答，AI就是沒有看資料庫就回答的員工（Zero Shot）</li>
+<li>建立個人知識庫，就等於跟員工說：「你去查了資料回來再跟我說！」（氣氣氣）</li>
 </ul>
 <blockquote>
 <p><strong>🧑‍💼 企業主的思考時間</strong></p>
