@@ -4,175 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Tagala Agentic AI Workshop — Richy 講次講義</title>
-<style>*, *::before, *::after { box-sizing: border-box; }
-
-/* ── Base ── */
-body {
-  font-family: "Helvetica Neue", Arial, "Noto Sans TC", "Microsoft JhengHei", sans-serif;
-  font-size: 20px;
-  line-height: 1.9;
-  color: #111;
-  background: #fff;
-  margin: 0;
-}
-
-/* ── Two-column layout (note pages) ── */
-.layout { display: flex; align-items: flex-start; min-height: 100vh; }
-
-.sidebar {
-  width: 270px;
-  flex-shrink: 0;
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  overflow-y: auto;
-  padding: 2rem 1rem 2rem 1.5rem;
-  border-right: 1px solid #e8e8e8;
-  background: #f9f9f9;
-}
-.sidebar-back {
-  display: block;
-  font-size: 0.82rem;
-  color: #999;
-  margin-bottom: 1.4rem;
-  text-decoration: none;
-}
-.sidebar-back:hover { color: #333; }
-.sidebar-label {
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: #bbb;
-  font-weight: 700;
-  margin-bottom: 0.4rem;
-}
-
-/* ── TOC in sidebar ── */
-.toc { font-size: 0.82rem; line-height: 1.55; }
-.toc ul { list-style: none; margin: 0; padding: 0; }
-.toc ul ul { padding-left: 0.9rem; }
-.toc li { margin: 0; }
-.toc-row { display: flex; align-items: baseline; gap: 0.2rem; }
-.toc-row a {
-  flex: 1;
-  display: block;
-  padding: 0.18rem 0.3rem;
-  border-radius: 3px;
-  color: #555;
-  text-decoration: none;
-  word-break: break-word;
-}
-.toc-row a:hover { background: #ebebeb; color: #111; }
-.toc-row a.active { color: #0055cc; font-weight: 600; background: #e8f0ff; }
-.toc-toggle {
-  flex-shrink: 0;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  font-size: 0.65rem;
-  color: #bbb;
-  line-height: 1;
-  width: 1rem;
-  text-align: center;
-}
-.toc-toggle:hover { color: #555; }
-
-/* ── Main content ── */
-.content {
-  flex: 1;
-  min-width: 0;
-  padding: 3rem 3rem 6rem;
-  max-width: 800px;
-}
-
-/* ── Single-column (index page) ── */
-.container { max-width: 800px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
-
-/* ── Typography ── */
-h1 {
-  font-size: 1.6em; font-weight: 700;
-  margin: 0 0 0.15rem;
-  padding-bottom: 0.4rem;
-  border-bottom: 2px solid #111;
-  line-height: 1.3;
-}
-h2 {
-  font-size: 1.35em; font-weight: 700;
-  margin: 2.5rem 0 0.5rem;
-  padding-bottom: 0.2rem;
-  border-bottom: 1px solid #ddd;
-}
-h3 { font-size: 1.2em; font-weight: 700; margin: 1.8rem 0 0.4rem; }
-h4 { font-size: 1.1em; font-weight: 700; margin: 1.4rem 0 0.3rem; }
-p { margin: 0.9rem 0; }
-a { color: #0055cc; text-decoration: none; }
-a:hover { text-decoration: underline; }
-nav { margin-bottom: 2.5rem; font-size: 0.85rem; color: #999; }
-nav a { color: #999; }
-
-/* ── Code ── */
-code {
-  font-family: "SFMono-Regular", Consolas, monospace;
-  background: #f2f2f2;
-  padding: 0.1em 0.4em;
-  border-radius: 3px;
-  font-size: 0.85em;
-}
-pre {
-  background: #f2f2f2;
-  padding: 1.2rem 1.4rem;
-  border-radius: 5px;
-  overflow-x: auto;
-  font-size: 0.85em;
-  line-height: 1.6;
-}
-pre code { background: none; padding: 0; }
-
-/* ── Lists ── */
-ul, ol { padding-left: 1.6rem; margin: 0.8rem 0; }
-li { margin: 0.35rem 0; }
-li > ul, li > ol { margin: 0.2rem 0; }
-
-/* ── Other elements ── */
-blockquote {
-  border-left: 4px solid #ccc;
-  margin: 1.2rem 0;
-  padding: 0.3rem 1.2rem;
-  color: #444;
-  background: #fafafa;
-}
-table { border-collapse: collapse; width: 100%; margin: 1.2rem 0; font-size: 0.95em; }
-th, td { border: 1px solid #ccc; padding: 0.55rem 0.9rem; text-align: left; }
-th { background: #f5f5f5; font-weight: 700; }
-tr:nth-child(even) { background: #fafafa; }
-hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
-.meta { font-size: 0.8rem; color: #aaa; margin: 0.3rem 0 1.8rem; }
-.index-list { list-style: none; padding: 0; margin: 1rem 0; }
-.index-list li { padding: 0.55rem 0; border-bottom: 1px solid #eee; font-size: 1.05rem; }
-.index-list li:last-child { border-bottom: none; }
-.embed-block {
-  border-left: 3px solid #aaa;
-  padding: 0.5rem 1.2rem;
-  margin: 1.5rem 0;
-  background: #f8f8f8;
-}
-
-/* ── Mobile ── */
-@media (max-width: 800px) {
-  .layout { flex-direction: column; }
-  .sidebar {
-    position: static;
-    width: 100%;
-    height: auto;
-    max-height: 50vh;
-    border-right: none;
-    border-bottom: 1px solid #e8e8e8;
-    padding: 1rem 1.5rem;
-  }
-  .content { padding: 1.5rem 1.2rem 4rem; }
-}
-</style>
+<link rel="stylesheet" href="style.c953efdd48.css">
 </head>
 <body>
 <div class="layout">
@@ -198,9 +30,7 @@ hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
 <li><a href="#harness">harness 是什麼</a></li>
 <li><a href="#token">Token 是什麼</a></li>
 <li><a href="#context">Context 是什麼，為什麼重要</a></li>
-</ul>
-</li>
-<li><a href="#follow-up">follow - up</a><ul>
+<li><a href="#today-kanban-skill">案例：/today ← /kanban ←—— skill 不只一種等級</a></li>
 <li><a href="#context_1">專案 / 對話 / Context 三層的差異</a></li>
 <li><a href="#hand-off">Hand off：對話太長怎麼辦</a></li>
 <li><a href="#glob">Glob 是什麼</a></li>
@@ -211,6 +41,8 @@ hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
 <li><a href="#claudeai-connectors-3">串接步驟（claude.ai Connectors 路線，3 分鐘搞定）</a></li>
 <li><a href="#_7">學員自己試（如果還有時間）</a></li>
 <li><a href="#twinkle-mcp-mcp">同場加映：Twinkle MCP — 台灣專屬的 MCP 服務集合</a></li>
+</ul>
+</li>
 <li><a href="#s5-skill-1520-15-min">S5 ｜ Skill 是什麼、怎麼建、怎麼訓練、怎麼自動化（15:20, 15 min）</a><ul>
 <li><a href="#skill">為什麼需要 Skill</a></li>
 <li><a href="#skill_1">Skill 長什麼樣（最小範例）</a></li>
@@ -258,8 +90,6 @@ hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
 </ul>
 </li>
 <li><a href="#_23">結尾：今天結束你應該帶走的四件事</a></li>
-</ul>
-</li>
 <li><a href="#_24">番外</a></li>
 </ul>
 </div>
@@ -550,12 +380,60 @@ hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
 <ul>
 <li><strong>小事用小 context</strong>（單檔修改別讓它 <code>Glob **/*.md</code>）</li>
 <li><strong>大事拆 subagent</strong>（用 Agent tool 開分身去查，分身做完只回主對話一段摘要，不污染主 context）。<ul>
-<li>可以在Skill設計時，要求多Agent執行。或者將Skill拆小，觸發後也會用 Sub-Agent的方式進行。</li>
+<li>可以在 Skill 設計時，要求多 Agent 執行。或者將 Skill 拆小，觸發後也會用 Sub-Agent 的方式進行。</li>
 </ul>
 </li>
 </ul>
-<h2 id="follow-up">follow - up</h2>
-<p>我的 /today 中有 /kanban 用這個當例子說明不同等級的skill 差異, 以及 agent 微小化的用途</p>
+<h4 id="today-kanban-skill">案例：<code>/today</code> ← <code>/kanban</code> ←—— skill 不只一種等級</h4>
+<p>延續上面的「拆小、用 sub-agent」。我自己有兩個關係很緊的 skill，剛好示範「<strong>skill 微小化</strong>」的真實用途：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><code>/today</code></th>
+<th><code>/kanban</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>角色</strong></td>
+<td>「規劃」型 skill</td>
+<td>「同步」型 skill</td>
+</tr>
+<tr>
+<td><strong>跑什麼</strong></td>
+<td>Kanban 同步 + 抓 Google Calendar + 跑 <code>/news-sec</code> + <code>/jp-daily</code> + <code>/sleep-report</code> + 7 日展望 + 子任務拆解 + 互動勾選</td>
+<td>只跑 <code>read_kanban() → write_kanban() → write_project_kanbans()</code></td>
+</tr>
+<tr>
+<td><strong>耗時</strong></td>
+<td>2–5 分鐘</td>
+<td><strong>1–3 秒</strong></td>
+</tr>
+<tr>
+<td><strong>何時用</strong></td>
+<td>早上開工、晚上收工這兩個關鍵時點</td>
+<td>白天任何時候拖了卡片、勾了完成、想立刻看更新</td>
+</tr>
+</tbody>
+</table>
+<p><strong>為什麼要拆</strong></p>
+<p>如果只有 <code>/today</code>——白天我每改一張卡都得等 2 分鐘讓它跑完整套，痛苦。所以我<strong>把 <code>/today</code> 裡最頻繁、最輕的子流程獨立成 <code>/kanban</code></strong>，3 秒就跑完。</p>
+<p>這就是 <strong>agent 微小化（agent minimization）</strong> 的真正用途——把一個大 skill 內部「<strong>最常被單獨呼叫的部分</strong>」抽出來，做成獨立 skill。</p>
+<p><strong>判斷準則：什麼時候該把子流程拆成獨立 skill？</strong></p>
+<p>問三題：</p>
+<ol>
+<li><strong>這段子流程的功能，會被「單獨」需要嗎？</strong>（如果只在大 skill 內部呼叫、外部用不到 → 不用拆）</li>
+<li><strong>它跑起來輕嗎？</strong>（如果輕 → 拆出來，讓使用者可以高頻呼叫；如果重 → 跟大 skill 一起跑沒差）</li>
+<li><strong>它有副作用嗎？</strong>（讀取型 → 安全可拆；寫入型 → 拆出來小心併發衝突）</li>
+</ol>
+<p><code>/kanban</code> 三題都 yes（單獨會用、3 秒輕、寫入但只動 YAML 沒併發問題）→ 值得拆。</p>
+<p><strong>對比 <code>/daily</code> 為什麼不拆</strong></p>
+<p>S1 提過的 <code>/daily</code> 是 10-step subagent DAG（讀 Citavi、跑 extend、跑 scholar、跑 audit ……），<strong>裡面每個 step 已經是獨立 skill</strong> 了（<code>/read-citavi</code>、<code>/extend</code>、<code>/scholar</code>、<code>/audit</code>）。<code>/daily</code> 只是把它們<strong>串成一個 pipeline</strong>——這跟 <code>/kanban</code> 從 <code>/today</code> <strong>拆出來</strong>是相反方向。</p>
+<p>兩個方向都有用：
+- <strong>由大拆小</strong>（<code>/today</code> → <code>/kanban</code>）：給高頻單一動作一個獨立 entry
+- <strong>由小串大</strong>（<code>/read-citavi</code> + <code>/extend</code> + <code>/scholar</code> + ... → <code>/daily</code>）：給低頻組合動作一個批次 entry</p>
+<p>你寫 skill 寫到第 5、第 6 個會自然遇到這兩個方向，提早知道有這兩條路，比較不會卡住。</p>
 <h4 id="context_1">專案 / 對話 / Context 三層的差異</h4>
 <p>容易混。一句話對照：</p>
 <table>
