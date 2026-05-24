@@ -91,7 +91,10 @@
 <li><a href="#skill_4">自我檢核：你的 Skill「會長大」嗎</a></li>
 </ul>
 </li>
-<li><a href="#_23">結尾：今天結束你應該帶走的四件事</a></li>
+<li><a href="#_23">結束之前</a><ul>
+<li><a href="#your-take-aways">Your Take-aways</a></li>
+</ul>
+</li>
 <li><a href="#_24">番外</a></li>
 </ul>
 </div>
@@ -105,6 +108,7 @@
 本講義所有範例均來自 Richy 實際在用的工作流，不是為了上課編出來的示範。
 本講義由 Claude AI 根據 Richy 的指令、過往檔案、多次討論修改後協作產生。</p>
 </blockquote>
+<p>本講義位置： richyli.github.io/obs/tzn</p>
 <hr />
 <h3 id="s1-agentic-ai-1400-15-min">S1 ｜ 開場與 Agentic AI 簡介（14:00, 15 min）</h3>
 <h4 id="_1">這節要回答的問題</h4>
@@ -292,15 +296,8 @@
 2. <strong>它主動觀察</strong>：Claude Code 內建一條 auto memory 規則，當你<strong>反覆</strong>糾正同一件事，它會主動寫進 memory。</p>
 <p><strong>跨機呼叫</strong>：memory 檔放在你的 <code>~/.claude/projects/&lt;project&gt;/memory/</code>。如果你的 home 目錄有同步到 Dropbox / OneDrive（我自己是把整個 <code>.claude/</code> 同步），在公司電腦和家裡筆電打開 Claude Code，會讀到同一份記憶。沒同步的話換機器就會失憶——這是大家最容易踩的坑。</p>
 <h4 id="claude-code">我的多機同步真實歷程（直接交給 Claude Code 處理）</h4>
-<p>我自己有兩台 Windows 電腦（家裡一台、辦公室一台）+ 同一份 Dropbox。每次換機器要做的事很多：memory 對齊、<code>.claude/skills/</code> 同步、過去 session 紀錄要能撈到、本機自動化腳本（番茄鐘、開機啟動）要兩台一致、本機 Junction 連結要重建 ……</p>
-<p><strong>這些我沒有自己研究過一次</strong>。流程是：</p>
-<ol>
-<li>在新機器打開 Claude Code，第一句講：「我這台機器是新的，幫我比對另一台跟這台的 <code>.claude/</code> 設定差在哪、補齊」</li>
-<li>它自己跑 <code>Glob</code>、<code>Read</code>、<code>diff</code>，列差異給我</li>
-<li>我說「OK 全部補齊」，它寫個一次性腳本跑完</li>
-<li>遇到 Windows 特殊狀況（例：Junction、Startup 捷徑、Dropbox 路徑大小寫）它會問我一兩題、我回答完就繼續</li>
-</ol>
-<p><strong>訊息</strong>：多機同步不是「教學課題」，是「<strong>直接跟 Claude Code 對話解決</strong>」的事。你回家別翻 stackoverflow——打開 Claude Code 描述你的狀況、它會自己幫你規劃。我的兩台機器就是這樣同步起來的，從沒手動寫過 sync 腳本。</p>
+<p>我自己有3台 Windows 電腦（家裡一台、辦公室一台、筆電）+ 同一份 Dropbox。每次換機器要做的事很多：memory 對齊、<code>.claude/skills/</code> 同步、過去 session 紀錄要能撈到、本機自動化腳本（番茄鐘、開機啟動）要3台一致、本機 Junction 連結要重建 ……</p>
+<p><strong>訊息</strong>：多機同步不是「教學課題」，是「<strong>直接跟 Claude Code 對話解決</strong>」的事。你回家別翻 stackoverflow——打開 Claude Code 描述你的狀況、它會自己幫你規劃。我的3台機器就是這樣同步起來的，從沒手動寫過 sync 腳本。</p>
 <blockquote>
 <p><strong>🧑‍💼 企業主的思考時間</strong></p>
 <p>員工的 memory 是個棘手的法律 / 管理問題——</p>
@@ -1406,12 +1403,33 @@ date: 2026-05-24
 </ul>
 </blockquote>
 <hr />
-<h3 id="_23">結尾：今天結束你應該帶走的四件事</h3>
+<h2 id="_23">結束之前</h2>
+<p>我目前用 Claude Code 的產出</p>
+<ul>
+<li>論文規劃與分析系統<ul>
+<li>Corpus Analysis</li>
+<li>Conjoint</li>
+</ul>
+</li>
+<li>超大型個人知識庫</li>
+<li>研究主題與研究方法手冊16本</li>
+<li>重點學者蒸餾 50人並建立論文審查團</li>
+<li>講義撰寫與發布系統（包含這一篇）</li>
+<li>授課即時互動系統</li>
+<li>行事曆、Todo、專案、番茄鐘、Kanban 全部整合</li>
+<li>睡眠資料分析並與行事曆系統同步</li>
+<li>自動日語教材</li>
+<li>新聞秘書</li>
+<li>YouTube影片摘要</li>
+<li>日語新聞影片雙語播放器（桌面端程式）</li>
+</ul>
+<h3 id="your-take-aways">Your Take-aways</h3>
 <ol>
 <li><strong>手上有一個自己寫的 skill</strong>（S6 的 <code>/my-news</code>，或 S7 的 專案資料庫 筆記助手）</li>
 <li><strong>知道怎麼讓 skill 自己變強</strong>（S8 的監督式循環）</li>
 <li><strong>腦中有一張藍圖</strong>：未來 1–3 個月可以陸續做出「日記 skill」「行事曆 skill」「論文整理 skill」「報告草稿 skill」⋯⋯每多一個，你每天就少花 30 分鐘做重複的事</li>
 <li>大加蚋扶輪社的群組就是你的真人交流場，我們是學習性公益社團，有問題就在群組內提出。</li>
+<li>使用AI的最終目的不是提升效率，而是完成<strong>人生願景</strong>。這些事情都讓AI做之後，你想做什麼？</li>
 </ol>
 <hr />
 <h2 id="_24">番外</h2>
