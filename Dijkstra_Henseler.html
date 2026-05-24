@@ -173,16 +173,29 @@ hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
   .content { padding: 1.5rem 1.2rem 4rem; }
 }
 </style>
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
 </head>
 <body>
 <div class="layout">
 <aside class="sidebar">
 <div class="toc">
 <ul>
-<li><a href="#dijkstra_henseler">Dijkstra_Henseler</a></li>
+<li><a href="#_1">方法說明</a><ul>
+<li><a href="#_2">目的</a></li>
+<li><a href="#_3">流程</a></li>
+<li><a href="#_4">適用範圍</a></li>
+<li><a href="#_5">代表性研究</a></li>
+<li><a href="#_6">相關學者</a></li>
+</ul>
+</li>
 </ul>
 </div>
-
 </aside>
 <main class="content">
 <h1>Dijkstra_Henseler</h1>
@@ -194,6 +207,38 @@ hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
 <li><strong><a href="PLSc.html">PLSc</a></strong>（Consistent PLS）：修正傳統 PLS 估計參數的偏</li>
 </ol>
 <p><strong>參考</strong>：Dijkstra, T. K., &amp; Henseler, J. (2015). Consistent partial least squares path modeling. <em>MIS Quarterly</em>, 39(2), 297-316.</p>
+<h3 id="_1">方法說明</h3>
+<h4 id="_2">目的</h4>
+<ul>
+<li>主要研究目的：修正傳統 PLS-SEM 在反映性測量模型上對 factor model 參數的偏估，使估計值漸近一致</li>
+<li>次要用途：提供 PLS 與 CB-SEM 之間的橋樑估計器</li>
+</ul>
+<h4 id="_3">流程</h4>
+<ol>
+<li>跑標準 PLS-SEM 估計 weights 與 outer loadings</li>
+<li>用 <a href="rho_A.html">rho_A</a> 計算構念可靠度</li>
+<li>對 reflective 構念應用 PLSc 校正：每對構念的相關除以 $\sqrt{\rho_{A1} \rho_{A2}}$</li>
+<li>重新計算結構路徑係數</li>
+<li>在 SmartPLS / JASP 中勾選 "Consistent PLS" 選項</li>
+</ol>
+<h4 id="_4">適用範圍</h4>
+<ul>
+<li><strong>適用</strong>：reflective 測量模型為主、有 factor model 概念假設的研究</li>
+<li><strong>不適用</strong>：純 composite-based / formative 模型</li>
+<li><strong>樣本規模建議</strong>：N ≥ 100（PLS 通用建議）；PLSc 的小樣本表現仍優於 CB-SEM</li>
+<li><strong>資料類型要求</strong>：連續或近連續變項</li>
+</ul>
+<h4 id="_5">代表性研究</h4>
+<ul>
+<li><strong>奠基性文獻</strong>：Dijkstra &amp; Henseler (2015) <em>MIS Quarterly</em>（本筆記）</li>
+<li><strong>相關 wiki 筆記</strong>：（延伸：<a href="PLSc.html">PLSc</a>、<a href="rho_A.html">rho_A</a>、<a href="PLS-SEM.html">PLS-SEM</a>、<a href="CB-SEM.html">CB-SEM</a>、<a href="Henseler_2016_MICOM.html">Henseler_2016_MICOM</a>）</li>
+<li><strong>方法手冊</strong>：（另見 methodology_book 第 3.2 節 SEM）</li>
+</ul>
+<h4 id="_6">相關學者</h4>
+<ul>
+<li><strong>奠基者</strong>：Theo K. Dijkstra、Jörg Henseler（暫無 wiki/ 學者 note）</li>
+</ul>
+<hr />
 </main>
 </div>
 <script>

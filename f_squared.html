@@ -186,10 +186,16 @@ MathJax = {
 <aside class="sidebar">
 <div class="toc">
 <ul>
-<li><a href="#f_squared">f_squared</a></li>
+<li><a href="#_1">方法說明</a><ul>
+<li><a href="#_2">目的</a></li>
+<li><a href="#_3">流程</a></li>
+<li><a href="#_4">適用範圍</a></li>
+<li><a href="#_5">代表性研究</a></li>
+<li><a href="#_6">相關學者</a></li>
+</ul>
+</li>
 </ul>
 </div>
-
 </aside>
 <main class="content">
 <h1>f_squared</h1>
@@ -203,6 +209,39 @@ MathJax = {
 - $.02 \sim .15$：小效果
 - $< .02$：無實質效果</p>
 <p>PLS-SEM 強調 $f^2$ 而非單看 $\beta$。</p>
+<h3 id="_1">方法說明</h3>
+<h4 id="_2">目的</h4>
+<ul>
+<li>主要研究目的：量化自變項對應變項的個別實質貢獻，避免單純依賴顯著性檢定（effect size）</li>
+<li>次要用途：模型簡化（剔除 $f^2 < .02$ 的路徑）；多變項相對重要性比較</li>
+</ul>
+<h4 id="_3">流程</h4>
+<ol>
+<li>跑 full 模型，記錄 $R^2_{\text{full}}$</li>
+<li>刪除目標自變項後重跑，得到 $R^2_{\text{exclude}}$</li>
+<li>套用公式 $f^2 = (R^2_{\text{full}} - R^2_{\text{exclude}}) / (1 - R^2_{\text{full}})$</li>
+<li>對每條結構路徑重複計算</li>
+<li>依 Cohen 標準判讀</li>
+</ol>
+<h4 id="_4">適用範圍</h4>
+<ul>
+<li><strong>適用</strong>：所有 PLS-SEM / CB-SEM 結構模型；多元迴歸</li>
+<li><strong>不適用</strong>：純探索性無理論模型</li>
+<li><strong>樣本規模建議</strong>：依主模型樣本量</li>
+<li><strong>資料類型要求</strong>：連續或近連續變項</li>
+</ul>
+<h4 id="_5">代表性研究</h4>
+<ul>
+<li><strong>奠基性文獻</strong>：Cohen, J. (1988) <em>Statistical Power Analysis</em>（暫無 wiki/ 資料）</li>
+<li><strong>相關 wiki 筆記</strong>：（延伸：effect size、R squared、<a href="Q_squared_predict.html">Q_squared_predict</a>、statistical power、<a href="PLS-SEM.html">PLS-SEM</a>）</li>
+<li><strong>方法手冊</strong>：（另見 methodology_book 第 6.1 節效果量與統計力）</li>
+</ul>
+<h4 id="_6">相關學者</h4>
+<ul>
+<li><strong>奠基者</strong>：Jacob Cohen（暫無 wiki/ 學者 note）</li>
+<li><strong>主要推廣者</strong>：Hair et al. PLS-SEM 學派將 $f^2$ 列為 PLS-SEM 標準報告項（<a href="Hair_2022_PLS.html">Hair_2022_PLS</a>）</li>
+</ul>
+<hr />
 </main>
 </div>
 <script>

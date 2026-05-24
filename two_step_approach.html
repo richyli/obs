@@ -192,6 +192,14 @@ MathJax = {
 <li><a href="#cb-sem-pls-sem">在 CB-SEM 與 PLS-SEM 的差別</a></li>
 <li><a href="#_2">常見錯誤</a></li>
 <li><a href="#three-step-approach">延伸：Three-Step Approach</a></li>
+<li><a href="#_3">方法說明</a><ul>
+<li><a href="#_4">目的</a></li>
+<li><a href="#_5">流程</a></li>
+<li><a href="#_6">適用範圍</a></li>
+<li><a href="#_7">代表性研究</a></li>
+<li><a href="#_8">相關學者</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </aside>
@@ -303,6 +311,42 @@ MathJax = {
 <hr />
 <p><strong>相關概念</strong>：<a href="CB-SEM.html">CB-SEM</a>、<a href="PLS-SEM.html">PLS-SEM</a>、Model Fit、<a href="Cronbach_alpha.html">Cronbach alpha</a>、<a href="rho_A.html">rho_A</a>、<a href="Fornell-Larcker.html">Fornell-Larcker</a>、<a href="CFI_Comparative_Fit_Index.html">CFI Comparative Fit Index</a>、<a href="RMSEA.html">RMSEA</a>、<a href="SRMR.html">SRMR</a>、<a href="Q_squared_predict.html">Q_squared_predict</a>、<a href="Discriminant_Validity_%E5%8D%80%E5%88%A5%E6%A0%A1%E5%BA%A6.html">Discriminant Validity 區別校度</a>、Common Method Bias、<a href="Hair_2022_PLS.html">Hair_2022_PLS</a>、<a href="CFA_Marker_Variable_Technique.html">CFA Marker Variable Technique</a>、<a href="Multicollinearity_%E5%85%B1%E7%B7%9A%E6%80%A7.html">Multicollinearity 共線性</a>
 另見：<a href="PLS-SEM.html">PLS-SEM</a> 的 5 階段 checklist、<a href="CB-SEM.html">CB-SEM</a> 的 fit 評估</p>
+<hr />
+<h3 id="_3">方法說明</h3>
+<h4 id="_4">目的</h4>
+<ul>
+<li><strong>主要研究目的</strong>：在 SEM 框架下，先排除測量誤差來源、再估計結構路徑，避免「構念測量不準」與「理論假設錯誤」混淆（Anderson &amp; Gerbing, 1988）</li>
+<li><strong>次要用途</strong>：作為 reviewer 預期的標準流程，提升信效度報告完整性，避免方法章節被退稿</li>
+</ul>
+<h4 id="_5">流程</h4>
+<ol>
+<li><strong>Step 1 測量模型評估</strong>：以 <a href="CFA_Marker_Variable_Technique.html">CFA</a>（CB-SEM）或 outer model（PLS-SEM）檢驗 factor loading、composite reliability、AVE、HTMT 等指標（Anderson &amp; Gerbing, 1988；Hair et al., 2022）</li>
+<li>子步驟：未通過構念需刪題、合併或重新概念化後重估</li>
+<li><strong>Step 2 結構模型評估</strong>：在驗證過的測量模型基礎上估計結構路徑，檢視 inner VIF、$\beta$、bootstrap CI、$R^2$、$Q^2$、$f^2$</li>
+<li><strong>加入結構路徑後重檢</strong>：若構念相關性大幅變化，需重新檢驗 discriminant validity</li>
+</ol>
+<h4 id="_6">適用範圍</h4>
+<ul>
+<li><strong>適用</strong>：以潛在構念為核心、需同時驗證測量品質與理論路徑的研究（Anderson &amp; Gerbing, 1988）</li>
+<li><strong>不適用</strong>：純預測模型、無潛在構念設計、或單一構念的描述性分析</li>
+<li><strong>樣本規模建議</strong>：CB-SEM 建議 $N > 200$ 或 N:q &gt; 10:1；PLS-SEM 可較小（詳見 <a href="CB-SEM.html">CB-SEM</a>、<a href="PLS-SEM.html">PLS-SEM</a>）</li>
+<li><strong>資料類型要求</strong>：橫斷面或縱貫面構念測量資料，多項目反映性指標為主（形成性指標另需 PLS 或特殊識別）</li>
+</ul>
+<h4 id="_7">代表性研究</h4>
+<ul>
+<li><strong>開創性文獻</strong>：Anderson &amp; Gerbing（1988）— <em>Psychological Bulletin</em> 提出兩階段建模建議</li>
+<li><strong>方法發展里程碑</strong>：Hair et al.（2022）— 將兩階段擴展為 PLS-SEM 完整 checklist（<a href="Hair_2022_PLS.html">Hair_2022_PLS</a>）</li>
+<li><strong>三階段延伸</strong>：Vermunt（2010）— 針對潛在類別模型提出 three-step approach</li>
+<li><strong>相關 wiki 筆記</strong>：（延伸：<a href="CB-SEM.html">CB-SEM</a>、<a href="PLS-SEM.html">PLS-SEM</a>、<a href="Hair_2022_PLS.html">Hair_2022_PLS</a>）</li>
+</ul>
+<h4 id="_8">相關學者</h4>
+<ul>
+<li><strong>提出者 / 奠基者</strong>：Anderson, J. C.；Gerbing, D. W.（1988）— 兩階段建模框架（暫無 wiki/ scholar note）</li>
+<li><strong>主要推廣者</strong>：Hair, J. F. 等（2022）— PLS-SEM 操作化（<a href="Hair_2022_PLS.html">Hair_2022_PLS</a>）</li>
+<li><strong>延伸者</strong>：Vermunt, J. K.（2010）— latent class three-step approach（暫無 wiki/ scholar note）</li>
+<li><strong>相關學者 wiki 頁</strong>：（暫無 wiki/ scholar note）</li>
+</ul>
+<p>另見：methodology_book 中的「第 3.2 節 結構方程模型」</p>
 </main>
 </div>
 <script>

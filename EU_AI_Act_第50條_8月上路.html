@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Q_squared_predict</title>
+<title>EU AI Act 第50條 8月上路</title>
 <style>*, *::before, *::after { box-sizing: border-box; }
 
 /* ── Base ── */
@@ -173,78 +173,30 @@ hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
   .content { padding: 1.5rem 1.2rem 4rem; }
 }
 </style>
-<script>
-MathJax = {
-  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
-  svg: { fontCache: 'global' }
-};
-</script>
-<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
 </head>
 <body>
 <div class="layout">
 <aside class="sidebar">
 <div class="toc">
 <ul>
-<li><a href="#_1">方法說明</a><ul>
-<li><a href="#_2">目的</a></li>
-<li><a href="#_3">流程</a></li>
-<li><a href="#_4">適用範圍</a></li>
-<li><a href="#_5">代表性研究</a></li>
-<li><a href="#_6">相關學者</a></li>
-</ul>
-</li>
+<li><a href="#eu-ai-act-50-8">EU AI Act 第50條 8月上路</a></li>
 </ul>
 </div>
+
 </aside>
 <main class="content">
-<h1>Q_squared_predict</h1>
-<p class="meta">#methodology　#pls_sem</p>
-<h2 id="q_squared_predict"><a href="Q_squared_predict.html">Q_squared_predict</a></h2>
-<p>$Q^2_{predict}$ 是 <a href="PLSpredict.html">PLSpredict</a> 的核心指標，評估 PLS-SEM 模型的<strong>外樣本預測力</strong>。</p>
-<p><strong>判讀</strong>：
-- $Q^2_{predict} > 0$：模型優於均值預測
-- 比較 PLS 與 LM (linear regression) 的 RMSE：
-  - 全部 PLS &lt; LM：強預測力
-  - 多數 PLS &lt; LM：中等
-  - 少數 PLS &lt; LM：弱
-  - 全部 PLS &gt; LM：無預測力</p>
-<p><strong>參考</strong>：Shmueli et al. (2019).</p>
-<h3 id="_1">方法說明</h3>
-<h4 id="_2">目的</h4>
-<ul>
-<li>補足傳統 PLS-SEM 只看 $R^2$（in-sample fit）的不足，評估模型對<strong>新樣本的預測力</strong>（Shmueli et al., 2019）</li>
-<li>區分模型的解釋導向 vs. 預測導向（Shmueli &amp; Koppius, 2011）</li>
-</ul>
-<h4 id="_3">流程</h4>
-<ol>
-<li>將樣本切為 $k$ folds（建議 $k = 10$）</li>
-<li>每次留下一 fold 為 holdout，用其餘訓練 PLS 模型</li>
-<li>對 holdout 樣本計算預測值與真實值的 RMSE / MAE</li>
-<li>同步跑 linear regression (LM) benchmark</li>
-<li>計算 $Q^2_{predict} = 1 - \frac{\sum (y - \hat y_{PLS})^2}{\sum (y - \bar y)^2}$</li>
-<li>判讀（PLS RMSE 全部 / 多數 / 少數 / 都不低於 LM RMSE → 強 / 中 / 弱 / 無預測力）</li>
-</ol>
-<h4 id="_4">適用範圍</h4>
-<ul>
-<li><strong>適用</strong>：PLS-SEM 模型的外樣本驗證、預測導向研究</li>
-<li><strong>不適用</strong>：純結構檢驗 / 假設檢定研究；小樣本 $N < 100$（k-fold 不穩）</li>
-<li><strong>樣本規模建議</strong>：$N \geq 100$；10-fold 至少各 fold $\geq 10$</li>
-<li><strong>資料類型要求</strong>：完整連續或 ordinal 指標資料</li>
-</ul>
-<h4 id="_5">代表性研究</h4>
-<ul>
-<li><strong>方法奠基</strong>：Shmueli et al. (2019) <em>European Journal of Marketing</em> — PLSpredict 提出</li>
-<li><strong>預測 vs 解釋分野</strong>：Shmueli &amp; Koppius (2011) <em>MIS Quarterly</em></li>
-<li><strong>PLS-SEM 標準教科書</strong>：Hair et al. (2022) <em>A Primer on PLS-SEM</em></li>
-<li>（另見 手冊 §3.2、<a href="PLSpredict.html">PLSpredict</a>、<a href="PLS_MGA.html">PLS_MGA</a>）</li>
-</ul>
-<h4 id="_6">相關學者</h4>
-<ul>
-<li><strong>方法奠基</strong>：Galit Shmueli（NTHU 清華）— predictive modeling in IS / marketing</li>
-<li><strong>PLS-SEM 推廣</strong>：Joseph F. Hair Jr.（South Alabama）、Marko Sarstedt（LMU Munich）、Christian M. Ringle（TU Hamburg）</li>
-<li><strong>理論祖宗</strong>：Herman Wold（Uppsala）— PLS 原始作者；Wynne W. Chin（Houston）— PLS-SEM 早期推廣</li>
-</ul>
+<h1>EU AI Act 第50條 8月上路</h1>
+<p class="meta">#EU_AI_Act　#Article_50　#AI_transparency　#AI_governance　#人工智慧基本法　#policy_commentary</p>
+<h2 id="eu-ai-act-50-8">EU AI Act 第50條 8月上路</h2>
+<p>歐盟 AI Act 第 50 條 Transparency Rule 在今年8月2號要實施了，歐盟上週提供了詳細的說明。</p>
+<p>有做過網路生意的都知道，雖然是歐盟的法令，但全球適用哦，除非你鎖歐盟的客戶，否則來自歐洲的鐵拳也是會打過來的。詳見 EU AI Act has extra-territorial effect covering non-EU providers whose outputs reach EU users。</p>
+<p>從8月2號起，AI都必須自我介紹，只要使用聊天機器人、情感辨識、生成內容或Deepfake，都要強制揭露。只要台灣廠商經營AI客服、生成式內容、小型的 SaaS，都需要注意符合規定，否則就像當初 GDPR 一樣，先封鎖歐盟使用者。</p>
+<p>我國的《人工智慧基本法》目前是指導性框架，細則與行業指引由事業主管機關負責，但根據我最近勤跑 NCC 開會的經驗，事業主管機關都還是很溫柔體貼的，不會像歐盟寫得這麼斬釘截鐵。</p>
+<p>從組織理論的角度來看，歐盟把AI生成式內容揭露這件事，在很短的期間內從自律、他律提升到法律，算是很快的。</p>
+<p>台灣的公司，不管軟硬體，都要開始檢查一下，例如UI上有沒有寫「您正在與 AI 互動」、生成內容有沒有 C2PA 或 SynthID、跟歐盟客戶的合約補了 AI 條款沒有。</p>
+<hr />
+<p>🔗 <a href="https://artificialintelligenceact.eu/transparency-rules-article-50/">Article 50 — Transparency Rules, artificialintelligenceact.eu</a></p>
+<p><strong>相關概念</strong>：EU AI Act、EU AI Act Article 50 leaves significant room for interpretation in journalism、GDPR</p>
 </main>
 </div>
 <script>

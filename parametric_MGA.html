@@ -186,10 +186,16 @@ MathJax = {
 <aside class="sidebar">
 <div class="toc">
 <ul>
-<li><a href="#parametric_mga">parametric_MGA</a></li>
+<li><a href="#_1">方法說明</a><ul>
+<li><a href="#_2">目的</a></li>
+<li><a href="#_3">流程</a></li>
+<li><a href="#_4">適用範圍</a></li>
+<li><a href="#_5">代表性研究</a></li>
+<li><a href="#_6">相關學者</a></li>
+</ul>
+</li>
 </ul>
 </div>
-
 </aside>
 <main class="content">
 <h1>parametric_MGA</h1>
@@ -199,6 +205,38 @@ MathJax = {
 <p>公式：$t = (\beta_1 - \beta_2) / \sqrt{SE_1^2 + SE_2^2}$</p>
 <p>假設兩組變異相等。若不等，改用 <a href="Welch_Satterthwaite.html">Welch_Satterthwaite</a>。</p>
 <p>vs <a href="Henseler_PLS_MGA.html">Henseler_PLS_MGA</a>：parametric 較傳統，現代 PLS 多偏好 <a href="Henseler_PLS_MGA.html">Henseler_PLS_MGA</a> 的 permutation 法。</p>
+<h3 id="_1">方法說明</h3>
+<h4 id="_2">目的</h4>
+<ul>
+<li>主要研究目的：以參數化 t-test 比較 PLS-SEM 路徑係數在兩群之間是否顯著不同</li>
+<li>次要用途：作為 permutation 法的對照與診斷</li>
+</ul>
+<h4 id="_3">流程</h4>
+<ol>
+<li>對兩群分別跑 PLS-SEM，取得 $\beta_1$、$\beta_2$ 與其 bootstrap 標準誤</li>
+<li>以 $t = (\beta_1 - \beta_2) / \sqrt{SE_1^2 + SE_2^2}$ 計算統計量</li>
+<li>用 $df = n_1 + n_2 - 2$ 對應 t 分配查 p-value</li>
+<li>若兩群變異不等，改用 <a href="Welch_Satterthwaite.html">Welch_Satterthwaite</a> 修正自由度</li>
+<li>報告路徑差異與 95% CI</li>
+</ol>
+<h4 id="_4">適用範圍</h4>
+<ul>
+<li><strong>適用</strong>：兩群比較、樣本量相近、變異近似的情境</li>
+<li><strong>不適用</strong>：變異嚴重不等或樣本極不平衡（改用 Henseler permutation 或 Welch）</li>
+<li><strong>樣本規模建議</strong>：每群 N ≥ 100</li>
+<li><strong>資料類型要求</strong>：通過 <a href="MICOM.html">MICOM</a> 至少 metric invariance 的兩群</li>
+</ul>
+<h4 id="_5">代表性研究</h4>
+<ul>
+<li><strong>奠基性文獻</strong>：Keil, M. et al. (2000) — 提出 PLS 群組差異的 t-test 公式（暫無 wiki/ 資料）</li>
+<li><strong>相關 wiki 筆記</strong>：（延伸：<a href="PLS_MGA.html">PLS_MGA</a>、<a href="Welch_Satterthwaite.html">Welch_Satterthwaite</a>、<a href="MICOM.html">MICOM</a>、<a href="Henseler_2016_MICOM.html">Henseler_2016_MICOM</a>）</li>
+</ul>
+<h4 id="_6">相關學者</h4>
+<ul>
+<li><strong>奠基者</strong>：Mark Keil 等（2000）（暫無 wiki/ 學者 note）</li>
+<li><strong>批評者 / 修正者</strong>：Henseler 提出 non-parametric permutation 法（<a href="Henseler_2016_MICOM.html">Henseler_2016_MICOM</a>）</li>
+</ul>
+<hr />
 </main>
 </div>
 <script>

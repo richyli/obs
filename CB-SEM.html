@@ -210,6 +210,14 @@ MathJax = {
 <li><a href="#_4">五、 估計失敗的常見徵兆</a></li>
 <li><a href="#pls-sem">六、 與 PLS-SEM 的等價條件與整合</a></li>
 <li><a href="#fit-cutoff-reviewer">七、 fit cutoff 的爭議與 reviewer 因應</a></li>
+<li><a href="#_5">方法說明</a><ul>
+<li><a href="#_6">目的</a></li>
+<li><a href="#_7">流程</a></li>
+<li><a href="#_8">適用範圍</a></li>
+<li><a href="#_9">代表性研究</a></li>
+<li><a href="#_10">相關學者</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </aside>
@@ -449,6 +457,45 @@ Compare SEM vs OLS Test</p>
 <p><strong>相關論文</strong>：<a href="Hair_2022_PLS.html">Hair_2022_PLS</a>、<a href="Henseler_2016_MICOM.html">Henseler_2016_MICOM</a>、<a href="Dijkstra_Henseler.html">Dijkstra_Henseler</a>
 <strong>相關概念</strong>：SEM、<a href="PLS-SEM.html">PLS-SEM</a>、PLS-SEM vs CB-SEM、<a href="PLSc.html">PLSc</a>、Maximum Likelihood、Modification Indices、Heywood case、<a href="capitalize_on_chance.html">capitalize_on_chance</a>、<a href="Multicollinearity_%E5%85%B1%E7%B7%9A%E6%80%A7.html">Multicollinearity 共線性</a>、<a href="Discriminant_Validity_%E5%8D%80%E5%88%A5%E6%A0%A1%E5%BA%A6.html">Discriminant Validity 區別校度</a>、<a href="CFI_Comparative_Fit_Index.html">CFI Comparative Fit Index</a>、<a href="RMSEA.html">RMSEA</a>、<a href="SRMR.html">SRMR</a>、Model Fit、<a href="MICOM.html">MICOM</a>、<a href="Henseler_PLS_MGA.html">Henseler_PLS_MGA</a>、<a href="parametric_MGA.html">parametric_MGA</a>、Cross-validation
 另見：Model Fit 中「Cutoff 來源與爭議」段落</p>
+<hr />
+<h3 id="_5">方法說明</h3>
+<h4 id="_6">目的</h4>
+<ul>
+<li><strong>主要研究目的</strong>：理論驗證——以最大概似估計尋找參數，使模型導出共變異數矩陣與樣本共變異數矩陣差異最小化，檢驗既有理論模型與資料的整體適配（Hair et al., 2022）</li>
+<li><strong>次要用途</strong>：處理雙向因果（non-recursive）模型；提供成熟的整體適配度報告以利期刊審查</li>
+</ul>
+<h4 id="_7">流程</h4>
+<ol>
+<li>釐清理論模型與構念測量題目（反映性為主）</li>
+<li>檢驗多變量常態性與樣本規模（$N > 200$ 或 N:q &gt; 10:1）</li>
+<li>以 <a href="two_step_approach.html">two step approach</a> 先驗證測量模型（CFA），確認 loading、信效度與適配</li>
+<li>估計結構模型，報告路徑係數、$\chi^2$、<a href="CFI_Comparative_Fit_Index.html">CFI Comparative Fit Index</a>、<a href="RMSEA.html">RMSEA</a>、<a href="SRMR.html">SRMR</a></li>
+<li>必要時以 Modification Indices 修改（須有理論依據）並以 holdout sample 驗證（Cross-validation）</li>
+</ol>
+<h4 id="_8">適用範圍</h4>
+<ul>
+<li><strong>適用</strong>：理論驗證、反映性構念、樣本充足（$N > 200$）、資料近常態（Hair et al., 2022）</li>
+<li><strong>不適用</strong>：形成性指標、樣本過小（$N < 150$）、嚴重偏態、需高預測力的探索情境（改用 <a href="PLS-SEM.html">PLS-SEM</a>）</li>
+<li><strong>樣本規模建議</strong>：$N > 200$；嚴謹標準 N:q &gt; 10:1</li>
+<li><strong>資料類型要求</strong>：多變量常態的潛在構念測量資料</li>
+</ul>
+<h4 id="_9">代表性研究</h4>
+<ul>
+<li><strong>方法手冊</strong>：Hair et al.（2022）— PLS 與 CB 對比與 checklist（<a href="Hair_2022_PLS.html">Hair_2022_PLS</a>）</li>
+<li><strong>Fit cutoff 來源</strong>：Hu &amp; Bentler（1999）— Monte Carlo 推導 CFI &gt; 0.95、RMSEA &lt; 0.06 等標準</li>
+<li><strong>Cutoff 爭議</strong>：Marsh, Hau, &amp; Wen（2004）— 警告 cutoff 不應機械化使用</li>
+<li><strong>PLSc 等價條件</strong>：Dijkstra &amp; Henseler（2015）— PLSc 在大樣本下逼近 ML 結果（<a href="Dijkstra_Henseler.html">Dijkstra_Henseler</a>）</li>
+<li><strong>相關 wiki 筆記</strong>：（延伸：<a href="PLS-SEM.html">PLS-SEM</a>、PLS-SEM vs CB-SEM、<a href="two_step_approach.html">two step approach</a>、Heywood case、<a href="capitalize_on_chance.html">capitalize_on_chance</a>）</li>
+</ul>
+<h4 id="_10">相關學者</h4>
+<ul>
+<li><strong>奠基者</strong>：Anderson, J. C.；Gerbing, D. W.（1988）— 兩階段建模建議</li>
+<li><strong>適配度標準</strong>：Hu, L.；Bentler, P. M.（1999）— fit cutoff 建議（暫無 wiki/ scholar note）</li>
+<li><strong>批評者 / 修正者</strong>：Marsh, H. W.；Hau, K-T.；Wen, Z.（2004）— cutoff 機械化批判（暫無 wiki/ scholar note）</li>
+<li><strong>整合者</strong>：Hair, J. F. 等；Dijkstra, T. K.；Henseler, J.（PLSc 整合）</li>
+<li><strong>相關學者 wiki 頁</strong>：（暫無 wiki/ scholar note）</li>
+</ul>
+<p>另見：methodology_book 中的「第 3.2 節 結構方程模型」</p>
 </main>
 </div>
 <script>

@@ -173,16 +173,29 @@ hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
   .content { padding: 1.5rem 1.2rem 4rem; }
 }
 </style>
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
 </head>
 <body>
 <div class="layout">
 <aside class="sidebar">
 <div class="toc">
 <ul>
-<li><a href="#composite_score">composite_score</a></li>
+<li><a href="#_1">方法說明</a><ul>
+<li><a href="#_2">目的</a></li>
+<li><a href="#_3">流程</a></li>
+<li><a href="#_4">適用範圍</a></li>
+<li><a href="#_5">代表性研究</a></li>
+<li><a href="#_6">相關學者</a></li>
+</ul>
+</li>
 </ul>
 </div>
-
 </aside>
 <main class="content">
 <h1>composite_score</h1>
@@ -192,6 +205,45 @@ hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
 <p><strong>Mode A（reflective）</strong>：權重由 PLS 演算法迭代決定。
 <strong>Mode B（formative）</strong>：權重以多元迴歸從指標到構念決定。</p>
 <p>對比 <a href="CB-SEM.html">CB-SEM</a> 的因子分數：CB-SEM 因子是統計推導的潛變項；composite 是確定性線性組合。</p>
+<h3 id="_1">方法說明</h3>
+<h4 id="_2">目的</h4>
+<ul>
+<li>在 PLS-SEM 中以指標的加權組合代表潛在構念，每位受試者得到一個構念分數</li>
+<li>區分 reflective（Mode A）與 formative（Mode B）兩種測量模式</li>
+<li>提供確定性的線性組合替代 CB-SEM 的因子分數估計</li>
+</ul>
+<h4 id="_3">流程</h4>
+<ol>
+<li>設定測量模式（Mode A 或 B）</li>
+<li>PLS 演算法迭代估計權重</li>
+<li>Mode A：權重由內部估計（迴歸）決定</li>
+<li>Mode B：權重以多元迴歸從指標到構念決定</li>
+<li>計算 composite：$\xi = \sum w_i x_i$</li>
+<li>評估</li>
+<li>Mode A：indicator reliability、composite reliability、AVE</li>
+<li>Mode B：weights significance、collinearity（VIF）</li>
+<li>結構模型階段使用 composite 進行路徑估計</li>
+</ol>
+<h4 id="_4">適用範圍</h4>
+<ul>
+<li><strong>適用</strong>：<a href="PLS-SEM.html">PLS-SEM</a>、預測導向研究、formative 構念、小樣本（$n \geq 100$）</li>
+<li><strong>不適用</strong>：純驗證性 confirmatory 假設檢定（改用 <a href="CB-SEM.html">CB-SEM</a>）</li>
+<li><strong>樣本規模建議</strong>：依 10-times rule 或 minimum-$R^2$ 法則（暫無 wiki/ 資料）</li>
+<li><strong>資料類型要求</strong>：多指標反映或構成的構念</li>
+</ul>
+<h4 id="_5">代表性研究</h4>
+<ul>
+<li><strong>方法手冊</strong>：<a href="Hair_2022_PLS.html">Hair_2022_PLS</a> — PLS-SEM 教科書</li>
+<li><strong>權重檢定</strong>：<a href="Dijkstra_Henseler.html">Dijkstra_Henseler</a>、<a href="Henseler_PLS_MGA.html">Henseler_PLS_MGA</a>、<a href="PLSc.html">PLSc</a></li>
+<li><strong>相關 wiki 筆記</strong>：（延伸：<a href="PLS-SEM.html">PLS-SEM</a>、<a href="CB-SEM.html">CB-SEM</a>、indicator、<a href="indicator_reliability.html">indicator_reliability</a>、measurement model、<a href="latent_variable_scores.html">latent_variable_scores</a>）</li>
+<li>（另見 methodology_book §3.2 SEM）</li>
+</ul>
+<h4 id="_6">相關學者</h4>
+<ul>
+<li><strong>方法奠基</strong>：Joseph F. Hair（<a href="Hair_2022_PLS.html">Hair_2022_PLS</a>）— PLS-SEM 推廣</li>
+<li><strong>計量方法</strong>：Theo K. Dijkstra、Jörg Henseler — PLSc、bootstrap、MGA（<a href="Dijkstra_Henseler.html">Dijkstra_Henseler</a>、<a href="Henseler_PLS_MGA.html">Henseler_PLS_MGA</a>）</li>
+<li><strong>相關學者 wiki 頁</strong>：（暫無 wiki/ 資料）</li>
+</ul>
 </main>
 </div>
 <script>

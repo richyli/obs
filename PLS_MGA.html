@@ -186,10 +186,16 @@ MathJax = {
 <aside class="sidebar">
 <div class="toc">
 <ul>
-<li><a href="#pls_mga">PLS_MGA</a></li>
+<li><a href="#_1">方法說明</a><ul>
+<li><a href="#_2">目的</a></li>
+<li><a href="#_3">流程</a></li>
+<li><a href="#_4">適用範圍</a></li>
+<li><a href="#_5">代表性研究</a></li>
+<li><a href="#_6">相關學者</a></li>
+</ul>
+</li>
 </ul>
 </div>
-
 </aside>
 <main class="content">
 <h1>PLS_MGA</h1>
@@ -202,6 +208,41 @@ MathJax = {
 3. <strong><a href="Welch_Satterthwaite.html">Welch_Satterthwaite</a></strong>（變異不等時）</p>
 <p><strong>前置</strong>：須先通過 <a href="MICOM.html">MICOM</a> 至少 metric invariance。
 <strong>判讀</strong>：$p_{MGA} < .05$ 表路徑在兩組間有顯著差異。</p>
+<h3 id="_1">方法說明</h3>
+<h4 id="_2">目的</h4>
+<ul>
+<li>主要研究目的：檢驗 PLS-SEM 結構路徑在不同群組（如性別、文化、產業）間是否有統計顯著差異</li>
+<li>次要用途：moderation 的離散版本；驗證理論模型的跨群普適性</li>
+</ul>
+<h4 id="_3">流程</h4>
+<ol>
+<li>先以 <a href="MICOM.html">MICOM</a> 三階段檢驗測量恆等性，至少需通過 metric invariance（<a href="Henseler_2016_MICOM.html">Henseler_2016_MICOM</a>）</li>
+<li>將樣本依群組變項分組</li>
+<li>對每群分別跑 PLS-SEM，取得 path coefficient 與 bootstrap standard error</li>
+<li>選擇比較法：permutation（<a href="Henseler_PLS_MGA.html">Henseler_PLS_MGA</a>）或 t-test（<a href="parametric_MGA.html">parametric_MGA</a>）；變異不等時用 <a href="Welch_Satterthwaite.html">Welch_Satterthwaite</a></li>
+<li>對每條結構路徑計算 $p_{MGA}$</li>
+<li>報告通過顯著的路徑差異與其方向</li>
+</ol>
+<h4 id="_4">適用範圍</h4>
+<ul>
+<li><strong>適用</strong>：兩群或多群比較、moderation 為類別變項時</li>
+<li><strong>不適用</strong>：MICOM 未通過 configural invariance（測量結構不同，無法比較係數）</li>
+<li><strong>樣本規模建議</strong>：每群 N ≥ 100；MGA 推薦每群 ≥ 200</li>
+<li><strong>資料類型要求</strong>：通過 MICOM 的兩個以上群組</li>
+</ul>
+<h4 id="_5">代表性研究</h4>
+<ul>
+<li><strong>奠基性文獻</strong>：Henseler, Ringle &amp; Sarstedt (2016) — MICOM 三階段框架（詳見 <a href="Henseler_2016_MICOM.html">Henseler_2016_MICOM</a>）</li>
+<li><strong>方法發展里程碑</strong>：Keil et al. (2000) — t-test 版本（<a href="parametric_MGA.html">parametric_MGA</a>）</li>
+<li><strong>相關 wiki 筆記</strong>：（延伸：<a href="MICOM.html">MICOM</a>、<a href="parametric_MGA.html">parametric_MGA</a>、<a href="Welch_Satterthwaite.html">Welch_Satterthwaite</a>、measurement invariance）</li>
+<li><strong>方法手冊</strong>：（另見 methodology_book 第 3.2 節 SEM）</li>
+</ul>
+<h4 id="_6">相關學者</h4>
+<ul>
+<li><strong>奠基者</strong>：Jörg Henseler、Christian Ringle、Marko Sarstedt（暫無 wiki/ 學者 note）</li>
+<li><strong>主要推廣者</strong>：SmartPLS 社群、JASP PLS-SEM 模組（暫無 wiki/ 學者 note）</li>
+</ul>
+<hr />
 </main>
 </div>
 <script>

@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Claude Code 教材</title>
+<style>*, *::before, *::after { box-sizing: border-box; }
+
+/* ── Base ── */
+body {
+  font-family: "Helvetica Neue", Arial, "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+  font-size: 20px;
+  line-height: 1.9;
+  color: #111;
+  background: #fff;
+  margin: 0;
+}
+
+/* ── Two-column layout (note pages) ── */
+.layout { display: flex; align-items: flex-start; min-height: 100vh; }
+
+.sidebar {
+  width: 270px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 2rem 1rem 2rem 1.5rem;
+  border-right: 1px solid #e8e8e8;
+  background: #f9f9f9;
+}
+.sidebar-back {
+  display: block;
+  font-size: 0.82rem;
+  color: #999;
+  margin-bottom: 1.4rem;
+  text-decoration: none;
+}
+.sidebar-back:hover { color: #333; }
+.sidebar-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #bbb;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+/* ── TOC in sidebar ── */
+.toc { font-size: 0.82rem; line-height: 1.55; }
+.toc ul { list-style: none; margin: 0; padding: 0; }
+.toc ul ul { padding-left: 0.9rem; }
+.toc li { margin: 0; }
+.toc-row { display: flex; align-items: baseline; gap: 0.2rem; }
+.toc-row a {
+  flex: 1;
+  display: block;
+  padding: 0.18rem 0.3rem;
+  border-radius: 3px;
+  color: #555;
+  text-decoration: none;
+  word-break: break-word;
+}
+.toc-row a:hover { background: #ebebeb; color: #111; }
+.toc-row a.active { color: #0055cc; font-weight: 600; background: #e8f0ff; }
+.toc-toggle {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-size: 0.65rem;
+  color: #bbb;
+  line-height: 1;
+  width: 1rem;
+  text-align: center;
+}
+.toc-toggle:hover { color: #555; }
+
+/* ── Main content ── */
+.content {
+  flex: 1;
+  min-width: 0;
+  padding: 3rem 3rem 6rem;
+  max-width: 800px;
+}
+
+/* ── Single-column (index page) ── */
+.container { max-width: 800px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
+
+/* ── Typography ── */
+h1 {
+  font-size: 1.75rem; font-weight: 700;
+  margin: 0 0 0.15rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 2px solid #111;
+  line-height: 1.3;
+}
+h2 {
+  font-size: 1.3rem; font-weight: 700;
+  margin: 2.5rem 0 0.5rem;
+  padding-bottom: 0.2rem;
+  border-bottom: 1px solid #ddd;
+}
+h3 { font-size: 1.1rem; font-weight: 700; margin: 1.8rem 0 0.4rem; }
+h4 { font-size: 1rem; font-weight: 700; margin: 1.4rem 0 0.3rem; }
+p { margin: 0.9rem 0; }
+a { color: #0055cc; text-decoration: none; }
+a:hover { text-decoration: underline; }
+nav { margin-bottom: 2.5rem; font-size: 0.85rem; color: #999; }
+nav a { color: #999; }
+
+/* ── Code ── */
+code {
+  font-family: "SFMono-Regular", Consolas, monospace;
+  background: #f2f2f2;
+  padding: 0.1em 0.4em;
+  border-radius: 3px;
+  font-size: 0.85em;
+}
+pre {
+  background: #f2f2f2;
+  padding: 1.2rem 1.4rem;
+  border-radius: 5px;
+  overflow-x: auto;
+  font-size: 0.85em;
+  line-height: 1.6;
+}
+pre code { background: none; padding: 0; }
+
+/* ── Lists ── */
+ul, ol { padding-left: 1.6rem; margin: 0.8rem 0; }
+li { margin: 0.35rem 0; }
+li > ul, li > ol { margin: 0.2rem 0; }
+
+/* ── Other elements ── */
+blockquote {
+  border-left: 4px solid #ccc;
+  margin: 1.2rem 0;
+  padding: 0.3rem 1.2rem;
+  color: #444;
+  background: #fafafa;
+}
+table { border-collapse: collapse; width: 100%; margin: 1.2rem 0; font-size: 0.95em; }
+th, td { border: 1px solid #ccc; padding: 0.55rem 0.9rem; text-align: left; }
+th { background: #f5f5f5; font-weight: 700; }
+tr:nth-child(even) { background: #fafafa; }
+hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
+.meta { font-size: 0.8rem; color: #aaa; margin: 0.3rem 0 1.8rem; }
+.index-list { list-style: none; padding: 0; margin: 1rem 0; }
+.index-list li { padding: 0.55rem 0; border-bottom: 1px solid #eee; font-size: 1.05rem; }
+.index-list li:last-child { border-bottom: none; }
+.embed-block {
+  border-left: 3px solid #aaa;
+  padding: 0.5rem 1.2rem;
+  margin: 1.5rem 0;
+  background: #f8f8f8;
+}
+
+/* ── Mobile ── */
+@media (max-width: 800px) {
+  .layout { flex-direction: column; }
+  .sidebar {
+    position: static;
+    width: 100%;
+    height: auto;
+    max-height: 50vh;
+    border-right: none;
+    border-bottom: 1px solid #e8e8e8;
+    padding: 1rem 1.5rem;
+  }
+  .content { padding: 1.5rem 1.2rem 4rem; }
+}
+</style>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+<div class="toc">
+<ul>
+<li><a href="#_1">這份教材是給誰</a></li>
+<li><a href="#chapter-1">Chapter 1 — 入門篇</a><ul>
+<li><a href="#_2">入門關鍵指令（記三個就夠）</a></li>
+</ul>
+</li>
+<li><a href="#chapter-2">Chapter 2 — 工作流與方法論</a><ul>
+<li><a href="#5">我從這些筆記提煉出的 5 個鐵律</a></li>
+</ul>
+</li>
+<li><a href="#chapter-3">Chapter 3 — 實作案例</a><ul>
+<li><a href="#_3">對外公開案例</a></li>
+<li><a href="#_4">進階流程案例</a></li>
+</ul>
+</li>
+<li><a href="#chapter-4">Chapter 4 — 進階應用與延伸</a><ul>
+<li><a href="#yes-all">自動化進階：Yes-All 模式</a></li>
+</ul>
+</li>
+<li><a href="#_5">我給讀者的三條閱讀路徑</a><ul>
+<li><a href="#a">路徑 A：完全零基礎（推薦）</a></li>
+<li><a href="#b-agent">路徑 B：會寫程式但沒用過 Agent</a></li>
+<li><a href="#c">路徑 C：學術研究者</a></li>
+</ul>
+</li>
+<li><a href="#_6">教材本身的維護原則</a></li>
+</ul>
+</div>
+</aside>
+<main class="content">
+<h1>Claude Code 教材</h1>
+<p class="meta">#claude_code　#teaching　#curriculum　#AI_agent</p>
+<p><a href="Claude_Code.html">Claude Code</a> | AI Agent | Vibe Coding</p>
+<h2 id="claude-code">Claude Code 教材：從零開始到能交付產品</h2>
+<blockquote>
+<p>這份教材是我使用 Claude Code 一年多的筆記彙整，目標是讓<strong>完全沒寫過程式的人也能讀懂</strong>，並且讓<strong>已經會寫程式的人快速建立系統化工作流</strong>。</p>
+</blockquote>
+<h3 id="_1">這份教材是給誰</h3>
+<table>
+<thead>
+<tr>
+<th>你的背景</th>
+<th>從哪一章開始</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>從來沒用過終端機 / 命令列</td>
+<td>第 1 章 入門篇 → 案例：<a href="Claude_code_case_RockPaperScissors.html">Claude code case RockPaperScissors</a></td>
+</tr>
+<tr>
+<td>會寫一點程式但沒用過 Agent</td>
+<td>第 2 章 工作流 → 第 3 章 實作案例</td>
+</tr>
+<tr>
+<td>已經在用 Claude Code，想優化流程</td>
+<td>第 2 章 方法論 → 第 4 章 進階應用</td>
+</tr>
+<tr>
+<td>想做研究 / 學術應用</td>
+<td>Claude Code Conjoint Skill → Claude workflow</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="chapter-1">Chapter 1 — 入門篇</h3>
+<blockquote>
+<p>Claude Code 是什麼？怎麼裝？第一次能拿來做什麼？</p>
+</blockquote>
+<ul>
+<li><strong><a href="Claude_Code.html">Claude Code</a></strong>（核心概念與工具導覽）— 必讀。包含 Claude.md、WAT Framework（Workflow / Agent / Tools）、Plug-in 介紹、Skill 系統、Slash Commands、四種自動化模式（Plan / Bypass / Ask / Auto）</li>
+<li><strong>Claude Code Skills</strong>（Skill 機制概覽）— 為什麼 Skill 是 Claude Code 最重要的擴充點</li>
+<li><strong>Claude code in Action - Coursera</strong>（Coursera 官方課程筆記）— 想要結構化學習的人從這裡開始</li>
+</ul>
+<h4 id="_2">入門關鍵指令（記三個就夠）</h4>
+<pre><code class="language-bash">pwd                    # 我現在在哪個資料夾
+ls                     # 這個資料夾裡有什麼
+mkdir my-project       # 建一個新資料夾
+cd my-project          # 進去
+claude                 # 啟動 Claude Code
+</code></pre>
+<hr />
+<h3 id="chapter-2">Chapter 2 — 工作流與方法論</h3>
+<blockquote>
+<p>同樣是用 Claude Code，會用的人跟不會用的人差在哪？這一章講核心思維。</p>
+</blockquote>
+<ul>
+<li><strong>Claude Code case 03</strong>（計劃優先 Plan-First 原則）— 三階段：研究 → 編碼 → 執行；為什麼跳過「計劃」階段會浪費時間</li>
+<li><strong>Claude code note 20260307-1</strong>（Agent Skill 位置分類）— Skill 放在 user / project / plugin 三個層級的差異</li>
+<li><strong>Claude code note 2603081</strong>（Skill 位置 vs. 使用範圍對應表）— 上一篇的查表版</li>
+<li><strong>claude cowork</strong>（Cowork 預覽與不確定性處理）— 當 Claude 不確定時，怎麼讓它停下來問人</li>
+<li><strong>Claude workflow</strong>（36 小時打造個人數位助理）— 一個非工程師的完整方法論</li>
+<li><strong>Claude Code Conjoint Skill</strong>（學術資料分析的 Skill 設計）— 把研究流程做成可重複呼叫的 Skill</li>
+</ul>
+<h4 id="5">我從這些筆記提煉出的 5 個鐵律</h4>
+<ol>
+<li><strong>動工前先問技術棧</strong>：不要讓 Agent 猜，用多選題快速對齊</li>
+<li><strong>環境檢查放最前面</strong>：缺工具就停下來，不要硬幹</li>
+<li><strong>不可逆動作要先告知</strong>：裝套件、改設定、刪檔、推送 → 先問</li>
+<li><strong>善用官方模板</strong>：<code>dotnet new</code>、<code>npm create</code>、<code>cargo new</code></li>
+<li><strong>以「能跑」為完成條件</strong>：build 通過、tests 通過、瀏覽器看到畫面才算完</li>
+</ol>
+<hr />
+<h3 id="chapter-3">Chapter 3 — 實作案例</h3>
+<blockquote>
+<p>看真實案例怎麼做，比看抽象原則有效十倍。</p>
+</blockquote>
+<h4 id="_3">對外公開案例</h4>
+<ul>
+<li><strong><a href="Claude_code_case_RockPaperScissors.html">Claude code case RockPaperScissors</a></strong> ⭐ <strong>推薦從這篇開始</strong>（2026-05-14）— Windows 桌面亂數猜拳程式，C# WinForms + .NET 8，從零到 <code>.exe</code>，15 分鐘完成。完整呈現「問技術棧 → 查環境 → 裝 SDK → 建專案 → 寫程式 → 編譯驗證」六步驟</li>
+<li><strong>Claude Case 01</strong>（EMS 論文網頁工具）— 從 Manus AI 遷移到 Claude Code 的實作紀錄</li>
+<li><strong>Claude code case 2</strong>（AI 價值論述）— Claude 在溝通職場中的應用初探</li>
+</ul>
+<h4 id="_4">進階流程案例</h4>
+<ul>
+<li><strong>Claude workflow</strong>（個人數位助理）— 跨越 36 小時的多 session 開發紀錄</li>
+</ul>
+<hr />
+<h3 id="chapter-4">Chapter 4 — 進階應用與延伸</h3>
+<blockquote>
+<p>已經會用 Claude Code 了，怎麼進一步優化？</p>
+</blockquote>
+<ul>
+<li><strong>Claude Codex</strong>（Claude Code + Codex CLI 生圖）— 串接其他 CLI 工具的範例</li>
+<li><strong>Claude code case 1</strong>（快速技巧集合）— 快捷鍵、Bash 叫用、重新執行</li>
+<li><strong>Claude code base</strong>（Sniffly 分析工具與常見錯誤）— 怎麼分析自己使用 Claude Code 的盲點</li>
+<li><strong>Claude Code N 260304</strong>（外部資源連結）</li>
+</ul>
+<h4 id="yes-all">自動化進階：Yes-All 模式</h4>
+<pre><code class="language-bash">claude --yes --skip-confirm
+</code></pre>
+<p>或在專案根目錄放 <code>.claude.json</code>：</p>
+<pre><code class="language-json">{ &quot;autoYes&quot;: true, &quot;skipConfirm&quot;: true, &quot;silent&quot;: false }
+</code></pre>
+<p>⚠️ 記得加進 <code>.gitignore</code>，不要強迫隊友共用自動 yes。</p>
+<hr />
+<h3 id="_5">我給讀者的三條閱讀路徑</h3>
+<h4 id="a">路徑 A：完全零基礎（推薦）</h4>
+<ol>
+<li><a href="Claude_Code.html">Claude Code</a> 先看「Newbie Projects」段</li>
+<li><a href="Claude_code_case_RockPaperScissors.html">Claude code case RockPaperScissors</a> 跟著做一次</li>
+<li>Claude Code case 03 學「計劃優先」</li>
+<li>自己挑一個小專案動手</li>
+</ol>
+<h4 id="b-agent">路徑 B：會寫程式但沒用過 Agent</h4>
+<ol>
+<li><a href="Claude_Code.html">Claude Code</a> 看 WAT Framework</li>
+<li>Claude code note 20260307-1 理解 Skill 系統</li>
+<li>Claude workflow 看完整工作流</li>
+<li>Claude Code Conjoint Skill 看 Skill 怎麼設計</li>
+</ol>
+<h4 id="c">路徑 C：學術研究者</h4>
+<ol>
+<li>Claude workflow 看非工程師如何系統化</li>
+<li>Claude Code Conjoint Skill 看研究流程 Skill 化</li>
+<li>Claude Codex 看跨工具串接</li>
+<li>把自己的研究方法寫成 Skill</li>
+</ol>
+<hr />
+<h3 id="_6">教材本身的維護原則</h3>
+<ul>
+<li><strong>incremental</strong>：新增案例就追加一個 bullet，不動既有章節順序</li>
+<li><strong>publish: true</strong>：本檔與引用的關鍵筆記都標記為可公開</li>
+<li><strong>案例優先</strong>：每個方法論章節必須有對應的實作案例佐證</li>
+<li><strong>連結為主，重複為輔</strong>：核心內容寫在子筆記，本檔只做索引與閱讀路徑</li>
+</ul>
+</main>
+</div>
+<script>
+(function () {
+  // ── Rebuild TOC with toggle buttons ──────────────────────────────────────
+  var toc = document.querySelector('.sidebar .toc');
+  if (toc) {
+    toc.querySelectorAll('li').forEach(function (li) {
+      var childUl = li.querySelector(':scope > ul');
+      var link    = li.querySelector(':scope > a');
+      if (!link) return;
+
+      var row = document.createElement('div');
+      row.className = 'toc-row';
+
+      if (childUl) {
+        var btn = document.createElement('button');
+        btn.className = 'toc-toggle';
+        btn.setAttribute('aria-expanded', 'true');
+        btn.textContent = '▾';          // ▾ open
+        btn.addEventListener('click', function () {
+          var open = childUl.hidden;
+          childUl.hidden = !open;
+          btn.textContent = open ? '▾' : '▸';   // ▾ / ▸
+          btn.setAttribute('aria-expanded', String(open));
+        });
+        row.appendChild(btn);
+      } else {
+        var spacer = document.createElement('span');
+        spacer.style.width = '1rem';
+        spacer.style.flexShrink = '0';
+        row.appendChild(spacer);
+      }
+
+      row.appendChild(link);
+      li.insertBefore(row, li.firstChild);
+    });
+  }
+
+  // ── Scroll spy ───────────────────────────────────────────────────────────
+  var headings = document.querySelectorAll('.content h2[id], .content h3[id], .content h4[id]');
+  var tocLinks = document.querySelectorAll('.sidebar .toc a');
+  if (!headings.length || !tocLinks.length) return;
+
+  var current = null;
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      var link = document.querySelector('.sidebar .toc a[href="#' + e.target.id + '"]');
+      if (!link) return;
+      if (current) current.classList.remove('active');
+      current = link;
+      current.classList.add('active');
+      // Scroll link into view within sidebar
+      current.scrollIntoView({ block: 'nearest' });
+    });
+  }, { rootMargin: '-5% 0px -75% 0px', threshold: 0 });
+
+  headings.forEach(function (h) { io.observe(h); });
+}());
+</script>
+</body>
+</html>

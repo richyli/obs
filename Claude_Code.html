@@ -207,7 +207,24 @@ hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
 <li><a href="#japanese-keyboard">Japanese Keyboard</a></li>
 </ul>
 </li>
-<li><a href="#agent">Agent</a></li>
+<li><a href="#agent">Agent</a><ul>
+<li><a href="#subagent-dag-skill-subagent">Subagent DAG：何時要把 skill 拆成多個 subagent</a><ul>
+<li><a href="#_1">好處</a></li>
+<li><a href="#_2">何時該這樣做</a></li>
+<li><a href="#_3">設計原則</a></li>
+<li><a href="#_4">反模式：不是「另一個對話框」</a></li>
+<li><a href="#daily-dag">範例：/daily 的 DAG</a></li>
+</ul>
+</li>
+<li><a href="#today-subagent">反例：/today 為何不該整體 subagent 化</a><ul>
+<li><a href="#pipeline-dashboard">表面像 pipeline，本質是互動式 dashboard</a></li>
+<li><a href="#_5">三條判斷規則</a></li>
+<li><a href="#subagent-context-skill">選擇性 subagent：對「重 context 的子 skill 呼叫」做手術</a></li>
+<li><a href="#subagent">一般原則：subagent 是 手術刀，不是 斧頭</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -218,6 +235,10 @@ hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
 <h1>Claude Code</h1>
 <p class="meta">#AI_agent　#claude</p>
 <p>AI Agent, Claude, Vibe Coding</p>
+<blockquote>
+<p>📚 <strong>對外教學總覽</strong>：<a href="Claude_Code_%E6%95%99%E6%9D%90.html">Claude Code 教材</a> — 整合本檔與所有 Claude code case / workflow / skill 系列筆記，提供完整章節結構與閱讀路徑
+📌 <strong>最新案例</strong>：<a href="Claude_code_case_RockPaperScissors.html">Claude code case RockPaperScissors</a> — 15 分鐘從零做出 Windows 桌面猜拳程式</p>
+</blockquote>
 <h2 id="reference">reference</h2>
 <ul>
 <li><a href="https://www.youtube.com/watch?v=saggDHHnmtQ&amp;list=PLjWDgfv04HA9r-jCEmUAagOWU6p8teZmR">https://www.youtube.com/watch?v=saggDHHnmtQ&amp;list=PLjWDgfv04HA9r-jCEmUAagOWU6p8teZmR</a></li>
@@ -374,6 +395,111 @@ claude
 <h3 id="utility">Utility</h3>
 <h4 id="japanese-keyboard">Japanese Keyboard</h4>
 <h3 id="agent">Agent</h3>
+<h4 id="subagent-dag-skill-subagent">Subagent DAG：何時要把 skill 拆成多個 subagent</h4>
+<p>Claude Code 的 <code>Agent</code> 工具會在<strong>獨立 context</strong> 中跑一個子代理，跑完只回傳摘要到主對話。多個無依賴的 step 可在同一則訊息內發多個 <code>Agent</code> call，runtime 會真正並行執行。把 pipeline-style 的 skill（如 <code>/daily</code>、<code>/weekly</code>）改寫成 subagent DAG，等於是把「一段長腳本」變成「一張有節點和邊的執行圖」。</p>
+<h5 id="_1">好處</h5>
+<ol>
+<li><strong>保護主對話 context</strong>：每個 skill 動輒掃 wiki/ 數百檔，直接在主對話跑會在第 2–3 步就把 context 塞滿，導致後段步驟品質下降或被迫壓縮。subagent 在隔離 context 跑完只回摘要，主對話 context 增長從「O(處理檔案數)」變成「O(step 數)」。</li>
+<li><strong>真並行加速</strong>：同一 message 內多個 Agent call 並行執行。<code>/daily</code> 的 summary-note 與 random-link 互不依賴，並行可省一半時間。</li>
+<li><strong>失敗隔離</strong>：某個 subagent 失敗不會污染主對話狀態，記錄錯誤後可直接跳下一步。</li>
+<li><strong>DAG 顯式化</strong>：把依賴關係寫成圖，比「依序執行步驟 1–10」更容易看出哪裡可並行、哪裡會卡。</li>
+<li><strong>prompt 可審查</strong>：每個 step 的 prompt 被寫進 skill 檔，比散落在主對話的隱含指令更易維護。</li>
+</ol>
+<h5 id="_2">何時該這樣做</h5>
+<p>✅ <strong>適合改成 subagent DAG</strong>：</p>
+<ul>
+<li>Pipeline-style skill：多個步驟串接、每步處理大量檔案（<code>/daily</code>、<code>/weekly</code>、<code>/audit</code>+索引刷新等）</li>
+<li>步驟之間有可並行的區塊（兩個以上 step 互不依賴）</li>
+<li>單一 skill 的 context 預估超過 100K tokens（掃全 wiki、批次處理論文等）</li>
+<li>需要 fan-out：對 N 個目標各跑同樣處理（例如對 N 篇論文各做 paper-image 抽圖）</li>
+</ul>
+<p>❌ <strong>不適合</strong>：</p>
+<ul>
+<li>互動式 skill：需要使用者中途回答的（<code>/today</code>、<code>/workplan</code>、<code>/diary</code>）—— subagent 跑完才回主對話，無法中途問你</li>
+<li>短任務：總共只動 1–3 個檔案的 skill，包 subagent 反而增加 overhead</li>
+<li>強順序依賴：每步都需要前步的完整輸出而非摘要（subagent 摘要可能丟資訊）</li>
+<li>需要看完整中間產出：debug 或第一次跑某 pipeline 時，主對話應該看到細節而非摘要</li>
+</ul>
+<h5 id="_3">設計原則</h5>
+<ul>
+<li><strong>subagent_type 選擇</strong>：要寫檔的用 <code>general-purpose</code>；純查詢用 <code>Explore</code>（read-only，更快）</li>
+<li><strong>prompt 強制回傳摘要</strong>：明寫「回報：N 個處理檔、檔名列表、異常」，禁止 subagent 貼出完整內容</li>
+<li><strong>並行區塊在同一 message</strong>：兩個無依賴的 Agent call <strong>必須</strong>寫在同一則回應內，否則退化為順序</li>
+<li><strong>跨 step 資料傳遞</strong>：主對話收摘要 → 組成 struct → 塞進下游 step 的 prompt（不要讓下游 subagent 重新掃檔還原狀態）</li>
+<li><strong>session 檔機制</strong>：對依賴鏈長的 pipeline，第一個 step 寫 <code>wiki/_session/current_run.md</code> 鎖定本輪範圍，後續 subagent 讀此檔避免重複掃描</li>
+<li><strong>失敗處理</strong>：subagent 失敗 → 該 step 摘要填「失敗：&lt;簡述&gt;」→ 繼續下一步，不回頭重試</li>
+</ul>
+<h5 id="_4">反模式：不是「另一個對話框」</h5>
+<p>Claude Code 的 Agent 是 subagent 在獨立 context 跑，<strong>不是真的開新 terminal/窗口</strong>。如果想要真正多窗口並行（例如同時跑 <code>/jp-daily</code> 和 <code>/news-sec</code>），那是 <code>/schedule</code> 或手動多開 Claude Code instance 的事，不是 Agent 工具。對有 DAG 依賴的 pipeline，跨窗口執行反而會破壞順序保證（沒辦法 enforce 步驟 6 等步驟 1–5），所以這類場景<strong>只該用 subagent</strong>。</p>
+<h5 id="daily-dag">範例：<code>/daily</code> 的 DAG</h5>
+<pre><code>1 read-citavi
+  └─ 1.5 journal-watch (gate)
+       └─ 1.6 weekly (gate)
+            └─ 2 extend
+                 └─ 3 methodology
+                      └─ [4 summary-note] ‖ [5 random-link]   ← 同一 message 並行
+                           └─ 6 book-edit
+                                └─ 7 scholar → 8 audit → 9 daily_report → 10 wish-list
+</code></pre>
+<p>完整實作見 <a href=".claude/commands/daily.md">.claude/commands/daily.md</a>。</p>
+<h4 id="today-subagent">反例：<code>/today</code> 為何不該整體 subagent 化</h4>
+<p>不是所有 pipeline-style skill 都該改 subagent DAG。<code>/today</code> 是好的反例。</p>
+<h5 id="pipeline-dashboard">表面像 pipeline，本質是互動式 dashboard</h5>
+<p><code>/today</code> 有 14 個步驟（負一、零、零·二、零·二·五、零·三、零·五、一~八），看起來和 /daily 類似。但拆開看：</p>
+<table>
+<thead>
+<tr>
+<th>類型</th>
+<th>步驟</th>
+<th>能否 subagent 化</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MCP 呼叫 / Python 腳本 stdout</td>
+<td>負一、零·二、零·二·五、七·六</td>
+<td>❌ 沒必要，本來就輕量</td>
+</tr>
+<tr>
+<td><strong>互動式</strong>（等使用者回覆）</td>
+<td>七、七·五、八</td>
+<td>❌ subagent 跑完才回主對話，無法中途問你</td>
+</tr>
+<tr>
+<td><strong>要展示給使用者看的內容</strong></td>
+<td>零·五（昨日日記）、三~六（dashboard、警示）</td>
+<td>❌ subagent 只回摘要會丟掉展示細節</td>
+</tr>
+<tr>
+<td>重 context 的子 skill 呼叫</td>
+<td>零（jp-daily）、零·三（news-sec）</td>
+<td>✅ <strong>這兩個值得改</strong></td>
+</tr>
+</tbody>
+</table>
+<h5 id="_5">三條判斷規則</h5>
+<p>從這次經驗萃取：</p>
+<ol>
+<li><strong>看互動需求</strong>：skill 內若有「等使用者回覆 <code>done X</code> / <code>dl Y</code> / 選項」的 step，<strong>整體不能 subagent 化</strong>——subagent 跑完才回主對話。</li>
+<li><strong>看輸出用途</strong>：subagent 只回摘要。若 step 的輸出是「直接展示給使用者讀的儀表板/日記/警示」，subagent 化會丟掉關鍵展示細節；若是「寫到檔案、主對話不用看完整內容」，才適合 subagent。</li>
+<li><strong>看 context 重量</strong>：主要由 Python 腳本（today_run.py、weather_brief.py、sleep_advisor.py）處理重活的 step，主對話只接收 stdout，沒有 context 稀釋問題，不需要 subagent。</li>
+</ol>
+<h5 id="subagent-context-skill">選擇性 subagent：對「重 context 的子 skill 呼叫」做手術</h5>
+<p>/today 內<strong>唯二</strong>值得改的是 <code>/jp-daily</code>（抓 Yahoo News + 改寫教材）和 <code>/news-sec</code>（抓 60 則全球新聞 + 4000 字 brief）。這兩個 step 符合三條件：</p>
+<ul>
+<li>完全沒互動需求（自動執行）</li>
+<li>輸出寫到檔案（learn/jp/、learn/news/），主對話不需要看內容</li>
+<li>子 skill context 量大（抓網頁、寫長文）</li>
+</ul>
+<p>改寫成 <code>Agent</code> call + 強制摘要回報後，主對話只記「檔路徑 + 條數 + 字數」一行，不會被 Yahoo News 原文或 4000 字 brief 灌爆。</p>
+<h5 id="subagent">一般原則：subagent 是 <strong>手術刀</strong>，不是 <strong>斧頭</strong></h5>
+<p>看到「多步驟 skill」不要反射性想全部包 subagent。先標每個 step 屬性：</p>
+<ul>
+<li>互動 / 自動？</li>
+<li>輸出是給人看 / 寫進檔案？</li>
+<li>context 重 / 輕？</li>
+</ul>
+<p>只對「自動 + 寫檔 + 重 context」的 step 動刀。/daily 之所以整體適合 subagent DAG，是因為它<strong>所有 step 都符合這三個條件</strong>（全自動、產出寫進 wiki/、每步動數百檔）。/today 不是。</p>
 <p>VS Code</p>
 </main>
 </div>

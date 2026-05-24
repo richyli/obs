@@ -186,10 +186,16 @@ MathJax = {
 <aside class="sidebar">
 <div class="toc">
 <ul>
-<li><a href="#indicator_reliability">indicator_reliability</a></li>
+<li><a href="#_1">方法說明</a><ul>
+<li><a href="#_2">目的</a></li>
+<li><a href="#_3">流程</a></li>
+<li><a href="#_4">適用範圍</a></li>
+<li><a href="#_5">代表性研究</a></li>
+<li><a href="#_6">相關學者</a></li>
+</ul>
+</li>
 </ul>
 </div>
-
 </aside>
 <main class="content">
 <h1>indicator_reliability</h1>
@@ -224,6 +230,40 @@ MathJax = {
 </tbody>
 </table>
 <p>註：$.708^2 = .50$。</p>
+<h3 id="_1">方法說明</h3>
+<h4 id="_2">目的</h4>
+<ul>
+<li>主要研究目的：在 PLS-SEM 反映性測量模型中，評估單一題目對其構念的代表性</li>
+<li>次要用途：題目淨化（item purification）；測量模型的初步診斷</li>
+</ul>
+<h4 id="_3">流程</h4>
+<ol>
+<li>跑 PLS-SEM 估計，取得每題的標準化外負荷 $\lambda$</li>
+<li>計算 $\lambda^2$</li>
+<li>依 Hair 等準則分類</li>
+<li>$\lambda < .40$：直接刪題</li>
+<li>$.40 \leq \lambda < .708$：檢視 CR、AVE 是否受影響，再決定保留或刪除</li>
+<li>$\lambda \geq .708$：保留</li>
+<li>報告所有題目負荷表</li>
+</ol>
+<h4 id="_4">適用範圍</h4>
+<ul>
+<li><strong>適用</strong>：reflective measurement model（PLS-SEM、CB-SEM）</li>
+<li><strong>不適用</strong>：formative measurement model（用 weight 與 VIF 評估）</li>
+<li><strong>樣本規模建議</strong>：依主模型樣本量</li>
+<li><strong>資料類型要求</strong>：Likert 或近連續量表</li>
+</ul>
+<h4 id="_5">代表性研究</h4>
+<ul>
+<li><strong>準則來源</strong>：Hair et al. (2022) <em>A Primer on Partial Least Squares</em>（<a href="Hair_2022_PLS.html">Hair_2022_PLS</a>）</li>
+<li><strong>相關 wiki 筆記</strong>：（延伸：<a href="PLS-SEM.html">PLS-SEM</a>、<a href="Cronbach_alpha.html">Cronbach alpha</a>、measurement model、<a href="rho_A.html">rho_A</a>、<a href="Dijkstra_Henseler.html">Dijkstra_Henseler</a>）</li>
+<li><strong>方法手冊</strong>：（另見 methodology_book 第 5.2 節信度）</li>
+</ul>
+<h4 id="_6">相關學者</h4>
+<ul>
+<li><strong>奠基者</strong>：Joseph F. Hair Jr.、Christian Ringle、Marko Sarstedt（PLS Primer 系列）（暫無 wiki/ 學者 note）</li>
+</ul>
+<hr />
 </main>
 </div>
 <script>

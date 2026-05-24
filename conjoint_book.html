@@ -267,6 +267,18 @@ MathJax = {
 <li><a href="#69-barter-conjoint">6.9 Barter Conjoint</a></li>
 <li><a href="#610-mixed-method-conjoint-integration">6.10 Mixed-method Conjoint Integration（混合方法整合）</a></li>
 <li><a href="#611-dynamic-conjoint-cbc">6.11 Dynamic Conjoint（動態 CBC，時間依存偏好）</a></li>
+<li><a href="#612-cbc-lca">6.12 CBC + LCA 整合方法論（消費者偏好餵入環境生命週期）</a></li>
+<li><a href="#613-multi-conjoint-mixed-method-conjoint">6.13 Multi-conjoint 與 mixed-method 研究設計（超越單一 conjoint 的論文架構）</a><ul>
+<li><a href="#6131-conjoint-multi-conjoint-replication-staging">6.13.1 多個 conjoint 在同一論文（multi-conjoint replication / staging）</a></li>
+<li><a href="#6132-conjoint-multi-format-head-to-head">6.13.2 多種 conjoint 變體在同一論文（multi-format head-to-head）</a></li>
+<li><a href="#6133-conjoint-qualitative-integration">6.13.3 Conjoint + 質性方法（qualitative integration）</a></li>
+<li><a href="#6134-conjoint-quantitative-auxiliary">6.13.4 Conjoint + 量化輔助測量（quantitative auxiliary）</a></li>
+<li><a href="#6135-conjoint-computational-integration">6.13.5 Conjoint + 計算方法／資料挖掘（computational integration）</a></li>
+<li><a href="#6136-conjoint-revealed-preference-statedrevealed-triangulation">6.13.6 Conjoint 與 revealed preference / 行為資料整合（stated–revealed triangulation）</a></li>
+<li><a href="#6137-conjoint-segmentation-post-conjoint-clustering">6.13.7 Conjoint 與 segmentation / 後分析整合（post-conjoint clustering）</a></li>
+<li><a href="#6138-design-principles-for-multi-strand-studies">6.13.8 整合機制與設計原則（design principles for multi-strand studies）</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href="#7">7. 應用場域速查</a></li>
@@ -284,6 +296,16 @@ MathJax = {
 <li><a href="#_8">優秀研究的設計標準</a></li>
 </ul>
 </li>
+<li><a href="#9">9. 多元應用案例精選</a><ul>
+<li><a href="#91">9.1 政治學：候選人評估與民主規範</a></li>
+<li><a href="#92">9.2 公衛與健康傳播</a></li>
+<li><a href="#93">9.3 消費者行為與產品設計</a></li>
+<li><a href="#94">9.4 組織與社會創業決策</a></li>
+<li><a href="#95">9.5 移民居住選擇：政治環境的因果效應</a></li>
+<li><a href="#96">9.6 數位行銷與服務業</a></li>
+<li><a href="#97">9.7 跨案例方法學比較</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </aside>
@@ -295,6 +317,9 @@ MathJax = {
 <p>更新紀錄：conjoint_book_changelog</p>
 </blockquote>
 <p>本手冊以條列短句彙整 wiki/ 中所有 conjoint 相關筆記的可取用內容。每一條後附 APA citation；延伸閱讀優先連結 synthesis note（跨論文整合），其次整理過的 concept / finding note，最後才到方法論與主大綱 note。完整 reference 可至 §來源索引 對應的主大綱筆記查閱。</p>
+<blockquote>
+<p>速查索引：所有 wiki/ 中 conjoint 實證研究的多維度索引表，見 conjoint research index。</p>
+</blockquote>
 <h3 id="_1">目錄</h3>
 <ul>
 <li><a href="conjoint_book.html">1. 基本概念與術語</a></li>
@@ -355,8 +380,17 @@ MathJax = {
 <li><a href="conjoint_book.html">6.9 Barter Conjoint</a></li>
 <li><a href="conjoint_book.html">6.10 Mixed-method Integration</a></li>
 <li><a href="conjoint_book.html">6.11 Dynamic Conjoint</a></li>
+<li><a href="conjoint_book.html">6.12 CBC + LCA 整合</a></li>
+<li><a href="conjoint_book.html">6.13 Multi-conjoint 與 mixed-method 設計</a></li>
 <li><a href="conjoint_book.html">7. 應用場域速查</a></li>
 <li><a href="conjoint_book.html">8. 方法論常見陷阱</a></li>
+<li><a href="conjoint_book.html">9. 多元應用案例精選</a></li>
+<li><a href="conjoint_book.html">9.1 政治學：候選人評估與民主規範</a></li>
+<li><a href="conjoint_book.html">9.2 公衛與健康傳播</a></li>
+<li><a href="conjoint_book.html">9.3 消費者行為與產品設計</a></li>
+<li><a href="conjoint_book.html">9.4 組織與社會創業決策</a></li>
+<li><a href="conjoint_book.html">9.5 移民居住選擇</a></li>
+<li><a href="conjoint_book.html">9.6 數位行銷與服務業</a></li>
 </ul>
 <h3 id="1">1. 基本概念與術語</h3>
 <p>Conjoint analysis（聯合分析）是一類透過讓受訪者在多屬性輪廓間做出權衡選擇，以反推各屬性 part-worth 效用的多變量方法。其核心假設是：整體偏好可分解為各屬性水準的邊際貢獻之和（additive utility），並透過隨機效用模型（random utility model, RUM）連結潛在效用與觀察到的選擇行為。此方法涵蓋 rating-based、ranking-based 與 choice-based 三大家族，並衍生出 DCE、CBC、ACA、ACBC、BWS、MaxDiff、BBC、compound conjoint 等變體。</p>
@@ -420,6 +454,9 @@ MathJax = {
 <li><strong>Conjoint 跳脫消費者預設的三條路線</strong>：conjoint 算法的核心是「從 multi-attribute profile 的某種排序資訊解構 part-worth」，數學上對「排序產生的機制」不可知，因此<strong>不必綁定消費者偏好</strong>——已發展出三條跳脫路線：(a) <strong>expert elicitation</strong>（專家為受訪者，n 通常 20–50）如 Valeeva et al.（2005）24 食安專家；(b) <strong>objective ranking</strong>（客觀資料排序取代受訪者）如 Atwater et al.（2014）1692 motor carrier 退出/存續；(c) <strong>hybrid Delphi + survey conjoint</strong>（先專家壓縮屬性、再大樣本量化）如 Mishra et al.（2025）314 IT 專家 + Delphi 預壓縮 4 因素；三者均達文獻擬合度標準（個體 $R^2 > 0.75$、Kendall's $\tau \geq 0.8$），證實「conjoint 必須用消費者」是歷史慣例非統計必要條件（Valeeva et al., 2005; Atwater et al., 2014; Mishra et al., 2025; 延伸：Conjoint Beyond Consumer Preference Expert Elicitation and Objective Rankings）。</li>
 <li><strong>Ratings-based conjoint 在 OM/B2B 仍具方法地位</strong>：Karniouchina et al.（2009）以 193 名筆電購買者 between-subjects 設計（98 RB + 95 CB）系統比較 RB 與 CB 在 HB 估計下的差異；ratings-based 任務形式為「對所有 18 個 profiles 給 0–10 購買意願評分」，CB 形式為「18 組三選一 + keep on shopping」；該研究確立 OM 領域「該選 RB 或 CB」的方法論答案——CB 命中率優、市場規模建模能力強、軟體普及，為當代主流首選（Karniouchina et al., 2009; 延伸：Karniouchina 2009 Issues、ratings-based conjoint）。</li>
 <li><strong>Quantitative SCM conjoint 的三條獨立路線</strong>：除了上述「conjoint 跳脫消費者」三路線，supply chain 文獻還發展出三條 conjoint 量化路線：(a) <strong>B2B 採購主管 CBC</strong>（Hartmann &amp; Caerteling, 2010 NL 202 總包商；van der Rhee, Verma &amp; Plaschka, 2009 歐洲 4 國 N=200；皆採真實採購主管樣本）；(b) <strong>下游消費者 CBC + LCL 四群解</strong>（Bask et al., 2013 芬蘭學生 N≈400 手機永續性 + 4 latent class）；(c) <strong>B2C logistics ACM</strong>（Garver et al., 2012 US 249 名 parcel shipping 用戶，5 need-based segments）；三路線共同證實 conjoint 在 SC 文獻已從「消費者行銷工具」擴張為「供應鏈雙端決策結構」量化方法（延伸：Supplier Selection Conjoint Across B2B Industries、Conjoint Applications in Supply Chain Risk and Sustainability）。</li>
+<li><strong>Single-profile conjoint（單一輪廓設計）</strong>：只呈現一個假設性對象，要求受訪者評分或接受/拒絕，而非配對強制選擇；貼近「是否接受某政策、某申請人」的自然決策框架，認知負荷較低，但 Hainmueller, Hopkins &amp; Yamamoto (2015) 比較顯示單一輪廓設計的<strong>外部效度最差</strong>——配對 forced-choice 設計仍是 external validity 首選（Hainmueller et al., 2015; Kawakami et al., 2026; 延伸：single-profile conjoint）。</li>
+<li><strong>Stereotype-based conjoint（刻板印象式 conjoint）</strong>：把 conjoint 結果變量從「偏好/選擇」改為「刻板印象符合度」——詢問「這個人更像典型的 [A 群體] 還是 [B 群體]？」而非「你支持誰？」；允許測量隱性 stereotype content（群體 × 特質 × 議題三維度），降低 SDB，是 Myers (2023) 在 partisan stereotypes 研究中提出的方法創新（Myers, 2023; 延伸：stereotype-based conjoint）。</li>
+<li><strong>Kansei + Conjoint 雙階段整合</strong>：Wang (2015) 在數位相機案例提出雙階段框架——第一階段以 Kansei engineering + Rough Set Theory（情感特徵：顏色、材質、螢幕、閃光）做市場區隔；第二階段以 CA + Grey Relational Analysis（功能特徵：光學變焦、廣角焦距）做產品客製化；兩 segment 對功能屬性偏好顯著不同（消費者型重視廣角/螢幕、專業型重視光學變焦/最大光圈），體現「情感維度區隔 → 功能維度客製化」的設計工程整合路線（Wang, 2015; 延伸：Wang 2015 Kansei Conjoint）。</li>
 </ul>
 <h4 id="14">1.4 估計方法總覽</h4>
 <p>MNL（multinomial logit）、mixed logit、Hierarchical Bayes（HB）、exploded logit 是 conjoint 資料估計的四大基石。MNL 提供基礎選擇機率形式但受 IIA 限制；mixed logit 以隨機係數放鬆 IIA；HB 以層級先驗提供個體層次 part-worth；exploded logit 把排序資料拆解為多個選擇觀測。本節先給出各方法的概率形式，細節於 §3 展開。</p>
@@ -463,6 +500,7 @@ MathJax = {
 <li><strong>Stimulus-Organism-Response（S-O-R）框架</strong>：Hou, Zhang &amp; Zhang（2023）以 S-O-R 為中介路徑模型——影像屬性（S） → 影像情緒（O） → 同理心（O） → 出資意願（R），使 visual conjoint 的刺激變項與 downstream behavior 之間具心理學中介結構（Hou, Zhang &amp; Zhang, 2023）。</li>
 <li><strong>Random Utility + Lancaster demand theory</strong>（Lancaster, 1966）：消費者效用源自產品 characteristics 而非產品本身——為 conjoint 把產品分解為屬性提供經濟學基礎；Telser &amp; Zweifel（2002）等健康 DCE 明示引用此理論（Lancaster, 1966; <a href="conjoint_book.html">§7 健康／醫療／QoL</a>）。</li>
 <li><strong>Social Identity Theory（SIT）</strong>（Tajfel &amp; Turner, 1979）：個體以群體成員資格建構自我概念，並對內群體（in-group）表現偏好、對外群體（out-group）表現貶低；在 conjoint 設計中，可以 <strong>Marginal Means</strong> 直接區分兩機制——MM &gt; 0.5 為 in-group favoritism、MM &lt; 0.5 且顯著為 out-group derogation；Aichholzer（2023）以日本跨族婚姻 conjoint 示範：日籍 MM = +10.7% 為典型 in-group favoritism，奈及利亞 MM = −5.8% 為外群貶低；相對於 AMCE（須選基準類別），MM 無需指定參照類別，更適合測試 SIT 的正負方向預測（Aichholzer, 2023; Tajfel &amp; Turner, 1979; social identity theory）。</li>
+<li><strong>Push-Pull motivation theory + Self-determination theory</strong>（Crompton, 1979; Deci &amp; Ryan, 1985）：旅遊／會議參與決策的二元動機框架——push 為內在驅動（個人成長、社交、學術發表動機）、pull 為外部吸引力（地點、節目、規模、組織者品牌）；可與 SDT 的 intrinsic/extrinsic motivation 對應；Cavusoglu et al.（2022）以此為理論基礎將學術會議 6 屬性分配至 push（publishing opportunities、size）與 pull（cost、organizer、location、reputation）兩類，示範如何將動機理論轉換為可操弄的 CBC 屬性集，並引入「歷年舉辦次數」作為新屬性合法化過去文獻未測量的 pull factor（Crompton, 1979; Rittichainuwat et al., 2001; Cavusoglu et al., 2022; push-pull motivation theory）。</li>
 <li><strong>研究者使用建議</strong>：選論文理論框架時<strong>先問屬性結構</strong>——若屬性具訊號性質（認證、學歷、背書），優先 signaling + HSM；若為技術採用（e-commerce、行動支付），優先 TAM/UTAUT；若為框架效應測試（獲益 vs 損失訊息），優先 prospect theory；若為 opt-out/default 結構，優先 status quo bias；跨多實體決策（慈善、採購）優先 Charitable Triad / compound conjoint；若研究「誰被選擇」的群體認同機制（跨族婚姻、候選人評估、族裔偏好），優先 Social Identity Theory + MM 估計（詳見 <a href="conjoint_book.html">§8 AMCE 統計陷阱</a>）。</li>
 </ul>
 <h3 id="2">2. 設計決策</h3>
@@ -615,6 +653,7 @@ MathJax = {
 <li><strong>ACBC 樣本需求</strong>：ACBC 需更長作答時間，樣本規模要求 $n \geq 250$，限制成本受限研究適用性（Cunningham et al., 2010）。</li>
 <li><strong>誤差變異 vs 樣本量</strong>：Monte Carlo 比較顯示 error variance、number of segments、within-segment heterogeneity 對分群方法效能的影響<strong>顯著大於</strong> sample size 的效應；研究者應優先最小化 response error（如更好的任務設計），而非僅依賴更大樣本（Error variance and within-segment heterogeneity matter more than sample size）。</li>
 <li><strong>Huber-Zwerina utility balance</strong>：utility balance 在 choice-based 可提升 33% 效率，相當於減少 10–50% 樣本量需求（Huber &amp; Zwerina, 1996; Huber 1996 utility balance reduces sample size by 10-50 percent）。</li>
+<li><strong>Johnson's rule-of-thumb 樣本量公式</strong>：CBC 設計最小有效樣本以 $n \cdot t \cdot a / c > 500$ 推估，其中 $n$ 為受訪者數、$t$ 為 task 數、$a$ 為每 task 的 alternative 數（不含 none）、$c$ 為任一屬性最多的 level 數；Orme（2019）進一步建議將右側目標放至 1,000 倍以獲得更佳精度。Cavusoglu et al.（2022）以六屬性最多 5 levels 的學術會議 CBC 套用 Orme（2019）較嚴版本得最低有效樣本 $n = 417$，實收 433（Cavusoglu et al., 2022; Orme, 2019; Cavusoglu 2022 Methods）。</li>
 </ul>
 <h4 id="211-cbc-attribute">2.11 CBC 實務範本與跨域 attribute 常見發現</h4>
 <p>Choice-Based Conjoint（CBC）的完整做法可歸納為「質性屬性發掘 → 屬性/水準定稿 → 效率設計 → 資料蒐集 → 估計 → 驗證」六階段流水線；跨應用場域的 attribute 發現則呈現「價格主導、但特定認證或符號屬性可取代」的穩定 pattern。本節整合前述各子節為可直接取用的實務範本，並彙整政治、健康、慈善、環境、產品五大領域的常見 attribute 類型清單。</p>
@@ -643,6 +682,7 @@ MathJax = {
 <li><strong>骨鬆／慢性病藥物情境</strong>：屬性常為 efficacy（多 endpoint）、mode of administration、side effect risk、dose frequency、cost；Liu et al.（2024）$n=304$ hip-fracture efficacy 31% + administration 17.5% + side effects 16.6% 為前 3；LCA 識別 efficacy-focused (60.9%) vs multi-factor (39.1%) 兩 class；demographic 預測 class membership 效力低（Liu et al., 2024; 60 percent of osteoporosis patients prioritize efficacy over all other attributes）。</li>
 <li><strong>Implementation science / innovation prioritization 情境</strong>：屬性依 Rogers（2003）diffusion theory + Grimshaw（2004）經濟準則導出，常含 impact on care、strength of evidence、cost、local health needs、minimum standards、national/local priority、local expertise；Farley et al.（2013）英國 NHS PCT $n=139$ rating-based CA 發現 impact on care + strength of evidence 主導、national/local priority 意外不顯著（Farley et al., 2013; impact on patient care is top ranked attribute for innovation adoption; national or local priority status does not influence adoption preference）。</li>
 <li><strong>Sports nutrition / isotonic drink 情境</strong>：屬性常為 sugar content、packaging size、price、flavor；Oktaneldanora et al.（2025）印尼 $n=185$ flavor 33% ≈ price 32% 主導；最佳組合為 low sugar + 500ml + Rp 3,000–4,000 + original flavor（Oktaneldanora, Purnomo &amp; Noer, 2025）。</li>
+<li><strong>學術會議參與情境（MICE / hospitality）</strong>：屬性常為 total cost、conference organizer、publishing opportunities、reputation（# times held）、location、size；Cavusoglu et al.（2022）以 6 屬性 × 多 levels CBC、$n = 433$（57 國學者，QuestionPro）發現 total cost 與 conference organizer 並列 28% 主導、publishing opportunities 19%、reputation/location 各 10%、size 5%；conference cost 由 &lt; \$500 升至 > \$1,000 使市場份額由 multi-level baseline 跌至 17%、unknown organizer 市占降至 14%（vs university 35%）；F2F 與 online 無顯著差異；新提出「歷年舉辦次數」作為過去文獻未測量的 reputation proxy 並經五位專家 panel 合法化（Cavusoglu et al., 2022; Cavusoglu 2022 academic conference）。</li>
 <li><strong>永續運動服飾情境</strong>：Spindler et al.（2023）以 CBC N=1,000 德國跑者量化跑步服飾對永續性的偏好；屬性包含 environmental sustainability（ES）、social sustainability（SS）、brand、price、material、fit；ES 相對重要性 26.18% 居所有屬性之首，超越品牌（19.24%）；此發現挑戰「價格與品牌主導」的傳統消費品假設，並示範 share-of-preferences 模擬方法推算 WTP（Spindler, Hambrecht &amp; Breuer, 2023; Spindler 2023 Sustainable Consumption Sports）。</li>
 <li><strong>初級醫療保健偏好情境</strong>：Lim et al.（2022）系統性回顧 35 篇初級醫療 conjoint 研究（N=58 屬性，ISPOR 10 項品質準則篩選），發現等待時間（waiting time）為最多研究納入的屬性（20/35 篇），且具強烈負向效應；out-of-pocket cost 亦為強負向屬性；過程屬性（process attributes，如醫病溝通品質）共 34/58 個，主導初級醫療偏好結構（Lim, Loke &amp; Car, 2022; Lim 2022 Conjoint Analyses Patients）。</li>
 <li><strong>新聞內容版面偏好情境</strong>：Kanuri et al.（2014）以 CBC 量化美國日報讀者偏好，屬性含 hard news 類型（State Government News utility 最高）、features（Arts &amp; Entertainment 主導）、sports、advertising、版面比例；CBC 比直接詢問更能揭露真實的版面取捨，個案報社依研究結果調整後，在漲價 75% 下仍維持發行量（Kanuri, Thorson &amp; Mantrala, 2014; Newspaper Maintained Circulation After 75 Percent Price Increase）。</li>
@@ -882,6 +922,7 @@ MathJax = {
 <li><strong>Conjoint 作為非線性 part-worth 預測工具</strong>：傳統 logit／MDA 對 $x_i$ 估計單一斜率 $\beta_i$ 假設效應在整個 $x_i$ 範圍內單調且線性 $\text{logit}(p) = \beta_0 + \sum_i \beta_i x_i$；conjoint 把 $x_i$ 切成 $K$ 個 levels 各估一個 part-worth $u_i(x_{i,k})$，效用為 piecewise step function $U_n = \sum_i u_i(\text{level of } x_i)$，允許<strong>非單調反應</strong>（如 Operating Income 從負到 50 萬 part-worth 大幅上升、50–100 萬趨緩、&gt;100 萬因規模僵化反而下降的 U 型曲線）（Atwater et al., 2014; Conjoint part-worths capture nonlinear attribute response that linear regression cannot）。</li>
 <li><strong>Conjoint 非線性 vs. 線性回歸的代價</strong>：(a) <strong>資料量需求</strong>——每個 level 需足夠樣本估 part-worth，levels 越多需求越高；(b) <strong>參數膨脹</strong>——16 變數 × 平均 5 levels = 80 個 part-worth 待估，比 logit 的 16 個 $\beta$ 多 5 倍，需配合 PARS 精簡變數集避免過度擬合；(c) <strong>新樣本歸 level 規則</strong>——須清楚定義新觀測屬於哪個 level、處理 level 邊界外推；當反應確實線性，conjoint 的額外彈性反成 noise，logit 仍是更穩定選擇——典型 bias-variance trade-off（Atwater et al., 2014）。</li>
 <li><strong>PARS（精簡變數集）勝出 full 模型的兩機制</strong>：Atwater et al.（2014）比較 72 個 conjoint 模型（36 full + 36 PARS）發現 6 變數 PARS Model 64 綜合排名第 1（4 指標等權重）勝過 16 變數 full 模型；機制：(1) <strong>過度擬合的反向懲罰</strong>——full 模型對 part-worth 個別估計變異數較高（bias-variance 中的 variance 端），精簡到 6 變數降低 variance；(2) <strong>訊號雜訊比改善</strong>——被砍掉的 10 個變數本來貢獻就低（落入 Low tier），保留它們等於放大雜訊；研究指引：conjoint 用於預測時，先以 logit 或其他簡單方法做特徵預篩，再用精簡變數集進 conjoint 比把所有變數丟進去更穩健（呼應 ML 文獻的 L1 regularization）（Atwater et al., 2014; Parsimonious six variable conjoint model outperforms full sixteen variable model）。</li>
+<li><strong>Spike-and-slab prior 於 conjoint AMCE 多檢驗校正</strong>：spike-and-slab 為混合先驗 $\pi(\beta) = \pi_0 \delta_0(\beta) + (1 - \pi_0) g(\beta)$——spike 是零點點質量（先驗認為「效應為零」的機率 $\pi_0$）、slab 是連續分布（效應非零時的分布）；Liu &amp; Shiraito (2023) 將此先驗應用於 conjoint AMCE 的 multiple testing 校正，混合權重 $\pi_0$ 由 penalized likelihood 從資料估計（empirical Bayes），實現對 AMCE 估計向 0 的自適應收縮，特別適合屬性 × 水準眾多、family-wise error 嚴重的 conjoint 場景（Liu &amp; Shiraito, 2023; 延伸：spike-and-slab prior、adaptive shrinkage）。</li>
 </ul>
 <h4 id="37-joint-pooled-estimation">3.7 Joint / pooled estimation 跨資料源</h4>
 <p>Joint estimation 指同時估計多個資料源（DCE + BWS、conjoint + MaxDiff、RP + SP）的偏好參數。ICLV（Integrated Choice and Latent Variable, Ben-Akiva et al., 2002）結合離散選擇模型與 SEM 潛在變量。Swait-Louviere test 檢定兩資料源是否可 pooling（$H_0: \beta_1 = \beta_2$ 且 $\sigma_1 = \sigma_2$）。Outside good（外部選項/無選擇選項）作為共同參考水準可識別原本不可識別的 level-0 partworth。</p>
@@ -990,6 +1031,8 @@ MathJax = {
 <li><strong>Individually adapted CBC design 緩解 ERB</strong>：Gensler et al.（2012）提出「個體化適應性設計」——依前幾題反應動態調整後續任務的價格水準，使其落在消費者 WTP 範圍內；此設計顯著降低 ERB 比例與 WTP 誤差（Gensler et al., 2012; individually adapted CBC design reduces extreme response behavior）。</li>
 <li><strong>螢幕佈局反轉屬性重要性排序</strong>：King et al.（2019）以 conjoint 研究 conjoint 本身的螢幕佈局偏好，發現每頁呈現 2 概念 vs 3 概念時「激勵設計」屬性的 importance 排序發生反轉——呈現格式本身成為混淆變數；研究者設計時需考量佈局對 importance scores 的系統性影響（King, Labas &amp; Renaudin, 2019; conjoint screen layout can alter attribute importance rankings）。</li>
 <li><strong>Radio buttons 優於 drop-down menus</strong>：King et al.（2019）同一研究顯示受訪者顯著偏好 radio buttons 格式而非 drop-down menus，建議線上 conjoint 問卷以 radio buttons 作為 grid 問題的預設格式（King et al., 2019; respondents prefer radio buttons over drop-down menus in grid questions）。</li>
+<li><strong>Trap question 為注意力篩選的低成本工具</strong>：在 conjoint profile 中刻意嵌入明顯不合理組合（如「超低排氣量 + 超高級品牌」）作為 trap，可在事後辨識並剔除注意力不足的受訪者；相較 attention check item，trap 直接利用屬性結構不破壞 conjoint 任務流暢度（20_117 Methods; 延伸：China Car Brand Value Conjoint）。</li>
+<li><strong>Statistical power 在 conjoint 中常被高估</strong>：調查實驗領域中位數效應量 $d = 0.08$，遠低於研究者預設的 0.2，多數實驗即便有事前 power 分析仍嚴重 underpowered；conjoint AMCE 在 effect size $d \approx 0.1$ 的常見場景下需 $N \geq 1{,}500$ 才能達 80% power（Rauf et al., 2025; Cohen, 1988; 延伸：statistical power）。</li>
 </ul>
 <h4 id="46-attribute-non-attendance">4.6 Attribute non-attendance</h4>
 <p>Attribute non-attendance（ANA）指受訪者在評估時完全忽略某些屬性，被忽略屬性的估計係數壓向 0。Screening model（Gilbride &amp; Allenby, 2004）顯式建模受訪者的兩階段決策：先篩選可接受選項、再於剩餘選項中最大化效用。ANA 可透過 self-reported 方式或 latent class 統計推導。</p>
@@ -1006,6 +1049,10 @@ MathJax = {
 <li>Carryover effect 在重複測量設計中，受訪者對先前任務反應影響後續回應（Hainmueller et al., 2014）。</li>
 <li>Context effects 含 range effect、number-of-levels effect、attention effect，part-worth 隨呈現情境變動（Wittink, 1989）。</li>
 <li>偏好是動態建構而非靜態儲存；情境、學習、疲勞都影響偏好表達（Agarwal et al., 2014）。</li>
+<li><strong>Phantom effect</strong> 指選擇集中出現不可購得（out-of-stock）的優勢選項時，仍會改變消費者對其餘可選項的偏好；忽略 phantom effect 系統性偏誤估計屬性重要性與 part-worth（Igari &amp; Takeuchi, 2025；延伸：phantom effect、ignoring context effects biases conjoint attribute importance estimates）。</li>
+<li>將 phantom effect 納入 rank-ordered logit + hierarchical Bayes 可顯著改善模型適配，holdout 第二順位 hit rate 提升 1–2 個百分點（Igari &amp; Takeuchi, 2025；延伸：phantom effect significantly improves rank-ordered conjoint model fit、holdout sample second choice hit rate increases by 1 to 2 percent with phantom term）。</li>
+<li><strong>Inverse distance coding</strong> 在屬性空間中將 phantom 對其他選項的影響以距離倒數加權，預測效度優於傳統 dummy coding（Igari &amp; Takeuchi, 2025；延伸：inverse distance coding outperforms dummy coding for phantom effect）。</li>
+<li>Phantom effect 在個體層級呈右偏分布：多數受訪者效應接近 0，少數受訪者受 phantom 強烈影響，需以 HB 個人層級估計揭示（Igari &amp; Takeuchi, 2025；延伸：phantom effect heterogeneity is right-skewed across individuals）。</li>
 </ul>
 <h4 id="48-social-desirability-bias">4.8 Social desirability bias</h4>
 <p>Social desirability bias（SDB, 社會期許偏誤）指受訪者為迎合社會規範而扭曲回應。Forced-choice 設計（如 conjoint 的強制取捨）透過分散注意力至多屬性、使「哪個選項應該被選」不再明顯，降低 SDB。Horiuchi et al.（2021）發現完全隨機化可將敏感屬性 SDB 降低約三分之二（延伸：Self-Report Attitude and Conjoint Results Often Diverge、High Burden Tasks Favor Conjoint Over Self-Report）。</p>
@@ -1088,6 +1135,8 @@ MathJax = {
 <li>Barter conjoint 與 conjoint poker 在樣本外預測優於 incentive-aligned 與 hypothetical CBC（Ding, Park &amp; Bradlow, 2009）。</li>
 <li>Base-case market share 是約束非先驗資訊，選擇模型應明確建模無選項與品牌忠誠度（Gilbride, Lenk &amp; Brazell, 2008）。</li>
 <li><strong>SIMOPT 12 能力</strong>：first-choice / share-of-preference 法則、sequential competitive moves、Pareto frontier（市占 vs return）、line extension、cannibalization 模擬、價格敏感度分析等；搜尋空間為 $\prod_k L_k$ attribute-level 組合，遠超傳統 simulator 僅模擬預設 profile 的範圍（Green &amp; Krieger, 1991; Optimal product design models operationalize segment targeting; SIMOPT）。</li>
+<li><strong>Share of Preference（SOP）定義與計算</strong>：在 conjoint market simulation 中，特定 profile 被受訪者選為「首選」（最高 composite utility）的比例；採 randomized first choice 規則 $\text{SOP}_j = \frac{1}{N}\sum_{n=1}^{N} \mathbb{1}\{j = \arg\max_k U_{nk} + \varepsilon_{nk}\}$ 加入隨機誤差項以避免過度集中於最高 utility；總和恆為 100%；適合做相對比較（如「加入 eco-score 後永續品牌 SOP 提升多少」），絕對值需以 market share 校正（Orme, 2019; Bergener et al., 2026; 延伸：share of preference）。</li>
+<li><strong>Sampling of Scenarios（SOS）為 WTP 估計的競爭情境法</strong>：Orme (2021) 提出之 WTP 估計方法，對 reference product 設定 SOP、提升某屬性後重算 SOP，找出讓 SOP 回到原始水準的價格 delta 即為 WTP；透過 bootstrap 反覆隨機抽樣競爭者定位估計 95% CI；相對於 algebraic WTP（$\beta_{\text{attribute}} / \beta_{\text{price}}$）能避免高估、提供不確定性區間；適合競爭市場（如 47 款手機 Bergener et al., 2026），CI 較貼近真實不確定性（Orme, 2021; Bergener et al., 2026; 延伸：sampling of scenarios）。</li>
 <li><strong>POSSE 系統（Green, Carroll &amp; Goldberg, 1981）</strong>：Product Optimization and Selected Segment Evaluation 為首套 conjoint-based 產品/服務最適化的 28 支程式整合系統，含 7 子系統（experimental design、utility estimation、choice simulator、objective function estimation、optimization、sensitivity analysis、time-path forecasting），於 1981 前已在 15 個商業領域（durables、telecom、foods、drugs 等）實際應用（Green, Carroll &amp; Goldberg, 1981）。</li>
 <li><strong>POSSE 的 response surface methodology</strong>：以低階多項式 $\hat{R}(\mathbf{x}) = \beta_0 + \sum_k \beta_k x_k + \sum_{k,l} \beta_{kl} x_k x_l + \cdots$ 近似 choice simulator 輸出，透過 RSM 將昂貴的選擇模擬以解析最佳化取代；類別變數採 enumeration（如 QUALO）保證全域最優、連續變數採 gradient/direct/random search 但不保證全域最優（Green, Carroll &amp; Goldberg, 1981）。</li>
 <li><strong>Hybrid conjoint model（Green, Carroll &amp; Goldberg, 1981）</strong>：結合 self-explicated 與 decomposition 測量，皮卡車案例 N=486、8 屬性 × 3 水準（$3^8 = 6{,}561$ 組合），分數型設計縮減至 81 master profiles 後每位受訪者僅評估 9 個 profiles，以個體 hybrid 效用估計支撐 POSSE 最適化（Green, Carroll &amp; Goldberg, 1981）。</li>
@@ -1099,6 +1148,7 @@ MathJax = {
 <li>MWTP 可透過 stepwise 多元回歸建構 benefit transfer functions，將測得 MWTP 外推至未測量城市；亞洲城市應用中 ~90% 預測 transfer error 低於 50%（Tokimatsu et al., 2016）。</li>
 <li><strong>Market simulation 必須包含 no-choice option 才能估計 absolute take-up</strong>：Eggers, Sattler, Teichert &amp; Völckner（2022）ebook 範例顯示——若 simulation 僅含 real options，預測 share 之和恆為 100%；加入 no-choice 後可區分「不買」比例，反映實際市場 take-up rate；ebook 6-in 黑色 4 GB @ €139 vs no-choice 範例：$V = -0.787$ vs $V_{\text{none}} = -0.532$，purchase probability = $0.437$；轉為 market shares 的條件（Orme &amp; Johnson, 2006）：(1) 包含所有影響購買的 attributes / competitors、(2) 真實市場與 experiment 相符、(3) incentive alignment 提升 validity（Eggers et al., 2022; Market simulation requires no-choice option for absolute predictions）。</li>
 <li><strong>WTP 從 partworth 直接推導</strong>：Eggers et al.（2022）介紹標準轉換 $\text{WTP}_{nm} = \beta_{nm} / \beta_p$，ebook 範例 white color WTP = $0.240 / -0.028 \approx €-8.57$（「願多付 €8.57 換取白色」）；同時警示 WTP 解釋需考慮符號方向（正 partworth 對應負 WTP）（Eggers et al., 2022）。</li>
+<li><strong>Market share simulation 作為實務轉譯</strong>：將學術 conjoint 結果轉譯為「漲價 \$500 會掉幾 % 市場份額」這類管理者可操作的結論；Cavusoglu et al.（2022）以 QuestionPro 內建 simulator 改動 cost level（< \$500 → \$501–1,000 → > \$1,000）並固定其他屬性，得 unknown organizer 市占自 35%（university 基準）跌至 14%、high-cost 市占跌至 17%，將 CBC 估計直接轉為會議主辦者可操作的定價與品牌決策（Cavusoglu et al., 2022; market share simulation; Cavusoglu 2022 Methods）。</li>
 </ul>
 <h4 id="55-wtp">5.5 跨領域 WTP 常見發現</h4>
 <p>WTP 研究跨食品、服飾、電商、電子產品、數位新聞、慈善、環境等領域呈現一致的 pattern：<strong>價格是影響消費者選擇最重要的單一屬性</strong>，重要性通常遠超其他屬性之和；然而在特定條件下（認證標章存在、倫理動機強、非商品情境），其他屬性可取代或接近價格主導地位。本節整合跨領域 WTP 實證發現、方法論意涵與邊界條件（延伸：Hospitality Service Attribute WTP Across Restaurant and Hotel Studies、Green Attribute WTP Across Consumer Domains、Digital News WTP and Pricing Strategies、Attribute Importance Patterns Across Consumer Conjoint Studies）。</p>
@@ -1142,6 +1192,9 @@ MathJax = {
 <li><strong>AI 消費者 green AI 無 WTP</strong>：König et al.（2022）綠色 AI 的 WTP ≈ +0.04 EUR/月（近 null），即便高 environmental concern 次群樣本也僅 +0.08 EUR/月；say-do gap 顯著（自陳環保，不願付費），純市場機制無法驅動低碳 AI 採用（Environmental concern does not translate to green AI WTP）。</li>
 <li><strong>Desire for control 預測 XAI valuation</strong>：König et al.（2022）以 Parker et al. (2009) 4-item 量表（$\alpha = 0.74$）區分高/低控制欲；高控制欲群 XAI WTP = +0.71 EUR/月，低控制欲群 = +0.34 EUR/月；個人特質顯著 moderate XAI valuation，指向「可選 XAI 而非強制 XAI」的政策設計（König et al., 2022; Desire for control predicts transparency valuation）。</li>
 <li><strong>永續運動服飾 WTP（Spindler 2023）</strong>：Spindler et al.（2023）以 share-of-preferences 模擬推算德國跑者 WTP：100% environmental sustainability（ES）跑步服飾相對 0% ES 的 WTP = <strong>31.50€</strong>；100% social sustainability（SS）的 WTP = <strong>25.02€</strong>；兩者加總並不等於「同時提升 ES + SS」的 WTP——支持 WTP 的<strong>非加法性</strong>（non-additivity）為 conjoint 模擬的關鍵限制；此研究同時示範 share-of-preferences 法（以市場模擬計算 WTP 而非直接比率法）（Spindler, Hambrecht &amp; Breuer, 2023; Spindler 2023 Sustainable Consumption Sports）。</li>
+<li><strong>永續/歷史標籤資訊在 restaurant WTP 不顯著（反例）</strong>：Binesh (2023) 餐廳 conjoint 中 sustainability message（碳足跡標示）與 historical information 對三類菜單品項的 WTP 均不顯著；解讀為 <strong>information overload</strong>——在已呈現食物品質、服務品質、氛圍、價格後，額外標籤未能影響決策；提示研究者：當核心屬性已飽和受訪者注意力時，邊際資訊性屬性可能在 conjoint 中失效（Binesh, 2023; 延伸：Sustainability and historical info not significant for restaurant WTP、information overload）。</li>
+<li><strong>Online banking 客製化與即時互動的偏好提升</strong>：Dauda &amp; Lee (2015) 線上銀行 conjoint 顯示 website customization/personalization 與 real-time interaction（如 video banking）為未來線上銀行服務的關鍵增值特徵；該等屬性透過便利性與 engagement 超越基本交易功能促進 e-banking 普及採用（Dauda &amp; Lee, 2015; 延伸：Website customization and real-time interaction enhance online banking preference、Dauda 2015 Technology Adoption）。</li>
+<li><strong>Low cause-brand fit 反例（CrM 領域）</strong>：Moosmayer &amp; Fuljahn (2013) 在 laptop + 非洲醫院捐贈情境發現<strong>低 fit（醫療設備捐贈）被偏好於高 fit（IT 系統捐贈）</strong>（$p < .001$），part-worth: low fit +0.215 vs high fit −0.215；市場份額模擬 medical 61% vs IT 39%；與 schema theory 預期相反，作者以 attribution theory 解釋——消費者懷疑 IT 捐贈為 self-serving（藉機增加自家產品分銷）；同時 NPO（非洲醫院）與醫療設備在另一維度上 fit 更高；提供 CrM 領域中「fit 維度需多方向審視」的方法論啟示（Moosmayer &amp; Fuljahn, 2013; Ellen et al., 2000; 延伸：Low Cause Brand Fit Preferred Over High Fit In Laptop CrM）。</li>
 </ul>
 <h3 id="6">6. 進階變體</h3>
 <p>本章整理 conjoint 家族中解決特定問題的進階變體：BBC 在 benefit 層建模飽和；ACA/ACBC 以自適應設計降低認知負荷；holistic/hybrid 捕捉 heuristic 維度；compound conjoint 處理多實體決策；label conjoint 測試標籤組合效應；Kano-conjoint 以 Kano 模型前置篩選屬性；barter conjoint 以實物交換提升激勵相容。</p>
@@ -1185,6 +1238,8 @@ MathJax = {
 <li><strong>Garver 2012 把 ACM 引介到 logistics</strong>：Garver, Williams, Taylor &amp; Wynne（2012）以 US 249 名 parcel shipping 經驗者示範 ACM 在 logistics 的完整流水線（BYO + Possible Buy/No-buy + Screening Rules + Choice Tournament + HB + LCCA），是首篇將 ACM 帶入 logistics/SCM 文獻的應用論文；目的在於補強 logistics 文獻長期以 retention 為主、忽略 purchase choice 決策結構的缺口（Garver et al., 2012; 延伸：Garver 2012 Modelling Choice、adaptive choice modelling）。</li>
 <li><strong>ACM 解決 CBC 的 4 大限制</strong>：Garver et al.（2012）明確指出 ACM 相對 CBC 的 4 項改善——(a) <strong>attribute fatigue</strong>：BYO 階段個人化篩選降低後續任務的屬性負載；(b) <strong>profile complexity</strong>：near-neighbor concept 變動 1–2 levels 而非全屬性，比較認知負荷低；(c) <strong>price disconnection</strong>：summed pricing 動態定價避免「高價低能/低價高能」不真實組合；(d) <strong>segment heterogeneity</strong>：HB 個體層次估計 + LCCA 後驗分群直接揭示 need-based segments；4 限制對應 ACM 三階段的設計巧思（Garver et al., 2012; 延伸：ACM mitigates four key limitations of choice-based conjoint in logistics research）。</li>
 <li><strong>Summed pricing 為 ACM 特有的價格設定方式</strong>：在 ACM 中，各屬性水準帶獨立 cost premium（如 next-day +$20、3-day +$10、7-day +$5、10-day $0）；同一 product concept 中所有水準的 premium 加總後<strong>隨機 ±30%</strong> 作為呈現價格——使高效能組合對應較高價、低效能組合對應較低價，比 CBC 中常見「fixed price levels」更貼近真實市場；此設計直接緩解 CBC 中「price 與其他屬性正交但市場上實際強相關」的生態效度問題（Garver et al., 2012; summed pricing）。</li>
+<li><strong>ACBC 在 11 屬性高複雜消費電子的應用</strong>：Bergener et al.（2026）以 ACBC（Sawtooth Lighthouse Studio）處理手機 11 屬性 × 多 levels 的高維選擇——4 階段流程（BYO + Screening + Choice Tasks + Calibration）；$N = 534$ 德國消費者完成 8 BYO + 6 Screening + 6 Choice Task；HB 估計個體 part-worth、Sawtooth choice simulator + randomized first choice 進行市場模擬；以 SOS（Orme, 2021）在競爭市場情境計算 WTP，顯示市場簡化版兩產品情境系統性高估 WTP（Bergener, Jacobs, Veneny &amp; Gossen, 2026; 延伸：Bergener 2026 Methods）。</li>
+<li><strong>SOS（Sampling of Scenarios）市場 WTP 計算</strong>：Orme（2021）提出的 SOS 方法於市場模擬中蒙地卡羅抽取多個競爭情境（包含參考品與替代品組合），計算屬性變動的平均 SOP 與 WTP；比傳統兩產品情境 WTP 估計更貼近真實競爭市場下消費者實際支付意願；Bergener et al.（2026）使用 SOS 證明競爭環境會壓抑 eco-score WTP 溢價空間（Orme, 2021; Bergener et al., 2026; SOS_method）。</li>
 </ul>
 <h4 id="63-holistic-hybrid">6.3 Holistic 與 hybrid</h4>
 <p>Feature count（特徵總數）指輪廓中非零/非預設屬性的個數；holistic slope $\gamma$ 捕捉「更豐富 = 更好」或「更簡潔 = 更好」的整體性 heuristic。Holistic conjoint（Vriens &amp; Eggers, 2025）以 HB-MNL 同時估計 micro-feature partworths 與 holistic slope，顯著提升複雜產品選擇的預測精度。Hybrid 方法結合 self-explicated、conjoint、rating 等多資料源估計。</p>
@@ -1208,6 +1263,11 @@ MathJax = {
 <ul>
 <li>Label conjoint 可測試 eco-label 與 social label 的組合效應（加乘、中立或相消）（Arslan &amp; Dijkstra-Silva, 2025）。</li>
 <li>屬性標籤間可能出現相消效應，組合產生的效用值小於個別相加（Arslan &amp; Dijkstra-Silva, 2025）。</li>
+<li><strong>多階層 eco-score 設計（multi-level eco-label）</strong>：Torma &amp; Thøgersen（2021）提出將永續標籤從 binary（有/無）擴張為多階層（如 5 階紅綠燈式 A–E）以提供連續性偏好訊號；Bergener et al.（2026）以德國 $N = 534$ ACBC 在消費電子產品（mobile phones）首度驗證——eco-score 從 E 升至 A 帶來 SOP 與 WTP 雙顯著上升（Bergener, Jacobs, Veneny &amp; Gossen, 2026; 延伸：eco-score、eco-score raises share of preference for mobile phones in two product scenario）。</li>
+<li><strong>eco-score 在消費電子產品的市場效應</strong>：兩產品情境下 eco-score 從 E 升至 A 可使 WTP 溢價達 110%（基準價 €199 帶來 €220.7 溢價）；全市場 47 款手機情境下 Fairphone SOP 由 1.4% 升至 4.08%、Shiftphone 由 0.78% 升至 1.75%，永續品牌市佔近乎翻倍（Bergener et al., 2026; 延伸：E to A eco-score upgrade can more than double willingness to pay、eco-score nearly doubles sustainable brand SOP in competitive market）。</li>
+<li><strong>eco-score 屬性 importance 排名</strong>：在 11 屬性的手機 ACBC 中，eco-score importance 6.37%（排第 5），低於 price (32.8%)、brand (26.6%)、performance (11.2%)、condition (9.9%) 但<strong>高於 shipping、customer reviews、fair production 等其他屬性</strong>；顯示永續標籤在高單價產品中已非邊緣屬性（Bergener et al., 2026; 延伸：eco-score ranks fifth most important attribute but exceeds shipping and reviews）。</li>
+<li><strong>Eco-score 的個體異質性</strong>：market simulation 顯示多數消費者偏好維持不變，但少數人從低 eco-score 顯著轉向高 eco-score；以 Sankey diagram 視覺化個人層級的偏好轉移路徑，揭示「sustainable minority」存在（Bergener et al., 2026; 延伸：majority of consumers maintain preferences but minority shifts toward higher eco-score）。</li>
+<li><strong>refurbished + low-price 與高 eco-score 的雙重吸引</strong>：條件變數 (new / B-stock / refurbished) 與 eco-score 結合後，<strong>refurbished + 低價 + 高 eco-score</strong> 的 Samsung 與 Apple 機種捕獲環境敏感需求，凸顯 循環經濟商業模式（refurbishment）與標籤政策的協同效應（Bergener et al., 2026; 延伸：refurbished low-priced Samsung and Apple capture eco-conscious demand）。</li>
 </ul>
 <h4 id="66-kano-conjoint-integration">6.6 Kano-Conjoint Integration</h4>
 <p>Kano 模型將屬性分類為 Attractive（具吸引力，有則驚喜、無則不失望）、One-dimensional（一維，滿意度與水準正相關）、Must-be（必要，無則不滿、有則理所當然）、Indifferent（無感）、Reverse（反向）五類。Kano-conjoint 兩階段方法先以 CSI 值（Customer Satisfaction Index）排序篩除 Indifferent 屬性、保留前 2-3 個 Attractive 與 One-dimensional，可將 26 屬性縮減至 6 個（Mahatthanachosit &amp; Chompu-inwai, 2023）。Gregory（2011）以大型服務業場景（n = 3,231）示範 Modified Kano + CBC 的完整兩階段：先以 Modified Kano 識別 Positive（One-dimensional）vs Zone of Indifference（Indifferent）屬性，再以 CBC 量化每個 Positive 屬性的 WTP，使 Kano 的方向性判斷獲得具體貨幣錨點（Gregory 2011 Assessment Kano Conjoint）。</p>
@@ -1266,6 +1326,7 @@ MathJax = {
 <li><strong>Sequential 質性 + 量化 divergence 時的詮釋</strong>：混合方法常見結果為 <strong>agreement on core findings but divergence on peripheral</strong>；例如行為嚴重性指標在量質間收斂、但壓力指標僅質性訪談捕捉（Quantitative qualitative convergence on behavioral severity but not on stress），提醒研究者不應將質性結果視為量化的「補充驗證」而應作為獨立資訊來源。</li>
 <li><strong>官僚學習混合方法</strong>：Tangianu, Esser &amp; Janus（2025）對 BMZ/KOICA/Norad 三國發展援助機構採 conjoint（$N=81$）+ 89 場質性訪談，conjoint 僅識別「強制 vs 選擇性訓練」屬性顯著（AMCE = $-0.137$, $p<0.001$），訪談揭示機制——強制訓練「保留」學習時間避免與日常工作競爭；純 conjoint 無法提供此機制解釋（Tangianu, Esser &amp; Janus, 2025）。</li>
 <li><strong>方法論警示</strong>：混合方法不等於「兩個獨立 sub-study 拼貼」——研究者須在設計階段明示 integration point（研究問題、取樣、分析、詮釋四層次至少一層整合），否則易退化為 parallel publication；conjoint 的屬性設計與質性發現之間必須有明確 traceability（Fetters et al., 2013）。</li>
+<li><strong>延伸閱讀</strong>：本節聚焦 conjoint + 質性的整合；若論文採「多個 conjoint / 多種 conjoint 變體 / conjoint + 量化輔助測量 / conjoint + 計算方法 / stated–revealed triangulation」其他模式，請見上層分類框架 <a href="conjoint_book.html">§6.13</a>。</li>
 </ul>
 <h4 id="611-dynamic-conjoint-cbc">6.11 Dynamic Conjoint（動態 CBC，時間依存偏好）</h4>
 <p>Dynamic conjoint 在標準 CBC 基礎上引入<strong>時間</strong>（或其他連續情境變數）作為額外的「屬性」或調節變數，以捕捉偏好如何隨時間動態變化。核心模型為 RCMNL（random coefficients multinomial logit），允許每位受訪者的屬性係數在不同時間點取不同值。此設計特別適用於時間敏感的訂購/預訂情境（旅館、機票、演唱會），傳統靜態 conjoint 在此情境下會低估時間折扣效應與取消政策的動態價值。</p>
@@ -1274,6 +1335,98 @@ MathJax = {
 <li><strong>Pay on departure 偏好隨近入住日遞減</strong>：Arenoe &amp; van der Rest（2020）發現延遲付款偏好在 booking horizon 縮短時下降——越近入住日越傾向接受 pay now，反映不確定性管理動機隨時間降低（Arenoe &amp; van der Rest, 2020; pay on departure preference declines as check-in approaches）。</li>
 <li><strong>MVAI（monetary value of attribute importance）</strong>：Arenoe &amp; van der Rest（2020）提出 MVAI 指標將屬性重要性轉為貨幣價值，直接支持 dynamic pricing 決策；RCMNL 允許個體 time-path 估計（Arenoe &amp; van der Rest, 2020）。</li>
 <li><strong>客群異質性高</strong>：Arenoe &amp; van der Rest（2020）發現 time-dependent 偏好的個體間差異顯著，部分旅客偏好早訂優惠、另一群偏好彈性取消；HB 估計可分離此異質性並支持差異化定價（Arenoe &amp; van der Rest, 2020; guest heterogeneity in time-dependent preferences is substantial）。</li>
+</ul>
+<h4 id="612-cbc-lca">6.12 CBC + LCA 整合方法論（消費者偏好餵入環境生命週期）</h4>
+<p>整合 CBCA 與 LCA 解決循環經濟設計中「使用者偏好」與「環境衝擊」常相互衝突的核心張力。CBC 量化消費者對服務屬性的偏好強度（part-worth、importance），LCA 計算各情境（依屬性 level 組合）的 GWP、化石資源、淡水優養化、水耗等環境指標。整合方式為「CBC 偏好結果直接餵入 LCA 情境設計」：將消費者最偏好的屬性組合作為主情境，最不偏好但環境最佳的組合作為對照，建立雙指標決策框架（Lin, Lin, Peng &amp; Amasawa, 2026; 延伸：Lin 2026 Reusable Cup Methods）。</p>
+<ul>
+<li>整合 CBC + LCA 可同時量化「消費者偏好」與「環境表現」，揭示兩者之間的 trade-off 結構，避免單純偏好導向設計忽視環境後果（Lin, Lin, Peng &amp; Amasawa, 2026; 延伸：longer return period and flexible return location preferred but reduce environmental performance）。</li>
+<li>CBC 結果直接驅動 LCA 情境設計：以消費者偏好的歸還天數、距離、租用方式組合為 LCA 主情境輸入，使環境計算反映真實使用模式而非預設假設（Lin et al., 2026）。</li>
+<li><strong>台灣循環杯實證</strong>：5 屬性（折扣、租用方式、歸還天數、歸還距離、歸還方式）× 14 levels CBC + ISO 14040/44 LCA，OLS via Stata <code>conjoint</code> package；最佳服務設計為「NT\$5 + 集點 / APP 會員 / 7 天歸還 / 400m 內 / 任意分店」（Lin et al., 2026; 延伸：discount with rewards is the most important reusable cup attribute in Taiwan、seven day return period optimizes consumer acceptance and environmental performance）。</li>
+<li>即使最差條件下（高損失率、低利用率、長重新分配時間），循環杯 GWP 仍低於一次性紙杯（&lt; 0.04 kg CO₂-eq/drink），驗證循環杯系統的環境穩健性；唯水耗與淡水優養化兩項，循環杯因清洗階段而略劣於一次性（Lin et al., 2026; 延伸：reusable cups outperform single-use cups across most environmental categories）。</li>
+<li><strong>「最小可接受歸還天數」自由填答驗證</strong>：Lin et al.（2026）以自由填答補充 CBC 結果，437 位（44%）受訪者選 7 天作為閾值，Wilcoxon rank-sum $z = -21.96$、$p < 0.0001$ 統計驗證 7 天為最佳設計點；示範 CBC 主分析 + 開放題交叉驗證的混合設計（Lin et al., 2026; 延伸：Lin 2026 Reusable Cup CBC LCA Taiwan）。</li>
+<li>押金制（deposit system）為消費者最不偏好的租用方式，部分原因為支付摩擦與心理損失；台灣便利商店 APP 會員制與通訊軟體會員制接受度顯著較高（Lin et al., 2026; 延伸：deposit system is least preferred reusable cup rental method）。</li>
+<li><strong>方法論意涵</strong>：CBC + LCA 整合適用於任何「使用者偏好結構直接影響環境表現」的循環經濟服務設計——共享單車、可重複使用包裝、租賃家具、衣物租借等；研究者應同時報告 CBC importance 與各情境 LCA 指標，提供雙指標 dashboard（Lin et al., 2026）。</li>
+</ul>
+<h4 id="613-multi-conjoint-mixed-method-conjoint">6.13 Multi-conjoint 與 mixed-method 研究設計（超越單一 conjoint 的論文架構）</h4>
+<p>一篇論文只跑一個 conjoint 經常在審稿與外部效度上顯得方法論單薄：屬性清單來自研究者先驗、AMCE 無法解釋為何受訪者如此選擇、樣本偏好異質性難以歸因、stated preference 與真實行為的落差難以驗證。本節彙整將 conjoint 與「多個 conjoint／不同類型 conjoint／其他研究方法」整合的研究設計典範，作為 §6.4 compound conjoint、§6.6 Kano-conjoint、§6.10 mixed-method qualitative integration、§6.12 CBC+LCA 的上層分類框架。整合設計的核心價值在於補償單一 conjoint 的四項限制：(a) <strong>屬性來源偏誤</strong>（誰決定屬性清單）、(b) <strong>機制解釋缺失</strong>（為何選 A 不選 B）、(c) <strong>異質性歸因不足</strong>（誰偏好什麼、為什麼）、(d) <strong>外部效度有限</strong>（stated 是否預測 actual）。</p>
+<h5 id="6131-conjoint-multi-conjoint-replication-staging">6.13.1 多個 conjoint 在同一論文（multi-conjoint replication / staging）</h5>
+<p>同一研究中執行多個 conjoint，目的可為跨樣本複製（external validity）、跨脈絡比較（boundary conditions）、子樣本對照（heterogeneity identification）或階段性壓縮屬性清單（pilot → main）。</p>
+<ul>
+<li><strong>三研究遞進設計（multi-study within paper）</strong>：Mogilski（2017）以同一受訪者對象連續執行三個 conjoint——研究一 5 屬性配偶輪廓 rating-based 排序（$N=51$ 對伴侶，16 + 3 holdout 輪廓，OLS）、研究二 3 屬性電腦合成臉部 composite（L9 正交陣列 9 張臉、性別二型性 × 對稱性 × 健康膚色）、研究三 5 屬性五官線索 L16 正交陣列；三研究遞進從「屬性 → 整體吸引力 → 細部線索」的概念解析，示範 conjoint 可作為<strong>理論分解工具</strong>而非單次量測（Mogilski 2017; Mogilski 2017 Human Mating Romantic Decision Making; Mogilski 2017 Methods）。</li>
+<li><strong>跨國／跨文化複製</strong>：Kim, Chang &amp; Park（2017）以同套 5 屬性 OTT CBC 同時施測於中韓兩國，揭示中國最重解析度／韓國最重推薦系統、兩國對「多種支付方式」偏好相反，提供市場進入決策依據；BechLarsen &amp; Grunert（2003）丹麥/芬蘭/英國三國功能性食品 conjoint 揭示 GMO 接受度跨文化差異；Kolling &amp; Ribeiro（2025）巴西 + 澳洲 shampoo $N=439$ 同設計揭示 CE/CSR/ESG 三概念跨文化無區分。<strong>設計要點</strong>：跨文化複製須驗證 measurement invariance、preference regularity test、跨組 partworth equality LR test（Yangui 2019 框架）。</li>
+<li><strong>跨利害關係人三套相同 CA</strong>：Vermeulen et al.（2007）荷蘭骨折管理研究對醫師 ($n=50$) / 護理師 ($n=150$) / 病患 ($n=74$) 執行<strong>完全相同的 18 orthogonal vignettes</strong>，揭示三方對「快速癒合」排序一致但 WTP 顯著分歧（醫師 €275 短住院、護理師 €252 減痛、病患 €280 快速癒合，$p<0.05$）；示範 conjoint 作為「跨利害關係人偏好對齊診斷工具」（Vermeulen et al., 2007; Vermeulen 2007 Preferences of）。</li>
+<li><strong>嚴重度子樣本隨機分派</strong>：Rowen et al.（2022）NHS 索賠 DCE $N=1{,}013$ 將受訪者隨機分至 mild ($n=315$) / moderate ($n=349$) / severe ($n=349$) 三組 PSI 情境，<strong>依嚴重度調整 compensation 與 process length 的 levels</strong>，使「情境效應」與「屬性效應」可同時識別；發現 baseline claim probability 隨嚴重度從 42% 升至 78%、compensation 僅在 mild 顯著、apology 跨三組均顯著——示範「政策設計型 DCE」可同時估計 baseline rate 與處理效應（Rowen 2022 DCE Clinical Negligence）。</li>
+<li><strong>三階段屬性壓縮設計（pilot funnel）</strong>：Bask, Halme, Kallio &amp; Kuula（2013）芬蘭手機 SCM 三階段——focus group（4 組、4 主題 SSCM 框架）→ MaxDiff scaling pretest（$n=72$，13 屬性壓縮至 6）→ second pretest（壓縮至 5 永續屬性 + price）→ main CBC + LCA $N=8{,}592$ 邀請樣本；屬性篩選 traceability 完整，最後 LCA 4-class 解 entropy = 0.81、holdout = 68.5%（Bask et al., 2013; Bask 2013 Methods）。</li>
+<li><strong>兩階段定性 + 定量</strong>：Leister 2007 Why Do Leister &amp; Stausberg（2007）德國 Essen 大學醫院 pilot $n=50$ 開放訪談 → main $n=151$ full-profile rank-order 12 stimuli + 5-factor reduced model，揭露「經驗訊號 &gt; QM certification &gt; website &gt; quality report (ns)」，H9b 驗證<strong>無經驗訊號時 servicescape + distance 重要性顯著提升</strong>；訪談階段為 conjoint 屬性清單提供合理性檢驗（Leister &amp; Stausberg, 2007）。</li>
+<li><strong>量表構念化先於 conjoint 設計</strong>：Hsu, Kannan, Leong &amp; Tan（2006）以 ISM-US ($N=100$) EFA → APICS-US ($N=310$) + APICS-Europe ($N=115$) 雙樣本 CFA 驗證 supplier selection 三因子構念（quality / service / strategic-management fit）；<strong>設計啟示</strong>：跨產業 conjoint attribute 列表應源自驗證後構念而非任意挑選，且 conjoint 中 price 應為<strong>獨立屬性</strong>而非嵌入 service factor 的量表題項（Hsu et al., 2006; Hsu 2006 Methods）。</li>
+</ul>
+<h5 id="6132-conjoint-multi-format-head-to-head">6.13.2 多種 conjoint 變體在同一論文（multi-format head-to-head）</h5>
+<p>在同一研究中同時或對照施測<strong>不同 conjoint 變體</strong>，可揭示方法論差異本身的實證後果（不只是統計顯著性差異，而是研究者該選哪個方法）。</p>
+<ul>
+<li><strong>RB vs CB 對照（OM/marketing 經典）</strong>：Karniouchina, Moore, van der Rhee &amp; Verma（2009）193 名美國 MBA + 商學生 between-subjects（98 RB + 95 CB）筆電 conjoint；HB 估計 + powered BTL 個人預測；HB CB 個體 hit rate 顯著高於 HB RB（含 keep on shopping 0.65 vs 0.50；排除 0.67 vs 0.58）；compatibility effect 為唯一系統性差異（brand 在 RB 較重要、price 在 CB 較重要）；choice share MAD 在無 no-buy option 時 RB/CB 收斂；CB 對 comparable attributes 下行係數絕對值大於上行（loss aversion CB 強於 RB）；<strong>作者建議</strong>：HB CB 為 OM 主流首選（Karniouchina 2009 Issues; Karniouchina 2009 Methods）。</li>
+<li><strong>三方法 head-to-head（DCE / RCA / MBWS）</strong>：Yangui et al.（2019）西班牙巴塞隆納橄欖油 $N=165$ 隨機等量分配三組（每組約 55 人），<strong>三組使用完全相同的實驗設計</strong>僅回應任務不同；NHCE 選最偏好 / NHRCA 排序 5 輪廓 / NHMBWS 依序最佳-最差-2nd-2nd；非假設性 binding task 機制（incentive-aligned）；hit rate NHMBWS 完整排序 = 61.8% 最高、NHCE = 43.6%；WTP estimates 跨方法相似但 partworths 不同；<strong>preference regularity test</strong> 拒絕跨組偏好相等假設（Yangui 2019 Comparing Conjoint Methods）。</li>
+<li><strong>DCE vs Rating vs TTO（within-subject 三法）</strong>：Kaplan et al.（2019）prostate cancer $N=194$ 同一受訪者依序執行 conjoint / rating / TTO；novel holdout 預測 conjoint 68% vs rating 43%（$p=0.003$）、internal $R^2$ rating 0.92 ≈ conjoint 0.91 &gt;&gt; TTO 0.35；TTO satisfaction 顯著低（trade life years 引發焦慮）、84% 受訪者視 life span 為 most important（<strong>ceiling effect 遮蔽其他 attributes</strong>），示範同一決策三法不可互換結論。</li>
+<li><strong>CBC + MaxDiff + 滿意度三類偏好資料整合</strong>：Liu, Büschken, Orme &amp; Allenby（2025）MTurk $N=318$ 電視機擁有者，同一受訪者<strong>先 conjoint 15 任務、再 MaxDiff 11 任務、再評 9 個 5 點滿意度量表</strong>；HB 框架以「不購買」outside good 作為共同 reference，允許三類資料三個誤差尺度（$\sigma_{\text{conjoint}}$、$\sigma_B$、$\sigma_W$）不同；$\theta_n$（GoM archetype 隸屬）作為上層迴歸共變數同時影響 part-worth 與滿意度——實證反駁 behavioral decision theory 強命題（context effects 沒想像中重要），支持經濟學派 preference stability（Liu 2025 Integrating Methods）。</li>
+<li><strong>Hypothetical vs Incentive-Aligned 2×2</strong>：Ding, Grewal &amp; Liechty（2005）賓州州立大學附近中餐廳 Study 1 四組——hypothetical conjoint / IA conjoint（隨機抽出實現實際購買）/ hypothetical CV / IA CV（BDM mechanism）；IA conjoint holdout hit rate 顯著高於 hypothetical conjoint、partworth 估計<strong>系統性不同</strong>（非單純 scale 差異）、IA conjoint 比 IA BDM CV 更能預測真實購買；Study 2 snack combos 實驗室複製 Study 1 結果（Ding 2005 Incentive-Aligned）。</li>
+<li><strong>Verbal vs Tasting</strong>：Cerjak et al.（2010）克羅埃西亞 $N=78$ 2×2 設計，tasting 刺激使品牌熟悉度效應從正向轉為負向（brand × tasting 顯著交互），暗示<strong>純語言 CA 系統性高估品牌傘效應</strong>；Pelsmaeker, Gellynck, Delbaere et al.（2013）比利時巧克力泡芙 verbal-only vs tasting-with-verbal——tasting 系統性壓低價格重要性估計（Cerjak 2010 Brand Familiarity Tasting Conjoint; Pelsmaeker 2013 Tasting Sensory Stimuli Conjoint）。</li>
+<li><strong>Visual vs Text（候選人 / 產品）</strong>：Vecchiato &amp; Munger（2025）YouGov $N=500$ 美國樣本 5 任務隨機指派 standard box vs visual Twitter profile（AI 生成大頭照）；視覺顯著屬性（gender、race）AMCE 改變方向、視覺邊緣化屬性（profession、education、religion）AMCE 縮小；López Ortega &amp; Radojevic（2025）德國 $N=2{,}324$ <strong>4 cells 2×2 因子設計</strong>（視覺/文字 × 有黨派/無黨派線索）；DeLong et al.（2021）消費品貨架模擬 vs 文字表格組——文字組 WTP 顯著較高、達顯著屬性數較多，attribute non-attendance 比例不同（Vecchiato Munger 2025 Visual Conjoint; López Ortega Radojevic 2025 Visual Conjoint Discrimination）。</li>
+<li><strong>Standard CBC + ACBC 互補</strong>：Garver, Williams, Taylor &amp; Wynne（2012）parcel shipping $N=249$ 以 ACM（ACBC v7.0）解決標準 CBC 的 4 限制——attribute fatigue（BYO 個人化篩選）、profile complexity（near-neighbor 變動 1–2 levels）、price disconnection（summed pricing 動態定價）、segment heterogeneity（HB + LCCA 後驗 5-class）；ACM 完成時間比 CBC 多 50–200%、樣本要求 $n \geq 250$，但獲得更細緻的個體 part-worth 估計（Garver 2012 Methods）。</li>
+</ul>
+<h5 id="6133-conjoint-qualitative-integration">6.13.3 Conjoint + 質性方法（qualitative integration）</h5>
+<p>詳細處理見 §6.10。本小節僅補充三種整合 timing 與<strong>質性發現如何回流 conjoint 設計</strong>的 traceability 要求。</p>
+<ul>
+<li><strong>Sequential exploratory</strong>：focus group → 屬性清單（Rodrigues et al., 2018 巴西 Cerrado 水果蜜餞 3 場 $N=50$ focus group → conjoint attributes）；ISPOR good practice 將 patient/user focus group 列為健康 conjoint 必要前置（MS 領域 70.6% 諮詢醫護專家、僅 11.8% 用 focus group 為方法論缺口）。</li>
+<li><strong>Convergent parallel</strong>：質性與量化 strand 同時蒐集、各自獨立分析、詮釋階段以 triangulation 整合——van Deen et al.（2023）IBD biologic SC vs IV $N=1{,}077$ ACBC + 22 場質性訪談 thematic analysis 揭示 IV 常與癌症/生病聯想、SC 需自信才能自行注射等情緒機制，<strong>補足 ACBC part-worth 無法解釋的偏好形成路徑</strong>；Tangianu, Esser &amp; Janus（2025）發展援助機構 $N=81$ conjoint + 89 場訪談揭示「強制 vs 選擇性訓練」AMCE 顯著的<strong>機制解釋</strong>——強制訓練保留學習時間避免與日常工作競爭。</li>
+<li><strong>開放題交叉驗證（quantitative-on-quantitative triangulation）</strong>：Lin, Lin, Peng &amp; Amasawa（2026）循環杯 CBC 主分析 + 自由填答「最小可接受歸還天數」437 位（44%）受訪者選 7 天，Wilcoxon rank-sum $z=-21.96$、$p<0.0001$ 統計驗證 7 天為最佳設計點，示範 CBC + 開放題的<strong>單一研究內二次驗證</strong>設計（Lin et al., 2026）。</li>
+<li><strong>Traceability 要求</strong>：質性發現 → conjoint 屬性必須有明確 mapping，每個屬性與水準應能追溯到某段訪談、某場 focus group 或某條 thematic code；否則退化為「兩個獨立 sub-study 拼貼」（Fetters et al., 2013）。</li>
+</ul>
+<h5 id="6134-conjoint-quantitative-auxiliary">6.13.4 Conjoint + 量化輔助測量（quantitative auxiliary）</h5>
+<p>Conjoint 之外<strong>同時施測</strong>心理測量量表、人口變數、行為觀察等，用於識別異質性、moderator 效應或外部變項預測。</p>
+<ul>
+<li><strong>Scale moderator + 雙群 conjoint</strong>：Imburgia et al.（2025）ratings-based conjoint $N=3{,}968$ 母親同時測 vaccine hesitancy 量表，<strong>高 hesitancy 群偏好 narrative</strong>（importance 16.3 vs 低 hesitancy 4.7），cross-group reversal 揭示「同樣 conjoint，不同 moderator 不同結論」；Deliza, MacFie &amp; Hedderley（2003）以 Need for Cognition 量表調節 visual conjoint——低 NFC 者依賴周邊線索（背景色、圖片、形狀），高 NFC 者受文字資訊影響更強（ELM 雙路徑）。</li>
+<li><strong>黨派身分 within-subject 操弄 + 量表</strong>：Sonmez, Makarovs &amp; Allum（2023）Prolific $N=1{,}005$ 5 屬性科學家信任 conjoint，<strong>黨派身分採 within-design 操弄</strong>（含黨派版 vs 不含黨派版 between-subject 分派）；AMCE + Marginal Means 雙報告；<strong>Entropy balancing</strong> 穩健性檢驗確認民主黨偏向樣本結果不受樣本偏誤影響；<strong>多維信任依變項</strong>（偏好選擇 binary + 資格認定/公眾利益/特定信任 7 點量表）提升收斂效度（Sonmez 2023 Methods）。</li>
+<li><strong>行為觀察 + conjoint</strong>：Toubia et al.（2012）conjoint poker 遊戲化激勵相容方法，<strong>eye-tracking</strong> 顯示參與者比 CBC 考量更多屬性資訊、涉入度更高；Barone, Lombardo &amp; Tarantino（2007）以<strong>受訪者選擇時間</strong>反估屬性重要性權重（choice time 越短 → 重要性越確定 → 權重越高），引入加權序數 logistic 迴歸（weighted OLR），Pearson $p = 0.681$ vs 未加權 $p = 0.080$、比例 odds 假設加權後成立（Barone 2007 Weighted Logistic）。</li>
+<li><strong>Latent budget constraint 共同估計</strong>：Pachali, Kurz &amp; Otter（2023）CBC + Bayesian HB 框架引入<strong>潛在預算上限</strong>（log-normal 先驗 + MCMC 後驗）；標準模型忽略預算限制造成 WTP 系統性高估、競爭均衡價格高估約 20%；此架構對定價研究者的啟示：CBC 估計 WTP 後供市場模擬或均衡定價前，必須驗證 budget omission bias 是否扭曲均衡解（Pachali Kurz Otter 2023 Omitted Budget）。</li>
+<li><strong>RCT-style between-subjects 操弄 stimuli</strong>：Kuo &amp; Wei（2020）NCKU $N=1{,}957$ 學生 3 種訊息 conditions（news report / statistics / safety guide）× CBC 8 alternatives；僅 news reports 顯著提升 safety certification importance（23.65% vs control 20.95%, $p<0.05$），WTP +NT$390/月——示範 conjoint 作為「<strong>訊息處理效應的因變項</strong>」而非僅描述偏好。</li>
+</ul>
+<h5 id="6135-conjoint-computational-integration">6.13.5 Conjoint + 計算方法／資料挖掘（computational integration）</h5>
+<p>近期前沿研究整合<strong>機器學習、文本探勘、生成模型</strong>到 conjoint 設計與估計，突破傳統「expert-defined attributes」的限制。</p>
+<ul>
+<li><strong>LDA + 雙 GoM + 雙 conjoint 五元件 compound integrated model</strong>：Kim, Chapman, Haruvy, Popkowski Leszczyc &amp; Allenby（2022）以 membership probability vector $\theta_n$ 整合五元件——LDA（donor 動機自由文本）、兩個 GoM（charity × beneficiary 量表回應）、兩個 conjoints（beneficiary 5 屬性 + charity 6 屬性），於 $N=480$ 澳洲捐贈者識別 $K=5$ archetypes（Cancer Carers 24%、Effective Altruists 19%、Animal/Nature Lovers 16%、Emergency Responders 23%、Feel-good Do-gooders 18%）；archetype-targeted appeals 預測優於 mass appeals（Kim et al., 2022）。</li>
+<li><strong>文字探勘 + Kano</strong>：Jin, Jia &amp; Chen（2022）以線上評論自動萃取 Kano 分類——以 word2vec 擷取產品特徵詞、以 ABSA 抽取 Kansei 情感向量，轉化為 Kano 評估矩陣計算各屬性 Attractive/One-dimensional 機率；以智慧型手機評論實證識別 camera 為最高 Attractive 屬性，<strong>取代傳統問卷調查</strong>，大幅降低蒐集成本（Jin 2022 Mining Online）。</li>
+<li><strong>β-VAE 自動發現視覺屬性</strong>：Sisodia, Burnap &amp; Kumar（2025）監督式 disentanglement β-VAE 從 6,187 支手錶圖片自動發現 6 個可解讀視覺特徵（dial size/color、strap color、bezel color、dial shape、crown size）；UDR = 0.414；HB 估計個體 part-worth + 生成式解碼器產出 ideal-point 客製設計；克服 expert-defined attribute 限制，將屬性 level 從離散水準擴張為連續 latent 維度（見 §6.8）。</li>
+<li><strong>AI 生成臉部 stimuli</strong>：López Ortega &amp; Radojevic（2025）與 Vecchiato &amp; Munger（2025）以 GAN/diffusion 生成可控屬性的合成臉避免使用真實人物造成 confound；自動生成數千張獨特候選人圖片（大頭照含 gender/race/age 視覺線索 + bio 含 party/profession/education 文字線索），克服標準 box conjoint 「處理模式」與真實社群媒體曝光情境的落差（見 §6.7）。</li>
+<li><strong>圖像情緒 DNN 量化作為視覺屬性</strong>：Hou, Zhang &amp; Zhang（2023）以深度神經網絡將圖像情緒（amusement、sadness、fear 等八類）量化後作為 S-O-R 框架的刺激變項，<strong>sadness 在低預算教育類 Kickstarter 專案顯著提升出資</strong>、fear 反向；此量化方式可延伸成 visual conjoint 的「情緒屬性 level」。</li>
+<li><strong>Monte Carlo + 公理設計資訊內容</strong>：SharifUllah &amp; Tamaki（2011）Kano 問卷缺失答案以 Monte Carlo 依已有答案的相對頻率分佈模擬缺失回應（15 次連續模擬「一致地相似」），以<strong>公理設計資訊內容（information content）</strong>框架量化答案複雜度，提出 Certainty Compliance、Requirement Compliance、Coherency measure 三指標取代傳統加權平均（SharifUllah 2011 Kano Uncertainty）。</li>
+</ul>
+<h5 id="6136-conjoint-revealed-preference-statedrevealed-triangulation">6.13.6 Conjoint 與 revealed preference / 行為資料整合（stated–revealed triangulation）</h5>
+<p>Conjoint 為 stated preference 方法，外部效度長期被質疑。同一論文中<strong>同時蒐集 revealed preference 資料</strong>（真實購買、平台聯絡、行政紀錄）可大幅強化因果詮釋。</p>
+<ul>
+<li><strong>Dictator game + conjoint 同卷整合</strong>：Kustov（2020）英國 Qualtrics $N=1{,}963$ 主問卷五區塊——Study 1 激勵型慈善 dictator game（£100 配對 6 個國內/全球慈善），三型分類（Egoists 57% / Parochial altruists 30% / Universal altruists 13%）作為 conjoint Study 2 的 pre-treatment moderator；Study 2 conjoint 6 屬性政策後果（T/G/I payoffs），AMCE OLS + clustered SE；<strong>設計貢獻</strong>：以激勵誘因規避 social desirability bias 超越自陳量表，再用行為分類作為 conjoint 異質性 moderator（Kustov 2020 Methods）。</li>
+<li><strong>Field choice 行為驗證（incentive-aligned binding task）</strong>：Ding et al.（2005）餐廳實際購買 holdout 驗證 IA conjoint 預測效度；Yangui et al.（2019）以排名比例機率（排名第 1 = 17/50、排名第 5 = 3/50）作為 binding mechanism 確保排序資料 incentive-compatible；Wertenbroch &amp; Skiera（2002）以 Vickrey auction 真實 WTP 驗證 conjoint stated WTP 上偏。</li>
+<li><strong>平台行政資料 + conditional logit</strong>：Hitsch, Hortaçsu &amp; Ariely（2010）美國線上交友平台（波士頓 + 聖地牙哥 2003 年）$N_m=3{,}004$、$N_f=2{,}783$、49,223 次主動聯絡作為 revealed preference；以用戶固定效果 conditional logit 控制搜尋異質性、對比不同吸引力等級聯絡行為分布識別策略性偏誤；<strong>配偶偏好研究 stated（conjoint）+ revealed（平台聯絡）互補</strong>——前者反映實際接觸行為、後者可控制選擇集設定（Hitsch Hortacsu Ariely 2010 What Makes You Click QME）。</li>
+<li><strong>客觀排序作為「虛擬受訪者」</strong>：Atwater, Gopalan, Lancioni &amp; Hunt（2014）美國 1{,}692 家 Class I/II 卡車業者<strong>客觀 exit vs non-exit 排序</strong>作為 conjoint DV，無真人受訪者；6 變數 PARS 兩階段 logit + conjoint 篩選；分數標準化 300–900 仿 FICO，2002 年退出 capture rate = 77.6%、Joint 2-year capture rate = 82.4%；<strong>60 年 conjoint 史上首次以「事件結果客觀排序」取代「人類偏好排序」</strong>——conjoint 從市場研究工具擴張為非線性財務／韌性預測工具（Conjoint Beyond Consumer Preference Expert Elicitation and Objective Rankings）。</li>
+<li><strong>生命週期評估環境影響整合</strong>（已於 §6.12 詳細展開）：Lin et al.（2026）循環杯 CBC + LCA；Bergener et al.（2026）ACBC + SOS market simulation 從個體偏好推估 Fairphone SOP 翻倍。</li>
+</ul>
+<h5 id="6137-conjoint-segmentation-post-conjoint-clustering">6.13.7 Conjoint 與 segmentation / 後分析整合（post-conjoint clustering）</h5>
+<p>Conjoint 估計完後再進行<strong>潛在類別分析（LCA）、K-means、混合隸屬（GoM）</strong>分群，是揭示偏好異質性的標準後分析做法（詳見 §3.4）。本小節僅補充常見搭配組合與報告規範。</p>
+<ul>
+<li><strong>CBC + HB + LCA 兩階段</strong>：Liu et al.（2024）骨鬆 Cedars-Sinai $N=304$，LCA 2-class 60.9% efficacy-focused vs 39.1% multi-factor，aggregate DCE 遮蔽 60/40 療效偏好分裂；Bask et al.（2013）4-class（Updater 22.1% / Budgeter 10.9% / Environmentalist 40.8% / Long-life 26.2%），entropy = 0.81；Garver et al.（2012）5 need-based segments（Speed Demons / Penny Pinchers / Cautious Information Seekers / Price Buyers / Average Joes），BIC 最低；Kim &amp; Lee（2023）韓國 OTT $N=360$ 多 OTT 訂閱者 MWTP 顯著高於單 OTT 訂閱者。</li>
+<li><strong>K-means cluster + cluster-specific 二階段建模</strong>：Head &amp; Ziolkowski（2012）加拿大行動電話 $n=188$ ACA → K-means 2-cluster（instant communicators 58.5% / information seekers 41%）→ <strong>cluster-specific PLS-SEM</strong>，TAM 前因路徑在兩群相反；Pinto et al.（2018）慢性膝痛 PAPRIKA → average-linkage hierarchical + NbClust 選 $K=3$ phenotype → PROMIS pain interference + Self-Efficacy 預測 cluster；Vukic, Kuzmanovic &amp; Kostic Stankovic（2014）塞爾維亞 Gen Y conjoint 6 attr → 4-cluster，preference-based segmentation F=47.8 vs demographic F=12.3 揭示偏好分群優於人口分群。</li>
+<li><strong>個體偏好轉移視覺化（Sankey diagram）</strong>：Bergener et al.（2026）以 Sankey diagram 視覺化個人層級的 eco-score 偏好轉移路徑，揭示「sustainable minority」存在——多數消費者偏好維持不變、少數人從低 eco-score 顯著轉向高 eco-score；個體層次視覺化已成為 ACBC 後分析新慣例。</li>
+<li><strong>Mixed-membership / GoM</strong>：Kim et al.（2022）$K=5$ archetypes，每受訪者為 $K$ 個 archetype 的混合（權重 $\theta_n$ 加總為 1）；Liu et al.（2025）3 archetypes（A1 幾乎全五星 / A2 多為四星 / A3 三星以下），$\theta_n$ 作為上層迴歸共變數同時影響 part-worth 與滿意度。</li>
+</ul>
+<h5 id="6138-design-principles-for-multi-strand-studies">6.13.8 整合機制與設計原則（design principles for multi-strand studies）</h5>
+<p>多 conjoint／混合方法設計的核心方法論文獻為 Teddlie &amp; Yu（2007）、Fetters, Curry &amp; Creswell（2013）、Greene, Caracelli &amp; Graham（1989）。研究者於設計階段須明示整合層次，否則退化為 parallel publication。</p>
+<ul>
+<li><strong>Integration timing 三類</strong>：(a) <strong>Sequential exploratory</strong>——質性先行以發掘屬性（focus group → attribute list → conjoint，如 Rodrigues 2018、Bask 2013、Leister 2007）；(b) <strong>Convergent parallel</strong>——兩 strand 平行進行、詮釋層次整合（van Deen 2023、Tangianu 2025）；(c) <strong>Compound integrated model</strong>——多個資料源同時納入統計模型共同估計（Kim 2022 五元件、Liu 2025 三類資料 HB）。</li>
+<li><strong>Integration point 四層次</strong>（Fetters et al., 2013）：研究問題 / 取樣 / 分析 / 詮釋——<strong>至少一層必須整合</strong>，否則退化為「兩個獨立 sub-study 拼貼」；conjoint 的屬性設計與質性發現之間必須有明確 traceability。</li>
+<li><strong>Convergence coding 四類</strong>（Teddlie &amp; Yu, 2007）：agreement（完全一致）/ partial agreement（部分一致）/ silence（一方有發現但另一方未涉及）/ expansion（一方擴展另一方）；混合方法常見結果為 <strong>agreement on core findings but divergence on peripheral</strong>，研究者不應將質性結果視為量化的「補充驗證」。</li>
+<li><strong>Greene 1989 五種混合方法目的</strong>：triangulation（同構念多方法交叉驗證）/ complementarity（不同面向互補）/ development（一方指導另一方設計）/ initiation（探索矛盾以產生新詮釋）/ expansion（擴大研究範圍）；conjoint 與質性整合最常見為 <strong>triangulation + complementarity + development</strong>。</li>
+<li><strong>樣本規模建議</strong>：pilot 質性 $n=30$–$50$、main conjoint $n \geq 200$（單一條件）；跨利害關係人三套 $\geq 50$ 每組（Vermeulen 2007）；多 format between-subjects $\geq 100$/cell（Karniouchina 2009）；多國複製每國符合 conjoint 一般樣本建議（Johnson's $n \cdot t \cdot a / c > 1{,}000$）。</li>
+<li><strong>Order effects 處理</strong>：Liu et al.（2025）「先 conjoint 後 MaxDiff」確保受訪者熟悉屬性空間；Vecchiato &amp; Munger（2025）隨機指派 standard vs visual format；Kustov（2020）將 incentivized dictator game <strong>置後</strong>以避免污染前序態度題；Kim et al.（2017）將開放題置於 conjoint 之後驗證 7 天閾值——順序選擇須以「污染風險」與「熟悉度需求」雙考量。</li>
+<li><strong>報告規範</strong>：(a) 必須同時報告 conjoint AMCE / part-worth 與質性 themes / scale moderator 結果，不可只附錄；(b) integration point 須在 methods 章節明示；(c) 跨方法收斂或分歧須在 discussion 詮釋——避免「方法 A 顯著、方法 B 不顯著、所以方法 B 有問題」式 cherry-picking；(d) 多 conjoint paper 應在 methods 列出<strong>每個 conjoint 的屬性、樣本、估計方法表格</strong>便於審查。</li>
+<li><strong>方法論警示</strong>：(a) 混合方法不等於「兩個獨立 sub-study 拼貼」；(b) 質性 sample size 與 conjoint sample size 不需相等，但 traceability 需可驗證；(c) 多 conjoint 之間需控制 measurement invariance（跨國／跨群可比較性）；(d) 多 format 之間需 preference regularity test 拒絕跨組偏好相等假設後才可比較（Yangui 2019 框架）。</li>
 </ul>
 <h3 id="7">7. 應用場域速查</h3>
 <p>Conjoint 自 Green &amp; Rao（1971）引入行銷以來已擴散至政治學、健康/醫療、產品/行銷、新聞/媒體、慈善/捐贈、旅遊/休閒、科技/支付、食品、環境/能源、血液/器官捐贈、AI/合成內容、基因/生物庫、職涯/工作安排、氣候健康倡議、LLM 永續等多元領域。各領域有各自的設計慣例（屬性選擇、樣本規模、效度檢驗）與代表性文獻。本節以表格形式快速檢索。</p>
@@ -1393,6 +1546,11 @@ MathJax = {
 <td>美國全國 n = 3,231 CBC（Sawtooth HB + fixed choice sets + None option）+ Modified Kano；7 個 Positive 屬性具正向 WTP（聯盟交換公司、禮賓服務、購買誘因等）；2 個 Zone of Indifference 屬性（金融分期、現場活動）WTP ≈ 0；Modified Kano 將原始類別名稱改名以適配服務業無形性（Desirable/Positive/Critical/Negative/Zone of Indifference）；首篇系統性將 Kano + CBC 應用於大型服務業樣本的博士論文；Gregory 2011 Assessment Kano Conjoint</td>
 </tr>
 <tr>
+<td>學術會議出席偏好（MICE／hospitality）</td>
+<td><strong>Cavusoglu et al. (2022)</strong></td>
+<td>全球 57 國學者 $n = 433$ CBC（QuestionPro，full-profile，含 none）；6 屬性 × 多 levels：total cost (28%) + organizer (28%) 並列主導、publishing opportunities (19%)、reputation = # times held (10%)、location (10%)、size (5%)；以 Push-Pull motivation theory + Self-determination theory 將屬性分配為 push（publishing、size）vs pull（cost、organizer、location、reputation）；新提出「歷年舉辦次數」屬性經 5 位專家 panel 合法化；採 Johnson's rule-of-thumb（$n \cdot t \cdot a / c > 1{,}000$）得最低樣本 417；market share simulation 顯示 unknown organizer 市占由 35% 跌至 14%、cost &gt; \$1,000 跌至 17%；F2F 與 online 無顯著差異；Cavusoglu 2022 academic conference；Cavusoglu 2022 Methods</td>
+</tr>
+<tr>
 <td>OTT / 串流媒體</td>
 <td>Kim, Chang &amp; Park (2017); Kim &amp; Lee (2023)</td>
 <td>中韓 CBC（Kim et al., 2017）：5 attributes（content、resolution、recommendation、payment、price）；中國最重解析度、韓國最重推薦系統；兩市場對多種支付方式偏好相反；Kim 2017 WTP OTT。韓國 OTT killer content CBC（Kim &amp; Lee, 2023）：N=360；月費 RI=28.9% 最高；R1G1 殺手內容 MWTP=7,633 KRW；30 代 MWTP 最高、40 代唯一殺手內容重要性超越月費；多 OTT 訂閱者 MWTP 更高；採 MNL + opt-out 選項；Kim Lee 2023 Return King</td>
@@ -1461,6 +1619,31 @@ MathJax = {
 <td>環境／能源／公共溝通</td>
 <td>Alriksson &amp; Öberg (2008); Menges, Schroeder &amp; Traub (2005); Tokimatsu et al. (2016); Vermeulen et al. (2011); Poortinga et al. (2003); Kluge, Offermann-van Heek &amp; Ziefle (2021)</td>
 <td>屬性含環保效益、成本、規管風險、溝通方式；環保屬性直接評分低估、conjoint 中更高；WTP-optimal Bayesian design + Halton draws；LIME endpoint damages + benefit transfer function；cheap talk + random lottery 檢驗 impure altruism；節能策略重要性 58% &gt; 領域 25% &gt; 幅度 16%；環境 conjoint review 84 研究；德國能源計畫溝通偏好 CBC（情報時間點 + 告知者身分 + 民眾參與最重要、資訊管道最不重要、年齡與抗議經驗調節決策模式）</td>
+</tr>
+<tr>
+<td>循環經濟／循環杯（reusable cup）服務設計</td>
+<td><strong>Lin, Lin, Peng &amp; Amasawa (2026)</strong></td>
+<td><em>Resources, Conservation &amp; Recycling</em> 232: 108961；台灣 5 屬性（折扣、租用方式、歸還天數、歸還距離、歸還方式）× 14 levels CBCA + ISO 14040/44 LCA 整合；importance：折扣 &gt; 距離 &gt; 歸還方式 &gt; 租用方式 &gt; 歸還天數；最佳服務「NT\$5 + 集點 / APP 會員 / 7 天歸還 / 400m / 任意分店」；自由填答 437 人（44%）選 7 天閾值，Wilcoxon $z = -21.96$、$p &lt; 0.0001$；循環杯 GWP &lt; 一次性紙杯 0.04 kg CO₂-eq/drink（即使最差參數）；押金制最不受歡迎；CBC + LCA 雙指標 dashboard 為循環經濟服務設計典範（延伸：Lin 2026 Reusable Cup CBC LCA Taiwan、<a href="conjoint_book.html">§6.12</a>）</td>
+</tr>
+<tr>
+<td>永續消費電子／多階層 eco-label</td>
+<td><strong>Bergener, Jacobs, Veneny &amp; Gossen (2026)</strong></td>
+<td><em>Business Strategy and the Environment</em> 35(1): 1495–1513；德國 $N = 534$ ACBC（Sawtooth Lighthouse Studio，4 階段 BYO + Screening + Choice + Calibration）；11 屬性含 price (32.8%) / brand (26.6%) / performance (11.2%) / condition (9.9%) / <strong>eco-score (6.37%, 排第 5)</strong>；5 階紅綠燈式 eco-score A–E（食品標籤遷移至 mobile phones）；HB + Sawtooth choice simulator + SOS market simulation；E→A 兩產品情境 WTP 溢價 110%（€220.7）；Fairphone SOP 1.4%→4.08%、Shiftphone 0.78%→1.75% 永續品牌市佔翻倍；Sankey diagram 視覺化個體偏好轉移；refurbished + 低價 + 高 eco-score 為循環經濟商業模式黃金組合；首篇消費電子多階層 eco-label WTP 實證（延伸：Bergener 2026 Eco-Score Mobile Phones ACBC、<a href="conjoint_book.html">§6.5</a>）</td>
+</tr>
+<tr>
+<td>Context effects / 缺貨替代</td>
+<td><strong>Igari &amp; Takeuchi (2025)</strong></td>
+<td>preprint；日本 637 beef + 633 airline ticket 排序型 conjoint；<strong>rank-ordered logit + hierarchical Bayes</strong> 同時納入 attraction effect（第一選擇）與 phantom effect（第二選擇）；6 模型比較顯示 phantom 顯著改善適配（holdout 第二選擇 hit rate +1–2 pp）；<strong>inverse distance coding</strong> 預測效度優於 dummy coding；phantom effect 個體分布右偏；忽略 phantom 系統性偏誤 importance（beef price 27.8% / grade 72.2%，加 phantom 後反轉）；提供缺貨情境替代選擇預測，協助零售商利潤模擬；首篇將 phantom effect 完整整合進 conjoint 模型（延伸：Igari 2025 Phantom Effects Conjoint、phantom effect、<a href="conjoint_book.html">§4.7</a>）</td>
+</tr>
+<tr>
+<td>虛擬商品／數位財訂價</td>
+<td><strong>Ke &amp; Sundararajan (2012)</strong></td>
+<td>Second Life 虛擬商品市場 fixed effects regression on panel + empirical pricing；copy 與 transfer permission rights 獨立提升價格但<strong>交互項為負</strong>（兩權同時授予不額外加價）；modify 權單獨無價格效應；featured listing 與 high rating 顯著抬升價格；<strong>economies of scope</strong>：創作者生產品項愈多、單品價格愈低；virtual goods 為 information_goods 與 digital_goods 的 versioning + permission_rights 設計實證；延伸 conjoint 屬性設計可參考——permission rights 應視為<strong>獨立屬性</strong>而非可加總指標（延伸：Ke 2012 Virtual Goods Permissions Pricing、virtual_goods、information goods versioning）</td>
+</tr>
+<tr>
+<td>訂閱型禮物／直播打賞行為</td>
+<td><strong>Kunigita &amp; Takeuchi (2024)</strong></td>
+<td>Twitch panel data + correlation analysis；COVID-19 期間虛擬世界 social density（同時觀看者密度）與 subscription gifting 高度正相關；少數 outlier streamers 顯示 social density 非唯一決定因子（粉絲社群文化、實況主人格特質亦影響）；提供「PWYW + social density」打賞行為的非 conjoint 實證——可作為設計 live streaming 打賞 CBC 屬性的基礎（同時觀看者密度、實況主類型、打賞層級）（延伸：Kunigita 2024 Subscription Gifting COVID Twitch、social_density）</td>
 </tr>
 <tr>
 <td>隱私／行動鑑識／監控接受度</td>
@@ -1657,6 +1840,36 @@ MathJax = {
 <td>de Vries, Bakker, Monster et al. (2022)</td>
 <td>荷蘭 hospital HCPs N=178、5 elements（frequency、seriousness、action need、drug life span、evidence type）、SPSS orthogonal 16 stimuli 每人 8 questions、GLMM (linear mixed for importance、logistic mixed for timing/action multi-select)；frequency + seriousness + action 主導，type of evidence + drug life span 影響弱；3 outcomes：importance 0–100 fixed-point、preferred timing（multi-select）、stated action（multi-select）；最常見 action：「與同事討論」（peer consultation as primary mechanism）；low-severity 偏好 periodic vs immediate（避免 alert fatigue）；對 EMA / national agency 的 tiered communication system 設計提供 evidence</td>
 </tr>
+<tr>
+<td>中國汽車品牌價值（China auto）</td>
+<td>20_117 Methods; China Car Brand Value Conjoint</td>
+<td>中國兩地年輕消費者（20–30 代）、3 選 1 conjoint、6 屬性（品牌、安全性、排氣量、燃費、色、車型）、orthogonal design + trap question 篩注意力、conditional logit + LR test 對地域/性別/收入 subgroup 比較；地域與收入次群體效用顯著異質、性別效用同質；MWTP 與 compensating variation 透過 inclusive value 計算</td>
+</tr>
+<tr>
+<td>數位相機 Kansei + CA 雙階段</td>
+<td>Wang 2015 Kansei Conjoint</td>
+<td>台灣消費者；第一階段 KE + Rough Set Theory 以情感屬性（顏色、材質、螢幕、閃光）區隔為消費者型 vs 專業型；第二階段 CA + Grey Relational Analysis 對功能屬性（光學變焦、廣角焦距）估 part-worth；兩 segment 共享相同最優核心配置但選配功能差異；示範「情感維度區隔 → 功能維度客製化」設計工程整合</td>
+</tr>
+<tr>
+<td>線上銀行偏好</td>
+<td>Website customization and real-time interaction enhance online banking preference; Dauda 2015 Technology Adoption</td>
+<td>客製化（personalization）與即時互動（real-time interaction、video banking）為未來線上銀行服務的關鍵增值特徵；該等屬性透過便利性與 engagement 超越基本交易功能促進 e-banking 普及採用（Dauda &amp; Lee, 2015）</td>
+</tr>
+<tr>
+<td>餐廳 WTP 與 information overload</td>
+<td>Sustainability and historical info not significant for restaurant WTP; Binesh 2023 Exploring which</td>
+<td>三類菜單品項對 sustainability message（碳足跡）與 historical info 的 WTP 均不顯著；解讀為當核心屬性（食物品質、服務、氛圍、價格）已飽和注意力後，邊際資訊性屬性在 conjoint 中失效（information overload）；與其他研究 sustainability premium 結果矛盾，需檢視屬性數與屬性間飽和</td>
+</tr>
+<tr>
+<td>Cause-related marketing fit</td>
+<td>Low Cause Brand Fit Preferred Over High Fit In Laptop CrM; Moosmayer 2013 Corporate Motive</td>
+<td>Laptop 製造商 + 非洲醫院捐贈情境；low fit（醫療設備捐贈）part-worth +0.215 &gt; high fit（IT 捐贈）−0.215，市場份額模擬 medical 61% vs IT 39%；與 schema theory 預期相反；機制：attribution theory（消費者懷疑 IT 捐贈為 self-serving）+ 多維 fit（NPO 與醫療設備在另一維度上 fit 更高）</td>
+</tr>
+<tr>
+<td>招募/篩選 conjoint 跨領域</td>
+<td>Hiring Selection Conjoint Across Domains; Carey et al. (2020); Miller et al. (2025); Giersch &amp; Dong (2018); Oberst et al. (2021); Weber (2023)</td>
+<td>五項 hiring/selection conjoint synthesis：rapport signals 在直接服務情境（教師 +「gets along with students」、recruiter +「human recommendation」58.7% vs AI 22.3%）主導 credentials；domain-specific credential premium（faculty teaching +40 pp、lobbyist committee staff +42 pp、VC serial entrepreneur 6.14× odds）；demographic signal 方向一致但幅度依情境顯著性而異；algorithm aversion 強度跨域穩定；conjoint 設計對 SDB 緩解為共同方法論優勢</td>
+</tr>
 </tbody>
 </table>
 <h3 id="8">8. 方法論常見陷阱</h3>
@@ -1701,6 +1914,7 @@ MathJax = {
 <li>Attention checks 無法實質消除 swapping error；排除未通過者 IRR 仍 77%，提示噪音源自任務複雜度本身（Clayton et al., 2023）。</li>
 <li>Swapping error 系統性衰減 AMCE 至 $\hat{\theta} = (1 - 2\tau) \cdot \theta$，絕對值永遠低估（Clayton et al., 2023）。</li>
 <li>八篇複製研究的 AMCE 與原始發表結果高度吻合（中位相關 ~0.9），儘管每項研究含約 23% swapping error（Clayton et al., 2023）。</li>
+<li><strong>忽略 context effects 系統性偏誤 attribute importance</strong>：當選擇集中包含 dominance 關係或 phantom 選項時，傳統 CBC 模型未納入 attraction / phantom term 會錯誤分配效用至屬性 main effect，扭曲 importance 排序；Igari &amp; Takeuchi（2025）以日本牛肉資料示範——加入 phantom term 後 price 重要性由 72.2% 修正、grade 由 27.8% 微調，且 holdout 第二選擇 hit rate 同步提升（Igari &amp; Takeuchi, 2025; 延伸：ignoring context effects biases conjoint attribute importance estimates）。</li>
 </ul>
 <h4 id="_6">受訪者參與度</h4>
 <p>本節整理受訪者參與度層面的陷阱：non-trader（每題皆選同一選項，佔 17%）、二元 accept/reject 在族群兩極化時鑑別力驟降、物件型 BWS 無法精確識別、部分 BWS 受訪者一致選同屬性為最不重要。</p>
@@ -1761,6 +1975,190 @@ MathJax = {
 <li>屬性數量應控制在 5-7 個（過多致疲勞、過少犧牲生態效度），水準應涵蓋真實世界變異而非人為壓縮。</li>
 <li>效應量報告應包含 AMCE + 信賴區間 + 實質政治意義，不只 p 值；median effect size 為 d=0.08，優秀論文需論證偏小效應何以重要。</li>
 <li>外部效度處理須討論假設性偏誤，最強驗證設計為真實行為基準（如投票紀錄、naturalization data）；pure hypothetical conjoint 應謹慎推論（Hainmueller et al., 2015）。</li>
+</ul>
+<h3 id="9">9. 多元應用案例精選</h3>
+<p>本章精選 10 篇研究對象、情境脈絡、conjoint 使用方式各異的實證論文，以「完整研究流程」為呈現框架，示範 conjoint 如何跨越政治學、公衛、消費者行為、社會創業、移民研究、數位行銷等領域回答根本不同的研究問題。本章的目的不在於方法學深度（詳見 §1–§8），而在於展示 conjoint 的應用廣度——讓初學者看到「同一把工具可以解決多少種不同的社會科學謎題」。</p>
+<p>歷史上，conjoint 的應用擴散路徑從 Green &amp; Rao（1971）的行銷 part-worth 估計出發，逐步滲透至政治學（Hainmueller, Hopkins &amp; Yamamoto, 2014）、健康傳播（Della et al., 2016）、公衛政策（de Vries et al., 2022）、組織決策（Block et al., 2025）、移民研究（Bennour, Manatschal &amp; Ruedin, 2022），近年更擴展至精緻餐飲（Dabral, Nayak &amp; Piramanayagam, 2025）、數位 App 行銷（Böhm et al., 2015）等新興領域。此擴散體現 conjoint 作為「強迫取捨工具」的方法論核心優勢：任何可以拆解為若干可操弄屬性的決策問題，皆可成為 conjoint 的應用場域。</p>
+<p>典範層面，本章案例可歸納出三種典型的理論-方法接合模式：(a) <strong>因果推論模式</strong>——以 AMCE 為核心估計量，問「屬性 X 對選擇機率有多大獨立因果效應？」（案例 01、02、10）；(b) <strong>偏好分解模式</strong>——以屬性相對重要性或 WTP 為核心，問「在真實取捨中各屬性值多少？」（案例 03、04、06、08）；(c) <strong>文化客製化模式</strong>——以個體或子群體層次估計為核心，問「不同族群/情境下偏好結構有何差異？」（案例 05、07、09）。三種模式對應不同的研究問題類型，研究者可依問題性質選擇合適模式。</p>
+<h4 id="91">9.1 政治學：候選人評估與民主規範</h4>
+<p>本子節以台灣選舉行為（陳奕龍 &amp; 陳陸輝, 2025）與芬蘭民主規範（Christensen &amp; Saikkonen, 2025）為雙案例，展示 conjoint 的「因果推論模式」如何應用於政治學核心問題。兩研究均以 AMCE 為主要估計量，均採完全隨機化多屬性設計，但研究問題截然不同：前者問「哪種候選人屬性組合最獲選民青睞？」後者問「公民在民主規範 vs. 政策目標之間，如何依政策領域類型做出不同取捨？」。以下 bullets 依研究設計 → 屬性設計 → 主要發現 → 方法學亮點展開。</p>
+<ul>
+<li><strong>案例 01｜帶職參選是選民的加分還是扣分？</strong>（陳奕龍 &amp; 陳陸輝, 2025）：台灣立委選舉中「帶職參選」行為在公眾輿論中常受批評，但選民在面對整套候選人屬性組合時是否真的懲罰帶職參選者？研究採 online 選民調查 conjoint 設計，以強制配對選擇（forced-choice）設計，讓受訪者在每一任務中選出較支持的候選人（陳奕龍 &amp; 陳陸輝, 2025; 延伸：conjoint case 01 候選人評估 台灣選民）。</li>
+<li><strong>候選人屬性設計（8 維度）</strong>：性別（男/女）、年齡（25/30/45/60/75 歲）、學歷（高中/大學/碩士/博士）、立法院外職務經驗（有/無）、議事經驗（有/無）、現任職位（現任立委/代理職位）、帶職參選（是/否）、在地出身（是/否）；屬性水準完全隨機組合，保證統計獨立性（陳奕龍 &amp; 陳陸輝, 2025）。</li>
+<li><strong>核心發現：現任光環壓過帶職懲罰</strong>——帶職參選的 AMCE 確為負值，但效果量遠小於「現任立委」身份的正向 AMCE；選民解讀「現任立委帶職參選」為「有政治能力的人在晉升」，正負效應相消後反呈淨正效應；女性、中年（45 歲）、高學歷、有議事經驗的候選人在 conjoint 任務中 AMCE 均顯著為正（陳奕龍 &amp; 陳陸輝, 2025）。</li>
+<li><strong>方法學亮點</strong>：AMCE 因果詮釋框架（Hainmueller, Hopkins &amp; Yamamoto, 2014）讓「帶職參選」從公眾評論中的道德標籤，轉化為可量化的選民選擇效應；多屬性同時隨機化使「帶職」效應可從「現任」、「學歷」等混淆變數中單獨識別（陳奕龍 &amp; 陳陸輝, 2025）。</li>
+<li><strong>案例 02｜公民為什麼容忍政客違反民主規範？</strong>（Christensen &amp; Saikkonen, 2025）：研究核心問題為：議題一致性（issue congruence）vs. 黨派忠誠（partisan loyalty），哪個是公民容忍反民主行為的主要動因？研究以芬蘭多黨體系為場域，設計上刻意移除政黨標籤以分離議題效應（Christensen &amp; Saikkonen, 2025; 延伸：conjoint case 02 民主倒退容忍度 芬蘭公民）。</li>
+<li><strong>設計創新：跨議題領域比較</strong>——conjoint 設計同時操弄政策議題類型（移民/氣候/稅收/社會福利等）與政黨立場一致性，直接比較不同政策領域下 issue congruence 效應的大小——這種「跨域效應量比較」在單一問卷實驗中不可能實現（Christensen &amp; Saikkonen, 2025）。</li>
+<li><strong>核心發現</strong>：issue congruence 對民主規範容忍度的影響強於黨派認同；不同政策議題的容忍度效應顯著不同——某些議題（移民、安全）下公民更傾向犧牲民主規範換取政策目標；黨派偽善假說（partisan hypocrisy）被置於次要地位（Christensen &amp; Saikkonen, 2025）。</li>
+<li><strong>Marginal means 優於 AMCE 於跨群比較</strong>：本研究依受訪者政治立場分群比較，採 marginal means 而非 AMCE 差異，避免參照類別人工產物（Leeper, Hobolt &amp; Tilley, 2020; Christensen &amp; Saikkonen, 2025）。</li>
+</ul>
+<h4 id="92">9.2 公衛與健康傳播</h4>
+<p>本子節呈現 conjoint 在公衛政策設計與健康傳播訊息研究中的兩種典型應用：de Vries et al.（2022）以「正交設計 + GLMM」量化藥物安全通訊內容元素的偏好，Della et al.（2016）以「ACA 自適應聯合分析」識別非裔美國人族群的健康訊息設計偏好差異。兩研究的共同主題是：<strong>訊息的哪些設計特徵最重要？</strong> conjoint 強迫受訪者在具體情境中做判斷，避免「所有項目都重要」的傳統問卷弔詭。</p>
+<ul>
+<li><strong>案例 03｜哪種藥物安全通知，讓醫師護理師真的重視？</strong>（de Vries et al., 2022）：荷蘭 EMA 規範下的藥物安全直接通訊（DHPC）常被醫療人員忽略；研究以 178 位 hospital-based HCPs 為樣本，透過 conjoint 量化 DHPC 五個內容元素的相對重要性（de Vries, Bakker, Monster, Denig &amp; Mol, 2022; 延伸：conjoint case 03 藥物安全通訊 醫療專業人員）。</li>
+<li><strong>正交設計（Orthogonal Main-Effects Plan）</strong>：五屬性（發生頻率/嚴重程度/是否需要行動/藥物年限/證據類型）在 $2^5 = 32$ 全因子中以 SPSS 正交設計壓縮至 16 stimuli；每位受訪者分配 8 張假想 DHPC 卡片，回應三個依變項（重要性評分 0–100 / 溝通時機偏好 / 行動意向）（de Vries et al., 2022）。</li>
+<li><strong>廣義線性混合效果模型（GLMM）</strong>：固定效果為五屬性水準、隨機效果為受訪者個人差異，同時分析三個不同尺度的依變項——重要性（連續）、溝通時機（二元）、行動（多選）（de Vries et al., 2022）。</li>
+<li><strong>核心發現</strong>：高頻率 + 嚴重性 → 偏好立即通訊、低頻率 + 可逆 → 偏好定期彙總；最常見行動為「與同事討論」而非直接更改處方；證據類型與藥物年限對反應影響微弱——意涵監管機構應依 risk profile 設計差異化 DHPC 發布頻率（de Vries et al., 2022）。</li>
+<li><strong>案例 07｜說服非裔美國人多吃蔬果，誰說最有效？</strong>（Della et al., 2016）：Kentucky 非裔美國成人的飲食相關健康不平等顯著；研究以 ACA（Adaptive Conjoint Analysis）識別蔬果攝取健康訊息的設計元素相對重要性，並比較 urban vs. rural 偏好差異（Della, D'Silva, Best, Smith, Carthan &amp; Rajack-Talley, 2016; 延伸：conjoint case 07 健康訊息設計 非裔美國人）。</li>
+<li><strong>ACA 的適應性優勢</strong>：屬性數多（訊息來源/陳述利益/行為描述方式/情境框架）且樣本量有限，ACA 以 Sawtooth Software 的適應性算法動態調整題目，集中測量最能區分偏好的屬性水準，每位受訪者可得到個人層次效用估計（Della et al., 2016）。</li>
+<li><strong>核心發現</strong>：訊息來源（Message Source）重要性排名第一，遠超過陳述的利益（Stated Benefit）；urban 受訪者偏好醫療專業人員為來源，rural 受訪者更接受宗教領袖與社區代言人；此發現直接指出「客製化訊息設計」不只是效率問題，也是文化針對性問題（Della et al., 2016）。</li>
+<li><strong>ACA 在小樣本健康傳播研究的適用性</strong>：ACA 個體層次估計使研究者可在 $n < 100$ 的社區樣本中仍獲得可靠的 importance 排序，是健康傳播研究在資源有限情境下的方法選擇（Della et al., 2016）。</li>
+</ul>
+<h4 id="93">9.3 消費者行為與產品設計</h4>
+<p>本子節展示 conjoint 在消費者行為與產品設計研究中的兩個不同場景：Choudhury &amp; Gulati（2020）以「Kano + Conjoint + ANOVA 三方法整合」全面分析印度智慧型手機市場，Chiambaretto（2021）以「Choice-Based Conjoint + WTP 計算 + 分群分析」揭示航班輔助服務的差異化定價機會。前者展示多方法互補的設計邏輯，後者展示 WTP 如何轉化為商業定價決策語言。</p>
+<ul>
+<li><strong>案例 04｜印度消費者買智慧型手機，RAM 還是相機最重要？</strong>（Choudhury &amp; Gulati, 2020）：整合 Kano model + conjoint analysis + ANOVA 三種方法，系統分析印度德里市場 14 個手機功能屬性——Kano 分類功能類型（必備/亮點/線性/無差異），conjoint 量化取捨權重，ANOVA 比較三品牌滿意度差異（Choudhury &amp; Gulati, 2020; 延伸：conjoint case 04 智慧型手機屬性 印度消費者）。</li>
+<li><strong>Kano Model 分類結果（14 屬性）</strong>：Attractive 驚喜型：無線充電（CS=0.833，最高）、防水、指紋辨識、語音控制；Must-be 必備型：儲存容量、相機品質、RAM（CD=−0.604，缺失不滿意係數最強）；One-dimensional 線性型：GPS、感測器、錄影、價格；Indifferent 無差異型：顏色、藍牙、行動支付（Choudhury &amp; Gulati, 2020）。</li>
+<li><strong>Conjoint 相對重要性排序</strong>：RAM（31.03%）&gt; 價格（23.45%）&gt; 螢幕（18.22%）&gt; 儲存（13.41%）；傳統 ratings-based conjoint（評分式，7 個屬性），以 OLS 估計 part-worth utility，相對重要性計算公式：$\text{RI}(\%) = \text{range}_k / \sum_k \text{range}_k \times 100$（Choudhury &amp; Gulati, 2020）。</li>
+<li><strong>ANOVA 結果</strong>：三品牌整體滿意度 $F(2, 100) = 11.330$，$p < 0.001$，差異顯著；最優 iPhone 組合（Card 9）效用值 4.471（Choudhury &amp; Gulati, 2020）。</li>
+<li><strong>三方法互補邏輯</strong>：Kano 回答「功能類型是什麼」、conjoint 回答「在取捨中各功能值多少」、ANOVA 回答「品牌間差距統計上是否顯著」——三方法形成「功能分類 → 取捨權重 → 品牌比較」完整決策鏈，比單一方法更有行動指引價值（Choudhury &amp; Gulati, 2020）。</li>
+<li><strong>案例 06｜哪種旅客願意為 Wi-Fi、行李、餐飲多付多少錢？</strong>（Chiambaretto, 2021）：454 位長途航班旅客的 choice-based conjoint 研究，以 WTP 計算為核心，分析旅行目的（休閒/商務）、世代（千禧/非千禧）、飛行時間對 6 項輔助服務 WTP 的調節效應（Chiambaretto, 2021; 延伸：conjoint case 06 航班輔助服務 旅客願付價格）。</li>
+<li><strong>WTP 計算公式</strong>：$\text{WTP}_{\text{服務}} = -\beta_{\text{服務}} / \beta_{\text{票價}}$，以服務屬性效用係數除以票價邊際效用，換算為貨幣金額；使用混合 Logit（Mixed Logit）以捕捉個體間偏好異質性（Chiambaretto, 2021）。</li>
+<li><strong>整體屬性重要性</strong>：票價（33.33%）&gt; 託運行李（19.67%）&gt; 機上餐飲（19.48%）&gt; 座位選擇（14.35%）&gt; Wi-Fi（8.17%）&gt; 點心（5.19%）&gt; 優先登機（3.32%）（Chiambaretto, 2021）。</li>
+<li><strong>核心分群發現</strong>：休閒旅客大多數服務 WTP 高於商務旅客，唯一例外是 Wi-Fi（商務旅客 WTP 更高）；長途飛行顯著提升行李與零食 WTP；千禧世代行李、優先登機、全程 Wi-Fi WTP 較高，但餐飲與選座低於非千禧世代；此異質性發現直接支持「差異化定價策略」（Chiambaretto, 2021）。</li>
+</ul>
+<h4 id="94">9.4 組織與社會創業決策</h4>
+<p>本子節以 Block et al.（2025）的社會企業客戶選擇研究為案例，展示 conjoint 如何應用於<strong>組織層面決策</strong>（而非消費者個人選擇）。此案例的特殊性在於：(a) 受訪者是社會企業創業者而非一般消費者，(b) 研究問題是「組織如何在使命與財務之間做取捨」，(c) 以「社會創業者身份認同」為調節變數的 moderation analysis 設計。</p>
+<ul>
+<li><strong>案例 05｜社會企業選客戶：使命優先還是財務優先？</strong>（Block et al., 2025）：conjoint 實驗讓德國社會企業創業者在 B2B/B2G 合約情境中選擇客戶，測量「社會使命契合度」「財務收益」「客戶規模」「使命漂移風險」四屬性的相對重要性（Block, Blöcher, Greß &amp; Hirschmann, 2025; 延伸：conjoint case 05 社會企業客戶選擇 創業者）。</li>
+<li><strong>屬性設計與理論連結</strong>：社會使命契合度（高/低）→ 社會企業文獻；財務收益（高/低）→ 資源依賴理論；客戶規模（大/小）→ 成長機會論；使命漂移風險（高/低）→ 社會企業身份理論；每個屬性均有明確理論對應，使研究問題與文獻直接扣連（Block et al., 2025）。</li>
+<li><strong>核心發現</strong>：社會使命契合度是最強的客戶選擇驅動因素，即使控制財務收益後仍顯著；使命漂移風險是最主要的排斥因素；社會創業者身份認同越強，對使命契合的偏好越強、財務誘惑效果越小（Block et al., 2025）。</li>
+<li><strong>Conditional Logit + Moderation Analysis</strong>：以條件 Logit 估計各屬性的選擇效用；加入身份認同強度 × 屬性水準的交互項，檢驗調節效應；此設計使 conjoint 超越「平均效果估計」，進入「誰對什麼決策」的異質性分析（Block et al., 2025）。</li>
+<li><strong>組織決策 conjoint 的方法論意義</strong>：大多數 conjoint 研究以消費者個人偏好為對象；本研究示範 conjoint 同樣可應用於組織層面的<strong>倫理取捨決策</strong>（使命 vs. 財務）——任何「說不清楚的組織取捨」都可以透過 conjoint 的強迫選擇設計量化（Block et al., 2025）。</li>
+</ul>
+<h4 id="95">9.5 移民居住選擇：政治環境的因果效應</h4>
+<p>本子節以 Bennour, Manatschal &amp; Ruedin（2022）的瑞士移民居住地選擇研究為案例，展示 conjoint 如何解決觀察性研究無法解決的因果識別問題。政治接待環境（入籍政策、外國人投票權、居民態度）對移民居住地選擇的影響，若以觀察數據分析，面臨嚴重的選擇性偏誤——願意去「政治環境友善城鎮」的移民本來就可能有其他特性。Conjoint 透過隨機化屬性設計切斷此混淆，提供因果估計。</p>
+<ul>
+<li><strong>案例 10｜政治環境影響移民選擇在哪裡定居嗎？</strong>（Bennour et al., 2022）：瑞士 N=1,596 近期移民 survey conjoint，8 屬性（公共交通/自然環境/生活成本/居民態度/入籍年限/外國人投票權/同族群社群/文化休閒）完全隨機化；AMCE 估計各屬性對「選擇該城鎮」機率的平均因果效應（Bennour, Manatschal &amp; Ruedin, 2022; 延伸：conjoint case 10 移民居住地選擇 瑞士）。</li>
+<li><strong>瑞士聯邦制提供天然的屬性真實性</strong>：不同州的入籍年限（2–8 年）、外國人投票權（有/無）、極右政黨得票率（高/低）的差異真實存在，使 conjoint 情境設計更具可信度（Bennour et al., 2022）。</li>
+<li><strong>三個政治屬性的 AMCE</strong>：入籍等待年限（2 年 vs. 8 年）+10.4 pp；居民態度友善（低極右得票率）+9.6 pp；外國人有投票權 +7.2 pp——三個政治屬性效果量與公共交通（+12.6 pp）、生活成本等傳統因素相當，推翻「移民只看經濟因素」假設（Bennour et al., 2022）。</li>
+<li><strong>異質效應分析</strong>：以 difference in marginal means + Leeper et al.（2020）omnibus F-test 評估子群體差異；高學歷移民對入籍政策更敏感；有長期定居計畫的移民對政治接待環境效應更強（Bennour et al., 2022）。</li>
+<li><strong>Conjoint 相對於觀察性方法的識別優勢</strong>：觀察數據無法分離「移民選擇政治環境友善城鎮」的自我選擇效應；conjoint 透過隨機化屬性組合，在同一實驗中同時估計 8 個屬性的獨立因果效應，避免多重假設檢定問題（Bennour et al., 2022）。</li>
+</ul>
+<h4 id="96">9.6 數位行銷與服務業</h4>
+<p>本子節以 Böhm et al.（2015）的 App Store 行銷研究與 Dabral, Nayak &amp; Piramanayagam（2025）的精緻餐廳選擇研究為雙案例，展示 conjoint 如何應用於數位行銷與服務業設計最佳化。兩研究均關注「頁面/場域元素設計對消費者選擇的影響」，但前者以傳統 conjoint + 市場細分為框架，後者採用 PAPRIKA 方法（1000Minds 軟體），展示 conjoint 的工具多元性。</p>
+<ul>
+<li><strong>案例 09｜App Store 頁面哪個元素最影響下載決策？</strong>（Böhm et al., 2015）：以 conjoint 研究 Apple App Store 8 個頁面元素（App Icon/App Name/截圖/用戶評分/評分人數/描述文字/價格/分類標籤）對下載決策的影響，並以 cluster analysis 識別不同偏好結構的用戶群（Böhm, Schreiber &amp; Farrell, 2015; 延伸：conjoint case 09 App Store 行銷 手機用戶）。</li>
+<li><strong>設計：無實際 prototype 的假想情境</strong>——研究展示 conjoint 的一個重要彈性：即使沒有真實 App prototype，只要設計好屬性組合（Messenger App 場景），就可以系統性測試「哪種頁面設計最有說服力」，大幅降低研究成本（Böhm et al., 2015）。</li>
+<li><strong>核心發現</strong>：App Icon 是第一視覺關卡；用戶評分（顆數）與評分人數共構「社會認同信號（social proof）」對下載意願有顯著影響；截圖品質效果大於描述文字；「免費」雖降低障礙，但也發送「低品質」信號（Böhm et al., 2015）。</li>
+<li><strong>市場細分</strong>：cluster analysis 識別「評分導向型」「外觀導向型」「功能資訊導向型」等偏好群，為 App Store Optimization（ASO）策略提供差異化依據（Böhm et al., 2015）。</li>
+<li><strong>案例 08｜印度精緻餐廳，食物品質還是氛圍最重要？</strong>（Dabral et al., 2025）：以 Cue Utilization Theory 為框架，將 9 個餐廳屬性分為內在線索（食物品質/服務品質/食材）與外在線索（價格/線上評論/位置/氛圍），採 PAPRIKA 方法對 492 位班加羅爾精緻餐廳顧客進行 CBC 實驗（Dabral, Nayak &amp; Piramanayagam, 2025; 延伸：conjoint case 08 精緻餐廳選擇 印度消費者）。</li>
+<li><strong>PAPRIKA 方法特色</strong>：Potentially All Pairwise RanKings of all possible Alternatives（PAPRIKA）為 choice-based conjoint 變體；每次任務只比較兩個屬性有差異的選項，認知負荷低；1000Minds 軟體以線性規劃（Linear Programming）從成對取捨回答中計算屬性相對重要性；9 個屬性情境下每位受訪者完成中位數 40 道題（完成時間約 9 分鐘）（Dabral et al., 2025）。</li>
+<li><strong>相對重要性結果</strong>：食物品質（24.3%）&gt; 服務品質（17.1%）&gt; 價格（16.6%）&gt; 線上評論（14.2%）&gt; 氛圍（6.5%）&gt; 位置（6.4%）&gt; 食材（6.1%）&gt; 菜單（6.0%）&gt; 餐廳類型（2.0%）；<strong>氛圍僅排第 5</strong>，顛覆「高端餐廳氛圍主導選擇」的傳統認知（Dabral et al., 2025）。</li>
+<li><strong>Cue Utilization Theory 驗證</strong>：即使在「享樂型高涉入消費」（精緻餐廳）情境中，intrinsic cues（食物品質 + 服務品質）仍然主導 extrinsic cues（氛圍、位置、品牌）——PAPRIKA 提供的「強迫取捨」設計使此理論預測得到更嚴格的實證檢驗（Dabral et al., 2025）。</li>
+<li><strong>跨域應用提示</strong>：PAPRIKA / 1000Minds 的低認知負荷特性，使其特別適合「屬性多（&gt;7）、現場招募、需要快速完成」的服務業研究情境（Dabral et al., 2025）。</li>
+</ul>
+<h4 id="97">9.7 跨案例方法學比較</h4>
+<table>
+<thead>
+<tr>
+<th>案例</th>
+<th>研究領域</th>
+<th>受訪者</th>
+<th>屬性數</th>
+<th>Conjoint 類型</th>
+<th>估計方法</th>
+<th>核心估計量</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Chen 2025（台灣選舉）</td>
+<td>政治學</td>
+<td>合格選民</td>
+<td>8</td>
+<td>Choice-Based</td>
+<td>OLS/AMCE</td>
+<td>AMCE（因果）</td>
+</tr>
+<tr>
+<td>Christensen 2025（芬蘭民主）</td>
+<td>政治科學</td>
+<td>芬蘭公民</td>
+<td>3+</td>
+<td>Survey Conjoint</td>
+<td>Logit + MM</td>
+<td>Marginal Means</td>
+</tr>
+<tr>
+<td>de Vries 2022（藥物安全）</td>
+<td>公衛</td>
+<td>HCPs（醫護人員）</td>
+<td>5</td>
+<td>Profile-Based</td>
+<td>GLMM</td>
+<td>屬性效用（多依變項）</td>
+</tr>
+<tr>
+<td>Choudhury 2020（手機）</td>
+<td>消費者行為</td>
+<td>德里消費者</td>
+<td>7</td>
+<td>Traditional（評分）</td>
+<td>OLS + Kano + ANOVA</td>
+<td>相對重要性（%）</td>
+</tr>
+<tr>
+<td>Block 2025（社會企業）</td>
+<td>組織決策</td>
+<td>創業者</td>
+<td>4</td>
+<td>Choice-Based</td>
+<td>Conditional Logit</td>
+<td>AMCE + 調節效應</td>
+</tr>
+<tr>
+<td>Chiambaretto 2021（航班）</td>
+<td>行銷定價</td>
+<td>旅客</td>
+<td>6</td>
+<td>CBC</td>
+<td>Mixed Logit</td>
+<td>WTP（貨幣）</td>
+</tr>
+<tr>
+<td>Della 2016（健康訊息）</td>
+<td>健康傳播</td>
+<td>非裔美國成人</td>
+<td>4</td>
+<td>ACA（自適應）</td>
+<td>ACA 算法</td>
+<td>相對重要性（個體層次）</td>
+</tr>
+<tr>
+<td>Dabral 2025（餐廳）</td>
+<td>服務業</td>
+<td>精緻餐廳顧客</td>
+<td>9</td>
+<td>PAPRIKA</td>
+<td>線性規劃</td>
+<td>相對重要性（%）</td>
+</tr>
+<tr>
+<td>Böhm 2015（App Store）</td>
+<td>數位行銷</td>
+<td>App 用戶</td>
+<td>8</td>
+<td>Traditional</td>
+<td>OLS + Cluster</td>
+<td>部分效用 + 市場細分</td>
+</tr>
+<tr>
+<td>Bennour 2022（移民）</td>
+<td>移民研究</td>
+<td>近期移民</td>
+<td>8</td>
+<td>Survey Conjoint</td>
+<td>OLS/AMCE + DMM</td>
+<td>AMCE（因果）</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>屬性數範圍</strong>：3–9 個，中位數 7–8 個；超過 9 個屬性時 PAPRIKA 或 ACA 比傳統 full-profile 更具優勢（Dabral et al., 2025; Della et al., 2016）。</li>
+<li><strong>估計方法多元性</strong>：從最簡單的 OLS part-worth 估計（Choudhury &amp; Gulati, 2020; Böhm et al., 2015）到 GLMM（de Vries et al., 2022）、Mixed Logit（Chiambaretto, 2021）、PAPRIKA 線性規劃（Dabral et al., 2025）——估計方法選擇應由研究問題與依變項尺度決定，而非習慣或軟體可及性。</li>
+<li><strong>因果推論模式 vs. 偏好分解模式</strong>：因果推論模式（AMCE 為核心）更常見於社會科學研究（政治學、移民、組織決策）；偏好分解模式（WTP 或相對重要性為核心）更常見於行銷與服務業研究；兩種模式的選擇依「研究問題是因果識別還是偏好描述」而定（Hainmueller, Hopkins &amp; Yamamoto, 2014; Green &amp; Rao, 1971）。</li>
+<li><strong>跨領域共同的 conjoint 核心邏輯</strong>：無論哪個領域，conjoint 的設計邏輯都是：(a) 把研究對象的「決策」拆解為若干可操弄的屬性；(b) 隨機組合屬性水準呈現給受訪者；(c) 從選擇/評分/排序行為中反推每個屬性的相對貢獻；(d) 以嚴謹的統計模型（Logit、GLMM、Linear Programming 等）估計因果效應或偏好強度。</li>
 </ul>
 </main>
 </div>

@@ -186,10 +186,16 @@ MathJax = {
 <aside class="sidebar">
 <div class="toc">
 <ul>
-<li><a href="#rho_a">rho_A</a></li>
+<li><a href="#_1">方法說明</a><ul>
+<li><a href="#_2">目的</a></li>
+<li><a href="#_3">流程</a></li>
+<li><a href="#_4">適用範圍</a></li>
+<li><a href="#_5">代表性研究</a></li>
+<li><a href="#_6">相關學者</a></li>
+</ul>
+</li>
 </ul>
 </div>
-
 </aside>
 <main class="content">
 <h1>rho_A</h1>
@@ -198,6 +204,41 @@ MathJax = {
 <p><a href="rho_A.html">rho_A</a>（Dijkstra-Henseler reliability）為 PLS-SEM 文獻推薦的構念信度指標，介於 <a href="Cronbach_alpha.html">Cronbach alpha</a>（最寬）與 CR Composite Reliability $\rho_c$（最緊）之間，被認為是「真正的」reliability 估計。</p>
 <p><strong>標準</strong>：$\rho_A \geq .70$。</p>
 <p><strong>參考</strong>：Dijkstra, T. K., &amp; Henseler, J. (2015). Consistent partial least squares path modeling. <em>MIS Quarterly</em>, 39(2), 297-316.</p>
+<hr />
+<h3 id="_1">方法說明</h3>
+<h4 id="_2">目的</h4>
+<ul>
+<li><strong>主要研究目的</strong>：估計 <a href="PLS-SEM.html">PLS-SEM</a> 構念的「真實」信度，避免 <a href="Cronbach_alpha.html">Cronbach alpha</a> 低估或 $\rho_c$（composite reliability）高估的偏誤（Dijkstra &amp; Henseler, 2015）</li>
+<li><strong>次要用途</strong>：作為 PLSc（consistent PLS）一致性估計的副產品</li>
+</ul>
+<h4 id="_3">流程</h4>
+<ol>
+<li>估計 PLS-SEM 外模型，得到指標 loading $\lambda_i$ 與相關矩陣</li>
+<li>套用 Dijkstra–Henseler 公式計算 $\rho_A$（介於 $\alpha$ 與 $\rho_c$ 之間）</li>
+<li>檢核 $\rho_A \geq .70$；不達標時檢視指標品質、刪題或重新設計</li>
+<li>同時報告 $\alpha$、$\rho_c$、$\rho_A$ 三項作 robustness 證據</li>
+</ol>
+<h4 id="_4">適用範圍</h4>
+<ul>
+<li><strong>適用</strong>：PLS-SEM 分析下構念信度報告，特別是當 $\alpha$ 與 $\rho_c$ 不一致時（Dijkstra &amp; Henseler, 2015）</li>
+<li><strong>不適用</strong>：CB-SEM 中已有 ML 一致估計；單題量表</li>
+<li><strong>樣本規模建議</strong>：與 PLS-SEM 整體 sample size 要求一致</li>
+<li><strong>資料類型要求</strong>：多項目反映性構念</li>
+</ul>
+<h4 id="_5">代表性研究</h4>
+<ul>
+<li><strong>方法發展</strong>：Dijkstra &amp; Henseler（2015，<em>MIS Quarterly</em>）— PLSc 一致性估計與 $\rho_A$ 提出（<a href="Dijkstra_Henseler.html">Dijkstra_Henseler</a>）</li>
+<li><strong>手冊整合</strong>：Hair et al.（2022）— PLS-SEM checklist 將 $\rho_A$ 列為標配（<a href="Hair_2022_PLS.html">Hair_2022_PLS</a>）</li>
+<li><strong>相關 wiki 筆記</strong>：（延伸：<a href="PLS-SEM.html">PLS-SEM</a>、<a href="Cronbach_alpha.html">Cronbach alpha</a>、CR Composite Reliability、Dijkstra-Henseler）</li>
+</ul>
+<h4 id="_6">相關學者</h4>
+<ul>
+<li><strong>提出者</strong>：Dijkstra, Theo K.（University of Groningen，PLSc 共同提出）</li>
+<li><strong>主要推廣者</strong>：Henseler, Jörg（University of Twente，PLS 方法論主推者）</li>
+<li><strong>手冊整合</strong>：Hair, J. F. 等</li>
+<li><strong>相關學者 wiki 頁</strong>：（暫無 wiki/ scholar note）</li>
+</ul>
+<p>另見：methodology_book 中的「第 5.2 節 信度」</p>
 </main>
 </div>
 <script>

@@ -186,10 +186,16 @@ MathJax = {
 <aside class="sidebar">
 <div class="toc">
 <ul>
-<li><a href="#partial_mediation">partial_mediation</a></li>
+<li><a href="#_1">方法說明</a><ul>
+<li><a href="#_2">目的</a></li>
+<li><a href="#_3">流程</a></li>
+<li><a href="#_4">適用範圍</a></li>
+<li><a href="#_5">代表性研究</a></li>
+<li><a href="#_6">相關學者</a></li>
+</ul>
+</li>
 </ul>
 </div>
-
 </aside>
 <main class="content">
 <h1>partial_mediation</h1>
@@ -202,6 +208,41 @@ MathJax = {
 <p>子分類：
 - <strong>Complementary</strong>：$a \times b$ 與 $c'$ 同向（最常見）
 - <strong>Competitive</strong>：兩者反向（提示有未發現的第二中介）</p>
+<h3 id="_1">方法說明</h3>
+<h4 id="_2">目的</h4>
+<ul>
+<li>主要研究目的：辨識自變項對應變項的因果機制，並區分直接效果與間接效果（mediation analysis）</li>
+<li>次要用途：診斷模型是否漏掉重要的第二中介（competitive partial mediation 提示之）</li>
+</ul>
+<h4 id="_3">流程</h4>
+<ol>
+<li>建立 IV→M→DV 路徑模型</li>
+<li>估計三條路徑：$a$（IV→M）、$b$（M→DV）、$c'$（IV→DV controlling M）</li>
+<li>以 bootstrap 計算 $a \times b$ 的信賴區間（bootstrap）</li>
+<li>判讀：indirect 顯著且 $c'$ 也顯著 → partial mediation</li>
+<li>比較 $a \times b$ 與 $c'$ 方向判定 complementary / competitive</li>
+<li>報告 VAF（variance accounted for）= $\frac{ab}{ab+c'}$</li>
+</ol>
+<h4 id="_4">適用範圍</h4>
+<ul>
+<li><strong>適用</strong>：橫斷面與縱貫面的 mediation 模型；PLS-SEM 與 CB-SEM 皆可</li>
+<li><strong>不適用</strong>：因果方向未確立的純相關資料（會誤判中介結構）</li>
+<li><strong>樣本規模建議</strong>：bootstrap 法 N ≥ 200，較複雜模型 N ≥ 300</li>
+<li><strong>資料類型要求</strong>：連續或近似連續變項</li>
+</ul>
+<h4 id="_5">代表性研究</h4>
+<ul>
+<li><strong>奠基性文獻</strong>：Baron &amp; Kenny (1986) — 因果步驟法（詳見 <a href="Baron_Kenny_1986.html">Baron_Kenny_1986</a>）</li>
+<li><strong>方法發展里程碑</strong>：Zhao, Lynch &amp; Chen (2010) — 提出 bootstrap-only 判讀流程（詳見 <a href="Zhao_Lynch_Chen_2010.html">Zhao_Lynch_Chen_2010</a>）</li>
+<li><strong>相關 wiki 筆記</strong>：（延伸：mediation analysis、bootstrap、suppression effect）</li>
+<li><strong>方法手冊</strong>：（另見 methodology_book 第 3.1 節中介與調節分析）</li>
+</ul>
+<h4 id="_6">相關學者</h4>
+<ul>
+<li><strong>奠基者</strong>：Reuben Baron、David Kenny（暫無 wiki/ 學者 note）</li>
+<li><strong>主要推廣者</strong>：Zhao, Lynch, Chen；Andrew Hayes（PROCESS macro）（暫無 wiki/ 學者 note）</li>
+</ul>
+<hr />
 </main>
 </div>
 <script>

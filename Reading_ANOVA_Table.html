@@ -210,6 +210,14 @@ MathJax = {
 </ul>
 </li>
 <li><a href="#6-wiki-anova">6. 與 wiki 其他 ANOVA 筆記的關係</a></li>
+<li><a href="#_3">方法說明（讀表流程）</a><ul>
+<li><a href="#_4">目的</a></li>
+<li><a href="#_5">流程</a></li>
+<li><a href="#_6">適用範圍</a></li>
+<li><a href="#_7">代表性研究</a></li>
+<li><a href="#_8">相關學者</a></li>
+</ul>
+</li>
 </ul>
 </div>
 
@@ -389,6 +397,47 @@ Table</p>
 <p><strong>相關論文</strong>：Mainardi 2022 Fundamental Concepts
 <strong>相關概念</strong>：<a href="ANOVA.html">ANOVA</a>、effect size、Bonferroni、<a href="Welch_Satterthwaite.html">Welch_Satterthwaite</a>、t-test、Levene's Test、one-way Anova、two-way Anova、<a href="ANCOVA.html">ANCOVA</a></p>
 <p>另見：<a href="ANOVA.html">ANOVA</a> 中「方法說明」段落</p>
+<hr />
+<h3 id="_3">方法說明（讀表流程）</h3>
+<h4 id="_4">目的</h4>
+<ul>
+<li><strong>主要研究目的</strong>：以結構化方式讀懂 ANOVA 摘要表，從 SS、df、MS、F、p 推斷類別自變量是否顯著影響連續依變量（Fisher, 1925）</li>
+<li><strong>次要用途</strong>：作為審稿與口試自我檢核工具，辨識報表常見缺漏</li>
+</ul>
+<h4 id="_5">流程</h4>
+<ol>
+<li>確認設計與分組數：df_between 等於 k − 1</li>
+<li>讀 SS_between / SS_within / SS_total，檢視組間 vs 組內變異比重</li>
+<li>計算 $F = MS_{between} / MS_{within}$ 並對應 p 值</li>
+<li>補算效果量：$\eta^2 = SS_{between}/SS_{total}$、partial $\eta^2$、$\omega^2$（Cohen, 1988）</li>
+<li>檢驗假設：Levene's Test 變異數同質性、常態性、觀察獨立性</li>
+<li>必要時改用 <a href="Welch_Satterthwaite.html">Welch's correction</a> 或 t-test（兩組時）</li>
+<li>三組以上的 post-hoc：Bonferroni、Tukey HSD、Scheffé</li>
+</ol>
+<h4 id="_6">適用範圍</h4>
+<ul>
+<li><strong>適用</strong>：類別自變量（≥ 2 組）對連續依變量的差異檢驗（Fisher, 1925）</li>
+<li><strong>不適用</strong>：同一受試者跨組重複測量（改用 one-way Anova Repeated measures）；連續自變量（改用 regression）；非常態小樣本（改用無母數）</li>
+<li><strong>樣本規模建議</strong>：各組 $N > 30$ 大致滿足中央極限定理；不平衡設計尤需 Welch 修正</li>
+<li><strong>資料類型要求</strong>：連續 DV、類別 IV、組內近常態與獨立觀察</li>
+</ul>
+<h4 id="_7">代表性研究</h4>
+<ul>
+<li><strong>方法奠基</strong>：Fisher（1925）— ANOVA 與 F 分布的提出</li>
+<li><strong>Cutoff 與效果量</strong>：Cohen（1988）— 小／中／大效應建議</li>
+<li><strong>教學案例論文</strong>：Mainardi 2022 Fundamental Concepts</li>
+<li><strong>應用案例</strong>：本筆記引用的 Table 8（推薦類型 × choice confidence / search / cognitive effort）</li>
+<li><strong>相關 wiki 筆記</strong>：（延伸：<a href="ANOVA.html">ANOVA</a>、JASP_ANOVA_effect_size、JASP_welch_correction、<a href="Welch_Satterthwaite.html">Welch_Satterthwaite</a>、Bonferroni）</li>
+</ul>
+<h4 id="_8">相關學者</h4>
+<ul>
+<li><strong>奠基者</strong>：Fisher, Ronald A.（1925）— ANOVA 提出（暫無 wiki/ scholar note）</li>
+<li><strong>效果量推廣者</strong>：Cohen, Jacob（1988）— 效應量分類（暫無 wiki/ scholar note）</li>
+<li><strong>修正方法</strong>：Welch, B. L.；Satterthwaite, F. E.（變異數不齊修正）</li>
+<li><strong>多重比較</strong>：Bonferroni；Tukey；Scheffé（暫無 wiki/ scholar note）</li>
+<li><strong>相關學者 wiki 頁</strong>：（暫無 wiki/ scholar note）</li>
+</ul>
+<p>另見：methodology_book 中的「第 3 章 統計分析方法」相關 ANOVA 段落</p>
 </main>
 </div>
 <script>

@@ -193,6 +193,21 @@ body {
 .btn-done.done   { background: #22c55e; cursor: default; }
 .btn-done:disabled { background: #e0e0e0; color: #999; cursor: not-allowed; }
 
+/* Help / stuck button (student) */
+.btn-help {
+  padding: .42rem .85rem; border: 1px solid #f59e0b; border-radius: 7px;
+  font-size: .82rem; font-weight: 600; cursor: pointer;
+  white-space: nowrap; transition: all .15s;
+  background: #fff; color: #b45309;
+}
+.btn-help:hover:not(:disabled) { background: #fff8e6; transform: scale(1.03); }
+.btn-help.helped { background: #f59e0b; color: #fff; cursor: default; border-color: #f59e0b; }
+.btn-help:disabled { cursor: default; }
+
+/* Help count (teacher) */
+.u-help { font-size: .82rem; font-weight: 700; color: #b45309; margin-left: .5rem; }
+.u-help.zero { color: #ccc; font-weight: 400; }
+
 /* Teacher card: clickable header */
 .card-hdr.t-clickable { cursor: pointer; }
 .card-hdr.t-clickable:hover { filter: brightness(.97); }
@@ -482,9 +497,10 @@ let connected = false;
 let pollTimer = null;
 
 let srv = { session: 0, total: 0, active: "" };
-UNITS.forEach(([id]) => { if (id) srv[id] = 0; });
+UNITS.forEach(([id]) => { if (id) { srv[id] = 0; srv[id + "_help"] = 0; } });
 
-let local = JSON.parse(localStorage.getItem(LS_LOCAL) || '{"session":0,"done":{}}');
+let local = JSON.parse(localStorage.getItem(LS_LOCAL) || '{"session":0,"done":{},"help":{}}');
+if (!local.help) local.help = {};
 
 const root = document.getElementById("root");
 
@@ -516,13 +532,18 @@ async function poll() {
   const data = await dbGet();
   if (!data) { render(); return; }
   if ((data.session || 0) > (local.session || 0)) {
-    local = { session: data.session, done: {} };
+    local = { session: data.session, done: {}, help: {} };
     localStorage.setItem(LS_LOCAL, JSON.stringify(local));
   }
   srv.session = data.session || 0;
   srv.total   = data.total   || 0;
   srv.active  = data.active  || "";
-  UNITS.forEach(([id]) => { if (id) srv[id] = data[id] || 0; });
+  UNITS.forEach(([id]) => {
+    if (id) {
+      srv[id]            = data[id]            || 0;
+      srv[id + "_help"]  = data[id + "_help"]  || 0;
+    }
+  });
   render();
 }
 
@@ -535,13 +556,22 @@ async function markDone(uid) {
   srv[uid] = next; render();
   await dbPatch({ [uid]: next });
 }
+async function markHelp(uid) {
+  if (local.help[uid]) return;
+  local.help[uid] = true;
+  localStorage.setItem(LS_LOCAL, JSON.stringify(local));
+  const k = uid + "_help";
+  const next = (srv[k] || 0) + 1;
+  srv[k] = next; render();
+  await dbPatch({ [k]: next });
+}
 
 // ── Teacher actions ───────────────────────────────
 async function resetAll() {
   if (!confirm("確定重置所有學生進度？\n學生頁面將在 3 秒內自動更新。")) return;
   const newSession = (srv.session || 0) + 1;
   const fresh = { session: newSession, total: srv.total, active: srv.active };
-  UNITS.forEach(([id]) => { if (id) fresh[id] = 0; });
+  UNITS.forEach(([id]) => { if (id) { fresh[id] = 0; fresh[id + "_help"] = 0; } });
   await dbPut(fresh); srv = { ...fresh }; render();
 }
 async function setTotal(n) {
@@ -608,6 +638,7 @@ function buildCard(uid, label, time) {
   if (IS_TEACHER) {
     const total    = srv.total || 1;
     const cnt      = srv[uid] || 0;
+    const helpCnt  = srv[uid + "_help"] || 0;
     const pct      = Math.min(100, Math.round(cnt / total * 100));
     const fill     = pct >= 80 ? "" : pct >= 40 ? " mid" : " low";
     const isActive = srv.active === uid;
@@ -626,13 +657,17 @@ function buildCard(uid, label, time) {
   <div class="card-foot t-foot">
     <div class="t-foot-top">
       <span class="t-hint-text">點擊標題以標記「現在進行」</span>
-      <span class="u-count">${cnt} / ${total}</span>
+      <span>
+        <span class="u-count">${cnt} / ${total}</span>
+        <span class="u-help${helpCnt === 0 ? " zero" : ""}" title="求助人數">🆘 ${helpCnt}</span>
+      </span>
     </div>
     <div class="bar-bg"><div class="bar-fill${fill}" style="width:${pct}%"></div></div>
   </div>
 </div>`;
   } else {
     const isDone   = inSession && !!local.done[uid];
+    const isHelped = inSession && !!local.help[uid];
     const isActive = srv.active === uid;
     const cls      = isDone ? " done" : isActive ? " active" : "";
     const badge    = isActive && !isDone ? `<span class="active-badge">現在</span>`
@@ -649,6 +684,11 @@ function buildCard(uid, label, time) {
   </div>
   ${content ? `<div class="card-body">${content}</div>` : ""}
   <div class="card-foot">
+    ${isDone ? "" : `<button class="btn-help${isHelped ? " helped" : ""}"${isHelped ? " disabled" : ""}
+            onclick="${isHelped ? "" : `markHelp('${uid}')`}"
+            title="不懂這段，請老師再說明">
+      ${isHelped ? "🆘 已舉手" : "🆘 卡住了"}
+    </button>`}
     <button class="btn-done${isDone ? " done" : ""}"${isDone ? " disabled" : ""}
             onclick="${isDone ? "" : `markDone('${uid}')`}">
       ${isDone ? "✓ 完成" : "完成"}

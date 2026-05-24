@@ -173,16 +173,29 @@ hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
   .content { padding: 1.5rem 1.2rem 4rem; }
 }
 </style>
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
 </head>
 <body>
 <div class="layout">
 <aside class="sidebar">
 <div class="toc">
 <ul>
-<li><a href="#latent_variable_scores">latent_variable_scores</a></li>
+<li><a href="#_1">方法說明</a><ul>
+<li><a href="#_2">目的</a></li>
+<li><a href="#_3">流程</a></li>
+<li><a href="#_4">適用範圍</a></li>
+<li><a href="#_5">代表性研究</a></li>
+<li><a href="#_6">相關學者</a></li>
+</ul>
+</li>
 </ul>
 </div>
-
 </aside>
 <main class="content">
 <h1>latent_variable_scores</h1>
@@ -194,6 +207,37 @@ hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
 - 計算 <a href="Fornell-Larcker.html">Fornell-Larcker</a> 區別效度（用 LV 分數的相關矩陣）
 - 跑 <a href="PLS_MGA.html">PLS_MGA</a> 多群組比較</p>
 <p>JASP PLS-SEM 模組可勾選 <strong>Save scores</strong> 把 LV 分數加回資料表。</p>
+<h3 id="_1">方法說明</h3>
+<h4 id="_2">目的</h4>
+<ul>
+<li>主要研究目的：以加權指標分數作為潛在構念的 proxy，供後續多變量分析使用</li>
+<li>次要用途：跨群組比較（<a href="PLS_MGA.html">PLS_MGA</a>）、構念分群分析、cluster 區隔</li>
+</ul>
+<h4 id="_3">流程</h4>
+<ol>
+<li>跑完 PLS-SEM 估計，取得 outer weights</li>
+<li>對每個觀察值，依公式 $\eta_i = \sum_j w_j x_{ij}$ 計算 LV 分數</li>
+<li>儲存 LV 分數至資料表（JASP 勾選 Save scores）</li>
+<li>將 LV 分數用於後續迴歸、ANOVA、cluster、MGA</li>
+<li>報告 LV 分數相關矩陣以支援 Fornell-Larcker 判讀</li>
+</ol>
+<h4 id="_4">適用範圍</h4>
+<ul>
+<li><strong>適用</strong>：PLS-SEM 模型、composite-based SEM、reflective + formative 混合模型</li>
+<li><strong>不適用</strong>：CB-SEM（用 factor scores 而非 composite scores，公式不同）</li>
+<li><strong>樣本規模建議</strong>：依主模型樣本量；MGA 建議每群 N ≥ 100</li>
+<li><strong>資料類型要求</strong>：通過 PLS-SEM 評估的測量模型</li>
+</ul>
+<h4 id="_5">代表性研究</h4>
+<ul>
+<li><strong>相關 wiki 筆記</strong>：（延伸：<a href="composite_score.html">composite_score</a>、<a href="PLS-SEM.html">PLS-SEM</a>、<a href="PLS_MGA.html">PLS_MGA</a>、<a href="Dijkstra_Henseler.html">Dijkstra_Henseler</a>）</li>
+</ul>
+<h4 id="_6">相關學者</h4>
+<ul>
+<li><strong>奠基者</strong>：Wold, H.（PLS path modeling）（暫無 wiki/ 學者 note）</li>
+<li><strong>主要推廣者</strong>：Hair、Ringle、Sarstedt（SmartPLS 學派）；Henseler（暫無 wiki/ 學者 note）</li>
+</ul>
+<hr />
 </main>
 </div>
 <script>

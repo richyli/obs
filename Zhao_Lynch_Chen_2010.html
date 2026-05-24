@@ -186,14 +186,20 @@ MathJax = {
 <aside class="sidebar">
 <div class="toc">
 <ul>
-<li><a href="#zhao_lynch_chen_2010">Zhao_Lynch_Chen_2010</a></li>
+<li><a href="#_1">方法說明</a><ul>
+<li><a href="#_2">目的</a></li>
+<li><a href="#_3">流程</a></li>
+<li><a href="#_4">適用範圍</a></li>
+<li><a href="#_5">代表性研究</a></li>
+<li><a href="#_6">相關學者</a></li>
+</ul>
+</li>
 </ul>
 </div>
-
 </aside>
 <main class="content">
 <h1>Zhao_Lynch_Chen_2010</h1>
-<p class="meta">#methodology　#pls_sem</p>
+<p class="meta">#methodology　#pls_sem　#mediation</p>
 <h2 id="zhao_lynch_chen_2010"><a href="Zhao_Lynch_Chen_2010.html">Zhao_Lynch_Chen_2010</a></h2>
 <p><a href="Zhao_Lynch_Chen_2010.html">Zhao_Lynch_Chen_2010</a> 指：</p>
 <p>Zhao, X., Lynch, J. G., Jr., &amp; Chen, Q. (2010). Reconsidering Baron and Kenny: Myths and truths about mediation analysis. <em>Journal of Consumer Research</em>, 37(2), 197-206.</p>
@@ -204,6 +210,42 @@ MathJax = {
 - <strong>Indirect-only mediation</strong>：只 indirect 顯著（=完全中介）
 - <strong>Direct-only nonmediation</strong>：只 direct 顯著
 - <strong>No-effect nonmediation</strong>：兩者都不顯著</p>
+<h3 id="_1">方法說明</h3>
+<h4 id="_2">目的</h4>
+<ul>
+<li>取代 <a href="Baron_Kenny_1986.html">Baron &amp; Kenny (1986)</a> 的四步因果鏈，用 bootstrap 直接檢驗 indirect effect $a \times b$ 是否顯著（Zhao, Lynch &amp; Chen, 2010）</li>
+<li>將「完全 / 部分中介」的二分法擴展為五類型，含 complementary / competitive mediation 等更細緻分類</li>
+</ul>
+<h4 id="_3">流程</h4>
+<ol>
+<li>建模 IV → M → DV 的迴歸路徑，估計 $a$、$b$、$c'$</li>
+<li>對 indirect effect $ab$ 執行 bootstrap（建議 5000 次以上）</li>
+<li>取 percentile 或 bias-corrected 95% CI 判斷 $ab$ 是否顯著</li>
+<li>同步檢驗 direct effect $c'$ 的顯著性</li>
+<li>依 $ab$ 與 $c'$ 的顯著 / 同號狀態判定五類型之一</li>
+<li>報告 standardized indirect effect 與 CI（含 bootstrap 樣本數）</li>
+</ol>
+<h4 id="_4">適用範圍</h4>
+<ul>
+<li><strong>適用</strong>：所有中介模型（OLS、SEM、PLS-SEM、multilevel）</li>
+<li><strong>不適用</strong>：縱貫資料的時序中介（需 latent growth 或 CLPM）；moderated mediation 需擴充 PROCESS 模型</li>
+<li><strong>樣本規模建議</strong>：bootstrap 對小樣本仍適用，但 $N \geq 100$ 較穩</li>
+<li><strong>資料類型要求</strong>：橫斷面或縱貫資料皆可</li>
+</ul>
+<h4 id="_5">代表性研究</h4>
+<ul>
+<li><strong>方法奠基</strong>：Zhao, Lynch &amp; Chen (2010) — <em>J Consumer Research</em></li>
+<li><strong>bootstrap 技術原型</strong>：Preacher &amp; Hayes (2004, 2008) — <em>Behavior Research Methods</em></li>
+<li><strong>PROCESS 推廣</strong>：Hayes (2018) <em>Introduction to Mediation</em></li>
+<li><strong>PLS-SEM 整合</strong>：Nitzl, Roldán &amp; Cepeda (2016)</li>
+<li>（另見 手冊 §3.1）</li>
+</ul>
+<h4 id="_6">相關學者</h4>
+<ul>
+<li><strong>奠基者</strong>：Xinshu Zhao（CUHK Shenzhen）、John G. Lynch Jr.（Colorado）、Qimei Chen（Hawaii）</li>
+<li><strong>bootstrap 推廣</strong>：Andrew F. Hayes（Ohio State）— PROCESS macro 作者</li>
+<li><strong>理論祖宗</strong>：Reuben Baron、David Kenny（Connecticut）— 1986 原始四步法</li>
+</ul>
 </main>
 </div>
 <script>

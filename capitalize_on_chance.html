@@ -195,6 +195,14 @@ MathJax = {
 <li><a href="#_2">後果</a></li>
 <li><a href="#_3">防禦策略</a></li>
 <li><a href="#_4">與相關偏誤的區別</a></li>
+<li><a href="#_5">方法說明（方法論陷阱）</a><ul>
+<li><a href="#_6">目的</a></li>
+<li><a href="#_7">流程（偵測與防禦）</a></li>
+<li><a href="#_8">適用範圍</a></li>
+<li><a href="#_9">代表性研究</a></li>
+<li><a href="#_10">相關學者</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </aside>
@@ -265,6 +273,45 @@ MathJax = {
 <hr />
 <p><strong>相關概念</strong>：Modification Indices、<a href="CB-SEM.html">CB-SEM</a>、<a href="PLS-SEM.html">PLS-SEM</a>、Cross-validation、<a href="PLSpredict.html">PLSpredict</a>、<a href="Q_squared_predict.html">Q_squared_predict</a>、Bonferroni、Benjamini-Hochberg controls FDR with higher power than Bonferroni、<a href="Type_I_and_Type_II_errors.html">Type I and Type II errors</a>、replication crisis、validation、Model Fit
 另見：Model Fit §六「Modification Indices 的雙刃劍」</p>
+<hr />
+<h3 id="_5">方法說明（方法論陷阱）</h3>
+<h4 id="_6">目的</h4>
+<ul>
+<li><strong>主要研究目的</strong>：作為方法論警示概念，辨識並控制「同一筆樣本反覆嘗試／微調模型」造成的 in-sample fit 虛高、out-of-sample 失敗（MacCallum et al., 1992）</li>
+<li><strong>次要用途</strong>：作為審稿與口試的攻防點，預先化解 reviewer 對 Modification Indices、超參數調校、p-hacking 的質疑</li>
+</ul>
+<h4 id="_7">流程（偵測與防禦）</h4>
+<ol>
+<li><strong>辨識來源</strong>：SEM 中的 MI 修正、ML 中的超參數調校、p-hacking 中的 forking paths（Gelman &amp; Loken, 2014）</li>
+<li><strong>預先註冊</strong>：分析計畫先存檔</li>
+<li><strong>三分割資料</strong>：train / validation / test</li>
+<li><strong>獨立樣本驗證</strong>：以 holdout 或 Cross-validation 重跑（Shmueli et al., 2019）</li>
+<li><strong>每次修改需理論依據</strong>：MI、變數刪除、調節項加入都應有 a priori 假設</li>
+<li><strong>透明報告所有嘗試</strong>：避免讀者誤判</li>
+<li><strong>多重比較校正</strong>：Bonferroni 或 Benjamini-Hochberg controls FDR with higher power than Bonferroni</li>
+</ol>
+<h4 id="_8">適用範圍</h4>
+<ul>
+<li><strong>適用</strong>：所有資料驅動的建模情境——SEM、ML 預測、迴歸、多重 t-test</li>
+<li><strong>不適用</strong>：純探索性研究公開宣示為 exploratory 且不做因果推論時，警示性下降但仍應透明</li>
+<li><strong>樣本規模建議</strong>：（不直接適用；視原模型而定）</li>
+<li><strong>資料類型要求</strong>：可分割成獨立 train/test 的橫斷或縱貫資料</li>
+</ul>
+<h4 id="_9">代表性研究</h4>
+<ul>
+<li><strong>詞源</strong>：MacCallum, Roznowski, &amp; Necowitz（1992，<em>Psychological Bulletin</em>）— SEM 中 MI 反覆修正的 simulation</li>
+<li><strong>Garden of forking paths</strong>：Gelman &amp; Loken（2014）— 未報告分析路徑的隱性多重檢定</li>
+<li><strong>PLS 預測框架</strong>：Shmueli et al.（2019）— <a href="PLSpredict.html">PLSpredict</a>、<a href="Q_squared_predict.html">Q_squared_predict</a></li>
+<li><strong>相關 wiki 筆記</strong>：（延伸：Modification Indices、Cross-validation、replication crisis、<a href="CB-SEM.html">CB-SEM</a>、<a href="PLSpredict.html">PLSpredict</a>）</li>
+</ul>
+<h4 id="_10">相關學者</h4>
+<ul>
+<li><strong>奠基者</strong>：MacCallum, Robert C.；Roznowski, Mary；Necowitz, Lawrence B.（1992；暫無 wiki/ scholar note）</li>
+<li><strong>Garden of forking paths</strong>：Gelman, Andrew；Loken, Eric（2014；暫無 wiki/ scholar note）</li>
+<li><strong>PLSpredict 框架</strong>：Shmueli, Galit 等（暫無 wiki/ scholar note）</li>
+<li><strong>相關學者 wiki 頁</strong>：（暫無 wiki/ scholar note）</li>
+</ul>
+<p>另見：methodology_book 中的「第 6.2 節 常見方法論陷阱」</p>
 </main>
 </div>
 <script>

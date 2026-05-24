@@ -186,10 +186,16 @@ MathJax = {
 <aside class="sidebar">
 <div class="toc">
 <ul>
-<li><a href="#composite_based_sem">composite_based_SEM</a></li>
+<li><a href="#_1">方法說明</a><ul>
+<li><a href="#_2">目的</a></li>
+<li><a href="#_3">流程</a></li>
+<li><a href="#_4">適用範圍</a></li>
+<li><a href="#_5">代表性研究</a></li>
+<li><a href="#_6">相關學者</a></li>
+</ul>
+</li>
 </ul>
 </div>
-
 </aside>
 <main class="content">
 <h1>composite_based_SEM</h1>
@@ -201,6 +207,43 @@ MathJax = {
 - 估計時每個觀察值都有 <a href="latent_variable_scores.html">latent_variable_scores</a>
 - 代表方法：PLS-SEM、GSCA</p>
 <p><strong>關鍵差別</strong>：因為構念為複合分數而非潛在因子，無 CFI、<a href="RMSEA.html">RMSEA</a> 等 model fit 指標，改以 <a href="SRMR.html">SRMR</a>、$R^2$、<a href="f_squared.html">f_squared</a>、<a href="Q_squared_predict.html">Q_squared_predict</a> 評估。</p>
+<hr />
+<h3 id="_1">方法說明</h3>
+<h4 id="_2">目的</h4>
+<ul>
+<li><strong>主要研究目的</strong>：將潛在構念視為觀察變項的加權組合（composite），以「預測」與「最大化 $R^2$」為目標，提供因子導向以外的構念估計途徑</li>
+<li><strong>次要用途</strong>：在小樣本、非常態、含形成性指標的情境提供可運作的 SEM 替代（詳見 <a href="PLS-SEM.html">PLS-SEM</a>）</li>
+</ul>
+<h4 id="_3">流程</h4>
+<ol>
+<li>設定外模型（measurement / outer model）：把每個構念表示為其指標的加權組合</li>
+<li>估計每筆觀察值的 <a href="latent_variable_scores.html">latent_variable_scores</a></li>
+<li>內模型估計路徑：以 OLS 在 composite 之間迴歸</li>
+<li>評估：以 <a href="SRMR.html">SRMR</a>、$R^2$、<a href="f_squared.html">f_squared</a>、<a href="Q_squared_predict.html">Q_squared_predict</a> 取代傳統 fit indices</li>
+<li>信效度報告：<a href="Cronbach_alpha.html">Cronbach alpha</a>、<a href="rho_A.html">rho_A</a>、HTMT 等</li>
+</ol>
+<h4 id="_4">適用範圍</h4>
+<ul>
+<li><strong>適用</strong>：預測導向研究、含形成性指標、小樣本或非常態資料（詳見 <a href="PLS-SEM.html">PLS-SEM</a>）</li>
+<li><strong>不適用</strong>：嚴格的理論驗證、需報告 $\chi^2$/CFI/RMSEA 整體適配的情境（改用 <a href="CB-SEM.html">CB-SEM</a>）</li>
+<li><strong>樣本規模建議</strong>：依 inverse square root method 或 power analysis 計算（詳見 <a href="Hair_2022_PLS.html">Hair_2022_PLS</a>）</li>
+<li><strong>資料類型要求</strong>：橫斷或縱貫構念測量；對分布形式較寬容</li>
+</ul>
+<h4 id="_5">代表性研究</h4>
+<ul>
+<li><strong>方法手冊</strong>：Hair et al.（2022）— PLS-SEM checklist（<a href="Hair_2022_PLS.html">Hair_2022_PLS</a>）</li>
+<li><strong>PLSc 一致性</strong>：Dijkstra &amp; Henseler（2015）— 證明 PLSc 在大樣本下逼近 CB-SEM ML 結果（<a href="Dijkstra_Henseler.html">Dijkstra_Henseler</a>）</li>
+<li><strong>替代方法</strong>：GSCA（generalized structured component analysis）</li>
+<li><strong>相關 wiki 筆記</strong>：（延伸：<a href="PLS-SEM.html">PLS-SEM</a>、<a href="CB-SEM.html">CB-SEM</a>、<a href="rho_A.html">rho_A</a>）</li>
+</ul>
+<h4 id="_6">相關學者</h4>
+<ul>
+<li><strong>奠基者</strong>：Wold, H.（PLS 軟建模傳統，暫無 wiki/ scholar note）</li>
+<li><strong>主要推廣者</strong>：Hair, J. F.；Henseler, J.；Dijkstra, T. K.</li>
+<li><strong>批評者 / 修正者</strong>：Rönkkö 等對 PLS 估計性質的批評（暫無 wiki/ 資料）</li>
+<li><strong>相關學者 wiki 頁</strong>：（暫無 wiki/ scholar note）</li>
+</ul>
+<p>另見：methodology_book 中的「第 3.2 節 結構方程模型」</p>
 </main>
 </div>
 <script>
