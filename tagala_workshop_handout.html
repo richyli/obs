@@ -25,9 +25,11 @@
 <li><a href="#claude-desktop-claude-code">為什麼從 Claude Desktop 切到 Claude Code</a></li>
 <li><a href="#claudemd">CLAUDE.md：給這個專案的「公司守則」</a></li>
 <li><a href="#memory">Memory：跨對話、跨專案的「個人偏好」</a></li>
+<li><a href="#claude-code">我的多機同步真實歷程（直接交給 Claude Code 處理）</a></li>
 <li><a href="#skills">Skills</a></li>
-<li><a href="#claude-code">基本邏輯：Claude Code 一次回應在做什麼</a></li>
+<li><a href="#claude-code_1">基本邏輯：Claude Code 一次回應在做什麼</a></li>
 <li><a href="#harness">harness 是什麼</a></li>
+<li><a href="#claude-code-modes-models">Claude Code 的 Modes 與 Models — 怎麼選？</a></li>
 <li><a href="#token">Token 是什麼</a></li>
 <li><a href="#context">Context 是什麼，為什麼重要</a></li>
 <li><a href="#today-kanban-skill">案例：/today ← /kanban ←—— skill 不只一種等級</a></li>
@@ -289,6 +291,16 @@
 1. <strong>你說「記下來」</strong>：講完糾正後加一句「把這個寫進 memory」，它會自己存檔。
 2. <strong>它主動觀察</strong>：Claude Code 內建一條 auto memory 規則，當你<strong>反覆</strong>糾正同一件事，它會主動寫進 memory。</p>
 <p><strong>跨機呼叫</strong>：memory 檔放在你的 <code>~/.claude/projects/&lt;project&gt;/memory/</code>。如果你的 home 目錄有同步到 Dropbox / OneDrive（我自己是把整個 <code>.claude/</code> 同步），在公司電腦和家裡筆電打開 Claude Code，會讀到同一份記憶。沒同步的話換機器就會失憶——這是大家最容易踩的坑。</p>
+<h4 id="claude-code">我的多機同步真實歷程（直接交給 Claude Code 處理）</h4>
+<p>我自己有兩台 Windows 電腦（家裡一台、辦公室一台）+ 同一份 Dropbox。每次換機器要做的事很多：memory 對齊、<code>.claude/skills/</code> 同步、過去 session 紀錄要能撈到、本機自動化腳本（番茄鐘、開機啟動）要兩台一致、本機 Junction 連結要重建 ……</p>
+<p><strong>這些我沒有自己研究過一次</strong>。流程是：</p>
+<ol>
+<li>在新機器打開 Claude Code，第一句講：「我這台機器是新的，幫我比對另一台跟這台的 <code>.claude/</code> 設定差在哪、補齊」</li>
+<li>它自己跑 <code>Glob</code>、<code>Read</code>、<code>diff</code>，列差異給我</li>
+<li>我說「OK 全部補齊」，它寫個一次性腳本跑完</li>
+<li>遇到 Windows 特殊狀況（例：Junction、Startup 捷徑、Dropbox 路徑大小寫）它會問我一兩題、我回答完就繼續</li>
+</ol>
+<p><strong>訊息</strong>：多機同步不是「教學課題」，是「<strong>直接跟 Claude Code 對話解決</strong>」的事。你回家別翻 stackoverflow——打開 Claude Code 描述你的狀況、它會自己幫你規劃。我的兩台機器就是這樣同步起來的，從沒手動寫過 sync 腳本。</p>
 <blockquote>
 <p><strong>🧑‍💼 企業主的思考時間</strong></p>
 <p>員工的 memory 是個棘手的法律 / 管理問題——</p>
@@ -302,7 +314,7 @@
 </blockquote>
 <h4 id="skills">Skills</h4>
 <p>第三層是 skills——這留到 S5 詳講。先記住：CLAUDE.md 管「這個專案的規矩」、memory 管「你這個人的習慣」、skills 管「你常做的動作」。</p>
-<h4 id="claude-code">基本邏輯：Claude Code 一次回應在做什麼</h4>
+<h4 id="claude-code_1">基本邏輯：Claude Code 一次回應在做什麼</h4>
 <pre><code>你打一句話
   ↓
 模型決定要不要先用工具（Read / Bash / Grep / WebFetch ...）
@@ -323,6 +335,149 @@
 - <strong>Windsurf</strong>：Codeium 出的
 - <strong>Cline / Continue</strong>：開源的 VS Code 擴充</p>
 <p>同一個模型套不同 harness 行為差很多。Claude Code 強在：原生 Skill 系統、原生 MCP 串接、<code>/agents</code> 多代理人、Bash sandbox。所以今天選它當主要工具。</p>
+<h4 id="claude-code-modes-models">Claude Code 的 Modes 與 Models — 怎麼選？</h4>
+<p>Claude Code 對一個任務有<strong>三個維度</strong>可以調。今天的 demo 我都用預設值跑，但你回家會想自己挑：</p>
+<p><strong>維度 1：Model — 選引擎大小</strong></p>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>強項</th>
+<th>適合</th>
+<th>成本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Opus 4.7</strong></td>
+<td>複雜推理、長對話、寫作、debug 邏輯難題</td>
+<td>寫論文、設計 skill、跑 <code>/daily</code> 整套 pipeline</td>
+<td>最貴（約 Sonnet 5×）</td>
+</tr>
+<tr>
+<td><strong>Sonnet 4.6</strong></td>
+<td>平衡型，快速且夠聰明</td>
+<td>日常 90% 任務、寫程式、抓資料</td>
+<td>中等</td>
+</tr>
+<tr>
+<td><strong>Haiku 4.5</strong></td>
+<td>反應快、便宜</td>
+<td>短問答、簡單格式轉換、批次小操作</td>
+<td>最便宜</td>
+</tr>
+</tbody>
+</table>
+<p><strong>選擇原則</strong>：<strong>從便宜開始試</strong>。先用 Sonnet，跑壞了再換 Opus 重做一次——通常省錢。
+我自己跑 <code>/daily</code> 用 Opus（內容多、判斷複雜），但白天問「這個 git 指令是什麼意思」用 Sonnet 就夠。</p>
+<p>切換指令：對話中打 <code>/model</code>，跳出選單；或在 <code>settings.json</code> 設預設值。</p>
+<p><strong>維度 2：Effort Level — 選思考深度</strong></p>
+<p><code>effortLevel</code> 控制模型「給回應前花多少時間想」：</p>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>行為</th>
+<th>適合</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>low</code></td>
+<td>直接答、少 reasoning</td>
+<td>已知步驟的快速操作</td>
+</tr>
+<tr>
+<td><code>medium</code>（預設）</td>
+<td>標準思考</td>
+<td>大多數任務</td>
+</tr>
+<tr>
+<td><code>high</code></td>
+<td>反覆檢查、深度推理</td>
+<td>設計決策、debug、寫架構</td>
+</tr>
+</tbody>
+</table>
+<p>我自己 <code>~/.claude/settings.json</code> 設 <code>"effortLevel": "high"</code>——寫論文、改 skill 這類事不希望它草率。但代價是回應變慢。如果你只是日常問答，調 <code>medium</code> 即可。</p>
+<p><strong>維度 3：Permission Mode — 控制 Claude 動手的權限</strong></p>
+<p>決定它做事前要不要問你：</p>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>行為</th>
+<th>適合</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>default</strong></td>
+<td>每個寫入、Bash 都問你「Allow / Always / Deny」</td>
+<td>第一週、不熟悉時</td>
+</tr>
+<tr>
+<td><strong>acceptEdits</strong></td>
+<td>自動同意檔案編輯，但 Bash 仍問</td>
+<td>跑熟的 skill、不會傷檔的任務</td>
+</tr>
+<tr>
+<td><strong>plan</strong></td>
+<td>它只規劃、不執行（產出 plan、等你 approve）</td>
+<td>大型改動前先看計畫</td>
+</tr>
+<tr>
+<td><strong>bypassPermissions</strong></td>
+<td>全自動，什麼都不問（<strong>危險</strong>）</td>
+<td>Cron 排程、CI 跑批次</td>
+</tr>
+</tbody>
+</table>
+<p>切換：對話中打 Shift+Tab 循環切換，或 <code>/permissions</code> 看詳細設定。</p>
+<p><strong>我的日常組合</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>任務</th>
+<th>Model</th>
+<th>Effort</th>
+<th>Permission</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>寫論文 / 改架構</td>
+<td><strong>Opus</strong></td>
+<td><strong>high</strong></td>
+<td>default（每步看著）</td>
+</tr>
+<tr>
+<td>跑 <code>/daily</code> 自動化</td>
+<td><strong>Opus</strong></td>
+<td><strong>high</strong></td>
+<td><strong>acceptEdits</strong></td>
+</tr>
+<tr>
+<td>白天小問題</td>
+<td><strong>Sonnet</strong></td>
+<td>medium</td>
+<td>default</td>
+</tr>
+<tr>
+<td>大型重構前先看計畫</td>
+<td><strong>Opus</strong></td>
+<td><strong>high</strong></td>
+<td><strong>plan</strong></td>
+</tr>
+<tr>
+<td>半夜跑批次 cron</td>
+<td><strong>Sonnet</strong></td>
+<td>medium</td>
+<td><strong>bypassPermissions</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>今天的建議</strong>：先用「Sonnet + medium + default」跑一週，<strong>所有寫入都看一眼再放行</strong>。一週後你會自然知道哪些 skill 你信任、哪些不信任，再調整。</p>
 <h4 id="token">Token 是什麼</h4>
 <p>講 context 之前，要先講 <strong>token</strong>——AI 圈最常聽到、卻最少人講清楚的單位。</p>
 <p><strong>Token = 模型處理文字的最小單位</strong>。不是字、不是詞、不是 byte——是介於字與詞之間的小塊。例：</p>
