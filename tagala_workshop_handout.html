@@ -91,20 +91,20 @@ body {
 
 /* ── Typography ── */
 h1 {
-  font-size: 1.75rem; font-weight: 700;
+  font-size: 1.6em; font-weight: 700;
   margin: 0 0 0.15rem;
   padding-bottom: 0.4rem;
   border-bottom: 2px solid #111;
   line-height: 1.3;
 }
 h2 {
-  font-size: 1.3rem; font-weight: 700;
+  font-size: 1.35em; font-weight: 700;
   margin: 2.5rem 0 0.5rem;
   padding-bottom: 0.2rem;
   border-bottom: 1px solid #ddd;
 }
-h3 { font-size: 1.1rem; font-weight: 700; margin: 1.8rem 0 0.4rem; }
-h4 { font-size: 1rem; font-weight: 700; margin: 1.4rem 0 0.3rem; }
+h3 { font-size: 1.2em; font-weight: 700; margin: 1.8rem 0 0.4rem; }
+h4 { font-size: 1.1em; font-weight: 700; margin: 1.4rem 0 0.3rem; }
 p { margin: 0.9rem 0; }
 a { color: #0055cc; text-decoration: none; }
 a:hover { text-decoration: underline; }
@@ -182,11 +182,11 @@ hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
 <li><a href="#s1-agentic-ai-1400-15-min">S1 ｜ 開場與 Agentic AI 簡介（14:00, 15 min）</a><ul>
 <li><a href="#_1">這節要回答的問題</a></li>
 <li><a href="#_2">一句話定義</a></li>
-<li><a href="#_3">為什麼是「今年」</a></li>
+<li><a href="#_3">為什麼現在要談這個</a></li>
 <li><a href="#_4">用「員工」來比喻</a></li>
-<li><a href="#_5">我的真實例子</a></li>
-<li><a href="#_6">三條今天會反覆出現的原則</a></li>
-<li><a href="#_7">下午行程地圖</a></li>
+<li><a href="#today-daily-skill">我的真實例子：/today 與 /daily 兩個 skill 的分時段差異</a></li>
+<li><a href="#_5">三條今天會反覆出現的原則</a></li>
+<li><a href="#_6">下午行程地圖</a></li>
 </ul>
 </li>
 <li><a href="#s4-vs-code-claude-code1500-20-min">S4 ｜ 進階代理人：VS Code + Claude Code（15:00, 20 min）</a><ul>
@@ -196,7 +196,11 @@ hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
 <li><a href="#skills">Skills</a></li>
 <li><a href="#claude-code">基本邏輯：Claude Code 一次回應在做什麼</a></li>
 <li><a href="#harness">harness 是什麼</a></li>
+<li><a href="#token">Token 是什麼</a></li>
 <li><a href="#context">Context 是什麼，為什麼重要</a></li>
+</ul>
+</li>
+<li><a href="#follow-up">follow - up</a><ul>
 <li><a href="#context_1">專案 / 對話 / Context 三層的差異</a></li>
 <li><a href="#hand-off">Hand off：對話太長怎麼辦</a></li>
 <li><a href="#glob">Glob 是什麼</a></li>
@@ -205,10 +209,8 @@ hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
 <li><a href="#memory_1">真實案例：我自己的 memory 長什麼樣</a></li>
 <li><a href="#demogoogle-calendar">Demo：Google Calendar 串接 + 個人小祕書</a></li>
 <li><a href="#claudeai-connectors-3">串接步驟（claude.ai Connectors 路線，3 分鐘搞定）</a></li>
-<li><a href="#_8">學員自己試（如果還有時間）</a></li>
+<li><a href="#_7">學員自己試（如果還有時間）</a></li>
 <li><a href="#twinkle-mcp-mcp">同場加映：Twinkle MCP — 台灣專屬的 MCP 服務集合</a></li>
-</ul>
-</li>
 <li><a href="#s5-skill-1520-15-min">S5 ｜ Skill 是什麼、怎麼建、怎麼訓練、怎麼自動化（15:20, 15 min）</a><ul>
 <li><a href="#skill">為什麼需要 Skill</a></li>
 <li><a href="#skill_1">Skill 長什麼樣（最小範例）</a></li>
@@ -216,47 +218,49 @@ hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
 <li><a href="#skill_2">怎麼「訓練」一個 Skill</a></li>
 <li><a href="#skill-script">進階：skill 裡的 script 是怎麼回事</a></li>
 <li><a href="#python-claude">補：Python 是什麼？跟 Claude 是什麼關係？</a></li>
-<li><a href="#_9">怎麼自動化</a></li>
+<li><a href="#_8">怎麼自動化</a></li>
 <li><a href="#skill_3">我目前在用的 Skill 列表（給大家當靈感）</a></li>
 </ul>
 </li>
 <li><a href="#s6-1535-15-min">S6 ｜ 新聞秘書實作（15:35, 15 min）</a><ul>
-<li><a href="#_10">目標</a></li>
-<li><a href="#_11">我的真實版本長什麼樣（先給你看終點）</a></li>
+<li><a href="#_9">目標</a></li>
+<li><a href="#_10">我的真實版本長什麼樣（先給你看終點）</a></li>
 <li><a href="#mini-3-20">你今天要做的「mini 版」（3 個媒體、20 則新聞）</a></li>
-<li><a href="#_12">關鍵小技巧</a></li>
-<li><a href="#_13">自我檢核：跑完後問自己</a></li>
-<li><a href="#_14">進階（回家自己玩）</a></li>
+<li><a href="#_11">關鍵小技巧</a></li>
+<li><a href="#_12">自我檢核：跑完後問自己</a></li>
+<li><a href="#_13">進階（回家自己玩）</a></li>
 <li><a href="#bonus-news-sec-checkbox">Bonus 案例：/news-sec 的 checkbox 偏好學習機制</a></li>
-<li><a href="#_15">為什麼這值得學</a></li>
+<li><a href="#_14">為什麼這值得學</a></li>
 </ul>
 </li>
 <li><a href="#s7-obsidian-1550-20-min">S7 ｜ 知識庫實作：用 Obsidian 建構（15:50, 20 min）</a><ul>
 <li><a href="#obsidian">為什麼是 Obsidian</a></li>
-<li><a href="#_16">我的 專案資料庫 規模（給大家一個尺度感）</a></li>
-<li><a href="#_17">為什麼要連起來</a></li>
+<li><a href="#_15">我的 專案資料庫 規模（給大家一個尺度感）</a></li>
+<li><a href="#_16">為什麼要連起來</a></li>
 <li><a href="#5-mini">今天的實作：5 步建立你的 mini 專案資料庫</a></li>
 <li><a href="#claude-note">讓 Claude 幫你寫 note</a></li>
-<li><a href="#_18">我的真實工作流（給大家參考）</a></li>
+<li><a href="#_17">我的真實工作流（給大家參考）</a></li>
 <li><a href="#skill-skill-review-skill">我的 Skill 檢查流程：用 /skill-review 讓 skill 自我體檢</a></li>
-<li><a href="#_19">自我檢核</a></li>
+<li><a href="#_18">自我檢核</a></li>
 </ul>
 </li>
 <li><a href="#s8-supervised-learning-skill-1610-15-min">S8 ｜ 訓練技巧：用 Supervised Learning 把 Skill 教得更好（16:10, 15 min）</a><ul>
-<li><a href="#_20">一句話</a></li>
-<li><a href="#_21">三層記憶（從窄到寬）</a></li>
+<li><a href="#_19">一句話</a></li>
+<li><a href="#_20">三層記憶（從窄到寬）</a></li>
 <li><a href="#loop">Loop 長這樣</a></li>
-<li><a href="#_22">我的兩個訓練做法</a></li>
+<li><a href="#_21">我的兩個訓練做法</a></li>
 <li><a href="#learn-style-10-ai-vs">從 /learn-style 萃取的 10 條：AI 預設風格 vs. 我的風格</a></li>
 <li><a href="#case-1">Case 1：撰寫比賽或提案文件</a></li>
 <li><a href="#case-2-sns">Case 2：寫 SNS 文章</a></li>
 <li><a href="#fine-tuning">為什麼這比 fine-tuning 好</a></li>
-<li><a href="#_23">高階：把「為什麼」也記下來</a></li>
+<li><a href="#_22">高階：把「為什麼」也記下來</a></li>
 <li><a href="#skill_4">自我檢核：你的 Skill「會長大」嗎</a></li>
 </ul>
 </li>
-<li><a href="#_24">結尾：今天結束你應該帶走的四件事</a></li>
-<li><a href="#_25">番外</a></li>
+<li><a href="#_23">結尾：今天結束你應該帶走的四件事</a></li>
+</ul>
+</li>
+<li><a href="#_24">番外</a></li>
 </ul>
 </div>
 
@@ -265,8 +269,9 @@ hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
 <h1>Tagala Agentic AI Workshop — Richy 講次講義</h1>
 <p class="meta">#tagala_workshop　#agentic_ai　#claude_code　#skill　#handout</p>
 <blockquote>
-<p>主要工具：<strong>Claude Code（在 VS Code 中跑）</strong>。輔助工具：Claude Desktop（S3 由 Iona 帶）、Obsidian（S7）。</p>
-<p>本講義所有範例均來自 Richy 實際在用的工作流，不是為了上課編出來的示範。</p>
+<p>主要工具：<strong>Claude Code（在 VS Code 中跑）</strong>。輔助工具：Claude Desktop（S3 由 Iona 帶）、Obsidian（S7）。
+本講義所有範例均來自 Richy 實際在用的工作流，不是為了上課編出來的示範。
+本講義由 Claude AI 根據 Richy 的指令、過往檔案、多次討論修改後協作產生。</p>
 </blockquote>
 <hr />
 <h3 id="s1-agentic-ai-1400-15-min">S1 ｜ 開場與 Agentic AI 簡介（14:00, 15 min）</h3>
@@ -310,11 +315,12 @@ hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
 </tr>
 </tbody>
 </table>
-<h4 id="_3">為什麼是「今年」</h4>
+<h4 id="_3">為什麼現在要談這個</h4>
 <p>兩件事在 2025–2026 之間成熟：</p>
 <ol>
 <li><strong>模型夠強到可以放手</strong>——Opus 4.x、Sonnet 4.x 的工具使用（tool use）穩定到可以連續做 20–30 步不爆掉。</li>
 <li><strong>harness 成熟</strong>——Claude Code、Cursor、Windsurf 這類 CLI / IDE 整合，把「模型 ↔ 你的檔案系統 ↔ 你的瀏覽器 ↔ 你的行事曆」串起來（「harness」這個詞 S4 會詳講）。</li>
+<li>開始進入了不跟上會落後的階段</li>
 </ol>
 <p>今天的重點<strong>不是學新 prompt 技巧</strong>，是學「怎麼把一件事的決策權交給 AI、但又不會失控」。</p>
 <h4 id="_4">用「員工」來比喻</h4>
@@ -333,26 +339,79 @@ hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
 <li>你會用「<strong>這個員工值不值得繼續培訓</strong>」的標準去淘汰你的 AI 嗎？多久淘汰一次？</li>
 </ul>
 </blockquote>
-<h4 id="_5">我的真實例子</h4>
-<p>我每天早上會跑一個叫 <code>/daily</code> 的指令，它會：</p>
-<ol>
-<li>抓全球 5–7 個地區的新聞，挑 70 則我會在意的，寫成 4000 字的個人簡報</li>
-<li>從我自己過去收集的論文資料庫找最多 6 篇與我目前寫作計畫最相關的自動讀完、寫成 wiki note、補上學者 note、補上 wikilink</li>
-<li>製作一篇日語時事教材</li>
-<li>掃我 todo/ 資料夾，排今天的工作清單</li>
-<li>綜合我的 Google Calendar 資料</li>
-<li>更新我的番茄鍾</li>
-<li>抓 Polar 手錶的睡眠資料，告訴我今晚幾點該睡</li>
-</ol>
+<h4 id="today-daily-skill">我的真實例子：<code>/today</code> 與 <code>/daily</code> 兩個 skill 的分時段差異</h4>
+<p>我每天有<strong>兩個</strong>核心 skill，分早晚兩次跑。先把它們的差異講清楚——這是後面所有討論的場景錨。</p>
+<p><strong><code>/today</code>：當天工作排程，早晚各跑一次</strong></p>
+<ul>
+<li><strong>早上 8:00 跑</strong>：掃 <code>todo/</code> 所有 <code>Todo: true</code> 的任務 → 依 Deadline + Priority 排序 → 產出<strong>今天該做的清單</strong>到 Obsidian Kanban</li>
+<li><strong>晚上 22:00 跑</strong>：讀我白天<strong>手動拖過的 Kanban 卡片</strong>（拖到「✅ 完成」/「📅 明日 deliver」等欄）→ 把拖動結果<strong>寫回</strong>每個 task 的 YAML → 重建明日清單</li>
+<li><strong>主要介面</strong>：<code>todo/Todo Kanban.md</code>（7 欄看板，🔴 今日確定處理 / 📅 明日 deliver / 🟡 本週推進 / 🔥 重要待排程 / 📦 之後再做 / 🗄️ 深櫃 / ✅ 完成）</li>
+<li><strong>特性</strong>：<strong>雙向同步</strong>——我拖卡片，Claude 寫回 YAML；YAML 改了，Claude 重畫 Kanban</li>
+<li>跑完還會繼續：產 70 則新聞 + 4000 字 brief（<code>/news-sec</code>）、抓 Yahoo Japan 寫 N4/N5 日語教材（<code>/jp-daily</code>）、抓 Polar 手錶睡眠資料（<code>/sleep-report</code>）、綜合 Google Calendar、更新番茄鐘。</li>
+</ul>
+<p><code>/today</code> 解決的問題：把「我心中的優先順序」與「實際工作流程」每天對齊兩次。</p>
+<p><strong><code>/daily</code>：早上跑一次的維護流水線</strong></p>
+<p><code>/daily</code> 才是真正讓我「沖咖啡的時間自動跑完一切」的那個。它是個<strong>多 subagent DAG（有向無環圖）</strong>，依序跑 10 個 step，每個 step 都丟給獨立的 subagent 在自己的 context 裡跑、跑完只回主對話一段摘要：</p>
+<pre><code>1. /read-citavi      ← 讀 Citavi 新 PDF（上限 6 篇）寫成 wiki note
+   └─ 1.5 /journal-watch  ← 每 7 天跑：掃學術期刊 TOC
+       └─ 1.6 /weekly         ← 每週日跑：週維護
+           └─ 2. /extend       ← 擴充需要展開的 note
+               └─ 3. /methodology   ← 整理方法論 note
+                   └─ [4. /summary-note] ‖ [5. /random-link]  ← 並行
+                       └─ 6. /book-edit       ← 更新 16 本研究手冊
+                           └─ 7. /scholar      ← 識別並建立學者 note
+                               └─ 8. /audit    ← 全 vault 品質檢查
+                                   └─ 9. /daily_report  ← 產出今日綜合報告
+                                       └─ 10. /wish-list  ← 未完願望清單
+</code></pre>
+<p><strong>特性</strong>：<strong>單向</strong>——<code>/daily</code> 是「<strong>主動推送</strong>」型 skill，跑完把結果擺到你眼前；你不需要互動、不需要拖卡。</p>
+<p><strong>為什麼要分兩個</strong></p>
+<table>
+<thead>
+<tr>
+<th>比較項</th>
+<th><code>/today</code></th>
+<th><code>/daily</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>跑的頻率</td>
+<td>一天 2 次（早 + 晚）</td>
+<td>一天 1 次（早上）</td>
+</tr>
+<tr>
+<td>與我互動</td>
+<td>我拖卡片、它寫回 YAML</td>
+<td>我不需要動、只看結果</td>
+</tr>
+<tr>
+<td>主功能</td>
+<td>任務排程 + Kanban 雙向同步</td>
+<td>知識庫維護 + 內容供給（新聞 / 論文 / 教材）</td>
+</tr>
+<tr>
+<td>失敗代價</td>
+<td>排錯一天</td>
+<td>漏讀幾篇論文、新聞</td>
+</tr>
+<tr>
+<td>跑完誰看</td>
+<td>我看 Kanban 規劃</td>
+<td>Claude 寫完進對應資料夾，我有空再看</td>
+</tr>
+</tbody>
+</table>
+<p>簡單講：<strong><code>/today</code> 是「我的祕書」、<code>/daily</code> 是「我的研究助理」</strong>。一個管我的時間，一個管我的學術產出。</p>
 <p>整個過程我<strong>沒有打字</strong>，就是 <code>/daily</code> 一個指令。早上沖咖啡的時間它跑完了。</p>
 <p>這就是今天下午要讓大家感覺到的東西——<strong>授權</strong>給 AI，而不是<strong>指揮</strong>AI。</p>
-<h4 id="_6">三條今天會反覆出現的原則</h4>
+<h4 id="_5">三條今天會反覆出現的原則</h4>
 <ol>
 <li><strong>看著它跑</strong>：Agentic AI 跑錯比 chat 跑錯後果大（會改你的檔），所以要看著、要會喊停。</li>
 <li><strong>用 Skill 把「你會的事」封裝起來</strong>：教一次，之後一個指令叫出來。</li>
 <li><strong>資料留在你電腦上</strong>：今天教的所有東西，產出都在你的本機資料夾，不是雲端 SaaS。我是用 Dropbox，但還有很多 Options 例如 Google Drive、One Drive。Skills 與記憶都同步。</li>
 </ol>
-<h4 id="_7">下午行程地圖</h4>
+<h4 id="_6">下午行程地圖</h4>
 <ul>
 <li>14:15 Iona 講 workflow 重構（怎麼想「哪些事可以交給 AI」）</li>
 <li>14:30 Iona 帶 Claude Desktop / Claude Cowork 基本盤</li>
@@ -434,8 +493,51 @@ hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
 - <strong>Windsurf</strong>：Codeium 出的
 - <strong>Cline / Continue</strong>：開源的 VS Code 擴充</p>
 <p>同一個模型套不同 harness 行為差很多。Claude Code 強在：原生 Skill 系統、原生 MCP 串接、<code>/agents</code> 多代理人、Bash sandbox。所以今天選它當主要工具。</p>
+<h4 id="token">Token 是什麼</h4>
+<p>講 context 之前，要先講 <strong>token</strong>——AI 圈最常聽到、卻最少人講清楚的單位。</p>
+<p><strong>Token = 模型處理文字的最小單位</strong>。不是字、不是詞、不是 byte——是介於字與詞之間的小塊。例：</p>
+<table>
+<thead>
+<tr>
+<th>原文</th>
+<th>切成 token</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Hello world</code></td>
+<td><code>["Hello", " world"]</code> 2 個 token</td>
+</tr>
+<tr>
+<td><code>Agentic AI</code></td>
+<td><code>["Ag", "entic", " AI"]</code> 3 個 token</td>
+</tr>
+<tr>
+<td><code>你好</code></td>
+<td><code>["你", "好"]</code> 2 個 token</td>
+</tr>
+<tr>
+<td><code>今天天氣很好</code></td>
+<td><code>["今天", "天", "氣", "很", "好"]</code> 5 個 token</td>
+</tr>
+</tbody>
+</table>
+<p><strong>粗略換算</strong>（英文 vs 中文差很多）：</p>
+<ul>
+<li><strong>英文</strong>：1 token ≈ 0.75 個英文字（即 4 個英文字母 ≈ 1 token）</li>
+<li><strong>中文</strong>：1 token ≈ 0.5–0.7 個漢字（中文每字資訊密度高，1 個漢字常拆 1–2 個 token）</li>
+</ul>
+<p>所以同樣 1000 個 token：英文約 750 字，中文約 500–700 字。</p>
+<p><strong>為什麼要懂 token</strong></p>
+<p>三個原因：</p>
+<ol>
+<li><strong>計費單位</strong>：Claude / OpenAI / Gemini 通通按 token 計價（<strong>input token</strong> 一個價、<strong>output token</strong> 另一個價，後者通常貴 4–5 倍）。你跑 <code>/daily</code> 燒幾塊錢，就是燒 token。</li>
+<li><strong>Context 上限</strong>：每個模型有「一次對話最多吃幾個 token」上限——Opus 4.7 是 <strong>1M token</strong>（約 75 萬字英文 / 50 萬字中文）。塞滿就裝不下、會被自動壓縮。當Context越大，回應效率與品質就愈差。</li>
+<li><strong>速度</strong>：你給模型的 prompt 越長（token 越多），它每次回應前要「讀」的時間越久。所以 context 不是越塞越好。</li>
+</ol>
+<p><strong>省 token 的常識</strong>：別讓 Claude 讀整個資料夾如果只需要 3 個檔；別把整份 PDF 貼進對話如果只要查一個段落；複雜任務拆 subagent，分身吃完丟掉、不污染主對話。</p>
 <h4 id="context">Context 是什麼，為什麼重要</h4>
-<p>「Context」= 這次對話模型「看得到」的所有文字，包含：</p>
+<p>「Context」= 這次對話模型「看得到」的所有 token，包含：</p>
 <ul>
 <li>系統提示（Claude Code 本身的 instructions）</li>
 <li><code>CLAUDE.md</code> 的內容</li>
@@ -444,7 +546,7 @@ hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
 <li>它讀過的每個檔案的內容</li>
 <li>每次工具呼叫的結果</li>
 </ul>
-<p><strong>context 有上限</strong>（Opus 4.7 是 1M token，但塞滿會變慢、變貴、變笨）。所以你要學會：</p>
+<p><strong>context 有上限</strong>（Opus 4.7 是 1M token，約 50 萬字中文，但塞滿會變慢、變貴、變笨）。所以你要學會：</p>
 <ul>
 <li><strong>小事用小 context</strong>（單檔修改別讓它 <code>Glob **/*.md</code>）</li>
 <li><strong>大事拆 subagent</strong>（用 Agent tool 開分身去查，分身做完只回主對話一段摘要，不污染主 context）。<ul>
@@ -452,6 +554,8 @@ hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
 </ul>
 </li>
 </ul>
+<h2 id="follow-up">follow - up</h2>
+<p>我的 /today 中有 /kanban 用這個當例子說明不同等級的skill 差異, 以及 agent 微小化的用途</p>
 <h4 id="context_1">專案 / 對話 / Context 三層的差異</h4>
 <p>容易混。一句話對照：</p>
 <table>
@@ -648,7 +752,7 @@ How to apply: 若出現「——X——」式的插入語，一律改為：
 </ul>
 <p><strong>進階</strong>：同一路徑可以連 Gmail、Google Drive、Spotify。我現在連了 4 個——每天 <code>/daily</code> 自動讀行事曆、寄睡眠報告到自己信箱。</p>
 <p><strong>這就是 agentic 的感覺</strong>：你描述意圖（不是步驟），它選工具、它執行、它確認。</p>
-<h4 id="_8">學員自己試（如果還有時間）</h4>
+<h4 id="_7">學員自己試（如果還有時間）</h4>
 <p>打開你的 Claude Code，輸入：</p>
 <pre><code>今天是 2026-05-24，幫我看我下週的行事曆，
 如果有兩個會中間空 30 分鐘以上，幫我抓出來。
@@ -791,7 +895,7 @@ Step 3: 解讀紅燈項目 ......
 - 文字、判斷、寫作 → 全寫在 SKILL.md，讓模型直接做
 - 數學、API、檔案批次處理 → 寫成 script，SKILL.md 只負責叫它跑</p>
 <p>不會寫 Python 沒關係——叫 Claude Code 幫你寫。「我要一個腳本能從 Polar API 抓 HRV 資料」，丟給它，它寫完、debug 完，放進 <code>tools/</code>，再幫你寫好 SKILL.md。整個流程<strong>你都不用打程式碼</strong>。</p>
-<h4 id="_9">怎麼自動化</h4>
+<h4 id="_8">怎麼自動化</h4>
 <p>兩條路：</p>
 <p><strong>A. Cron 排程</strong>：設定固定時間自動跑。例：每天早上 7:00 自動跑 <code>/news-sec</code>，咖啡來不及泡完，70 則新聞已經彙整好了。</p>
 <p><strong>B. Hook 觸發</strong>：在 Claude Code 的 <code>settings.json</code> 裡寫 hook，當某事件發生（例如 <code>Stop</code> = 對話結束），自動執行某個指令。例：每次對話結束自動跑 <code>/log-request</code>，把這次需求登記到 <code>wiki/user_requests_log.md</code>。</p>
@@ -820,14 +924,14 @@ Step 3: 解讀紅燈項目 ......
 </blockquote>
 <hr />
 <h3 id="s6-1535-15-min">S6 ｜ 新聞秘書實作（15:35, 15 min）</h3>
-<h4 id="_10">目標</h4>
+<h4 id="_9">目標</h4>
 <p>15 分鐘內，做出一個指令 <code>/my-news</code>，每次叫它就會：</p>
 <ol>
 <li>從你指定的 3–5 個媒體抓今天的頭條</li>
 <li>過濾掉你不想看的主題</li>
 <li>寫成一份你會想讀的早報，存到 <code>news/YYYY-MM-DD.md</code></li>
 </ol>
-<h4 id="_11">我的真實版本長什麼樣（先給你看終點）</h4>
+<h4 id="_10">我的真實版本長什麼樣（先給你看終點）</h4>
 <p>我自己跑的 <code>/news-sec</code> 會抓：</p>
 <ul>
 <li>台灣（中央社、聯合、自由）</li>
@@ -865,19 +969,19 @@ description: 抓 3 個媒體的當日頭條，過濾後寫成個人早報
 </code></pre>
 <p><strong>Step 2</strong>：在 Claude Code 打 <code>/my-news</code>，看它跑。</p>
 <p><strong>Step 3</strong>：跑完後對輸出不滿意（一定會不滿意）——告訴它「太多政治了」「日本新聞太少」「我不想看美股」，它會調整。</p>
-<h4 id="_12">關鍵小技巧</h4>
+<h4 id="_11">關鍵小技巧</h4>
 <ul>
 <li><strong>過濾條件寫具體</strong>：「不要犯罪新聞」太模糊。寫「不要包含『刺死』『酒駕』『搶劫』『家暴』等關鍵字的新聞」。</li>
 <li><strong>加你的視角</strong>：「為什麼值得看」這欄逼模型把新聞跟<strong>你的領域</strong>連起來（例：「你是傳播學者，這條新聞涉及演算法治理」）。</li>
 <li><strong>訂閱來源標記</strong>：如果你訂了 NYT、Nikkei，在 skill 裡寫「以下來源優先採用全文，並在標題前加 💎」，模型會記得。</li>
 </ul>
-<h4 id="_13">自我檢核：跑完後問自己</h4>
+<h4 id="_12">自我檢核：跑完後問自己</h4>
 <ul>
 <li>☐ 這 20 則裡，有幾則我會真的點進去讀？少於 5 則 → 過濾條件太寬。</li>
 <li>☐ 重複的新聞有去掉嗎？三家媒體報同一件事，應該合併。</li>
 <li>☐ 我的領域被涵蓋了嗎？沒有 → 在 skill 裡加「優先納入 [你的領域] 相關新聞」。</li>
 </ul>
-<h4 id="_14">進階（回家自己玩）</h4>
+<h4 id="_13">進階（回家自己玩）</h4>
 <ul>
 <li>加 cron：每天早上 7:00 自動跑（見 S5）</li>
 <li>加 RSS 來源：用 <code>fetch_url_as_markdown</code> 抓 feed</li>
@@ -924,7 +1028,7 @@ for line in last_content.splitlines():
 <p><strong>追蹤行為 2：A0 區勾選 → 自動建立後續 task</strong></p>
 <p>A0 區是「新聞產業 × 科技衝擊」。我經營一個媒體 SNS——所以勾這區的條目意味著「這則我想發成貼文」。<code>/news-sec</code> 看到 A0 勾了，<strong>自動</strong>為每則勾選的新聞生一個 300 字 SNS 草稿 task 檔放進 <code>todo/</code>，再透過 <code>kanban_sync</code> 自動進入今天的 Kanban 欄。</p>
 <p>我<strong>只動作了一次</strong>（勾 checkbox），系統幫我做了三件事：(1) 學偏好、(2) 寫貼文初稿、(3) 進工作流。</p>
-<h4 id="_15">為什麼這值得學</h4>
+<h4 id="_14">為什麼這值得學</h4>
 <p><strong>單向 skill</strong>（你下指令、它執行、結束）是 80% 的人用法。
 <mark style="background: #FFF3A3A6;"><strong>雙向 skill</strong>（你下指令、它執行、<strong>留下回饋介面</strong>、下次讀回饋、自我調整）是真正讓 AI 像員工的關鍵。</mark></p>
 <p>設計時問自己三個問題：
@@ -957,14 +1061,14 @@ for line in last_content.splitlines():
 <li>一年後員工帶走的不再是「Excel + Word」，而是「他整理過的 專案資料庫」。你的離職交接流程準備好了嗎？</li>
 </ul>
 </blockquote>
-<h4 id="_16">我的 專案資料庫 規模（給大家一個尺度感）</h4>
+<h4 id="_15">我的 專案資料庫 規模（給大家一個尺度感）</h4>
 <ul>
 <li>18,000+ 個 markdown 檔</li>
 <li>主要在 <code>wiki/</code> 目錄</li>
 <li>每篇都有 YAML frontmatter：<code>tags</code>、<code>date</code>、<code>extend</code>、<code>degree</code>（SNA 計算）、<code>cluster</code>（Louvain 分群）</li>
 <li>篇與篇之間靠 <code>wikilink</code> 互相連——形成一張圖</li>
 </ul>
-<h4 id="_17">為什麼要連起來</h4>
+<h4 id="_16">為什麼要連起來</h4>
 <p>兩個原因：</p>
 <ol>
 <li><strong>找回來容易</strong>：你不需要記得「我把那個觀念寫在哪了」。從任何相關概念點過去就找到。</li>
@@ -1001,7 +1105,7 @@ date: 2026-05-24
 2. 順著 wikilink <code>Read</code> 相關檔
 3. <code>Edit</code> 補新內容
 4. <code>Write</code> 新建空 note</p>
-<h4 id="_18">我的真實工作流（給大家參考）</h4>
+<h4 id="_17">我的真實工作流（給大家參考）</h4>
 <ul>
 <li>讀論文 → <code>/read-citavi</code> 自動寫成 paper note，補學者 note，補 wikilink</li>
 <li>寫 note 一陣子後 → <code>/sna</code> 計算 degree + cluster，YAML 自動更新</li>
@@ -1049,19 +1153,19 @@ date: 2026-05-24
 </tbody>
 </table>
 <p>這就是 S5 講過的「Skill 會長大」的真正機制——<strong>不是 Claude 自動讓它長大，是你寫一個 skill 去 review 其他 skill</strong>。第二階。</p>
-<h4 id="_19">自我檢核</h4>
+<h4 id="_18">自我檢核</h4>
 <ul>
 <li>☐ 我的 專案資料庫 第一週要先寫<strong>自己的話</strong>，不是貼別人的內容。AI 是來幫你連結你的想法，不是來餵你別人的想法的。</li>
 <li>☐ 每篇 note 標題用「<strong>完整句子</strong>」勝過「<strong>單詞</strong>」。例：「Agentic AI 跟對話式 AI 的差別」 &gt; 「Agentic AI」。理由：完整句子當 wikilink 出現時可讀性高 10 倍。</li>
 </ul>
 <hr />
 <h3 id="s8-supervised-learning-skill-1610-15-min">S8 ｜ 訓練技巧：用 Supervised Learning 把 Skill 教得更好（16:10, 15 min）</h3>
-<h4 id="_20">一句話</h4>
+<h4 id="_19">一句話</h4>
 <blockquote>
 <p><strong>「監督式訓練」對 skill 來說 = 你糾正它一次 → 把糾正寫進 SKILL.md 或 memory → 下次自動對。</strong></p>
 </blockquote>
 <p>跟 ML 的 supervised learning 同名同精神，但<strong>不用算梯度</strong>——你就是 loss function，SKILL.md 就是 weights。</p>
-<h4 id="_21">三層記憶（從窄到寬）</h4>
+<h4 id="_20">三層記憶（從窄到寬）</h4>
 <p>當 Claude 做錯了，糾正寫進哪一層？</p>
 <table>
 <thead>
@@ -1099,7 +1203,7 @@ date: 2026-05-24
 7. 下次跑 /skill → 自動 100% 對
 </code></pre>
 <p>第 5 步是大家最容易漏的——光糾正一次，下次它還會犯。<strong>必須明說「記下來」</strong>。</p>
-<h4 id="_22">我的兩個訓練做法</h4>
+<h4 id="_21">我的兩個訓練做法</h4>
 <p>抽象的監督式循環我講完了。再講兩個我自己天天在做的具體做法，給大家拷貝。</p>
 <p><strong>做法 1：CBS 個案法（學得獎作品 → 練陌生題 → 比對差異 → 記錄）</strong></p>
 <p>我教研究所的 CBS 個案分析時，自己也用同一套循環訓練 Claude：</p>
@@ -1234,7 +1338,7 @@ date: 2026-05-24
 <li><strong>可移植</strong>：複製 SKILL.md 給同事，他立刻有同一套規則</li>
 <li><strong>可回溯</strong>：規則不對就刪掉那一行，不像 fine-tune model 改不回來</li>
 </ul>
-<h4 id="_23">高階：把「為什麼」也記下來</h4>
+<h4 id="_22">高階：把「為什麼」也記下來</h4>
 <p>差的記法：</p>
 <pre><code>- 中文不要用破折號
 </code></pre>
@@ -1264,7 +1368,7 @@ date: 2026-05-24
 </ul>
 </blockquote>
 <hr />
-<h3 id="_24">結尾：今天結束你應該帶走的四件事</h3>
+<h3 id="_23">結尾：今天結束你應該帶走的四件事</h3>
 <ol>
 <li><strong>手上有一個自己寫的 skill</strong>（S6 的 <code>/my-news</code>，或 S7 的 專案資料庫 筆記助手）</li>
 <li><strong>知道怎麼讓 skill 自己變強</strong>（S8 的監督式循環）</li>
@@ -1272,7 +1376,7 @@ date: 2026-05-24
 <li>大加蚋扶輪社的群組就是你的真人交流場，我們是學習性公益社團，有問題就在群組內提出。</li>
 </ol>
 <hr />
-<h2 id="_25">番外</h2>
+<h2 id="_24">番外</h2>
 <p>大加蚋扶輪社第一次電影包場移動例會歡迎報名 <a href="https://forms.gle/arv6bpNgHNYEngqm8">https://forms.gle/arv6bpNgHNYEngqm8</a>
 不要上網查，看了會影響觀影經驗</p>
 </main>
