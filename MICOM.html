@@ -11,10 +11,16 @@
 <aside class="sidebar">
 <div class="toc">
 <ul>
-<li><a href="#micom">MICOM</a></li>
+<li><a href="#_1">方法說明</a><ul>
+<li><a href="#_2">目的</a></li>
+<li><a href="#_3">流程</a></li>
+<li><a href="#_4">適用範圍</a></li>
+<li><a href="#_5">代表性研究</a></li>
+<li><a href="#_6">相關學者</a></li>
+</ul>
+</li>
 </ul>
 </div>
-
 </aside>
 <main class="content">
 <h1>MICOM</h1>
@@ -28,6 +34,37 @@
 <p><strong>判讀</strong>：
 - 通過 step 1+2 → metric invariance（可比較結構係數）
 - 全通過 → full measurement invariance（可比較構念平均）</p>
+<h3 id="_1">方法說明</h3>
+<h4 id="_2">目的</h4>
+<ul>
+<li>主要研究目的：在 PLS-SEM 多群組分析（<a href="PLS_MGA.html">PLS_MGA</a>、<a href="parametric_MGA.html">parametric_MGA</a>）前確認跨組測量恆等性，避免把測量差異誤判為結構差異（<a href="Henseler_2016_MICOM.html">Henseler_2016_MICOM</a>）</li>
+<li>次要用途：作為跨文化、跨情境、跨樣本研究比較構念平均值前的前提檢驗</li>
+</ul>
+<h4 id="_3">流程</h4>
+<ol>
+<li><strong>Configural invariance</strong>：確認兩組同樣的指標—構念配置（同樣 indicator 對應同樣 LV）</li>
+<li><strong>Compositional invariance</strong>：以 permutation 檢驗 LV 分數兩組是否同質（合成權重一致）</li>
+<li><strong>Equality of composite means and variances</strong>：檢驗兩組構念平均數與變異數是否等價</li>
+</ol>
+<h4 id="_4">適用範圍</h4>
+<ul>
+<li><strong>適用</strong>：PLS-SEM 多群組比較（性別、國家、文化、實驗組）前的測量恆等性檢驗（Henseler et al., 2016）</li>
+<li><strong>不適用</strong>：CB-SEM 場景請改用 multi-group CFA 的 measurement invariance 流程</li>
+<li><strong>樣本規模建議</strong>：每組樣本須足以執行 PLS bootstrap（暫無 wiki/ 確切下限）</li>
+<li><strong>資料類型要求</strong>：可分組的 PLS-SEM 資料、相同題項版本</li>
+</ul>
+<h4 id="_5">代表性研究</h4>
+<ul>
+<li><strong>奠基文獻</strong>：<a href="Henseler_2016_MICOM.html">Henseler_2016_MICOM</a> — MICOM 三步驟提出</li>
+<li><strong>方法論教材</strong>：<a href="Hair_2022_PLS.html">Hair_2022_PLS</a> — 列為 PLS-MGA 標準前置流程</li>
+<li><strong>相關 wiki 筆記</strong>：（延伸：<a href="PLS_MGA.html">PLS_MGA</a>、<a href="parametric_MGA.html">parametric_MGA</a>、<a href="Henseler_2016_MICOM.html">Henseler_2016_MICOM</a>、measurement invariance）</li>
+</ul>
+<h4 id="_6">相關學者</h4>
+<ul>
+<li><strong>奠基者</strong>：Jörg Henseler、Christian M. Ringle、Marko Sarstedt（2016）— MICOM 提出</li>
+<li><strong>推廣者</strong>：PLS-SEM 主流圈（<a href="Hair_2022_PLS.html">Hair_2022_PLS</a> 等教材）</li>
+<li><strong>相關學者 wiki 頁</strong>：（暫無 wiki/ 資料）</li>
+</ul>
 </main>
 </div>
 <script>

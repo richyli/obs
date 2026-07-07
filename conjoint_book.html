@@ -81,16 +81,6 @@ MathJax = {
 </li>
 <li><a href="#5-wtp-reservation-price">5. 價值估計 (WTP / reservation price)</a><ul>
 <li><a href="#51-wtp">5.1 WTP 估計與信賴區間</a></li>
-<li><a href="#52-incentive-aligned-hypothetical-bias">5.2 Incentive-aligned / hypothetical bias</a></li>
-<li><a href="#53-conjoint-vs-bws-wtp-cmv">5.3 Conjoint vs BWS WTP 差異；CMV 新方法</a></li>
-<li><a href="#54-market-simulation-reservation-price">5.4 Market simulation / reservation price</a></li>
-<li><a href="#55-wtp">5.5 跨領域 WTP 常見發現</a></li>
-</ul>
-</li>
-<li><a href="#6">6. 進階變體</a><ul>
-<li><a href="#61-benefit-based-conjoint-bbc">6.1 Benefit-Based Conjoint (BBC)</a></li>
-<li><a href="#62-adaptive-aca-acbc">6.2 Adaptive / ACA / ACBC</a></li>
-<li><a href="#63-holistic-hybrid">6.3 Holistic 與 hybrid</a></li>
 <li><a href="#64-compound-conjoint">6.4 Compound Conjoint</a></li>
 <li><a href="#65-label-conjoint">6.5 Label Conjoint</a></li>
 <li><a href="#66-kano-conjoint-integration">6.6 Kano-Conjoint Integration</a></li>
@@ -134,8 +124,12 @@ MathJax = {
 <li><a href="#93">9.3 消費者行為與產品設計</a></li>
 <li><a href="#94">9.4 組織與社會創業決策</a></li>
 <li><a href="#95">9.5 移民居住選擇：政治環境的因果效應</a></li>
-<li><a href="#96">9.6 數位行銷與服務業</a></li>
+<li><a href="#96">9.6 數位行銷與服務業</a><ul>
+<li><a href="#13-ai-required-warmth-ai-peng-et-al-2022">案例 13｜消費者願不願意讓 AI 提供服務？required warmth 與 AI-人協作（Peng et al., 2022）</a></li>
+</ul>
+</li>
 <li><a href="#97">9.7 跨案例方法學比較</a></li>
+<li><a href="#98">9.8 社會政策：福利制度偏好</a></li>
 </ul>
 </li>
 </ul>
@@ -248,6 +242,8 @@ MathJax = {
 <li>效用（utility）是從選項獲得的主觀滿足感，透過隨機效用模型連結觀察選擇與潛在效用函數，受試者選 $i$ 當且僅當 $U_{ni} \geq U_{nj}\ \forall j \in J$（McFadden, 1974）。</li>
 <li>平均邊際成分效應（AMCE）衡量某屬性水準相對於參照水準對選擇概率的平均因果效應，定義為 $\text{AMCE}_k = \mathbb{E}[Y(T_k=t_1) - Y(T_k=t_0)]$，其中 $T_k$ 為屬性 $k$、$t_0$ 為參照水準（Hainmueller, Hopkins &amp; Yamamoto, 2014）。</li>
 <li>AMCE 與選舉結果的關係：AMCE 等於屬性對<strong>期望得票率</strong>（expected vote share）的平均因果效應，而非對「偏好該屬性的選民比例」（fraction preferring）的效應；Bansak et al.（2023）證明 AMCE 與 Expected Borda Score 呈比例關係，對任意目標選舉分佈成立（Bansak et al., 2023）。</li>
+<li><strong>AMCE 的微觀基礎與三項理想性質</strong>：Bansak, Hainmueller, Hopkins &amp; Yamamoto（2020）形式化 AMCE 的微觀基礎——AMCE 與 Expected Borda Score 的跨水準平均差呈比例關係：$\text{AMCE}_A \propto \bar{S}^A(1) - \bar{S}^A(0)$，其中 $S_i^A(a)$ 為選民 $i$ 對含 $A=a$ 之所有 profiles 的平均排名；三項理想性質為 (1) <strong>多維度性</strong>——在所有可能 profile 組合上平均，非僅 ceteris paribus 比較；(2) <strong>實質可詮釋性</strong>——直接等於對 expected vote share 的因果效應；(3) <strong>實證可操作性</strong>——由設計層面隨機化識別，無需函數形式假設（Bansak, Hainmueller, Hopkins &amp; Yamamoto, 2020; Bansak 2020 AMCE essential role conjoint elections）。</li>
+<li><strong>Handedness 反例</strong>：即使某屬性（如慣用手）在 ceteris paribus 下獲壓倒性多數支持，其 AMCE 仍可近乎為零——因選民對該屬性賦予的 preference intensity 極低（平均排名差異近零）；此反例說明 AMCE 測量的是對選舉結果的實際邊際影響而非「有多少人偏好」（Bansak et al., 2020; Bansak 2020 AMCE essential role conjoint elections）。</li>
 <li><strong>Fraction preferring 在典型 conjoint 不可行</strong>：要識別某屬性的「偏好比例」，需能觀察到每個 respondent 的完整 pairwise 偏好，但 conjoint 只測量一小部分 profile pairs；Bansak et al.（2023）以 handedness 反例顯示，AMCE 可能為 0 但 fraction preferring 顯著非 1/2（Bansak et al., 2023）。</li>
 <li>平均組成交互效應（ACIE）衡量一屬性的因果效應如何隨另一屬性取值而變化，$\text{ACIE}_{k,l} = \mathbb{E}[Y(t_k, t_l) - Y(t_k^0, t_l) - Y(t_k, t_l^0) + Y(t_k^0, t_l^0)]$（Hainmueller, Hopkins &amp; Yamamoto, 2014）。</li>
 <li>輪廓（profile）是一組屬性水準組合，代表假設產品或方案（North &amp; de Vos, 2002）。</li>
@@ -272,6 +268,8 @@ MathJax = {
 <li>Conjoint poker（Toubia et al., 2012）為遊戲化激勵相容方法，eye-tracking 顯示參與者考量更多屬性資訊（Agarwal et al., 2014）。</li>
 <li><strong>Ratings-based conjoint</strong>：受訪者對每個 full-profile 概念給予連續或 Likert 評分，part-worth 以 OLS 或 dummy regression 估計；優點為個人層次 utilities 可估（無需 HB）、cognitive burden 低；缺點為 scale-use bias、ceiling/floor effect、缺 forced trade-off，對 novel combinations 預測弱於 CBC（Moskowitz, Beckley &amp; Minkus-McKenna, 2004; Imburgia et al., 2025; ratings-based conjoint）。</li>
 <li><strong>Metric vs non-metric conjoint 估計差異</strong>：Metric conjoint（OLS）假設 interval-scale 偏好回應，non-metric conjoint（alternating least squares, ALS / monotone transformation）僅要求 ordinal 排序一致；SAS PROC TRANSREG 同時支援兩種，實務上 metric 更易實施、non-metric 理論更嚴謹（Kuhfeld, n.d.; metric conjoint analysis uses OLS while non-metric uses alternating least squares）。</li>
+<li><strong>排序式（ranking）傳統聯合分析的完整估計—重要性—區隔鏈</strong>：陳建和 &amp; 蔡宜思（2008）示範傳統排序式 conjoint 的可行流程——以正交設計取少量全輪廓、受訪者對輪廓做偏好排序、以 OLS 或單調迴歸（monotone regression）估各屬性水準 part-worth、以水準效用全距衡量屬性相對重要性、再以集群分析做市場區隔；此路線適合<strong>小樣本、屬性數適中（≤6）、需個體層次效用</strong>的偏好研究情境，無需 HB（陳建和 &amp; 蔡宜思, 2008; 陳建和 2008 Methods、ratings-based conjoint）。</li>
+<li><strong>跨語意等值（cross-language equivalence）的多重把關流程</strong>：陳建和 &amp; 蔡宜思（2008）研究日本旅客時，日文問卷經專業翻譯後再請兩位留學日本、精通日語的大學教師指導確認，並於預試邀受訪者提供修正建議；此「回譯 + 專家確認 + 預試」三重把關是<strong>跨語言/跨國樣本 conjoint 的等值控制範例</strong>，確保屬性與水準表述在目標語言中語意一致、避免 measurement non-invariance（陳建和 &amp; 蔡宜思, 2008; 陳建和 2008 Methods）。</li>
 <li><strong>Conjoint 方法分類（Carroll &amp; Green 1995 taxonomy）</strong>：Carroll &amp; Green（1995）以資料收集策略分類 conjoint 方法為三大類：(1) <strong>Full-profile only</strong>（OLS、monotone constraints、partial aggregation Bayes）；(2) <strong>Self-explicated only</strong>（直接重要性評分）；(3) <strong>Hybrid</strong>（ACA 混合兩者）；此分類圖呈現 1980–1995 年的方法演化，可作為選擇方法時的歷史脈絡地圖（Carroll &amp; Green, 1995; conjoint analysis taxonomy reveals three data collection strategies）。</li>
 <li><strong>軟體生態決定方法應用範疇</strong>：Carroll &amp; Green（1995）指出 conjoint 理論發展遠超實務應用，原因在於 Sawtooth、Bretton-Clark 等商業軟體未能即時支援新方法；此「軟體生態制約」至今仍部分成立（Carroll &amp; Green, 1995; software availability defines the practice envelope for conjoint methods）。</li>
 <li><strong>CBC 主導 conjoint 市場</strong>：當代 conjoint 應用中 &gt; 80% 為 CBC，相對於 traditional ratings-based 或 ranking-based（Orme, 2016, 引自 Eggers et al., 2022；CBC dominates conjoint with 80 percent of applications）。</li>
@@ -288,6 +286,11 @@ MathJax = {
 <li><strong>Quantitative SCM conjoint 的三條獨立路線</strong>：除了上述「conjoint 跳脫消費者」三路線，supply chain 文獻還發展出三條 conjoint 量化路線：(a) <strong>B2B 採購主管 CBC</strong>（Hartmann &amp; Caerteling, 2010 NL 202 總包商；van der Rhee, Verma &amp; Plaschka, 2009 歐洲 4 國 N=200；皆採真實採購主管樣本）；(b) <strong>下游消費者 CBC + LCL 四群解</strong>（Bask et al., 2013 芬蘭學生 N≈400 手機永續性 + 4 latent class）；(c) <strong>B2C logistics ACM</strong>（Garver et al., 2012 US 249 名 parcel shipping 用戶，5 need-based segments）；三路線共同證實 conjoint 在 SC 文獻已從「消費者行銷工具」擴張為「供應鏈雙端決策結構」量化方法（延伸：Supplier Selection Conjoint Across B2B Industries、Conjoint Applications in Supply Chain Risk and Sustainability）。</li>
 <li><strong>Single-profile conjoint（單一輪廓設計）</strong>：只呈現一個假設性對象，要求受訪者評分或接受/拒絕，而非配對強制選擇；貼近「是否接受某政策、某申請人」的自然決策框架，認知負荷較低，但 Hainmueller, Hopkins &amp; Yamamoto (2015) 比較顯示單一輪廓設計的<strong>外部效度最差</strong>——配對 forced-choice 設計仍是 external validity 首選（Hainmueller et al., 2015; Kawakami et al., 2026; 延伸：single-profile conjoint）。</li>
 <li><strong>Stereotype-based conjoint（刻板印象式 conjoint）</strong>：把 conjoint 結果變量從「偏好/選擇」改為「刻板印象符合度」——詢問「這個人更像典型的 [A 群體] 還是 [B 群體]？」而非「你支持誰？」；允許測量隱性 stereotype content（群體 × 特質 × 議題三維度），降低 SDB，是 Myers (2023) 在 partisan stereotypes 研究中提出的方法創新（Myers, 2023; 延伸：stereotype-based conjoint）。</li>
+<li><strong>PAPRIKA 配對排序解決全因子維度爆炸</strong>：Patwardhan et al.（2025）印度威士忌研究以 1000minds 軟體實作 PAPRIKA（Potentially All Pairwise RanKings of all possible Alternatives；Hansen &amp; Ombler, 2008）——每題僅呈現兩個僅在兩屬性上相異的選項，請受訪者選偏好者或「兩者相等」，前一選擇引導後續比較生成、藉遞移性（transitivity）推論其餘配對；此設計把 $3^8=6561$ 個全因子輪廓的評估壓縮為受訪者可操作的少量配對，是 full-profile 方法在高屬性數下的可行解（Patwardhan et al., 2025; Patwardhan 2025 Methods、PAPRIKA）。</li>
+<li><strong>PAPRIKA 的屬性重要性三步驟計算</strong>：Patwardhan et al.（2025）以 part-worth 計算相對重要性——(1) 由選擇估各水準效用（基準水準設 0）；(2) 以各屬性內最高與最低水準的效用全距衡量該屬性對總偏好變異的貢獻；(3) 正規化使所有屬性相對重要性加總為 1；威士忌八屬性中陳年（aging）最重要、其次包裝與價格，內在屬性合計重要性（54.27%）略高於外在（45.73%）（Patwardhan et al., 2025; Indian consumers weight intrinsic whiskey attributes slightly above extrinsic）。</li>
+<li><strong>Ratings-based + 正交設計的環境偏好應用</strong>：Xiao et al.（2025）校園非正式運動研究以傳統 ratings-based conjoint（SPSS 27 Conjoint 模組、OLS 估計）承載六屬性環境偏好——理由是環境偏好是多屬性組合的整體評估而非個別屬性加總；以 SPSS 正交設計把 $3^3 \times 2^3 = 216$ 全因子組合縮為 16 張輪廓卡，受訪者以七點 Likert 隨機順序評分；信度 Cronbach's $\alpha=0.84$、模型適配 Pearson's $r=0.98$、Kendall's $\tau=0.8$（皆 $p<.001$）（Xiao et al., 2025; Xiao 2025 Methods、ratings-based conjoint）。</li>
+<li><strong>屬性以文字而非視覺呈現以避免視覺吸引偏誤</strong>：Xiao et al.（2025）刻意以文字描述而非視覺圖像呈現環境屬性，確保受訪者均衡關注所有特徵、不被視覺吸引元素分心；作者承認此設計限制了受訪者對情境的想像，建議未來輔以視覺/VR——對 ratings-based conjoint 的「呈現模式 × 注意力分配」trade-off 提供具體案例（Xiao et al., 2025; Xiao 2025 Methods）。</li>
+<li><strong>Rating-based conjoint 承載框架操弄而非競爭偏好</strong>：Bhatia et al.（2024）壽險研究以 rating-based conjoint（而非 CBC）測量同一組保單在不同框架呈現下購買意圖的<strong>絕對水準</strong>變化——受訪者對每個壽險輪廓以五點 Likert 評分；理由是研究目的不是估計競爭選項間的相對偏好，而是讓框架偏誤從抽象認知偏誤轉化為可測量的行為輸出；此案例界定了 ratings-based 相對 CBC 的適用情境（測絕對意圖 vs 測相對偏好）（Bhatia et al., 2024; Bhatia 2024 Methods、rating-based conjoint）。</li>
 <li><strong>Kansei + Conjoint 雙階段整合</strong>：Wang (2015) 在數位相機案例提出雙階段框架——第一階段以 Kansei engineering + Rough Set Theory（情感特徵：顏色、材質、螢幕、閃光）做市場區隔；第二階段以 CA + Grey Relational Analysis（功能特徵：光學變焦、廣角焦距）做產品客製化；兩 segment 對功能屬性偏好顯著不同（消費者型重視廣角/螢幕、專業型重視光學變焦/最大光圈），體現「情感維度區隔 → 功能維度客製化」的設計工程整合路線（Wang, 2015; 延伸：Wang 2015 Kansei Conjoint）。</li>
 </ul>
 <h4 id="14">1.4 估計方法總覽</h4>
@@ -333,7 +336,8 @@ MathJax = {
 <li><strong>Random Utility + Lancaster demand theory</strong>（Lancaster, 1966）：消費者效用源自產品 characteristics 而非產品本身——為 conjoint 把產品分解為屬性提供經濟學基礎；Telser &amp; Zweifel（2002）等健康 DCE 明示引用此理論（Lancaster, 1966; <a href="conjoint_book.html">§7 健康／醫療／QoL</a>）。</li>
 <li><strong>Social Identity Theory（SIT）</strong>（Tajfel &amp; Turner, 1979）：個體以群體成員資格建構自我概念，並對內群體（in-group）表現偏好、對外群體（out-group）表現貶低；在 conjoint 設計中，可以 <strong>Marginal Means</strong> 直接區分兩機制——MM &gt; 0.5 為 in-group favoritism、MM &lt; 0.5 且顯著為 out-group derogation；Aichholzer（2023）以日本跨族婚姻 conjoint 示範：日籍 MM = +10.7% 為典型 in-group favoritism，奈及利亞 MM = −5.8% 為外群貶低；相對於 AMCE（須選基準類別），MM 無需指定參照類別，更適合測試 SIT 的正負方向預測（Aichholzer, 2023; Tajfel &amp; Turner, 1979; social identity theory）。</li>
 <li><strong>Push-Pull motivation theory + Self-determination theory</strong>（Crompton, 1979; Deci &amp; Ryan, 1985）：旅遊／會議參與決策的二元動機框架——push 為內在驅動（個人成長、社交、學術發表動機）、pull 為外部吸引力（地點、節目、規模、組織者品牌）；可與 SDT 的 intrinsic/extrinsic motivation 對應；Cavusoglu et al.（2022）以此為理論基礎將學術會議 6 屬性分配至 push（publishing opportunities、size）與 pull（cost、organizer、location、reputation）兩類，示範如何將動機理論轉換為可操弄的 CBC 屬性集，並引入「歷年舉辦次數」作為新屬性合法化過去文獻未測量的 pull factor（Crompton, 1979; Rittichainuwat et al., 2001; Cavusoglu et al., 2022; push-pull motivation theory）。</li>
-<li><strong>研究者使用建議</strong>：選論文理論框架時<strong>先問屬性結構</strong>——若屬性具訊號性質（認證、學歷、背書），優先 signaling + HSM；若為技術採用（e-commerce、行動支付），優先 TAM/UTAUT；若為框架效應測試（獲益 vs 損失訊息），優先 prospect theory；若為 opt-out/default 結構，優先 status quo bias；跨多實體決策（慈善、採購）優先 Charitable Triad / compound conjoint；若研究「誰被選擇」的群體認同機制（跨族婚姻、候選人評估、族裔偏好），優先 Social Identity Theory + MM 估計（詳見 <a href="conjoint_book.html">§8 AMCE 統計陷阱</a>）。</li>
+<li><strong>Social Dominance Theory（SDT）</strong>（Sidanius &amp; Pratto, 1999）：群體基礎的社會階層理論，主張社會系統性地產生與維持群體間的不平等；高 social dominance orientation（SDO）個體更傾向維護群體階層結構。在 conjoint 中，SDT 解釋為何特定群體身份屬性（宗教、移民身分）在右翼選民中產生系統性懲罰——群體階層動機超越對行為規範的共識性評估；Goodman（2025）以三國公民身分 conjoint 為 SDT 提供跨國實證，穆斯林身份在右翼選民的 AMCE 顯著為負但在聚合分析中被掩蓋（Sidanius &amp; Pratto, 1999; Goodman, 2025; social dominance theory）。</li>
+<li><strong>研究者使用建議</strong>：選論文理論框架時<strong>先問屬性結構</strong>——若屬性具訊號性質（認證、學歷、背書），優先 signaling + HSM；若為技術採用（e-commerce、行動支付），優先 TAM/UTAUT；若為框架效應測試（獲益 vs 損失訊息），優先 prospect theory；若為 opt-out/default 結構，優先 status quo bias；跨多實體決策（慈善、採購）優先 Charitable Triad / compound conjoint；若研究「誰被選擇」的群體認同機制（跨族婚姻、候選人評估、族裔偏好），優先 Social Identity Theory + MM 估計（詳見 <a href="conjoint_book.html">§8 AMCE 統計陷阱</a>）；若研究身份屬性的群體階層效應（宗教歧視、移民懲罰、族群偏好），優先 Social Dominance Theory + 子群體 AMCE。</li>
 </ul>
 <h3 id="2">2. 設計決策</h3>
 <p>Conjoint experiment 的設計階段決定研究的內部與外部效度上限。設計決策涵蓋屬性選擇、水準範圍、屬性/任務數量、呈現順序、統計效率準則、全/部分輪廓、屬性重疊控制等面向。核心挑戰在於三重取捨：<strong>認知負荷、統計效率、生態效度</strong>——屬性越多 AMCE 估計可能越完整但 satisficing 越嚴重；正交設計統計最優但可能包含不現實組合；完全隨機化保證因果識別但可能出現受訪者難以處理的輪廓。</p>
@@ -360,6 +364,7 @@ MathJax = {
 <li><strong>兩階段 open-ended pilot + conjoint main study</strong> 為 health/hospital choice CA 的穩健流程：Leister &amp; Stausberg (2007) pilot 先訪談 50 位擇期入院病患，以「請說出選擇這家醫院的三個理由」開放題得到 121 個 responses，頻率分析萃取出 9 個因素，其中 16% 受訪者額外提及「瀏覽醫院網站」——再將此 9 因素作為 main study conjoint 屬性；此設計保障內容效度（content validity），避免研究者主觀決定屬性的偏差（Leister &amp; Stausberg, 2007）。</li>
 <li><strong>Pilot 揭露 cost attribute 呈現方式需修改</strong>：Lin et al. (2021) 原設計 cost 為「200 vs. 500 元人民幣」具體金額，但 pilot 發現不同經濟層級醫院的院長對金額解讀差異太大（200 元對省級醫院微不足道、對縣級醫院卻是實質成本）；最終改為相對文字「relatively cheap / expensive」；此為跨層級受訪者場域下「絕對金額 vs. 相對描述」的關鍵設計取捨（Lin et al., 2021）。</li>
 <li>若某屬性與未納入的相關屬性有感知關聯，會出現 masking 效應——核心屬性 AMCE 會吸收省略屬性的效應（詳見 <a href="conjoint_book.html">§2.9</a>）。</li>
+<li><strong>以 O*NET 職業任務資料庫導出屬性</strong>：Peng et al.（2022）AI 服務接受度 CBC 將屬性設為「教學工作中的七項具體任務」（備課、生涯建議、行政、批改考試、授課、帶討論、指導研究），任務清單取自美國勞工部 O*NET 資料庫而非研究者杜撰，確保任務具生態效度（ecological validity）；此「外部權威任務分類法 → conjoint 屬性」做法可避免屬性遺漏並提升外部效度（Peng et al., 2022; 延伸：Peng 2022 Methods）。</li>
 <li><strong>理論驅動屬性選擇</strong>（implementation science）：Farley et al.（2013）以 Rogers（2003）innovation-diffusion 理論 perceived attributes + Grimshaw（2004）經濟準則共同導出 7 屬性（impact on care、cost、local health needs、minimum standards、strength of evidence、priority、local expertise），示範「理論決定屬性清單」而非僅憑文獻或臨床直覺；此流程使屬性具可追溯的概念基礎（Farley et al., 2013; conjoint outperforms budget impact analysis for capturing adopter preferences）。</li>
 <li><strong>Split-sample 屬性呈現</strong>：van Gils et al.（2011）將 money attribute 拆為兩版（copayment €0–500 vs bonus €0–500）隨機分派，其餘 5 屬性相同；避免同一受訪者同時暴露於 gain + loss frame 造成 context-dependent 偏好重構，可識別 loss aversion 斜率非對稱（van Gils et al., 2011; Bonus 500 euros raises lifestyle program participation by 10 percentage points）。</li>
 <li><strong>量表構念化先於 conjoint attribute 設計</strong>（B2B supplier selection 範例）：Hsu et al.（2006）以 ISM-US（$N=100$）EFA + APICS-US（$N=310$）/ APICS-Europe（$N=115$）雙樣本 CFA 確立 supplier selection 三因子構念（quality / service / strategic-management fit），跨美歐皆成立；EFA 結果意外發現 <strong>price 併入 supplier service 因素而非獨立因子</strong>——反映在全球競爭中價格已從 order winner 退居 order qualifier；此「先量表、再 conjoint」流程為 supplier selection 與 B2B 採購 conjoint 研究的最佳實踐：先以量表確認構念結構，再以 conjoint 量化 part-worth，避免 conjoint attribute 設計脫離理論基礎（Hsu, Kannan, Leong &amp; Tan, 2006; 延伸：Supplier Selection Conjoint Across B2B Industries、Hsu 2006 Methods、supplier selection construct comprises three latent dimensions、price collapses into supplier service factor not standalone criterion）。</li>
@@ -377,6 +382,7 @@ MathJax = {
 <li>對非連續屬性（如類別性品牌），水準應涵蓋市場主要類別並避免類別過細導致樣本分散（Bridges et al., 2011）。</li>
 <li><strong>Continuous level 無精度損失</strong>：Brown et al.（2009）以四個現金誘因水準（$5、$15、$35、$50/週）擬合 linear-in-attribute 效用函數，連續處理比 4 個 dummy 節省 3 個自由度且 likelihood 無顯著下降；此結果支持在價格／貨幣屬性採 linear coding，特別當水準數 ≥ 4 且理論無先驗非線性假設時（Brown et al., 2009; incentive levels treated as continuous without efficiency loss in conjoint）。</li>
 <li><strong>Per-attribute utility range 作為實務工具</strong>：Farley et al.（2013）在 rating-based CA 中以 $(\max_l \hat\beta_{kl} - \min_l \hat\beta_{kl})$ 為屬性相對重要性，strength of evidence utility range = 0.65（highest）vs local expertise = 0.04（lowest）；此方法不需 price coefficient normalization，適合無自然 numeraire 的組織決策研究（Farley et al., 2013）。</li>
+<li><strong>屬性層級（attribute-level）而非工作層級（job-level）測量，把調節變項變成自然連續變異</strong>：Peng et al.（2022）讓每個任務屬性以「由人類／由 AI」兩水準呈現，並對每項任務另以 5 點量表測量其 required warmth 與 required competence；如此「溫暖度」不是被研究者實驗操弄的離散水準，而是<strong>隨任務自然變異的連續調節/預測變項</strong>，再以該連續測量去解釋各任務的 task-specific AI 接受度；此設計巧思讓調節分析建立在真實任務的偏好異質之上而非人為操弄（Peng et al., 2022; 延伸：Peng 2022 Methods）。</li>
 </ul>
 <h4 id="24">2.4 屬性數量與水準數</h4>
 <p>Cognitive burden（認知負荷）指受訪者在單一任務中處理資訊所需的心智資源，隨屬性數、水準數、呈現形式增長。Masking-satisficing tradeoff（Bansak et al., 2021）指出：屬性過少會引發 masking（遺漏屬性投射到核心屬性使 AMCE 被誇大），屬性過多則引發 satisficing（簡化策略使估計衰減）。本節給出屬性數與水準數的實務區間。</p>
@@ -412,6 +418,9 @@ MathJax = {
 <li><strong>呈現格式 &gt; 排序策略</strong>：Horiuchi et al.（2021）直接比較部分隨機化與完全隨機化，顯示部分隨機化因 forced attention 使敏感屬性 AMCE 由 0.62 膨脹至 1.86（約 3 倍），非敏感屬性也從 0.43 膨脹至 1.28；AMCE 大小對「是否強制比較」與「隨機化策略」高度敏感，但對「如何排列屬性順序」相對不敏感（Horiuchi et al., 2021; Conjoint Design Format Effects on AMCE Magnitude）。</li>
 <li><strong>屬性順序固定的特殊理由</strong>：Bennour et al.（2022）以 Auspurg &amp; Jäckle（2017）為據，在移民居住地選擇 conjoint 中採屬性順序固定（水準仍隨機），理由是「非複雜情境的 conjoint」中固定順序不顯著影響估計；此設計決策需明確引用方法論文獻支撐——若研究者選擇屬性固定順序，必須在論文中引用文獻說明不影響 AMCE，否則視為未報告排序策略的方法透明度問題（Bennour, Manatschal &amp; Ruedin, 2022; Auspurg &amp; Jäckle, 2017; 詳見 <a href="conjoint_book.html">§2.6 Half of Applied Research Does Not Report Ordering</a>）。</li>
 <li><strong>視覺編碼（color coding）輔助快速辨識</strong>：Bask et al.（2013）芬蘭手機 CBC 採問卷視覺編碼以降低屬性辨識認知成本——status quo levels 用灰色、improved levels 用綠色、+10% premium 價格用橘色；搭配每屬性 2 levels 設計，受訪者可在數秒內掃描完整 profile；此細節對「屬性多 + 水準少」的設計尤其有用，是 Sawtooth SSI Web 7.0.22 "balanced overlap" 設計外的視覺工程強化（Bask, Halme, Kallio &amp; Kuula, 2013）。</li>
+<li><strong>「身份」屬性的分離化設計巧思</strong>：Abascal, Xu &amp; Baldassarri（2021）鄰里多元 conjoint 為使「最大群體身份」與「缺席群體身份」可作為<strong>兩個分離的特徵</strong>進行分析，固定群體數 = 3 且最小群體 = 2%（在群體數可變的設計中，largest 與 absent 完全共變、無法分離效應）；Heterogeneity 與 Representation 在設計上<strong>正交</strong>；此為 identity attribute 在 conjoint 中需要的特殊設計約束（Abascal, Xu &amp; Baldassarri, 2021; Abascal 2021 Methods）。</li>
+<li><strong>限制性隨機化以四階交互項加權處理</strong>：Donnaloja（2022）英國公民身分 CBC 對 Poland × Muslim、Ireland/Australia × Basic/Good English、歐洲國家 × Refugee 等不合生態效度組合施加限制；AMCE 計算須使用「四階交互項加權」反映各反事實組合在實際隨機化中的出現機率 $\text{AMCE}_{kl} = \sum_m w_m \cdot \beta_{kl,m}$；例如計算 Poland 的 AMCE 時 Muslim 權重 = 0、Christian/No religion 權重各 = 1/2；此為限制性隨機化下 AMCE 估計的標準擴充（Donnaloja, 2022; Donnaloja 2022 Methods; restricted randomization in conjoint）。</li>
+<li><strong>Balanced overlap method 為 Sawtooth 預設 CBC 設計</strong>：Brückner, Emberger-Klein &amp; Menrad（2023）德國優酪乳 CBC 採 Sawtooth Software 內建 balanced overlap 設計，允許屬性水準在 choice set 內部分重疊（vs. complete enumeration 的零重疊），平衡 D-efficiency 與受訪者認知負擔；8 個 choice tasks × 3 product alternatives + none-option 為 Sawtooth balanced overlap 的標準任務數規格（Brückner, Emberger-Klein &amp; Menrad, 2023; Bruckner 2023 Methods; balanced overlap design）。</li>
 </ul>
 <h4 id="27-d-efficiency-bayesian-design">2.7 統計效率 / D-efficiency / Bayesian design</h4>
 <p>Fisher information matrix $I(\beta \mid X) = -\mathbb{E}[\partial^2 \ell / \partial \beta \partial \beta']$ 衡量設計對參數估計的資訊含量；D-optimality 以 $\det(I)^{1/K}$ 最大化為準則。Locally optimal design 需要固定 $\beta$ 先驗點，Bayesian optimal design 則以先驗分布上的期望 D-error $D_B = \int \det(I)^{-1/K} \pi(\beta) d\beta$ 最小化為目標（Sandor &amp; Wedel, 2001），在 CBC 非線性模型下比正交設計更有效率。</p>
@@ -434,6 +443,10 @@ MathJax = {
 <li><strong>S-efficiency criterion</strong>（Bliemer &amp; Rose 2009, 實作於 Ngene）：直接最小化「達到指定 statistical power 所需最小樣本」 $n_{\text{min}} = \max_k \left(\frac{z_{1-\alpha/2}}{\hat{\beta}_k / \text{SE}(\hat{\beta}_k)}\right)^2$；對研究預算受限的研究者比 D-efficiency 更實用（Johnson et al., 2013; S-efficiency、Ngene supports S-efficiency for sample-size minimization）。</li>
 <li><strong>Modified Fedorov algorithm</strong>：常用 swap-variant exchange 演算法搜尋 D-optimal design，逐一掃描 design points 嘗試以候選池替換、僅當 D-criterion 改善時接受；對 NLMNL likelihood 非凹需多 starting values 確認全域最適（Vermeulen, Goos &amp; Vandebroek, 2008; Fedorov algorithm）。</li>
 <li><strong>音樂串流正交分數因子設計實例</strong>（Kim, Nam &amp; Ryu, 2017）：5 屬性（廣告 2 × 串流模式 2 × 獨家內容 2 × 離線使用 3 × 價格 3 = 72 全組合）採 SAS 9.4 生成正交分數因子設計（orthogonal fractional factorial design），大幅縮減任務數量同時保留主效應估計效率；設計含「不選擇」status-quo 選項以避免強迫選擇偏誤；提供以現實市場價格範圍設定水準的跨國設計範本（Kim, Nam &amp; Ryu, 2017; Kim Nam Ryu 2017 Music Streaming）。</li>
+<li><strong>Bayesian D-efficient 在能源 DCE 的實例</strong>：Danne et al.（2021）德國綠電 DCE 以完整析因 $4 \times 4 \times 4 \times 4 \times 3$ 兩配方 = 589,824 choice sets 經 Bayesian D-efficient design 壓縮至 12 sets，D-error = 0.051；以 30 人 pretest 估出 prior 後再供 efficient design 使用，示範「pilot → prior → main efficient design」雙階段流程在中等樣本（$N = 371$）DCE 的可行性（Danne, Meier-Sauthoff &amp; Musshoff, 2021; Danne 2021 Methods）。</li>
+<li><strong>ACBC 設計品質以 robot test 驗證正交性</strong>：Boyer et al.（2021）以機器人受訪者隨機作答測試 ACBC 設計正交性與 D-efficiency，得 0.86–0.96（vs. 完全正交 = 1.00）；此 robot test 為 Sawtooth ACBC 在實地 fielding 前確認 design balance 的標準做法（Boyer, Hunka, Linder, Whalen &amp; Habibi, 2021; Boyer 2021 Methods）。</li>
+<li><strong>SPSS Orthoplan 在小規模 rank-based conjoint 實例</strong>：Altınay Özdemir（2022）土耳其旅遊 conjoint 完整析因 $3 \times 2 \times 3 \times 4 \times 2 = 144$ profiles 經 SPSS 22 Orthoplan 縮減至 16 destination cards + 4 simulation cards，保證每對屬性在 16 卡中 uncorrelated 使主效應可獨立估計；模型 Pearson $r = 0.816$、Kendall's $\tau = 0.600$（皆 $p < 0.001$）驗證高度預測一致性（Altınay Özdemir, 2022; Altinay Ozdemir 2022 Methods）。</li>
+<li><strong>Bayesian efficient pilot-then-main 在醫療 DCE 的標準流程</strong>：Forrest et al.（2024）癌症藥物 DCE 採兩階段——(1) Pilot：以正交設計 + noninformative priors 對 77 人試測蒐集 informative priors；(2) 正式階段：用 pilot 估計值作 priors，以 Bayesian efficient design（Bliemer, Rose &amp; Hess, 2008）產出 40 任務 / 4 區塊 × 10 任務；設計約束移除「不合邏輯」任務（如等待時間 &gt; 預期壽命）與含 dominant alternative 的任務；此為 ISPOR-style 中小樣本 DCE 的標準設計範本（Forrest, Lagarde, Aggarwal &amp; Naci, 2024; Forrest 2024 Methods）。</li>
 </ul>
 <h4 id="28-full-profile-partial">2.8 Full-profile / Partial / 屬性篩選</h4>
 <p>Full-profile design 呈現所有屬性於每個輪廓，外部效度高但認知負荷大；partial profile 每題僅顯示屬性子集，降低 truncation 風險。Aliasing（別名化）指共線屬性無法個別識別（如國籍與語言）；attribute truncation 指受訪者忽略部分屬性使被忽略屬性係數壓向 0（Allenby et al., 2005）。Kano 與 two-stage screening 是屬性篩選的兩種實務作法。</p>
@@ -445,6 +458,7 @@ MathJax = {
 <li>Partial profile 透過減少 choice bits 降低 truncation 風險，尤其屬性 &gt;6-8 時（Chrzan &amp; Patterson, 1999）。</li>
 <li><strong>Partial-profile CBC 在年長受訪者場域</strong>：Coxon et al. (2015) 以 partial-profile CBC 研究 863 位 50+ 歲英國關節痛長者就診決策，6 屬性每 task 僅呈現 3 個、10 choice tasks × 10 questionnaire versions、Sawtooth SSI Web Advanced Design Module 模擬 SE &lt; 0.05；結果：disruption 相對重要性 31%、GP attitude 24%、assessment 14%、management 13%、comorbidity 13%、pain characteristics 僅 5%；aggregate MNL utility range / sum(ranges) 算法標準化相對重要性（Coxon et al., 2015）。</li>
 <li><strong>兩個對照 conjoint models 揭露 context-dependent preference</strong>：Leister &amp; Stausberg (2007) 於同一組 151 位德國病患連續執行兩個獨立 conjoint interview——Model 1（9 因素 12 stimuli full-profile rank-order）與 Model 2（5 非經驗因素 8 stimuli），後者排除 past experience、GP referral、recommendation、press coverage；結果：Model 2 中 reception/friendliness、distance 係數顯著上升（H5b、H8b 成立），但 QM certification、website、quality report 變化不顯著；揭示 experience good 情境下病患依賴 servicescape 與便利性作為 fallback proxy cue（Leister &amp; Stausberg, 2007）。</li>
+<li><strong>小屬性數全輪廓 + 正交設計縮減卡片數</strong>：劉俊杰 &amp; 周建亨（2024）四屬性寵物鳥飼料研究以 SPSS Orthogonal Design 將全因子組合縮減至 <strong>9 張卡片</strong>（含 1 張保留卡），受測者以 1–5 分評分後 OLS 估 part-worth；屬性 ≤4 且全輪廓認知負荷可控時，正交設計是最精簡的卡片產生路徑（劉俊杰 &amp; 周建亨, 2024）。同理王國梅 &amp; 任立中（2022）以部分因子直交設計從 7 屬性產生 16 組卡片供 1–100 分評分（王國梅 &amp; 任立中, 2022）。</li>
 <li><strong>Full-profile rank-order 9 屬性可行但 drop-out 高</strong>：Leister &amp; Stausberg (2007) 於 Essen 大學醫院與 Niederberg 醫院共 151 位擇期入院病患完成 Model 1（12 stimuli full-profile rank-order）與 Model 2（8 stimuli）；原始參與率 71.5% vs. 68.2%、最終完成率 36.0% vs. 48.1%，drop-out 主因為 task 長度與複雜度；顯示 full-profile 9 屬性雖超出 Green 建議 ≤6 的經驗法則，在 rank-order 情境下仍可行但需犧牲完成率（Leister &amp; Stausberg, 2007）。</li>
 </ul>
 <h4 id="29">2.9 屬性重疊、遮蔽與交互項</h4>
@@ -486,6 +500,7 @@ MathJax = {
 <li><strong>誤差變異 vs 樣本量</strong>：Monte Carlo 比較顯示 error variance、number of segments、within-segment heterogeneity 對分群方法效能的影響<strong>顯著大於</strong> sample size 的效應；研究者應優先最小化 response error（如更好的任務設計），而非僅依賴更大樣本（Error variance and within-segment heterogeneity matter more than sample size）。</li>
 <li><strong>Huber-Zwerina utility balance</strong>：utility balance 在 choice-based 可提升 33% 效率，相當於減少 10–50% 樣本量需求（Huber &amp; Zwerina, 1996; Huber 1996 utility balance reduces sample size by 10-50 percent）。</li>
 <li><strong>Johnson's rule-of-thumb 樣本量公式</strong>：CBC 設計最小有效樣本以 $n \cdot t \cdot a / c > 500$ 推估，其中 $n$ 為受訪者數、$t$ 為 task 數、$a$ 為每 task 的 alternative 數（不含 none）、$c$ 為任一屬性最多的 level 數；Orme（2019）進一步建議將右側目標放至 1,000 倍以獲得更佳精度。Cavusoglu et al.（2022）以六屬性最多 5 levels 的學術會議 CBC 套用 Orme（2019）較嚴版本得最低有效樣本 $n = 417$，實收 433（Cavusoglu et al., 2022; Orme, 2019; Cavusoglu 2022 Methods）。</li>
+<li><strong>小樣本 rank-based conjoint 的 Orme 辯護</strong>：Altınay Özdemir（2022）土耳其旅遊 conjoint $N = 86$ 仍引用 Orme（2010, p.62）「conjoint 即便在小樣本仍可具代表性，只要受訪者足以代表母體」；但作者承認子群分析（按年齡、收入細分後每組僅 10–20 人）統計力受限——示範<strong>小樣本研究的明確局限性聲明</strong>為發表必要條件（Altınay Özdemir, 2022; Orme, 2010）。</li>
 </ul>
 <h4 id="211-cbc-attribute">2.11 CBC 實務範本與跨域 attribute 常見發現</h4>
 <p>Choice-Based Conjoint（CBC）的完整做法可歸納為「質性屬性發掘 → 屬性/水準定稿 → 效率設計 → 資料蒐集 → 估計 → 驗證」六階段流水線；跨應用場域的 attribute 發現則呈現「價格主導、但特定認證或符號屬性可取代」的穩定 pattern。本節整合前述各子節為可直接取用的實務範本，並彙整政治、健康、慈善、環境、產品五大領域的常見 attribute 類型清單。</p>
@@ -514,6 +529,9 @@ MathJax = {
 <li><strong>骨鬆／慢性病藥物情境</strong>：屬性常為 efficacy（多 endpoint）、mode of administration、side effect risk、dose frequency、cost；Liu et al.（2024）$n=304$ hip-fracture efficacy 31% + administration 17.5% + side effects 16.6% 為前 3；LCA 識別 efficacy-focused (60.9%) vs multi-factor (39.1%) 兩 class；demographic 預測 class membership 效力低（Liu et al., 2024; 60 percent of osteoporosis patients prioritize efficacy over all other attributes）。</li>
 <li><strong>Implementation science / innovation prioritization 情境</strong>：屬性依 Rogers（2003）diffusion theory + Grimshaw（2004）經濟準則導出，常含 impact on care、strength of evidence、cost、local health needs、minimum standards、national/local priority、local expertise；Farley et al.（2013）英國 NHS PCT $n=139$ rating-based CA 發現 impact on care + strength of evidence 主導、national/local priority 意外不顯著（Farley et al., 2013; impact on patient care is top ranked attribute for innovation adoption; national or local priority status does not influence adoption preference）。</li>
 <li><strong>Sports nutrition / isotonic drink 情境</strong>：屬性常為 sugar content、packaging size、price、flavor；Oktaneldanora et al.（2025）印尼 $n=185$ flavor 33% ≈ price 32% 主導；最佳組合為 low sugar + 500ml + Rp 3,000–4,000 + original flavor（Oktaneldanora, Purnomo &amp; Noer, 2025）。</li>
+<li><strong>酒類消費情境（full-profile, 非 CBC）</strong>：六屬性 type of alcohol、oral sensation、flavor、origin、color、price；Yandug et al.（2023）菲律賓年輕消費者 $n = 205$ 全輪廓 7 點 Likert conjoint 中，price 26.311% 與 type of alcohol 26.237% 並列首位（差距僅 0.074），color 7.790% 最低；最優刺激組合為 mixed drinks + sweetness + apple + Filipino + light + cheap（score 0.652）；示範以正交設計（25 stimuli + 2 holdout）+ SPSS 25 估計、再餵入 5Ps marketing mix 的傳統 conjoint 範本（Yandug, Ponce &amp; Ong, 2023; price is the most important attribute in youth alcohol preference; type of alcohol nearly ties price as second most important attribute）。</li>
+<li><strong>精釀啤酒情境（CBC + 市場模擬）</strong>：屬性常為 color、aroma intensity、alcohol degree、bitterness、foam level、price；Castillo-Ortiz et al.（2024）墨西哥 $n = 501$ CBC 中 alcohol degree 0.305 最重要 &gt; bitterness 0.228 &gt; foam 0.140 &gt; price 0.114 &gt; aroma 0.113 &gt; color 0.099；McFadden pseudo-$R^2 = 61.4\%$；市場模擬比對 Untappd 實際排名以驗證預測效度；反證 Aquilani et al.（2015）「酒精濃度非關鍵」之主張（Castillo-Ortiz, Lee, Taylor &amp; Bufquin, 2024; alcohol degree is the most important craft beer attribute for Mexican consumers; conjoint choice simulation accurately reproduces actual Untappd market rankings）。</li>
+<li><strong>永續建材公眾接受情境（CBC + LCA 屬性）</strong>：CO₂-衍生隔熱板四屬性 perceived health concern、disposal condition、fossil resource saving、CO₂ content；Arning et al.（2021）德國 $n = 145$ CBC 中 perceived health concern 46.0% 主導 &gt; disposal 30.2% &gt; fossil saving 16.4% &gt; CO₂ content 7.4%；屬性水準依聚氨酯 LCA 的全球暖化與化石耗竭影響設定；設計效率中位數達 99%；示範以接受度屬性建立可遷移至其他 CCU 產品的「接受度評估藍圖」（Arning, Offermann-van Heek &amp; Ziefle, 2021; Perceived health complaints dominate CO2 insulation board choices at 46 percent importance）。</li>
 <li><strong>學術會議參與情境（MICE / hospitality）</strong>：屬性常為 total cost、conference organizer、publishing opportunities、reputation（# times held）、location、size；Cavusoglu et al.（2022）以 6 屬性 × 多 levels CBC、$n = 433$（57 國學者，QuestionPro）發現 total cost 與 conference organizer 並列 28% 主導、publishing opportunities 19%、reputation/location 各 10%、size 5%；conference cost 由 &lt; \$500 升至 > \$1,000 使市場份額由 multi-level baseline 跌至 17%、unknown organizer 市占降至 14%（vs university 35%）；F2F 與 online 無顯著差異；新提出「歷年舉辦次數」作為過去文獻未測量的 reputation proxy 並經五位專家 panel 合法化（Cavusoglu et al., 2022; Cavusoglu 2022 academic conference）。</li>
 <li><strong>永續運動服飾情境</strong>：Spindler et al.（2023）以 CBC N=1,000 德國跑者量化跑步服飾對永續性的偏好；屬性包含 environmental sustainability（ES）、social sustainability（SS）、brand、price、material、fit；ES 相對重要性 26.18% 居所有屬性之首，超越品牌（19.24%）；此發現挑戰「價格與品牌主導」的傳統消費品假設，並示範 share-of-preferences 模擬方法推算 WTP（Spindler, Hambrecht &amp; Breuer, 2023; Spindler 2023 Sustainable Consumption Sports）。</li>
 <li><strong>初級醫療保健偏好情境</strong>：Lim et al.（2022）系統性回顧 35 篇初級醫療 conjoint 研究（N=58 屬性，ISPOR 10 項品質準則篩選），發現等待時間（waiting time）為最多研究納入的屬性（20/35 篇），且具強烈負向效應；out-of-pocket cost 亦為強負向屬性；過程屬性（process attributes，如醫病溝通品質）共 34/58 個，主導初級醫療偏好結構（Lim, Loke &amp; Car, 2022; Lim 2022 Conjoint Analyses Patients）。</li>
@@ -555,6 +573,7 @@ MathJax = {
 <li><strong>Robust no-choice design</strong>：Vermeulen et al.（2008）提議 $w \cdot D_{ENCMNL} + (1-w) \cdot D_{NLMNL}$ 線性加權的 robust design，相對於專屬 D-optimal 在 model 誤指時效率損失僅 ~8%（vs 30–40% 損失），適用於不確定 IIA 是否成立的情境（Vermeulen et al., 2008; Robust no-choice design balances ENCMNL and NLMNL risk）。</li>
 <li><strong>Reference design（忽略 no-choice）在分析模型正確時表現尚可</strong>：simulation 顯示忽略 no-choice 的 D-optimal reference design 在分析模型正確時 EMSE 僅較 no-choice-aware design 高 5–15%；但對 model misspecification 的脆弱度較高，當 IIA 違反時 bias 顯著放大（Vermeulen et al., 2008; Reference design ignoring no-choice still performs adequately under correct model、no-choice option design has marginal effect when model matches）。</li>
 <li><strong>No-choice 偏好的兩種理論基礎</strong>：(a) <strong>rationale theory</strong>——所有選項皆無足夠效用時選擇 no-choice 並繼續搜尋；(b) <strong>choice conflict avoidance</strong>（Baron &amp; Ritov, 1994）——避免在效用相近選項間決策的不適感；Johnson &amp; Orme（1996）支持 (a)，Vermeulen et al.（2008）採用 (a) 假設並接續 MNL 框架（Vermeulen et al., 2008）。</li>
+<li><strong>Opt-out 行為可作 inattention 訊號</strong>：Jensen et al.（2021）農場鮮乳 CBC 中 Neither（opt-out）係數強烈為負，且不專心受訪者選 Neither 的傾向更高——opt-out 既反映真實「不買」偏好，也可能由注意力不足或迴避困難選擇驅動，研究者應將 opt-out 頻率與 inattention 指標交叉檢視（Jensen et al., 2021; opt-out; 詳見 <a href="conjoint_book.html">§4.5</a>）。</li>
 </ul>
 <h3 id="3">3. 模型估計</h3>
 <p>模型估計將觀察到的選擇資料轉為結構化的 part-worth 或 AMCE。核心張力在於「群體層次估計 vs 個體層次估計」以及「偏好異質性 vs 尺度異質性」。聚合 MNL 產生單一效用向量但掩蓋異質性（DeSarbo et al., 1995）；個體層次 HB 與 mixed logit 提供 $\beta_n$ 但需適當先驗或隨機分布假設；latent class 在「偏好呈離散群集」假設下有管理意義但面臨 scale/preference 混淆問題。</p>
@@ -579,12 +598,17 @@ MathJax = {
 - <strong>Mixed logit + Bayesian HB 於新聞平台可信度訊號</strong>：Nam &amp; Park（2026）以混合 logit 模型 $U_{njt} = \beta'_n X_{jt} + \varepsilon_{njt}$（其中 $\beta'_n \sim N(b, \Sigma)$）放鬆 IIA，並採貝葉斯 HB 估計（30,000 次 MCMC 迭代，burn-in 5,000，每 10 次保留 1 次，共 2,500 次後驗樣本）；相對於 Kim &amp; Lee（2023）使用的 MNL，mixed logit 可捕捉個體偏好異質性，WTP 估計更穩健（Nam &amp; Park, 2026; Nam Park 2026 Credibility Signals）。
 - <strong>屬性非注意（ANA）延伸的 RPL</strong>：在 RPL 框架中加入 ANA 建模可顯著改善模型配適度——部分受訪者對某屬性的係數本質上為零；ANA+RPL 在有無 cheap talk 提示的兩種實驗條件下均優於基礎 RPL（ANA RPL improves model fit over base RPL in both treatments）。
 - <strong>對數常態分布適用固定符號係數</strong>：當屬性效用方向需固定（如「價格必然為負」），mixed logit 應採 log-normal 而非 normal 分布，確保估計係數符號一致；違反此原則可能導致部分受訪者的係數符號反轉並污染 WTP 推算（Train, 2003）。
+- <strong>WTP-space mixed logit 直接估邊際 WTP</strong>：Jensen et al.（2021）農場鮮乳 CBC 以隨機參數 logit 估計，效用 $U_{ijt} = X_{ijt}\beta_i - \alpha_i P_{ijt} + \varepsilon_{ijt}$，並於 WTP 空間重新參數化 $\tilde U_{ijt} = \lambda_i(X_{ijt}\gamma_i - P_{ijt}) + \varepsilon_{ijt}$（$\lambda_i = \alpha_i/\sigma_i$），使屬性參數可直接解讀為邊際 WTP；價格係數設對數常態確保 WTP 為正（Train &amp; Weeks, 2005; Hole, 2007; Jensen et al., 2021; Jensen 2021 Methods; 詳見 <a href="conjoint_book.html">§5.1</a>）。
+- <strong>mixed logit + 偏好相關係數矩陣於股東揭露 CBC</strong>：De Villiers et al.（2023）以 mixed logit（Stata <code>mixlogit</code>，500 Halton draws）估計 65 位散戶股東 780 次選擇的偏好異質性 $\Pr(Y_n) = \prod_{t=1}^{12} \exp(\beta_n' x_j)/\sum \exp(\beta_n' x_i)$，估計 $\Omega$ 的 Choleski 分解 $L$（$\Omega = LL'$）並將 10% 不顯著元素限制為零以節省參數；揭示「高財務揭露偏好」與「低財務揭露偏好」呈最強負相關（De Villiers et al., 2023; De Villiers 2023 Methods; Strongest preference correlation is negative between high and low financial disclosure taste）。
 - <strong>HB CB 個體 hit rate 顯著高於 HB RB</strong>：Karniouchina et al.（2009）193 名筆電 between-subjects 比較顯示，含 keep on shopping 時 HB CB hit rate = 0.65 vs HB RB = 0.50；排除後 0.67 vs 0.58；以個體層次預測為目標時 CB 結構性優於 RB（Karniouchina et al., 2009; HB choice-based conjoint achieves higher individual hit rates than ratings-based）。
 - <strong>RB vs CB 的 compatibility effect 為唯一系統性差異但量級不大</strong>：Karniouchina et al.（2009）發現 enriched 屬性（brand name、microprocessor、pointing device）在 RB 較重要、comparable 屬性（screen size、RAM、price）在 CB 較重要——這是行為決策理論預測的 compatibility effect，但 conjoint 任務的多 stimuli + warm-up 結構稀釋其量級；管理意涵：屬性絕對排序在兩方法間高度一致，share-maximizing profile 收斂（Karniouchina et al., 2009; Compatibility effect produces small systematic differences between RB and CB conjoint parameters）。
 - <strong>Choice share 預測在無 no-buy option 時 RB 與 CB 收斂</strong>：Karniouchina et al.（2009）發現排除「keep on shopping」outside option 後，choice share MAD 在 RB 與 CB 之間無顯著差異；含 no-buy option 時 CB 在「市場規模變化」建模上有結構性優勢——RB 無法自然納入 outside option（Karniouchina et al., 2009; Choice share validations show no RB CB difference when no-buy option excluded）。
 - <strong>Share-maximizing profiles 在 RB 與 CB 之間收斂</strong>：Karniouchina et al.（2009）以完全列舉法找出兩種模型各自前 10 名最佳輪廓做比較，兩種模型預測的份額最大化筆電輪廓高度相似——研究者若僅以「找最佳產品設計」為目的，RB 與 CB 可依資料蒐集成本擇一（Karniouchina et al., 2009; Optimal product profiles converge across RB and CB conjoint methods）。
 - <strong>CB loss aversion 在 comparable 屬性（price、RAM）強於 RB</strong>：Karniouchina et al.（2009）level focusing 分析顯示，price 與 RAM 在 CB 中下行（loss）係數絕對值大於上行（gain）係數，且效應強於 RB——與相容性效應一致：comparable 屬性在 CB 任務形式下更易啟動 prospect-theory 式損失框架（Karniouchina et al., 2009; Loss aversion stronger in CB for comparable attributes price and RAM）。
-- <strong>AMCE 估計可化約為 OLS + cluster-robust SE</strong>：Hainmueller, Hopkins &amp; Yamamoto（2014）證明在 fully randomized attribute distribution 假設下，AMCE 的估計可以單純 dummy-OLS 取得——將每個屬性水準編碼為 dummy variable 對選擇結果迴歸，OLS 係數即為 AMCE 估計量；變異數估計需以受訪者層級 cluster-robust SE（Stata <code>cluster</code> 或 R <code>sandwich::vcovCL</code>）校正——同一受訪者的多筆觀察具有強相關（forced choice 任務內 $\text{Corr}(Y_{i1k}, Y_{i2k}) = -1$）；小樣本可改用受訪者層級 block bootstrap（Hainmueller, Hopkins &amp; Yamamoto, 2014; Conjoint Estimation Reduces to OLS with Clustered Standard Errors）。</p>
+- <strong>AMCE 估計可化約為 OLS + cluster-robust SE</strong>：Hainmueller, Hopkins &amp; Yamamoto（2014）證明在 fully randomized attribute distribution 假設下，AMCE 的估計可以單純 dummy-OLS 取得——將每個屬性水準編碼為 dummy variable 對選擇結果迴歸，OLS 係數即為 AMCE 估計量；變異數估計需以受訪者層級 cluster-robust SE（Stata <code>cluster</code> 或 R <code>sandwich::vcovCL</code>）校正——同一受訪者的多筆觀察具有強相關（forced choice 任務內 $\text{Corr}(Y_{i1k}, Y_{i2k}) = -1$）；小樣本可改用受訪者層級 block bootstrap（Hainmueller, Hopkins &amp; Yamamoto, 2014; Conjoint Estimation Reduces to OLS with Clustered Standard Errors）。
+- <strong>Apollo R package 為 MMNL 與 DCE 的開源主流工具</strong>：Forrest et al.（2024）以 Apollo R package v0.3.0（Hess &amp; Palma, 2019）執行 mixed multinomial logit MLE，效用 $U_{njt} = X_{njt}^{\prime}\beta_n + \varepsilon_{njt}$、$\beta_n \sim f(\beta)$、選擇機率 $\Pr(n \text{ chooses } j) = \int [\exp(X_{njt}^{\prime}\beta) / \sum_k \exp(X_{nkt}^{\prime}\beta)] f(\beta) d\beta$；Apollo 為 Sawtooth/Stata 之外的免費替代，特別適合學術 DCE 與貝氏效率設計搭配（Forrest, Lagarde, Aggarwal &amp; Naci, 2024; Forrest 2024 Methods; Apollo R package）。
+- <strong>OLS + clustered SE 在 4-way 限制設計的應用</strong>：Donnaloja（2022）對 15,970 筆 paired-profile 觀察採線性機率模型 $Y_{ij} = \beta_0 + \sum_{k,l} \beta_{kl} \mathbb{1}\{X_{ijk}=l\} + \varepsilon_{ij}$，受訪者層級聚類標準誤校正 10 個輪廓 per 受訪者的非獨立性；同時於 YouGov Census 校準權重下估計——示範 LPM AMCE + cluster SE + design weight 三件套在大樣本 CBC 的標準實作（Donnaloja, 2022; Donnaloja 2022 Methods）。
+- <strong>Paired AMCE 估計搭配 forced-choice robustness</strong>：Abascal, Xu &amp; Baldassarri（2021）主分析以 OLS 對 7 點 rating 估計，受訪者層級 cluster SE 校正每位受訪者 8 個重複測量；robustness 以 AMCE on forced-choice 作雙 outcome 互補——rating 提供連續變量資訊，forced-choice + AMCE 提供「選擇」證據並 net out compositional effects（Ganter, 2019）；兩種估計策略並行為政治學 conjoint 的常見穩健性設計（Abascal, Xu &amp; Baldassarri, 2021; Abascal 2021 Methods）。</p>
 <h4 id="32-hierarchical-bayes">3.2 Hierarchical Bayes</h4>
 <p>Hierarchical prior（層級先驗）將個體效用 $\beta_n$ 視為從群體分布 $\mathcal{N}(\bar{\beta}, \Sigma)$ 抽取，實現 borrowing strength（借用其他個體資訊改善單一個體估計）與 partial pooling（後驗為個體 OLS 與群體均值的 convex combination）。HB 的優勢在於不要求個體設計矩陣 full rank，適合 CBC 每人資訊有限的情境（Lenk et al., 1996）（延伸：Hierarchical Bayes Estimation and Shrinkage in Conjoint）。</p>
 <ul>
@@ -602,7 +626,16 @@ MathJax = {
 - CBC + HB 估計已成為 conjoint 實務主流標準（Agarwal et al., 2014）。
 - <strong>HB 於 algorithm aversion 情境</strong>：Egala &amp; Liang（2024）在 $N = 362$ 迦納臨床醫師 mCDS CBC 採用 HB；以 Lenk et al. (1996) 規格 $Y_i = X_i \beta_i + \varepsilon_i$ 與 covariate 映射 $\beta_i = \Theta z_i + \delta_i$，允許 gender、年齡、執業角色、年資等 covariate 下的 aversion 差異分析（Egala &amp; Liang, 2024; Egala 2024 Methods）。
 - <strong>HB 與 CBC scale 分離需充足任務數</strong>：Egala &amp; Liang（2024）採 fractional factorial orthogonal design 僅 2 tasks × 8 profiles，總資料量有限；雖 McFadden pseudo $R^2 = 0.309$ 落在良好區間，但無 holdout 驗證且 scale heterogeneity 未分離，提示小型 CBC 的 HB 應用需警覺估計不確定性（Egala &amp; Liang, 2024）。
-- <strong>Bayesian 預算限制推斷（latent budget inference）</strong>：Pachali, Kurz &amp; Otter（2023）將消費者預算限制（budget constraint）以潛在變數形式嵌入 Bayesian 階層模型，避免研究者需事前觀察或假設消費者實際預算；標準 CBC + HB 模型遺漏預算限制時，WTP 估計出現向上偏誤（upward bias），競爭均衡價格被高估約 20%；此架構為「結構性消費者預算異質性」提供貝葉斯估計路徑（Pachali, Kurz &amp; Otter, 2023; Pachali Kurz Otter 2023 Omitted Budget）。</p>
+- <strong>Bayesian 預算限制推斷（latent budget inference）</strong>：Pachali, Kurz &amp; Otter（2023）將消費者預算限制（budget constraint）以潛在變數形式嵌入 Bayesian 階層模型，避免研究者需事前觀察或假設消費者實際預算；標準 CBC + HB 模型遺漏預算限制時，WTP 估計出現向上偏誤（upward bias），競爭均衡價格被高估約 20%；此架構為「結構性消費者預算異質性」提供貝葉斯估計路徑（Pachali, Kurz &amp; Otter, 2023; Pachali Kurz Otter 2023 Omitted Budget）。
+- <strong>Zero-centered diffs 為 Sawtooth HB 預設方法</strong>：Brückner et al.（2023）德國優酪乳 CBC 採 Sawtooth zero-centered diffs HB 估計個體層級 part-worth；upper-level model $\beta_i \sim \mathcal{N}(\alpha, D)$、lower-level model 為 multinomial logit；MCMC 20,000 iterations、前 10,000 burn-in、後 10,000 draws 用於推論；split-half 法驗證信度（隨機切半重跑後比較三群結構是否一致）（Brückner, Emberger-Klein &amp; Menrad, 2023; Bruckner 2023 Methods）。
+- <strong>Zero-centred diffs 重標度測量「水準間移動」而非水準絕對效用</strong>：Adams（2017）以 Sawtooth CBC/HB + SMRT 估郵輪偏好時，採 zero-centred diffs 計算各屬性最佳與最差水準之效用差，作為平衡個體層次資料雜訊並避免 IIA 假設的重標度法；SMRT 不測量水準本身的效用，而是測量水準間移動所對應的效用（utility of movement between levels）（Adams, 2017; Bakken &amp; Frazier, 2006; Adams 2017 Methods）。
+- <strong>HB 模型適配以 percentage certainty 與 root likelihood 報告</strong>：Adams（2017）郵輪 CBC/HB 以 Gibbs Sampler 估計、借用群體層次 means 與 covariance 描述同資料集其他受訪者的 Average Importance；模型適配 percentage certainty $= 0.768$（模型比隨機猜測好 76.8%）、root likelihood $= 0.726$（適配為隨機水準的三倍以上），兩者為 Sawtooth CBC/HB 標準配適指標（Adams, 2017; Adams 2017 Methods）。
+- <strong>Covariate HB 估計群差</strong>：Brückner et al.（2023）採 covariate HB 估計情緒分群間的 part-worth 差異——$\alpha_i = z_i \Theta + \varepsilon_i$，其中 $\Theta$ 為 $q \times b$ regression matrix（先驗 $\mathcal{N}(0, 100)$）、$z_i$ 為共變量向量（含 cluster dummies，positive 群為 intercept）、$\varepsilon_i \sim \mathcal{N}(0, D)$；各 level 之 $\theta$ 估計值若 &gt; 95% alpha draws 為正/負記為 $p < 0.05$、&gt; 99% 記為 $p < 0.01$；此估計鏈讓「情緒分群」與「屬性偏好」可對照而不混淆（Brückner, Emberger-Klein &amp; Menrad, 2023; Bruckner 2023 Methods）。
+- <strong>ACBC HB 兩層估計的小樣本能力</strong>：Boyer et al.（2021）採 Sawtooth Software 內建 HB（Allenby et al., 1995; Orme, 2010）——lower level 對每位受訪者擬合個體 MNL 估個體 $\beta_n$、upper level 從樣本反覆 Gibbs sampling 對 $\beta_n$ 施加 normal prior $\beta_n \sim N(\bar{\beta}, \Sigma)$；在小樣本（$\approx$ 200/組）下仍能推導個體效用，使後續 WTP 與 market simulation 可在個體層面操作——這是 ACBC 配合 HB 在中等樣本研究的核心優勢（Boyer, Hunka, Linder, Whalen &amp; Habibi, 2021; Boyer 2021 Methods）。
+- <strong>HB 作為潛在類別分群的前置估計</strong>：Jedicke et al.（2025）以 Sawtooth Lighthouse 9.15.4 HB 估計 $N=225$ 永續葡萄酒 CBC 的個體層級 part-worth（納入「乾度×價格」交互），先以 HB 取得個體效用，再以這些效用為基礎跑潛在類別分群——示範 HB（連續個體異質性，供 market simulation）與 LC（離散可操作區隔）雙軌互補的標準工作流（Jedicke et al., 2025; Jedicke 2025 Methods）。
+- <strong>HB + 個體效用支撐倒 U 形價格模擬</strong>：Jedicke et al.（2025）以 HB 個體效用聚合做 share-of-preference 市場模擬，再以 OLS 曲線擬合估價格反應函數；二次式擬合最佳（$R^2=0.88$），需求在約 €8 達頂峰後下降，呈 Veblen effect——個體層級 HB 效用是揭露非線性（倒 U）價格反應的前提（Jedicke et al., 2025; Jedicke 2025 Wine Consumer Acceptance Sheep-Grazed）。
+- <strong>HB 自動吸收個體異質性，省去額外控制變項</strong>：Peng et al.（2022）在 AI 服務接受度 CBC 採 mixed logit + HB 估個體層級 part-worth，並據此<strong>不另加 AI understanding 控制變項</strong>——因為 HB 的個體層級效用估計已將「對 AI 的理解程度」等個別差異吸收進個體 $\beta_n$，群體層次推論不致受其干擾；此為「HB 框架下何時可省略控制變項」的實務範例（Peng et al., 2022; 延伸：Peng 2022 Methods）。
+- <strong>CBC 貝氏 p 值即後驗機率</strong>：Peng et al.（2022）說明 CBC 報表中括號內 p 值為<strong>參數大於/小於 0 的貝氏後驗機率</strong>（而非頻率學派抽樣分布的 p 值），詮釋為「該效應方向為真的後驗信度」；研究者報告 HB-CBC 結果時應註明 p 值的貝氏定義以免讀者誤解（Peng et al., 2022; 延伸：Peng 2022 Methods）。</p>
 <h5 id="part-worth">Part-worth 計算、意涵與實例</h5>
 <p>Part-worth utility 的計算可從三個層次理解：(a) 理論——Luce &amp; Tukey（1964）additive representation theorem 的線性參數化；(b) MNL 估計——MLE 最大化 log-likelihood $\ell(\beta) = \sum_n \sum_i y_{ni} \log \Pr(i \mid J_n)$，$\hat{\beta}_k$ 即為估計的 part-worth；(c) HB 估計——層級先驗下個體 posterior mean $\hat{\beta}_n^{HB} = W_n \hat{\beta}_n^{OLS} + (I - W_n) \bar{\beta}$。Part-worth 的意涵為「屬性水準對整體偏好的邊際貢獻」，為 conjoint 所有下游分析（attribute importance、WTP、market simulation、segmentation）的基礎。</p>
 <ul>
@@ -672,10 +705,16 @@ MathJax = {
 <li><strong>識別性風險</strong>：LC-MNL 對隨機起始值敏感，建議多次最佳化（multiple random starts）以確保達到全域最大；尤其在群數 $C \geq 3$ 且 $N < 300$ 時局部最大問題顯著（Kamakura &amp; Russell, 1989; Goeken et al., 2023；詳見 latent class conjoint）。</li>
 <li><strong>尺度異質性遮蔽問題</strong>：若資料同時存在 scale heterogeneity，應先估計 G-MNL 或 SALC，否則 LC 可能把「同偏好但反應尺度不同」的受訪者誤歸為不同群（Fiebig et al., 2010; latent class conjoint；詳見 <a href="conjoint_book.html">§3.5</a>）。</li>
 <li><strong>外部驗證必要性</strong>：LC 的群體為統計概念，需進行 holdout prediction 與 profile analysis 確認行銷意涵；內部準則（CAIC/BIC）選群後應補充樣本外預測準確率（DeSarbo et al., 1995; latent class conjoint）。</li>
+<li><strong>LCA 接受度區隔範例（CBC + 社會人口連結）</strong>：Arning et al.（2021）CO₂-隔熱板 CBC 以 latent class 辨識兩個接受度輪廓——「健康導向群」（$n = 108$，較年輕、健康狀況較佳、CO₂ 知識較低，受 perceived health concern 主導）與「環境導向群」（$n = 37$，較年長、健康狀況較差、CO₂ 知識較高，以 disposal 與節能等環境因素為主）；再以 MANOVA／$\chi^2$ 將 class membership 連結至社會人口與態度變項，示範「LCA 後驗區隔 + 群體差異檢定 + 偏好模擬」的完整接受度區隔流程（Arning, Offermann-van Heek &amp; Ziefle, 2021; Two latent acceptance profiles split by health versus environmental motives）。</li>
 <li><strong>Latent Profile Analysis (LPA)</strong> 為 model-based 分群方法，假設資料來自 $C$ 個潛在 profile，每 profile 具不同連續指標均值；與 k-means 等 distance-based 方法不同，LPA 估計明確的機率模型，可透過後驗機率 $\Pr(c_n = k \mid y_n)$ 估計分類誤差（Magidson &amp; Vermunt, 2002）。</li>
 <li>LPA 相較 k-means 的三項優勢：(a) 機率性分配而非硬分類；(b) 透過 $\text{BIC} = -2\ell + k\log n$ 等資訊準則選擇最佳群數；(c) unconstrained error covariance 允許群內指標相關（Magidson &amp; Vermunt, 2002; Mitchell &amp; Schmitz, 2023）。</li>
 <li>LPA 在 Mitchell（2026）美國慷慨動機資料 N=2,569 比較 1–8 群模型後 BIC = 97842.25 選定 5 群，平均後驗分配機率 0.94（LPA identifies five generosity profiles in US population）。</li>
 <li>LPA 適用於連續 motivation/attitude 指標；若指標為 categorical 應改用 Latent Class Analysis（LCA）；若為混合指標則用 mixture model with mixed response type。</li>
+<li><strong>Individual Marginal Component Effect（IMCE）：受訪者層次的 AMCE</strong>：Zhirkov（2022）提出 IMCE——以<strong>逐受訪者 OLS 迴歸</strong>估計每個屬性對該受訪者的個體邊際成分效果，作為 AMCE/ATE 的個體層次對應（IMCE/UTE）；不需在標準 conjoint 分析外附加任何假設，即可取得偏好的完整母體分布而非僅子群體 AMCE 比較（Zhirkov, 2022; 延伸：Zhirkov 2022 Individual Marginal、IMCE recovers individual respondent preferences without extra assumptions beyond standard conjoint）。</li>
+<li><strong>IMCE 的三項任務設計調整</strong>：Zhirkov（2022）建議估計 IMCE 時——(a) 改用<strong>評分（rating）</strong>而非選擇作為依變項、(b) <strong>極小化</strong>每個屬性的隨機水準數、(c) <strong>極大化</strong>每位受訪者評分的 profile 數——以提升個體層次估計的精度（Zhirkov, 2022; Zhirkov 2022 Individual Marginal）。</li>
+<li><strong>IMCE 的測量誤差處理（拔靴 + 多重插補）</strong>：IMCE 在小樣本逐人估計帶來測量誤差，直接以點估計做下游迴歸會膨脹關聯可靠度；Zhirkov（2022）以<strong>常態近似</strong>或<strong>非參數拔靴法</strong>抽取可能值，再循 Rubin 多重插補規則彙整下游分析（Zhirkov, 2022; 延伸：<a href="conjoint_book.html">§8 異質性掩蓋</a>）。</li>
+<li><strong>IMCE 揭示「沉默多數 + 發聲少數」結構</strong>：Zhirkov（2022）以調整後設計複製 Hainmueller &amp; Hopkins（2015）移民入境 conjoint（Lucid panel，929 人，六屬性二分化），發現實質移民偏好呈<strong>正偏態、僅由少數受訪者持有</strong>；多數受訪者缺乏可靠偏好，顯著的 AMCE 實由發聲少數驅動——此為集計 AMCE 無法揭示的偏好分布事實（Zhirkov, 2022; 延伸：Substantive immigrant preferences are positively skewed and held by only a minority of respondents、Most respondents lack reliable preferences while a vocal minority drives significant AMCEs）。</li>
+<li><strong>IMCE 可作下游迴歸的自變項並做個體層次效度驗證</strong>：IMCE 點估計可直接連結回問卷資料作為後續分析的預測變項（對照 list experiment 已有此能力）；亦可在個體層次對照外部行為（如 eye-tracking）驗證 conjoint 測量效度，而非僅在集計層次對照（Zhirkov, 2022; Immigration preference dimensions are largely uncorrelated at the individual level）。</li>
 </ul>
 <h5 id="341">3.4.1 依資料類型與演算法的分群方法總覽</h5>
 <p>Conjoint 分群可依「資料類型」與「演算法」兩維度展開。資料類型包含 conjoint part-worth、survey attitudes/motivation、混合資料、demography；演算法涵蓋 K-means、LC-MNL、HB-MNL、FCM、DPM-MNL、mixed membership 等。跨實證研究顯示 demographics 作為分群基礎效力普遍低（Hansen, 2014; Boenigk, 2016; Mitchell, 2026），preference-based 與 motivation-based 分群系統性勝出。群數選擇相關的 AIC/BIC/CAIC 見 <a href="conjoint_book.html">§3.8</a>。</p>
@@ -698,6 +737,7 @@ MathJax = {
 <li><strong>Cluster-specific SEM 揭示聚合模型遮蔽的結構</strong>：Head &amp; Ziolkowski（2012）在兩 mobile cluster 發現 TAM 前因路徑<strong>完全相反</strong>——instant communicator 群為 subjective norm 主導，information seeker 群為 perceived usefulness 主導；若以全體 N=188 估計單一 SEM 會平均出「加權幻覺」（Cluster-specific SEM reveals attitude heterogeneity hidden by aggregate model）。</li>
 <li><strong>Generation Y 單一市場假設失敗</strong>：塞爾維亞 $N = 514$ Gen Y 的 K-means 分 4 群（budget-conscious explorers 31%、luxury seekers 19%、adventure-driven 26%、cultural immersion 24%），各群對同一 activities 屬性 part-worth 正負反轉，否定「millennial 單一市場」行銷直覺（Vukic et al., 2014; Generation Y tourism preferences split into multiple segments）。</li>
 <li><strong>Average-linkage hierarchical clustering + NbClust</strong>：Pinto et al.（2018）慢性膝痛 $n=146$ 採 PAPRIKA 個人 part-worth 為分群輸入，以 R package NbClust 的 30 種 index majority vote 選定 $K=3$；三群 preference phenotype（Cluster 1 enjoyment-driven $n=33$、Cluster 2 health-benefit-driven + 高 self-efficacy $n=63$、Cluster 3 resource-constrained $n=50$）；multinomial logistic regression 顯示 PROMIS pain interference 與 Self-Efficacy for Exercise Scale 可預測 cluster membership（Pinto et al., 2018; three preference phenotypes identified among chronic knee pain patients）。</li>
+<li><strong>Two-step cluster + Schwarz BIC 為 SPSS 內建 mixed-data 分群方案</strong>：Brückner et al.（2023）以 SPSS two-step cluster 對情緒空間分群——(1) pre-clustering：以對類別資料的 log-likelihood 演算法逐一指派 case 至既有 precluster 或新建；(2) hierarchical clustering on preclusters：以 hierarchical clustering 將 precluster 聚成最終群組數，群數選擇依 Schwarz BIC 最佳化（Tkaczynski, 2017）；split-half 信度驗證以 $\chi^2$ 檢定群差顯著性（$p < 0.01$）；此方法對混合連續/類別變項分群比純 K-means 更穩健，且不需事前指定 $K$（Brückner, Emberger-Klein &amp; Menrad, 2023; Bruckner 2023 Methods; two-step cluster analysis）。</li>
 <li><strong>LCA 在患者偏好顯著勝過 demographic subgroup</strong>：Liu et al.（2024）Cedars-Sinai 骨鬆 $n=304$ CBC + HB + LCA 識別兩 class——60.9% efficacy-focused、39.1% multi-factor；multivariable logistic regression 顯示僅 3 變數（college graduation、medication belief necessity、never-user status）顯著預測 class membership，多數 demographic 變數預測力低；此結果呼應 demographic 分群一般失效的規律（Liu et al., 2024; Latent class analysis outperforms demographic subgroup analysis in osteoporosis preferences）。</li>
 <li><strong>Aggregate MNL 遮蔽 latent class 揭示的 catastrophic 偏好誤判</strong>：Eggers, Sattler, Teichert &amp; Völckner（2022）ebook reader 範例顯示——aggregate MNL 估計「6-in 螢幕 + 白色」為總偏好組合；但 latent class 分析（3-segment）發現 segment 1（60% 樣本）偏好 6-in 但喜歡黑色、segment 2（25%）偏好 5-in 與白色、segment 3（15%）偏好 7-in 與白色；依 aggregate 推出新產品三 segments 都不會買；3-segment LC log-likelihood = $-2056.6$（McFadden $R^2 = 0.258$、entropy = 0.948）顯著優於 aggregate MNL ($-2277.8$）（Eggers et al., 2022; Aggregate MNL hides preference heterogeneity that latent class reveals）。</li>
 <li><strong>Conjoint utility-based segmentation 在 functional foods 揭示 demographic 遮蔽的 mindset 異質性</strong>：Moskowitz, Beckley &amp; Minkus-McKenna（2004）對 147 位 40+ 女性的 utility 進行 k-means clustering，識別三個 functional foods mindset segments——(a) Health Optimist（30%）、(b) Food for Life（40%）、(c) Food for Cure（30%）；三 segments 對相同 element 的 utility 差異可達 30 點以上，遠超人口統計與 attitude 量表能預測；強烈支持「conjoint utility-based segmentation &gt; traditional demographic segmentation」原則（Moskowitz et al., 2004; Conjoint segmentation reveals three functional food mindsets、Demographic variables fail to predict functional food message response）。</li>
@@ -708,6 +748,10 @@ MathJax = {
 </ul>
 <p>$$\text{CAIC} = -2 \log L + (tr + r - 1)(\ln N + 1)$$</p>
 <p>其中 $r$ 為 cluster 數、$t$ 為每群獨立參數數、$N$ 為總 choice tasks 數；CAIC 較 BIC 對複雜度懲罰更重、較 AIC 更兼顧樣本規模，是 conjoint LC-MNL 模型選擇的穩健準則（Bask et al., 2013; DeSarbo et al., 1995; Bozdogan, 1987）。
+- <strong>資訊準則不一致時以可解釋性裁決群數</strong>：Jedicke et al.（2025）永續葡萄酒 CBC（$N=225$）以 AIC、CAIC、BIC、ABIC 輔助選群數，但 CAIC 指向 3 群、BIC 指向 4 群、AIC/ABIC 無明確指引；作者結合質性準則（Paetz et al., 2019）——3 群解的第二群在 4 群解中清楚一分為二，且 4 群解在描述變項上差異更顯著、可解釋性更佳——故採 4 群解；示範「量化準則 + 質性可解釋性」的務實裁決法（Jedicke et al., 2025; Jedicke 2025 Methods）。
+- <strong>永續葡萄酒四區隔的描述變項驗證</strong>：Jedicke et al.（2025）以 HB 個體效用為基礎跑潛在類別分群，得四群——永續白酒消費者、種族中心型消費者、乾酒愛好者、永續紅酒消費者；各區隔差異以卡方檢定（性別 $\chi^2=7.67, p=.053$；年齡 $\chi^2=44.49, p<.001$；教育 $\chi^2=20.57, p=.057$）與單因子 ANOVA（葡萄酒知識 $F=3.95, p<.01$；飲酒頻率 $F=3.86, p<.05$）驗證，群間在永續偏好、年齡、性別、葡萄酒知識上系統性不同（Jedicke et al., 2025; Four latent segments differ in sustainability preference age sex and wine knowledge）。
+- <strong>潛在類別分群 → 政策溝通成本（環境估價案例）</strong>：沈芝貝、莊晴 &amp; 柳婉郁（2022）臺灣 PES 選擇試驗（$N=452$）以 conditional logit 估 WTP 後，另以潛在類別模型捕捉族群間偏好異質，再將分群結果直接轉譯為「不同族群的政策溝通成本」——示範 conjoint 分群結果落地為政策資源配置的路徑（非商業區隔）；因潛在類別模型只接受二元變數，社經背景與環境態度變數皆做二元轉換（類別變數取眾數為 1、數值變數以高於平均為 1）（沈芝貝 et al., 2022; 延伸：latent class segmentation informs differentiated PES policy communication cost、沈芝貝 2022 Methods）。
+- <strong>偏好分群顯著勝過人口分群（長宿旅遊 K-means 案例）</strong>：陳建和 &amp; 蔡宜思（2008）以排序式聯合分析估日本旅客長宿 part-worth 後，以集群分析（K-means）區隔出「鄉村導向」與「都市導向」兩群，兩群對「居住當地文化特色」屬性的偏好方向相反；此再添一例支持「以偏好而非人口學分群」的跨域規律（呼應 Vukic et al., 2014 塞爾維亞旅遊、Xiao et al., 2025 校園環境）（陳建和 &amp; 蔡宜思, 2008; 延伸：japanese long stay tourists segment into rural oriented and urban oriented groups、陳建和 2008 Methods；詳見 <a href="conjoint_book.html">§7 旅遊／休閒</a>）。
 - <strong>多階段壓縮設計適用於新興議題的屬性發掘</strong>：Bask et al.（2013）以<strong>focus group → max diff → CBC + LCL</strong> 三階段流程處理「SC 永續性」議題：階段一 4 組 focus group（4 學科）+ 4 主題 SSCM 框架識別候選 statements；階段二第 1 次 pre-test（n=72）以 max difference scaling（Finn &amp; Louviere, 1992）將 13 屬性壓縮為 6；第 2 次 pre-test 進一步刪冗餘合併為 5 屬性 + 1 price；此「先質化探索、再壓縮、再 CBC + LCL 量化」流程適用於<strong>新興議題、無現成屬性集、需量化權重</strong>的研究情境（Bask, Halme, Kallio &amp; Kuula, 2013; 延伸：Bask 2013 Methods）。</p>
 <h4 id="35-scale-heterogeneity">3.5 Scale heterogeneity</h4>
 <p>Gumbel scale parameter $\sigma_n$ 控制選擇機率的「決定性程度」；$\sigma_n \to \infty$ 時接近確定性選擇、$\sigma_n \to 0$ 時接近隨機選擇。個體估計實為 $\hat{\beta}_n = \sigma_n \cdot \bar{\beta}$，回答一致性差異可能被誤解為偏好差異。G-MNL（Generalized Multinomial Logit, Fiebig et al., 2010）同時納入 scale 與 coefficient 異質性，BIC 優於純 mixed logit（延伸：Scale Heterogeneity vs Coefficient Heterogeneity in Conjoint）。</p>
@@ -727,6 +771,7 @@ MathJax = {
 <li><strong>Ranking-based QALY 估計兩大問題</strong>：Flynn（2010）指出 ranking-based QALY（如 Salomon 2003、McCabe et al. 2006）有 (a) <strong>logit 估計 ≠ QALY scale</strong>——rank-ordered logit (ROL) 估計的 coefficient 位於 latent scale，需額外 anchoring 才能轉為 QALY，過往提議未處理 variance scale factor；(b) <strong>deterministic responses 問題</strong>——若任一受訪者 strict deterministic ranking（無任何 inconsistency），其 likelihood contribution 為 1（perfect prediction），導致 estimation 不收斂或 bias；實務需排除或加入 noise 模擬（Flynn, 2010; rank-ordered logit、Ranking tasks face deterministic response problem in QALY estimation）。</li>
 <li><strong>Death anchor 的 QALY DCE 三方案</strong>：Flynn（2010）強調 QALY 框架中「死亡」為絕對 anchor（QALY = 0），但 DCE 估計的 latent utility 為 relative scale；將「impaired health A vs impaired health B」結果直接外推至「health A vs death」存在三大困難——長度不可比性、discount factor 差異、states-worse-than-dead 識別；三種 anchoring 方案：嵌入 TTO 子任務、DCE 內加入 death 為 alternative、BWS scale-free 配合獨立 valuation 任務（Flynn, 2010; Death state requires special anchoring in DCE QALY estimation）。</li>
 <li><strong>Panel logit 為 conjoint 的標準替代估計</strong>：對 panel data（同 individual 多次 observed）的 binary outcome 加入 individual-level random effects $P(Y_{it} = 1) = \exp(X_{it}'\beta + \alpha_i) / (1 + \exp(X_{it}'\beta + \alpha_i))$，account for within-subject correlation；相對於 MNL 假設 task 獨立，panel logit 處理 individual heterogeneity（intercept-only random effects），相對於 mixed logit 處理 full random coefficients on attributes（Igarashi, Nakano &amp; Yoneyama-Hirozane, 2022; panel logit）。</li>
+<li><strong>GMNL 在能源 DCE 的 WTP-space 應用</strong>：Danne et al.（2021）德國綠電 DCE 選 GMNL 而非 standard MNL/MIXL 的理由——(1) MIXL 處理 preference heterogeneity，GMNL 加入 scale heterogeneity（$\tau$ 參數）；(2) WTP space 解決分母隨機問題（preference space 下 $\text{WTP} = \beta_{\text{attr}}/\beta_{\text{price}}$ 兩 random term 相除常產生 unrealistic 分佈）；STATA 14 <code>gmnl</code> 指令、Gu et al.（2013）模組、1000 Halton draws、隨機參數設正常分佈且允許相關（標準 WTP space 研究少做）；McFadden pseudo-$R^2 = 0.322$（達 Hensher 建議的 0.3 門檻）（Danne, Meier-Sauthoff &amp; Musshoff, 2021; Danne 2021 Methods; GMNL_WTP_space）。</li>
 </ul>
 <h4 id="36">3.6 替代估計方法</h4>
 <p>本節整理 HB 之外的替代估計：polyhedral methods（Toubia et al., 2004）以 interior-point algorithm 求 partworth 多面體解析中心；convex optimization（Evgeniou et al., 2007）以凸損失函數進行 frequentist shrinkage；multi-task learning（Caruana, 1997）以共用中心表徵與 partial pooling 同構 HB。這些方法在特定情境（高異質性、diffuse prior、大量受訪者）下可勝過 HB（延伸：Alternative Estimation Methods Beyond HB in Conjoint、OLS and PLS Regression Equivalence in Rating-Based Conjoint）。</p>
@@ -802,6 +847,7 @@ MathJax = {
 <li>IRR 可在無重複題設計的既有資料上透過屬性差異數的線性外插估計（Clayton et al., 2023）。</li>
 <li><strong>Reliability 雙軸：over time vs. over items</strong>：Kulshreshtha, Sharma &amp; Bajpai（2023）強調 conjoint 信度應在兩個正交軸上分別檢驗——(a) <strong>reliability over time</strong>（時間穩定性，即 test-retest，受訪者數週後重答應產生相近 part-worth；對應 IRR 的延伸版）、(b) <strong>reliability over items</strong>（屬性穩定性，即同一受訪者對相似屬性集的回應一致性，可用 split-half 設計檢驗）；兩者來源不同（時間軸對應記憶／偏好穩定性、items 軸對應屬性表達一致性），故需採不同設計與統計檢驗，不可互相替代（Kulshreshtha, Sharma &amp; Bajpai, 2023; Reliability over time and over items require distinct conjoint validation strategies）。</li>
 <li><strong>Conjoint 文獻長期忽略 reliability/validity 報告</strong>：Kulshreshtha et al.（2023）指出相對於 SEM、PLS-SEM 已建立完整審稿評估標準，conjoint 應用論文常略過信效度檢驗——這是 conjoint 方法論成熟度仍落後 SEM 的根本問題；研究者與審稿者應將「同時報告 over time + over items reliability」列為基本要求（Kulshreshtha, Sharma &amp; Bajpai, 2023）。</li>
+<li><strong>信效度的章節擺放與寫作體例（2026-05-29 原文比對佐證）</strong>：隨機抽 5 篇實證 conjoint/CBC 期刊論文原文（非筆記摘要）核對章節結構，結果高度一致——(a) <strong>Method 章只保留核心 utility/效用式一條即收</strong>（Austrian Digital Journalism、Farmstead Milk），最詳盡者連 Hierarchical Bayes 估計都僅以散文敘述、不展開公式（迦納 mCDS algorithm aversion 研究）；(b) <strong>信效度與模型配適的數值（McFadden pseudo-R²、RLH、Cronbach's α、LR test、log-likelihood/BIC）一律寫在 Results 或獨立的 Robustness 章</strong>，不放在 Method——algorithm aversion 研究設「Goodness of fit statistics」為 Results 子節報 pseudo-R² = .309，Austrian 研究 RLH 僅在 Method 一句帶過、cluster 配適全在 §4 Results，民主退化研究 validity 全集中於 §Robustness tests；(c) <strong>五篇全採連續散文 + 表格</strong>呈現信效度，無一篇做成 bullet 清單或在正文重列檢定公式。<strong>寫作啟示</strong>：method 章宜精簡（核心模型公式以外的估計/驗證細節下放附錄或補充材料），信效度數值與達標判定以散文寫進結果章——此為 <code>/conjoint-draft</code> 採用之體例依據。</li>
 </ul>
 <h4 id="42-swapping-error">4.2 Swapping error 與測量誤差</h4>
 <p>Swapping error 為測量誤差的一種，定義為受訪者以機率 $\tau$ 將真實選擇「翻轉」為另一選項。Measurement error bias 使 AMCE 被系統性衰減：$\hat{\theta}^{\text{obs}} = (1 - 2\tau) \theta^{\text{true}}$，(1-2τ) 為 attenuation factor。在 $\tau = 0.15$ 下 AMCE 被放大 $1/0.7 \approx 1.43$ 倍校正。Subgroup 比較需分別估計 $\tau_1, \tau_2$，否則差異可能因 scale 差異而偏誤。</p>
@@ -849,6 +895,7 @@ MathJax = {
 <li>Barter conjoint 與 conjoint poker 的樣本外 holdout 預測優於 incentive-aligned 與 hypothetical CBC（Ding, Park &amp; Bradlow, 2009; Toubia et al., 2012）。</li>
 <li>Apostolakis et al. (2018) 觀光 conjoint 中 holdout 命中率 63.3%、MAE 3.19 作為預測效度報告範例。</li>
 <li><strong>Rating-based CA 的 holdout 報告範例</strong>：Farley et al.（2013）在 16 fractional factorial scenarios + 5 hold-out 設計下，Pearson correlation $r = 0.96$（$r^2 = 0.93$, $p < 0.001$）；顯示即使是 11% response rate 下的 rating-based CA，模型仍具良好內部預測效度（Farley et al., 2013; rating-based conjoint achieves 93 percent holdout prediction for innovation utilities）。</li>
+<li><strong>Full-profile conjoint 雙信度門檻報告範例</strong>：Yandug et al.（2023）菲律賓酒類 full-profile conjoint 同時回報 Pearson's $R = 0.955$（estimate vs observed 偏好相關）與 Kendall's $\tau = 0.876$，皆高於 0.8 門檻，holdout $\tau = 1.000$；示範 SPSS conjoint 程序輸出的標準雙信度指標報告法（Pearson's R 與 Kendall's τ 並列）（Yandug, Ponce &amp; Ong, 2023; conjoint model reliability confirmed by Pearson R and Kendall tau above 0.8）。</li>
 </ul>
 <h4 id="45-attention-cognitive-burden">4.5 Attention / cognitive burden</h4>
 <p>Satisficing 指受訪者以「夠好就好」策略替代完整補償式評估，在認知負荷過高時啟動。Fixations（眼動停留次數）與 decision time 為外部可觀察的 cognitive burden 指標。Attention check 通過後 IRR 仍為 77%（Clayton et al., 2023），顯示 engagement 不等於測量精度——任務本身的複雜度才是誤差主源（延伸：Attention and Cognitive Strategies in Conjoint Response、High Burden Tasks Favor Conjoint Over Self-Report）。</p>
@@ -865,6 +912,11 @@ MathJax = {
 <li><strong>Radio buttons 優於 drop-down menus</strong>：King et al.（2019）同一研究顯示受訪者顯著偏好 radio buttons 格式而非 drop-down menus，建議線上 conjoint 問卷以 radio buttons 作為 grid 問題的預設格式（King et al., 2019; respondents prefer radio buttons over drop-down menus in grid questions）。</li>
 <li><strong>Trap question 為注意力篩選的低成本工具</strong>：在 conjoint profile 中刻意嵌入明顯不合理組合（如「超低排氣量 + 超高級品牌」）作為 trap，可在事後辨識並剔除注意力不足的受訪者；相較 attention check item，trap 直接利用屬性結構不破壞 conjoint 任務流暢度（20_117 Methods; 延伸：China Car Brand Value Conjoint）。</li>
 <li><strong>Statistical power 在 conjoint 中常被高估</strong>：調查實驗領域中位數效應量 $d = 0.08$，遠低於研究者預設的 0.2，多數實驗即便有事前 power 分析仍嚴重 underpowered；conjoint AMCE 在 effect size $d \approx 0.1$ 的常見場景下需 $N \geq 1{,}500$ 才能達 80% power（Rauf et al., 2025; Cohen, 1988; 延伸：statistical power）。</li>
+<li><strong>Inattention 雙準則構造</strong>：Jensen et al.（2021）以（1）資訊螢幕閱讀時間落在最低四分位、和/或（2）答錯 trap question 雙準則構造 inattention 虛擬變數；27.17% 受訪者被判不專心、trap question 答錯率僅 2.82%；inattention 與每個屬性交乘以量測其對各屬性 WTP 的影響（Jensen et al., 2021; survey inattention; attention check）。</li>
+<li><strong>不專心受訪者係數壓向「熟悉的預設」</strong>：Jensen et al.（2021）Table 5 顯示，重複客戶中不專心者比專心者更重折非塑膠包裝——紙 −2.62 vs −1.49、玻璃 −2.51 vs −0.11（皆 $p<.05$）；不專心使偏好回歸熟悉的塑膠瓶，壓低非塑膠包裝估值（Jensen et al., 2021; Inattentive respondents discount paper and glass packaging more heavily）。</li>
+<li><strong>Inattention 與 product familiarity 在閱讀時間上混淆</strong>：閱讀時間短可能代表不專心，也可能代表熟悉產品而讀得快；以閱讀時間單一指標判斷不專心會把熟悉的重複購買者誤判為不專心（Jensen et al., 2021; product familiarity; Inattention is confounded with product familiarity in survey reading time）。</li>
+<li><strong>Inattention 效應集中於新客戶</strong>：Jensen et al.（2021）inattention × 屬性交乘在新客戶（New）顯著（HTST、Ultra、Full Homog 正向、Glass 負向，皆 $p<.05$），在重複客戶（Repeat）不顯著——不專心扭曲的是「不熟悉產品」受訪者的 WTP，而非熟悉者（Jensen et al., 2021; Inattention effects are strongest among new customers not repeat customers）。</li>
+<li><strong>以 LR 檢定驗證分層估計正當性</strong>：Jensen et al.（2021）以兩個 likelihood ratio 檢定支持分開建模——(1) inattention 交乘整體顯著 $\chi^2=253.9$（17 df, $p<.01$）；(2) Repeat vs. New 分層 $\chi^2=482.6$（8 df, $p<.01$）；此「先檢定再分層」是去除 inattention–familiarity 混淆的方法論範本（Jensen et al., 2021; likelihood ratio test; Likelihood ratio tests confirm modeling repeat and new customers separately; 詳見 <a href="conjoint_book.html">§3.7</a>）。</li>
 </ul>
 <h4 id="46-attribute-non-attendance">4.6 Attribute non-attendance</h4>
 <p>Attribute non-attendance（ANA）指受訪者在評估時完全忽略某些屬性，被忽略屬性的估計係數壓向 0。Screening model（Gilbride &amp; Allenby, 2004）顯式建模受訪者的兩階段決策：先篩選可接受選項、再於剩餘選項中最大化效用。ANA 可透過 self-reported 方式或 latent class 統計推導。</p>
@@ -894,7 +946,10 @@ MathJax = {
 <li>Conjoint 相較 Likert，受訪者難以判斷哪個屬性「應該」被選，降低迎合傾向（Pelzer, 2019）。</li>
 <li>CRM conjoint 相較直接態度問卷更能降低社會期許偏誤；強制取捨設計使「支持公益」不再是唯一正確答案（Chang &amp; Liu, 2012）。</li>
 <li>Single-profile vignette conjoint 在敏感議題（難民接受度、宗教偏好）可降低社會期許偏誤，允許受訪者於多屬性 masking 下表達真實偏好（Krzyzowski &amp; Nowicka, 2020）。</li>
+<li><strong>直接量表測不到、conjoint 取捨揭露的隱性顧慮</strong>：Arning et al.（2021）CO₂-隔熱板研究中，受訪者在直接 Likert 量表上對健康風險評分不顯著（呈正面接受），但同一批受訪者在 CBC 強制取捨情境中，perceived health concern 卻是 46% 重要性的主導屬性；此「直接量表 vs conjoint 落差」歸因於態度—行為落差與社會期許偏誤，是 conjoint 揭露 self-report 掩蓋之真實顧慮的典型案例（Arning, Offermann-van Heek &amp; Ziefle, 2021; Health risk invisible in direct Likert but dominant in conjoint trade-off）。</li>
 <li><strong>Within-design 敏感屬性操弄</strong>：Sonmez et al.（2023）以黨派身分為 within-design 操弄變數（受訪者隨機分配至「含黨派版本」vs「不含黨派版本」），允許直接比較黨派資訊存在與否的效果；此設計比單純 between-subject 比較更有力——在科學家信任 conjoint 中，黨派身分存在時職場隸屬屬性效應顯著縮小，顯示黨派資訊「壓縮」受訪者對其他屬性的注意力；此設計策略可廣泛應用於政治 conjoint 中測試任何「誰在說話」類型的 contextual attribute（Sonmez, Makarovs &amp; Allum, 2023）。</li>
+<li><strong>counts（偏好）對照 HB importance（重要性）量化 value-action gap</strong>：Adams（2017）以雙路線設計揭露陳述偏好與實際選擇的落差——counts 分析測偏好，HB Average Importance 測重要性；郵輪乘客在陳述偏好層次以接近 <strong>2:1</strong> 偏好具 CSER（企業社會與環境責任）政策的公司，但在實際選擇中 CSER 落入七屬性中最不重要的三個（重要性僅 11.82%），遠不及 standard 28.4% 與 price 24.6%；此「偏好高、行為低」的 value-action gap 是 conjoint 強制取捨揭露 self-report 掩蓋之真實權重的典型案例（Adams, 2017; Self-Report Attitude and Conjoint Results Often Diverge、Adams 2017 All aboard CSER cruise conjoint）。</li>
+<li><strong>行為共變項優於人口統計共變項提升估計效率</strong>：Adams（2017）引用 Orme &amp; Howell（2009）指出人口統計共變項（age、gender、nationality）在 CBC/HB 中與偏好相關性低、對 part-worth 估計貢獻有限，故改以 5 個行為共變項（cruise frequency、loyalty、cabin preference、booking mode、cruise plans）提升模型估計效率（Adams, 2017; Orme &amp; Howell, 2009; Adams 2017 Methods）。</li>
 </ul>
 <h4 id="49">4.9 非補償式決策與有限理性</h4>
 <p>Non-compensatory heuristics 指受訪者不以加法補償（某屬性不足由另一屬性彌補）方式評估，而採 lexicographic（字典序）、elimination-by-aspects、conjunctive/disjunctive 等規則。Lexicographic rule 依屬性重要性逐層篩選；若某屬性不達門檻即排除。有限理性模型在預測新資料時常相當或優於線性補償模型，因後者易過擬合（Agarwal et al., 2014）。</p>
@@ -929,156 +984,201 @@ MathJax = {
 <li><strong>Impact score 作為 WTP 之外的屬性重要性指標</strong>：Lin et al. (2021) 於醫院院長 EBI 採用研究，以 HGLM 的 $\beta_k$ 直接作為「impact score」——成本 2.12 &gt; 持續時間 0.88 &gt; 技術支持 0.69 &gt; 形式彈性 0.36；其他 3 屬性不顯著；此 impact score 為 Likert-based rating CA 的相對重要性指標，在無自然金錢 numeraire（組織決策而非消費者購買）情境下適用，作為 WTP 的替代（Lin et al., 2021）。</li>
 <li><strong>Willingness-to-accept（WTA）補償金額</strong>：Brown et al.（2009）以 bivariate probit 同時估計 Program A/B 偏好與 enrollment decision，計算公共衛生推薦劑量（5 天 × 30 分鐘）相對最偏好（3 天 × 20 分鐘 alone）的補償金額為 $\approx \$36/$週，formal group 相對 alone/informal 為 $\approx \$37/$週；此 WTA = $-(\hat\beta_{\text{attr}} - \hat\beta_{\text{baseline}}) / \hat\beta_{\text{cash}}$ 與 WTP 對偶，適用於「必須說服受訪者接受非偏好屬性」的政策情境（Brown et al., 2009; formal group requirement adds 37 dollars weekly disutility in walking program; public health recommended dose requires 36 dollars weekly to offset utility loss）。</li>
 <li><strong>Bivariate probit 同時估計 choice + participation</strong>：Brown et al.（2009）設計兩類 outcome——(a) Program A vs B 偏好、(b) 參加 vs 不參加（enrollment）——以 bivariate probit 共同估計並允許兩 equation error correlation $\rho$ 非零；此結構捕捉「選偏好方案且願參加」vs「選偏好方案但仍不參加」兩類受訪者的識別差異；model structure 類似 §2.12 的 dual-response design 但以 probit link 實作（Brown et al., 2009）。</li>
-</ul>
-<h4 id="52-incentive-aligned-hypothetical-bias">5.2 Incentive-aligned / hypothetical bias</h4>
-<p>Hypothetical bias（假設性偏誤）指受訪者在無真實後果的情境下高估 WTP、低估價格敏感度。BDM（Becker-DeGroot-Marschak）機制要求受訪者報告 WTP，隨機抽出一價格，若 WTP ≥ 該價格則以該價格購買，使誠實報告為 Bayesian Nash Equilibrium。Vickrey auction（次價密封投標）同樣誘發真實偏好揭露。Incentive-aligned 設計透過真實交易或實物獎勵與報告偏好綁定，顯著降低 hypothetical bias（Ding, 2007）（延伸：Incentive Alignment and Hypothetical Bias in Conjoint）。</p>
-<ul>
-<li>Incentive-aligned CBC 在樣本外預測顯著優於 hypothetical CBC，產生更高價格敏感度與更低風險尋求（Ding, 2007; Agarwal et al., 2014）。</li>
-<li>BDM 機制使推論 WTP 等於真實 WTP 成為 Bayesian Nash Equilibrium（Ding, 2007）。</li>
-<li>Hypothetical 與 real WTP 差異顯著，但在新或複雜產品實施 incentive alignment 仍面臨成本挑戰（Völckner, 2006）。</li>
-<li>Vickrey auction 與 BDM 機制理論上可誘發真實 WTP 揭露（incentive compatibility），使報告 WTP 等於真實 WTP 為 Bayesian Nash Equilibrium（Breidert et al., 2006; Koschate-Fischer, Stefan &amp; Hoyer, 2012）。</li>
-<li>Cheap talk + random lottery incentive（10% 機率實現）可顯著降低 hypothetical bias 並支持 impure altruism 模型檢定（Menges, Schroeder &amp; Traub, 2005）。</li>
-<li>Stated preferences with consequences（如 200 位隨機受試者真實捐款 NZ$20）可減輕純假設性偏誤，是 pure hypothetical 與 incentive-aligned 之間的折衷設計（Hansen, Kergozou, Knowles &amp; Thorsnes, 2014）。</li>
-<li>WTP 測量方法可分為 revealed preference（market data、auctions）與 stated preference（direct survey、conjoint、DCE）；每種方法適用情境不同，不存在單一最佳方法（Breidert et al., 2006）。</li>
-<li>直接 WTP 調查易受 prestige bias（誇大）或 collaboration bias（降估）扭曲；conjoint 透過間接推論可減輕此偏誤（Breidert et al., 2006）。</li>
-<li>在數位新聞 WTP 測量文獻中，direct survey 仍佔主導地位，僅 6/37 篇採 conjoint、incentive-aligned 設計幾乎不存在（O'Brien, Wellbrock &amp; Kleer, 2020）。</li>
-<li><strong>Hypothetical conjoint 系統性高估 WTP</strong>：Yue et al.（2010）以生物可降解花盆容器比較 conjoint（假設性）與 experimental auction（誘因相容）——conjoint WTP 顯著高於 auction，確認 hypothetical bias；此結果支持 Ding（2007）的 incentive-aligned conjoint 設計建議，在環保 premium 研究中尤須謹慎（Yue, Dennis, Behe, Hall, Campbell &amp; Lopez, 2010; hypothetical conjoint and experimental auction produce different WTP estimates; hypothetical bias leads conjoint to overestimate WTP relative to revealed preference）。</li>
-<li><strong>Mixed ordered probit 優於標準 ordered probit</strong>：Yue et al.（2010）在 conjoint internet survey 中引入 mixed ordered probit 以處理 panel 異質性，在 AIC/BIC 均優於標準 ordered probit；實務建議 internet conjoint 採 mixed 模型（Yue et al., 2010; mixed ordered probit outperforms standard ordered probit for conjoint internet surveys）。</li>
-<li><strong>Cash incentive 作為 conjoint 屬性</strong>（而非 alignment 機制）：Brown et al.（2009）將每週 $5–$50 現金誘因設為 walking program 的其中一個屬性，間接估計 WTA 與參與彈性；$9/週即可將參與率由約 18% 提升至約 23%（+31pp 相對成長）；此設計與 incentive-aligned conjoint 的 BDM/Vickrey 機制不同——前者「在假設情境下 estimate 金錢誘因對選擇的效應」，後者「以真實金錢支付誘發誠實揭露」；兩者可互補，Brown et al. 顯示modest 現金誘因是 policy-relevant lever（Brown et al., 2009; cash incentives raise walking program participation 31 percent; walking programs + financial incentive effective even at modest 9 dollars weekly）。</li>
-</ul>
-<h4 id="53-conjoint-vs-bws-wtp-cmv">5.3 Conjoint vs BWS WTP 差異；CMV 新方法</h4>
-<p>Convergent validity（收斂效度）要求不同 stated preference 方法在同一構念上產生一致估計。本節整理 conjoint（CBC）與 BWS Case III 在 WTP 上的收斂性：最偏好屬性高度一致支持收斂效度，最不偏好屬性則顯著分歧（CBC 高於 BWS），反映兩方法對負面偏好的捕捉機制不同（Cheng et al., 2023）。此外，He、Anderson &amp; Rucker（2024）在 Journal of Marketing 提出 Comparative Method of Valuation（CMV），指出現有 WTP 測量方法（含 BDM、conjoint）的根本概念模糊性，為本節增加重要方法論批判。</p>
-<ul>
-<li>對最偏好屬性，CBC 與 BWS Case III 的 WTP 估計大小相近且正負號一致，支持收斂效度（Cheng et al., 2023）。</li>
-<li>對最不偏好屬性，CBC 估計的 WTP 顯著高於 BWS，因前者中低偏好屬性的厭惡被其他正面效應稀釋（Cheng et al., 2023）。</li>
-<li>BWS「選最壞」機制更直接捕捉負面偏好強度，若需精確估計避免意願應選 BWS（Cheng et al., 2023）。</li>
-<li>不同 stated preference 方法在主要偏好屬性 WTP 估計上具穩健性（Yangui et al., 2019; Cheng et al., 2023）。</li>
-<li><strong>WTP 是顧客 × 比較選項 × 情境的函數，而非單一數字</strong>：He et al.（2024）建立數學框架，WTP 依賴三要素——顧客（C）、比較選項（A，alternative comparison option）、情境（S）；同一產品在不同情境下 WTP 可截然不同，現有方法未充分識別此三維度（He, Anderson &amp; Rucker, 2024）。</li>
-<li><strong>BDM 強制以「不購買」為比較選項，造成概念模糊</strong>：傳統 BDM 隱含比較選項為「不買任何東西」，但現實中消費者通常比較的是競爭替代品；此模糊性使 BDM 估計的 WTP 對應的是「產品 vs 無產品」而非「產品 vs 競爭品」（He et al., 2024）。</li>
-<li><strong>CMV 明確引出比較選項</strong>：CMV 先請受訪者指定比較選項（competing product），再在目標產品與比較選項間進行激勵相容的 lottery；使 WTP 定義清晰，避免 BDM 的比較歧義（He et al., 2024; CMV explicitly elicits comparative option making WTP well-defined）。</li>
-<li><strong>Conjoint 可能高估 WTP</strong>：He et al.（2024）跨九項實驗中，conjoint WTP 系統性高於 CMV WTP；因 conjoint 隱含「vs 不購買」邏輯而非「vs 競爭品」比較（He et al., 2024; Conjoint may overestimate WTP compared to CMV）。</li>
-<li><strong>情境效果：直接路徑與間接路徑</strong>：He et al.（2024）識別情境改變 WTP 的兩條路徑——直接路徑（situational factor 改變目標品相對固定比較選項的差異化價值）與間接路徑（situational factor 改變比較選項本身）；CMV 能識別間接路徑，BDM 不能（He et al., 2024; Direct and indirect pathways link situational factors to WTP changes）。</li>
-</ul>
-<h4 id="54-market-simulation-reservation-price">5.4 Market simulation / reservation price</h4>
-<p>Market share simulator（市場份額模擬器）以估計的 part-worth 與假設市場情境，計算每個輪廓的預測市占率 $\hat{s}_j = \exp(X_j'\hat{\beta}) / \sum_k \exp(X_k'\hat{\beta})$。Reservation price（保留價格）為受訪者接受某輪廓的最高願付價格，可透過調整 cost 屬性掃描 indifference 點推得。Equivalent discount 方法將非價格偏好轉為等值貨幣溢價，連結 conjoint 估計與財務決策。</p>
-<ul>
-<li>Choice simulation 透過估計多輪廓市場佔有率，識別最具競爭力的屬性組合（Jeon, 2010）。</li>
-<li>ACBC 在估計價格敏感度與 WTP 方面比傳統 CBC 更準確，特別當消費者對極端價格採迴避行為時（Chapman, 2009; Gensler et al., 2012）。</li>
-<li>Barter conjoint 與 conjoint poker 在樣本外預測優於 incentive-aligned 與 hypothetical CBC（Ding, Park &amp; Bradlow, 2009）。</li>
-<li>Base-case market share 是約束非先驗資訊，選擇模型應明確建模無選項與品牌忠誠度（Gilbride, Lenk &amp; Brazell, 2008）。</li>
-<li><strong>SIMOPT 12 能力</strong>：first-choice / share-of-preference 法則、sequential competitive moves、Pareto frontier（市占 vs return）、line extension、cannibalization 模擬、價格敏感度分析等；搜尋空間為 $\prod_k L_k$ attribute-level 組合，遠超傳統 simulator 僅模擬預設 profile 的範圍（Green &amp; Krieger, 1991; Optimal product design models operationalize segment targeting; SIMOPT）。</li>
-<li><strong>Share of Preference（SOP）定義與計算</strong>：在 conjoint market simulation 中，特定 profile 被受訪者選為「首選」（最高 composite utility）的比例；採 randomized first choice 規則 $\text{SOP}_j = \frac{1}{N}\sum_{n=1}^{N} \mathbb{1}\{j = \arg\max_k U_{nk} + \varepsilon_{nk}\}$ 加入隨機誤差項以避免過度集中於最高 utility；總和恆為 100%；適合做相對比較（如「加入 eco-score 後永續品牌 SOP 提升多少」），絕對值需以 market share 校正（Orme, 2019; Bergener et al., 2026; 延伸：share of preference）。</li>
-<li><strong>Sampling of Scenarios（SOS）為 WTP 估計的競爭情境法</strong>：Orme (2021) 提出之 WTP 估計方法，對 reference product 設定 SOP、提升某屬性後重算 SOP，找出讓 SOP 回到原始水準的價格 delta 即為 WTP；透過 bootstrap 反覆隨機抽樣競爭者定位估計 95% CI；相對於 algebraic WTP（$\beta_{\text{attribute}} / \beta_{\text{price}}$）能避免高估、提供不確定性區間；適合競爭市場（如 47 款手機 Bergener et al., 2026），CI 較貼近真實不確定性（Orme, 2021; Bergener et al., 2026; 延伸：sampling of scenarios）。</li>
-<li><strong>POSSE 系統（Green, Carroll &amp; Goldberg, 1981）</strong>：Product Optimization and Selected Segment Evaluation 為首套 conjoint-based 產品/服務最適化的 28 支程式整合系統，含 7 子系統（experimental design、utility estimation、choice simulator、objective function estimation、optimization、sensitivity analysis、time-path forecasting），於 1981 前已在 15 個商業領域（durables、telecom、foods、drugs 等）實際應用（Green, Carroll &amp; Goldberg, 1981）。</li>
-<li><strong>POSSE 的 response surface methodology</strong>：以低階多項式 $\hat{R}(\mathbf{x}) = \beta_0 + \sum_k \beta_k x_k + \sum_{k,l} \beta_{kl} x_k x_l + \cdots$ 近似 choice simulator 輸出，透過 RSM 將昂貴的選擇模擬以解析最佳化取代；類別變數採 enumeration（如 QUALO）保證全域最優、連續變數採 gradient/direct/random search 但不保證全域最優（Green, Carroll &amp; Goldberg, 1981）。</li>
-<li><strong>Hybrid conjoint model（Green, Carroll &amp; Goldberg, 1981）</strong>：結合 self-explicated 與 decomposition 測量，皮卡車案例 N=486、8 屬性 × 3 水準（$3^8 = 6{,}561$ 組合），分數型設計縮減至 81 master profiles 後每位受訪者僅評估 9 個 profiles，以個體 hybrid 效用估計支撐 POSSE 最適化（Green, Carroll &amp; Goldberg, 1981）。</li>
-<li><strong>SEGUE 輔助程式</strong>：彙整 segment 層次 part-worth 與 importance，產生 buyer weights 作為 SIMOPT 輸入；若採 a priori 以目標 segment weight = 1 其他 = 0，若 post hoc 以 weight = 1/n_c；可手動加權反映 reachability（Green &amp; Krieger, 1991; SEGUE）。</li>
-<li><strong>財務準則優先於統計準則</strong>：optimal product design 以 return/contribution 為主要優化目標，而非 cluster goodness-of-fit；segment 的 reachability、substantiality、actionability 等主觀準則需管理者判斷（Green &amp; Krieger, 1991）。</li>
-<li>等值折扣（equivalent discount）方法將 CSR 偏好提升映射至等值貨幣溢價：$\Delta P = \gamma_j / (\beta_3 + \beta_{j \times \text{CSR}})$，可將 conjoint 偏好量化為財務收益（Amezcua, Briseño, Ríos &amp; Ayala, 2018）。</li>
-<li>知名品牌搭配社會公益活動可產生 22% 溢價，對較不知名品牌僅 10%；品牌認知度調節 CSR 對 WTP 的效應（Amezcua et al., 2018）。</li>
-<li>WTP for risk reduction 隨收入、年齡、初始風險上升而上升，支持 Lancaster demand theory 的理論預測並可作為 conjoint 外部效度檢驗（Telser &amp; Zweifel, 2002）。</li>
-<li>MWTP 可透過 stepwise 多元回歸建構 benefit transfer functions，將測得 MWTP 外推至未測量城市；亞洲城市應用中 ~90% 預測 transfer error 低於 50%（Tokimatsu et al., 2016）。</li>
-<li><strong>Market simulation 必須包含 no-choice option 才能估計 absolute take-up</strong>：Eggers, Sattler, Teichert &amp; Völckner（2022）ebook 範例顯示——若 simulation 僅含 real options，預測 share 之和恆為 100%；加入 no-choice 後可區分「不買」比例，反映實際市場 take-up rate；ebook 6-in 黑色 4 GB @ €139 vs no-choice 範例：$V = -0.787$ vs $V_{\text{none}} = -0.532$，purchase probability = $0.437$；轉為 market shares 的條件（Orme &amp; Johnson, 2006）：(1) 包含所有影響購買的 attributes / competitors、(2) 真實市場與 experiment 相符、(3) incentive alignment 提升 validity（Eggers et al., 2022; Market simulation requires no-choice option for absolute predictions）。</li>
-<li><strong>WTP 從 partworth 直接推導</strong>：Eggers et al.（2022）介紹標準轉換 $\text{WTP}_{nm} = \beta_{nm} / \beta_p$，ebook 範例 white color WTP = $0.240 / -0.028 \approx €-8.57$（「願多付 €8.57 換取白色」）；同時警示 WTP 解釋需考慮符號方向（正 partworth 對應負 WTP）（Eggers et al., 2022）。</li>
-<li><strong>Market share simulation 作為實務轉譯</strong>：將學術 conjoint 結果轉譯為「漲價 \$500 會掉幾 % 市場份額」這類管理者可操作的結論；Cavusoglu et al.（2022）以 QuestionPro 內建 simulator 改動 cost level（< \$500 → \$501–1,000 → > \$1,000）並固定其他屬性，得 unknown organizer 市占自 35%（university 基準）跌至 14%、high-cost 市占跌至 17%，將 CBC 估計直接轉為會議主辦者可操作的定價與品牌決策（Cavusoglu et al., 2022; market share simulation; Cavusoglu 2022 Methods）。</li>
-</ul>
-<h4 id="55-wtp">5.5 跨領域 WTP 常見發現</h4>
-<p>WTP 研究跨食品、服飾、電商、電子產品、數位新聞、慈善、環境等領域呈現一致的 pattern：<strong>價格是影響消費者選擇最重要的單一屬性</strong>，重要性通常遠超其他屬性之和；然而在特定條件下（認證標章存在、倫理動機強、非商品情境），其他屬性可取代或接近價格主導地位。本節整合跨領域 WTP 實證發現、方法論意涵與邊界條件（延伸：Hospitality Service Attribute WTP Across Restaurant and Hotel Studies、Green Attribute WTP Across Consumer Domains、Digital News WTP and Pricing Strategies、Attribute Importance Patterns Across Consumer Conjoint Studies）。</p>
-<ul>
-<li><strong>跨領域價格主導</strong>：永續戶外服飾 price RI = 61.3%（Wang, 2022）、數位新聞 47.1%（Erbrich et al., 2024）、手機 convergence 26.0%（Jeon, 2010）、波蘭雞蛋 39–59%（Tekien, 2018，依集群）均顯示 price dominance（Price Dominance Across Consumer Conjoint Studies）。</li>
-<li><strong>認證可取代價格主導</strong>：當可信政府認證（如 GBA）可用時，消費者首先以認證作為篩選門檻，價格敏感性降低（Dong, 2022; Regulatory certification acts as dominant heuristic in food choice）；印尼萵苣 Organik Indonesia 政府認證效用最高（1.02）（Noor, 2024）。</li>
-<li><strong>電商情境隱私超越價格</strong>：電商滿意度研究中隱私排名高於價格，反映線上交易特有的信任結構（Schaupp, 2005; Privacy Most Important E-Commerce Attribute）。</li>
-<li><strong>非物質財貨情境</strong>：慈善捐款（Nguyen, 2017 透明度主導）與關聯行銷（Kulshreshtha, 2019 cause proximity 34.2% &gt; 捐款金額 15.9%）中 price 不再主導（Transparency Most Important Charity Attribute; Cause Proximity Is Most Important CrM Attribute）。</li>
-<li><strong>CSR 品牌溢價發現</strong>：知名品牌搭配社會公益活動可產生 22% 溢價，對較不知名品牌僅 10%；品牌認知度調節 CSR 對 WTP 的效應（Amezcua et al., 2018）。</li>
-<li><strong>民主制度 WTP（society-choice conjoint）</strong>：Adserà, Arenas &amp; Boix（2023）以「社會選擇」式 conjoint 實驗在 3 國（含不同民主健全度情境）估計公民對民主制度的 WTP；以 AMCE 比率法（$\text{WTP}_{\text{democracy}} = -\beta_{\text{democracy}} / \beta_{\text{income}}$）換算貨幣價值，結果顯示民主 WTP 約為個人年收入的 3 倍（democracy WTP ≈ 3× income）；此發現支持民主作為「非市場財」具高度貨幣化價值，可為民主倒退研究提供量化基準（Adserà, Arenas &amp; Boix, 2023; Adsera Arenas Boix 2023 Value of Democracy）。</li>
-<li><strong>健康 WTP 發現</strong>：瑞士老年人對減少 1% 髖關節骨折風險的 MWTP 隨收入、年齡、初始風險上升而上升，支持 Lancaster demand theory（Telser &amp; Zweifel, 2002）。</li>
-<li><strong>骨鬆治療屬性重要性</strong>：Liu et al.（2024）Cedars-Sinai $n=304$ CBC 中 hip-fracture efficacy importance 31.0% 主導，遠超 mode of administration 17.5%、serious side-effect risk 16.6%；mode part-worth 為 oral (+37.2) &gt; skin patch (+21.5) &gt; injected SC (−10.4) &gt;&gt; IV (−48.3)，顯示受訪者對 IV 強烈排斥（Liu et al., 2024; Oral administration most preferred over IV for osteoporosis treatment; Efficacy at preventing hip fractures is top ranked osteoporosis medication attribute）。</li>
-<li><strong>印尼 sports nutrition WTP</strong>：Oktaneldanora et al.（2025）$n=185$ isotonic drink 中 flavor 33% ≈ price 32% &gt; sugar 19% &gt; packaging 16%；最低價帶 Rp 3,000–4,000 utility = +0.204、原味 utility = +0.201 共同主導偏好組合；與 §5.5 其他產品類別的 price 主導模式一致，但口味屬性在食品類異常高（Oktaneldanora, Purnomo &amp; Noer, 2025; taste and price jointly account for 65 percent importance in isotonic drink choice）。</li>
-<li><strong>環境 WTP 發現</strong>：CO2 吸收在海洋生態系服務中有最高 MWTP（CO2 Absorption Has Highest Marginal WTP Among Ocean Services）；亞洲城市 MWTP 比較中中國城市最高（Chinese cities show highest MWTP among 11 Asian cities）。</li>
-<li><strong>CBC vs BWS WTP 差異</strong>：最偏好屬性高度一致支持收斂效度；最不偏好屬性 CBC 顯著高於 BWS，反映兩方法對負面偏好的捕捉機制不同；若需精確估計避免意願應選 BWS（Cheng et al., 2023; Conjoint analysis overestimates WTP for the least preferred attribute）。</li>
-<li><strong>Hypothetical vs real WTP 系統性差異</strong>：直接 WTP 調查易受 prestige bias（誇大）或 collaboration bias（降估）扭曲；conjoint 透過間接推論減輕此偏誤，但 incentive alignment（Ding, 2007; BDM/Vickrey 機制）進一步降低 hypothetical bias（Breidert et al., 2006; Koschate-Fischer et al., 2012; Direct WTP survey overstated by pretige or understated by collaboration bias）。</li>
-<li><strong>WTP 估計的三類問題</strong>（Breidert et al., 2006）：</li>
-<li>理論——price 作為 utility 概念混淆；</li>
-<li>實務——price effect、range effect、number-of-levels effect；</li>
-<li>估計——缺 choice decision rule，需倚賴 status quo 設定。</li>
-<li><strong>Ad hoc cost level 偏誤</strong>：cost 層級設定常為 ad hoc；若上限設過低則 WTP 被低估；層級數量（通常僅 4–5 個）遠少於直接法 10+ 個，降低 WTP 敏感度（Ratcliffe, 2000; Ad hoc cost level setting biases WTP estimates）。</li>
-<li><strong>機制解釋</strong>：</li>
-<li>認知捷思（price heuristic）——複雜多屬性決策中以價格為快速篩選器；</li>
-<li>財務能力制約——道德消費意願受可支配所得強烈制約；</li>
-<li>態度-行為落差——自陳式調查誇大永續屬性溢價，CBC 強制取捨揭示真實偏好（Wang, 2022）。</li>
-<li><strong>葡萄酒市場價格主導（跨知識水準）</strong>：Jaeger et al.（2013）加州紅白葡萄酒 rating-based conjoint 中，低 wine knowledge 群 price importance 達 88.7%，高 wine knowledge 群 58.8%；消費者知識調節 price salience 但價格始終主導（Price dominates wine purchase intention across segments; Low wine knowledge segment more price-sensitive）。</li>
-<li><strong>OTT 平台 WTP：解析度 vs 推薦系統跨市場差異</strong>：Kim et al.（2017）在中韓兩市場 CBC 研究中發現，中國消費者對 OTT 服務最重視解析度（resolution），韓國消費者最重視推薦系統（recommendation）；兩市場消費者對「多種支付方式」看法相反——顯示 OTT WTP 驅動因素有實質性跨市場異質（Kim, Chang &amp; Park, 2017; resolution is top OTT attribute for Chinese consumers while Koreans prefer recommendation）。</li>
-<li><strong>盜版研究中 WTP 異質性</strong>：Burmester et al.（2016）電影市場 CBC + HB 研究發現，降低合法內容價格可將部分海盜轉為正版消費者，但部分消費者無論價格如何均採盜版（hierarchical Bayes 揭示高度個體異質性）；電影院早期首映具最高 WTP（Burmester, Eggers, Nisch &amp; Sattler, 2016; price reduction converts some pirates to legal media purchasers; hierarchical Bayes reveals substantial consumer heterogeneity in media piracy preferences）。</li>
-<li><strong>數位新聞存取模式 WTP（奧地利 CBCA）</strong>：O'Brien et al.（2025）奧地利 CBCA 研究發現消費者最偏好限制性免費存取（metered）而非硬性付費牆（hard paywall）；提供者類型顯著影響 WTP（公共廣播機構最受偏好）；intermedia competition 情境下 WTP 相較單一提供者研究顯著壓縮（O'Brien et al., 2025; Austrian consumers prefer limited free access over hard paywall for online news; provider type significantly influences WTP for digital journalism in Austria）。</li>
-<li><strong>調查式新聞：高興趣低 WTP</strong>：Rodriguez Gómez &amp; Sandoval-Martín（2016）西班牙研究顯示受訪者對調查報導表達高度興趣，但實際 WTP 仍低；偏好以捐款（donation）而非訂閱（subscription）的方式支付；主流媒體機構調查報導比自由記者更受信賴（Rodriguez Gómez &amp; Sandoval-Martín, 2016; investigative journalism audience interest is high but WTP remains low; donation preferred over subscription for investigative journalism payment）。</li>
-<li><strong>公共氣象資訊 WTP：精確度最高</strong>：Lee et al.（2014）韓國花粉預報 rank-ordered DCE 研究中，預報精確度（forecast accuracy）具最高 WTP；遞送媒體選擇（SMS、App、廣播）顯著影響 WTP；rank-ordered DCE 比標準 DCE 提供更有效率的估計（Lee, Jang &amp; Kim, 2014; forecast accuracy has highest WTP in meteorological information services; rank ordered discrete choice model provides more efficient WTP estimates）。</li>
-<li><strong>生育治療 WTP：效果性主導、84% 投入預算於 COS</strong>：Palumbo et al.（2011）WTP + conjoint 雙重方法研究義大利不孕女性發現，治療效果（pregnancy rate）是最重要屬性，消費者願意為邊際懷孕率提升支付大量金額；84% 受訪者將多數生育預算分配至 COS（controlled ovarian stimulation）治療（Palumbo et al., 2011; effectiveness dominates patient preferences in fertility treatment choice; 84 percent of patients allocate majority of fertility budget to COS treatment）。</li>
-<li><strong>OTT killer content MWTP（韓國）</strong>：Kim &amp; Lee（2023）N=360 韓國 OTT 訂閱者 CBC 研究中，消費者對最偏好類型中排名第一的殺手內容（R1G1）MWTP=7,633 KRW（約 5.8 USD）；月費為最重要屬性（RI=28.9%）。30 代 MWTP 最高（8,990 KRW），40 代是唯一殺手內容重要性（25.4%）超越月費重要性（24.3%）的年齡層；訂閱 3 個以上 OTT 的多訂閱者 MWTP 最高（8,540 KRW），顯示重度串流用戶對差異化內容的貨幣化價值更高（Kim &amp; Lee, 2023; killer content MWTP for rank one in favorite genre is 7633 KRW; 40s consumers value killer content over price in OTT subscription choice; multi-OTT users show higher MWTP for killer content than single service users）。</li>
-<li><strong>音樂串流服務 MWTP 跨市場比較（美國 vs 韓國）</strong>：Kim, Nam &amp; Ryu（2017）以正交分數因子 conjoint 比較美韓兩市場：美國消費者最重視隨選串流模式（on-demand streaming, MWTP=$6.54），廣告移除 MWTP=$5.61，全功能訂閱 MWTP 合計$14.55；韓國消費者最重視廣告移除（無廣告 MWTP=5,840 KRW），且已收斂至訂閱制，獨家內容在兩市場 MWTP 均為最低，顯示差異化內容在音樂串流的貨幣化價值遠低於 OTT 殺手內容（Kim, Nam &amp; Ryu, 2017; Korean music streaming consumers show highest MWTP for no advertisement at 5840 KRW; exclusive music content has low MWTP in both Korea and US markets; on-demand streaming mode yields higher MWTP than radio streaming in both Korea and US）。</li>
-<li><strong>新聞平台可信度訊號 MWTP</strong>：Nam &amp; Park（2026）以 mixed logit + Bayesian HB 研究韓國線上新聞用戶，發現<strong>人工審核驗證</strong>具最高絕對 MWTP（$3.14/月，KRW 4,187），**SNS 分享功能** MWTP=$2.84/月（KRW 3,842）；多媒體格式（multimediality）為影響偏好最強屬性（RI 最高）：文字 + 多媒體 MWTP=$1.62/月、文字 + 資料視覺化 MWTP=$1.87/月；AI 審核驗證 MWTP 僅$0.69/月，僅為人工審核的 22%（即人工審核 WTP 溢價約 4.6 倍），顯示消費者對 AI vs 人工核查有顯著差異化評估（Nam &amp; Park, 2026; human review verification commands highest WTP at 3.14 USD per month for news platform; AI verification valued at lower WTP than human review for online news credibility; credibility signals in news platform interfaces have measurable monetary value）。</li>
-<li><strong>行動平台選擇：APP 數量為 WTP 最強預測子</strong>：Nikou et al.（2014）以 conjoint analysis 研究行動服務平台偏好，發現可用 app 數量是 WTP 的最強預測因子，OS 品牌效應超越所有平台技術特性（Nikou, Bouwman &amp; de Reuver, 2014; number of apps is strongest predictor of WTP for mobile applications; OS brand outweighs all platform characteristics in consumer preference）。</li>
-<li><strong>預算限制遺漏導致 WTP 高估（Pachali et al. 2023）</strong>：Pachali, Kurz &amp; Otter（2023）在 Journal of Marketing Research 指出，標準 CBC + HB 模型忽略消費者預算限制時，WTP 估計存在系統性向上偏誤；以 Bayesian 潛在變數架構（latent budget inference）顯性建模個體預算異質性後，WTP 重新校正，競爭市場均衡價格估計降低約 20%；此發現提示任何以 CBC 估計 WTP 供市場模擬或定價決策使用的研究，均應檢驗 budget omission 對均衡解的影響（Pachali, Kurz &amp; Otter, 2023; Pachali Kurz Otter 2023 Omitted Budget）。</li>
-<li><strong>度假所有權服務屬性 WTP（Gregory 2011）</strong>：Gregory 以 n = 3,231 美國消費者大樣本 CBC（Sawtooth HB + fixed choice sets + None option）研究度假所有權（vacation ownership/timeshare）產業；Kano Positive 屬性（如聯盟交換公司、禮賓服務、購買誘因）具顯著正向 WTP；Zone of Indifference 屬性（金融分期、現場活動）WTP 近零；結論是唯有結合 CBC 才能量化「願意多付多少」，為 Kano 方向性判斷提供貨幣錨點（Gregory, 2011; Gregory 2011 Assessment Kano Conjoint; Gregory 2011 willingness to pay varies by product features in vacation ownership conjoint; Gregory 2011 CBC with Sawtooth Software used for vacation ownership WTP）。</li>
-<li><strong>MC newspaper：整體不付溢價，高教育階層付</strong>：Schoder et al.（2006）德國 n=2,114 conjoint 研究中，整體樣本不願為個人化報紙付溢價，但高教育程度與中上社經階層的消費者願意；majority fallacy 警告——彙總結果可能掩蓋真正目標市場的偏好（Schoder, Sick, Putzke &amp; Kaplan, 2006; general public does not pay premium for individualized newspapers; majority fallacy risk in aggregated conjoint results for heterogeneous markets）。</li>
-<li><strong>AI 消費者 XAI 有 WTP</strong>：König, Wurster &amp; Siewert（2022）德國 $n > 1{,}000$ CBC 顯示 explainable AI 的 WTP = +0.52 EUR/月（顯著正）；但邊際效益被少量加價抵銷（Opaque AI @ 1.99 EUR vs. Explainable AI @ 2.49 EUR，explainable share 仍 43%；@ 2.99 EUR 降至 21%）——市場推力有限，需 regulation 配合（König, Wurster &amp; Siewert, 2022; Consumers have positive WTP for explainable AI but not for green AI; Transparency WTP is offset by modest price increase）。</li>
-<li><strong>AI 消費者 green AI 無 WTP</strong>：König et al.（2022）綠色 AI 的 WTP ≈ +0.04 EUR/月（近 null），即便高 environmental concern 次群樣本也僅 +0.08 EUR/月；say-do gap 顯著（自陳環保，不願付費），純市場機制無法驅動低碳 AI 採用（Environmental concern does not translate to green AI WTP）。</li>
-<li><strong>Desire for control 預測 XAI valuation</strong>：König et al.（2022）以 Parker et al. (2009) 4-item 量表（$\alpha = 0.74$）區分高/低控制欲；高控制欲群 XAI WTP = +0.71 EUR/月，低控制欲群 = +0.34 EUR/月；個人特質顯著 moderate XAI valuation，指向「可選 XAI 而非強制 XAI」的政策設計（König et al., 2022; Desire for control predicts transparency valuation）。</li>
-<li><strong>永續運動服飾 WTP（Spindler 2023）</strong>：Spindler et al.（2023）以 share-of-preferences 模擬推算德國跑者 WTP：100% environmental sustainability（ES）跑步服飾相對 0% ES 的 WTP = <strong>31.50€</strong>；100% social sustainability（SS）的 WTP = <strong>25.02€</strong>；兩者加總並不等於「同時提升 ES + SS」的 WTP——支持 WTP 的<strong>非加法性</strong>（non-additivity）為 conjoint 模擬的關鍵限制；此研究同時示範 share-of-preferences 法（以市場模擬計算 WTP 而非直接比率法）（Spindler, Hambrecht &amp; Breuer, 2023; Spindler 2023 Sustainable Consumption Sports）。</li>
-<li><strong>永續/歷史標籤資訊在 restaurant WTP 不顯著（反例）</strong>：Binesh (2023) 餐廳 conjoint 中 sustainability message（碳足跡標示）與 historical information 對三類菜單品項的 WTP 均不顯著；解讀為 <strong>information overload</strong>——在已呈現食物品質、服務品質、氛圍、價格後，額外標籤未能影響決策；提示研究者：當核心屬性已飽和受訪者注意力時，邊際資訊性屬性可能在 conjoint 中失效（Binesh, 2023; 延伸：Sustainability and historical info not significant for restaurant WTP、information overload）。</li>
-<li><strong>Online banking 客製化與即時互動的偏好提升</strong>：Dauda &amp; Lee (2015) 線上銀行 conjoint 顯示 website customization/personalization 與 real-time interaction（如 video banking）為未來線上銀行服務的關鍵增值特徵；該等屬性透過便利性與 engagement 超越基本交易功能促進 e-banking 普及採用（Dauda &amp; Lee, 2015; 延伸：Website customization and real-time interaction enhance online banking preference、Dauda 2015 Technology Adoption）。</li>
-<li><strong>Low cause-brand fit 反例（CrM 領域）</strong>：Moosmayer &amp; Fuljahn (2013) 在 laptop + 非洲醫院捐贈情境發現<strong>低 fit（醫療設備捐贈）被偏好於高 fit（IT 系統捐贈）</strong>（$p < .001$），part-worth: low fit +0.215 vs high fit −0.215；市場份額模擬 medical 61% vs IT 39%；與 schema theory 預期相反，作者以 attribution theory 解釋——消費者懷疑 IT 捐贈為 self-serving（藉機增加自家產品分銷）；同時 NPO（非洲醫院）與醫療設備在另一維度上 fit 更高；提供 CrM 領域中「fit 維度需多方向審視」的方法論啟示（Moosmayer &amp; Fuljahn, 2013; Ellen et al., 2000; 延伸：Low Cause Brand Fit Preferred Over High Fit In Laptop CrM）。</li>
-</ul>
-<h3 id="6">6. 進階變體</h3>
-<p>本章整理 conjoint 家族中解決特定問題的進階變體：BBC 在 benefit 層建模飽和；ACA/ACBC 以自適應設計降低認知負荷；holistic/hybrid 捕捉 heuristic 維度；compound conjoint 處理多實體決策；label conjoint 測試標籤組合效應；Kano-conjoint 以 Kano 模型前置篩選屬性；barter conjoint 以實物交換提升激勵相容。</p>
-<p>歷史發展以 Johnson（1987）的 ACA 開啟自適應典範，Johnson &amp; Orme（2007）的 ACBC 進一步以 BYO + Screener + Choice Tournament 三階段同時提升生態效度與覆蓋非補償式決策。Kim, Bailey, Hardt &amp; Allenby（2017）的 BBC 將屬性對應至潛在 benefit 層，以 concave saturation function 在 benefit 層建模邊際遞減，將標準 conjoint 嵌套為 $K=0$ 特例。Vriens &amp; Eggers（2025）的 holistic conjoint 則識別「特徵總數」作為獨立 heuristic 維度，使 CBC holdout hit rate 從 67.9% 提升至 79.8%。</p>
-<p>這些變體反映 conjoint 研究的核心張力：<strong>忠實於 additive RUM 假設 vs 貼近真實決策啟發式</strong>。BBC 與 holistic 擴展效用函數結構；ACBC 與 compound 擴展任務設計；Kano、barter、poker 則擴展資料蒐集機制。研究者依問題特性選擇變體，但需認識每種變體的獨特假設與適用邊界。</p>
-<h4 id="61-benefit-based-conjoint-bbc">6.1 Benefit-Based Conjoint (BBC)</h4>
-<p>Benefit-Based Conjoint（BBC, Kim et al., 2017）假設消費者在 benefit 層（而非 attribute 層）產生滿足（satiation），透過 concave 函數 $g(\cdot)$ 對同一 benefit 下的屬性集合求和後再飽和。$K=0$ 時 BBC 退化為標準 conjoint，使兩模型可以巢狀比較（nested in standard conjoint）；$K=2$ 時在多數實證情境 in-sample、holdout、LMD 均最優。</p>
-<ul>
-<li>BBC 以 latent partition $\pi$ 將屬性對應至 $K$ 個 benefit，效用為</li>
-</ul>
-<p>$$U_j = \sum_{k=1}^{K} g\left(\sum_{a \in \pi_k} \beta_a x_{ja}\right) + \varepsilon_j$$</p>
-<p>其中 $g(\cdot)$ 為 concave saturation function；消費者在 benefit 層面而非屬性層面產生飽和（Kim, Bailey, Hardt &amp; Allenby, 2017）。
+<li><strong>Willingness to wait（WTW）以時間替代價格作 numeraire</strong>：Forrest et al.（2024）癌症藥物 DCE 在「FDA 加速核准延遲」與「存活確定性提升」屬性間計算 marginal rate of substitution，$\mathrm{WTW}_{\text{cert level }k} = -(\beta_{\text{certainty}_k} - \beta_{\text{certainty}_{\text{ref}}}) / \beta_{\text{wait time per year}}$；以 very low certainty 為 reference 下，high certainty WTW = 21.68 月（95% CI 17.61–25.74）；此「時間替代金錢」的 MRS 操作為健康 DCE 在「藥物可近性」研究的常見設計（Forrest, Lagarde, Aggarwal &amp; Naci, 2024; Forrest 2024 Methods; willingness to wait）。</li>
+<li><strong>WTP space 重新參數化解除分母隨機問題</strong>：Danne et al.（2021）德國綠電 DCE 將 utility function 重新參數化為 $\text{WTP}_k$ 為估計目標、price coefficient 固定為 $-1$（log-normal）；preference space 下 $\text{WTP} = \beta_{\text{attr}}/\beta_{\text{price}}$ 因兩 random term 相除常產生 unrealistic Cauchy-like 分佈，WTP space 直接估 Euro/kWh 避開此問題；隨機參數設正常分佈且允許相關進一步避免「標準 WTP space 假設獨立而高估 SE」的問題（Danne, Meier-Sauthoff &amp; Musshoff, 2021; Danne 2021 Methods; WTP space）。</li>
+<li><strong>Median WTP 避免肥尾與極端值</strong>：Boyer et al.（2021）採 Sawtooth Software 之 WTP 推導 $U(\$) = \Delta \text{price}<em>{A,B} / \Delta \text{utility}</em>{A,B}$、$\text{WTP}<em>{A \text{ over } B} = \Delta \text{utility}</em>{A,B} \times U(\$)$；Orme（2010）警告當價格效用差小或反向、無明顯偏好排序的屬性會產生負 WTP 或極端值——本研究因此採<strong>中位數</strong>而非算術平均報告 WTP，避免離群值影響；同時搭配 Wilcoxon signed-rank 檢定 WTP 中位數差異的顯著性（$p < 0.05, 0.01, 0.001$ 三層）（Boyer, Hunka, Linder, Whalen &amp; Habibi, 2021; Boyer 2021 Methods）。</li>
+<li><strong>WTP space 估計使屬性參數即邊際 WTP</strong>：Jensen et al.（2021）將價格係數除入效用 $\tilde U_{ijt} = \lambda_i(X_{ijt}\gamma_i - P_{ijt}) + \varepsilon_{ijt}$（$\lambda_i = \alpha_i/\sigma_i$），分離「與 scale 無關的 WTP 變異」與「作為 scale 函數的價格係數變異」，屬性參數可直接讀為邊際 WTP，免去 preference-space 下 $-\beta_k/\beta_p$ 兩隨機項相除的肥尾問題（Train &amp; Weeks, 2005; Hensher &amp; Greene, 2011; Jensen et al., 2021; WTP space; Jensen 2021 Methods）。</li>
+<li><strong>Inattention-conditional WTP 推論</strong>：Jensen et al.（2021）對專心受訪者以屬性係數為 WTP，對不專心受訪者以「屬性係數 + 屬性 × inattention 交乘係數」為 WTP；WTP 與標準誤以 Stata <code>nlcom</code>（delta 法）估計並報 95% 信賴區間——示範如何在 WTP 估計中內生地校正注意力偏誤（Jensen et al., 2021; delta method; survey inattention）。</li>
+<li><strong>報酬作為價格軸計算非財務揭露 WTP</strong>：De Villiers et al.（2023）以盈餘／股利的百分比變動（$+6\%$ 至 $-6\%$）為價格屬性，邊際 WTP 由 money 與屬性的邊際替代率求得 $\text{WTP}<em>k = -\beta_k/\beta</em>\$$，標準誤以 delta 法（Stata `nlcom`）近似；此「以報酬代價作價格軸」設計強迫股東在揭露與報酬間取捨，是測量「對公共財/資訊財付費意願」的範本（De Villiers et al., 2023; delta method; De Villiers 2023 Methods; 詳見 [§5.5](conjoint_book.html)）。
+
+### 5.2 Incentive-aligned / hypothetical bias
+
+Hypothetical bias（假設性偏誤）指受訪者在無真實後果的情境下高估 WTP、低估價格敏感度。BDM（Becker-DeGroot-Marschak）機制要求受訪者報告 WTP，隨機抽出一價格，若 WTP ≥ 該價格則以該價格購買，使誠實報告為 Bayesian Nash Equilibrium。Vickrey auction（次價密封投標）同樣誘發真實偏好揭露。Incentive-aligned 設計透過真實交易或實物獎勵與報告偏好綁定，顯著降低 hypothetical bias（Ding, 2007）（延伸：Incentive Alignment and Hypothetical Bias in Conjoint）。
+
+- Incentive-aligned CBC 在樣本外預測顯著優於 hypothetical CBC，產生更高價格敏感度與更低風險尋求（Ding, 2007; Agarwal et al., 2014）。
+- BDM 機制使推論 WTP 等於真實 WTP 成為 Bayesian Nash Equilibrium（Ding, 2007）。
+- Hypothetical 與 real WTP 差異顯著，但在新或複雜產品實施 incentive alignment 仍面臨成本挑戰（Völckner, 2006）。
+- Vickrey auction 與 BDM 機制理論上可誘發真實 WTP 揭露（incentive compatibility），使報告 WTP 等於真實 WTP 為 Bayesian Nash Equilibrium（Breidert et al., 2006; Koschate-Fischer, Stefan & Hoyer, 2012）。
+- Cheap talk + random lottery incentive（10% 機率實現）可顯著降低 hypothetical bias 並支持 impure altruism 模型檢定（Menges, Schroeder & Traub, 2005）。
+- Stated preferences with consequences（如 200 位隨機受試者真實捐款 NZ$20）可減輕純假設性偏誤，是 pure hypothetical 與 incentive-aligned 之間的折衷設計（Hansen, Kergozou, Knowles & Thorsnes, 2014）。
+- WTP 測量方法可分為 revealed preference（market data、auctions）與 stated preference（direct survey、conjoint、DCE）；每種方法適用情境不同，不存在單一最佳方法（Breidert et al., 2006）。
+- 直接 WTP 調查易受 prestige bias（誇大）或 collaboration bias（降估）扭曲；conjoint 透過間接推論可減輕此偏誤（Breidert et al., 2006）。
+- 在數位新聞 WTP 測量文獻中，direct survey 仍佔主導地位，僅 6/37 篇採 conjoint、incentive-aligned 設計幾乎不存在（O'Brien, Wellbrock & Kleer, 2020）。
+- **Hypothetical conjoint 系統性高估 WTP**：Yue et al.（2010）以生物可降解花盆容器比較 conjoint（假設性）與 experimental auction（誘因相容）——conjoint WTP 顯著高於 auction，確認 hypothetical bias；此結果支持 Ding（2007）的 incentive-aligned conjoint 設計建議，在環保 premium 研究中尤須謹慎（Yue, Dennis, Behe, Hall, Campbell & Lopez, 2010; hypothetical conjoint and experimental auction produce different WTP estimates; hypothetical bias leads conjoint to overestimate WTP relative to revealed preference）。
+- **Mixed ordered probit 優於標準 ordered probit**：Yue et al.（2010）在 conjoint internet survey 中引入 mixed ordered probit 以處理 panel 異質性，在 AIC/BIC 均優於標準 ordered probit；實務建議 internet conjoint 採 mixed 模型（Yue et al., 2010; mixed ordered probit outperforms standard ordered probit for conjoint internet surveys）。
+- **Cash incentive 作為 conjoint 屬性**（而非 alignment 機制）：Brown et al.（2009）將每週 $5–$50 現金誘因設為 walking program 的其中一個屬性，間接估計 WTA 與參與彈性；$9/週即可將參與率由約 18% 提升至約 23%（+31pp 相對成長）；此設計與 incentive-aligned conjoint 的 BDM/Vickrey 機制不同——前者「在假設情境下 estimate 金錢誘因對選擇的效應」，後者「以真實金錢支付誘發誠實揭露」；兩者可互補，Brown et al. 顯示modest 現金誘因是 policy-relevant lever（Brown et al., 2009; cash incentives raise walking program participation 31 percent; walking programs + financial incentive effective even at modest 9 dollars weekly）。
+
+### 5.3 Conjoint vs BWS WTP 差異；CMV 新方法
+
+Convergent validity（收斂效度）要求不同 stated preference 方法在同一構念上產生一致估計。本節整理 conjoint（CBC）與 BWS Case III 在 WTP 上的收斂性：最偏好屬性高度一致支持收斂效度，最不偏好屬性則顯著分歧（CBC 高於 BWS），反映兩方法對負面偏好的捕捉機制不同（Cheng et al., 2023）。此外，He、Anderson & Rucker（2024）在 Journal of Marketing 提出 Comparative Method of Valuation（CMV），指出現有 WTP 測量方法（含 BDM、conjoint）的根本概念模糊性，為本節增加重要方法論批判。
+
+- 對最偏好屬性，CBC 與 BWS Case III 的 WTP 估計大小相近且正負號一致，支持收斂效度（Cheng et al., 2023）。
+- 對最不偏好屬性，CBC 估計的 WTP 顯著高於 BWS，因前者中低偏好屬性的厭惡被其他正面效應稀釋（Cheng et al., 2023）。
+- BWS「選最壞」機制更直接捕捉負面偏好強度，若需精確估計避免意願應選 BWS（Cheng et al., 2023）。
+- 不同 stated preference 方法在主要偏好屬性 WTP 估計上具穩健性（Yangui et al., 2019; Cheng et al., 2023）。
+- **WTP 是顧客 × 比較選項 × 情境的函數，而非單一數字**：He et al.（2024）建立數學框架，WTP 依賴三要素——顧客（C）、比較選項（A，alternative comparison option）、情境（S）；同一產品在不同情境下 WTP 可截然不同，現有方法未充分識別此三維度（He, Anderson & Rucker, 2024）。
+- **BDM 強制以「不購買」為比較選項，造成概念模糊**：傳統 BDM 隱含比較選項為「不買任何東西」，但現實中消費者通常比較的是競爭替代品；此模糊性使 BDM 估計的 WTP 對應的是「產品 vs 無產品」而非「產品 vs 競爭品」（He et al., 2024）。
+- **CMV 明確引出比較選項**：CMV 先請受訪者指定比較選項（competing product），再在目標產品與比較選項間進行激勵相容的 lottery；使 WTP 定義清晰，避免 BDM 的比較歧義（He et al., 2024; CMV explicitly elicits comparative option making WTP well-defined）。
+- **Conjoint 可能高估 WTP**：He et al.（2024）跨九項實驗中，conjoint WTP 系統性高於 CMV WTP；因 conjoint 隱含「vs 不購買」邏輯而非「vs 競爭品」比較（He et al., 2024; Conjoint may overestimate WTP compared to CMV）。
+- **情境效果：直接路徑與間接路徑**：He et al.（2024）識別情境改變 WTP 的兩條路徑——直接路徑（situational factor 改變目標品相對固定比較選項的差異化價值）與間接路徑（situational factor 改變比較選項本身）；CMV 能識別間接路徑，BDM 不能（He et al., 2024; Direct and indirect pathways link situational factors to WTP changes）。
+
+### 5.4 Market simulation / reservation price
+
+Market share simulator（市場份額模擬器）以估計的 part-worth 與假設市場情境，計算每個輪廓的預測市占率 $\hat{s}_j = \exp(X_j'\hat{\beta}) / \sum_k \exp(X_k'\hat{\beta})$。Reservation price（保留價格）為受訪者接受某輪廓的最高願付價格，可透過調整 cost 屬性掃描 indifference 點推得。Equivalent discount 方法將非價格偏好轉為等值貨幣溢價，連結 conjoint 估計與財務決策。
+
+- Choice simulation 透過估計多輪廓市場佔有率，識別最具競爭力的屬性組合（Jeon, 2010）。
+- ACBC 在估計價格敏感度與 WTP 方面比傳統 CBC 更準確，特別當消費者對極端價格採迴避行為時（Chapman, 2009; Gensler et al., 2012）。
+- Barter conjoint 與 conjoint poker 在樣本外預測優於 incentive-aligned 與 hypothetical CBC（Ding, Park & Bradlow, 2009）。
+- Base-case market share 是約束非先驗資訊，選擇模型應明確建模無選項與品牌忠誠度（Gilbride, Lenk & Brazell, 2008）。
+- **SIMOPT 12 能力**：first-choice / share-of-preference 法則、sequential competitive moves、Pareto frontier（市占 vs return）、line extension、cannibalization 模擬、價格敏感度分析等；搜尋空間為 $\prod_k L_k$ attribute-level 組合，遠超傳統 simulator 僅模擬預設 profile 的範圍（Green & Krieger, 1991; Optimal product design models operationalize segment targeting; SIMOPT）。
+- **Share of Preference（SOP）定義與計算**：在 conjoint market simulation 中，特定 profile 被受訪者選為「首選」（最高 composite utility）的比例；採 randomized first choice 規則 $\text{SOP}_j = \frac{1}{N}\sum_{n=1}^{N} \mathbb{1}\{j = \arg\max_k U_{nk} + \varepsilon_{nk}\}$ 加入隨機誤差項以避免過度集中於最高 utility；總和恆為 100%；適合做相對比較（如「加入 eco-score 後永續品牌 SOP 提升多少」），絕對值需以 market share 校正（Orme, 2019; Bergener et al., 2026; 延伸：share of preference）。
+- **Sampling of Scenarios（SOS）為 WTP 估計的競爭情境法**：Orme (2021) 提出之 WTP 估計方法，對 reference product 設定 SOP、提升某屬性後重算 SOP，找出讓 SOP 回到原始水準的價格 delta 即為 WTP；透過 bootstrap 反覆隨機抽樣競爭者定位估計 95% CI；相對於 algebraic WTP（$\beta_{\text{attribute}} / \beta_{\text{price}}$）能避免高估、提供不確定性區間；適合競爭市場（如 47 款手機 Bergener et al., 2026），CI 較貼近真實不確定性（Orme, 2021; Bergener et al., 2026; 延伸：sampling of scenarios）。
+- **POSSE 系統（Green, Carroll & Goldberg, 1981）**：Product Optimization and Selected Segment Evaluation 為首套 conjoint-based 產品/服務最適化的 28 支程式整合系統，含 7 子系統（experimental design、utility estimation、choice simulator、objective function estimation、optimization、sensitivity analysis、time-path forecasting），於 1981 前已在 15 個商業領域（durables、telecom、foods、drugs 等）實際應用（Green, Carroll & Goldberg, 1981）。
+- **POSSE 的 response surface methodology**：以低階多項式 $\hat{R}(\mathbf{x}) = \beta_0 + \sum_k \beta_k x_k + \sum_{k,l} \beta_{kl} x_k x_l + \cdots$ 近似 choice simulator 輸出，透過 RSM 將昂貴的選擇模擬以解析最佳化取代；類別變數採 enumeration（如 QUALO）保證全域最優、連續變數採 gradient/direct/random search 但不保證全域最優（Green, Carroll & Goldberg, 1981）。
+- **Hybrid conjoint model（Green, Carroll & Goldberg, 1981）**：結合 self-explicated 與 decomposition 測量，皮卡車案例 N=486、8 屬性 × 3 水準（$3^8 = 6{,}561$ 組合），分數型設計縮減至 81 master profiles 後每位受訪者僅評估 9 個 profiles，以個體 hybrid 效用估計支撐 POSSE 最適化（Green, Carroll & Goldberg, 1981）。
+- **SEGUE 輔助程式**：彙整 segment 層次 part-worth 與 importance，產生 buyer weights 作為 SIMOPT 輸入；若採 a priori 以目標 segment weight = 1 其他 = 0，若 post hoc 以 weight = 1/n_c；可手動加權反映 reachability（Green & Krieger, 1991; SEGUE）。
+- **財務準則優先於統計準則**：optimal product design 以 return/contribution 為主要優化目標，而非 cluster goodness-of-fit；segment 的 reachability、substantiality、actionability 等主觀準則需管理者判斷（Green & Krieger, 1991）。
+- 等值折扣（equivalent discount）方法將 CSR 偏好提升映射至等值貨幣溢價：$\Delta P = \gamma_j / (\beta_3 + \beta_{j \times \text{CSR}})$，可將 conjoint 偏好量化為財務收益（Amezcua, Briseño, Ríos & Ayala, 2018）。
+- 知名品牌搭配社會公益活動可產生 22% 溢價，對較不知名品牌僅 10%；品牌認知度調節 CSR 對 WTP 的效應（Amezcua et al., 2018）。
+- WTP for risk reduction 隨收入、年齡、初始風險上升而上升，支持 Lancaster demand theory 的理論預測並可作為 conjoint 外部效度檢驗（Telser & Zweifel, 2002）。
+- MWTP 可透過 stepwise 多元回歸建構 benefit transfer functions，將測得 MWTP 外推至未測量城市；亞洲城市應用中 ~90% 預測 transfer error 低於 50%（Tokimatsu et al., 2016）。
+- **Market simulation 必須包含 no-choice option 才能估計 absolute take-up**：Eggers, Sattler, Teichert & Völckner（2022）ebook 範例顯示——若 simulation 僅含 real options，預測 share 之和恆為 100%；加入 no-choice 後可區分「不買」比例，反映實際市場 take-up rate；ebook 6-in 黑色 4 GB @ €139 vs no-choice 範例：$V = -0.787$ vs $V_{\text{none}} = -0.532$，purchase probability = $0.437$；轉為 market shares 的條件（Orme & Johnson, 2006）：(1) 包含所有影響購買的 attributes / competitors、(2) 真實市場與 experiment 相符、(3) incentive alignment 提升 validity（Eggers et al., 2022; Market simulation requires no-choice option for absolute predictions）。
+- **WTP 從 partworth 直接推導**：Eggers et al.（2022）介紹標準轉換 $\text{WTP}_{nm} = \beta_{nm} / \beta_p$，ebook 範例 white color WTP = $0.240 / -0.028 \approx €-8.57$（「願多付 €8.57 換取白色」）；同時警示 WTP 解釋需考慮符號方向（正 partworth 對應負 WTP）（Eggers et al., 2022）。
+- **Market share simulation 作為實務轉譯**：將學術 conjoint 結果轉譯為「漲價 \$500 會掉幾 % 市場份額」這類管理者可操作的結論；Cavusoglu et al.（2022）以 QuestionPro 內建 simulator 改動 cost level（< \$500 → \$501–1,000 → > \$1,000）並固定其他屬性，得 unknown organizer 市占自 35%（university 基準）跌至 14%、high-cost 市占跌至 17%，將 CBC 估計直接轉為會議主辦者可操作的定價與品牌決策（Cavusoglu et al., 2022; market share simulation; Cavusoglu 2022 Methods）。
+- **兩產品情境 SOP 模擬循環度敏感度**：Boyer et al.（2021）以 Sawtooth Software market simulator + 個體 part-worths 計算競爭情境下的 share of preference：固定其他屬性於最偏好 level、價格 £499，僅變化 CE Score；兩產品情境下消費者**幾乎一律偏好較循環的產品**，但 WTP premium 在循環度 75%–100% 區間消失或反轉；以 t-test + 95% CI 重疊判定 SOP 差異顯著性，並以 Chi-square homogeneity test 驗證性別 × CE Score 偏好同質性（Boyer, Hunka, Linder, Whalen & Habibi, 2021; Boyer 2021 Methods; share of preference）。
+
+### 5.5 跨領域 WTP 常見發現
+
+WTP 研究跨食品、服飾、電商、電子產品、數位新聞、慈善、環境等領域呈現一致的 pattern：**價格是影響消費者選擇最重要的單一屬性**，重要性通常遠超其他屬性之和；然而在特定條件下（認證標章存在、倫理動機強、非商品情境），其他屬性可取代或接近價格主導地位。本節整合跨領域 WTP 實證發現、方法論意涵與邊界條件（延伸：Hospitality Service Attribute WTP Across Restaurant and Hotel Studies、Green Attribute WTP Across Consumer Domains、Digital News WTP and Pricing Strategies、Attribute Importance Patterns Across Consumer Conjoint Studies）。
+
+- **跨領域價格主導**：永續戶外服飾 price RI = 61.3%（Wang, 2022）、數位新聞 47.1%（Erbrich et al., 2024）、手機 convergence 26.0%（Jeon, 2010）、波蘭雞蛋 39–59%（Tekien, 2018，依集群）均顯示 price dominance（Price Dominance Across Consumer Conjoint Studies）。
+- **認證可取代價格主導**：當可信政府認證（如 GBA）可用時，消費者首先以認證作為篩選門檻，價格敏感性降低（Dong, 2022; Regulatory certification acts as dominant heuristic in food choice）；印尼萵苣 Organik Indonesia 政府認證效用最高（1.02）（Noor, 2024）。
+- **電商情境隱私超越價格**：電商滿意度研究中隱私排名高於價格，反映線上交易特有的信任結構（Schaupp, 2005; Privacy Most Important E-Commerce Attribute）。
+- **非物質財貨情境**：慈善捐款（Nguyen, 2017 透明度主導）與關聯行銷（Kulshreshtha, 2019 cause proximity 34.2% > 捐款金額 15.9%）中 price 不再主導（Transparency Most Important Charity Attribute; Cause Proximity Is Most Important CrM Attribute）。
+- **CSR 品牌溢價發現**：知名品牌搭配社會公益活動可產生 22% 溢價，對較不知名品牌僅 10%；品牌認知度調節 CSR 對 WTP 的效應（Amezcua et al., 2018）。
+- **CSER 僅與 price 顯著互動、成為品質與價格相當時的決勝屬性**：Adams（2017）郵輪 CBC 中，CSER（重要性 11.82%，二元水準對稱效用 $\pm 36.28$ zero-centred diffs）唯一顯著互動的屬性是 price——當價格與品質感知相當時，CSER 成為決勝的差異化屬性（tiebreaker）；較不具價格敏感性者最願選擇具 CSER 的公司，有經驗的乘客更重視品牌形象（Adams, 2017; Adams 2017 All aboard CSER cruise conjoint）。
+- **永續/倫理屬性作為差異化屬性的條件性**：Adams（2017）顯示永續屬性在郵輪選擇中整體權重低於品質與價格，但在「核心屬性相當」的邊界情境下成為決勝因素；此呼應 §5.5 其他永續研究的條件性發現（Jedicke 2025 永續創新具正向價值、Wang 2022 自陳誇大永續溢價），共同指向「永續屬性在價格主導下仍可作為差異化但非主導屬性」的跨域規律（Adams, 2017; Jedicke et al., 2025; Wang, 2022; Adams 2017 All aboard CSER cruise conjoint）。
+- **民主制度 WTP（society-choice conjoint）**：Adserà, Arenas & Boix（2023）以「社會選擇」式 conjoint 實驗在 3 國（含不同民主健全度情境）估計公民對民主制度的 WTP；以 AMCE 比率法（$\text{WTP}_{\text{democracy}} = -\beta_{\text{democracy}} / \beta_{\text{income}}$）換算貨幣價值，結果顯示民主 WTP 約為個人年收入的 3 倍（democracy WTP ≈ 3× income）；此發現支持民主作為「非市場財」具高度貨幣化價值，可為民主倒退研究提供量化基準（Adserà, Arenas & Boix, 2023; Adsera Arenas Boix 2023 Value of Democracy）。
+- **股東願為財務與環境揭露付費、但不為社會揭露付費**：De Villiers et al.（2023）以報酬百分比為價格軸——股東願為高於平均之財務揭露付費（Fin_H WTP $=+3.70\%$ 報酬, 95% CI [1.13, 6.27]）、要求對低於平均之環境揭露補償（Env_L WTP $=-3.28\%$, 95% CI [−5.72, −0.83]），但社會揭露各水準 WTP 均不顯著；此為首次以選擇實驗直接量測股東對非財務揭露 WTP 的研究（De Villiers et al., 2023; Shareholders are willing to pay for above average financial disclosure; Shareholders require higher returns for below average environmental disclosure; Shareholders are unwilling to pay for social disclosure）。
+- **揭露 WTP 無 gain–loss 不對稱（與 prospect theory 預測相反）**：De Villiers et al.（2023）以巢套模型檢定 Fin_L $=-$Fin_H 等對稱限制，個別與聯合檢定皆 $p>.05$，即股東對「高於平均」（增益）與「低於平均」（損失）的揭露變動評價對稱——揭露情境未觸發框架不對稱（De Villiers et al., 2023; No gain-loss asymmetry in shareholder willingness to pay for disclosure）。
+- **揭露 WTP 隨產業而異**：De Villiers et al.（2023）H3 顯示高環境揭露在運動服飾廠商比採礦廠商更受重視（Env_H × SportApp 交乘 $0.809$, $p<.01$）；作者詮釋為運動產業的環境揭露較新穎、採礦業環境風險已被熟知（De Villiers et al., 2023; Environmental disclosure is valued more in sports apparel than mining firms）。
+- **農場鮮乳屬性 WTP（食品/農業）**：Jensen et al.（2021）「專心且重複購買」群組（約 21% 樣本）偏好 VAT 或 HTST 殺菌、低脂、塑膠或玻璃裝盛；消費者對高乳脂折價、cream-line 折價最深；與假設相反，**消費者不為玻璃包裝付溢價**；WTP 直接 inform 農場端設備投資決策（Jensen et al., 2021; Attentive repeat customers prefer VAT or HTST pasteurized low-fat milk in plastic or glass; Consumers will not pay a premium for glass milk packaging contrary to hypothesis）。
+- **健康 WTP 發現**：瑞士老年人對減少 1% 髖關節骨折風險的 MWTP 隨收入、年齡、初始風險上升而上升，支持 Lancaster demand theory（Telser & Zweifel, 2002）。
+- **骨鬆治療屬性重要性**：Liu et al.（2024）Cedars-Sinai $n=304$ CBC 中 hip-fracture efficacy importance 31.0% 主導，遠超 mode of administration 17.5%、serious side-effect risk 16.6%；mode part-worth 為 oral (+37.2) > skin patch (+21.5) > injected SC (−10.4) >> IV (−48.3)，顯示受訪者對 IV 強烈排斥（Liu et al., 2024; Oral administration most preferred over IV for osteoporosis treatment; Efficacy at preventing hip fractures is top ranked osteoporosis medication attribute）。
+- **印尼 sports nutrition WTP**：Oktaneldanora et al.（2025）$n=185$ isotonic drink 中 flavor 33% ≈ price 32% > sugar 19% > packaging 16%；最低價帶 Rp 3,000–4,000 utility = +0.204、原味 utility = +0.201 共同主導偏好組合；與 §5.5 其他產品類別的 price 主導模式一致，但口味屬性在食品類異常高（Oktaneldanora, Purnomo & Noer, 2025; taste and price jointly account for 65 percent importance in isotonic drink choice）。
+- **精釀啤酒 WTP 與市場模擬**：Castillo-Ortiz et al.（2024）墨西哥 $n = 501$ CBC 將 price（30–70+ MXN 披索）納為屬性，price importance 0.114（六屬性中第四）；市場模擬顯示消費者偏好「深色、酒精強烈、苦度低」風格（近 Stout），並願為偏好風格支付 70 披索以上溢價；以選擇模擬比對 Untappd 實際排名驗證預測效度，為精釀啤酒文獻首次整合屬性偏好、WTP 與預測模擬的研究（Castillo-Ortiz, Lee, Taylor & Bufquin, 2024; consumers pay price premium for preferred craft beer styles; Mexican craft beer consumers prefer dark intense-alcohol low-bitterness styles）。
+- **品牌名稱本身的貨幣化（品牌鑑價 conjoint）**：王國梅 & 任立中（2022）以評分式全輪廓 conjoint 對台灣高粱酒（烈酒）建立「消費者觀點」品牌鑑價法——先以因素分析將 25 個感官／意象變項壓縮為 7 個正交因素再設計屬性，OLS 效用函數中**唯一顯著的連續係數為價格**（$\beta_{\text{price}} = -0.016$），其餘屬性 part-worth 皆以此為換算分母反推 WTP；台灣茅台相對基準品牌（金門高粱）多 12.5 效用分，換算品牌溢價 $12.5 / 0.016 = 781.25$ 元，顯示**品牌名稱單獨即可撐起逾 780 元的願付差距**（王國梅 & 任立中, 2022; Brand attribute alone shifts willingness to pay by 781 NT dollars in Kinmen sorghum conjoint; Price is the only significant continuous coefficient in sorghum brand valuation）。此設計示範 conjoint 作為「個別消費者層次品牌鑑價」工具，可支援一對一互動式定價而非僅市場平均（王國梅 & 任立中, 2022; Individual level conjoint enables one-to-one heterogeneous brand pricing; 延伸：王國梅 2022 消費者偏好）。
+- **價格主導再現於台灣低價快消品**：劉俊杰 & 周建亨（2024）對台灣寵物鳥飼料（$N=233$）的四屬性全輪廓 conjoint 中，屬性重要性排序為**售價（最重要，負向）> 飼料種類 > 產地**，包裝不顯著；與 §5.5 的跨領域 price dominance 模式一致，且最佳模擬組合為「咬合飼料 × 國內生產 × 最低價（150 元）」（劉俊杰 & 周建亨, 2024; price has the strongest negative effect on pet bird feed purchase preference; best simulated pet bird feed profile combines chewing feed domestic origin and lowest price; 延伸：劉俊杰 2024 聯合分析）。
+- **環境 WTP 發現**：CO2 吸收在海洋生態系服務中有最高 MWTP（CO2 Absorption Has Highest Marginal WTP Among Ocean Services）；亞洲城市 MWTP 比較中中國城市最高（Chinese cities show highest MWTP among 11 Asian cities）。
+- **生態系統服務給付上限依起始地類差異化（臺灣 PES CE）**：沈芝貝、莊晴 & 柳婉郁（2022）以選擇試驗法 + RUM，把「給付金額」設為價格屬性，將生物多樣性、碳吸存、病蟲害防治三項非貨幣生態服務貨幣化，再對「檳榔園／休耕農地／裸露林地」三類起始土地分別估價，得到差異化的每年每公頃給付上限——**裸露林地 122,823 元 >> 檳榔園 24,862 元 > 休耕農地 14,371 元**（分別對應全臺年給付上限約 87.4 億、10.6 億、6.95 億元）；方法論意涵是把「土地利用變化」內建進 CE 設計，讓給付能對不同轉換路徑差異化而非齊頭補貼（沈芝貝 et al., 2022; 延伸：bare forest land yields the highest per hectare ecosystem service payment ceiling、choice experiment recovers differentiated PES ceilings by starting land use type、沈芝貝 2022 Methods）。
+- **CBC vs BWS WTP 差異**：最偏好屬性高度一致支持收斂效度；最不偏好屬性 CBC 顯著高於 BWS，反映兩方法對負面偏好的捕捉機制不同；若需精確估計避免意願應選 BWS（Cheng et al., 2023; Conjoint analysis overestimates WTP for the least preferred attribute）。
+- **Hypothetical vs real WTP 系統性差異**：直接 WTP 調查易受 prestige bias（誇大）或 collaboration bias（降估）扭曲；conjoint 透過間接推論減輕此偏誤，但 incentive alignment（Ding, 2007; BDM/Vickrey 機制）進一步降低 hypothetical bias（Breidert et al., 2006; Koschate-Fischer et al., 2012; Direct WTP survey overstated by pretige or understated by collaboration bias）。
+- **WTP 估計的三類問題**（Breidert et al., 2006）：
+  - 理論——price 作為 utility 概念混淆；
+  - 實務——price effect、range effect、number-of-levels effect；
+  - 估計——缺 choice decision rule，需倚賴 status quo 設定。
+- **Ad hoc cost level 偏誤**：cost 層級設定常為 ad hoc；若上限設過低則 WTP 被低估；層級數量（通常僅 4–5 個）遠少於直接法 10+ 個，降低 WTP 敏感度（Ratcliffe, 2000; Ad hoc cost level setting biases WTP estimates）。
+- **機制解釋**：
+  - 認知捷思（price heuristic）——複雜多屬性決策中以價格為快速篩選器；
+  - 財務能力制約——道德消費意願受可支配所得強烈制約；
+  - 態度-行為落差——自陳式調查誇大永續屬性溢價，CBC 強制取捨揭示真實偏好（Wang, 2022）。
+- **葡萄酒市場價格主導（跨知識水準）**：Jaeger et al.（2013）加州紅白葡萄酒 rating-based conjoint 中，低 wine knowledge 群 price importance 達 88.7%，高 wine knowledge 群 58.8%；消費者知識調節 price salience 但價格始終主導（Price dominates wine purchase intention across segments; Low wine knowledge segment more price-sensitive）。
+- **葡萄酒倒 U 形價格反應（Veblen 效果，反例）**：Jedicke et al.（2025）德國永續葡萄酒 CBC 中，價格部分效用呈非線性倒 U 形（€7.80 部分效用最高 15.84），市場模擬以二次式擬合最佳（$R^2=0.88$），需求在約 €8 達頂峰後下降；價格重要性僅 11.24%（五屬性最低）；此案例直接反駁「價格永遠負向單調」的線性假設，提示中等偏高定價策略（Jedicke et al., 2025; Wine price utility follows inverted U-shape Veblen effect peaking at 8 euro）。
+- **永續創新屬性具正向價值**：Jedicke et al.（2025）「綿羊放牧葡萄園」這個永續產品特徵在全樣本中為正向重要屬性（重要性 15.49%，排第三，高於顏色 12.40% 與價格 11.24%），最重要屬性為乾度（33.10%）與產區（27.78%）；顯示在感官與品質代理屬性之後，永續創新仍能成為消費者重視的差異化屬性（Jedicke et al., 2025; Sheep-grazing sustainability feature is a positively valued wine attribute）。
+- **威士忌：陳年主導、內在略高於外在**：Patwardhan et al.（2025）印度威士忌 PAPRIKA 研究中，陳年（aging）是最重要屬性（12+ 年單水準部分效用 16.9% 為最高），其次包裝與價格；八屬性中內在屬性（陳年、香氣、餘味、風味）合計重要性 54.27% 略高於外在屬性（包裝、價格、品牌、可得性）45.73%；對資訊密集型產品的內在/外在線索權重提供 conjoint 量化證據（Patwardhan et al., 2025; Indian consumers weight intrinsic whiskey attributes slightly above extrinsic、Aging is the most preferred whiskey attribute）。
+- **校園環境偏好：位置主導且跨次群一致**：Xiao et al.（2025）大學生非正式運動環境偏好中，健身區位置重要性達 42.2%（六屬性第一），其次配套設施 25.1%、景觀元素 18.6%；五個次群組（性別、年級、主修、動機、活動量）僅少數排序差異且信賴區間多重疊（無統計顯著），顯示客觀環境因子的影響強於人口特徵——對「以人口學分群」普遍失效規律再添一例（Xiao et al., 2025; Fitness area location is the dominant campus environment attribute、Environmental preferences are largely consistent across student subgroups）。
+- **OTT 平台 WTP：解析度 vs 推薦系統跨市場差異**：Kim et al.（2017）在中韓兩市場 CBC 研究中發現，中國消費者對 OTT 服務最重視解析度（resolution），韓國消費者最重視推薦系統（recommendation）；兩市場消費者對「多種支付方式」看法相反——顯示 OTT WTP 驅動因素有實質性跨市場異質（Kim, Chang & Park, 2017; resolution is top OTT attribute for Chinese consumers while Koreans prefer recommendation）。
+- **盜版研究中 WTP 異質性**：Burmester et al.（2016）電影市場 CBC + HB 研究發現，降低合法內容價格可將部分海盜轉為正版消費者，但部分消費者無論價格如何均採盜版（hierarchical Bayes 揭示高度個體異質性）；電影院早期首映具最高 WTP（Burmester, Eggers, Nisch & Sattler, 2016; price reduction converts some pirates to legal media purchasers; hierarchical Bayes reveals substantial consumer heterogeneity in media piracy preferences）。
+- **數位新聞存取模式 WTP（奧地利 CBCA）**：O'Brien et al.（2025）奧地利 CBCA 研究發現消費者最偏好限制性免費存取（metered）而非硬性付費牆（hard paywall）；提供者類型顯著影響 WTP（公共廣播機構最受偏好）；intermedia competition 情境下 WTP 相較單一提供者研究顯著壓縮（O'Brien et al., 2025; Austrian consumers prefer limited free access over hard paywall for online news; provider type significantly influences WTP for digital journalism in Austria）。
+- **調查式新聞：高興趣低 WTP**：Rodriguez Gómez & Sandoval-Martín（2016）西班牙研究顯示受訪者對調查報導表達高度興趣，但實際 WTP 仍低；偏好以捐款（donation）而非訂閱（subscription）的方式支付；主流媒體機構調查報導比自由記者更受信賴（Rodriguez Gómez & Sandoval-Martín, 2016; investigative journalism audience interest is high but WTP remains low; donation preferred over subscription for investigative journalism payment）。
+- **公共氣象資訊 WTP：精確度最高**：Lee et al.（2014）韓國花粉預報 rank-ordered DCE 研究中，預報精確度（forecast accuracy）具最高 WTP；遞送媒體選擇（SMS、App、廣播）顯著影響 WTP；rank-ordered DCE 比標準 DCE 提供更有效率的估計（Lee, Jang & Kim, 2014; forecast accuracy has highest WTP in meteorological information services; rank ordered discrete choice model provides more efficient WTP estimates）。
+- **生育治療 WTP：效果性主導、84% 投入預算於 COS**：Palumbo et al.（2011）WTP + conjoint 雙重方法研究義大利不孕女性發現，治療效果（pregnancy rate）是最重要屬性，消費者願意為邊際懷孕率提升支付大量金額；84% 受訪者將多數生育預算分配至 COS（controlled ovarian stimulation）治療（Palumbo et al., 2011; effectiveness dominates patient preferences in fertility treatment choice; 84 percent of patients allocate majority of fertility budget to COS treatment）。
+- **OTT killer content MWTP（韓國）**：Kim & Lee（2023）N=360 韓國 OTT 訂閱者 CBC 研究中，消費者對最偏好類型中排名第一的殺手內容（R1G1）MWTP=7,633 KRW（約 5.8 USD）；月費為最重要屬性（RI=28.9%）。30 代 MWTP 最高（8,990 KRW），40 代是唯一殺手內容重要性（25.4%）超越月費重要性（24.3%）的年齡層；訂閱 3 個以上 OTT 的多訂閱者 MWTP 最高（8,540 KRW），顯示重度串流用戶對差異化內容的貨幣化價值更高（Kim & Lee, 2023; killer content MWTP for rank one in favorite genre is 7633 KRW; 40s consumers value killer content over price in OTT subscription choice; multi-OTT users show higher MWTP for killer content than single service users）。
+- **音樂串流服務 MWTP 跨市場比較（美國 vs 韓國）**：Kim, Nam & Ryu（2017）以正交分數因子 conjoint 比較美韓兩市場：美國消費者最重視隨選串流模式（on-demand streaming, MWTP=$6.54），廣告移除 MWTP=$5.61，全功能訂閱 MWTP 合計$14.55；韓國消費者最重視廣告移除（無廣告 MWTP=5,840 KRW），且已收斂至訂閱制，獨家內容在兩市場 MWTP 均為最低，顯示差異化內容在音樂串流的貨幣化價值遠低於 OTT 殺手內容（Kim, Nam & Ryu, 2017; Korean music streaming consumers show highest MWTP for no advertisement at 5840 KRW; exclusive music content has low MWTP in both Korea and US markets; on-demand streaming mode yields higher MWTP than radio streaming in both Korea and US）。
+- **新聞平台可信度訊號 MWTP**：Nam & Park（2026）以 mixed logit + Bayesian HB 研究韓國線上新聞用戶，發現**人工審核驗證**具最高絕對 MWTP（$3.14/月，KRW 4,187），**SNS 分享功能** MWTP=$2.84/月（KRW 3,842）；多媒體格式（multimediality）為影響偏好最強屬性（RI 最高）：文字 + 多媒體 MWTP=$1.62/月、文字 + 資料視覺化 MWTP=$1.87/月；AI 審核驗證 MWTP 僅$0.69/月，僅為人工審核的 22%（即人工審核 WTP 溢價約 4.6 倍），顯示消費者對 AI vs 人工核查有顯著差異化評估（Nam & Park, 2026; human review verification commands highest WTP at 3.14 USD per month for news platform; AI verification valued at lower WTP than human review for online news credibility; credibility signals in news platform interfaces have measurable monetary value）。
+- **行動平台選擇：APP 數量為 WTP 最強預測子**：Nikou et al.（2014）以 conjoint analysis 研究行動服務平台偏好，發現可用 app 數量是 WTP 的最強預測因子，OS 品牌效應超越所有平台技術特性（Nikou, Bouwman & de Reuver, 2014; number of apps is strongest predictor of WTP for mobile applications; OS brand outweighs all platform characteristics in consumer preference）。
+- **預算限制遺漏導致 WTP 高估（Pachali et al. 2023）**：Pachali, Kurz & Otter（2023）在 Journal of Marketing Research 指出，標準 CBC + HB 模型忽略消費者預算限制時，WTP 估計存在系統性向上偏誤；以 Bayesian 潛在變數架構（latent budget inference）顯性建模個體預算異質性後，WTP 重新校正，競爭市場均衡價格估計降低約 20%；此發現提示任何以 CBC 估計 WTP 供市場模擬或定價決策使用的研究，均應檢驗 budget omission 對均衡解的影響（Pachali, Kurz & Otter, 2023; Pachali Kurz Otter 2023 Omitted Budget）。
+- **度假所有權服務屬性 WTP（Gregory 2011）**：Gregory 以 n = 3,231 美國消費者大樣本 CBC（Sawtooth HB + fixed choice sets + None option）研究度假所有權（vacation ownership/timeshare）產業；Kano Positive 屬性（如聯盟交換公司、禮賓服務、購買誘因）具顯著正向 WTP；Zone of Indifference 屬性（金融分期、現場活動）WTP 近零；結論是唯有結合 CBC 才能量化「願意多付多少」，為 Kano 方向性判斷提供貨幣錨點（Gregory, 2011; Gregory 2011 Assessment Kano Conjoint; Gregory 2011 willingness to pay varies by product features in vacation ownership conjoint; Gregory 2011 CBC with Sawtooth Software used for vacation ownership WTP）。
+- **MC newspaper：整體不付溢價，高教育階層付**：Schoder et al.（2006）德國 n=2,114 conjoint 研究中，整體樣本不願為個人化報紙付溢價，但高教育程度與中上社經階層的消費者願意；majority fallacy 警告——彙總結果可能掩蓋真正目標市場的偏好（Schoder, Sick, Putzke & Kaplan, 2006; general public does not pay premium for individualized newspapers; majority fallacy risk in aggregated conjoint results for heterogeneous markets）。
+- **AI 消費者 XAI 有 WTP**：König, Wurster & Siewert（2022）德國 $n > 1{,}000$ CBC 顯示 explainable AI 的 WTP = +0.52 EUR/月（顯著正）；但邊際效益被少量加價抵銷（Opaque AI @ 1.99 EUR vs. Explainable AI @ 2.49 EUR，explainable share 仍 43%；@ 2.99 EUR 降至 21%）——市場推力有限，需 regulation 配合（König, Wurster & Siewert, 2022; Consumers have positive WTP for explainable AI but not for green AI; Transparency WTP is offset by modest price increase）。
+- **AI 消費者 green AI 無 WTP**：König et al.（2022）綠色 AI 的 WTP ≈ +0.04 EUR/月（近 null），即便高 environmental concern 次群樣本也僅 +0.08 EUR/月；say-do gap 顯著（自陳環保，不願付費），純市場機制無法驅動低碳 AI 採用（Environmental concern does not translate to green AI WTP）。
+- **Desire for control 預測 XAI valuation**：König et al.（2022）以 Parker et al. (2009) 4-item 量表（$\alpha = 0.74$）區分高/低控制欲；高控制欲群 XAI WTP = +0.71 EUR/月，低控制欲群 = +0.34 EUR/月；個人特質顯著 moderate XAI valuation，指向「可選 XAI 而非強制 XAI」的政策設計（König et al., 2022; Desire for control predicts transparency valuation）。
+- **永續運動服飾 WTP（Spindler 2023）**：Spindler et al.（2023）以 share-of-preferences 模擬推算德國跑者 WTP：100% environmental sustainability（ES）跑步服飾相對 0% ES 的 WTP = **31.50€**；100% social sustainability（SS）的 WTP = **25.02€**；兩者加總並不等於「同時提升 ES + SS」的 WTP——支持 WTP 的**非加法性**（non-additivity）為 conjoint 模擬的關鍵限制；此研究同時示範 share-of-preferences 法（以市場模擬計算 WTP 而非直接比率法）（Spindler, Hambrecht & Breuer, 2023; Spindler 2023 Sustainable Consumption Sports）。
+- **永續/歷史標籤資訊在 restaurant WTP 不顯著（反例）**：Binesh (2023) 餐廳 conjoint 中 sustainability message（碳足跡標示）與 historical information 對三類菜單品項的 WTP 均不顯著；解讀為 **information overload**——在已呈現食物品質、服務品質、氛圍、價格後，額外標籤未能影響決策；提示研究者：當核心屬性已飽和受訪者注意力時，邊際資訊性屬性可能在 conjoint 中失效（Binesh, 2023; 延伸：Sustainability and historical info not significant for restaurant WTP、information overload）。
+- **Online banking 客製化與即時互動的偏好提升**：Dauda & Lee (2015) 線上銀行 conjoint 顯示 website customization/personalization 與 real-time interaction（如 video banking）為未來線上銀行服務的關鍵增值特徵；該等屬性透過便利性與 engagement 超越基本交易功能促進 e-banking 普及採用（Dauda & Lee, 2015; 延伸：Website customization and real-time interaction enhance online banking preference、Dauda 2015 Technology Adoption）。
+- **Low cause-brand fit 反例（CrM 領域）**：Moosmayer & Fuljahn (2013) 在 laptop + 非洲醫院捐贈情境發現**低 fit（醫療設備捐贈）被偏好於高 fit（IT 系統捐贈）**（$p < .001$），part-worth: low fit +0.215 vs high fit −0.215；市場份額模擬 medical 61% vs IT 39%；與 schema theory 預期相反，作者以 attribution theory 解釋——消費者懷疑 IT 捐贈為 self-serving（藉機增加自家產品分銷）；同時 NPO（非洲醫院）與醫療設備在另一維度上 fit 更高；提供 CrM 領域中「fit 維度需多方向審視」的方法論啟示（Moosmayer & Fuljahn, 2013; Ellen et al., 2000; 延伸：Low Cause Brand Fit Preferred Over High Fit In Laptop CrM）。
+- **德國綠電 WTP 系統性發現**：Danne et al.（2021）德國 $N = 371$ 家庭 DCE 估計平均 WTP 21.6 €/kWh（ASC）為一般綠電轉換誘因；Solar > Wind > RE mix > Biogas（太陽 +0.211**、風 +0.196**、Mix n.s.）；EEG levy 接受度 +0.555***、環境採買 +1.130**、願意外包換約 +1.279***；Green Party 支持者 ASC −1.038*** 但 share × Green +0.010***（純綠電才買）；South Germany WTP 最低（−1.139***）、Town size 越大 WTP 越低（−0.496***）（Danne, Meier-Sauthoff & Musshoff, 2021; Danne 2021 Green Electricity; solar and wind preferred over biogas in German green electricity DCE）。
+- **癌症藥物 WTW：21.68 月換高確定性**：Forrest et al.（2024）美國 $N = 870$ 癌症經驗者 DCE 顯示，在最低確定性情境下，平均 WTW 7.86 月（弱證據）、16.34 月（中證據）、21.68 月（強證據）以換取存活受益確定性；高存活確定性 $\beta = 2.61$（強烈正向偏好）、1 年延遲核准 $\beta = -1.04$（強烈負向偏好）、代理終點 PFS 效果 $\beta = 0.02$（不顯著）；遠超過 FDA 累積額外存活資料所需的 11 個月，提示 FDA 可能低估部分患者願意等待以換取確定性的程度（Forrest, Lagarde, Aggarwal & Naci, 2024; Forrest 2024 Speed Access; surrogate endpoint progression-free survival benefit holds no value without survival certainty）。
+- **循環度 WTP 非單調：25% 顯著、75% 反轉**：Boyer et al.（2021）UK $N = 800$ ACBC 顯示，**25% 循環**相對全新產品在所有四個 sub-experiments 中觸發顯著 WTP premium，中位數 UK 消費者多付 23–31 GBP；但 WTP premium 在 75% 循環度時消失或反轉；挑戰 LEED-type「等級越高、溢價越高」假設，提示 OEM 對「低度循環」加標可能有利可圖、對重度翻新或完全再用品則風險未明；以 psychological licensing（Miller & Effron, 2010）解釋低度循環的「道德通行證」效應（Boyer, Hunka, Linder, Whalen & Habibi, 2021; Boyer 2021 Product Labels; 25 percent circular triggers significant WTP premium over brand new in all four experiments; WTP premium disappears or reverses at 75 percent circular content）。
+
+## 6. 進階變體
+
+本章整理 conjoint 家族中解決特定問題的進階變體：BBC 在 benefit 層建模飽和；ACA/ACBC 以自適應設計降低認知負荷；holistic/hybrid 捕捉 heuristic 維度；compound conjoint 處理多實體決策；label conjoint 測試標籤組合效應；Kano-conjoint 以 Kano 模型前置篩選屬性；barter conjoint 以實物交換提升激勵相容。
+
+歷史發展以 Johnson（1987）的 ACA 開啟自適應典範，Johnson & Orme（2007）的 ACBC 進一步以 BYO + Screener + Choice Tournament 三階段同時提升生態效度與覆蓋非補償式決策。Kim, Bailey, Hardt & Allenby（2017）的 BBC 將屬性對應至潛在 benefit 層，以 concave saturation function 在 benefit 層建模邊際遞減，將標準 conjoint 嵌套為 $K=0$ 特例。Vriens & Eggers（2025）的 holistic conjoint 則識別「特徵總數」作為獨立 heuristic 維度，使 CBC holdout hit rate 從 67.9% 提升至 79.8%。
+
+這些變體反映 conjoint 研究的核心張力：**忠實於 additive RUM 假設 vs 貼近真實決策啟發式**。BBC 與 holistic 擴展效用函數結構；ACBC 與 compound 擴展任務設計；Kano、barter、poker 則擴展資料蒐集機制。研究者依問題特性選擇變體，但需認識每種變體的獨特假設與適用邊界。
+
+### 6.1 Benefit-Based Conjoint (BBC)
+
+Benefit-Based Conjoint（BBC, Kim et al., 2017）假設消費者在 benefit 層（而非 attribute 層）產生滿足（satiation），透過 concave 函數 $g(\cdot)$ 對同一 benefit 下的屬性集合求和後再飽和。$K=0$ 時 BBC 退化為標準 conjoint，使兩模型可以巢狀比較（nested in standard conjoint）；$K=2$ 時在多數實證情境 in-sample、holdout、LMD 均最優。
+
+- BBC 以 latent partition $\pi$ 將屬性對應至 $K$ 個 benefit，效用為
+
+  $$U_j = \sum_{k=1}^{K} g\left(\sum_{a \in \pi_k} \beta_a x_{ja}\right) + \varepsilon_j$$
+
+  其中 $g(\cdot)$ 為 concave saturation function；消費者在 benefit 層面而非屬性層面產生飽和（Kim, Bailey, Hardt & Allenby, 2017）。
 - BBC 將標準 conjoint 嵌套為特例（$K=0$ 時 $g$ 退化為 identity），模型選擇因而具統計嚴謹性；$K=2$ 時於 in-sample、holdout、LMD 均最優（Kim et al., 2017）。
 - Attribute-benefit partition $\pi$ 可完全從 choice data 識別，無需事前結構或額外評分資料（Kim et al., 2017）。
 - 消費者對同一 benefit 下的多個屬性產生邊際遞減 $\partial^2 U / \partial x_a^2 < 0\ \forall a \in \pi_k$，而不是在屬性層面飽和（Kim et al., 2017）。
 - 家用化學品 CBC 實證中，10 個屬性被認知空間簡化為 2 個 benefits（Kim et al., 2017）。
-- Conjoint part-worth 可作為 benefit segmentation 的自然基礎（Burke et al., 2019）。</p>
-<h4 id="62-adaptive-aca-acbc">6.2 Adaptive / ACA / ACBC</h4>
-<p>ACA（Adaptive Conjoint Analysis, Johnson, 1987）以 self-explicated importance（自我陳述重要性）先行篩選屬性，再以 paired comparison 適應性產生題目。ACBC（Adaptive CBC, Johnson &amp; Orme, 2007）分三階段：<strong>BYO</strong>（Build Your Own, 受訪者組裝理想輪廓）、<strong>Screener</strong>（篩選可接受選項，捕捉非補償式決策）、<strong>Choice Tournament</strong>（於剩餘選項中進行 CBC 式選擇）。ACBC 在屬性數 &gt;8 時認知負荷優勢最顯著（延伸：Self Explicated vs Full Profile Conjoint Methodology、Multi Stage Conjoint Design Variants）。</p>
-<ul>
-<li>ACA 以 self-explicated importance 主導屬性篩選，在 17+ 屬性時性能不如全輪廓 conjoint（Pullman et al., 1999）。</li>
-<li><strong>Pullman et al.（1999）unit weights 分解實驗</strong>：將 part-worth 除以 importance ($\tilde{\beta}_{nk} = \hat{\beta}_{nk}/\hat{w}_{nk}$) 後所有模型效度差異消失，證明 ACA/hybrid 劣勢源於 <strong>self-explicated importance 估計偏誤</strong>而非 desirability 估計偏誤（Pullman et al., 1999; Model differences driven by importance not desirability）。</li>
-<li><strong>Full profile 於 17 屬性仍勝出</strong>：Pullman et al.（1999）以 17 屬性、56 水準國家公園 conjoint 比較 full profile / ACA / hybrid / 8-most-important subset，full profile first choice = 0.51、phi = 0.75、RMSE = 0.07 顯著優於 ACA 與 hybrid；推翻 Green &amp; Srinivasan（1990）「&gt;10 屬性需改用 ACA」教條（Pullman et al., 1999; Conventional wisdom on full-profile attribute limit is wrong）。</li>
-<li><strong>8 most important subset 為 full profile 次優替代</strong>：若 17 屬性 full profile 過長，先以 self-explicated 選出 top 8 後做 full profile 的 32 profiles 仍勝過 ACA/hybrid（Pullman et al., 1999; Eight most important attributes subset outperforms ACA and hybrid）。</li>
-<li>ACA Phase III 中約 27% 的情況會反轉前一階段的偏好方向，提示 self-explicated importance 不穩（Orme, 2006）。</li>
-<li>ACA 配對比較低估偏好強度達 74%（Orme, 2006）。</li>
-<li>ACBC Build Your Own 階段個人化選項組合，提升生態效度與投入度（Johnson &amp; Orme, 2007）。</li>
-<li>ACBC 優於 CBC 於三面向：標準誤較小、holdout 預測更高、對真實決策預測更佳（Cunningham et al., 2010）。</li>
-<li>ACBC 認知負荷優勢對屬性多（&gt;8）的複雜決策最顯著（Cunningham et al., 2010）。</li>
-<li>ACBC 效用分化度不如 CBC，可能使市場模擬難以預測清晰勝負（Jervis et al., 2012）。</li>
-<li>ACBC 需更長作答時間，樣本規模要求較高（n≥250），限制成本受限研究適用性（Cunningham et al., 2010）。</li>
-<li>ACBC 與 CBC 效用值方向完全一致，分歧僅在效用差距大小（Jervis et al., 2012）。</li>
-<li><strong>ACBC 於共享自動駕駛車輛（SAV）偏好研究</strong>：Nickkar, Karimanzira &amp; Rashidi（2023）以 N=216 澳洲受訪者 ACBC + HB 估計 SAV 屬性偏好，確認 BYO 階段有效篩選非補償式規則（如安全底線），screener 降低 SAV 複雜決策的認知負荷；COVID-19 pandemic 作為自然調節變量揭示共乘意願的情境脆弱性——即使自動化程度提升，感知風險仍可阻斷 ridesharing 效用（Nickkar et al., 2023；延伸：Nickkar 2023 WTP Shared Automated Mobility）。</li>
-<li><strong>ACA 的五類題型組合</strong>：Sawtooth SSI 實作包含 (a) rating 題（對各水準直接評分）、(b) importance 題（屬性變動重要度）、(c) pair-wise comparison 題、(d) calibration 題（整合 profile 的購買機率 0–100）、(e) MaxDiff 式最重要/最不重要屬性 bundle 題；五類共同產生個體 part-worth（Head &amp; Ziolkowski, 2012; Head 2012 Methods）。</li>
-<li><strong>ACA 於 8 屬性消費品的穩定實作</strong>：Head &amp; Ziolkowski（2012）以 Sawtooth ACA 對 188 位大學生 8 種 mobile phone 功能估 part-worth，配合 K-means 與 PLS-SEM 二階段驗證，示範「ACA 個體估計 → cluster 分群 → cluster 內 SEM 驗證」流水線在認知友善範圍內穩定運作（Head &amp; Ziolkowski, 2012）。</li>
-<li><strong>PAPRIKA（Potentially All Pairwise RanKings of all possible Alternatives）</strong>：Hansen &amp; Ombler（2008）提出的 adaptive pairwise ranking 演算法，透過傳遞性推論（transitive inference）將每位受訪者只需回答最少 pair-wise ranking 即可識別完整 $L_1 \times \cdots \times L_K$ profile 偏好序；實作於 1000minds software，大幅降低 ACA 類方法的認知負擔；應用於 Pinto et al.（2018）慢性膝痛 $n=146$、6 屬性 × 3 水準，平均每人約 25–45 題 pairwise ranking（Pinto et al., 2018; PAPRIKA method minimizes conjoint question burden via adaptive pairwise ranking）。</li>
-<li><strong>PAPRIKA 的 consistency test</strong>：Pinto et al.（2018）以 3 重複 pairwise ranking 題檢驗內部一致性，12% 回應不一致（IRR ≈ 88%）；此比例優於 Clayton et al.（2023）在傳統 box CBC 觀察到的 IRR 77%，暗示 adaptive pairwise 可降低認知負荷驅動的 swapping error（Pinto et al., 2018; <a href="conjoint_book.html">§4.1 IRR</a>）。</li>
-<li><strong>ACBC 老人應用範本</strong>：Paudel et al.（2025）澳洲 $n=372$、65–93 歲老人以 Sawtooth Lighthouse Studio ACBC 完成 10 屬性 outdoor fitness area 設計研究；RLH 0.74–0.75、HB 估計個體 relative importance；示範 ACBC 在超出 CBC 建議 6 屬性上限（10 屬性）的高齡認知受限族群仍具可行性，因 BYO + Screener + Choice Tournament 結構分散認知負荷（Paudel et al., 2025; Older adult design preferences are largely consistent across gender and mobility status）。</li>
-<li><strong>ACA 專家 elicitation 範本（Valeeva 2005）</strong>：Valeeva et al.（2005）對 24 位食安專家以 ACA 估計乳品鏈 101 個食安控制屬性；採 8 份問卷（4 block × 2 hazard type）分散認知負荷、self-explicated 預壓縮 + paired comparison 個體 Bayesian 更新；個體 hold-out $R^2 = 0.757$–$0.888$ 全數超過 Huber et al.（1991）建議閾值，無受訪者出現倒序回答；示範<strong>「不必追求大樣本也能有可信模型擬合」</strong>——關鍵不在受訪者數而在每位受訪者填答的深度與系統能否從少量資料萃取個體偏好結構（Valeeva et al., 2005; 延伸：Adaptive conjoint analysis achieves R squared above 0.75 across all dairy chain blocks）。</li>
-<li><strong>ACA 的「block-then-integrate」雙階段設計</strong>：當研究主題涵蓋整條供應鏈但單一受訪者難以精通全鏈時，Valeeva et al.（2005）採「分塊 ACA + 紙本鏈權重」雙階段——階段一以 ACA 在每個 block 內估計屬性 part-worth；階段二以另一份紙本問卷請同一批專家為各 block 分配 100 點作為「鏈權重 chain weight」；階段一保留個體 part-worth 解析度，階段二補上跨 block 整合；可推廣至任何「整鏈研究但無單一全知受訪者」的情境（Valeeva et al., 2005; 延伸：Conjoint Applications in Supply Chain Risk and Sustainability）。</li>
-<li><strong>Garver 2012 把 ACM 引介到 logistics</strong>：Garver, Williams, Taylor &amp; Wynne（2012）以 US 249 名 parcel shipping 經驗者示範 ACM 在 logistics 的完整流水線（BYO + Possible Buy/No-buy + Screening Rules + Choice Tournament + HB + LCCA），是首篇將 ACM 帶入 logistics/SCM 文獻的應用論文；目的在於補強 logistics 文獻長期以 retention 為主、忽略 purchase choice 決策結構的缺口（Garver et al., 2012; 延伸：Garver 2012 Modelling Choice、adaptive choice modelling）。</li>
-<li><strong>ACM 解決 CBC 的 4 大限制</strong>：Garver et al.（2012）明確指出 ACM 相對 CBC 的 4 項改善——(a) <strong>attribute fatigue</strong>：BYO 階段個人化篩選降低後續任務的屬性負載；(b) <strong>profile complexity</strong>：near-neighbor concept 變動 1–2 levels 而非全屬性，比較認知負荷低；(c) <strong>price disconnection</strong>：summed pricing 動態定價避免「高價低能/低價高能」不真實組合；(d) <strong>segment heterogeneity</strong>：HB 個體層次估計 + LCCA 後驗分群直接揭示 need-based segments；4 限制對應 ACM 三階段的設計巧思（Garver et al., 2012; 延伸：ACM mitigates four key limitations of choice-based conjoint in logistics research）。</li>
-<li><strong>Summed pricing 為 ACM 特有的價格設定方式</strong>：在 ACM 中，各屬性水準帶獨立 cost premium（如 next-day +$20、3-day +$10、7-day +$5、10-day $0）；同一 product concept 中所有水準的 premium 加總後<strong>隨機 ±30%</strong> 作為呈現價格——使高效能組合對應較高價、低效能組合對應較低價，比 CBC 中常見「fixed price levels」更貼近真實市場；此設計直接緩解 CBC 中「price 與其他屬性正交但市場上實際強相關」的生態效度問題（Garver et al., 2012; summed pricing）。</li>
-<li><strong>ACBC 在 11 屬性高複雜消費電子的應用</strong>：Bergener et al.（2026）以 ACBC（Sawtooth Lighthouse Studio）處理手機 11 屬性 × 多 levels 的高維選擇——4 階段流程（BYO + Screening + Choice Tasks + Calibration）；$N = 534$ 德國消費者完成 8 BYO + 6 Screening + 6 Choice Task；HB 估計個體 part-worth、Sawtooth choice simulator + randomized first choice 進行市場模擬；以 SOS（Orme, 2021）在競爭市場情境計算 WTP，顯示市場簡化版兩產品情境系統性高估 WTP（Bergener, Jacobs, Veneny &amp; Gossen, 2026; 延伸：Bergener 2026 Methods）。</li>
-<li><strong>SOS（Sampling of Scenarios）市場 WTP 計算</strong>：Orme（2021）提出的 SOS 方法於市場模擬中蒙地卡羅抽取多個競爭情境（包含參考品與替代品組合），計算屬性變動的平均 SOP 與 WTP；比傳統兩產品情境 WTP 估計更貼近真實競爭市場下消費者實際支付意願；Bergener et al.（2026）使用 SOS 證明競爭環境會壓抑 eco-score WTP 溢價空間（Orme, 2021; Bergener et al., 2026; SOS_method）。</li>
+- Conjoint part-worth 可作為 benefit segmentation 的自然基礎（Burke et al., 2019）。
+
+### 6.2 Adaptive / ACA / ACBC
+
+ACA（Adaptive Conjoint Analysis, Johnson, 1987）以 self-explicated importance（自我陳述重要性）先行篩選屬性，再以 paired comparison 適應性產生題目。ACBC（Adaptive CBC, Johnson & Orme, 2007）分三階段：**BYO**（Build Your Own, 受訪者組裝理想輪廓）、**Screener**（篩選可接受選項，捕捉非補償式決策）、**Choice Tournament**（於剩餘選項中進行 CBC 式選擇）。ACBC 在屬性數 >8 時認知負荷優勢最顯著（延伸：Self Explicated vs Full Profile Conjoint Methodology、Multi Stage Conjoint Design Variants）。
+
+- ACA 以 self-explicated importance 主導屬性篩選，在 17+ 屬性時性能不如全輪廓 conjoint（Pullman et al., 1999）。
+- **Pullman et al.（1999）unit weights 分解實驗**：將 part-worth 除以 importance ($\tilde{\beta}_{nk} = \hat{\beta}_{nk}/\hat{w}_{nk}$) 後所有模型效度差異消失，證明 ACA/hybrid 劣勢源於 **self-explicated importance 估計偏誤**而非 desirability 估計偏誤（Pullman et al., 1999; Model differences driven by importance not desirability）。
+- **Full profile 於 17 屬性仍勝出**：Pullman et al.（1999）以 17 屬性、56 水準國家公園 conjoint 比較 full profile / ACA / hybrid / 8-most-important subset，full profile first choice = 0.51、phi = 0.75、RMSE = 0.07 顯著優於 ACA 與 hybrid；推翻 Green & Srinivasan（1990）「>10 屬性需改用 ACA」教條（Pullman et al., 1999; Conventional wisdom on full-profile attribute limit is wrong）。
+- **8 most important subset 為 full profile 次優替代**：若 17 屬性 full profile 過長，先以 self-explicated 選出 top 8 後做 full profile 的 32 profiles 仍勝過 ACA/hybrid（Pullman et al., 1999; Eight most important attributes subset outperforms ACA and hybrid）。
+- ACA Phase III 中約 27% 的情況會反轉前一階段的偏好方向，提示 self-explicated importance 不穩（Orme, 2006）。
+- ACA 配對比較低估偏好強度達 74%（Orme, 2006）。
+- ACBC Build Your Own 階段個人化選項組合，提升生態效度與投入度（Johnson & Orme, 2007）。
+- ACBC 優於 CBC 於三面向：標準誤較小、holdout 預測更高、對真實決策預測更佳（Cunningham et al., 2010）。
+- ACBC 認知負荷優勢對屬性多（>8）的複雜決策最顯著（Cunningham et al., 2010）。
+- ACBC 效用分化度不如 CBC，可能使市場模擬難以預測清晰勝負（Jervis et al., 2012）。
+- ACBC 需更長作答時間，樣本規模要求較高（n≥250），限制成本受限研究適用性（Cunningham et al., 2010）。
+- ACBC 與 CBC 效用值方向完全一致，分歧僅在效用差距大小（Jervis et al., 2012）。
+- **ACBC 於共享自動駕駛車輛（SAV）偏好研究**：Nickkar, Karimanzira & Rashidi（2023）以 N=216 澳洲受訪者 ACBC + HB 估計 SAV 屬性偏好，確認 BYO 階段有效篩選非補償式規則（如安全底線），screener 降低 SAV 複雜決策的認知負荷；COVID-19 pandemic 作為自然調節變量揭示共乘意願的情境脆弱性——即使自動化程度提升，感知風險仍可阻斷 ridesharing 效用（Nickkar et al., 2023；延伸：Nickkar 2023 WTP Shared Automated Mobility）。
+- **ACA 的五類題型組合**：Sawtooth SSI 實作包含 (a) rating 題（對各水準直接評分）、(b) importance 題（屬性變動重要度）、(c) pair-wise comparison 題、(d) calibration 題（整合 profile 的購買機率 0–100）、(e) MaxDiff 式最重要/最不重要屬性 bundle 題；五類共同產生個體 part-worth（Head & Ziolkowski, 2012; Head 2012 Methods）。
+- **ACA 於 8 屬性消費品的穩定實作**：Head & Ziolkowski（2012）以 Sawtooth ACA 對 188 位大學生 8 種 mobile phone 功能估 part-worth，配合 K-means 與 PLS-SEM 二階段驗證，示範「ACA 個體估計 → cluster 分群 → cluster 內 SEM 驗證」流水線在認知友善範圍內穩定運作（Head & Ziolkowski, 2012）。
+- **PAPRIKA（Potentially All Pairwise RanKings of all possible Alternatives）**：Hansen & Ombler（2008）提出的 adaptive pairwise ranking 演算法，透過傳遞性推論（transitive inference）將每位受訪者只需回答最少 pair-wise ranking 即可識別完整 $L_1 \times \cdots \times L_K$ profile 偏好序；實作於 1000minds software，大幅降低 ACA 類方法的認知負擔；應用於 Pinto et al.（2018）慢性膝痛 $n=146$、6 屬性 × 3 水準，平均每人約 25–45 題 pairwise ranking（Pinto et al., 2018; PAPRIKA method minimizes conjoint question burden via adaptive pairwise ranking）。
+- **PAPRIKA 的 consistency test**：Pinto et al.（2018）以 3 重複 pairwise ranking 題檢驗內部一致性，12% 回應不一致（IRR ≈ 88%）；此比例優於 Clayton et al.（2023）在傳統 box CBC 觀察到的 IRR 77%，暗示 adaptive pairwise 可降低認知負荷驅動的 swapping error（Pinto et al., 2018; [§4.1 IRR](conjoint_book.html)）。
+- **ACBC 老人應用範本**：Paudel et al.（2025）澳洲 $n=372$、65–93 歲老人以 Sawtooth Lighthouse Studio ACBC 完成 10 屬性 outdoor fitness area 設計研究；RLH 0.74–0.75、HB 估計個體 relative importance；示範 ACBC 在超出 CBC 建議 6 屬性上限（10 屬性）的高齡認知受限族群仍具可行性，因 BYO + Screener + Choice Tournament 結構分散認知負荷（Paudel et al., 2025; Older adult design preferences are largely consistent across gender and mobility status）。
+- **ACA 專家 elicitation 範本（Valeeva 2005）**：Valeeva et al.（2005）對 24 位食安專家以 ACA 估計乳品鏈 101 個食安控制屬性；採 8 份問卷（4 block × 2 hazard type）分散認知負荷、self-explicated 預壓縮 + paired comparison 個體 Bayesian 更新；個體 hold-out $R^2 = 0.757$–$0.888$ 全數超過 Huber et al.（1991）建議閾值，無受訪者出現倒序回答；示範**「不必追求大樣本也能有可信模型擬合」**——關鍵不在受訪者數而在每位受訪者填答的深度與系統能否從少量資料萃取個體偏好結構（Valeeva et al., 2005; 延伸：Adaptive conjoint analysis achieves R squared above 0.75 across all dairy chain blocks）。
+- **ACA 的「block-then-integrate」雙階段設計**：當研究主題涵蓋整條供應鏈但單一受訪者難以精通全鏈時，Valeeva et al.（2005）採「分塊 ACA + 紙本鏈權重」雙階段——階段一以 ACA 在每個 block 內估計屬性 part-worth；階段二以另一份紙本問卷請同一批專家為各 block 分配 100 點作為「鏈權重 chain weight」；階段一保留個體 part-worth 解析度，階段二補上跨 block 整合；可推廣至任何「整鏈研究但無單一全知受訪者」的情境（Valeeva et al., 2005; 延伸：Conjoint Applications in Supply Chain Risk and Sustainability）。
+- **Garver 2012 把 ACM 引介到 logistics**：Garver, Williams, Taylor & Wynne（2012）以 US 249 名 parcel shipping 經驗者示範 ACM 在 logistics 的完整流水線（BYO + Possible Buy/No-buy + Screening Rules + Choice Tournament + HB + LCCA），是首篇將 ACM 帶入 logistics/SCM 文獻的應用論文；目的在於補強 logistics 文獻長期以 retention 為主、忽略 purchase choice 決策結構的缺口（Garver et al., 2012; 延伸：Garver 2012 Modelling Choice、adaptive choice modelling）。
+- **ACM 解決 CBC 的 4 大限制**：Garver et al.（2012）明確指出 ACM 相對 CBC 的 4 項改善——(a) **attribute fatigue**：BYO 階段個人化篩選降低後續任務的屬性負載；(b) **profile complexity**：near-neighbor concept 變動 1–2 levels 而非全屬性，比較認知負荷低；(c) **price disconnection**：summed pricing 動態定價避免「高價低能/低價高能」不真實組合；(d) **segment heterogeneity**：HB 個體層次估計 + LCCA 後驗分群直接揭示 need-based segments；4 限制對應 ACM 三階段的設計巧思（Garver et al., 2012; 延伸：ACM mitigates four key limitations of choice-based conjoint in logistics research）。
+- **Summed pricing 為 ACM 特有的價格設定方式**：在 ACM 中，各屬性水準帶獨立 cost premium（如 next-day +$20、3-day +$10、7-day +$5、10-day $0）；同一 product concept 中所有水準的 premium 加總後**隨機 ±30%** 作為呈現價格——使高效能組合對應較高價、低效能組合對應較低價，比 CBC 中常見「fixed price levels」更貼近真實市場；此設計直接緩解 CBC 中「price 與其他屬性正交但市場上實際強相關」的生態效度問題（Garver et al., 2012; summed pricing）。
+- **ACBC 在 11 屬性高複雜消費電子的應用**：Bergener et al.（2026）以 ACBC（Sawtooth Lighthouse Studio）處理手機 11 屬性 × 多 levels 的高維選擇——4 階段流程（BYO + Screening + Choice Tasks + Calibration）；$N = 534$ 德國消費者完成 8 BYO + 6 Screening + 6 Choice Task；HB 估計個體 part-worth、Sawtooth choice simulator + randomized first choice 進行市場模擬；以 SOS（Orme, 2021）在競爭市場情境計算 WTP，顯示市場簡化版兩產品情境系統性高估 WTP（Bergener, Jacobs, Veneny & Gossen, 2026; 延伸：Bergener 2026 Methods）。
+- **SOS（Sampling of Scenarios）市場 WTP 計算**：Orme（2021）提出的 SOS 方法於市場模擬中蒙地卡羅抽取多個競爭情境（包含參考品與替代品組合），計算屬性變動的平均 SOP 與 WTP；比傳統兩產品情境 WTP 估計更貼近真實競爭市場下消費者實際支付意願；Bergener et al.（2026）使用 SOS 證明競爭環境會壓抑 eco-score WTP 溢價空間（Orme, 2021; Bergener et al., 2026; SOS_method）。
+- **ACBC 在 8 屬性循環經濟產品的設計範例**：Boyer et al.（2021）以 Sawtooth Software Lighthouse Studio 9.8.0/9.8.1 ACBC 處理手機與掃地機器人 8 屬性（CE Score、price、battery life、warranty、appearance、reseller type、fixability、customer service）× 2–5 levels 的高維選擇；**價格作為連續變量隨機抽樣**（£259–£629 取尾數 9）提供 WTP 更寬可估範圍——這是 ACBC 相對 CBC 的關鍵優勢之一；4 sub-experiments（產品 × 離散 vs 連續價格）每組 $\approx 200$ 跨設計穩健性驗證；ACBC 透過 BYO + Screener + Choice Tasks 三階段降低疲勞，在 8 屬性下標準 CBC 認知負擔過大（Boyer, Hunka, Linder, Whalen & Habibi, 2021; Boyer 2021 Methods）。
+- **ACBC vs CBC 的效益權衡（決策樹）**：Brand & Baier（2020）回顧六項既有比較研究並以跨國電商 ACBC 實證（$n=205$，運動壓縮褲、8 屬性 × 4 水準）總結——CBC 已能以較低心力提供「最受偏好屬性水準」的主要資訊；ACBC 的額外心力只在**複雜產品/服務、需深入洞察（次佳選項、完全不可接受水準）、需個體層次 evoked set**時才值得；CBC 需更大樣本量且估計常較不精確；方法選擇取決於預算、可用時間、所需資訊量與決策環境複雜度（Brand & Baier, 2020; 延伸：Brand 2020 Adaptive CBC）。
+- **ACBC 揭示 rejection-based 非補償式決策**：Brand & Baier（2020）的 8 屬性電商 ACBC 中，Screening 階段把約**三分之二**的屬性水準標記為「unacceptable」，顯示真實消費者以**拒絕為基礎（rejection-based）**而非補償式加總做決策——這是 ACBC 相對標準 CBC 補償式假設的核心洞察（Brand & Baier, 2020; 延伸：ACBC excludes two-thirds of attribute levels as unacceptable revealing rejection-based decision rules、[§4.9](conjoint_book.html)）。
+- **ACBC 的 evoked set 與作答行為**：Brand & Baier（2020）發現 ACBC 把 71–76% 的刺激保留在 evoked set 中，但僅少數刺激主導最終選擇；Calibration 階段以真實購買機率取代事前無法產生的 holdout 任務作為預測效度檢驗；drop-off 在 adaptive section 開始時達峰值約 6%（Brand & Baier, 2020; 延伸：ACBC keeps 71 to 76 percent of stimuli in evoked set while a handful dominate choices、ACBC drop-off peaks at six percent when adaptive section starts）。
+- **ACBC 跨文化雙樣本設計**：Brand & Baier（2020）以德國（$n=151$）vs 中國（$n=54$）雙樣本分國分析 evoked set 與不可接受水準，並偵測 country-of-production × payment-method 的顯著交互；示範 ACBC 在跨文化情境的可行性與 must-have/unacceptable 偏好的文化差異（Brand & Baier, 2020; Payment warranty and contact dominate eight-attribute e-commerce preference）。
+- **Task-Specific Scale Factors HB 提升 ACBC 配適度**：Brand & Baier（2020）以納入 task-specific scale factors 的 HB 估計，把 ACBC 模型的 RLH 提升至 0.738，顯示 ACBC 各階段（BYO / Screening / Choice）的反應尺度不同，HB 估計需考量任務專屬 scale（Brand & Baier, 2020; 延伸：Task-Specific Scale Factors HB lifts ACBC model fit to RLH 0.738）。
+- **BYO 段提升 ACBC 設計 D-efficiency**：Brand & Baier（2020）以模擬隨機受訪者驗證，加入 BYO 段可使 ACBC 設計的 D-efficiency 從接近零提升至 0.8 以上；同時模擬隨機受訪者在 ACBC 比 CBC 得到更高 RLH，提醒 ACBC 的高配適度部分為 adaptive 設計人工產物，須以模擬基準校準（Brand & Baier, 2020; 延伸：+ BYO section raises ACBC design D-efficiency from near zero to above 0.8、Simulated random respondents yield higher RLH for ACBC than CBC、[§2.7](conjoint_book.html)）。
+
+### 6.3 Holistic 與 hybrid
+
+Feature count（特徵總數）指輪廓中非零/非預設屬性的個數；holistic slope $\gamma$ 捕捉「更豐富 = 更好」或「更簡潔 = 更好」的整體性 heuristic。Holistic conjoint（Vriens & Eggers, 2025）以 HB-MNL 同時估計 micro-feature partworths 與 holistic slope，顯著提升複雜產品選擇的預測精度。Hybrid 方法結合 self-explicated、conjoint、rating 等多資料源估計。
+
+- 消費者將產品特徵「總數」本身作為 heuristic 維度；holistic 效用為
+
+  $$U_j = \sum_k \beta_k x_{jk} + \gamma \cdot N_j + \varepsilon_j$$</li>
 </ul>
-<h4 id="63-holistic-hybrid">6.3 Holistic 與 hybrid</h4>
-<p>Feature count（特徵總數）指輪廓中非零/非預設屬性的個數；holistic slope $\gamma$ 捕捉「更豐富 = 更好」或「更簡潔 = 更好」的整體性 heuristic。Holistic conjoint（Vriens &amp; Eggers, 2025）以 HB-MNL 同時估計 micro-feature partworths 與 holistic slope，顯著提升複雜產品選擇的預測精度。Hybrid 方法結合 self-explicated、conjoint、rating 等多資料源估計。</p>
-<ul>
-<li>消費者將產品特徵「總數」本身作為 heuristic 維度；holistic 效用為</li>
-</ul>
-<p>$$U_j = \sum_k \beta_k x_{jk} + \gamma \cdot N_j + \varepsilon_j$$</p>
 <p>其中 $N_j = \sum_k \mathbb{1}(x_{jk} \neq 0)$ 為特徵總數、$\gamma$ 為 holistic slope；不只是特徵個別效用加總（Vriens &amp; Eggers, 2025）。
 - 加入 feature count holistic 維度使 CBC holdout hit rate 從 67.9% 提升至 79.8%（+12 pp），模型更簡約且預測更佳（Vriens &amp; Eggers, 2025）。
 - Holistic 維度可正向（$\gamma > 0$，功能豐富優先）或負向（$\gamma < 0$，簡潔優先），取決於應用情境與消費者群體（Vriens &amp; Eggers, 2025）。
@@ -1200,7 +1300,7 @@ MathJax = {
 <li><strong>DCE vs Rating vs TTO（within-subject 三法）</strong>：Kaplan et al.（2019）prostate cancer $N=194$ 同一受訪者依序執行 conjoint / rating / TTO；novel holdout 預測 conjoint 68% vs rating 43%（$p=0.003$）、internal $R^2$ rating 0.92 ≈ conjoint 0.91 &gt;&gt; TTO 0.35；TTO satisfaction 顯著低（trade life years 引發焦慮）、84% 受訪者視 life span 為 most important（<strong>ceiling effect 遮蔽其他 attributes</strong>），示範同一決策三法不可互換結論。</li>
 <li><strong>CBC + MaxDiff + 滿意度三類偏好資料整合</strong>：Liu, Büschken, Orme &amp; Allenby（2025）MTurk $N=318$ 電視機擁有者，同一受訪者<strong>先 conjoint 15 任務、再 MaxDiff 11 任務、再評 9 個 5 點滿意度量表</strong>；HB 框架以「不購買」outside good 作為共同 reference，允許三類資料三個誤差尺度（$\sigma_{\text{conjoint}}$、$\sigma_B$、$\sigma_W$）不同；$\theta_n$（GoM archetype 隸屬）作為上層迴歸共變數同時影響 part-worth 與滿意度——實證反駁 behavioral decision theory 強命題（context effects 沒想像中重要），支持經濟學派 preference stability（Liu 2025 Integrating Methods）。</li>
 <li><strong>Hypothetical vs Incentive-Aligned 2×2</strong>：Ding, Grewal &amp; Liechty（2005）賓州州立大學附近中餐廳 Study 1 四組——hypothetical conjoint / IA conjoint（隨機抽出實現實際購買）/ hypothetical CV / IA CV（BDM mechanism）；IA conjoint holdout hit rate 顯著高於 hypothetical conjoint、partworth 估計<strong>系統性不同</strong>（非單純 scale 差異）、IA conjoint 比 IA BDM CV 更能預測真實購買；Study 2 snack combos 實驗室複製 Study 1 結果（Ding 2005 Incentive-Aligned）。</li>
-<li><strong>Verbal vs Tasting</strong>：Cerjak et al.（2010）克羅埃西亞 $N=78$ 2×2 設計，tasting 刺激使品牌熟悉度效應從正向轉為負向（brand × tasting 顯著交互），暗示<strong>純語言 CA 系統性高估品牌傘效應</strong>；Pelsmaeker, Gellynck, Delbaere et al.（2013）比利時巧克力泡芙 verbal-only vs tasting-with-verbal——tasting 系統性壓低價格重要性估計（Cerjak 2010 Brand Familiarity Tasting Conjoint; Pelsmaeker 2013 Tasting Sensory Stimuli Conjoint）。</li>
+<li><strong>Verbal vs Tasting</strong>：Cerjak et al.（2010）克羅埃西亞啤酒消費者 $N=403$（mall intercept，2×2 between-subjects：品牌熟悉度 × 有無 tasting，四組各約 100 人），full-profile 3 屬性（品牌／包裝／價格）10 主卡 + 5 holdout；<strong>tasting 使 brand 重要性由 25.7% 躍升至 38.5%（$Z=2.865, p<.01$）成為最重要屬性</strong>——因熟悉品牌下受訪者拒絕試喝、直接以品牌回答，把「味道」收攏進「品牌」（品牌傘效應）；效度差異全集中在陌生品牌（G2 陌生+無 tasting 的 face／predictive validity 崩壞，first-choice hit rate 僅 46% vs. G4 57.8%），熟悉品牌 verbal 與 tasting 效度相當——<strong>方法論結論：研究熟悉品牌時 verbal CA 成本效益更佳，研究陌生／新品牌時 tasting 為必要</strong>（Cerjak 2010 Brand Familiarity Tasting Conjoint，含五項效度標準與 Figure 3）；Pelsmaeker, Gellynck, Delbaere et al.（2013）比利時巧克力泡芙 verbal-only vs tasting-with-verbal——tasting 系統性壓低價格重要性估計（Pelsmaeker 2013 Tasting Sensory Stimuli Conjoint）。</li>
 <li><strong>Visual vs Text（候選人 / 產品）</strong>：Vecchiato &amp; Munger（2025）YouGov $N=500$ 美國樣本 5 任務隨機指派 standard box vs visual Twitter profile（AI 生成大頭照）；視覺顯著屬性（gender、race）AMCE 改變方向、視覺邊緣化屬性（profession、education、religion）AMCE 縮小；López Ortega &amp; Radojevic（2025）德國 $N=2{,}324$ <strong>4 cells 2×2 因子設計</strong>（視覺/文字 × 有黨派/無黨派線索）；DeLong et al.（2021）消費品貨架模擬 vs 文字表格組——文字組 WTP 顯著較高、達顯著屬性數較多，attribute non-attendance 比例不同（Vecchiato Munger 2025 Visual Conjoint; López Ortega Radojevic 2025 Visual Conjoint Discrimination）。</li>
 <li><strong>Standard CBC + ACBC 互補</strong>：Garver, Williams, Taylor &amp; Wynne（2012）parcel shipping $N=249$ 以 ACM（ACBC v7.0）解決標準 CBC 的 4 限制——attribute fatigue（BYO 個人化篩選）、profile complexity（near-neighbor 變動 1–2 levels）、price disconnection（summed pricing 動態定價）、segment heterogeneity（HB + LCCA 後驗 5-class）；ACM 完成時間比 CBC 多 50–200%、樣本要求 $n \geq 250$，但獲得更細緻的個體 part-worth 估計（Garver 2012 Methods）。</li>
 </ul>
@@ -1241,7 +1341,7 @@ MathJax = {
 <li><strong>生命週期評估環境影響整合</strong>（已於 §6.12 詳細展開）：Lin et al.（2026）循環杯 CBC + LCA；Bergener et al.（2026）ACBC + SOS market simulation 從個體偏好推估 Fairphone SOP 翻倍。</li>
 </ul>
 <h5 id="6137-conjoint-segmentation-post-conjoint-clustering">6.13.7 Conjoint 與 segmentation / 後分析整合（post-conjoint clustering）</h5>
-<p>Conjoint 估計完後再進行<strong>潛在類別分析（LCA）、K-means、混合隸屬（GoM）</strong>分群，是揭示偏好異質性的標準後分析做法（詳見 §3.4）。本小節僅補充常見搭配組合與報告規範。</p>
+<p>Conjoint 估計完後再進行<strong>潛在類別分析（LCA）、K-means、混合隸屬（GoM）</strong>分群，是揭示偏好異質性的標準後分析做法（詳見 <a href="conjoint_book.html">§3.4</a>）。本小節僅補充常見搭配組合與報告規範。</p>
 <ul>
 <li><strong>CBC + HB + LCA 兩階段</strong>：Liu et al.（2024）骨鬆 Cedars-Sinai $N=304$，LCA 2-class 60.9% efficacy-focused vs 39.1% multi-factor，aggregate DCE 遮蔽 60/40 療效偏好分裂；Bask et al.（2013）4-class（Updater 22.1% / Budgeter 10.9% / Environmentalist 40.8% / Long-life 26.2%），entropy = 0.81；Garver et al.（2012）5 need-based segments（Speed Demons / Penny Pinchers / Cautious Information Seekers / Price Buyers / Average Joes），BIC 最低；Kim &amp; Lee（2023）韓國 OTT $N=360$ 多 OTT 訂閱者 MWTP 顯著高於單 OTT 訂閱者。</li>
 <li><strong>K-means cluster + cluster-specific 二階段建模</strong>：Head &amp; Ziolkowski（2012）加拿大行動電話 $n=188$ ACA → K-means 2-cluster（instant communicators 58.5% / information seekers 41%）→ <strong>cluster-specific PLS-SEM</strong>，TAM 前因路徑在兩群相反；Pinto et al.（2018）慢性膝痛 PAPRIKA → average-linkage hierarchical + NbClust 選 $K=3$ phenotype → PROMIS pain interference + Self-Efficacy 預測 cluster；Vukic, Kuzmanovic &amp; Kostic Stankovic（2014）塞爾維亞 Gen Y conjoint 6 attr → 4-cluster，preference-based segmentation F=47.8 vs demographic F=12.3 揭示偏好分群優於人口分群。</li>
@@ -1274,8 +1374,8 @@ MathJax = {
 <tbody>
 <tr>
 <td>政治學／候選人評估</td>
-<td>Hainmueller et al. (2014); Hainmueller &amp; Hopkins (2015); Bansak et al. (2021); Kustov (2020); Krzyzowski &amp; Nowicka (2020); Ono &amp; Yamada (2018)</td>
-<td>全輪廓配對強制選擇；9+ 屬性；完全隨機化；AMCE 因果詮釋；樣本 1000+；incentivized dictator game 揭示 parochial altruism；single-profile vignette 降低 SDB；日本 7 屬性女性 AMCE −2.7 pp、女性候選人偏離女性議題會被額外懲罰但偏離 personality/ideology 不會</td>
+<td>Hainmueller et al. (2014); Hainmueller &amp; Hopkins (2015); Bansak et al. (2021); Kustov (2020); Krzyzowski &amp; Nowicka (2020); Ono &amp; Yamada (2018); <strong>Goodman (2025)</strong></td>
+<td>全輪廓配對強制選擇；9+ 屬性；完全隨機化；AMCE 因果詮釋；樣本 1000+；incentivized dictator game 揭示 parochial altruism；single-profile vignette 降低 SDB；日本 7 屬性女性 AMCE −2.7 pp、女性候選人偏離女性議題會被額外懲罰但偏離 personality/ideology 不會；<strong>Goodman 2025</strong>：三國（US/UK/DE）公民身分 conjoint，substance（行為規範、民主價值）跨國一致主導，identity（穆斯林、歸化）僅右翼子群體顯著負向——social dominance theory 提供理論機制</td>
 </tr>
 <tr>
 <td>政治學／視覺 conjoint</td>
@@ -1433,9 +1533,19 @@ MathJax = {
 <td>Annunziata 2013 義大利 n=160 conjoint；base product 34% &gt; brand 28% &gt; health claim 22% &gt; price 16%；三消費者區隔；BechLarsen 2003 丹麥/芬蘭/英國三國跨文化、GMO 顯著降低接受度、天然價值觀低度預測；Moskowitz 2004 ratings-based 147 位 40+女性 + 3 mindset segments；Annunziata 2013 Consumer Perception; BechLarsen 2003 Functional Foods</td>
 </tr>
 <tr>
+<td>會計／ESG／非財務揭露 WTP</td>
+<td><strong>De Villiers, Cho, Turner &amp; Scarpa (2023)</strong></td>
+<td><em>European Accounting Review</em> 32(1)；紐西蘭 NZSA 65 位資深散戶股東 × 12 任務 = 780 次選擇；4 屬性（財務／社會／環境揭露各 Low/Avg/High + 報酬 $\pm6\%$ 作價格軸）；Ngene Bayesian D-error 設計；conditional logit + mixed logit（500 Halton draws，Choleski 分解 $\Omega=LL'$）；delta 法（<code>nlcom</code>）算 WTP；<strong>股東願為財務（+3.70%）與環境（避免低揭露 −3.28%）付費、不為社會揭露付費</strong>；揭露 WTP 無 gain–loss 不對稱、隨產業而異（運動服飾 &gt; 採礦）；首篇直接量測股東對非財務揭露 WTP（延伸：De Villiers 2023 Are Shareholders、De Villiers 2023 Methods、agency theory）</td>
+</tr>
+<tr>
+<td>食品／農業 WTP（含 inattention 控制）</td>
+<td><strong>Jensen et al. (2021)</strong></td>
+<td><em>Journal of Food Products Marketing</em> 27(8–9)；田納西 $N=817$（Repeat 267 / New 550）農場自製鮮乳 CBC；JMP Pro 15 D-efficient（D-eff = 96.25）、2 區塊 18 情境、每人 5 任務含 opt-out；WTP-space 隨機參數 logit（價格係數對數常態，Stata <code>mixlogitwtp</code>）；以「閱讀時間最低四分位 + trap question」雙準則構造 inattention 並與屬性交乘；LR 檢定驗證 Repeat/New 分層；專心重複客戶偏好 VAT/HTST + 低脂 + 塑膠/玻璃、不為玻璃付溢價；不專心效應集中於新客戶；屬性 WTP inform 設備投資（延伸：Jensen 2021 Effects of、Jensen 2021 Methods、WTP space、survey inattention）</td>
+</tr>
+<tr>
 <td>旅遊／休閒</td>
-<td>Aas et al. (2000); Binesh et al. (2023)</td>
-<td>評分式 conjoint 適用漁業/角色偏好；旅遊屬性含目的地、季節、設施、成本；餐廳菜單分課別分析</td>
+<td>Aas et al. (2000); Binesh et al. (2023); <strong>陳建和 &amp; 蔡宜思 (2008)</strong></td>
+<td>評分式 conjoint 適用漁業/角色偏好；旅遊屬性含目的地、季節、設施、成本；餐廳菜單分課別分析；<strong>日本旅客長宿偏好排序式聯合分析</strong>（陳建和 &amp; 蔡宜思 2008 $N=122$，40 歲以上有效問卷；6 屬性 × 2 水準，SPSS 正交設計自 $2^6=64$ 取 8 組產品；排序法收集、OLS/單調迴歸估 part-worth；屬性重要性：日本食材取得 &gt; 醫療資源 &gt; 交通 &gt; 文化特色 &gt; 居住型態 &gt; 生活機能；K-means 分「鄉村導向 / 都市導向」兩群；日文問卷經回譯 + 兩位日語教師確認的跨語意等值範例；陳建和 2008 日本旅客長宿休閒偏好、陳建和 2008 Methods）</td>
 </tr>
 <tr>
 <td>科技／支付</td>
@@ -1445,12 +1555,12 @@ MathJax = {
 <tr>
 <td>食品／感官／包裝</td>
 <td>Asioli et al. (2018); Mahatthanachosit &amp; Chompu-inwai (2023); Khanum et al. (2024); Deliza, MacFie &amp; Hedderley (2003); Cerjak et al. (2010); Pelsmaeker et al. (2013)</td>
-<td>Kano+conjoint 兩階段；屬性含營養、價格、原產地、認證、形式、風味；環保屬性常被低估；都市/鄉村分層；passion-fruit juice 包裝 6 因子 balanced fractional 24 圖、94 UK 受訪者、background color + information 為最重要包裝屬性、Need for Cognition 調節周邊/中央線索採用。<strong>sensory conjoint（tasting 呈現）</strong>：Cerjak 2010 Brand Familiarity Tasting Conjoint（克羅埃西亞 $N=78$，2×2 設計）——tasting 刺激使品牌熟悉度效應從正向轉為負向（brand familiarity × tasting 交互作用顯著），品牌傘效應在純語言 CA 中高估；五項效度指標（Pearson、Kendall、cross-validity、face validity、feasibility）全通過；<strong>方法論意涵</strong>：食品 conjoint 若含感官屬性，pure verbal 設計系統性高估品牌效應，應加入 tasting 或 CGI 實物刺激。Pelsmaeker 2013 Tasting Sensory Stimuli Conjoint（比利時巧克力泡芙 conjoint）——比較 verbal-only vs tasting-with-verbal 兩種呈現方式；tasting 降低價格重要性（price importance bias）；以 Johansen 程序選取代表性樣本確保外部效度；<strong>方法論意涵</strong>：tasting 作為感官刺激呈現法在食品 conjoint 中系統性壓低價格重要性估計，研究者需謹慎詮釋 WTP。</td>
+<td>Kano+conjoint 兩階段；屬性含營養、價格、原產地、認證、形式、風味；環保屬性常被低估；都市/鄉村分層；passion-fruit juice 包裝 6 因子 balanced fractional 24 圖、94 UK 受訪者、background color + information 為最重要包裝屬性、Need for Cognition 調節周邊/中央線索採用。<strong>sensory conjoint（tasting 呈現）</strong>：Cerjak 2010 Brand Familiarity Tasting Conjoint（克羅埃西亞啤酒 $N=403$，2×2 between-subjects 四組各約 100 人）——tasting 使 brand 重要性 25.7%→38.5%（$Z=2.865, p<.01$），品牌傘效應在純語言 CA 中被高估；效度差異集中於陌生品牌組（G2 hit rate 僅 46%）；五項效度標準（face／convergent／internal Kendall's $\tau$／predictive／subjective）系統評估；<strong>方法論意涵</strong>：熟悉品牌用 verbal CA 成本效益更佳，陌生／新品牌則須加入 tasting 或 CGI 實物刺激。Pelsmaeker 2013 Tasting Sensory Stimuli Conjoint（比利時巧克力泡芙 conjoint）——比較 verbal-only vs tasting-with-verbal 兩種呈現方式；tasting 降低價格重要性（price importance bias）；以 Johansen 程序選取代表性樣本確保外部效度；<strong>方法論意涵</strong>：tasting 作為感官刺激呈現法在食品 conjoint 中系統性壓低價格重要性估計，研究者需謹慎詮釋 WTP。</td>
 </tr>
 <tr>
 <td>環境／能源／公共溝通</td>
-<td>Alriksson &amp; Öberg (2008); Menges, Schroeder &amp; Traub (2005); Tokimatsu et al. (2016); Vermeulen et al. (2011); Poortinga et al. (2003); Kluge, Offermann-van Heek &amp; Ziefle (2021)</td>
-<td>屬性含環保效益、成本、規管風險、溝通方式；環保屬性直接評分低估、conjoint 中更高；WTP-optimal Bayesian design + Halton draws；LIME endpoint damages + benefit transfer function；cheap talk + random lottery 檢驗 impure altruism；節能策略重要性 58% &gt; 領域 25% &gt; 幅度 16%；環境 conjoint review 84 研究；德國能源計畫溝通偏好 CBC（情報時間點 + 告知者身分 + 民眾參與最重要、資訊管道最不重要、年齡與抗議經驗調節決策模式）</td>
+<td>Alriksson &amp; Öberg (2008); Menges, Schroeder &amp; Traub (2005); Tokimatsu et al. (2016); Vermeulen et al. (2011); Poortinga et al. (2003); Kluge, Offermann-van Heek &amp; Ziefle (2021); <strong>沈芝貝、莊晴 &amp; 柳婉郁 (2022)</strong></td>
+<td>屬性含環保效益、成本、規管風險、溝通方式；環保屬性直接評分低估、conjoint 中更高；WTP-optimal Bayesian design + Halton draws；LIME endpoint damages + benefit transfer function；cheap talk + random lottery 檢驗 impure altruism；節能策略重要性 58% &gt; 領域 25% &gt; 幅度 16%；環境 conjoint review 84 研究；德國能源計畫溝通偏好 CBC（情報時間點 + 告知者身分 + 民眾參與最重要、資訊管道最不重要、年齡與抗議經驗調節決策模式）；<strong>臺灣生態系統服務給付（PES）CE</strong>（沈芝貝 et al., 2022 $N=452$ 選擇試驗 + RUM，給付金額為價格屬性、生物多樣性/碳吸存/病蟲害防治三非貨幣屬性；conditional logit 估 WTP + latent class 分群；依起始地類差異化給付上限——裸露林地 122,823 元 &gt;&gt; 檳榔園 24,862 元 &gt; 休耕農地 14,371 元/公頃/年；分群結果轉譯為政策溝通成本；沈芝貝 2022 選擇試驗評估生態系統服務給付、沈芝貝 2022 Methods）</td>
 </tr>
 <tr>
 <td>循環經濟／循環杯（reusable cup）服務設計</td>
@@ -1496,6 +1606,11 @@ MathJax = {
 <td>AI／動畫／合成內容</td>
 <td>Leong et al. (2023); Elgammal et al. (2017)</td>
 <td>Likert rating + 單因子三水準實驗（人類/TTS/AI voice）；CAN 創造性對抗網絡產生分離 emulation 與 creativity 的圖像；實驗室樣本適合初探</td>
+</tr>
+<tr>
+<td>AI 服務接受度／AI-人協作</td>
+<td><strong>Peng et al. (2022)</strong></td>
+<td><em>International Journal of Information Management</em> 66: 102533；教育／新聞／運輸三產業五 study（四 CBC + 一問卷，$N=234/234/218/141/204$）；服務提供方為核心屬性（兩水準：人/AI；四水準：純人/純 AI/AI 支援人/人監督 AI），任務屬性取自 O<em>NET，含 none option（現狀）；mixed logit + HB 估個體 part-worth + PROCESS Model 4 驗中介；required warmth 逐任務 5 點量表測量＝</em><em>屬性層級連續調節變項</em>*；核心發現：required warmth↑→AI 接受度↓（$\lambda=-0.07$ 至 $-0.249$，五 study 一致）、task-AI fit 完全中介（間接效果 $-0.463$，95% CI $[-0.598,-0.322]$）、AI 支援人類可救回高溫暖度任務接受度（$\Delta\lambda$ 顯著）但人類監督 AI 不行；社會認知理論 + task-technology fit + concept combination theory；HB 自動吸收 AI understanding 異質故免控制變項（延伸：Peng 2022 Required Warmth AI、Peng 2022 Methods、<a href="conjoint_book.html">§9.6 案例 13</a>）</td>
 </tr>
 <tr>
 <td>基因／生物庫／隱私</td>
@@ -1693,6 +1808,51 @@ MathJax = {
 <td>三類菜單品項對 sustainability message（碳足跡）與 historical info 的 WTP 均不顯著；解讀為當核心屬性（食物品質、服務、氛圍、價格）已飽和注意力後，邊際資訊性屬性在 conjoint 中失效（information overload）；與其他研究 sustainability premium 結果矛盾，需檢視屬性數與屬性間飽和</td>
 </tr>
 <tr>
+<td>公民身分 / 入籍偏好（英國）</td>
+<td><strong>Donnaloja (2022)</strong></td>
+<td>YouGov UK Omnibus $N=1{,}597$ 英國公民配對 CBC、8 屬性 47 水準（gender / length of residence / origin / occupation / ancestry / refugee status / English / religion）、4 限制隨機化（Poland × Muslim 等禁配對）、AMCE + Marginal Means 雙報告、4-way 交互項加權處理限制；<strong>核心發現</strong>：73% 通過率遠高於 BSA「77% 想減少移民」調查、Unemployed $-36$pp 為最大負效應、Muslim $-16$pp 為最大族裔懲罰且跨白人/非白人國家穩健（<strong>非 non-whiteness 代理</strong>）、Origin 效應幾乎不顯著（除 Ireland/Australia $+7$–$8$pp）、Excellent English $+11$pp、British parent $+10$pp、Refugee 無顯著效應（<strong>與「對難民敵意」調查相反</strong>）；H1c stereotype disaggregation 支持——拆解屬性後原國效應消失；跨子群體 MM 排序高度一致（Brexit Leave 64% vs Remain 80% 通過率差異主要為 baseline shift 而非屬性偏好結構差異），延伸 Hidden Consensus 至公民身分情境；延伸：Donnaloja 2022 British Nationals、Donnaloja 2022 Methods、Hidden Consensus on Immigration Attributes</td>
+</tr>
+<tr>
+<td>鄰里多元評估 / 種族 perceived diversity</td>
+<td><strong>Abascal, Xu &amp; Baldassarri (2021)</strong></td>
+<td><em>Science Advances</em> race-balanced $N=1{,}803$ 美國成人 paired conjoint、heterogeneity（三群體分佈 50/48/2 ↔ 90/8/2）+ largest group identity + absent group identity 三維操弄、固定群體數=3 + 最小群體 2% 使 largest vs absent 可分離、7 點 perceived diversity rating 主分析 + AMCE on forced-choice robustness；<strong>核心發現</strong>：所有族群以<strong>異質性</strong>為主評估多元、白人此效應最強（4.42 vs 2.96，差 1.46 點）、非白人視「<strong>自己族群為最大群體</strong>」的鄰里為更多元（Black +0.35 / Asian +0.33 / Latino +0.28）、白人整體不受最大群體身份影響但<strong>保守白人視黑人為主鄰里為較不多元</strong>（不能用「以美國人口比例為基準」解釋，benchmark 分析否證）；OLS + cluster SE + 196 名 straightliners robustness、pre-registration（EGAP 20190116AA）、Hainmueller 2014 識別假設成立（無 carryover、無 profile order）；延伸：Abascal 2021 People Use、Abascal 2021 Methods、diversity discourse</td>
+</tr>
+<tr>
+<td>食品消費 / 情緒分群（優酪乳）</td>
+<td><strong>Brückner, Emberger-Klein &amp; Menrad (2023)</strong></td>
+<td><em>Journal of Food Products Marketing</em> 德國 $N=1{,}181$ 配額抽樣優酪乳 CBC、5 屬性（nutrients 6 levels / price 3 / Nutri-Score 4 / flavor 2 / production 2）+ none-option、8 choice tasks、balanced overlap design；情緒測量整合 Pfister &amp; Böhm（2008）四情緒功能（information=content、speed=calm、relevance=fulfilled、commitment=proud）× CES（Richins, 1997）以 5 階 semantic differential，Cronbach's $\alpha = 0.713$、CBC 前測情緒避免污染；HB（zero-centered diffs, 20,000 MCMC）+ two-step cluster（Schwarz BIC）+ covariate HB；<strong>核心發現</strong>：Nutrients 27.2% 主導、price 21.3% 次之、organic 11.4% 最低；3 個情緒群——Positive 32.5%（女性、年輕、有機 + 低脂 + Nutri-Score A + 願付高價）、Rather positive 50%、Indifferent 17.5%（男性、年長、最便宜 + none-option 比例高、避高蛋白低脂）；<strong>警示</strong> number-of-levels effect（nutrients 6 levels 的 importance 自然偏高）；印證 Lerner 2015 EIC model 在食品購物情境（Brückner, Emberger-Klein &amp; Menrad, 2023; 延伸：Bruckner 2023 Emotions、Bruckner 2023 Methods、emotion-imbued choice model、Two-step cluster analysis splits German yogurt consumers into three emotion groups）</td>
+</tr>
+<tr>
+<td>健康 DCE / 癌症藥物 willingness to wait</td>
+<td><strong>Forrest, Lagarde, Aggarwal &amp; Naci (2024)</strong></td>
+<td><em>The Lancet Oncology</em> 美國 $N=870$ 癌症經驗者 DCE、5 屬性（life expectancy / functional status ECOG / surrogate PFS effect / certainty of OS benefit / FDA approval delay）；Cint 線上招募 + 配額抽樣（age quota 偏 ≥55 對齊美國癌症發生率）；Ngene Bayesian efficient design pilot-then-main（pilot $n=77$ 取 priors）；40 任務 / 4 區塊 × 10 任務 + 1 dominance check + 1 consistency check；Apollo R MMNL；<strong>核心發現</strong>：high certainty $\beta=2.61$ + 1-year delay $\beta=-1.04$ + PFS $\beta=0.02$（<strong>代理終點 PFS 無顯著價值</strong>——除非伴隨存活確定性）；WTW 21.68 月換 high certainty 遠超 FDA 收集 OS 資料所需 11 月；異質性：≥55 歲、非白人、低收入者 WTW 較少、本人/近親罹癌者 WTW 較長；提示 FDA 加速核准低估部分患者願等以換確定性程度；延伸：Forrest 2024 Speed Access、Forrest 2024 Methods、high certainty of survival benefit is strongly preferred over speed in cancer drug DCE</td>
+</tr>
+<tr>
+<td>能源 DCE / 綠電轉換（德國）</td>
+<td><strong>Danne, Meier-Sauthoff &amp; Musshoff (2021)</strong></td>
+<td><em>Energy, Sustainability and Society</em> 德國 $N=371$ 家庭 DCE、5 屬性（green energy source / share of green energy / switching bonus / price guarantee / tariff price）；Bayesian D-efficient design 將 589,824 完整析因壓縮至 12 sets（D-error = 0.051）；GMNL in WTP space + STATA <code>gmnl</code> + 1000 Halton draws + effect coding + ASC；<strong>核心發現</strong>：Solar &gt; Wind &gt; RE mix &gt; Biogas；EEG levy 接受度 +0.555<strong><em> + 環境採買 +1.130</em>* + 願意外包換約 +1.279</strong><em>；South Germany WTP 最低、town size 越大 WTP 越低；Green Party 支持者 ASC −1.038</em><strong> 但 share × Green +0.010</strong>*（純綠電才買）；政策建議：以「框架化的轉換獎金」（金額等同 EEG levy）促進採用；延伸：Danne 2021 Green Electricity、Danne 2021 Methods、EEG levy、WTP space</td>
+</tr>
+<tr>
+<td>循環經濟產品 / 循環度標籤</td>
+<td><strong>Boyer, Hunka, Linder, Whalen &amp; Habibi (2021)</strong></td>
+<td><em>Sustainable Production and Consumption</em> UK $N=800$ ACBC（Sawtooth Lighthouse Studio）+ HB；2×2 設計（手機 vs 掃地機器人 × 離散 vs 連續價格）每組 $\approx 200$；8 屬性（CE Score 5 levels / price 連續 £259–£629 / battery life / warranty / appearance / reseller / fixability / customer service）；CE Score 採 Linder, Sarasini &amp; van Loon (2017) c-metric $C = \text{value of recirculated components} / \text{value of all components}$；<strong>核心發現</strong>：消費者<strong>幾乎一律偏好較循環的產品</strong>、25% 循環觸發顯著 WTP premium（中位數 £23–£31）、75% 循環度 WTP 消失或反轉；CE Score importance 12.05%（手機第 5）/ 12.24%（吸塵器第 4）；以 psychological licensing（Miller &amp; Effron, 2010）解釋低度循環的「道德通行證」效應；高循環度產品較不易蠶食新品（self-cannibalization 緩解）；延伸：Boyer 2021 Product Labels、Boyer 2021 Methods、circular economy、c-metric</td>
+</tr>
+<tr>
+<td>郵輪觀光／CSER 永續責任</td>
+<td><strong>Adams, Font &amp; Stanford (2017)</strong></td>
+<td><em>Worldwide Hospitality and Tourism Themes</em> 9(1)；英格蘭南安普頓港 RCI + 精緻郵輪乘客 $N=441$ CBC + counts（偏好）+ Hierarchical Bayes（重要性，Sawtooth CBC/HB + SMRT）；7 屬性（standard 28.4% / price 24.6% / duration 13.1% / destination 12.7% / <strong>CSER 11.8%</strong> / brand 6.8% / disruption 2.6%）、CSER 二元水準對稱效用 $\pm 36.28$ zero-centred diffs；品牌匿名化（Company A–E）避免不真實情境；行為共變項取代人口統計共變項提升效率；percentage certainty $=0.768$、root likelihood $=0.726$；<strong>核心發現</strong>：陳述偏好 2:1 偏好 CSER 公司但 CSER 落入最不重要三屬性（value-action gap）、CSER 僅與 price 顯著互動、價格與品質相當時 CSER 為決勝差異化屬性；UK 情境首次將 CBC/HB 應用於郵輪選擇、首次將 CSER 設為郵輪套裝直接變項（延伸：Adams 2017 All aboard CSER cruise conjoint、Adams 2017 Methods、Self-Report Attitude and Conjoint Results Often Diverge）</td>
+</tr>
+<tr>
+<td>觀光目的地偏好（土耳其）</td>
+<td><strong>Altınay Özdemir (2022)</strong></td>
+<td><em>Academica Turistica</em> 伊斯坦堡 $N=86$ 立意取樣 rank-based traditional conjoint（SPSS Conjoint + Orthoplan）；5 屬性（destination type / distance / season / length of stay / value for money）、144 完整析因經 orthoplan 壓縮為 16 destination cards + 4 simulation cards；受訪者排序 1–16；<strong>核心發現</strong>：destination type 29.93% &gt; season 26.97% &gt; length 26.30% &gt; distance 16.73% &gt; value for money 10.05%；最受歡迎組合 Card-7（國內、海陽沙灘、≥12 天、春夏、住宿與餐飲）；模型 Pearson $r=0.816$、Kendall's $\tau=0.600$（皆 $p<0.001$）；t-test + ANOVA 子群差異——女性偏好國際 + 文化遺產、男性偏好國內；單身偏好自然冒險 + 9–11 天、已婚偏好文化遺產 + 1–4 天；<strong>方法論警示</strong>：rank-based 非當代主流 CBC、$N=86$ 子群分析統計力受限；延伸：Altinay Ozdemir 2022 Destination Attribute、Altinay Ozdemir 2022 Methods、Sea sand sun outranks culture and nature in Turkish destination choice</td>
+</tr>
+<tr>
+<td>AMCE 識別量論辯 / forced-choice 偏好估計</td>
+<td><strong>Ganter (2023)</strong></td>
+<td><em>Political Analysis</em> 31(1): 98–112 純方法論論文；論證 forced-choice conjoint 回答兩類研究問題（preference-related vs selection-process），AMCE 僅適合後者；<strong>Average Component Preference (ACP)</strong> $\pi_\ell(t_\ell; w_{t_\ell}) \equiv \mathbb{E}[Y_{ij}(T_{ij\ell}=t_\ell, T_{i[-j]\ell}\neq t_\ell) \mid w_\ell] - 0.5$ 為偏好導向估計量、明確排除 ties；paired-data 線性迴歸估計、trichotomous 編碼 $V_{i\ell t_\ell t'_\ell} \in \{-1, 0, 1\}$；CACP 處理 implausibility；以 Hainmueller &amp; Hopkins (2015) 移民實驗 + Mummolo &amp; Nall (2017) 社區實驗示範（school quality 因高 tie 率 ~50% 被 AMCE 系統性低估其重要性）；R 函式：Harvard Dataverse 10.7910/DVN/3RNU1Q；延伸：Ganter 2023 Forced Choice、Ganter 2023 Methods、AMCE Estimand Debate Microfoundation Limitations Extensions Synthesis</td>
+</tr>
+<tr>
 <td>Cause-related marketing fit</td>
 <td>Low Cause Brand Fit Preferred Over High Fit In Laptop CrM; Moosmayer 2013 Corporate Motive</td>
 <td>Laptop 製造商 + 非洲醫院捐贈情境；low fit（醫療設備捐贈）part-worth +0.215 &gt; high fit（IT 捐贈）−0.215，市場份額模擬 medical 61% vs IT 39%；與 schema theory 預期相反；機制：attribution theory（消費者懷疑 IT 捐贈為 self-serving）+ 多維 fit（NPO 與醫療設備在另一維度上 fit 更高）</td>
@@ -1715,7 +1875,7 @@ MathJax = {
 <li>地緣政治敵意構成來源國效應真實例外：敵對國家申請人受系統性懲罰（−7.6 pp），跨 22 國穩健（Wimmer et al., 2025）。</li>
 </ul>
 <h4 id="amce">AMCE 統計陷阱</h4>
-<p>AMCE 的因果識別依賴完全隨機化；跨子群體比較時受 reference-category 人工產物影響，應改用 marginal means $\text{MM}_k^g = \mathbb{E}[Y \mid T_k = t, G = g]$（Leeper, Hobolt &amp; Tilley, 2020）。本節整理 AMCE 統計陷阱的核心案例（延伸：Electoral Conjoint Estimand Debate、Conjoint Statistical Inference and Multiple Testing、Conjoint Design Format Effects on AMCE Magnitude）。</p>
+<p>AMCE 的因果識別依賴完全隨機化；跨子群體比較時受 reference-category 人工產物影響，應改用 marginal means $\text{MM}_k^g = \mathbb{E}[Y \mid T_k = t, G = g]$（Leeper, Hobolt &amp; Tilley, 2020）。本節整理 AMCE 統計陷阱的核心案例（延伸：Electoral Conjoint Estimand Debate、Conjoint Statistical Inference and Multiple Testing、Conjoint Design Format Effects on AMCE Magnitude、AMCE Estimand Debate Microfoundation Limitations Extensions Synthesis）。</p>
 <ul>
 <li>差異化 AMCE（跨子群體比較） $\Delta \text{AMCE} = \text{AMCE}_g - \text{AMCE}_{g'}$ 在兩子群體對參照類別偏好不同時，所有水準 AMCE 會系統性偏移，即使絕對偏好相同（Leeper, Hobolt &amp; Tilley, 2020）。</li>
 <li>跨子群體比較應使用 marginal means $\text{MM}_k^g = \mathbb{E}[Y \mid T_k = t, G = g]$ 而非 AMCE 差異，以避免參照類別人工產物（Leeper et al., 2020）。</li>
@@ -1726,12 +1886,22 @@ MathJax = {
 <li><strong>五項診斷檢驗 probe 識別假設</strong>：Hainmueller et al.（2014）提出五個可實證檢驗以 probe AMCE 識別假設：(1) <strong>carryover effect 檢驗</strong>（cross-task AMCE 比較）、(2) <strong>profile-order 檢驗</strong>（位置 × 屬性互動）、(3) <strong>randomization balance</strong>（背景變項在屬性間均衡）、(4) <strong>attribute-order 檢驗</strong>（不同屬性呈現順序的 AMCE）、(5) <strong>atypical profiles 檢驗</strong>（極端 profile 是否扭曲均值）；五者全部通過才確認設計層面識別假設成立（Hainmueller et al., 2014; Five Diagnostic Checks Probe Conjoint Identification Assumptions）。</li>
 <li><strong>Forced choice 設計 mitigates single-attribute aliasing</strong>：Hainmueller et al.（2014）論證 forced choice（雙 profile 強制二擇一）相對於 single-profile rating 在因果識別上更強——multi-attribute simultaneous randomization 同時切斷所有屬性間的觀察共變，使每個 component 的 AMCE 可被非參數識別；傳統 single-attribute 設計只能估計「複合處理」整體效應（Hainmueller et al., 2014; Forced Choice Design Mitigates Single Attribute Aliasing）。</li>
 <li><strong>Conjoint 一次實驗識別多項因果假設</strong>：相對於 single-attribute experiment 每次只能測試一個假設，conjoint 透過 multi-attribute randomization 在同一實驗中估計所有 attributes 的 AMCE 與 ACIE，大幅提升統計檢定力與成本效率（Hainmueller et al., 2014; Conjoint Identifies Multiple Causal Hypotheses in One Experiment）。</li>
+<li><strong>多重假設檢驗的假陽性風險</strong>：conjoint 同時估計多個屬性效應的優勢同時帶來 multiple hypothesis testing 問題；Monte Carlo 模擬顯示即使所有真實 AMCE 為零，標準流程仍在 90%+ 的試驗中至少產出一個假陽性，但絕大多數已發表 conjoint 論文未做校正（Liu &amp; Shiraito, 2023; Liu Shiraito 2023 Multiple）。</li>
+<li><strong>三種多重檢驗校正比較</strong>：Bonferroni 控制 FWER（簡單但過度保守、假陰性多）、Benjamini-Hochberg 控制 FDR（檢定力較高但仍偏保守）、adaptive shrinkage（Ash）控制 local FDR（假陰性最少、保留大效應，但需 empirical Bayes 實作）；Liu &amp; Shiraito（2023）建議優先採用 adaptive shrinkage（Liu &amp; Shiraito, 2023）。</li>
+<li><strong>估計量論辯的五點實務共識</strong>：整合 Hainmueller et al.（2014，識別）、Bansak et al.（2020，微觀基礎=Expected Borda Score）、Leeper et al.（2020，子群體 marginal means）、Liu &amp; Shiraito（2023，多重檢驗）、Horiuchi et al.（2021，SDB）五篇方法論論文——(1) 用完全隨機化設計、(2) 子群體比較同步報告 marginal means、(3) 對 AMCE 估計做多重檢驗校正、(4) 詮釋 AMCE 為「對期望得票/選擇率的邊際效應」而非「多數偏好」、(5) 涉及敏感屬性時討論但不假定 conjoint 自動消除 SDB（詳見 AMCE Estimand Debate Microfoundation Limitations Extensions Synthesis）。</li>
+<li><strong>AMCE 為 selection-process 而非 preference 識別量</strong>：Ganter（2023）論證 forced-choice conjoint 實際上回答兩類截然不同問題——<strong>偏好導向問題</strong>（preference-related，欲揭示受訪者多維潛在偏好）與<strong>選擇過程問題</strong>（selection-process，欲估計屬性對 profile 被選機率的因果效應）；AMCE 只適合回答 selection-process 問題；用 AMCE 來識別偏好（多數研究的實際目的）在概念上與計算上都不正確；61 篇政治學 conjoint 文獻盤點顯示幾乎全為偏好導向問題卻採 AMCE 估計（Ganter, 2023; Ganter 2023 Forced Choice; Forced Choice Conjoint Serves Two Distinct Research Questions）。</li>
+<li><strong>AMCE 混雜偏好與兩項 compositional effects</strong>：Ganter（2023）證明 AMCE 為 selection-process estimand 包含兩項與偏好無關的 compositional effects——(a) <strong>Conditions</strong>：當隨機化有限制時，不同 AMCE 條件於不同剩餘屬性分布，跨水準不可比；(b) <strong>Ties</strong>：AMCE 計算包含 focal attribute 同水準的 pairs，這些 ties 不攜帶偏好資訊但有非零權重，使 AMCE 朝 0.5 收縮；ties 上限為 $\pm[1 - 1/|T_\ell|]$，使<strong>屬性水準數量機械式影響 AMCE 大小</strong>（Ganter, 2023; AMCE Conflates Preferences With Tie and Condition Compositional Effects; AMCE Bounds Mechanically Depend on Attribute Level Count）。</li>
+<li><strong>AMCE 在 uniform randomization 下的封閉拆解</strong>：Ganter（2023）證明 $\hat\tau_\ell(t_{\ell 1}, t_{\ell 0})_U = (1 - 1/|T_\ell|) \times$（排除 ties 的 AMCE）；rule of thumb 為將 AMCE 乘以 $|T_\ell|/(|T_\ell|-1)$ 可獲得可比的偏好估計；經驗示範以 Mummolo &amp; Nall（2017）社區實驗顯示 school quality 因高 tie 率（~50%）被 AMCE 系統性低估其重要性，而 ACP 才正確識別「學區優於地段」（Ganter, 2023; Ganter 2023 Methods; School Quality Preference Underestimated by AMCE Due to High Tie Share）。</li>
+<li><strong>Average Component Preference (ACP) 為偏好導向研究新估計量</strong>：Ganter（2023）提出 ACP $\pi_\ell(t_\ell; w_{t_\ell}) \equiv \mathbb{E}[Y_{ij}(T_{ij\ell}=t_\ell, T_{i[-j]\ell}\neq t_\ell) \mid w_\ell] - 0.5$，明確排除 ties、標準化於 0、可比較 within- 與 between-attribute；以 paired-data 線性迴歸估計：建構 trichotomous 編碼 $V_{i\ell t_\ell t'_\ell} \in \{-1, 0, 1\}$（ties 全為 0 不貢獻於估計）、對 $Z_i$（是否選第一個 profile）線性迴歸；附帶福利為同時得到整個直接成對偏好向量 $\hat P = \{\hat\delta_{t_\ell t'_\ell}\}$（Ganter, 2023; Ganter 2023 Methods; Average Component Preference Identifies Preferences Without Counterfactual Frame）。</li>
+<li><strong>Conditional ACP (CACP) 處理 plausibility 限制</strong>：Ganter（2023）為處理屬性合理性限制（如「醫生必須有大學學歷」）定義 CACP $\pi_\ell(t_\ell; w_{t_\ell} \mid T_{ij\ell'}, T_{i[-j]\ell'})$，在 $\ell'$ 條件下識別；實務對 conditionally independently randomized attributes 同時報告兩種條件——(a) unrestricted levels of $\ell'$、(b) "comparable pairs"；ACP 亦可直接做子群偏好比較不受 AMCE reference category problem 影響（Ganter, 2023; Conditional ACP Handles Implausible Attribute Combinations; ACP Allows Direct Subgroup Preference Comparison Unlike AMCE）。</li>
 </ul>
 <h4 id="_3">異質性掩蓋</h4>
 <p>聚合 CBC 分析產生單一效用向量可能完全掩蓋關鍵市場區隔：同一產品在某群體效用 +3.79，另一群體 −0.94（DeSarbo et al., 1995）。本節整理異質性掩蓋的陷阱與緩解方法（延伸：Cluster and Latent Class Methods in Conjoint Segmentation、Young Consumer Preference Heterogeneity in Conjoint、WTP Heterogeneity Distribution Specification）。</p>
 <ul>
 <li>彙總 CBC 分析產生單一效用向量，可能掩蓋關鍵市場區隔；同一產品在某群體效用 +3.79、另一群體 −0.94（DeSarbo et al., 1995）。</li>
 <li>集群分析假設受訪者偏好呈密集分布群體，實證中真實偏好近乎均勻，導致集群預測效果不如個體或彙總層次分析（Hagerty, 1985）。</li>
+<li><strong>子群體 AMCE 比較只能用已知類別、遺漏潛在異質性</strong>：Zhirkov（2022）指出偏好異質性分析若僅靠子群體 AMCE 比較，須事先以任意分界（如種族中心高/低、黨派）切分，無法觸及母體偏好變異全貌；IMCE 不需事先分群，直接估計連續的個體偏好分布（Zhirkov, 2022; 延伸：Zhirkov 2022 Individual Marginal、<a href="conjoint_book.html">§3.4 IMCE</a>）。</li>
+<li><strong>顯著 AMCE 可能由發聲少數驅動</strong>：集計 AMCE 顯著不代表多數受訪者持有該偏好——Zhirkov（2022）以 IMCE 顯示移民偏好正偏態、多數人缺乏可靠偏好，顯著效應由少數驅動；提醒以 AMCE 推論「多數偏好」的陷阱（Zhirkov, 2022; Most respondents lack reliable preferences while a vocal minority drives significant AMCEs）。</li>
 </ul>
 <h4 id="_4">設計與估計限制</h4>
 <p>本節整理設計與估計層面的結構性限制：OMEP 無法捕捉屬性交互項；aliasing 問題在單屬性操縱實驗無法分離共線特徵，conjoint 以多屬性隨機化解決。</p>
@@ -1747,6 +1917,7 @@ MathJax = {
 <li>Swapping error 系統性衰減 AMCE 至 $\hat{\theta} = (1 - 2\tau) \cdot \theta$，絕對值永遠低估（Clayton et al., 2023）。</li>
 <li>八篇複製研究的 AMCE 與原始發表結果高度吻合（中位相關 ~0.9），儘管每項研究含約 23% swapping error（Clayton et al., 2023）。</li>
 <li><strong>忽略 context effects 系統性偏誤 attribute importance</strong>：當選擇集中包含 dominance 關係或 phantom 選項時，傳統 CBC 模型未納入 attraction / phantom term 會錯誤分配效用至屬性 main effect，扭曲 importance 排序；Igari &amp; Takeuchi（2025）以日本牛肉資料示範——加入 phantom term 後 price 重要性由 72.2% 修正、grade 由 27.8% 微調，且 holdout 第二選擇 hit rate 同步提升（Igari &amp; Takeuchi, 2025; 延伸：ignoring context effects biases conjoint attribute importance estimates）。</li>
+<li><strong>直接態度題系統性高估社會期許型屬性權重（value-action gap）</strong>：以單一直接態度題測量 CSER、永續、倫理等社會期許型屬性時，受訪者陳述偏好往往遠高於實際取捨權重；Adams（2017）郵輪研究中陳述偏好以 2:1 偏好 CSER 公司，但 CBC 強制取捨揭露 CSER 落入最不重要三屬性——研究者若僅憑直接態度題估價會嚴重高估永續屬性的市場驅動力，應以強制取捨設計校正（Adams, 2017; 延伸：Self-Report Attitude and Conjoint Results Often Diverge、value-action gap）。</li>
 </ul>
 <h4 id="_6">受訪者參與度</h4>
 <p>本節整理受訪者參與度層面的陷阱：non-trader（每題皆選同一選項，佔 17%）、二元 accept/reject 在族群兩極化時鑑別力驟降、物件型 BWS 無法精確識別、部分 BWS 受訪者一致選同屬性為最不重要。</p>
@@ -1823,6 +1994,10 @@ MathJax = {
 <li><strong>設計創新：跨議題領域比較</strong>——conjoint 設計同時操弄政策議題類型（移民/氣候/稅收/社會福利等）與政黨立場一致性，直接比較不同政策領域下 issue congruence 效應的大小——這種「跨域效應量比較」在單一問卷實驗中不可能實現（Christensen &amp; Saikkonen, 2025）。</li>
 <li><strong>核心發現</strong>：issue congruence 對民主規範容忍度的影響強於黨派認同；不同政策議題的容忍度效應顯著不同——某些議題（移民、安全）下公民更傾向犧牲民主規範換取政策目標；黨派偽善假說（partisan hypocrisy）被置於次要地位（Christensen &amp; Saikkonen, 2025）。</li>
 <li><strong>Marginal means 優於 AMCE 於跨群比較</strong>：本研究依受訪者政治立場分群比較，採 marginal means 而非 AMCE 差異，避免參照類別人工產物（Leeper, Hobolt &amp; Tilley, 2020; Christensen &amp; Saikkonen, 2025）。</li>
+<li><strong>案例 11｜跨三國民主公民身分偏好的身份歧視</strong>（Goodman, 2025）：美國、英國、德國三國配對強制選擇 conjoint，檢驗公民身分評估中行為規範、自由民主價值與公民身份（宗教、出生地）的相對重要性；以 social dominance theory 為理論框架解釋右翼選民系統性懲罰穆斯林與歸化公民的偏好結構（Goodman, 2025; Goodman 2025 good citizen conjoint）。</li>
+<li><strong>屬性設計</strong>：行為規範（投票、守法、服役）、價值觀（寬容、支持民主）、身份（宗教：基督教 / 穆斯林 / 無神論；出身：本地 / 歸化）——將公民身份從「做什麼」（substance）與「是誰」（identity）兩維度同時操弄（Goodman, 2025）。</li>
+<li><strong>核心發現</strong>：(1) 聚合層次中行為規範與自由民主價值的 AMCE 顯著為正且跨三國一致——substance 主導；(2) 穆斯林身份在聚合層次 AMCE 小而負，但在右翼選民子群體中 AMCE 顯著為強負——identity-based differentiation 被黨派效應掩蓋；(3) 歸化公民身份在美國共和黨與德國 CDU/AfD 選民中 AMCE 為顯著負值（Goodman, 2025）。</li>
+<li><strong>方法學亮點</strong>：跨國 conjoint 設計允許直接以 AMCE 比較同一屬性在不同國家脈絡中的效應大小——三國共用同一屬性集但可辨識文化 × 制度調節效應；子群體分析以黨派認同為分群變數揭示聚合效應掩蓋的異質性（Goodman, 2025）。</li>
 </ul>
 <h4 id="92">9.2 公衛與健康傳播</h4>
 <p>本子節呈現 conjoint 在公衛政策設計與健康傳播訊息研究中的兩種典型應用：de Vries et al.（2022）以「正交設計 + GLMM」量化藥物安全通訊內容元素的偏好，Della et al.（2016）以「ACA 自適應聯合分析」識別非裔美國人族群的健康訊息設計偏好差異。兩研究的共同主題是：<strong>訊息的哪些設計特徵最重要？</strong> conjoint 強迫受訪者在具體情境中做判斷，避免「所有項目都重要」的傳統問卷弔詭。</p>
@@ -1879,6 +2054,17 @@ MathJax = {
 <li><strong>相對重要性結果</strong>：食物品質（24.3%）&gt; 服務品質（17.1%）&gt; 價格（16.6%）&gt; 線上評論（14.2%）&gt; 氛圍（6.5%）&gt; 位置（6.4%）&gt; 食材（6.1%）&gt; 菜單（6.0%）&gt; 餐廳類型（2.0%）；<strong>氛圍僅排第 5</strong>，顛覆「高端餐廳氛圍主導選擇」的傳統認知（Dabral et al., 2025）。</li>
 <li><strong>Cue Utilization Theory 驗證</strong>：即使在「享樂型高涉入消費」（精緻餐廳）情境中，intrinsic cues（食物品質 + 服務品質）仍然主導 extrinsic cues（氛圍、位置、品牌）——PAPRIKA 提供的「強迫取捨」設計使此理論預測得到更嚴格的實證檢驗（Dabral et al., 2025）。</li>
 <li><strong>跨域應用提示</strong>：PAPRIKA / 1000Minds 的低認知負荷特性，使其特別適合「屬性多（&gt;7）、現場招募、需要快速完成」的服務業研究情境（Dabral et al., 2025）。</li>
+</ul>
+<h5 id="13-ai-required-warmth-ai-peng-et-al-2022">案例 13｜消費者願不願意讓 AI 提供服務？required warmth 與 AI-人協作（Peng et al., 2022）</h5>
+<p>本案例是 <strong>CBC + HB + 「屬性層級連續調節變項」設計</strong> 的教科書級範例，示範如何用 conjoint 把抽象的「任務所需溫暖度」轉成可估計的偏好效用，並以五個 study（四 CBC + 一問卷）層層堆疊建立主效果 → 機制 → 調節 → 跨產業複製（Peng et al., 2022; 延伸：Peng 2022 Required Warmth AI、Peng 2022 Methods）。</p>
+<ul>
+<li><strong>研究設計</strong>：跨教育、新聞、運輸三產業共五個 study（$N = 234/234/218/141/204$）；四個 CBC 實驗以「服務提供方」為核心屬性——Study 1 設「由人類／由 AI」兩水準、Study 2 設「純人類／純 AI／人類主導 AI 支援／AI 主導人類監督」四水準（純人類為參照組），含 none option 代表「現狀模式」作為基準；任務屬性取自 O*NET 職業資料庫；估計採 mixed logit + 階層貝氏（Peng et al., 2022; 延伸：Peng 2022 Methods）。</li>
+<li><strong>設計巧思——屬性層級而非工作層級測量</strong>：required warmth 不被實驗操弄，而是逐任務以 5 點量表測量（3 題，Caić et al. 2020，各 study $\alpha = .681$–$.748$），成為<strong>自然變異的連續調節變項</strong>；此設計使「溫暖度」從操弄變項升級為真實任務差異（行政任務 $M=2.47$ 最低、生涯建議 $M=4.23$ 最高）（Peng et al., 2022）。</li>
+<li><strong>發現一｜required warmth 降低 AI 接受度（H1，五 study 一致）</strong>：Study 1a 中 required warmth 顯著降低對 AI 教師的接受度，$\lambda = -0.070$（$p = .024$）；Study 2a/2b/2c 中純 AI 服務的負向效果為 $\lambda = -0.133/-0.249/-0.150$（$p = .004/.000/.001$），跨三產業穩健複製（Peng et al., 2022; 延伸：Required warmth effect - AI service acceptance）。</li>
+<li><strong>發現二｜task-AI fit 完全中介（H2）</strong>：Study 1b 以 PROCESS Model 4（Hayes, 2017）確認 required warmth 對接受度的負向效果由知覺 task-AI fit 完全中介——總效果 $\lambda = -0.481$、required warmth → fit $\lambda = -0.477$、fit → 接受度 $\lambda = 0.970$、間接效果 $-0.463$（95% CI $[-0.598, -0.322]$），加入中介後直接效果不顯著（$\lambda = -0.018$, $p = .720$）；亦即 $\text{warmth}\uparrow \to \text{fit}\downarrow \to \text{接受度}\downarrow$（Peng et al., 2022; 延伸：Task-AI fit fully mediates required warmth effect on AI acceptance）。</li>
+<li><strong>發現三｜「AI 支援人類」可救回高溫暖度任務的接受度（H3），但「人類監督 AI」不行（H4 不支持）</strong>：當協作形式為 AI 支援人類時，required warmth 的負向效果由純 AI 的 $\lambda = -0.133/-0.249/-0.150$ 減弱為 $-0.001/-0.102/-0.063$，差異 $\Delta\lambda = -0.132/-0.147/-0.087$（$p = .006/.005/.032$）皆顯著；「人類監督 AI」則無此救回效果——顯示<strong>協作的框定方式（誰主導）比是否有人類參與更關鍵</strong>（Peng et al., 2022; 延伸：AI supporting human collaboration restores acceptance for high-warmth tasks）。</li>
+<li><strong>理論貢獻</strong>：以 社會認知理論（溫暖／勝任兩維度）、任務—科技適配理論（Goodhue &amp; Thompson, 1995）、概念組合理論（maximum rule 解釋「AI-人」複合概念繼承人類高溫暖度知覺）三理論支撐；中介結果顯示是<strong>消費者知覺的適配</strong>（perceived fit）而非 AI 的技術可行性決定接受度，回應 Puntoni et al.（2021）「從消費者經驗角度研究 AI」的呼籲（Peng et al., 2022）。</li>
+<li><strong>方法學亮點與限制</strong>：(a) 五 study 職責分工清楚（主效果／機制／調節／跨產業複製），是 multi-study CBC 設計範本；(b) O<em>NET 任務 + 屬性層級溫暖度測量把調節變項自然化；(c) HB 個體層級估計自動吸收 AI understanding 等個別差異，故 CBC 無需額外控制變項（詳見 <a href="conjoint_book.html">§3.2</a>）；限制為全屬</em><em>自陳態度而非真實行為</em>*，且僅把 competence 當控制變項，留下「拆解 AI competence（分析智能 vs. 直覺智能）」的後續缺口（Peng et al., 2022; 延伸：Peng 2022 Methods）。</li>
 </ul>
 <h4 id="97">9.7 跨案例方法學比較</h4>
 <table>
@@ -1984,6 +2170,51 @@ MathJax = {
 <td>OLS/AMCE + DMM</td>
 <td>AMCE（因果）</td>
 </tr>
+<tr>
+<td>Goodman 2025（公民身分）</td>
+<td>政治學</td>
+<td>US/UK/DE 公民</td>
+<td>7</td>
+<td>Choice-Based</td>
+<td>OLS/AMCE</td>
+<td>AMCE（因果）+ 子群體</td>
+</tr>
+<tr>
+<td>Bansak 2020（AMCE 理論）</td>
+<td>方法論</td>
+<td>（理論推導）</td>
+<td>—</td>
+<td>（理論）</td>
+<td>—</td>
+<td>AMCE ∝ Expected Borda Score</td>
+</tr>
+<tr>
+<td>Nettle 2025（福利偏好）</td>
+<td>社會政策</td>
+<td>UK 成人</td>
+<td>10</td>
+<td>Survey Conjoint</td>
+<td>OLS/AMCE</td>
+<td>AMCE（因果）</td>
+</tr>
+<tr>
+<td>Tangianu 2025（官僚訓練）</td>
+<td>國際發展</td>
+<td>三國官僚</td>
+<td>5</td>
+<td>CBC + 質性</td>
+<td>MNL</td>
+<td>AMCE + 質性三角驗證</td>
+</tr>
+<tr>
+<td>Peng 2022（AI 服務接受度）</td>
+<td>服務業／AI</td>
+<td>荷／英消費者</td>
+<td>7 任務 + 服務方</td>
+<td>CBC + 問卷（5 study）</td>
+<td>Mixed Logit + HB；PROCESS</td>
+<td>個體 part-worth + 中介/調節</td>
+</tr>
 </tbody>
 </table>
 <ul>
@@ -1991,6 +2222,14 @@ MathJax = {
 <li><strong>估計方法多元性</strong>：從最簡單的 OLS part-worth 估計（Choudhury &amp; Gulati, 2020; Böhm et al., 2015）到 GLMM（de Vries et al., 2022）、Mixed Logit（Chiambaretto, 2021）、PAPRIKA 線性規劃（Dabral et al., 2025）——估計方法選擇應由研究問題與依變項尺度決定，而非習慣或軟體可及性。</li>
 <li><strong>因果推論模式 vs. 偏好分解模式</strong>：因果推論模式（AMCE 為核心）更常見於社會科學研究（政治學、移民、組織決策）；偏好分解模式（WTP 或相對重要性為核心）更常見於行銷與服務業研究；兩種模式的選擇依「研究問題是因果識別還是偏好描述」而定（Hainmueller, Hopkins &amp; Yamamoto, 2014; Green &amp; Rao, 1971）。</li>
 <li><strong>跨領域共同的 conjoint 核心邏輯</strong>：無論哪個領域，conjoint 的設計邏輯都是：(a) 把研究對象的「決策」拆解為若干可操弄的屬性；(b) 隨機組合屬性水準呈現給受訪者；(c) 從選擇/評分/排序行為中反推每個屬性的相對貢獻；(d) 以嚴謹的統計模型（Logit、GLMM、Linear Programming 等）估計因果效應或偏好強度。</li>
+</ul>
+<h4 id="98">9.8 社會政策：福利制度偏好</h4>
+<p>本子節以 Nettle et al.（2025）的英國福利制度偏好研究為案例，展示 conjoint 如何應用於公共政策設計的公民偏好研究。此案例的獨特性在於：(a) 屬性包含「結果特徵」（貧困削減、不平等削減、健康效應）與「制度設計特徵」（資格審查、條件性、普遍性），可直接比較兩類屬性的相對重要性；(b) 理論框架整合 quasi-maximin preferences、inequality aversion 與 deservingness heuristic 三個行為經濟學構念。</p>
+<ul>
+<li><strong>案例 12｜英國公民想要什麼樣的福利制度？</strong>（Nettle et al., 2025）：800 位英國成人 Prolific 樣本、10 屬性（貧困削減 / 不平等削減 / 心理健康效應 / 身體健康效應 / 所得稅率 / 財富稅 / 碳稅 / 資格審查 / 條件性 / 普遍性）、15 任務；以 AMCE 估計每個福利方案屬性對選擇機率的平均因果效應（Nettle, Chrisp, Johnson &amp; Johnson, 2025; Nettle 2025 welfare system conjoint UK）。</li>
+<li><strong>核心發現</strong>：(1) <strong>貧困削減為最強驅動因素</strong>——AMCE 效應量最大，受訪者優先選擇能有效減貧的方案；(2) <strong>稅收取捨被接受</strong>——即使中右選民亦接受較高所得稅率以換取更大的貧困削減；(3) <strong>財富稅與碳稅被正面看待</strong>——視為方案特色而非成本；(4) <strong>制度設計屬性次要</strong>——資格審查、條件性、普遍性的 AMCE 均弱於結果屬性（Nettle et al., 2025）。</li>
+<li><strong>理論框架</strong>：(a) quasi-maximin preferences（Charness &amp; Rabin, 2002）——公民優先提升最弱勢群體福祉，符合 Rawlsian 原則；(b) inequality aversion——偏好更平等的分配；(c) deservingness heuristic（Jensen &amp; Petersen, 2017）——道德直覺認為福利應流向「正當獲得者」，但在本研究中此機制弱於 sociotropic 結果導向偏好（Nettle et al., 2025）。</li>
+<li><strong>方法學亮點</strong>：10 屬性設計為大屬性數 conjoint 提供範例——每個任務同時呈現所有屬性以保持完整性，但以 15 任務維持足夠統計檢力；sociotropic vs. egotropic 維度的系統性比較是政策 conjoint 的典型分析框架（Nettle et al., 2025）。</li>
 </ul>
 </main>
 </div>

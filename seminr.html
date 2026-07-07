@@ -11,10 +11,16 @@
 <aside class="sidebar">
 <div class="toc">
 <ul>
-<li><a href="#seminr">seminr</a></li>
+<li><a href="#_1">方法說明</a><ul>
+<li><a href="#_2">目的</a></li>
+<li><a href="#_3">流程</a></li>
+<li><a href="#_4">適用範圍</a></li>
+<li><a href="#_5">代表性研究</a></li>
+<li><a href="#_6">相關學者</a></li>
+</ul>
+</li>
 </ul>
 </div>
-
 </aside>
 <main class="content">
 <h1>seminr</h1>
@@ -27,6 +33,39 @@
 - <a href="PLSpredict.html">PLSpredict</a>、<a href="PLS_MGA.html">PLS_MGA</a>、<a href="MICOM.html">MICOM</a>
 - 互動效果（moderation）</p>
 <p><strong>參考</strong>：Ray, S., Danks, N. P., &amp; Calero Valdez, A. (2022). seminr: Building and Estimating Structural Equation Models. R package.</p>
+<h3 id="_1">方法說明</h3>
+<h4 id="_2">目的</h4>
+<ul>
+<li>主要研究目的：提供與 SmartPLS 結果相容、語法簡潔的 R 套件，作為 <a href="PLS-SEM.html">PLS-SEM</a> 估計、信效度檢驗與預測力評估的開源工具（Ray, Danks, &amp; Calero Valdez, 2022）</li>
+<li>次要用途：擔任 JASP PLS-SEM Modeling 模組的後端計算引擎，讓 GUI 使用者亦能取得 <a href="seminr.html">seminr</a> 的完整輸出</li>
+</ul>
+<h4 id="_3">流程</h4>
+<ol>
+<li>以 <code>constructs()</code> 與 <code>relationships()</code> 宣告外模型與內模型結構</li>
+<li>呼叫 <code>estimate_pls_model()</code> 取得 PLS-SEM 估計結果</li>
+<li>以 <code>bootstrap_model()</code> 跑 5000 reps（含 BCa CI）估計係數顯著性</li>
+<li>透過 <code>summary()</code> 一鍵輸出 <a href="HTMT.html">HTMT</a>、<a href="rho_A.html">rho_A</a>、composite_reliability、average_variance_extracted</li>
+<li>進階分析：呼叫 <a href="PLSpredict.html">PLSpredict</a>、<a href="PLS_MGA.html">PLS_MGA</a>、<a href="MICOM.html">MICOM</a>、moderation 等模組</li>
+</ol>
+<h4 id="_4">適用範圍</h4>
+<ul>
+<li><strong>適用</strong>：reflective／formative 構念混合模型、moderation、多群組比較、預測導向 SEM（Ray et al., 2022）</li>
+<li><strong>不適用</strong>：純 CB-SEM（請改用 lavaan／Mplus）；極小樣本下 PLS-SEM 本身的適用性仍有爭議</li>
+<li><strong>樣本規模建議</strong>：依 PLS-SEM 一般慣例（暫無 wiki/ 套件特定建議）</li>
+<li><strong>資料類型要求</strong>：橫斷面或縱貫面數值指標；支援類別 moderator</li>
+</ul>
+<h4 id="_5">代表性研究</h4>
+<ul>
+<li><strong>奠基文獻</strong>：Ray, Danks, &amp; Calero Valdez（2022）— <a href="seminr.html">seminr</a> 套件發布與設計理念</li>
+<li><strong>方法論支撐</strong>：<a href="Hair_2022_PLS.html">Hair_2022_PLS</a> — PLS-SEM 主流教材，操作流程可直接映射至 seminr API</li>
+<li><strong>相關 wiki 筆記</strong>：（延伸：<a href="Hair_2022_PLS.html">Hair_2022_PLS</a>、<a href="HTMT.html">HTMT</a>、<a href="MICOM.html">MICOM</a>、<a href="PLSpredict.html">PLSpredict</a>、<a href="PLS_MGA.html">PLS_MGA</a>）</li>
+</ul>
+<h4 id="_6">相關學者</h4>
+<ul>
+<li><strong>開發者</strong>：Soumya Ray、Nicholas P. Danks、André Calero Valdez（2022）— <a href="seminr.html">seminr</a> 套件作者</li>
+<li><strong>PLS-SEM 方法論支撐</strong>：Joseph F. Hair Jr.、Christian M. Ringle、Marko Sarstedt、Jörg Henseler（透過 seminr 實作其方法論建議）</li>
+<li><strong>相關學者 wiki 頁</strong>：（暫無 wiki/ 資料）</li>
+</ul>
 </main>
 </div>
 <script>

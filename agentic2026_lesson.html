@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>課堂講義 · Agentic AI 實作</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; }
+body {
+  font-family: "Helvetica Neue", Arial, "Noto Sans TC", sans-serif;
+  background: #f0f2f5; margin: 0; min-height: 100vh; color: #1a1a1a;
+}
+
+/* ── Setup / Login screens ────────────────────── */
+.setup-wrap {
+  display: flex; align-items: center; justify-content: center;
+  min-height: 100vh; padding: 2rem;
+}
+.setup-card {
+  background: #fff; border-radius: 14px; padding: 2.5rem;
+  max-width: 520px; width: 100%;
+  box-shadow: 0 4px 24px rgba(0,0,0,.1);
+}
+.setup-card h2 { margin: 0 0 .4rem; font-size: 1.25rem; }
+.setup-card p  { color: #555; font-size: .88rem; line-height: 1.7; margin: 0 0 1.4rem; }
+.setup-card input {
+  width: 100%; padding: .7rem 1rem; border: 1.5px solid #ddd;
+  border-radius: 8px; font-size: .95rem; margin-bottom: 1rem;
+}
+.setup-card input:focus { outline: none; border-color: #0055cc; }
+
+/* ── Sticky header ────────────────────────────── */
+.hdr {
+  background: #fff; padding: .85rem 1.8rem;
+  border-bottom: 1px solid #e4e4e4;
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 30;
+  box-shadow: 0 2px 8px rgba(0,0,0,.06);
+}
+.hdr-left { display: flex; flex-direction: column; }
+.hdr h1 { margin: 0; font-size: 1rem; font-weight: 700; }
+.hdr-sub { font-size: .75rem; color: #999; margin-top: .1rem; }
+.hdr-right { display: flex; align-items: center; gap: .7rem; }
+.dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+.dot.ok  { background: #22c55e; }
+.dot.err { background: #ef4444; }
+.conn-text { font-size: .75rem; color: #999; }
+.session-chip {
+  font-size: .72rem; font-weight: 700; letter-spacing: .03em;
+  background: #e8f0ff; color: #0055cc;
+  padding: .2rem .6rem; border-radius: 20px;
+}
+
+/* ── Active unit banner (below header) ────────── */
+.now-banner {
+  background: #fbbf24; color: #7c5a00;
+  font-size: .8rem; font-weight: 700; letter-spacing: .03em;
+  text-align: center; padding: .35rem 1rem;
+  position: sticky; top: 57px; z-index: 29;
+}
+
+/* ── Lesson wrapper ───────────────────────────── */
+.lesson-wrap {
+  max-width: 780px; margin: 1.4rem auto 3rem;
+  padding: 0 1.2rem;
+  display: flex; flex-direction: column; gap: .8rem;
+}
+
+/* ── Section divider ──────────────────────────── */
+.section-hdr {
+  display: flex; align-items: center; gap: .7rem;
+  font-size: .72rem; font-weight: 800; letter-spacing: .1em;
+  text-transform: uppercase; color: #666;
+  padding: .5rem 0 .1rem; margin-top: .6rem;
+}
+.section-hdr::after { content: ""; flex: 1; height: 1px; background: #d0d0d0; }
+
+/* ── Teacher controls bar ─────────────────────── */
+.t-controls {
+  background: #fff; border-radius: 10px;
+  padding: .85rem 1.2rem;
+  display: flex; align-items: center; gap: .9rem; flex-wrap: wrap;
+  box-shadow: 0 1px 4px rgba(0,0,0,.07);
+}
+.t-controls label { font-size: .87rem; color: #555; white-space: nowrap; }
+.num-input {
+  width: 60px; padding: .32rem .5rem;
+  border: 1.5px solid #ddd; border-radius: 6px;
+  font-size: 1rem; font-weight: 700; text-align: center;
+}
+.btn-reset   { background: #ef4444; color: #fff; }
+.btn-reset:hover { background: #cc0000; }
+.btn-primary { background: #0055cc; color: #fff; }
+.btn-primary:hover { background: #0044aa; }
+.btn-reset, .btn-primary {
+  padding: .4rem .95rem; border: none; border-radius: 7px;
+  font-size: .87rem; font-weight: 700; cursor: pointer; transition: background .15s;
+}
+
+/* ── Lesson card ──────────────────────────────── */
+.lesson-card {
+  background: #fff; border-radius: 10px; overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0,0,0,.07);
+  border-left: 4px solid transparent;
+  transition: border-color .2s, background .2s;
+}
+.lesson-card.active { border-left-color: #fbbf24; }
+.lesson-card.done   { border-left-color: #22c55e; }
+
+/* Card header */
+.card-hdr {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: .8rem 1.2rem; gap: .6rem;
+  border-bottom: 1px solid #f0f0f0;
+  background: #fafafa;
+}
+.lesson-card.active .card-hdr { background: #fffbeb; }
+.lesson-card.done   .card-hdr { background: #f0fff4; }
+.card-hdr-main { display: flex; align-items: center; gap: .5rem; flex: 1; flex-wrap: wrap; }
+.card-label { font-size: .93rem; font-weight: 700; }
+.u-time {
+  font-size: .7rem; color: #aaa; font-weight: 400;
+  background: #efefef; padding: .1rem .4rem; border-radius: 4px;
+}
+.active-badge {
+  font-size: .7rem; font-weight: 700; letter-spacing: .04em;
+  background: #fbbf24; color: #7c5a00;
+  padding: .15rem .5rem; border-radius: 4px;
+}
+.done-badge {
+  font-size: .7rem; font-weight: 700;
+  background: #22c55e; color: #fff;
+  padding: .15rem .5rem; border-radius: 4px;
+}
+
+/* Card body (lesson content) */
+.card-body {
+  padding: .7rem 1.2rem .5rem;
+  transition: opacity .3s;
+}
+.lesson-card.done .card-body { opacity: .45; }
+
+.card-body p  { font-size: .87rem; line-height: 1.65; color: #333; margin: .4rem 0; }
+.card-body h4 { font-size: .83rem; font-weight: 700; color: #444; margin: .8rem 0 .3rem; }
+.card-body ol, .card-body ul { margin: .4rem 0 .4rem 1.25rem; }
+.card-body > ul { list-style: disc; }
+.card-body > ol { list-style: decimal; }
+.card-body li ul { list-style: circle; margin-top: .2rem; }
+.card-body li { font-size: .87rem; line-height: 1.6; color: #333; margin-bottom: .28rem; }
+.card-body code {
+  background: #f3f3f3; color: #c7254e;
+  padding: .1em .35em; border-radius: 3px;
+  font-size: .83em; font-family: "SFMono-Regular", Consolas, monospace;
+}
+.card-body strong { color: #111; }
+.card-body a { color: #0055cc; }
+
+.note {
+  background: #f0f7ff; border-left: 3px solid #0055cc;
+  padding: .5rem .85rem; border-radius: 0 6px 6px 0;
+  margin: .55rem 0; font-size: .84rem; line-height: 1.55; color: #333;
+}
+.question {
+  background: #fff8e6; border-left: 3px solid #f59e0b;
+  padding: .5rem .85rem; border-radius: 0 6px 6px 0;
+  margin: .55rem 0; font-size: .84rem; line-height: 1.55; color: #333;
+}
+
+/* Card footer */
+.card-foot {
+  display: flex; align-items: center; justify-content: flex-end;
+  padding: .65rem 1.2rem; border-top: 1px solid #f0f0f0; gap: .6rem;
+}
+.card-foot.t-foot { flex-direction: column; align-items: stretch; gap: .28rem; }
+.t-foot-top {
+  display: flex; justify-content: space-between; align-items: center;
+}
+.t-hint-text { font-size: .72rem; color: #ccc; }
+.u-count { font-size: .85rem; font-weight: 700; color: #0055cc; }
+.bar-bg  { width: 100%; height: 7px; background: #eee; border-radius: 4px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 4px; background: #22c55e; transition: width .4s ease; }
+.bar-fill.low { background: #ef4444; }
+.bar-fill.mid { background: #fbbf24; }
+
+/* Done / complete button */
+.btn-done {
+  padding: .42rem 1.1rem; border: none; border-radius: 7px;
+  font-size: .87rem; font-weight: 700; cursor: pointer;
+  white-space: nowrap; transition: all .15s;
+  background: #0055cc; color: #fff;
+}
+.btn-done:hover:not(:disabled) { background: #0044aa; transform: scale(1.03); }
+.btn-done.done   { background: #22c55e; cursor: default; }
+.btn-done:disabled { background: #e0e0e0; color: #999; cursor: not-allowed; }
+
+/* Help / stuck button (student) */
+.btn-help {
+  padding: .42rem .85rem; border: 1px solid #f59e0b; border-radius: 7px;
+  font-size: .82rem; font-weight: 600; cursor: pointer;
+  white-space: nowrap; transition: all .15s;
+  background: #fff; color: #b45309;
+}
+.btn-help:hover:not(:disabled) { background: #fff8e6; transform: scale(1.03); }
+.btn-help.helped { background: #f59e0b; color: #fff; cursor: default; border-color: #f59e0b; }
+.btn-help:disabled { cursor: default; }
+
+/* Help count (teacher) */
+.u-help { font-size: .82rem; font-weight: 700; color: #b45309; margin-left: .5rem; }
+.u-help.zero { color: #ccc; font-weight: 400; }
+
+/* Teacher card: clickable header */
+.card-hdr.t-clickable { cursor: pointer; }
+.card-hdr.t-clickable:hover { filter: brightness(.97); }
+
+@media (max-width: 520px) {
+  .hdr { padding: .8rem 1rem; }
+  .lesson-wrap { padding: 0 .7rem; margin-top: 1rem; }
+  .card-hdr { padding: .7rem 1rem; }
+  .card-body { padding: .6rem 1rem .4rem; }
+  .card-foot { padding: .55rem 1rem; }
+  .card-body li, .card-body p { font-size: .83rem; }
+}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+const FIREBASE_URL = "https://course-update-36460-default-rtdb.firebaseio.com";
+const TEACHER_HASH = "a93ac600f27f6602bf628cd929c9028e285038fc8637fe1ec6792e8850ade6a8";
+const POLL_MS = 2500;
+
+// ── Lesson content (keyed by unit id) ─────────────
+const CONTENT = {
+"p01": `<p>課前先裝好，上課才有時間動手。</p>
+<ol>
+  <li>確認有 Node.js 等 runtime（終端機打版本確認指令）</li>
+  <li>安裝 Claude Code CLI</li>
+  <li>第一次啟動要登入／授權——<strong>金鑰像鑰匙，別貼到群組裡</strong></li>
+</ol>
+<div class="note">裝不起來也沒關係，第一節 A① 會現場帶你裝，看到 <code>command not found</code> 是正常的第一關。</div>`,
+
+"p02": `<p>帶一段<strong>你自己真的在處理</strong>的東西：訪談逐字稿／一份報告／一封要回的長信都行。今天你要拿它動手兩次——先讓 agent 處理它，再把處理流程做成 skill。</p>`,
+
+"p03": `<p>上課前貼這段給 AI（ChatGPT／Claude／Gemini 皆可）：</p>
+<div class="note">「請用生活比喻解釋 <strong>AI agent、chatbot、workflow</strong> 三者差在哪，各舉一個我工作上會遇到的例子。接著反過來問我：我每週固定重複、步驟又差不多的工作有哪些？幫我列 3 件，並判斷哪一件最適合交給會動手的 AI agent。」<br>追問一次：「如果我完全不會寫程式，真的做得到嗎？卡點會在哪？」</div>
+<div class="question">💬 把 AI 列的那 3 件重複工作記下來——第二節 B③ 你要把其中一件真的做成 skill。</div>`,
+
+"a01": `<ol>
+  <li>確認 runtime → 裝 CLI → 登入授權</li>
+  <li><code>cd</code> 進一個工作資料夾再啟動——它<strong>只看得到你站的那個資料夾</strong></li>
+  <li>下一個無風險暖身指令，例如「用一句話說明這個資料夾裡有什麼」</li>
+</ol>
+<div class="note">注意三件事：① 它會<strong>先講計畫再動手</strong>（這是你的驗收介面）② 它會<strong>問你要不要授權</strong>讀寫檔（這是煞車，別狂按 yes）③ 同一指令、不同人結果不同。</div>`,
+
+"a02": `<ul>
+  <li><strong>chatbot</strong>：一問一答，<strong>不動</strong>你的檔</li>
+  <li><strong>workflow</strong>：固定步驟、照表操課，<strong>不臨場判斷</strong></li>
+  <li><strong>agent</strong>：會規劃、會動手、看結果再調整 → Claude Code 屬這類</li>
+</ul>
+<div class="note">三個比喻先聽過（第二節會用到）：skill＝可重複的<strong>食譜</strong>；MCP＝接資料源的<strong>轉接頭</strong>；hook＝當 X 發生自動做 Y 的<strong>開關</strong>。</div>
+<div class="question">💬 用一句話反駁「Claude Code 就是比較會查資料的 ChatGPT」，關鍵字要有「動檔案」和「臨場判斷」。</div>`,
+
+"a03": `<ol>
+  <li><strong>放料</strong>：把你帶來的檔案丟進你 <code>cd</code> 的資料夾，確認站的資料夾看得到它</li>
+  <li><strong>三段式下指令</strong>：背景（這是什麼、你是誰幫誰）＋任務（一條條列步驟）＋格式（輸出長相、多長）</li>
+  <li><strong>先讀它的計畫再放行</strong>——這就是你在驗收</li>
+  <li>看結果，<strong>立刻標「對一處／錯一處」</strong>，判斷不夠好要改背景、任務、還是格式</li>
+</ol>
+<div class="question">💬 它先講的計畫，跟你心裡想的一樣嗎？哪裡不一樣？</div>`,
+
+"a04": `<p>兩人互看螢幕：</p>
+<ul>
+  <li>各講一處 <strong>AI 幫上忙</strong>的地方</li>
+  <li>各講一處 <strong>需要你介入修</strong>的地方</li>
+</ul>
+<div class="note">重點不是它多強，是<strong>你在哪裡必須出手</strong>——那就是你不可被取代的判斷力。</div>`,
+
+"b01": `<p>什麼值得做成 skill？三條判準：</p>
+<ol>
+  <li><strong>頻率高</strong>（每週／每天都做，一次性的事不值得固化）</li>
+  <li><strong>步驟固定</strong>（流程大致一樣）</li>
+  <li><strong>輸入輸出講得清楚</strong>（丟什麼進、吐什麼出）</li>
+</ol>
+<div class="note">worked example「週報彙整」：背景＝編務助理、每週五給稿件清單；任務＝①逐篇一句重點 ②標數據最佳幾篇 ③一頁每篇三行附連結 ④三句選題建議；格式＝Markdown 一頁。存成 skill，下次喊名字＋丟清單就跑。</div>`,
+
+"b02": `<ul>
+  <li><strong>沒 MCP</strong>：只看得到你的資料夾，每次要手動把料複製貼上</li>
+  <li><strong>插上 MCP</strong>：伸手到試算表／開放資料／行事曆，喊一聲它自己去把料讀進來</li>
+</ul>
+<div class="note">批次產製（管理職殺手鐧）：一份素材→FB／IG／LINE／電子報 一次四版，這是「人力 × 平台數」的放大。</div>
+<div class="question">💬 沒接資料源的 skill，跟一個純文字模板差在哪？</div>`,
+
+"b03": `<p>用你課前跟 AI 挑出的那件「<strong>每週都做、步驟又固定</strong>」的事：</p>
+<ol>
+  <li><strong>挑事</strong>：對照三條判準，三條都中再往下</li>
+  <li><strong>寫三段式</strong>：背景／任務／格式各<strong>寫死</strong>。每留白一處，AI 就替你自作主張一處</li>
+  <li><strong>存成 skill</strong>：給它一個一看就懂的名字</li>
+  <li><strong>跑一次</strong>：喊名字、丟料、先讀計畫再放行</li>
+  <li><strong>驗收</strong>：標「對一處／待修一處」，判斷待修的是 <strong>prompt 留白</strong>還是<strong>沒接到資料</strong></li>
+</ol>`,
+
+"b04": `<p>兩人一組，互看對方的 skill，問三題：</p>
+<ol>
+  <li>解決的是哪個<strong>會重複很多次</strong>的工作？</li>
+  <li>prompt 寫得夠死、別人照跑會不會跑歪？</li>
+  <li><strong>有沒有真的接到資料源</strong>，還是只是純文字模板？</li>
+</ol>
+<div class="note">第三題最關鍵——很多人做出來的其實只是「把指令存起來」，料還是手貼。真正的工作流，是料能自己流進來。</div>`,
+
+"b05": `<p><strong>反思（寫下一句）</strong>：我下週會把哪一件每週都在做的事，包成自己的第一個 skill？它最可能卡在 prompt 還是資料接不上？</p>
+<div class="question">🎫 Exit ticket：你今天做出的 skill，如果<strong>下週給同事跑、結果卻不一樣</strong>，你會先檢查「prompt 哪一段留白了」還是「它根本沒接到資料源」？為什麼？</div>`,
+};
+
+// UNITS: [id, label, time] — null id = section header
+const UNITS = [
+  [null,   "課前準備（上課前完成）"],
+  ["p01",  "⓪-1 裝好 Claude Code",           "課前"],
+  ["p02",  "⓪-2 帶一段自己的真實工作檔",       "課前"],
+  ["p03",  "⓪-3 跟 AI 過一招，挑出 3 件重複工作", "課前"],
+  [null,   "第一節：讓 agent 動起來"],
+  ["a01",  "A① 安裝 + 跑第一個指令",           "13 min"],
+  ["a02",  "A② agent vs chatbot vs workflow", "9 min"],
+  ["a03",  "A③ 用真實工作跑一次（三段式）",     "15 min"],
+  ["a04",  "A④ 配對分享：幫上忙 / 要介入各一處", "8 min"],
+  [null,   "第二節：固化成 skill"],
+  ["b01",  "B① 判準三條 + 週報 worked example", "7 min"],
+  ["b02",  "B② MCP 接資料 + 批次產多版本",      "8 min"],
+  ["b03",  "B③ 做你自己的第一個 skill",         "17 min"],
+  ["b04",  "B④ 配對互評：有沒有真接到資料源",    "8 min"],
+  ["b05",  "B⑤ 反思 + Exit ticket",           "5 min"],
+];
+
+// ── State ─────────────────────────────────────────
+const params        = new URLSearchParams(location.search);
+const WANTS_TEACHER = params.has("t");
+let   IS_TEACHER    = WANTS_TEACHER && sessionStorage.getItem("teacher_auth") === "1";
+const LS_DB         = "cls_db_url";
+const LS_LOCAL      = "cls_local";
+
+let dbUrl     = (FIREBASE_URL || localStorage.getItem(LS_DB) || "").replace(/\/$/, "");
+let connected = false;
+let pollTimer = null;
+
+let srv = { session: 0, total: 0, active: "" };
+UNITS.forEach(([id]) => { if (id) { srv[id] = 0; srv[id + "_help"] = 0; } });
+
+let local = JSON.parse(localStorage.getItem(LS_LOCAL) || '{"session":0,"done":{},"help":{}}');
+if (!local.help) local.help = {};
+
+const root = document.getElementById("root");
+
+// ── Firebase REST ──────────────────────────────────
+const COURSE_ID = (function(){
+  const stem = location.pathname.split('/').pop().replace(/\.html$/, '');
+  if (['progress','classroom','lesson'].includes(stem)) return 'classroom';
+  return stem.replace(/_(progress|classroom|lesson)$/, '');
+})();
+function dbPath() { return `${dbUrl}/${COURSE_ID}.json`; }
+async function dbGet() {
+  try {
+    const r = await fetch(dbPath());
+    if (!r.ok) throw new Error(r.status);
+    connected = true; return await r.json();
+  } catch { connected = false; return null; }
+}
+async function dbPatch(data) {
+  return fetch(dbPath(), { method: "PATCH", body: JSON.stringify(data),
+    headers: { "Content-Type": "application/json" } });
+}
+async function dbPut(data) {
+  return fetch(dbPath(), { method: "PUT", body: JSON.stringify(data),
+    headers: { "Content-Type": "application/json" } });
+}
+
+// ── Sync ──────────────────────────────────────────
+async function poll() {
+  const data = await dbGet();
+  if (!data) { render(); return; }
+  if ((data.session || 0) > (local.session || 0)) {
+    local = { session: data.session, done: {}, help: {} };
+    localStorage.setItem(LS_LOCAL, JSON.stringify(local));
+  }
+  srv.session = data.session || 0;
+  srv.total   = data.total   || 0;
+  srv.active  = data.active  || "";
+  UNITS.forEach(([id]) => {
+    if (id) {
+      srv[id]            = data[id]            || 0;
+      srv[id + "_help"]  = data[id + "_help"]  || 0;
+    }
+  });
+  render();
+}
+
+// ── Student action ────────────────────────────────
+async function markDone(uid) {
+  if (local.done[uid]) return;
+  local.done[uid] = true;
+  localStorage.setItem(LS_LOCAL, JSON.stringify(local));
+  const next = (srv[uid] || 0) + 1;
+  srv[uid] = next; render();
+  await dbPatch({ [uid]: next });
+}
+async function markHelp(uid) {
+  if (local.help[uid]) return;
+  local.help[uid] = true;
+  localStorage.setItem(LS_LOCAL, JSON.stringify(local));
+  const k = uid + "_help";
+  const next = (srv[k] || 0) + 1;
+  srv[k] = next; render();
+  await dbPatch({ [k]: next });
+}
+
+// ── Teacher actions ───────────────────────────────
+async function resetAll() {
+  if (!confirm("確定重置所有學生進度？\n學生頁面將在 3 秒內自動更新。")) return;
+  const newSession = (srv.session || 0) + 1;
+  const fresh = { session: newSession, total: srv.total, active: srv.active };
+  UNITS.forEach(([id]) => { if (id) { fresh[id] = 0; fresh[id + "_help"] = 0; } });
+  await dbPut(fresh); srv = { ...fresh }; render();
+}
+async function setTotal(n) {
+  if (isNaN(n) || n < 1) return;
+  srv.total = n; await dbPatch({ total: n }); render();
+}
+async function setActive(uid) {
+  const next = srv.active === uid ? "" : uid;
+  srv.active = next; render(); await dbPatch({ active: next });
+}
+
+// ── Login screens ─────────────────────────────────
+function renderSetup() {
+  root.innerHTML = `
+<div class="setup-wrap"><div class="setup-card">
+  <h2>🔧 首次設定 Firebase</h2>
+  <p>請輸入 Firebase Realtime Database URL。</p>
+  <input id="db-in" type="url" placeholder="https://my-project-default-rtdb.firebaseio.com"
+         value="${localStorage.getItem(LS_DB) || ""}">
+  <button class="btn-primary" style="width:100%;padding:.7rem" onclick="saveDb()">儲存並開始</button>
+</div></div>`;
+}
+function saveDb() {
+  const val = document.getElementById("db-in").value.trim().replace(/\/$/, "");
+  if (!val.startsWith("https://")) { alert("請輸入完整 HTTPS URL"); return; }
+  dbUrl = val; localStorage.setItem(LS_DB, val); init();
+}
+function renderTeacherLogin() {
+  root.innerHTML = `
+<div class="setup-wrap"><div class="setup-card">
+  <h2>🔒 講師登入</h2>
+  <p>請輸入講師密碼以進入課堂管理介面。</p>
+  <input id="pw-in" type="password" placeholder="密碼"
+         onkeydown="if(event.key==='Enter')checkTeacherPw()">
+  <button class="btn-primary" style="width:100%;padding:.7rem" onclick="checkTeacherPw()">登入</button>
+  <p id="pw-err" style="color:#ef4444;font-size:.85rem;margin:.6rem 0 0;display:none">密碼錯誤，請再試一次</p>
+</div></div>`;
+  setTimeout(() => document.getElementById("pw-in")?.focus(), 50);
+}
+async function checkTeacherPw() {
+  const val = document.getElementById("pw-in")?.value || "";
+  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(val));
+  const hex = Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,"0")).join("");
+  if (hex === TEACHER_HASH) {
+    sessionStorage.setItem("teacher_auth","1"); IS_TEACHER = true; init();
+  } else {
+    document.getElementById("pw-err").style.display = "block";
+    document.getElementById("pw-in").value = "";
+    document.getElementById("pw-in").focus();
+  }
+}
+
+// ── Connection indicator ──────────────────────────
+function connHtml() {
+  return `<span class="dot ${connected ? "ok" : "err"}"></span>
+          <span class="conn-text">${connected ? "已連線" : "離線"}</span>`;
+}
+
+// ── Build one card's HTML ─────────────────────────
+function buildCard(uid, label, time) {
+  const content  = CONTENT[uid] || "";
+  const inSession = local.session === srv.session;
+
+  if (IS_TEACHER) {
+    const total    = srv.total || 1;
+    const cnt      = srv[uid] || 0;
+    const helpCnt  = srv[uid + "_help"] || 0;
+    const pct      = Math.min(100, Math.round(cnt / total * 100));
+    const fill     = pct >= 80 ? "" : pct >= 40 ? " mid" : " low";
+    const isActive = srv.active === uid;
+    const badge    = isActive ? `<span class="active-badge">現在進行</span>` : "";
+
+    return `
+<div class="lesson-card${isActive ? " active" : ""}">
+  <div class="card-hdr t-clickable" onclick="setActive('${uid}')">
+    <div class="card-hdr-main">
+      <span class="card-label">${label}</span>
+      ${time ? `<span class="u-time">${time}</span>` : ""}
+    </div>
+    ${badge}
+  </div>
+  ${content ? `<div class="card-body">${content}</div>` : ""}
+  <div class="card-foot t-foot">
+    <div class="t-foot-top">
+      <span class="t-hint-text">點擊標題以標記「現在進行」</span>
+      <span>
+        <span class="u-count">${cnt} / ${total}</span>
+        <span class="u-help${helpCnt === 0 ? " zero" : ""}" title="求助人數">🆘 ${helpCnt}</span>
+      </span>
+    </div>
+    <div class="bar-bg"><div class="bar-fill${fill}" style="width:${pct}%"></div></div>
+  </div>
+</div>`;
+  } else {
+    const isDone   = inSession && !!local.done[uid];
+    const isHelped = inSession && !!local.help[uid];
+    const isActive = srv.active === uid;
+    const cls      = isDone ? " done" : isActive ? " active" : "";
+    const badge    = isActive && !isDone ? `<span class="active-badge">現在</span>`
+                   : isDone              ? `<span class="done-badge">✓ 完成</span>`
+                   :                       "";
+    return `
+<div class="lesson-card${cls}">
+  <div class="card-hdr">
+    <div class="card-hdr-main">
+      <span class="card-label">${label}</span>
+      ${time ? `<span class="u-time">${time}</span>` : ""}
+    </div>
+    ${badge}
+  </div>
+  ${content ? `<div class="card-body">${content}</div>` : ""}
+  <div class="card-foot">
+    ${isDone ? "" : `<button class="btn-help${isHelped ? " helped" : ""}"${isHelped ? " disabled" : ""}
+            onclick="${isHelped ? "" : `markHelp('${uid}')`}"
+            title="不懂這段，請老師再說明">
+      ${isHelped ? "🆘 已舉手" : "🆘 卡住了"}
+    </button>`}
+    <button class="btn-done${isDone ? " done" : ""}"${isDone ? " disabled" : ""}
+            onclick="${isDone ? "" : `markDone('${uid}')`}">
+      ${isDone ? "✓ 完成" : "完成"}
+    </button>
+  </div>
+</div>`;
+  }
+}
+
+// ── Render ────────────────────────────────────────
+function render() {
+  const scrollY = window.scrollY;
+
+  const activeUnit = UNITS.find(([id]) => id && id === srv.active);
+  const nowBanner  = activeUnit
+    ? `<div class="now-banner">現在：${activeUnit[1]}</div>`
+    : "";
+
+  const items = UNITS.map(([uid, label, time]) => {
+    if (!uid) return `<div class="section-hdr">${label}</div>`;
+    return buildCard(uid, label, time);
+  }).join("");
+
+  const header = IS_TEACHER ? `
+<div class="hdr">
+  <div class="hdr-left">
+    <h1>Agentic AI 實作（講師）</h1>
+    <div class="hdr-sub">點擊各段落標題以標記「現在進行」</div>
+  </div>
+  <div class="hdr-right">
+    <span class="session-chip">Session ${srv.session}</span>
+    ${connHtml()}
+  </div>
+</div>
+${nowBanner}` : `
+<div class="hdr">
+  <div class="hdr-left">
+    <h1>Agentic AI 實作</h1>
+    <div class="hdr-sub">依照步驟操作，完成後按「完成」；卡住按「🆘 卡住了」</div>
+  </div>
+  <div class="hdr-right">${connHtml()}</div>
+</div>
+${nowBanner}`;
+
+  const controls = IS_TEACHER ? `
+<div class="t-controls">
+  <label>學生總人數：</label>
+  <input class="num-input" type="number" min="1" max="300"
+         value="${srv.total || ""}" placeholder="25"
+         onchange="setTotal(parseInt(this.value))">
+  <button class="btn-reset" onclick="resetAll()">🔄 重置進度</button>
+  ${connHtml()}
+</div>` : "";
+
+  root.innerHTML = `${header}<div class="lesson-wrap">${controls}${items}</div>`;
+  requestAnimationFrame(() => window.scrollTo(0, scrollY));
+}
+
+// ── Init ──────────────────────────────────────────
+function init() {
+  if (WANTS_TEACHER && !IS_TEACHER) { renderTeacherLogin(); return; }
+  if (!dbUrl) { renderSetup(); return; }
+  poll();
+  clearInterval(pollTimer);
+  pollTimer = setInterval(poll, POLL_MS);
+}
+
+init();
+</script>
+</body>
+</html>

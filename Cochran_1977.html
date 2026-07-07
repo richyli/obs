@@ -5,16 +5,29 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Cochran_1977</title>
 <link rel="stylesheet" href="style.c953efdd48.css">
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
 </head>
 <body>
 <div class="layout">
 <aside class="sidebar">
 <div class="toc">
 <ul>
-<li><a href="#cochran_1977">Cochran_1977</a></li>
+<li><a href="#_1">方法說明</a><ul>
+<li><a href="#_2">目的</a></li>
+<li><a href="#_3">流程</a></li>
+<li><a href="#_4">適用範圍</a></li>
+<li><a href="#_5">代表性研究</a></li>
+<li><a href="#_6">相關學者</a></li>
+</ul>
+</li>
 </ul>
 </div>
-
 </aside>
 <main class="content">
 <h1>Cochran_1977</h1>
@@ -26,6 +39,35 @@
 - <a href="finite_population_correction.html">finite_population_correction</a> 公式與適用情境
 - 簡單隨機抽樣、分層抽樣、整群抽樣理論
 - 抽樣率超過 5% 即須做 FPC</p>
+<h3 id="_1">方法說明</h3>
+<h4 id="_2">目的</h4>
+<p>以機率抽樣理論為基礎，提供從有限母體中以最小變異、可控成本估計母體參數的設計與樣本量計算方法，並界定何時須對估計變異做有限母體校正（finite population correction, FPC）。</p>
+<h4 id="_3">流程</h4>
+<ol>
+<li>界定目標母體與抽樣框（sampling frame），確認母體大小 $N$。</li>
+<li>選擇抽樣設計（簡單隨機、分層、整群），依研究目標與母體結構決定。</li>
+<li>設定可容忍誤差 $e$、信賴水準與母體變異（比例或變異數）的先驗估計。</li>
+<li>以無限母體公式求初步樣本量，例如比例估計 $n_0 = \dfrac{z^2 p(1-p)}{e^2}$。</li>
+<li>若抽樣率 $n_0/N$ 超過 5%，套用 FPC 修正為 $n = \dfrac{n_0}{1 + (n_0 - 1)/N}$。</li>
+<li>依設計效果（分層/整群）調整最終樣本量。</li>
+</ol>
+<h4 id="_4">適用範圍</h4>
+<ul>
+<li><strong>適用</strong>：以機率抽樣自有限母體做描述性參數（均值、比例、總量）推估的調查研究。</li>
+<li><strong>不適用</strong>：非機率抽樣（便利、滾雪球）的因果或結構推論；母體無明確抽樣框的情境。</li>
+<li><strong>樣本規模建議</strong>：由可容忍誤差 $e$、信賴水準與母體變異決定；抽樣率 &gt; 5% 時須以 FPC 下修。</li>
+<li><strong>資料類型要求</strong>：可定義抽樣機率的母體名冊與待估計變項（比例或連續量）。</li>
+</ul>
+<h4 id="_5">代表性研究</h4>
+<ul>
+<li><strong>開創性文獻</strong>：Cochran, W. G. (1977). <em>Sampling Techniques</em> (3rd ed.). New York: John Wiley &amp; Sons.</li>
+<li><strong>相關 wiki 筆記</strong>：（延伸：<a href="finite_population_correction.html">finite_population_correction</a>）</li>
+</ul>
+<h4 id="_6">相關學者</h4>
+<ul>
+<li><strong>提出者 / 奠基者</strong>：William G. Cochran（抽樣理論奠基者，<em>Sampling Techniques</em> 一書）。</li>
+</ul>
+<p>另見：methodology_book</p>
 </main>
 </div>
 <script>

@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 寫作辨識講義（大學生 / 研究生版）</title>
+<link rel="stylesheet" href="style.c953efdd48.css">
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+<div class="toc">
+<ul>
+<li><a href="#_1">為什麼這份講義對你重要</a></li>
+<li><a href="#llm-fingerprint">第一講｜LLM 句法 fingerprint 的計量基礎</a><ul>
+<li><a href="#11">1.1 為什麼可以量化</a></li>
+<li><a href="#12">1.2 風格指紋的三大徵候群</a></li>
+</ul>
+</li>
+<li><a href="#12-pattern">第二講｜12 個 pattern 的實證對照</a><ul>
+<li><a href="#21-patternbaseline">2.1 高判別力 pattern（baseline 對照表）</a></li>
+<li><a href="#22-patternllm">2.2 反向 pattern（LLM 反而不足）</a></li>
+</ul>
+</li>
+<li><a href="#_2">第三講｜真實例句的句法解剖</a><ul>
+<li><a href="#1p10c-p11-p04-p03">例句 1（P10c × P11 × P04 × P03 同時觸發）</a></li>
+<li><a href="#2p10b-em-dash">例句 2（P10b 雙 em-dash 補語式）</a></li>
+<li><a href="#3p08-p12">例句 3（P08 否定強化開頭 × P12 「所暴露的」）</a></li>
+</ul>
+</li>
+<li><a href="#_3">第四講｜論文寫作的自我審查工具</a><ul>
+<li><a href="#41">4.1 五步驟人工檢查</a></li>
+<li><a href="#42-regex">4.2 Regex 自動審查腳本</a></li>
+<li><a href="#43">4.3 文獻回顧的特殊風險</a></li>
+</ul>
+</li>
+<li><a href="#_4">第五講｜兩處批判反思</a><ul>
+<li><a href="#51-1regex">5.1 批判反思 1：regex 偵測的限制</a></li>
+<li><a href="#52-2baseline">5.2 批判反思 2：baseline 對照的代表性</a></li>
+</ul>
+</li>
+<li><a href="#llm">第六講｜LLM 自學專章</a><ul>
+<li><a href="#61-prompt">6.1 學術寫作審查 prompt</a></li>
+<li><a href="#62-prompt">6.2 文獻引用驗證 prompt</a></li>
+<li><a href="#63-llm">6.3 ⚠️ LLM 不可信任的地方（必須交叉驗證）</a></li>
+</ul>
+</li>
+<li><a href="#_5">自我診斷檢核表</a></li>
+<li><a href="#_6">結語</a></li>
+<li><a href="#domain-specific-baseline">第七講｜建立 domain-specific baseline 的方法論</a><ul>
+<li><a href="#71-baseline">7.1 為什麼社論 baseline 不夠用</a></li>
+<li><a href="#72-domain-specific-baseline">7.2 建立 domain-specific baseline 的最小可行流程</a></li>
+<li><a href="#73-1990-corpus">7.3 1990 年代以前 corpus 的價值</a></li>
+<li><a href="#74-baseline">7.4 跨文體 baseline 矩陣（建議建立）</a></li>
+</ul>
+</li>
+<li><a href="#related">Related</a></li>
+</ul>
+</div>
+</aside>
+<main class="content">
+<h1>AI 寫作辨識講義（大學生 / 研究生版）</h1>
+<p class="meta">#handout　#ai_writing_literacy　#media_literacy　#llm_detection　#academic_writing　#stylometry</p>
+<h2 id="ai">AI 寫作辨識講義（大學生 / 研究生版）</h2>
+<blockquote>
+<p>給：大學生、研究生、寫作課修課同學、論文指導教授
+主題：辨識學術論文 / 課堂評論中的 LLM 痕跡；避免在自己作業中複製 AI 套語
+用法：研究方法課、論文寫作課、學術倫理講座
+課時：1.5 小時</p>
+</blockquote>
+<hr />
+<h3 id="_1">為什麼這份講義對你重要</h3>
+<p>ChatGPT 推出以後，<strong>大學作業、期末報告、甚至碩博論文文獻回顧</strong>裡的 AI 痕跡越來越多。三個風險疊加：</p>
+<ol>
+<li><strong>被指導教授一眼識破</strong>：教授閱讀量大、對「文體感」敏感，AI 寫的學術文章有極穩定的句法指紋</li>
+<li><strong>學術不誠信指控</strong>：許多大學現在的學術倫理規範把「未揭露的 AI 生成內容」列為違規</li>
+<li><strong>自我風格污染</strong>：你看多了 AI 寫的學術論文，自己寫作會不自覺學起 AI 的句法癖好，永遠寫不出個人聲音</li>
+</ol>
+<p>這份講義基於 comparison_llm_patterns 的跨樣本實證——97 篇真實自由時報社論 + 364 篇真實聯合報社論 + 14 篇 Claude 生成繁中評論——萃取出 <strong>12 條可量化的 LLM 句法 pattern</strong>，並給每條配 baseline 對照數據。</p>
+<hr />
+<h3 id="llm-fingerprint">第一講｜LLM 句法 fingerprint 的計量基礎</h3>
+<h4 id="11">1.1 為什麼可以量化</h4>
+<p>語言生成模型（Claude / GPT-4 / Gemini）的訓練過程偏好<strong>統計上「安全」的 token 序列</strong>：高概率連接詞、平衡對偶結構、抽象名詞化短語。這在 comparison_llm_patterns 與 llm_chinese_writing_tics §3.6 已有跨樣本實證——LLM 在 12 個結構性 pattern 上的密度與人類寫作有顯著差異（多數為 4-40 倍）。</p>
+<p>最重要的方法論基礎：<strong>這些 pattern 用簡單 regex 即可偵測</strong>，不需要黑盒 AI 分類器。可解釋、可複製、可教學。</p>
+<h4 id="12">1.2 風格指紋的三大徵候群</h4>
+<table>
+<thead>
+<tr>
+<th>徵候群</th>
+<th>機制</th>
+<th>代表 pattern</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>對偶癖</strong></td>
+<td>RLHF 訓練偏好「平衡」「對比」結構 + essay 訓練語料含大量 "not A but B" 翻譯句</td>
+<td>P01 二元對偶、P03 二元對立框架、P10 破折號</td>
+</tr>
+<tr>
+<td><strong>抽象名詞化癖</strong></td>
+<td>LLM 偏好「N 的 N」結構降低 perplexity</td>
+<td>P04 抽象套語、P06 政治哲學辭藻、P12「所反映的 X」</td>
+</tr>
+<tr>
+<td><strong>過渡套語癖</strong></td>
+<td>Essay-writing 訓練讓 LLM 段落間自動加 transition</td>
+<td>P05「值得追問 / 換言之」、P08「從來不是 / 並不只是」</td>
+</tr>
+</tbody>
+</table>
+<p>詳見 llm_chinese_writing_tics §1。</p>
+<hr />
+<h3 id="12-pattern">第二講｜12 個 pattern 的實證對照</h3>
+<h4 id="21-patternbaseline">2.1 高判別力 pattern（baseline 對照表）</h4>
+<table>
+<thead>
+<tr>
+<th>pattern_id</th>
+<th>表現</th>
+<th style="text-align: right;">baseline_per_1k</th>
+<th style="text-align: right;">Claude_per_1k</th>
+<th style="text-align: right;">ratio</th>
+<th>判別強度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>P10c</strong></td>
+<td>em-dash 字元密度</td>
+<td style="text-align: right;">0.007 (LTN) / 0.118 (UDN)</td>
+<td style="text-align: right;"><strong>1.102</strong></td>
+<td style="text-align: right;"><strong>9-157x</strong></td>
+<td>⚠️⚠️⚠️</td>
+</tr>
+<tr>
+<td><strong>P08</strong></td>
+<td>否定強化開頭「從來不是 / 並不只是」</td>
+<td style="text-align: right;">0.013</td>
+<td style="text-align: right;">0.513</td>
+<td style="text-align: right;"><strong>40x</strong></td>
+<td>⚠️⚠️</td>
+</tr>
+<tr>
+<td><strong>P06</strong></td>
+<td>政治哲學辭藻「治理品質 / 系統性」</td>
+<td style="text-align: right;">0.025</td>
+<td style="text-align: right;">0.700</td>
+<td style="text-align: right;"><strong>28x</strong></td>
+<td>⚠️⚠️</td>
+</tr>
+<tr>
+<td>P11</td>
+<td>三段並列「X、Y、Z 等」</td>
+<td style="text-align: right;">0.190</td>
+<td style="text-align: right;">0.980</td>
+<td style="text-align: right;">5.2x</td>
+<td>⚠️</td>
+</tr>
+<tr>
+<td>P04</td>
+<td>抽象套語「真正的 / 本質的」+ N</td>
+<td style="text-align: right;">0.070</td>
+<td style="text-align: right;">0.280</td>
+<td style="text-align: right;">4.0x</td>
+<td>⚠️</td>
+</tr>
+<tr>
+<td>P01</td>
+<td>二元對偶「不是 X，而是 Y」</td>
+<td style="text-align: right;">0.248</td>
+<td style="text-align: right;">0.980</td>
+<td style="text-align: right;">4.0x</td>
+<td>⚠️</td>
+</tr>
+<tr>
+<td>P12</td>
+<td>「所反映 / 所暴露」的 X</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.373</td>
+<td style="text-align: right;">inf</td>
+<td>⚠️</td>
+</tr>
+<tr>
+<td>P03</td>
+<td>二元對立框架「症狀 / 結構」「個案 / 系統」</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.233</td>
+<td style="text-align: right;">inf</td>
+<td>⚠️</td>
+</tr>
+</tbody>
+</table>
+<p>對照本講義 corpus（10 篇 Claude 生成學術論文，總計 20,931 字）的實際命中率：</p>
+<table>
+<thead>
+<tr>
+<th>pattern</th>
+<th style="text-align: right;">命中數</th>
+<th style="text-align: right;">per_1k</th>
+<th>對照 baseline</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P10c em-dash 字元</td>
+<td style="text-align: right;">455</td>
+<td style="text-align: right;"><strong>21.7</strong></td>
+<td>比 LTN baseline 高 <strong>3000 倍</strong></td>
+</tr>
+<tr>
+<td>P10b 雙 em-dash</td>
+<td style="text-align: right;">227</td>
+<td style="text-align: right;">10.8</td>
+<td>比 UDN baseline 高 <strong>386 倍</strong></td>
+</tr>
+<tr>
+<td>P10a「——X[。]」收尾</td>
+<td style="text-align: right;">180</td>
+<td style="text-align: right;">8.6</td>
+<td>baseline 兩報幾近 0</td>
+</tr>
+<tr>
+<td>P06 政治哲學辭藻</td>
+<td style="text-align: right;">116</td>
+<td style="text-align: right;">5.5</td>
+<td>比 baseline 高 220 倍</td>
+</tr>
+<tr>
+<td>P08 否定強化開頭</td>
+<td style="text-align: right;">55</td>
+<td style="text-align: right;">2.6</td>
+<td>比 baseline 高 200 倍</td>
+</tr>
+</tbody>
+</table>
+<p><strong>結論</strong>：學術寫作脈絡裡，LLM 的 fingerprint 密度比社論寫作脈絡更極端——因為學術寫作本身就鼓勵抽象、平衡、對偶結構，LLM 在這個 domain 失控更快。</p>
+<h4 id="22-patternllm">2.2 反向 pattern（LLM 反而不足）</h4>
+<table>
+<thead>
+<tr>
+<th>pattern</th>
+<th style="text-align: right;">baseline</th>
+<th style="text-align: right;">Claude</th>
+<th>解讀</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P02 遞進對偶「不僅 X，更 Y」</td>
+<td style="text-align: right;">0.419</td>
+<td style="text-align: right;">0.140</td>
+<td>LLM 偏好 P01 對偶，犧牲 P02 漸層</td>
+</tr>
+<tr>
+<td>P07 抽象動詞「凸顯 / 折射 / 印證」</td>
+<td style="text-align: right;">0.394</td>
+<td style="text-align: right;">0.093</td>
+<td>LLM 偏好名詞化套語（P06），犧牲動詞化抽象</td>
+</tr>
+<tr>
+<td>！驚嘆號</td>
+<td style="text-align: right;">0.51</td>
+<td style="text-align: right;">0</td>
+<td>LLM 過度保守</td>
+</tr>
+<tr>
+<td>？反問句</td>
+<td style="text-align: right;">0.99</td>
+<td style="text-align: right;">0.37</td>
+<td>LLM 寫不出口語化反問</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="_2">第三講｜真實例句的句法解剖</h3>
+<p>以下例句全部來自本講義 corpus 經 audit 篩選的 LLM 生成樣本。每個例句解剖其句法結構，說明為什麼這樣寫等於暴露 LLM 痕跡。</p>
+<h4 id="1p10c-p11-p04-p03">例句 1（P10c × P11 × P04 × P03 同時觸發）</h4>
+<blockquote>
+<p>來源：02_disinfo_b.md（topic: 假訊息）
+「這套被<strong>個體化、被微觀化、被去脈絡化</strong>的研究取徑，<strong>本身就是</strong>當代假訊息研究<strong>最深的破口</strong>。」</p>
+</blockquote>
+<p><strong>句法解剖</strong>：
+- <code>被 X、被 Y、被 Z 化</code>：三段並列被動結構（P11 變體）
+- <code>本身就是</code>：是抽象主語回扣的套語
+- <code>最深的破口</code>：政治哲學辭藻 + 隱喻名詞化
+- 整句沒有具體行為主體，只有抽象標籤的堆疊</p>
+<p><strong>人類學者會寫成</strong>：「這種研究取徑把假訊息問題化約到個體心理層次，把它從歷史脈絡與政治經濟結構中抽離，這是當前文獻最大的盲點。」（主動句、有行為對象、避免「化—被—的」鏈）</p>
+<h4 id="2p10b-em-dash">例句 2（P10b 雙 em-dash 補語式）</h4>
+<blockquote>
+<p>來源：01_disinfo_a.md
+「當代假訊息生態的核心特徵<strong>——並非單一行動者的惡意，而是</strong>平台演算法、付費廣告系統、外國干預、商業內容農場、政黨側翼帳號、自願轉傳的一般公民六方共同建構的<strong>——治理品質低落、制度設計失能、結構性監管真空的多層次失序狀態</strong>。」</p>
+</blockquote>
+<p><strong>句法解剖</strong>：
+- 兩對 <code>——</code>（觸發 P10b ×2 + P10c ×4 個字元）
+- 中間夾入「並非 X，而是 Y」（P01）
+- 結尾「治理品質／制度設計／結構性」三連發（P06）
+- 六項並列（P11）
+- 整句 99 字，沒有句點切分</p>
+<p><strong>人類學者會寫成</strong>：「假訊息生態並非單一行動者造成的。它包含演算法推薦、廣告系統、外國干預、內容農場、政黨側翼、與一般公民的轉傳行為。這六方共同建構了一個多層次失序狀態。」（三句分開，破折號改成句點，「治理品質／結構性」這類名詞化標籤刪除）</p>
+<h4 id="3p08-p12">例句 3（P08 否定強化開頭 × P12 「所暴露的」）</h4>
+<blockquote>
+<p>來源：05_election_a.md（topic: 2024 大選後媒體環境）
+「Facebook、YouTube、TikTok、Instagram、Threads 五個平台<strong>所暴露的</strong>並<strong>不只是</strong>訊息傳播管道的多元化，<strong>更是</strong>——演算法邏輯、付費廣告、KOL 政治影響力、平台政策差異四方共構的根本性權力重組。」</p>
+</blockquote>
+<p><strong>句法解剖</strong>：
+- <code>所暴露的</code>（P12）
+- <code>並不只是 X，更是 Y</code>（P08 + 變體 P02）
+- <code>——</code> 接四項並列（P11）
+- 結尾「根本性權力重組」名詞化</p>
+<p><strong>人類學者會寫成</strong>：「五個平台不僅讓訊息傳播管道更多元，也重新分配了演算法、廣告、KOL、平台政策之間的權力關係。」（主動敘述，避免「所 V 的」結構，破折號刪掉）</p>
+<hr />
+<h3 id="_3">第四講｜論文寫作的自我審查工具</h3>
+<h4 id="41">4.1 五步驟人工檢查</h4>
+<p>寫完任何論文段落，跑過以下檢查：</p>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>檢查項目</th>
+<th style="text-align: right;">警戒值（per 1000 字）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>數「——」em-dash 字元數量</td>
+<td style="text-align: right;">≤ 1（baseline）／&gt; 3 即可疑</td>
+</tr>
+<tr>
+<td>2</td>
+<td>數「不是 X，而是 Y」對偶句</td>
+<td style="text-align: right;">≤ 1（baseline 0.25）／&gt; 2 即可疑</td>
+</tr>
+<tr>
+<td>3</td>
+<td>數「從來不是 / 並不只是」開頭</td>
+<td style="text-align: right;">≤ 0.5（baseline 0.01）／&gt; 1 即可疑</td>
+</tr>
+<tr>
+<td>4</td>
+<td>數「結構性 / 系統性 / 根本性 / 制度設計」</td>
+<td style="text-align: right;">≤ 1（baseline 0.03）／&gt; 2 即可疑</td>
+</tr>
+<tr>
+<td>5</td>
+<td>數「所反映 / 所暴露 / 所揭示的 X」</td>
+<td style="text-align: right;">baseline = 0／&gt; 0 即可疑</td>
+</tr>
+</tbody>
+</table>
+<h4 id="42-regex">4.2 Regex 自動審查腳本</h4>
+<p>可重用工具：<a href="analyzer_llm_patterns.py">analyzer_llm_patterns.py</a></p>
+<pre><code class="language-python">import re
+PATTERNS = {
+    &quot;P01&quot;: re.compile(r&quot;(?:不是|並非|並不是|從來不是)[^。！？\n]{1,30}?[，、][^。！？\n]{0,15}?而是&quot;),
+    &quot;P06&quot;: re.compile(r&quot;(?:治理品質|民主韌性|制度設計|系統性|政治話術|結構性|根本性|象徵性|實質性)&quot;),
+    &quot;P08&quot;: re.compile(r&quot;(?:從來不(?:是|只)|並不(?:只|僅)是|遠不止|不僅僅是|絕不只是|早已不是)&quot;),
+    &quot;P10c&quot;: re.compile(r&quot;—&quot;),
+    &quot;P11&quot;: re.compile(r&quot;[一-鿿]{2,6}、[一-鿿]{2,6}、[一-鿿]{2,6}(?:、[一-鿿]{2,6})?(?:等)&quot;),
+    &quot;P12&quot;: re.compile(r&quot;所(?:反映|暴露|揭示|呈現|凸顯|折射|印證)(?:的|出的)&quot;),
+}
+
+text = open(&quot;my_paper.md&quot;, encoding=&quot;utf-8&quot;).read()
+chars = len(text)
+print(f&quot;Total chars: {chars}&quot;)
+for pid, regex in PATTERNS.items():
+    hits = len(regex.findall(text))
+    print(f&quot;{pid}: {hits} hits, {hits*1000/chars:.2f}/1k&quot;)
+</code></pre>
+<h4 id="43">4.3 文獻回顧的特殊風險</h4>
+<p>寫文獻回顧時 LLM 痕跡最容易暴露——因為：</p>
+<ol>
+<li><strong>過度抽象化</strong>：LLM 寫文獻回顧愛用「典範轉移／結構性挑戰／根本性危機」這種高度抽象的概念詞，但這些詞在原始文獻裡可能根本不存在</li>
+<li><strong>虛構引用</strong>：LLM 會生成「看起來合理但不存在」的論文（Author, Year, Title）。每個引用都要實際查證</li>
+<li><strong>七段論結構</strong>：問題 → 現象 → 歷史 → 比較 → 分析 → 價值 → 呼籲——這套骨架太工整，反而像 AI</li>
+</ol>
+<p><strong>建議流程</strong>：先用 LLM 整理你看過的論文摘要 → 自己重寫文獻段落 → 跑 regex 檢查 → 人工潤飾</p>
+<hr />
+<h3 id="_4">第五講｜兩處批判反思</h3>
+<h4 id="51-1regex">5.1 批判反思 1：regex 偵測的限制</h4>
+<p>本講義所提的 12 條 pattern 用 regex 偵測，有三個結構性限制：</p>
+<ol>
+<li><strong>誤判</strong>：人類也會用「不是 X，而是 Y」對偶（baseline 0.25/1k 不是 0）。<strong>單一 pattern 命中不足以判定 AI，必須看整體 fingerprint</strong></li>
+<li><strong>逃避偵測</strong>：LLM 知道有 detector 後，可以被 prompt 訓練降低這些 pattern 密度（已有研究證實，見 Adversarial prompts of sufficient length can trigger any behavior present in LLM training distribution）</li>
+<li><strong>跨模型差異</strong>：本講義 baseline 對照只用 Claude Opus 4.7。GPT-4 / Gemini 的 fingerprint 可能不同</li>
+</ol>
+<p><strong>討論問題</strong>：如果一個學生用 Claude 寫初稿，然後手動修改去掉所有「——」「不是…而是」「結構性」——這還算 AI 寫作嗎？學術倫理該如何界定？</p>
+<h4 id="52-2baseline">5.2 批判反思 2：baseline 對照的代表性</h4>
+<p>本講義 baseline 用「自由時報 + 聯合報 2025-2026 社論」。這個 baseline 有兩個限制：</p>
+<ol>
+<li><strong>文體偏差</strong>：社論是高度規範化的評論文體，與學術論文、散文、報告體裁不同。學術論文的 baseline 應該換成期刊論文 corpus</li>
+<li><strong>時代偏差</strong>：2025-2026 社論本身可能已被 LLM 影響（記者用 AI 輔助寫作越來越普遍），baseline 本身可能不夠「純」</li>
+</ol>
+<p><strong>討論問題</strong>：建立一個「純人類寫作」的 baseline 是否可能？1990 年代以前的中文評論 corpus 是否更適合當基準？</p>
+<hr />
+<h3 id="llm">第六講｜LLM 自學專章</h3>
+<h4 id="61-prompt">6.1 學術寫作審查 prompt</h4>
+<pre><code>你是一位嚴格的學術期刊審稿人。我剛寫完一份論文段落，
+請你不要客氣，從 LLM 寫作癖好的角度找出問題：
+
+1. P10 破折號（——）：列出所有出現的位置與上下文。學術評論 baseline 每千字 ≤ 0.1 個
+2. P01 對偶句「不是 X，而是 Y」「並非 X，而是 Y」：列出全部命中
+3. P08 否定強化開頭「從來不是 / 並不只是 / 早已不是」
+4. P06 政治哲學辭藻「治理品質 / 結構性 / 系統性 / 根本性 / 制度設計」
+5. P12「所反映 / 所暴露 / 所揭示的 X」
+6. P11 三段並列「A、B、C 等」名詞堆砌
+
+對每個命中項，給出「改寫建議」——把這句改成主動句、減少名詞化、刪除空泛形容詞。
+
+我的論文段落：
+[貼上]
+</code></pre>
+<h4 id="62-prompt">6.2 文獻引用驗證 prompt</h4>
+<pre><code>請列出下列段落中的所有引用（Author, Year, Title 形式）。
+對每個引用，幫我判斷：
+1. 這個引用是真的可能存在的論文嗎？（有無典型作者名、年份合理性、期刊存在性）
+2. 我應該去哪個資料庫（Web of Science / Scopus / Google Scholar）查證？
+3. 標出「高度懷疑是 LLM 幻覺」的引用，幫我列出搜尋關鍵字
+
+段落如下：
+[貼上]
+</code></pre>
+<h4 id="63-llm">6.3 ⚠️ LLM 不可信任的地方（必須交叉驗證）</h4>
+<blockquote>
+<p><strong>使用 LLM 輔助學術寫作時，這些地方務必人工複查</strong>：</p>
+<ol>
+<li><strong>虛構參考文獻</strong>：LLM 會編造「看起來合理但不存在」的論文。Web of Science / Scopus / 期刊官網逐筆查</li>
+<li><strong>誤算統計值</strong>：LLM 會口算 effect size / R² 並寫得很有自信，但常常算錯</li>
+<li><strong>過時的方法論標準</strong>：LLM 給的方法論 cutoff（如 Cronbach α ≥ .7）可能來自過時版本</li>
+<li><strong>編造作者立場</strong>：LLM 會寫「Habermas 認為 X」但實際上原作裡沒有這句話</li>
+<li><strong>混淆學派立場</strong>：LLM 經常把「批判理論」「結構功能論」「制度論」的立場混為一談</li>
+<li><strong>過度平衡敘述</strong>：LLM 訓練偏好「兩邊都有道理」的中庸式論述，可能掩蓋你真實的論證立場</li>
+</ol>
+</blockquote>
+<hr />
+<h3 id="_5">自我診斷檢核表</h3>
+<p>寫完任何學術段落，逐項勾選：</p>
+<ul>
+<li>[ ] 跑過 regex 檢查，12 個 pattern 的密度都在 baseline 兩倍以內？</li>
+<li>[ ] 「——」破折號是否每千字 ≤ 3 個？</li>
+<li>[ ] 「不是 X，而是 Y」對偶句是否每千字 ≤ 2 次？</li>
+<li>[ ] 「結構性／系統性／根本性／制度設計」是否每千字 ≤ 2 個？</li>
+<li>[ ] 所有引用都已實際在資料庫查證（無 LLM 幻覺）？</li>
+<li>[ ] 段落結構不是「七段論」工整骨架？</li>
+<li>[ ] 是否保留至少一個你個人獨有的句法習慣（如：常用某連接詞、某反問結構、某比喻）？</li>
+</ul>
+<hr />
+<h3 id="_6">結語</h3>
+<p>LLM 不是論文寫作的敵人——是放大鏡。它會放大你寫作習慣的優點，也會放大缺點。<strong>正確的使用方式：先自己寫，再用 LLM 提建議，最後用 regex 檢查 LLM 痕跡有沒有殘留</strong>。</p>
+<p>本講義配套的中學生版見 <a href="handout_ai_writing_detection_youth.html">handout_ai_writing_detection_youth</a>、長輩 LINE 訊息版見 <a href="handout_ai_writing_detection_elder.html">handout_ai_writing_detection_elder</a>。</p>
+<hr />
+<h3 id="domain-specific-baseline">第七講｜建立 domain-specific baseline 的方法論</h3>
+<h4 id="71-baseline">7.1 為什麼社論 baseline 不夠用</h4>
+<p>本講義 baseline 主要依 corpus_ltn_editorial_2026（97 篇）+ corpus_udn_editorial_2025_2026（364 篇）兩報社論建立，但<strong>社論 baseline 不能直接套用到學術論文審查</strong>。理由：</p>
+<ol>
+<li><strong>文體張力不同</strong>：社論強調情緒動員與短時效的議題切割；學術論文強調概念精確與長時效的論證鋪陳，本身就會出現較多抽象名詞化與對偶結構</li>
+<li><strong>句長分布不同</strong>：社論 mean 句長 25-30 字、學術論文 mean 句長 35-50 字。同樣的 pattern 密度在學術文體裡相對「自然」的容忍度更高</li>
+<li><strong>論證結構不同</strong>：學術論文有「文獻 → gap → 假設 → 方法 → 發現」的固定骨架，本身就需要過渡語（P05），baseline 應該對應較高</li>
+</ol>
+<p>但 §2 corpus 實測仍顯示 LLM 學術寫作的 P10c em-dash 是 LTN baseline 的 3000 倍——這意味著<strong>即使學術 baseline 高出社論 baseline 2-3 倍，LLM 偏離仍極端顯著</strong>。</p>
+<h4 id="72-domain-specific-baseline">7.2 建立 domain-specific baseline 的最小可行流程</h4>
+<p>若您的學科有特定學術寫作風格（如管理學量化論文、社會學質性論文、傳播學批判論文），建議自建 baseline。流程依 corpus_analysis_guide：</p>
+<ol>
+<li><strong>採樣 30-50 篇</strong>：選擇 2010-2020 年之間（避免 ChatGPT 後 LLM 滲透）、目標期刊已發表、第一作者為母語繁中學者的論文</li>
+<li><strong>抽取「Discussion」段落</strong>：學術論文的 Discussion 是 LLM 最常滲透的段落（因為它需要 abstract reasoning），baseline 應該對應 Discussion 風格</li>
+<li><strong>跑相同 regex</strong>：用 §4.2 腳本算每 1000 字命中數，建立每個 pattern 的 mean ± 1 SD 警戒線</li>
+<li><strong>警戒值校準</strong>：可疑論文 = 任一 pattern &gt; baseline mean + 2 SD（95% 信賴區間外）</li>
+<li><strong>跨期刊驗證</strong>：同 pattern 在不同期刊密度應相近，差距 &gt; 50% 表示樣本不均衡需補</li>
+</ol>
+<h4 id="73-1990-corpus">7.3 1990 年代以前 corpus 的價值</h4>
+<p>2025-2026 社論本身可能已被 LLM 影響（記者 AI 輔助寫作越來越普遍），baseline 本身不夠「純」。建議補充：</p>
+<ul>
+<li><strong>聯合報 / 中國時報 1985-1995 社論</strong>（紙本電子化）作為「純人類」baseline</li>
+<li><strong>學報級期刊 1990-2010</strong>（《新聞學研究》《傳播與社會》等）作為「純人類學術」baseline</li>
+<li>兩者跨時期對照可量化 2020 年後 LLM 對人類寫作風格的滲透程度</li>
+</ul>
+<h4 id="74-baseline">7.4 跨文體 baseline 矩陣（建議建立）</h4>
+<table>
+<thead>
+<tr>
+<th>文體 \ 時期</th>
+<th>1990-2010</th>
+<th>2010-2020</th>
+<th>2020-2026</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>評論 / 社論</td>
+<td>純人類 baseline</td>
+<td>混合期</td>
+<td>corpus_ltn_editorial_2026 / corpus_udn_editorial_2025_2026（已建）</td>
+</tr>
+<tr>
+<td>學術期刊</td>
+<td>純人類 baseline（待建）</td>
+<td>混合期</td>
+<td>LLM 滲透期（待對照）</td>
+</tr>
+<tr>
+<td>純報導</td>
+<td>純人類 baseline</td>
+<td>混合期</td>
+<td>corpus_huang_jensen_cna_2026q1（已建 CNA 純報導）</td>
+</tr>
+<tr>
+<td>散文 / 小說</td>
+<td>純人類 baseline</td>
+<td>混合期</td>
+<td>待建</td>
+</tr>
+</tbody>
+</table>
+<p>完成此矩陣後，可作為「LLM 對中文寫作風格滲透史」實證研究的基礎資料。</p>
+<hr />
+<h3 id="related">Related</h3>
+<ul>
+<li>llm_chinese_writing_tics — 12 個 pattern 完整定義 + §3.6 跨樣本實證</li>
+<li>comparison_llm_patterns — 第二輪 corpus 對照（regex 命中率）</li>
+<li>comparison_vs_baseline — 第一輪 corpus 對照（token-level / 標點密度）</li>
+<li>corpus_ltn_editorial_2026 / corpus_udn_editorial_2025_2026 / ltn_vs_udn_comparison — baseline corpus</li>
+<li>corpus_huang_jensen_cna_2026q1 — CNA 純報導 baseline（可作為「報導 vs 評論」對照）</li>
+<li>corpus_analysis_guide — 自建 corpus baseline 的六步流程</li>
+<li><a href="handout_ai_writing_detection_youth.html">handout_ai_writing_detection_youth</a> — 中學生版</li>
+<li><a href="handout_ai_writing_detection_elder.html">handout_ai_writing_detection_elder</a> — 長者 LINE 訊息版</li>
+<li>Adversarial prompts of sufficient length can trigger any behavior present in LLM training distribution — adversarial robustness 文獻</li>
+</ul>
+</main>
+</div>
+<script>
+(function () {
+  // ── Rebuild TOC with toggle buttons ──────────────────────────────────────
+  var toc = document.querySelector('.sidebar .toc');
+  if (toc) {
+    toc.querySelectorAll('li').forEach(function (li) {
+      var childUl = li.querySelector(':scope > ul');
+      var link    = li.querySelector(':scope > a');
+      if (!link) return;
+
+      var row = document.createElement('div');
+      row.className = 'toc-row';
+
+      if (childUl) {
+        var btn = document.createElement('button');
+        btn.className = 'toc-toggle';
+        btn.setAttribute('aria-expanded', 'true');
+        btn.textContent = '▾';          // ▾ open
+        btn.addEventListener('click', function () {
+          var open = childUl.hidden;
+          childUl.hidden = !open;
+          btn.textContent = open ? '▾' : '▸';   // ▾ / ▸
+          btn.setAttribute('aria-expanded', String(open));
+        });
+        row.appendChild(btn);
+      } else {
+        var spacer = document.createElement('span');
+        spacer.style.width = '1rem';
+        spacer.style.flexShrink = '0';
+        row.appendChild(spacer);
+      }
+
+      row.appendChild(link);
+      li.insertBefore(row, li.firstChild);
+    });
+  }
+
+  // ── Scroll spy ───────────────────────────────────────────────────────────
+  var headings = document.querySelectorAll('.content h2[id], .content h3[id], .content h4[id]');
+  var tocLinks = document.querySelectorAll('.sidebar .toc a');
+  if (!headings.length || !tocLinks.length) return;
+
+  var current = null;
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      var link = document.querySelector('.sidebar .toc a[href="#' + e.target.id + '"]');
+      if (!link) return;
+      if (current) current.classList.remove('active');
+      current = link;
+      current.classList.add('active');
+      // Scroll link into view within sidebar
+      current.scrollIntoView({ block: 'nearest' });
+    });
+  }, { rootMargin: '-5% 0px -75% 0px', threshold: 0 });
+
+  headings.forEach(function (h) { io.observe(h); });
+}());
+</script>
+</body>
+</html>

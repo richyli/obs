@@ -5,16 +5,29 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>PLSpredict</title>
 <link rel="stylesheet" href="style.c953efdd48.css">
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
 </head>
 <body>
 <div class="layout">
 <aside class="sidebar">
 <div class="toc">
 <ul>
-<li><a href="#plspredict">PLSpredict</a></li>
+<li><a href="#_1">方法說明</a><ul>
+<li><a href="#_2">目的</a></li>
+<li><a href="#_3">流程</a></li>
+<li><a href="#_4">適用範圍</a></li>
+<li><a href="#_5">代表性研究</a></li>
+<li><a href="#_6">相關學者</a></li>
+</ul>
+</li>
 </ul>
 </div>
-
 </aside>
 <main class="content">
 <h1>PLSpredict</h1>
@@ -26,6 +39,38 @@
 2. 對每折估計 PLS 模型，預測 holdout fold 的 indicator
 3. 計算 RMSE / MAE，比較 PLS 模型與線性迴歸（LM）基準</p>
 <p><strong>參考</strong>：Shmueli, G. et al. (2016). <em>Journal of Business Research</em>, 69(10), 4552-4564.</p>
+<h3 id="_1">方法說明</h3>
+<h4 id="_2">目的</h4>
+<ul>
+<li>主要研究目的：評估 PLS-SEM 模型的<strong>外樣本（out-of-sample）預測力</strong>，補足傳統 PLS 僅報告樣本內 $R^2$ 的不足（Shmueli et al., 2016）</li>
+<li>次要用途：在 explanatory vs predictive 研究取徑爭論中提供量化判準，協助研究者宣稱「模型可用於預測新觀察」</li>
+</ul>
+<h4 id="_3">流程</h4>
+<ol>
+<li>k-fold 交叉驗證（推薦 10 folds × 10 repetitions）</li>
+<li>對每折估計 PLS 模型，預測 holdout fold 的 indicator</li>
+<li>計算 RMSE / MAE，比較 PLS 模型與線性迴歸（LM）基準</li>
+<li>判讀：PLS 之 RMSE 較 LM 低於多數指標 → 強預測力；持平 → 中等；較高 → 弱預測力（Shmueli et al., 2016）</li>
+</ol>
+<h4 id="_4">適用範圍</h4>
+<ul>
+<li><strong>適用</strong>：以預測為導向的 PLS-SEM 研究、與機器學習基準比較的應用場景（Shmueli et al., 2016）</li>
+<li><strong>不適用</strong>：純結構參數解釋的研究（此時更看重 $R^2$、$f^2$、路徑顯著性）；樣本極小無法切折時</li>
+<li><strong>樣本規模建議</strong>：（暫無 wiki/ 資料；至少需可分 10 折的最低樣本）</li>
+<li><strong>資料類型要求</strong>：可重複抽樣的橫斷面或 panel 資料</li>
+</ul>
+<h4 id="_5">代表性研究</h4>
+<ul>
+<li><strong>奠基文獻</strong>：Shmueli, Ray, Velasquez Estrada, &amp; Chatla（2016）— PLSpredict 演算法提出</li>
+<li><strong>方法論教材</strong>：<a href="Hair_2022_PLS.html">Hair_2022_PLS</a> — 納入為 PLS-SEM 標準評估流程</li>
+<li><strong>相關 wiki 筆記</strong>：（延伸：<a href="Q_squared_predict.html">Q_squared_predict</a>、cross-validation、<a href="Hair_2022_PLS.html">Hair_2022_PLS</a>、<a href="seminr.html">seminr</a>）</li>
+</ul>
+<h4 id="_6">相關學者</h4>
+<ul>
+<li><strong>奠基者</strong>：Galit Shmueli、Soumya Ray、Juan Manuel Velasquez Estrada、Suneel Babu Chatla（2016）</li>
+<li><strong>推廣者</strong>：Hair, Ringle, Sarstedt 等 PLS-SEM 圈</li>
+<li><strong>相關學者 wiki 頁</strong>：（暫無 wiki/ 資料）</li>
+</ul>
 </main>
 </div>
 <script>

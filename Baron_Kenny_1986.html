@@ -18,10 +18,16 @@ MathJax = {
 <aside class="sidebar">
 <div class="toc">
 <ul>
-<li><a href="#baron_kenny_1986">Baron_Kenny_1986</a></li>
+<li><a href="#_1">方法說明</a><ul>
+<li><a href="#_2">目的</a></li>
+<li><a href="#_3">流程</a></li>
+<li><a href="#_4">適用範圍</a></li>
+<li><a href="#_5">代表性研究</a></li>
+<li><a href="#_6">相關學者</a></li>
+</ul>
+</li>
 </ul>
 </div>
-
 </aside>
 <main class="content">
 <h1>Baron_Kenny_1986</h1>
@@ -35,6 +41,36 @@ MathJax = {
 3. M → Y 顯著（控制 X 後）
 4. 控制 M 後 X → Y 變不顯著（Complete Mediation）或減小（<a href="partial_mediation.html">partial_mediation</a>）</p>
 <p><strong>已過時</strong>：當代中介研究（<a href="Zhao_Lynch_Chen_2010.html">Zhao_Lynch_Chen_2010</a>、Hayes 等）建議直接用 bootstrap 檢驗 indirect effect。</p>
+<h3 id="_1">方法說明</h3>
+<h4 id="_2">目的</h4>
+<p>檢驗自變數 X 對依變數 Y 的效果是否經由中介變數 M 傳遞，以建立「X 透過 M 影響 Y」的因果機制推論，區辨完全中介與部分中介。</p>
+<h4 id="_3">流程</h4>
+<ol>
+<li>迴歸 X → Y，確認總效果 $c$ 顯著（傳統前提，當代已放寬）。</li>
+<li>迴歸 X → M，確認 $a$ 路徑顯著。</li>
+<li>同時納入 X 與 M 迴歸 Y，確認 M → Y 的 $b$ 路徑（控制 X 後）顯著。</li>
+<li>比較控制 M 後 X → Y 的 $c'$：變不顯著判為Complete Mediation，僅減小判為<a href="partial_mediation.html">partial_mediation</a>。</li>
+</ol>
+<h4 id="_4">適用範圍</h4>
+<ul>
+<li><strong>適用</strong>：單一中介、變數近常態、效果量足夠的解釋性研究。</li>
+<li><strong>不適用</strong>：非常態依變項、類別預測變項、巢套/多層次資料；當代建議改用 bootstrap 直接檢驗 indirect effect $a \times b$（<a href="Zhao_Lynch_Chen_2010.html">Zhao_Lynch_Chen_2010</a>）。</li>
+<li><strong>樣本規模建議</strong>：（暫無 wiki/ 資料）</li>
+<li><strong>資料類型要求</strong>：連續變數為主、可估計線性迴歸路徑。</li>
+</ul>
+<h4 id="_5">代表性研究</h4>
+<ul>
+<li><strong>開創性文獻</strong>：Baron &amp; Kenny（1986）— 提出 moderator-mediator 區辨與經典四步驟中介檢驗法。</li>
+<li><strong>方法發展里程碑</strong>：Zhao, Lynch &amp; Chen（2010）以 bootstrap 取代四步法並提出中介五分類；Imai, Keele &amp; Tingley（2010）以反事實框架估計 ACME（見 methodology_book）。</li>
+<li><strong>相關 wiki 筆記</strong>：（延伸：<a href="Zhao_Lynch_Chen_2010.html">Zhao_Lynch_Chen_2010</a>、Complete Mediation、<a href="partial_mediation.html">partial_mediation</a>）</li>
+</ul>
+<h4 id="_6">相關學者</h4>
+<ul>
+<li><strong>提出者 / 奠基者</strong>：Reuben M. Baron、David A. Kenny — 提出中介/調節變數區辨四步法。</li>
+<li><strong>主要推廣者 / 修正者</strong>：Xinshu Zhao、John Lynch、Qimei Chen — bootstrap 中介五分類修正。</li>
+<li><strong>相關學者 wiki 頁</strong>：（暫無 wiki/ 資料）</li>
+</ul>
+<p>另見：methodology_book</p>
 </main>
 </div>
 <script>

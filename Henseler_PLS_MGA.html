@@ -18,10 +18,16 @@ MathJax = {
 <aside class="sidebar">
 <div class="toc">
 <ul>
-<li><a href="#henseler_pls_mga">Henseler_PLS_MGA</a></li>
+<li><a href="#_1">方法說明</a><ul>
+<li><a href="#_2">目的</a></li>
+<li><a href="#_3">流程</a></li>
+<li><a href="#_4">適用範圍</a></li>
+<li><a href="#_5">代表性研究</a></li>
+<li><a href="#_6">相關學者</a></li>
+</ul>
+</li>
 </ul>
 </div>
-
 </aside>
 <main class="content">
 <h1>Henseler_PLS_MGA</h1>
@@ -35,6 +41,40 @@ MathJax = {
 4. $p_{MGA}$ = permuted $|\Delta\beta|$ 大於觀察值的比例</p>
 <p>優點：不假設常態。</p>
 <p><strong>參考</strong>：Henseler, J., Ringle, C. M., &amp; Sinkovics, R. R. (2009).</p>
+<h3 id="_1">方法說明</h3>
+<h4 id="_2">目的</h4>
+<ul>
+<li>主要研究目的：在 PLS-SEM 多群組分析中，以無分配假設的 permutation 檢驗比較兩組路徑係數是否顯著不同（Henseler, Ringle, &amp; Sinkovics, 2009）</li>
+<li>次要用途：作為 <a href="parametric_MGA.html">parametric_MGA</a> 在非常態 PLS 估計值下的穩健替代方案</li>
+</ul>
+<h4 id="_3">流程</h4>
+<ol>
+<li>通過 <a href="MICOM.html">MICOM</a> 確認測量恆等性</li>
+<li>以 bootstrap 估計兩組各自的路徑係數</li>
+<li>計算組差 $\Delta\beta = \beta_1 - \beta_2$</li>
+<li>隨機 permute 組別標籤 10000 次以上，重複 bootstrap</li>
+<li>$p_{MGA}$ = permuted $|\Delta\beta|$ 大於觀察值的比例</li>
+<li>依雙尾顯著水準判定組差是否存在</li>
+</ol>
+<h4 id="_4">適用範圍</h4>
+<ul>
+<li><strong>適用</strong>：PLS-SEM 多群組比較且不願假設常態分配時（Henseler et al., 2009）</li>
+<li><strong>不適用</strong>：未通過 MICOM 測量恆等性的多群組；極小組別樣本下 permutation 不穩定</li>
+<li><strong>樣本規模建議</strong>：每組至少 N ≥ 100，permutation 數 ≥ 5000</li>
+<li><strong>資料類型要求</strong>：可分組且通過 MICOM 的 PLS-SEM 資料</li>
+</ul>
+<h4 id="_5">代表性研究</h4>
+<ul>
+<li><strong>奠基文獻</strong>：Henseler, Ringle, &amp; Sinkovics（2009）— PLS-MGA permutation 法提出</li>
+<li><strong>方法論教材</strong>：<a href="Hair_2022_PLS.html">Hair_2022_PLS</a> — 列為標準 MGA 流程</li>
+<li><strong>相關 wiki 筆記</strong>：（延伸：<a href="PLS_MGA.html">PLS_MGA</a>、<a href="parametric_MGA.html">parametric_MGA</a>、<a href="MICOM.html">MICOM</a>）</li>
+</ul>
+<h4 id="_6">相關學者</h4>
+<ul>
+<li><strong>奠基者</strong>：Jörg Henseler、Christian M. Ringle、Rudolf R. Sinkovics（2009）</li>
+<li><strong>推廣者</strong>：Hair, Ringle, Sarstedt 等</li>
+<li><strong>相關學者 wiki 頁</strong>：（暫無 wiki/ 資料）</li>
+</ul>
 </main>
 </div>
 <script>

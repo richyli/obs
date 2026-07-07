@@ -5,16 +5,29 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>PLSc</title>
 <link rel="stylesheet" href="style.c953efdd48.css">
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
 </head>
 <body>
 <div class="layout">
 <aside class="sidebar">
 <div class="toc">
 <ul>
-<li><a href="#plsc">PLSc</a></li>
+<li><a href="#_1">方法說明</a><ul>
+<li><a href="#_2">目的</a></li>
+<li><a href="#_3">流程</a></li>
+<li><a href="#_4">適用範圍</a></li>
+<li><a href="#_5">代表性研究</a></li>
+<li><a href="#_6">相關學者</a></li>
+</ul>
+</li>
 </ul>
 </div>
-
 </aside>
 <main class="content">
 <h1>PLSc</h1>
@@ -24,6 +37,38 @@
 <p>做法：用 <a href="rho_A.html">rho_A</a> 做修正因子，讓 PLS 估計逼近 <a href="CB-SEM.html">CB-SEM</a> 結果。</p>
 <p>何時用：reflective 構念為主、與 CB-SEM 比較需求；不適用於 formative。</p>
 <p><strong>參考</strong>：Dijkstra, T. K., &amp; Henseler, J. (2015). <em>MIS Quarterly</em>, 39(2), 297-316.</p>
+<h3 id="_1">方法說明</h3>
+<h4 id="_2">目的</h4>
+<ul>
+<li>主要研究目的：修正傳統 PLS-SEM 對 reflective 構念負荷量低估與路徑係數膨脹的估計偏誤，使結果向 CB-SEM 收斂（Dijkstra &amp; Henseler, 2015）</li>
+<li>次要用途：當研究者必須以 PLS-SEM 操作（小樣本／formative 混合）但又需與 CB-SEM 文獻比較係數時的橋樑</li>
+</ul>
+<h4 id="_3">流程</h4>
+<ol>
+<li>跑標準 PLS-SEM 取得 composite scores 與初步負荷量</li>
+<li>計算各 reflective 構念的 <a href="rho_A.html">rho_A</a> 作為一致性修正因子</li>
+<li>以 $\rho_A$ 校正負荷量與構念間相關，得到 consistent estimates</li>
+<li>將校正後的負荷量回代，重新估計路徑係數（去除 attenuation bias）</li>
+</ol>
+<h4 id="_4">適用範圍</h4>
+<ul>
+<li><strong>適用</strong>：以 reflective 構念為主、需與 CB-SEM 結果比較的研究（Dijkstra &amp; Henseler, 2015）</li>
+<li><strong>不適用</strong>：formative 構念主導的模型（formative 構念無 reflective 一致性假設）；以預測為主而非結構參數估計的研究</li>
+<li><strong>樣本規模建議</strong>：（暫無 wiki/ 資料；沿用 PLS-SEM 一般經驗法則）</li>
+<li><strong>資料類型要求</strong>：須有可計算 $\rho_A$ 的多指標 reflective 構念</li>
+</ul>
+<h4 id="_5">代表性研究</h4>
+<ul>
+<li><strong>奠基文獻</strong>：Dijkstra &amp; Henseler（2015）— consistent PLS 演算法提出</li>
+<li><strong>方法論教材</strong>：<a href="Hair_2022_PLS.html">Hair_2022_PLS</a> — PLS-SEM 主流教材討論何時啟用 PLSc</li>
+<li><strong>相關 wiki 筆記</strong>：（延伸：<a href="Dijkstra_Henseler.html">Dijkstra_Henseler</a>、<a href="rho_A.html">rho_A</a>、<a href="CB-SEM.html">CB-SEM</a>、<a href="Hair_2022_PLS.html">Hair_2022_PLS</a>）</li>
+</ul>
+<h4 id="_6">相關學者</h4>
+<ul>
+<li><strong>奠基者</strong>：Theo K. Dijkstra、Jörg Henseler（2015）— PLSc 提出與證明</li>
+<li><strong>推廣者</strong>：Hair, Ringle, Sarstedt 等 PLS-SEM 主流圈將其納入教材</li>
+<li><strong>相關學者 wiki 頁</strong>：（暫無 wiki/ 資料）</li>
+</ul>
 </main>
 </div>
 <script>

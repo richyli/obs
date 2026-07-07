@@ -18,10 +18,16 @@ MathJax = {
 <aside class="sidebar">
 <div class="toc">
 <ul>
-<li><a href="#finite_population_correction">finite_population_correction</a></li>
+<li><a href="#_1">方法說明</a><ul>
+<li><a href="#_2">目的</a></li>
+<li><a href="#_3">流程</a></li>
+<li><a href="#_4">適用範圍</a></li>
+<li><a href="#_5">代表性研究</a></li>
+<li><a href="#_6">相關學者</a></li>
+</ul>
+</li>
 </ul>
 </div>
-
 </aside>
 <main class="content">
 <h1>finite_population_correction</h1>
@@ -36,6 +42,38 @@ $$\text{FPC} = \sqrt{\frac{N_{pop} - n}{N_{pop} - 1}}$$</p>
 - $f > .10$：強烈建議
 - $f \geq .50$：必做</p>
 <p><strong>參考</strong>：<a href="Cochran_1977.html">Cochran_1977</a>。</p>
+<h3 id="_1">方法說明</h3>
+<h4 id="_2">目的</h4>
+<ul>
+<li>主要研究目的：當樣本占母體比例 $f = n/N_{pop}$ 不可忽略時，校正以 SRSWOR 假設無限母體所高估的標準誤（Cochran, 1977）</li>
+<li>次要用途：在以普查或近普查為樣本基礎的研究（學校全教師、特定產業全公司）中，保留統計檢定的應有功效</li>
+</ul>
+<h4 id="_3">流程</h4>
+<ol>
+<li>確定母體大小 $N_{pop}$ 與樣本大小 $n$</li>
+<li>計算 $f = n / N_{pop}$</li>
+<li>計算 FPC factor：$\sqrt{(N_{pop} - n) / (N_{pop} - 1)}$</li>
+<li>將原始 SE 乘以 FPC，得到 $SE_{FPC}$；t 值對應放大為 $1/\text{FPC}$ 倍</li>
+<li>重新計算信賴區間與 p-value</li>
+</ol>
+<h4 id="_4">適用範圍</h4>
+<ul>
+<li><strong>適用</strong>：$f > .05$ 建議；$f > .10$ 強烈建議；$f \geq .50$ 必做（Cochran, 1977）</li>
+<li><strong>不適用</strong>：抽樣方法非 SRSWOR（複雜抽樣請用對應的設計校正權重）；母體大小無法定義或為無限時</li>
+<li><strong>樣本規模建議</strong>：與母體大小相對而非絕對</li>
+<li><strong>資料類型要求</strong>：可明確定義有限母體的調查資料</li>
+</ul>
+<h4 id="_5">代表性研究</h4>
+<ul>
+<li><strong>奠基文獻</strong>：<a href="Cochran_1977.html">Cochran_1977</a> — <em>Sampling Techniques</em> 第三版，FPC 標準推導</li>
+<li><strong>PLS-SEM 應用</strong>：<a href="Hair_2022_PLS.html">Hair_2022_PLS</a> — 提醒小母體 PLS 研究須套用 FPC</li>
+<li><strong>相關 wiki 筆記</strong>：（延伸：sampling、<a href="Cochran_1977.html">Cochran_1977</a>、<a href="Hair_2022_PLS.html">Hair_2022_PLS</a>）</li>
+</ul>
+<h4 id="_6">相關學者</h4>
+<ul>
+<li><strong>奠基者</strong>：William G. Cochran（1977）— survey sampling 經典教科書作者</li>
+<li><strong>相關學者 wiki 頁</strong>：（暫無 wiki/ 資料）</li>
+</ul>
 </main>
 </div>
 <script>

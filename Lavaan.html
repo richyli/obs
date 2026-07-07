@@ -52,7 +52,7 @@ MathJax = {
 </aside>
 <main class="content">
 <h1>Lavaan</h1>
-
+<p class="meta">#statistics　#SEM　#R_programming</p>
 <p>這是一份 <code>lavaan</code> (Latent Variable Analysis) 套件的核心語法速查表。<code>lavaan</code> 的模型語法是以 <strong>字串 (String)</strong> 的形式撰寫，透過不同的運算符號來定義變項之間的關係。</p>
 <h4 id="1-operators">1. 核心運算符號 (Operators)</h4>
 <p>這是建構模型最基礎的符號，請務必熟悉：</p>
@@ -496,7 +496,9 @@ $$\text{Indirect}|_{\text{Low ASE}} = (a_1 - a_3 \cdot SD_{\text{ASE}}) \times b
 - 方法偏誤：<a href="CMB_Common_method_bias.html">CMB Common method bias</a>、<a href="Harman%27s_Single_Factor_Test.html">Harman's Single Factor Test</a>、<a href="CFA_Marker_Variable_Technique.html">CFA Marker Variable Technique</a>、<a href="Lindell_Exercise.html">Lindell Exercise</a>
 - 中介 / 調節：<a href="partial_mediation.html">partial_mediation</a>、<a href="Baron_Kenny_1986.html">Baron_Kenny_1986</a>、<a href="Zhao_Lynch_Chen_2010.html">Zhao_Lynch_Chen_2010</a>、Index of Moderated Mediation (IMM, Hayes 2015)
 - 多群組 / 進階：<a href="MICOM.html">MICOM</a>、<a href="PLS_MGA.html">PLS_MGA</a>、<a href="Henseler_PLS_MGA.html">Henseler_PLS_MGA</a>、<a href="parametric_MGA.html">parametric_MGA</a>
-- Bootstrap / 預測：<a href="PLSpredict.html">PLSpredict</a>、<a href="Q_squared_predict.html">Q_squared_predict</a>（BCa CI 為 lavaan 與 seminr 共同建議）</p>
+- ESEM / set-ESEM 語法：ESEM、set-ESEM、geomin rotation、target rotation（lavaan 0.6-13+ 以 <code>efa("block")*</code> 指定 ESEM 區塊）；教學見 Marsh 2024 When How、Marsh 2024 Methods
+- Bootstrap / 預測：<a href="PLSpredict.html">PLSpredict</a>、<a href="Q_squared_predict.html">Q_squared_predict</a>（BCa CI 為 lavaan 與 seminr 共同建議）
+- 有序資料 CFA（CB-SEM）：Rogers 2023 Best Practices / Rogers 2023 Methods 示範以 <code>cfa(..., ordered=, estimator="WLSMV")</code> 跑典型 CFA；相關 DWLS、polychoric correlation、Dynamic Fit Index、Modification Indices、McDonald omega</p>
 </main>
 </div>
 <script>

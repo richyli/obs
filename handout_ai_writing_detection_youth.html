@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 寫作辨識講義（中學生版）</title>
+<link rel="stylesheet" href="style.c953efdd48.css">
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+<div class="toc">
+<ul>
+<li><a href="#_1">為什麼你需要學這個</a></li>
+<li><a href="#99-ai">黃金口訣：看到「——」就 99% 是 AI</a></li>
+<li><a href="#7">7 個視覺特徵（看一眼就能抓）</a><ul>
+<li><a href="#1">特徵 1｜「——」破折號爆量</a></li>
+<li><a href="#2-x-y">特徵 2｜「不是 X，而是 Y」對偶句連發</a></li>
+<li><a href="#3">特徵 3｜「從來不是 / 並不只是 / 早已不是」開頭</a></li>
+<li><a href="#4">特徵 4｜「治理品質／系統性／結構性／根本性」這種詞連發</a></li>
+<li><a href="#5-x-x">特徵 5｜「真正的 X / 本質的 X」+ 抽象名詞</a></li>
+<li><a href="#6abc">特徵 6｜「A、B、C 等」三段並列堆名詞</a></li>
+<li><a href="#7-x">特徵 7｜「所反映的 / 所暴露的 / 所揭示的」是 X</a></li>
+</ul>
+</li>
+<li><a href="#5">5 步驟檢查法</a></li>
+<li><a href="#6">隨堂辨識題（6 題）</a><ul>
+<li><a href="#1_1">題目 1</a></li>
+<li><a href="#2">題目 2</a></li>
+<li><a href="#3_1">題目 3</a></li>
+<li><a href="#4_1">題目 4</a></li>
+<li><a href="#5_1">題目 5</a></li>
+<li><a href="#6_1">題目 6</a></li>
+</ul>
+</li>
+<li><a href="#ai_1">怎麼避免自己作文沾染 AI 的壞習慣</a></li>
+<li><a href="#llm">給自己的 LLM 自學工具</a></li>
+<li><a href="#_2">結語</a></li>
+<li><a href="#_3">進階：用手機鍵盤的「打不出來」判斷</a><ul>
+<li><a href="#_4">中文常見標點，手機鍵盤打得出來</a></li>
+<li><a href="#_5">真人「打不出來」或「懶得打」的標點</a></li>
+<li><a href="#_6">一招驗證法：「複製貼上他寫的文字到鍵盤輸入框試試看」</a></li>
+</ul>
+</li>
+<li><a href="#llm_chinese_writing_tics-corpus">進階：跟 llm_chinese_writing_tics 完整 corpus 對照</a></li>
+<li><a href="#related">Related</a></li>
+</ul>
+</div>
+</aside>
+<main class="content">
+<h1>AI 寫作辨識講義（中學生版）</h1>
+<p class="meta">#handout　#ai_writing_literacy　#media_literacy　#llm_detection　#youth_education</p>
+<h2 id="ai">AI 寫作辨識講義（中學生版）</h2>
+<blockquote>
+<p>給：國高中生
+主題：怎麼一眼看出 IG 文、Dcard、班刊作品「其實是 AI 寫的」
+用法：閱讀理解課、媒體識讀課、班級導師時間
+課時：1 節課（45 分鐘）</p>
+</blockquote>
+<hr />
+<h3 id="_1">為什麼你需要學這個</h3>
+<p>每天你滑 IG、看 Dcard、追小紅書，會看到很多「看起來很有想法」的文章。但其中越來越多其實是 ChatGPT、Claude、Gemini 寫的——可能是同學偷懶交作業、可能是商業帳號賺流量、可能是有人想騙你按讚。</p>
+<p><strong>最大的風險不是被 AI 騙</strong>，而是<strong>你看多了 AI 文，自己寫作文也會不自覺學起 AI 的習慣</strong>——然後老師一眼就看出來。</p>
+<p>這份講義教你：
+1. 用 <strong>7 個視覺特徵</strong>快速辨識 AI 寫的中文文章
+2. 用 <strong>5 步驟檢查法</strong>判斷一篇文章是不是 AI 寫的
+3. 避免自己作文沾染 AI 的壞習慣</p>
+<p>所有特徵都來自真實的 AI 生成樣本對照 corpus_ltn_editorial_2026 真實中文寫作的密度差異——不是憑感覺亂講。</p>
+<hr />
+<h3 id="99-ai">黃金口訣：看到「——」就 99% 是 AI</h3>
+<p>最強單一特徵：<strong>破折號（——）</strong>。</p>
+<table>
+<thead>
+<tr>
+<th>來源</th>
+<th style="text-align: right;">平均 1700 字裡有幾個「——」？</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>真實中文評論（自由時報 353 篇）</td>
+<td style="text-align: right;">約 0 個</td>
+</tr>
+<tr>
+<td>真實中文評論（聯合報 364 篇）</td>
+<td style="text-align: right;">約 0.2 個</td>
+</tr>
+<tr>
+<td><strong>Claude AI 寫的繁體中文</strong></td>
+<td style="text-align: right;"><strong>約 22 個（!）</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>判斷法則</strong>：
+- 一篇文章看到 1 個「——」→ 開始懷疑
+- 看到 3 個以上「——」→ 9 成是 AI
+- 看到 10 個以上「——」→ 100% 是 AI</p>
+<p><strong>為什麼有效</strong>：手機鍵盤打「——」要切換符號鍵 → 長按「-」、找全形 → 真人懶得這樣做。AI 因為訓練資料含大量翻譯腔英文 essay（裡面 em-dash 很多），所以自動就會打。</p>
+<blockquote>
+<p><strong>真實例句</strong>（從本講義 corpus 抽取，文章主題：升學壓力）：
+「我們所失去的，遠不止於休息時間、社團活動、跟家人吃飯的安寧<strong>——</strong>更是我們對學習本身應有的好奇心。」</p>
+</blockquote>
+<p>這段話如果是同學寫的，你直接質疑——這個破折號根本不像高中生會打。</p>
+<hr />
+<h3 id="7">7 個視覺特徵（看一眼就能抓）</h3>
+<h4 id="1">特徵 1｜「——」破折號爆量</h4>
+<p>詳見上面黃金口訣。<strong>這條最強，看到就懷疑。</strong></p>
+<h4 id="2-x-y">特徵 2｜「不是 X，而是 Y」對偶句連發</h4>
+<p>真人會偶爾用一次。AI 一篇文章用 3-5 次。</p>
+<blockquote>
+<p><strong>真實例句</strong>（topic: 升學壓力）：
+「我發現自己每天打開課本，看到的<strong>不是知識，而是</strong>一個又一個還沒解開的盲點。這從來<strong>不是</strong>單純的努力夠不夠的問題，<strong>而是</strong>當所有大人都告訴你『再撐一下就好』的時候……」</p>
+</blockquote>
+<p>短短兩句連用兩次「不是…而是」——這就是 AI 寫作癖。<strong>警戒值：一篇文章看到 3 次以上就懷疑</strong>。</p>
+<h4 id="3">特徵 3｜「從來不是 / 並不只是 / 早已不是」開頭</h4>
+<p>AI 超愛用這種「否定強化」開頭來營造氣勢。</p>
+<blockquote>
+<p><strong>真實例句</strong>（topic: 升學壓力）：
+「我們<strong>不是</strong>抗壓性差，<strong>而是</strong>這套制度本身的根本性問題從未被真正檢討。」
+「<strong>並不只是</strong>『忙』這麼簡單，它是一種被時間追著跑的恐慌感。」</p>
+</blockquote>
+<p><strong>警戒值：一篇文章看到 2 次以上就懷疑</strong>。</p>
+<h4 id="4">特徵 4｜「治理品質／系統性／結構性／根本性」這種詞連發</h4>
+<p>正常高中生不會寫「結構性」「系統性」這種政治哲學辭藻——AI 會。</p>
+<blockquote>
+<p><strong>真實例句</strong>（topic: 升學壓力）：
+「並不只是她一個人的問題，更是整個台灣家庭文化長期、<strong>系統性、根本性</strong>的盲點。」
+「這套制度本身的<strong>根本性</strong>問題從未被真正檢討。」</p>
+</blockquote>
+<p><strong>警戒值：一篇文章看到「結構性／系統性／根本性／本質上」3 個以上就懷疑</strong>。</p>
+<h4 id="5-x-x">特徵 5｜「真正的 X / 本質的 X」+ 抽象名詞</h4>
+<blockquote>
+<p><strong>真實例句</strong>（topic: 升學壓力）：
+「<strong>真正的</strong>探索、<strong>真正的</strong>興趣、<strong>真正的</strong>思考，全部被排到『等你考完再說』的清單上。」
+「表面上的目標是高分，<strong>本質上的</strong>目標卻是『不要讓人失望』。」</p>
+</blockquote>
+<p><strong>警戒值：一篇 800 字文章看到 4 次以上「真正的／本質的」就懷疑</strong>。</p>
+<h4 id="6abc">特徵 6｜「A、B、C 等」三段並列堆名詞</h4>
+<blockquote>
+<p><strong>真實例句</strong>（topic: 升學壓力）：
+「沒有『考完』這件事，因為下一階段還有<strong>大學、研究所、就業、升遷</strong>在等著。」</p>
+</blockquote>
+<p>真人會寫「考完還有大學、再來研究所、之後又是工作」這種帶連接的散文式列舉。AI 偏好「A、B、C、D 等」這種制式並列。</p>
+<h4 id="7-x">特徵 7｜「所反映的 / 所暴露的 / 所揭示的」是 X</h4>
+<blockquote>
+<p><strong>真實例句</strong>（topic: 升學壓力）：
+「這份焦慮<strong>所反映的</strong>，根本是整個升學制度施加在我們這代人身上的長期擠壓。」
+「<strong>這所揭示的</strong>是——焦慮不是只有一種來源。」</p>
+</blockquote>
+<p>真人很少用「所 V 的」這種文言句構。AI 一篇文章用 3-5 次。</p>
+<hr />
+<h3 id="5">5 步驟檢查法</h3>
+<p>拿到一篇文章，依序問自己：</p>
+<table>
+<thead>
+<tr>
+<th>步驟</th>
+<th>檢查項目</th>
+<th>警戒值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Step 1</strong></td>
+<td>數「——」破折號數量</td>
+<td>≥ 3 個 → 高度可疑</td>
+</tr>
+<tr>
+<td><strong>Step 2</strong></td>
+<td>數「不是…而是」對偶句</td>
+<td>≥ 3 次 → 高度可疑</td>
+</tr>
+<tr>
+<td><strong>Step 3</strong></td>
+<td>數「從來不是／並不只是」開頭</td>
+<td>≥ 2 次 → 高度可疑</td>
+</tr>
+<tr>
+<td><strong>Step 4</strong></td>
+<td>數「結構性／系統性／根本性」</td>
+<td>≥ 3 個 → 高度可疑</td>
+</tr>
+<tr>
+<td><strong>Step 5</strong></td>
+<td>看全文有沒有「！」「？」</td>
+<td>整篇 0 個 → 可疑</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Step 5 為什麼重要</strong>：真人寫 IG、Dcard、班刊都會用「！」表達情緒、用「？」反問。AI 寫的「人類視角」文章反而過度保守，整篇都是平緩陳述句。</p>
+<p><strong>5 步驟全部命中 → 99% 是 AI 寫的。</strong></p>
+<hr />
+<h3 id="6">隨堂辨識題（6 題）</h3>
+<p>以下 6 段都是真實樣本，請判斷哪幾段是 AI 寫的（答案在最後）。</p>
+<h4 id="1_1">題目 1</h4>
+<blockquote>
+<p>「昨天晚上十一點，我傳了一段我覺得很重要的事給最好的朋友——關於我跟媽媽剛剛爆發的爭吵、關於我對自己的懷疑、關於我覺得快要撐不下去的感覺。她『已讀』了，然後沒有回。」</p>
+</blockquote>
+<h4 id="2">題目 2</h4>
+<blockquote>
+<p>「上週我跟阿明吵架，後來他發限動說『有些朋友還是別當朋友比較好』。我看了超火，回他『隨便你啊』，然後封鎖。結果今天他又傳訊息來說對不起。國中生的友誼真的有夠累。」</p>
+</blockquote>
+<h4 id="3_1">題目 3</h4>
+<blockquote>
+<p>「這份疲憊並不只是『群組訊息太多』這麼簡單，而是它所反映的，是我們五個人從同樣的小孩、逐漸長成五個截然不同的人之後，仍然被那個共同的過去綁在一起的——壓抑、勉強、表演式維繫的根本性緊張。」</p>
+</blockquote>
+<h4 id="4_1">題目 4</h4>
+<blockquote>
+<p>「凱道集會那天，我以為會很熱血。結果走到一半我就鐵腿了，又渴又累，只想趕快回家洗澡。社運真的比我想的辛苦很多。」</p>
+</blockquote>
+<h4 id="5_1">題目 5</h4>
+<blockquote>
+<p>「這種無處可逃的恐懼，不是大人能輕易理解的。更值得追問的是，當老師發現這件事時，他的反應是『同學之間鬧著玩不要太認真』。這句話聽起來很平淡，但它正是這套系統的縮影——學校把網路霸凌看成『線下衝突的延伸』，卻沒有看到網路霸凌的根本性差異。」</p>
+</blockquote>
+<h4 id="6_1">題目 6</h4>
+<blockquote>
+<p>「昨天看到班上有人在罵小華，我超不爽。她又沒做什麼，幹嘛集體攻擊她？我私下問小華還好嗎，她說沒事但聲音在抖。我覺得這種事真的不應該。」</p>
+</blockquote>
+<p><strong>答案</strong>：1、3、5 是 AI 寫的。2、4、6 是真人寫的。</p>
+<p><strong>辨識要點</strong>：
+- 題 1：開頭就有「——」連續三段，雖然內容很真，但破折號用法太典型 AI
+- 題 3：「並不只是… 而是…所反映的…」+「根本性」一句話 4 個 AI 特徵
+- 題 5：「更值得追問」「正是這套系統的縮影」「根本性差異」+「——」全套命中
+- 題 2、4、6：句子短、用「超」「鐵腿」「幹嘛」這種口語、有真實時間人名、沒有 AI 套語</p>
+<hr />
+<h3 id="ai_1">怎麼避免自己作文沾染 AI 的壞習慣</h3>
+<p>如果你有用 ChatGPT 練習作文，注意：</p>
+<table>
+<thead>
+<tr>
+<th>❌ AI 喜歡寫</th>
+<th>✅ 你應該寫</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>「這從來不是 A 的問題，而是 B 的問題」</td>
+<td>「這不只是 A 的問題，B 也很重要」</td>
+</tr>
+<tr>
+<td>「——更是 X」（破折號收尾）</td>
+<td>「，X 才是真正的關鍵」</td>
+</tr>
+<tr>
+<td>「結構性／系統性／根本性」連發</td>
+<td>換成「整個社會」「整套制度」「最核心的」</td>
+</tr>
+<tr>
+<td>「真正的 X、真正的 Y、真正的 Z」</td>
+<td>只用一次「真正的」就好</td>
+</tr>
+<tr>
+<td>「所反映的」「所暴露的」</td>
+<td>改成「這顯示」「這代表」</td>
+</tr>
+<tr>
+<td>整篇沒有「！」「？」</td>
+<td>至少 1-2 個反問句、1 個感嘆句</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="llm">給自己的 LLM 自學工具</h3>
+<p>把這段話貼給 ChatGPT 或 Claude，請它幫你檢查自己的作文：</p>
+<pre><code>請幫我檢查下面這篇作文有沒有 LLM 寫作癖好。檢查以下 7 項，每項列出實際命中的句子並算總次數：
+
+1. 「——」破折號出現幾次？
+2. 「不是 X，而是 Y」對偶句出現幾次？
+3. 「從來不是／並不只是／早已不是」開頭出現幾次？
+4. 「結構性／系統性／根本性／本質的」這類詞出現幾次？
+5. 「真正的 X」這類片語出現幾次？
+6. 「所反映／所暴露／所揭示」出現幾次？
+7. 整篇有沒有「！」或「？」？
+
+最後給我一個 0-10 的「AI 味分數」，10 = 完全像 AI，0 = 完全像真人。
+
+我的作文如下：
+[貼上你的作文]
+</code></pre>
+<p><strong>⚠️ 注意</strong>：LLM 自己也會幻覺，它可能會故意說你寫得很好（討好你）或故意挑毛病。所以<strong>人工複查</strong>這 7 項，不要全信 AI 的回答。</p>
+<hr />
+<h3 id="_2">結語</h3>
+<p>學會辨識 AI 寫作不是要你拒絕 AI——AI 可以幫你查資料、想點子、改錯字。但你寫出來的文章要是<strong>你自己的聲音</strong>。</p>
+<p>老師閱卷時越來越能一眼看出 AI 文，會考、學測作文如果被認定為 AI 寫的會被扣分甚至零分。最安全的做法：<strong>自己先寫，再請 AI 提建議，但不要讓 AI 幫你寫整段</strong>。</p>
+<p>關於 LLM 句法癖好的完整清單見 llm_chinese_writing_tics；對應的大學生版見 <a href="handout_ai_writing_detection_academic.html">handout_ai_writing_detection_academic</a>，給長輩的版本見 <a href="handout_ai_writing_detection_elder.html">handout_ai_writing_detection_elder</a>。</p>
+<hr />
+<h3 id="_3">進階：用手機鍵盤的「打不出來」判斷</h3>
+<p>這招很實用，特別針對 Dcard、IG 文、班刊作品：</p>
+<h4 id="_4">中文常見標點，手機鍵盤打得出來</h4>
+<table>
+<thead>
+<tr>
+<th>標點</th>
+<th>iPhone 怎麼打</th>
+<th>真人會用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>句號「。」</td>
+<td>切到符號鍵 → 第一個</td>
+<td>✅ 一直用</td>
+</tr>
+<tr>
+<td>逗號「，」</td>
+<td>中文鍵盤直接打</td>
+<td>✅ 一直用</td>
+</tr>
+<tr>
+<td>問號「？」</td>
+<td>切符號 → 找 ?</td>
+<td>✅ 偶爾用</td>
+</tr>
+<tr>
+<td>驚嘆號「！」</td>
+<td>切符號 → 找 !</td>
+<td>✅ 偶爾用</td>
+</tr>
+<tr>
+<td>頓號「、」</td>
+<td>切符號 → 較深層</td>
+<td>✅ 列舉時用</td>
+</tr>
+</tbody>
+</table>
+<h4 id="_5">真人「打不出來」或「懶得打」的標點</h4>
+<table>
+<thead>
+<tr>
+<th>標點</th>
+<th>怎麼打</th>
+<th>真人會用嗎？</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>破折號「——」（兩個全形 em-dash 串接）</td>
+<td>切符號 → 長按「-」→ 選全形</td>
+<td>❌ 幾乎沒人會</td>
+</tr>
+<tr>
+<td>單破折號「—」（全形 em-dash）</td>
+<td>同上</td>
+<td>❌ 罕見</td>
+</tr>
+<tr>
+<td>中文括號「（）」全形</td>
+<td>切符號才有</td>
+<td>⚠️ 偶爾用</td>
+</tr>
+<tr>
+<td>中文冒號「：」全形</td>
+<td>切符號才有</td>
+<td>✅ 標題會用</td>
+</tr>
+</tbody>
+</table>
+<p><strong>核心邏輯</strong>：手機鍵盤打字的人，<strong>會用最快的標點</strong>。「——」這種要切換、長按、找符號的標點，真人懶得用。</p>
+<p>AI 因為訓練資料來自書面語料（書、論文、翻譯文章），裡面 em-dash 多到爆，所以自動就會打。</p>
+<h4 id="_6">一招驗證法：「複製貼上他寫的文字到鍵盤輸入框試試看」</h4>
+<p>把可疑文章的「——」這幾個字選起來複製，貼到自己的 LINE 訊息輸入框。然後想想：<strong>你的同學會花時間切換鍵盤打出這個符號嗎？</strong></p>
+<p>如果答案是「不會」——那就是 AI 寫的。</p>
+<hr />
+<h3 id="llm_chinese_writing_tics-corpus">進階：跟 llm_chinese_writing_tics 完整 corpus 對照</h3>
+<p>本講義 7 個視覺特徵其實是 llm_chinese_writing_tics 跨 591 文件 corpus 實證的簡化版：</p>
+<table>
+<thead>
+<tr>
+<th>本講義特徵</th>
+<th>對應 pattern</th>
+<th style="text-align: right;">LLM 密度 / 1k 字</th>
+<th style="text-align: right;">真人（corpus_ltn_editorial_2026）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>特徵 1「——」破折號</td>
+<td>P10c em-dash</td>
+<td style="text-align: right;">15.2</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr>
+<td>特徵 2「不是 X，而是 Y」</td>
+<td>P01 二元對偶</td>
+<td style="text-align: right;">1.80</td>
+<td style="text-align: right;">0.25</td>
+</tr>
+<tr>
+<td>特徵 3「從來不是」開頭</td>
+<td>P08 否定強化</td>
+<td style="text-align: right;">1.01</td>
+<td style="text-align: right;">0.013</td>
+</tr>
+<tr>
+<td>特徵 4「系統性／結構性」</td>
+<td>P06 政哲詞</td>
+<td style="text-align: right;">3.09</td>
+<td style="text-align: right;">0.025</td>
+</tr>
+<tr>
+<td>特徵 5「真正的 X」</td>
+<td>P04 抽象套語</td>
+<td style="text-align: right;">0.32</td>
+<td style="text-align: right;">0.07</td>
+</tr>
+<tr>
+<td>特徵 6「A、B、C 等」</td>
+<td>P11 三段並列</td>
+<td style="text-align: right;">0.43</td>
+<td style="text-align: right;">0.19</td>
+</tr>
+<tr>
+<td>特徵 7「所反映／所暴露的」</td>
+<td>P12 名詞化</td>
+<td style="text-align: right;">1.75</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>敢公開的判別力排序</strong>：特徵 1 ≫ 特徵 7 ≫ 特徵 4 ≫ 特徵 3 ≫ 特徵 2 ≫ 特徵 6 ≫ 特徵 5</p>
+<p>如果只能記一個：<strong>就記特徵 1（破折號）</strong>。</p>
+<hr />
+<h3 id="related">Related</h3>
+<ul>
+<li>llm_chinese_writing_tics — 12 個 LLM 寫作 pattern 完整清單</li>
+<li>comparison_llm_patterns — 跨樣本實證對照數據</li>
+<li>corpus_ltn_editorial_2026 / corpus_udn_editorial_2025_2026 — 真實中文評論 baseline</li>
+<li><a href="handout_ai_writing_detection_academic.html">handout_ai_writing_detection_academic</a> — 大學生 / 研究生版</li>
+<li><a href="handout_ai_writing_detection_elder.html">handout_ai_writing_detection_elder</a> — 長輩 LINE 訊息版</li>
+</ul>
+</main>
+</div>
+<script>
+(function () {
+  // ── Rebuild TOC with toggle buttons ──────────────────────────────────────
+  var toc = document.querySelector('.sidebar .toc');
+  if (toc) {
+    toc.querySelectorAll('li').forEach(function (li) {
+      var childUl = li.querySelector(':scope > ul');
+      var link    = li.querySelector(':scope > a');
+      if (!link) return;
+
+      var row = document.createElement('div');
+      row.className = 'toc-row';
+
+      if (childUl) {
+        var btn = document.createElement('button');
+        btn.className = 'toc-toggle';
+        btn.setAttribute('aria-expanded', 'true');
+        btn.textContent = '▾';          // ▾ open
+        btn.addEventListener('click', function () {
+          var open = childUl.hidden;
+          childUl.hidden = !open;
+          btn.textContent = open ? '▾' : '▸';   // ▾ / ▸
+          btn.setAttribute('aria-expanded', String(open));
+        });
+        row.appendChild(btn);
+      } else {
+        var spacer = document.createElement('span');
+        spacer.style.width = '1rem';
+        spacer.style.flexShrink = '0';
+        row.appendChild(spacer);
+      }
+
+      row.appendChild(link);
+      li.insertBefore(row, li.firstChild);
+    });
+  }
+
+  // ── Scroll spy ───────────────────────────────────────────────────────────
+  var headings = document.querySelectorAll('.content h2[id], .content h3[id], .content h4[id]');
+  var tocLinks = document.querySelectorAll('.sidebar .toc a');
+  if (!headings.length || !tocLinks.length) return;
+
+  var current = null;
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      var link = document.querySelector('.sidebar .toc a[href="#' + e.target.id + '"]');
+      if (!link) return;
+      if (current) current.classList.remove('active');
+      current = link;
+      current.classList.add('active');
+      // Scroll link into view within sidebar
+      current.scrollIntoView({ block: 'nearest' });
+    });
+  }, { rootMargin: '-5% 0px -75% 0px', threshold: 0 });
+
+  headings.forEach(function (h) { io.observe(h); });
+}());
+</script>
+</body>
+</html>

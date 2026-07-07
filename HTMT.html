@@ -24,6 +24,14 @@ MathJax = {
 <li><a href="#htmt">四、若 HTMT 不過關的處理</a></li>
 <li><a href="#_3">五、與其他效度檢定的關係</a></li>
 <li><a href="#_4">六、論文中的呈現</a></li>
+<li><a href="#_5">方法說明</a><ul>
+<li><a href="#_6">目的</a></li>
+<li><a href="#_7">流程</a></li>
+<li><a href="#_8">適用範圍</a></li>
+<li><a href="#_9">代表性研究</a></li>
+<li><a href="#_10">相關學者</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </aside>
@@ -103,6 +111,40 @@ MathJax = {
 - 共線性檢定：<a href="Multicollinearity_%E5%85%B1%E7%B7%9A%E6%80%A7.html">Multicollinearity 共線性</a>、<a href="VIF_Variance_Inflation_Factor.html">VIF Variance Inflation Factor</a>
 - 同流程的方法論議題：<a href="CMB_Common_method_bias.html">CMB Common method bias</a>、<a href="Harman%27s_Single_Factor_Test.html">Harman's Single Factor Test</a>、<a href="CFA_Marker_Variable_Technique.html">CFA Marker Variable Technique</a></p>
 <p><img alt="Pasted image 20250915200706" src="img/Pasted%20image%2020250915200706.png" /></p>
+<h3 id="_5">方法說明</h3>
+<h4 id="_6">目的</h4>
+<ul>
+<li>主要研究目的：以「跨構念題項平均相關 / 同構念題項平均相關」的比率診斷區別效度，補足傳統 <a href="Fornell-Larcker.html">Fornell-Larcker</a> 對細微重疊偵測力不足的問題（Henseler, Ringle, &amp; Sarstedt, 2015）</li>
+<li>次要用途：作為 PLS-SEM 與 CB-SEM 量測模型評估的主流主檢定指標</li>
+</ul>
+<h4 id="_7">流程</h4>
+<ol>
+<li>估算量測模型，取得各題項間相關係數</li>
+<li>對每對構念 $(i, j)$：計算 heterotrait 平均相關（跨構念題項相關）</li>
+<li>計算 monotrait 平均相關（同構念題項相關）</li>
+<li>代入公式：$HTMT_{ij} = \text{heterotrait}_{ij} / \sqrt{\text{monotrait}_i \times \text{monotrait}_j}$</li>
+<li>依門檻判讀：理論接近 $< 0.90$、理論不同 $< 0.85$</li>
+<li>進階：以 bootstrap 取得 HTMT 信賴區間，上界不含 1 即區別效度成立</li>
+</ol>
+<h4 id="_8">適用範圍</h4>
+<ul>
+<li><strong>適用</strong>：reflective 構念為主的 PLS-SEM 與 CB-SEM 區別效度檢驗（Henseler et al., 2015）</li>
+<li><strong>不適用</strong>：formative 構念（無法定義 monotrait 相關）；單題項構念</li>
+<li><strong>樣本規模建議</strong>：依 PLS-SEM 一般經驗法則</li>
+<li><strong>資料類型要求</strong>：多題項 reflective 構念</li>
+</ul>
+<h4 id="_9">代表性研究</h4>
+<ul>
+<li><strong>奠基文獻</strong>：Henseler, Ringle, &amp; Sarstedt（2015）— HTMT 提出與模擬比較</li>
+<li><strong>方法論教材</strong>：<a href="Hair_2022_PLS.html">Hair_2022_PLS</a> — 列為主檢定，Fornell-Larcker 與 Cross-Loadings 退為輔助</li>
+<li><strong>相關 wiki 筆記</strong>：（延伸：<a href="Fornell-Larcker.html">Fornell-Larcker</a>、<a href="Discriminant_Validity_%E5%8D%80%E5%88%A5%E6%A0%A1%E5%BA%A6.html">Discriminant Validity 區別校度</a>、<a href="Hair_2022_PLS.html">Hair_2022_PLS</a>、<a href="seminr.html">seminr</a>）</li>
+</ul>
+<h4 id="_10">相關學者</h4>
+<ul>
+<li><strong>奠基者</strong>：Jörg Henseler、Christian M. Ringle、Marko Sarstedt（2015）</li>
+<li><strong>推廣者</strong>：Joseph F. Hair Jr. 等（PLS-SEM 教科書圈）</li>
+<li><strong>相關學者 wiki 頁</strong>：（暫無 wiki/ 資料）</li>
+</ul>
 </main>
 </div>
 <script>

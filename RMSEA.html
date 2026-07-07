@@ -22,6 +22,14 @@ MathJax = {
 <li><a href="#_2">與其他適配指標的關係</a></li>
 <li><a href="#_3">應用情境</a></li>
 <li><a href="#_4">限制與爭議</a></li>
+<li><a href="#_5">方法說明</a><ul>
+<li><a href="#_6">目的</a></li>
+<li><a href="#_7">流程</a></li>
+<li><a href="#_8">適用範圍</a></li>
+<li><a href="#_9">代表性研究</a></li>
+<li><a href="#_10">相關學者</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </aside>
@@ -72,8 +80,40 @@ $$</p>
 <li><strong>不可單獨判讀</strong>：RMSEA 通過不保證模型正確，需結合 CFI、SRMR、殘差矩陣、modification indices 與理論合理性綜合判斷</li>
 </ul>
 <hr />
-<p><strong>相關概念</strong>：<a href="CFI_Comparative_Fit_Index.html">CFI Comparative Fit Index</a>、<a href="SRMR.html">SRMR</a>、Tucker-Lewis Index、fit indices、CFA、SEM、MLR、FIML 使 SEM 在 MCAR MAR 下優於 listwise 刪除</p>
-<p><strong>相關論文</strong>：Alamer 2025 SEM、Alamer 2025 Methods</p>
+<p><strong>相關概念</strong>：<a href="CFI_Comparative_Fit_Index.html">CFI Comparative Fit Index</a>、<a href="SRMR.html">SRMR</a>、Tucker-Lewis Index、fit indices、CFA、SEM、MLR、DWLS、Dynamic Fit Index、FIML 使 SEM 在 MCAR MAR 下優於 listwise 刪除</p>
+<p><strong>相關論文</strong>：Alamer 2025 SEM、Alamer 2025 Methods、Rogers 2023 Best Practices（有序資料下 DWLS 使 RMSEA 偏低，須改用 DFI）</p>
+<hr />
+<h3 id="_5">方法說明</h3>
+<h4 id="_6">目的</h4>
+<ul>
+<li>主要研究目的：作為絕對適配指標，評估 SEM/CFA 目標模型本身在母體中的近似誤差，並對自由度與樣本量校正（Steiger &amp; Lind 1980）。</li>
+<li>次要用途：巢套模型比較與多群組測量不變性檢驗（觀察 ΔRMSEA）。</li>
+</ul>
+<h4 id="_7">流程</h4>
+<ol>
+<li>估計模型並取得 $\chi^2$、$df$、$N$，代入 $\text{RMSEA}=\sqrt{\max(\chi^2-df,0)/(df\cdot(N-1))}$。</li>
+<li>報告點估計、90% 信賴區間與 close fit 檢定 p 值（MacCallum, Browne &amp; Sugawara 1996；見上「解讀準則」）。</li>
+<li>與 CFI、SRMR 三指標並看綜合判斷（見上「與其他適配指標的關係」）。</li>
+</ol>
+<h4 id="_8">適用範圍</h4>
+<ul>
+<li><strong>適用</strong>：CFA 測量模型驗證、SEM 整體評估、大樣本巢套模型比較（見上「應用情境」）。</li>
+<li><strong>不適用</strong>：N&lt;200 或低自由度模型時易高估偏誤；不可單獨判讀（見上「限制與爭議」）。</li>
+<li><strong>樣本規模建議</strong>：N≥200；小樣本須加報 90% CI。</li>
+<li><strong>資料類型要求</strong>：連續資料用 ML/MLR；類別資料用 WLSMV 對應 robust 統計量。</li>
+</ul>
+<h4 id="_9">代表性研究</h4>
+<ul>
+<li><strong>開創性文獻</strong>：Steiger &amp; Lind（1980）— 提出 RMSEA。</li>
+<li><strong>方法發展里程碑</strong>：Browne &amp; Cudeck（1993）分段準則；Hu &amp; Bentler（1999）two-index strategy；MacCallum et al.（1996）close fit 檢定。</li>
+<li><strong>相關 wiki 筆記</strong>：Alamer 2025 SEM、Rogers 2023 Best Practices、<a href="SRMR.html">SRMR</a>、Dynamic Fit Index</li>
+</ul>
+<h4 id="_10">相關學者</h4>
+<ul>
+<li><strong>奠基者</strong>：James Steiger（1980）（暫無 wiki/ scholar 頁）。</li>
+<li><strong>主要推廣者</strong>：Michael Browne、Robert Cudeck（1993）；Li-tze Hu、Peter Bentler（1999）（暫無 wiki/ scholar 頁）。</li>
+<li><strong>相關學者 wiki 頁</strong>：（暫無 wiki/ 資料）</li>
+</ul>
 </main>
 </div>
 <script>
