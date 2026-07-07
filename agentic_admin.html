@@ -80,7 +80,7 @@ a{color:#2b6cb0}
 <body>
 <header><div class="inner">
   <h1>Agentic AI × 大學行政<br>打造你的個人行政助理</h1>
-  <p><strong>國立政治大學</strong>　2026/7/7　・　講者 李怡志</p>
+  <p><strong>國立政治大學</strong>　2026/7/7　・　新聞系 李怡志　<a href="mailto:richy@nccu.edu.tw" style="color:#cfe0f0">richy@nccu.edu.tw</a></p>
   <p>90 分鐘・以 demo 為主・公文 ｜ 法規比對 ｜ 新聞稿</p>
 </div></header>
 
@@ -111,7 +111,12 @@ a{color:#2b6cb0}
 <tr><td>你做什麼</td><td>複製、貼上、再複製</td><td>看它做、必要時喊停</td></tr>
 <tr><td>一個指令換來</td><td>一段答案</td><td>一連串動作 + 一份成品</td></tr>
 </table>
-<p><strong>用「員工」理解：</strong>對話式 AI 像個「博學但每天失憶的新人」，不認得你單位的公文格式、不記得你昨天交代過什麼；Agentic AI 像個「跟你三年的資深承辦」，認得檔案、記得慣用語、知道哪些簽呈要會辦人事。今天要做的，就是把第二種助理帶起來。</p>
+<p><strong>用「員工」理解——這是全場最重要的一個比喻：</strong></p>
+<ul>
+  <li><strong>對話式 AI（ChatGPT 網頁版）＝派遣公司每天送新的工讀生來。</strong>每次任務來的工讀生都不同，能力不差，但<strong>對你一無所知</strong>——不認得你單位、不記得你昨天交代過什麼。重點全在<strong>每一次都要把任務交代得夠準確</strong>。</li>
+  <li><strong>Agentic AI＝養在你身邊的小助理。</strong>永遠是同一個人，跟著你久了會<strong>認得你的檔案、記得你的慣用語、知道哪些簽呈要會辦人事</strong>。重點不在每次交代，而在<strong>不斷培養、訓練</strong>他。</li>
+</ul>
+<p>今天要做的，就是把第二種助理<strong>從零帶起來、並且教會他</strong>。</p>
 
 <h2 id="s2"><span class="s">S2</span>基本知識：你會一直聽到的幾個詞</h2>
 <p>下面幾個詞今天會一直出現，先花三分鐘認識，等一下看 demo 就不會卡。<strong>不用背，知道大概是什麼就好。</strong></p>
@@ -221,6 +226,23 @@ a{color:#2b6cb0}
 <div class="ask"><b>追問句：</b>「說明第二點太文言，改白話一點。」／「改成『簽』的格式給處長核示。」</div>
 <div class="callout warn">文號、日期、法源依據，AI 不要它編——留空自己填、自己核。</div>
 <div class="skldemo"><b>🔧 Skill demo（建立）：</b>demo 完 web 版 prompt 後，示範在 Claude Code 把這三段存成 <code>/公文簽呈</code> skill——下次只喊一聲＋給事由就跑，不用每次重貼。這是把「一次性 prompt」變「一鍵 skill」的第一個示範。</div>
+<div class="skldemo"><b>❓ 怎麼把「skill 的觀念」寫進 prompt？</b>把 prompt 拆成兩塊——<b>每次都一樣的規則</b>（你單位的公文慣例）和 <b>這次才變的內容</b>（事由、對象）。不變的那塊就是 skill 的雛形，變的那塊是你每次只要填的空格。下面這版把單位公文規矩<b>寫進 prompt</b>，最後一句還叫它「記住」——等於一邊用、一邊訓練你那位「養在身邊的小助理」。</div>
+<div class="promptbox"><div class="bar"><span>Skill 版 Prompt — 規則寫進去、只留空格給變數</span><button class="copybtn">複製</button></div><pre>你是我的公文擬稿助理。【單位慣例】之後每次擬公文都要遵守；【本次任務】才是每次會變的部分。
+
+【單位慣例（固定，之後都照這個）】
+- 公文結構：主旨 ＋ 說明（分點）＋ 辦法/請求事項
+- 不用「爰此、按」開頭；數字用阿拉伯數字
+- 主旨句尾用制式結尾（如「請 查照。」）
+- 全文一頁；文號、日期一律留〔〕給我填，不得自行編造
+- 語氣正式但白話，不堆砌成語
+
+【本次任務（每次會變）】
+- 受文者：〔總務處〕
+- 事由：〔借用會議室並確認投影設備〕
+- 補充：〔下週三 14:00–16:00、約 15 人、需投影機與麥克風〕
+
+擬好後，請把上面的【單位慣例】記住，之後我說「擬公文」就自動套用。</pre></div>
+<div class="ask"><b>看懂了嗎：</b>上半段【單位慣例】＝不變、可重複 → 存起來就是 <code>/公文簽呈</code> skill 的內容；下半段【本次任務】＝每次填的空格；最後一句「記住」＝訓練你的助理（memory）。<b>網頁版</b>可以把【單位慣例】當固定開頭每次貼；<b>Claude Code</b> 才能真的「記住」，之後連貼都不用。</div>
 <div class="vary"><span class="h">💡 同一情境的變化（換個想法）</span>
 <ul>
 <li><b>想更快</b>：「只要主旨＋說明兩點，其餘免。」</li>
@@ -386,7 +408,7 @@ B. 查證清單：把文中每個可查證的事實（數字、日期、金額�
 </div>
 
 <footer>
-Agentic AI × 大學行政 demo 講義 ・ 2026-07-07 ・ 講者 李怡志<br>
+Agentic AI × 大學行政 demo 講義 ・ 國立政治大學新聞系 李怡志 ・ richy@nccu.edu.tw ・ 2026/7/7<br>
 本講義所有範例均為講者實際工作流。含個資／機密內容請勿貼入公用網頁版 AI。
 </footer>
 </div>
