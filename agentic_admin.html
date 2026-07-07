@@ -19,6 +19,8 @@ h3{font-size:1.06rem;margin:1.5rem 0 .4rem;color:#16456b}
 h3 .tag{font-size:.68rem;font-weight:700;padding:.1rem .45rem;border-radius:5px;vertical-align:middle;margin-left:.4rem}
 .tag.web{background:#e3f4e5;color:#1e7a2e;border:1px solid #a9dcb0}
 .tag.cc{background:#e7edfb;color:#2b4fa0;border:1px solid #b3c4ef}
+.tmin{font-size:.72rem;font-weight:700;color:#7a5a00;background:#fff3cd;border:1px solid #f0d98a;
+  padding:.1rem .45rem;border-radius:5px;margin-left:.4rem;vertical-align:middle;white-space:nowrap}
 p{margin:.55rem 0}
 ul,ol{margin:.5rem 0 .7rem 1.2rem;padding:0}
 li{margin:.28rem 0}
@@ -62,16 +64,11 @@ a{color:#2b6cb0}
 <body>
 <header><div class="inner">
   <h1>Agentic AI × 大學行政<br>打造你的個人行政助理</h1>
+  <p><strong>國立政治大學</strong>　2026/7/7　・　講者 李怡志</p>
   <p>90 分鐘・以 demo 為主・公文 ｜ 法規比對 ｜ 新聞稿</p>
 </div></header>
 
 <div class="wrap">
-
-<div class="callout note big">
-<strong>這場怎麼上：</strong>以 <b>demo 為主</b>。老師講完「怎麼裝」後，直接示範 10 個平常真的在跑的行政場景。
-想跟著做的同仁：<b>純文字類</b>（公文、新聞稿、校對、會議紀錄）用<b>免費網頁版</b>就能做；
-<b>要動檔案／串資料類</b>（法規逐條比對、批次 PDF、政府資料查詢）需要 Claude Code，先看 demo、回家再裝。
-</div>
 
 <div class="toc">
 <strong>目錄</strong>
@@ -132,11 +129,11 @@ a{color:#2b6cb0}
 <p><strong>讓它記住的方法：</strong>糾正它之後加一句「<strong>把這個規則記下來，下次自動套用</strong>」，它就寫進去。這句是全場最重要的技巧——光糾正不說「記下來」，下次它還會犯。</p>
 
 <h2 id="s4"><span class="s">S4</span>10 個行政 demo 場景</h2>
-<p>每個都是老師平常在跑的工作流，換成行政情境。標 <span class="tag web">🌐 網頁版可做</span> 的下面附<strong>可直接複製的 Prompt</strong>；標 <span class="tag cc">💻 需 Claude Code</span> 的看老師 demo。</p>
+<p>每個都是老師平常在跑的工作流，換成行政情境。標 <span class="tag web">🌐 網頁版可做</span> 的下面附<strong>可直接複製的 Prompt</strong>；標 <span class="tag cc">💻 需 Claude Code</span> 的看老師 demo。<strong>每個 demo 的操作時間標在標題右側</strong>（<span class="tmin">⏱</span>），10 個合計約 37 分鐘。</p>
 
 <div class="callout note"><strong>三段式心法（所有 Prompt 的骨架）：背景</strong>（你是誰、給誰、什麼事）＋<strong>任務</strong>（要達成什麼、哪些要件）＋<strong>格式</strong>（長怎樣、多長）。每留一處空白，AI 就替你自作主張一處。網頁版每個新任務都<strong>開一個新對話</strong>，要附檔就點輸入框的<strong>迴紋針 📎</strong>。</p></div>
 
-<h3>Demo 1 ｜公文／簽呈起草 <span class="tag web">🌐</span></h3>
+<h3>Demo 1 ｜公文／簽呈起草 <span class="tag web">🌐</span> <span class="tmin">⏱ demo 3 min</span></h3>
 <p>把口頭交辦變成一份格式對的簽呈或函。</p>
 <div class="promptbox"><div class="bar"><span>Prompt — 把〔〕換成你的資訊</span><button class="copybtn">複製</button></div><pre>你是我的公文擬稿助理。以下用三段交辦，請據此擬一份公文。
 
@@ -158,7 +155,7 @@ a{color:#2b6cb0}
 <div class="ask"><b>追問句：</b>「說明第二點太文言，改白話一點。」／「改成『簽』的格式給處長核示。」</div>
 <div class="callout warn">文號、日期、法源依據，AI 不要它編——留空自己填、自己核。</div>
 
-<h3>Demo 2 ｜法規逐條比對 <span class="tag cc">💻</span> <span class="tag web">🌐 網頁備援</span></h3>
+<h3>Demo 2 ｜法規逐條比對 <span class="tag cc">💻</span> <span class="tag web">🌐 網頁備援</span> <span class="tmin">⏱ demo 5 min</span></h3>
 <p>兩版辦法（現行 vs 修正草案）→ 逐條對照表。Claude Code 能<strong>並排顯示 diff</strong>最好用；網頁版少了並排畫面但能生對照表。</p>
 <div class="promptbox"><div class="bar"><span>Prompt — 網頁版備援</span><button class="copybtn">複製</button></div><pre>以下是〔○○辦法〕的「現行版」與「修正草案」，請逐條比對。
 
@@ -176,7 +173,7 @@ a{color:#2b6cb0}
 只根據我貼的內容比對，不要推測未提供的條文。</pre></div>
 <div class="callout warn"><strong>網頁版沒有並排 diff，長辦法容易漏</strong>；涉及權利義務的關鍵條號，產出後一定自己再對一次。要並排 diff 就用 Claude Code。</div>
 
-<h3>Demo 3 ｜法規適用查詢 + 依據 <span class="tag cc">💻</span> <span class="tag web">🌐</span></h3>
+<h3>Demo 3 ｜法規適用查詢 + 依據 <span class="tag cc">💻</span> <span class="tag web">🌐</span> <span class="tmin">⏱ demo 3 min</span></h3>
 <p>貼一份辦法 + 一個實務情境，問它「適用哪條、要不要會辦」。</p>
 <div class="promptbox"><div class="bar"><span>Prompt</span><button class="copybtn">複製</button></div><pre>以下是〔○○大學兼任助理請假辦法〕全文，接著我給你一個實務情境。
 
@@ -193,7 +190,7 @@ a{color:#2b6cb0}
 務必只根據我貼的辦法回答；辦法沒寫到的就說「辦法未規定」，不要自己補。</pre></div>
 <div class="callout warn"><strong>大字警告：</strong>AI 會把<strong>不存在的條號</strong>講得很篤定（幻覺）。它的答案只能當「該看哪幾條」的指路，<strong>最終依據一律回法規原文</strong>，不可直接引 AI 的話當公文依據。</div>
 
-<h3>Demo 4 ｜新聞稿一稿多版 <span class="tag web">🌐</span></h3>
+<h3>Demo 4 ｜新聞稿一稿多版 <span class="tag web">🌐</span> <span class="tmin">⏱ demo 3 min</span></h3>
 <p>一份活動資訊 → 新聞稿／官網／FB／LINE 四版。</p>
 <div class="promptbox"><div class="bar"><span>Prompt</span><button class="copybtn">複製</button></div><pre>你是我的行政公關助理。以下是一場活動的資訊，請一次產出四個平台版本。
 
@@ -214,7 +211,7 @@ a{color:#2b6cb0}
 <div class="ask"><b>追問句：</b>「FB 版再口語一點，開頭用問句抓人。」／「新聞稿加一段講者背景。」</div>
 <div class="callout warn">quote、報名連結、確切人數，AI 會留佔位或自己編——換成真的再發。</div>
 
-<h3>Demo 5 ｜會議紀錄整理 <span class="tag web">🌐</span></h3>
+<h3>Demo 5 ｜會議紀錄整理 <span class="tag web">🌐</span> <span class="tmin">⏱ demo 3 min</span></h3>
 <p>逐字稿或便條 → 有決議、有待辦的正式紀錄。</p>
 <div class="promptbox"><div class="bar"><span>Prompt</span><button class="copybtn">複製</button></div><pre>以下是〔○○會議〕的逐字稿／我的手寫便條，請整理成正式會議紀錄。
 
@@ -231,13 +228,13 @@ a{color:#2b6cb0}
 <div class="ask"><b>追問句：</b>「第 2 案沒有結論，別寫成決議，改列未決。」／「待辦按期限排序。」</div>
 <div class="callout warn">AI 常把「討論到的」誤當「決議」——核對哪些是真的拍板。</div>
 
-<h3>Demo 6 ｜一疊 PDF／回覆彙整成總表 <span class="tag cc">💻</span></h3>
+<h3>Demo 6 ｜一疊 PDF／回覆彙整成總表 <span class="tag cc">💻</span> <span class="tmin">⏱ demo 4 min</span></h3>
 <p>各系所回覆的一疊 PDF → 一張總表（系所／重點／是否逾期／缺漏）。老師 demo：它用 <code>Glob</code> 找檔、逐一 <code>Read</code>、產出總表。批次讀十幾個檔是它的日常。⚠️ 掃描檔（無文字層）要另外處理。</p>
 
-<h3>Demo 7 ｜查政府資料：採購／廠商／法案 <span class="tag cc">💻</span></h3>
+<h3>Demo 7 ｜查政府資料：採購／廠商／法案 <span class="tag cc">💻</span> <span class="tmin">⏱ demo 4 min</span></h3>
 <p>串了台灣專屬的 <a href="https://hub.twinkleai.tw/" target="_blank" rel="noopener">Twinkle MCP</a> 後，直接用講的：「查某機關今年決標公告前 20 件」「用統編查廠商登記與董監事」「查立法院某法案進度」。政府採購、廠商徵信、法案追蹤，大學行政天天碰。</p>
 
-<h3>Demo 8 ｜公文／新聞稿校對 + 查證清單 <span class="tag web">🌐</span></h3>
+<h3>Demo 8 ｜公文／新聞稿校對 + 查證清單 <span class="tag web">🌐</span> <span class="tmin">⏱ demo 3 min</span></h3>
 <p>文件發出前，抓錯字、抓公文用語、把每個數字日期列成查證清單。</p>
 <div class="promptbox"><div class="bar"><span>Prompt</span><button class="copybtn">複製</button></div><pre>以下是一份即將發出的〔公文／新聞稿〕，發出前幫我做兩件事。
 
@@ -253,10 +250,10 @@ B. 查證清單：把文中每個可查證的事實（數字、日期、金額�
 <div class="ask"><b>追問句：</b>「只列你有把握的錯字，不確定的別硬挑。」／「B 表格『需確認』的排最前面。」</div>
 <div class="callout warn">AI 校對會漏也會誤報，當「第一道篩子」。它最有用的是<strong>查證清單</strong>——照著回去核每個數字、日期、法條。</div>
 
-<h3>Demo 9 ｜行事曆祕書 <span class="tag cc">💻</span></h3>
+<h3>Demo 9 ｜行事曆祕書 <span class="tag cc">💻</span> <span class="tmin">⏱ demo 3 min</span></h3>
 <p>「看我下週哪天最空、幫某會找一小時空檔並建立。」它呼叫 Google Calendar、回一張表 + 建議時段，你說「禮拜三下午建一小時 follow-up」，跳確認、按 Enter 就建好。你描述<strong>意圖</strong>，它選工具、執行、確認——這就是 agentic 的感覺。</p>
 
-<h3>Demo 10 ｜把重複工作固化成 skill + 記住單位慣例 <span class="tag cc">💻</span></h3>
+<h3>Demo 10 ｜把重複工作固化成 skill + 記住單位慣例 <span class="tag cc">💻</span> <span class="tmin">⏱ demo 6 min（壓軸）</span></h3>
 <p>每月的「院務會議通知」格式每次一樣、只換日期議程 → 現場做成一個 <code>/會議通知</code> skill（背景/任務/格式寫死，下次喊一聲就跑）；再糾正一次公文用語後說「<strong>把這規則記下來</strong>」，寫進 memory，下次自動套用。<strong>值得做成 skill 的＝頻率高、步驟固定、輸入輸出講得清楚。</strong></p>
 
 <h2 id="s5"><span class="s">S5</span>怎麼把 demo 變成你每天在用的</h2>
