@@ -27,6 +27,11 @@ h3 .tag{font-size:.68rem;font-weight:700;padding:.1rem .45rem;border-radius:5px;
 .skl.use{background:#d7f0ec;color:#0f6b5f;border:1px solid #9fd9cf}
 .skldemo{background:#fbf3ea;border:1px dashed #d9a86a;border-radius:8px;padding:.55rem .85rem;margin:.6rem 0;font-size:.87rem}
 .skldemo b{color:#9a4a00}
+.vary{background:#f4f8fc;border-left:4px solid #6aa0d8;border-radius:0 8px 8px 0;padding:.55rem .9rem;margin:.7rem 0;font-size:.87rem}
+.vary .h{font-weight:800;color:#1e4e86;display:block;margin-bottom:.2rem}
+.vary ul{margin:.2rem 0 0 1.1rem}
+.vary li{margin:.22rem 0}
+.vary b{color:#0a3d62}
 p{margin:.55rem 0}
 ul,ol{margin:.5rem 0 .7rem 1.2rem;padding:0}
 li{margin:.28rem 0}
@@ -187,6 +192,13 @@ a{color:#2b6cb0}
 
 <div class="callout tip"><strong>Skill demo 標記：</strong><span class="skl build">🔧 建立 skill</span> = 老師現場把一個重複工作做成一個新指令（教「怎麼把 prompt 變成一鍵 skill」）；<span class="skl use">⚙️ skill 應用</span> = 老師跑一個平常已在用的 skill（看成熟 skill 的樣子）。沒有這兩個標記的，就是一次性的 prompt／動作。</div>
 
+<div class="callout note"><strong>💡 同一個情境，prompt 可以怎麼變？</strong>三段式是骨架，你可以沿四個方向調——
+<strong>詳細度</strong>（趕時間少給幾點、重要公文把每個要件寫死）、
+<strong>對象與語氣</strong>（對上級莊重、對同仁平實；保守版或積極版）、
+<strong>產出形態</strong>（要一版成品／要「給我兩版讓我選」／要「你先問我幾個問題再寫」）、
+<strong>一次到位 vs 分步</strong>（直接要成品，或先「列大綱給我確認」再展開）。
+下面每個場景，除了主 Prompt，再給你幾個<strong>變化版</strong>，體會同一件事怎麼換著問。</div>
+
 <h3>Demo 1 ｜公文／簽呈起草 <span class="tag web">🌐</span> <span class="skl build">🔧 建立 skill</span> <span class="tmin">⏱ demo 4 min</span></h3>
 <p>把口頭交辦變成一份格式對的簽呈或函。</p>
 <div class="promptbox"><div class="bar"><span>Prompt — 把〔〕換成你的資訊</span><button class="copybtn">複製</button></div><pre>你是我的公文擬稿助理。以下用三段交辦，請據此擬一份公文。
@@ -209,6 +221,13 @@ a{color:#2b6cb0}
 <div class="ask"><b>追問句：</b>「說明第二點太文言，改白話一點。」／「改成『簽』的格式給處長核示。」</div>
 <div class="callout warn">文號、日期、法源依據，AI 不要它編——留空自己填、自己核。</div>
 <div class="skldemo"><b>🔧 Skill demo（建立）：</b>demo 完 web 版 prompt 後，示範在 Claude Code 把這三段存成 <code>/公文簽呈</code> skill——下次只喊一聲＋給事由就跑，不用每次重貼。這是把「一次性 prompt」變「一鍵 skill」的第一個示範。</div>
+<div class="vary"><span class="h">💡 同一情境的變化（換個想法）</span>
+<ul>
+<li><b>想更快</b>：「只要主旨＋說明兩點，其餘免。」</li>
+<li><b>更慎重</b>：「這是要陳給校長的簽，語氣再莊重些，說明補一欄法規依據（依據我後補）。」</li>
+<li><b>要選擇</b>：「給我『保守版』和『積極爭取版』兩版，我挑一版再改。」</li>
+<li><b>讓它先問我</b>：「動筆前先問我三個你需要、但我沒給的資訊，再擬。」</li>
+</ul></div>
 
 <h3>Demo 2 ｜法規逐條比對 <span class="tag cc">💻</span> <span class="tag web">🌐 網頁備援</span> <span class="tmin">⏱ demo 5 min</span></h3>
 <p>兩版辦法（現行 vs 修正草案）→ 逐條對照表。Claude Code 能<strong>並排顯示 diff</strong>最好用；網頁版少了並排畫面但能生對照表。</p>
@@ -227,6 +246,12 @@ a{color:#2b6cb0}
 【格式】表格。未變動的條標「未修正」即可。
 只根據我貼的內容比對，不要推測未提供的條文。</pre></div>
 <div class="callout warn"><strong>網頁版沒有並排 diff，長辦法容易漏</strong>；涉及權利義務的關鍵條號，產出後一定自己再對一次。要並排 diff 就用 Claude Code。</div>
+<div class="vary"><span class="h">💡 同一情境的變化</span>
+<ul>
+<li><b>只要重點</b>：「只列有變動的條，未變動的別列。」</li>
+<li><b>要影響分析</b>：「多一欄『這條改了對承辦作業的影響』。」</li>
+<li><b>要公文格式</b>：「用公文『修正對照表』三欄：修正規定／現行規定／說明。」</li>
+</ul></div>
 
 <h3>Demo 3 ｜法規適用查詢 + 依據 <span class="tag cc">💻</span> <span class="tag web">🌐</span> <span class="tmin">⏱ demo 3 min</span></h3>
 <p>貼一份辦法 + 一個實務情境，問它「適用哪條、要不要會辦」。</p>
@@ -244,6 +269,12 @@ a{color:#2b6cb0}
 
 務必只根據我貼的辦法回答；辦法沒寫到的就說「辦法未規定」，不要自己補。</pre></div>
 <div class="callout warn"><strong>大字警告：</strong>AI 會把<strong>不存在的條號</strong>講得很篤定（幻覺）。它的答案只能當「該看哪幾條」的指路，<strong>最終依據一律回法規原文</strong>，不可直接引 AI 的話當公文依據。</div>
+<div class="vary"><span class="h">💡 同一情境的變化</span>
+<ul>
+<li><b>更保守</b>：「你不確定的地方全部標出來，寧可說『需人事室認定』也不要猜。」</li>
+<li><b>多情境一次問</b>：「同時判斷 A 事假、B 病假、C 公假，各適用哪條。」</li>
+<li><b>要流程</b>：「除了適用條文，幫我列這個請假案的會辦流程（誰→誰）。」</li>
+</ul></div>
 
 <h3>Demo 4 ｜新聞稿一稿多版 <span class="tag web">🌐</span> <span class="skl build">🔧 建立 skill</span> <span class="tmin">⏱ demo 4 min</span></h3>
 <p>一份活動資訊 → 新聞稿／官網／FB／LINE 四版。</p>
@@ -266,6 +297,13 @@ a{color:#2b6cb0}
 <div class="ask"><b>追問句：</b>「FB 版再口語一點，開頭用問句抓人。」／「新聞稿加一段講者背景。」</div>
 <div class="callout warn">quote、報名連結、確切人數，AI 會留佔位或自己編——換成真的再發。</div>
 <div class="skldemo"><b>🔧 Skill demo（建立）：</b>把「一稿四版」的 prompt 存成 <code>/新聞稿</code> skill，之後每場活動一句話就出四版。對照我平常在跑的 <code>/news-sec</code>——同一個「一份素材→多平台版本」的道理。</div>
+<div class="vary"><span class="h">💡 同一情境的變化</span>
+<ul>
+<li><b>要兩種語氣</b>：「FB 版給我『正式』和『活潑』兩種，我挑。」</li>
+<li><b>要超短版</b>：「再加一個 50 字的簡訊／跑馬燈版。」</li>
+<li><b>要英文</b>：「加一版英文新聞稿，給國際處用。」</li>
+<li><b>要標題選項</b>：「官網標題給我三個候選，含關鍵字。」</li>
+</ul></div>
 
 <h3>Demo 5 ｜會議紀錄整理 <span class="tag web">🌐</span> <span class="tmin">⏱ demo 3 min</span></h3>
 <p>逐字稿或便條 → 有決議、有待辦的正式紀錄。</p>
@@ -283,6 +321,12 @@ a{color:#2b6cb0}
 不要加原文沒有的決議；沒共識的標「未決」，不要寫成決議。</pre></div>
 <div class="ask"><b>追問句：</b>「第 2 案沒有結論，別寫成決議，改列未決。」／「待辦按期限排序。」</div>
 <div class="callout warn">AI 常把「討論到的」誤當「決議」——核對哪些是真的拍板。</div>
+<div class="vary"><span class="h">💡 同一情境的變化</span>
+<ul>
+<li><b>要簡版</b>：「只要決議＋待辦，討論摘要免。」</li>
+<li><b>要正式格式</b>：「用學校會議紀錄格式，逐案排：案由／說明／決議。」</li>
+<li><b>要抓爭點</b>：「另外列出『有不同意見、需再討論』的點。」</li>
+</ul></div>
 
 <h3>Demo 6 ｜一疊 PDF／回覆彙整成總表 <span class="tag cc">💻</span> <span class="skl use">⚙️ skill 應用</span> <span class="tmin">⏱ demo 4 min</span></h3>
 <p>各系所回覆的一疊 PDF → 一張總表（系所／重點／是否逾期／缺漏）。老師 demo：它用 <code>Glob</code> 找檔、逐一 <code>Read</code>、產出總表。批次讀十幾個檔是它的日常。⚠️ 掃描檔（無文字層）要另外處理。</p>
@@ -306,6 +350,12 @@ B. 查證清單：把文中每個可查證的事實（數字、日期、金額�
 只指出問題與建議，不要擅自改動原意。</pre></div>
 <div class="ask"><b>追問句：</b>「只列你有把握的錯字，不確定的別硬挑。」／「B 表格『需確認』的排最前面。」</div>
 <div class="callout warn">AI 校對會漏也會誤報，當「第一道篩子」。它最有用的是<strong>查證清單</strong>——照著回去核每個數字、日期、法條。</div>
+<div class="vary"><span class="h">💡 同一情境的變化</span>
+<ul>
+<li><b>只要挑錯</b>：「先別給查證清單，只把錯字和不通順處挑出來。」</li>
+<li><b>要嚴格</b>：「用最嚴格標準，連可能有爭議的用詞都標。」</li>
+<li><b>順查法條</b>：「檢查文中引用的法條條號是否存在，你不確定的註明要我核。」</li>
+</ul></div>
 
 <h3>Demo 9 ｜行事曆祕書 <span class="tag cc">💻</span> <span class="tmin">⏱ demo 3 min</span></h3>
 <p>「看我下週哪天最空、幫某會找一小時空檔並建立。」它呼叫 Google Calendar、回一張表 + 建議時段，你說「禮拜三下午建一小時 follow-up」，跳確認、按 Enter 就建好。你描述<strong>意圖</strong>，它選工具、執行、確認——這就是 agentic 的感覺。</p>
