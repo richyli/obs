@@ -231,26 +231,34 @@ const POLL_MS = 2500;
 
 // ── Lesson content (keyed by unit id) ─────────────
 const CONTENT = {
-"p01": `<p>課前先裝好，上課才有時間動手。</p>
+"p01": `<p>到 <a href="https://code.visualstudio.com" target="_blank">code.visualstudio.com</a> 下載 Windows 版安裝。</p>
 <ol>
-  <li>確認有 Node.js 等 runtime（終端機打版本確認指令）</li>
-  <li>安裝 Claude Code CLI</li>
-  <li>第一次啟動要登入／授權——<strong>金鑰像鑰匙，別貼到群組裡</strong></li>
+  <li>安裝時勾選 <strong>Add to PATH</strong>（之後終端機才叫得到 <code>code</code>）</li>
+  <li>其餘保持預設即可</li>
+</ol>`,
+
+"p02": `<p>VS Code 是你的工作台，Claude Code 是在裡面幫你動手的 agent——兩個串起來，它改檔時你能在編輯器裡看著核准。</p>
+<ol>
+  <li><strong>裝 CLI</strong>：開 PowerShell 貼上 <code>irm https://claude.ai/install.ps1 | iex</code>（官方推薦，不用先裝 Node.js）</li>
+  <li><strong>裝擴充套件</strong>：VS Code 按 <code>Ctrl+Shift+X</code> → 搜「Claude Code」→ Install</li>
+  <li><strong>串接</strong>：VS Code 開整合終端機 <code>Ctrl+\`</code> → 打 <code>claude</code>，它會自動偵測在 VS Code 裡並連上 IDE（外部終端機可打 <code>/ide</code> 手動連）</li>
+  <li>第一次會跳瀏覽器<strong>登入</strong>（用你的 Claude 訂閱或 Console 帳號）</li>
 </ol>
-<div class="note">裝不起來也沒關係，第一節 A① 會現場帶你裝，看到 <code>command not found</code> 是正常的第一關。</div>`,
+<div class="note">被擋「無法載入指令碼」→ 先跑 <code>Set-ExecutionPolicy RemoteSigned -Scope CurrentUser</code> 再重試；公司／學校網路擋下載→改用 <code>winget install Anthropic.ClaudeCode</code>。裝不起來別慌，第一節會現場排解。</div>`,
 
-"p02": `<p>帶一段<strong>你自己真的在處理</strong>的東西：訪談逐字稿／一份報告／一封要回的長信都行。今天你要拿它動手兩次——先讓 agent 處理它，再把處理流程做成 skill。</p>`,
+"p03": `<p>帶一段<strong>你自己真的在處理</strong>的東西：訪談逐字稿／一份報告／一封要回的長信都行。今天你要拿它動手兩次——先讓 agent 處理它，再把處理流程做成 skill。</p>`,
 
-"p03": `<p>上課前貼這段給 AI（ChatGPT／Claude／Gemini 皆可）：</p>
+"p04": `<p>上課前貼這段給 AI（ChatGPT／Claude／Gemini 皆可）：</p>
 <div class="note">「請用生活比喻解釋 <strong>AI agent、chatbot、workflow</strong> 三者差在哪，各舉一個我工作上會遇到的例子。接著反過來問我：我每週固定重複、步驟又差不多的工作有哪些？幫我列 3 件，並判斷哪一件最適合交給會動手的 AI agent。」<br>追問一次：「如果我完全不會寫程式，真的做得到嗎？卡點會在哪？」</div>
 <div class="question">💬 把 AI 列的那 3 件重複工作記下來——第二節 B③ 你要把其中一件真的做成 skill。</div>`,
 
 "a01": `<ol>
-  <li>確認 runtime → 裝 CLI → 登入授權</li>
-  <li><code>cd</code> 進一個工作資料夾再啟動——它<strong>只看得到你站的那個資料夾</strong></li>
+  <li>VS Code <strong>File → Open Folder</strong> 打開你的工作資料夾（agent 只看得到這個資料夾）</li>
+  <li>開整合終端機 <code>Ctrl+\`</code> → 打 <code>claude</code>，確認它<strong>連上 IDE</strong></li>
   <li>下一個無風險暖身指令，例如「用一句話說明這個資料夾裡有什麼」</li>
 </ol>
-<div class="note">注意三件事：① 它會<strong>先講計畫再動手</strong>（這是你的驗收介面）② 它會<strong>問你要不要授權</strong>讀寫檔（這是煞車，別狂按 yes）③ 同一指令、不同人結果不同。</div>`,
+<div class="note">注意三件事：① 它改檔會在<strong>編輯器裡並排顯示 diff</strong>，你點核准才生效（這就是驗收介面）② 它會<strong>問你要不要授權</strong>（這是煞車，別狂按 yes）③ 同一指令、不同人結果不同。</div>
+<div class="note">還沒裝好的現在跟著補：VS Code → PowerShell 跑 <code>irm https://claude.ai/install.ps1 | iex</code> → 擴充套件搜「Claude Code」→ 終端機打 <code>claude</code>。<code>command not found</code> 是正常的第一關。</div>`,
 
 "a02": `<ul>
   <li><strong>chatbot</strong>：一問一答，<strong>不動</strong>你的檔</li>
@@ -314,11 +322,12 @@ const CONTENT = {
 // UNITS: [id, label, time] — null id = section header
 const UNITS = [
   [null,   "課前準備（上課前完成）"],
-  ["p01",  "⓪-1 裝好 Claude Code",           "課前"],
-  ["p02",  "⓪-2 帶一段自己的真實工作檔",       "課前"],
-  ["p03",  "⓪-3 跟 AI 過一招，挑出 3 件重複工作", "課前"],
+  ["p01",  "⓪-1 裝好 VS Code",                     "課前"],
+  ["p02",  "⓪-2 裝 Claude Code CLI + 串接 VS Code", "課前"],
+  ["p03",  "⓪-3 帶一段自己的真實工作檔",             "課前"],
+  ["p04",  "⓪-4 跟 AI 過一招，挑出 3 件重複工作",     "課前"],
   [null,   "第一節：讓 agent 動起來"],
-  ["a01",  "A① 安裝 + 跑第一個指令",           "13 min"],
+  ["a01",  "A① 在 VS Code 裡跑第一個指令",           "13 min"],
   ["a02",  "A② agent vs chatbot vs workflow", "9 min"],
   ["a03",  "A③ 用真實工作跑一次（三段式）",     "15 min"],
   ["a04",  "A④ 配對分享：幫上忙 / 要介入各一處", "8 min"],
