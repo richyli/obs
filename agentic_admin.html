@@ -62,6 +62,11 @@ th{background:#eef1f5;font-weight:700;white-space:nowrap}
 .toc a{color:#2b6cb0;text-decoration:none}
 .toc a:hover{text-decoration:underline}
 .toc ol{margin:.3rem 0 0 1.2rem}
+details{background:#fff;border:1px solid #dde1e6;border-radius:8px;padding:.2rem .95rem;margin:1rem 0}
+summary{cursor:pointer;font-weight:700;color:#16456b;padding:.5rem 0}
+details[open] summary{border-bottom:1px solid #eef1f5;margin-bottom:.4rem}
+.kv{background:#fff;border:1px solid #e2e6ea;border-radius:9px;padding:.7rem 1rem;margin:.7rem 0}
+.kv .t{font-weight:800;color:#0a2540}
 footer{margin-top:3rem;padding-top:1.2rem;border-top:1px solid #d7dbe0;font-size:.82rem;color:#777}
 a{color:#2b6cb0}
 @media(max-width:560px){header h1{font-size:1.28rem}h2{font-size:1.12rem}.wrap{padding:0 .8rem 4rem}}
@@ -80,10 +85,11 @@ a{color:#2b6cb0}
 <strong>目錄</strong>
 <ol>
   <li><a href="#s1">Agentic AI 是什麼，跟 ChatGPT 差在哪</a></li>
-  <li><a href="#s2">安裝與串接：VS Code + Claude Code</a></li>
-  <li><a href="#s3">為什麼它能變成「懂你單位」的助理</a></li>
-  <li><a href="#s4">10 個行政 demo 場景（含可複製 Prompt）</a></li>
-  <li><a href="#s5">怎麼把 demo 變成你每天在用的</a></li>
+  <li><a href="#s2">基本知識：你會一直聽到的幾個詞</a></li>
+  <li><a href="#s3">安裝與串接：VS Code + Claude Code</a></li>
+  <li><a href="#s4">為什麼它能變成「懂你單位」的助理</a></li>
+  <li><a href="#s5">10 個行政 demo 場景（含可複製 Prompt）</a></li>
+  <li><a href="#s6">怎麼把 demo 變成你每天在用的</a></li>
 </ol>
 </div>
 
@@ -102,7 +108,47 @@ a{color:#2b6cb0}
 </table>
 <p><strong>用「員工」理解：</strong>對話式 AI 像個「博學但每天失憶的新人」，不認得你單位的公文格式、不記得你昨天交代過什麼；Agentic AI 像個「跟你三年的資深承辦」，認得檔案、記得慣用語、知道哪些簽呈要會辦人事。今天要做的，就是把第二種助理帶起來。</p>
 
-<h2 id="s2"><span class="s">S2</span>安裝與串接：VS Code + Claude Code</h2>
+<h2 id="s2"><span class="s">S2</span>基本知識：你會一直聽到的幾個詞</h2>
+<p>下面幾個詞今天會一直出現，先花三分鐘認識，等一下看 demo 就不會卡。<strong>不用背，知道大概是什麼就好。</strong></p>
+
+<div class="kv"><span class="t">① 它一次回應在做什麼（tool use loop）</span><br>
+你打一句 → 模型決定要不要先用工具（讀檔／搜尋／查行事曆）→ 工具回結果 → 可能再用一次（迴圈）→ 給你最終回應。這個「<strong>一邊做一邊決定下一步</strong>」的迴圈，就是它跟聊天機器人最大的差別。</div>
+
+<div class="kv"><span class="t">② harness（韁繩／載具）</span><br>
+模型本身只是「吃字、吐字」的引擎；它能讀你的檔、跑指令、記住你的偏好，靠的是外面包的一層工程，叫 <strong>harness</strong>。Claude Code、Cursor、Windsurf 都是 harness——今天用 Claude Code。</div>
+
+<div class="kv"><span class="t">③ token（模型算錢、算長度的單位）</span><br>
+模型把文字切成一小塊一小塊，每塊叫一個 token（介於字和詞之間），中文大約 1 字＝1–2 token。<strong>為什麼要知道：</strong>AI 按 token 計費、一次能讀多少也有上限——所以別把整份幾百頁 PDF 全塞給它，只給要用的那幾頁。</div>
+
+<div class="kv"><span class="t">④ context（它這次「看得到」的東西）</span><br>
+這次對話裡它看得到的所有文字——你貼的、它讀過的檔、單位守則、記憶。有上限，塞太多會變慢、變貴、變笨。原則：<strong>小事給小 context</strong>（別叫它讀整個資料夾），大事拆給分身去做。</div>
+
+<div class="kv"><span class="t">⑤ 專案 / 對話 / context 三層</span></div>
+<table>
+<tr><th>層</th><th>是什麼</th><th>何時結束</th></tr>
+<tr><td>專案</td><td>一個資料夾 + 它的設定（含單位守則、記憶）</td><td>你刪掉資料夾</td></tr>
+<tr><td>對話</td><td>你跟它的一輪互動</td><td>你關掉視窗或重開</td></tr>
+<tr><td>context</td><td>這一輪它看得到的所有文字</td><td>塞滿會自動壓縮</td></tr>
+</table>
+<p>同一個專案開 10 次對話，會共用「單位守則」和「記憶」，但每次對話看得到的東西是獨立的。</p>
+
+<div class="callout note"><strong>三個今天會反覆出現的原則：</strong>
+<strong>①看著它跑</strong>——它會改你的檔，跑錯後果比聊天大，要看著、要會喊停；
+<strong>②用 skill 把「你會的事」封裝</strong>——教一次，之後一個指令叫出來；
+<strong>③資料留在你電腦上</strong>——產出在你本機資料夾，不是鎖在別人的雲端。</div>
+
+<details>
+<summary>想深入再看：幾個技術名詞（選讀，不看也不影響）</summary>
+<ul>
+  <li><strong>Glob</strong>：檔案搜尋，用萬用字元（<code>**/*.pdf</code> ＝所有 PDF）。你說「掃我所有回覆檔」，它第一步就是 Glob 把清單抓出來。</li>
+  <li><strong>Bash／PowerShell</strong>：命令列環境（黑底白字那個視窗）。Claude 要透過它去跑指令；Windows 預設用 PowerShell、Mac 用 zsh／Bash，它<strong>自動偵測，你不用設定</strong>。</li>
+  <li><strong>Python</strong>：程式語言，AI／自動化最主流。<strong>你不用學寫</strong>——叫 Claude 幫你寫，它會加註解、會自己 debug。精確計算、批次處理上萬個檔這種「機械活」交給 Python 比較可靠也省錢。</li>
+  <li><strong>三個旋鈕 Model／Effort／Permission</strong>：Model＝引擎大小（Opus 最強最貴、Sonnet 平衡、Haiku 快又便宜，從便宜的試起）；Effort＝思考深度（low／medium／high）；Permission＝動手權限（預設每個寫入都問你，<strong>新手一週內所有寫入都看一眼再放行</strong>）。</li>
+  <li><strong>對話太長怎麼辦</strong>：快滿時叫它 <code>/compact</code> 自己摘要，或叫它寫一份「交接指南」存檔，新對話讀回去接續。</li>
+</ul>
+</details>
+
+<h2 id="s3"><span class="s">S3</span>安裝與串接：VS Code + Claude Code</h2>
 <p>行政同仁多半沒裝過，卡住是正常的。</p>
 <h3>① 裝 VS Code（你的工作台）</h3>
 <ul>
@@ -125,7 +171,7 @@ a{color:#2b6cb0}
 <p>第一次跑 <code>claude</code> 會跳瀏覽器<strong>登入</strong>。串接後你會多：<strong>編輯器裡並排看 diff、點核准才生效</strong>（法規比對會用爆這個）、選取的文字自動變 context、<code>@檔名</code> 帶入檔案。</p>
 <div class="callout tip"><strong>卡點速查：</strong><code>command not found</code>→重開終端機或重跑安裝；擴充套件裝了沒出現→<code>Ctrl+Shift+P</code>→「Developer: Reload Window」。裝不起來別卡全場，先看 demo。</div>
 
-<h2 id="s3"><span class="s">S3</span>為什麼它能變成「懂你單位」的助理：三層記憶</h2>
+<h2 id="s4"><span class="s">S4</span>為什麼它能變成「懂你單位」的助理：三層記憶</h2>
 <table>
 <tr><th>層</th><th>是什麼</th><th>行政場景舉例</th></tr>
 <tr><td><code>CLAUDE.md</code></td><td>放專案資料夾的「單位守則」，每次自動讀</td><td>「公文用行政院格式」「數字用阿拉伯數字」「不可動已發文資料夾」</td></tr>
@@ -134,7 +180,7 @@ a{color:#2b6cb0}
 </table>
 <p><strong>讓它記住的方法：</strong>糾正它之後加一句「<strong>把這個規則記下來，下次自動套用</strong>」，它就寫進去。這句是全場最重要的技巧——光糾正不說「記下來」，下次它還會犯。</p>
 
-<h2 id="s4"><span class="s">S4</span>10 個行政 demo 場景</h2>
+<h2 id="s5"><span class="s">S5</span>10 個行政 demo 場景</h2>
 <p>每個都是老師平常在跑的工作流，換成行政情境。標 <span class="tag web">🌐 網頁版可做</span> 的下面附<strong>可直接複製的 Prompt</strong>；標 <span class="tag cc">💻 需 Claude Code</span> 的看老師 demo。<strong>每個 demo 的操作時間標在標題右側</strong>（<span class="tmin">⏱</span>），10 個合計約 39 分鐘。</p>
 
 <div class="callout note"><strong>三段式心法（所有 Prompt 的骨架）：背景</strong>（你是誰、給誰、什麼事）＋<strong>任務</strong>（要達成什麼、哪些要件）＋<strong>格式</strong>（長怎樣、多長）。每留一處空白，AI 就替你自作主張一處。網頁版每個新任務都<strong>開一個新對話</strong>，要附檔就點輸入框的<strong>迴紋針 📎</strong>。</p></div>
@@ -272,7 +318,7 @@ B. 查證清單：把文中每個可查證的事實（數字、日期、金額�
 ③ <b>訓練</b>：糾正一句公文用語後說「<strong>把這規則記下來</strong>」，寫進 memory，下次自動套用。
 這一段把前面所有 demo 收束成一句話——重複的事，做成 skill、用 skill、再教 skill。</div>
 
-<h2 id="s5"><span class="s">S5</span>怎麼把 demo 變成你每天在用的</h2>
+<h2 id="s6"><span class="s">S6</span>怎麼把 demo 變成你每天在用的</h2>
 <p>demo 看起來很神，真正的價值在<strong>它會跟著你長大</strong>，靠一個循環：</p>
 <ol class="steps">
   <li>你叫它做（<code>/會議通知</code>）</li>
