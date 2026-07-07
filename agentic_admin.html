@@ -21,6 +21,12 @@ h3 .tag{font-size:.68rem;font-weight:700;padding:.1rem .45rem;border-radius:5px;
 .tag.cc{background:#e7edfb;color:#2b4fa0;border:1px solid #b3c4ef}
 .tmin{font-size:.72rem;font-weight:700;color:#7a5a00;background:#fff3cd;border:1px solid #f0d98a;
   padding:.1rem .45rem;border-radius:5px;margin-left:.4rem;vertical-align:middle;white-space:nowrap}
+.skl{display:inline-block;font-size:.72rem;font-weight:800;padding:.12rem .5rem;border-radius:5px;
+  margin-left:.4rem;vertical-align:middle;white-space:nowrap}
+.skl.build{background:#fde7cf;color:#9a4a00;border:1px solid #f0b878}
+.skl.use{background:#d7f0ec;color:#0f6b5f;border:1px solid #9fd9cf}
+.skldemo{background:#fbf3ea;border:1px dashed #d9a86a;border-radius:8px;padding:.55rem .85rem;margin:.6rem 0;font-size:.87rem}
+.skldemo b{color:#9a4a00}
 p{margin:.55rem 0}
 ul,ol{margin:.5rem 0 .7rem 1.2rem;padding:0}
 li{margin:.28rem 0}
@@ -129,11 +135,13 @@ a{color:#2b6cb0}
 <p><strong>讓它記住的方法：</strong>糾正它之後加一句「<strong>把這個規則記下來，下次自動套用</strong>」，它就寫進去。這句是全場最重要的技巧——光糾正不說「記下來」，下次它還會犯。</p>
 
 <h2 id="s4"><span class="s">S4</span>10 個行政 demo 場景</h2>
-<p>每個都是老師平常在跑的工作流，換成行政情境。標 <span class="tag web">🌐 網頁版可做</span> 的下面附<strong>可直接複製的 Prompt</strong>；標 <span class="tag cc">💻 需 Claude Code</span> 的看老師 demo。<strong>每個 demo 的操作時間標在標題右側</strong>（<span class="tmin">⏱</span>），10 個合計約 37 分鐘。</p>
+<p>每個都是老師平常在跑的工作流，換成行政情境。標 <span class="tag web">🌐 網頁版可做</span> 的下面附<strong>可直接複製的 Prompt</strong>；標 <span class="tag cc">💻 需 Claude Code</span> 的看老師 demo。<strong>每個 demo 的操作時間標在標題右側</strong>（<span class="tmin">⏱</span>），10 個合計約 39 分鐘。</p>
 
 <div class="callout note"><strong>三段式心法（所有 Prompt 的骨架）：背景</strong>（你是誰、給誰、什麼事）＋<strong>任務</strong>（要達成什麼、哪些要件）＋<strong>格式</strong>（長怎樣、多長）。每留一處空白，AI 就替你自作主張一處。網頁版每個新任務都<strong>開一個新對話</strong>，要附檔就點輸入框的<strong>迴紋針 📎</strong>。</p></div>
 
-<h3>Demo 1 ｜公文／簽呈起草 <span class="tag web">🌐</span> <span class="tmin">⏱ demo 3 min</span></h3>
+<div class="callout tip"><strong>Skill demo 標記：</strong><span class="skl build">🔧 建立 skill</span> = 老師現場把一個重複工作做成一個新指令（教「怎麼把 prompt 變成一鍵 skill」）；<span class="skl use">⚙️ skill 應用</span> = 老師跑一個平常已在用的 skill（看成熟 skill 的樣子）。沒有這兩個標記的，就是一次性的 prompt／動作。</div>
+
+<h3>Demo 1 ｜公文／簽呈起草 <span class="tag web">🌐</span> <span class="skl build">🔧 建立 skill</span> <span class="tmin">⏱ demo 4 min</span></h3>
 <p>把口頭交辦變成一份格式對的簽呈或函。</p>
 <div class="promptbox"><div class="bar"><span>Prompt — 把〔〕換成你的資訊</span><button class="copybtn">複製</button></div><pre>你是我的公文擬稿助理。以下用三段交辦，請據此擬一份公文。
 
@@ -154,6 +162,7 @@ a{color:#2b6cb0}
 - 文號與日期先留〔〕給我填，不要自己編</pre></div>
 <div class="ask"><b>追問句：</b>「說明第二點太文言，改白話一點。」／「改成『簽』的格式給處長核示。」</div>
 <div class="callout warn">文號、日期、法源依據，AI 不要它編——留空自己填、自己核。</div>
+<div class="skldemo"><b>🔧 Skill demo（建立）：</b>demo 完 web 版 prompt 後，示範在 Claude Code 把這三段存成 <code>/公文簽呈</code> skill——下次只喊一聲＋給事由就跑，不用每次重貼。這是把「一次性 prompt」變「一鍵 skill」的第一個示範。</div>
 
 <h3>Demo 2 ｜法規逐條比對 <span class="tag cc">💻</span> <span class="tag web">🌐 網頁備援</span> <span class="tmin">⏱ demo 5 min</span></h3>
 <p>兩版辦法（現行 vs 修正草案）→ 逐條對照表。Claude Code 能<strong>並排顯示 diff</strong>最好用；網頁版少了並排畫面但能生對照表。</p>
@@ -190,7 +199,7 @@ a{color:#2b6cb0}
 務必只根據我貼的辦法回答；辦法沒寫到的就說「辦法未規定」，不要自己補。</pre></div>
 <div class="callout warn"><strong>大字警告：</strong>AI 會把<strong>不存在的條號</strong>講得很篤定（幻覺）。它的答案只能當「該看哪幾條」的指路，<strong>最終依據一律回法規原文</strong>，不可直接引 AI 的話當公文依據。</div>
 
-<h3>Demo 4 ｜新聞稿一稿多版 <span class="tag web">🌐</span> <span class="tmin">⏱ demo 3 min</span></h3>
+<h3>Demo 4 ｜新聞稿一稿多版 <span class="tag web">🌐</span> <span class="skl build">🔧 建立 skill</span> <span class="tmin">⏱ demo 4 min</span></h3>
 <p>一份活動資訊 → 新聞稿／官網／FB／LINE 四版。</p>
 <div class="promptbox"><div class="bar"><span>Prompt</span><button class="copybtn">複製</button></div><pre>你是我的行政公關助理。以下是一場活動的資訊，請一次產出四個平台版本。
 
@@ -210,6 +219,7 @@ a{color:#2b6cb0}
 【格式】四版各自加清楚標題，方便我分別複製貼出。</pre></div>
 <div class="ask"><b>追問句：</b>「FB 版再口語一點，開頭用問句抓人。」／「新聞稿加一段講者背景。」</div>
 <div class="callout warn">quote、報名連結、確切人數，AI 會留佔位或自己編——換成真的再發。</div>
+<div class="skldemo"><b>🔧 Skill demo（建立）：</b>把「一稿四版」的 prompt 存成 <code>/新聞稿</code> skill，之後每場活動一句話就出四版。對照我平常在跑的 <code>/news-sec</code>——同一個「一份素材→多平台版本」的道理。</div>
 
 <h3>Demo 5 ｜會議紀錄整理 <span class="tag web">🌐</span> <span class="tmin">⏱ demo 3 min</span></h3>
 <p>逐字稿或便條 → 有決議、有待辦的正式紀錄。</p>
@@ -228,8 +238,9 @@ a{color:#2b6cb0}
 <div class="ask"><b>追問句：</b>「第 2 案沒有結論，別寫成決議，改列未決。」／「待辦按期限排序。」</div>
 <div class="callout warn">AI 常把「討論到的」誤當「決議」——核對哪些是真的拍板。</div>
 
-<h3>Demo 6 ｜一疊 PDF／回覆彙整成總表 <span class="tag cc">💻</span> <span class="tmin">⏱ demo 4 min</span></h3>
+<h3>Demo 6 ｜一疊 PDF／回覆彙整成總表 <span class="tag cc">💻</span> <span class="skl use">⚙️ skill 應用</span> <span class="tmin">⏱ demo 4 min</span></h3>
 <p>各系所回覆的一疊 PDF → 一張總表（系所／重點／是否逾期／缺漏）。老師 demo：它用 <code>Glob</code> 找檔、逐一 <code>Read</code>、產出總表。批次讀十幾個檔是它的日常。⚠️ 掃描檔（無文字層）要另外處理。</p>
+<div class="skldemo"><b>⚙️ Skill demo（應用）：</b>這就是我每天在跑的 <code>/read-citavi</code>（批次讀論文 PDF 寫成筆記）——同一型「批次讀 PDF → 彙整」的成熟 skill，套在你們的系所回覆 PDF 上。這裡看的是「一個平常已在用的 skill 跑起來」的樣子。</div>
 
 <h3>Demo 7 ｜查政府資料：採購／廠商／法案 <span class="tag cc">💻</span> <span class="tmin">⏱ demo 4 min</span></h3>
 <p>串了台灣專屬的 <a href="https://hub.twinkleai.tw/" target="_blank" rel="noopener">Twinkle MCP</a> 後，直接用講的：「查某機關今年決標公告前 20 件」「用統編查廠商登記與董監事」「查立法院某法案進度」。政府採購、廠商徵信、法案追蹤，大學行政天天碰。</p>
@@ -253,8 +264,13 @@ B. 查證清單：把文中每個可查證的事實（數字、日期、金額�
 <h3>Demo 9 ｜行事曆祕書 <span class="tag cc">💻</span> <span class="tmin">⏱ demo 3 min</span></h3>
 <p>「看我下週哪天最空、幫某會找一小時空檔並建立。」它呼叫 Google Calendar、回一張表 + 建議時段，你說「禮拜三下午建一小時 follow-up」，跳確認、按 Enter 就建好。你描述<strong>意圖</strong>，它選工具、執行、確認——這就是 agentic 的感覺。</p>
 
-<h3>Demo 10 ｜把重複工作固化成 skill + 記住單位慣例 <span class="tag cc">💻</span> <span class="tmin">⏱ demo 6 min（壓軸）</span></h3>
-<p>每月的「院務會議通知」格式每次一樣、只換日期議程 → 現場做成一個 <code>/會議通知</code> skill（背景/任務/格式寫死，下次喊一聲就跑）；再糾正一次公文用語後說「<strong>把這規則記下來</strong>」，寫進 memory，下次自動套用。<strong>值得做成 skill 的＝頻率高、步驟固定、輸入輸出講得清楚。</strong></p>
+<h3>Demo 10 ｜把重複工作固化成 skill + 記住單位慣例 <span class="tag cc">💻</span> <span class="skl build">🔧 建立 skill</span> <span class="skl use">⚙️ skill 應用</span> <span class="tmin">⏱ demo 6 min（壓軸）</span></h3>
+<p>每月的「院務會議通知」格式每次一樣、只換日期議程。<strong>值得做成 skill 的＝頻率高、步驟固定、輸入輸出講得清楚。</strong></p>
+<div class="skldemo"><b>🔧 建立 → ⚙️ 應用（完整生命週期，一次演完）：</b>
+① <b>建立</b>：現場把它做成 <code>/會議通知</code> skill（背景/任務/格式寫死、存起來）。
+② <b>應用</b>：馬上喊一次 <code>/會議通知</code>，給日期議程就跑出通知。
+③ <b>訓練</b>：糾正一句公文用語後說「<strong>把這規則記下來</strong>」，寫進 memory，下次自動套用。
+這一段把前面所有 demo 收束成一句話——重複的事，做成 skill、用 skill、再教 skill。</div>
 
 <h2 id="s5"><span class="s">S5</span>怎麼把 demo 變成你每天在用的</h2>
 <p>demo 看起來很神，真正的價值在<strong>它會跟著你長大</strong>，靠一個循環：</p>
