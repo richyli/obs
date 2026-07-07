@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agentic AI × 大學行政 — 打造你的個人行政助理</title>
+<style>
+*,*::before,*::after{box-sizing:border-box}
+body{font-family:"Helvetica Neue",Arial,"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+  background:#f5f6f8;color:#1c1e21;margin:0;line-height:1.75;-webkit-text-size-adjust:100%}
+.wrap{max-width:820px;margin:0 auto;padding:0 1.1rem 5rem}
+header{background:linear-gradient(135deg,#0a2540,#16456b);color:#fff;padding:2.4rem 1.1rem 2rem;margin-bottom:1.6rem}
+header .inner{max-width:820px;margin:0 auto}
+header h1{margin:0 0 .5rem;font-size:1.55rem;line-height:1.35}
+header p{margin:.2rem 0 0;font-size:.9rem;color:#cfe0f0}
+h2{font-size:1.24rem;margin:2.4rem 0 .3rem;padding-top:.6rem;border-top:2px solid #16456b;color:#0a2540}
+h2 .s{color:#3b7bbf;font-weight:800;margin-right:.4rem}
+h3{font-size:1.06rem;margin:1.5rem 0 .4rem;color:#16456b}
+h3 .tag{font-size:.68rem;font-weight:700;padding:.1rem .45rem;border-radius:5px;vertical-align:middle;margin-left:.4rem}
+.tag.web{background:#e3f4e5;color:#1e7a2e;border:1px solid #a9dcb0}
+.tag.cc{background:#e7edfb;color:#2b4fa0;border:1px solid #b3c4ef}
+p{margin:.55rem 0}
+ul,ol{margin:.5rem 0 .7rem 1.2rem;padding:0}
+li{margin:.28rem 0}
+code{background:#eceef2;color:#c02b57;padding:.1em .4em;border-radius:4px;font-size:.86em;
+  font-family:"SFMono-Regular",Consolas,monospace}
+table{border-collapse:collapse;width:100%;margin:1rem 0;font-size:.86rem;display:block;overflow-x:auto}
+th,td{border:1px solid #d7dbe0;padding:.5rem .6rem;text-align:left;vertical-align:top}
+th{background:#eef1f5;font-weight:700;white-space:nowrap}
+.callout{border-left:4px solid;border-radius:0 8px 8px 0;padding:.7rem 1rem;margin:1rem 0;font-size:.9rem}
+.warn{background:#fff4f4;border-color:#e0384e}
+.warn strong{color:#c02333}
+.note{background:#f0f7ff;border-color:#2b6cb0}
+.tip{background:#fff9e8;border-color:#e0a020}
+.big{font-size:.98rem}
+.promptbox{position:relative;background:#0f1b2d;border-radius:10px;margin:.8rem 0 1.1rem;overflow:hidden}
+.promptbox .bar{display:flex;justify-content:space-between;align-items:center;
+  background:#16273f;padding:.35rem .7rem;font-size:.74rem;color:#9db6d4}
+.promptbox pre{margin:0;padding:.85rem 1rem;color:#e6edf5;font-size:.83rem;line-height:1.6;
+  overflow-x:auto;white-space:pre-wrap;word-break:break-word;
+  font-family:"SFMono-Regular",Consolas,monospace}
+.copybtn{background:#2b6cb0;color:#fff;border:none;border-radius:6px;padding:.24rem .7rem;
+  font-size:.74rem;font-weight:700;cursor:pointer;transition:background .15s}
+.copybtn:hover{background:#1e4e86}
+.copybtn.done{background:#1e7a2e}
+.steps{counter-reset:st;list-style:none;margin-left:0}
+.steps li{counter-increment:st;position:relative;padding-left:2rem;margin:.4rem 0}
+.steps li::before{content:counter(st);position:absolute;left:0;top:.05rem;width:1.4rem;height:1.4rem;
+  background:#16456b;color:#fff;border-radius:50%;font-size:.78rem;font-weight:700;
+  display:flex;align-items:center;justify-content:center}
+.ask{font-size:.86rem;color:#444;background:#f0f2f5;border-radius:7px;padding:.5rem .8rem;margin:.5rem 0}
+.ask b{color:#16456b}
+.toc{background:#fff;border:1px solid #dde1e6;border-radius:10px;padding:1rem 1.2rem;margin:1.4rem 0}
+.toc a{color:#2b6cb0;text-decoration:none}
+.toc a:hover{text-decoration:underline}
+.toc ol{margin:.3rem 0 0 1.2rem}
+footer{margin-top:3rem;padding-top:1.2rem;border-top:1px solid #d7dbe0;font-size:.82rem;color:#777}
+a{color:#2b6cb0}
+@media(max-width:560px){header h1{font-size:1.28rem}h2{font-size:1.12rem}.wrap{padding:0 .8rem 4rem}}
+</style>
+</head>
+<body>
+<header><div class="inner">
+  <h1>Agentic AI × 大學行政<br>打造你的個人行政助理</h1>
+  <p>90 分鐘・以 demo 為主・公文 ｜ 法規比對 ｜ 新聞稿</p>
+</div></header>
+
+<div class="wrap">
+
+<div class="callout note big">
+<strong>這場怎麼上：</strong>以 <b>demo 為主</b>。老師講完「怎麼裝」後，直接示範 10 個平常真的在跑的行政場景。
+想跟著做的同仁：<b>純文字類</b>（公文、新聞稿、校對、會議紀錄）用<b>免費網頁版</b>就能做；
+<b>要動檔案／串資料類</b>（法規逐條比對、批次 PDF、政府資料查詢）需要 Claude Code，先看 demo、回家再裝。
+</div>
+
+<div class="toc">
+<strong>目錄</strong>
+<ol>
+  <li><a href="#s1">Agentic AI 是什麼，跟 ChatGPT 差在哪</a></li>
+  <li><a href="#s2">安裝與串接：VS Code + Claude Code</a></li>
+  <li><a href="#s3">為什麼它能變成「懂你單位」的助理</a></li>
+  <li><a href="#s4">10 個行政 demo 場景（含可複製 Prompt）</a></li>
+  <li><a href="#s5">怎麼把 demo 變成你每天在用的</a></li>
+</ol>
+</div>
+
+<div class="callout warn big">
+<strong>⚠️ 全場最重要的一條：</strong>含<b>個資、機密、尚未公開的公文</b>，不要貼進公用網頁版 AI（內容可能被用於改善模型）。
+真的要用，先<b>去識別化</b>（姓名、學號、身分證、電話換成〔〕），或改用機關核可的工具。這條比任何技巧都重要。
+</div>
+
+<h2 id="s1"><span class="s">S1</span>Agentic AI 是什麼，跟你現在用的 ChatGPT 差在哪</h2>
+<p><strong>一句話：Agentic AI = 會主動拿工具、改檔案、串外部服務的 AI</strong>——不只是回你一段文字，是在你的電腦上替你做事。</p>
+<table>
+<tr><th></th><th>對話式 AI（ChatGPT 網頁版）</th><th>Agentic AI（Claude Code）</th></tr>
+<tr><td>它做什麼</td><td>回你一段文字</td><td>讀檔、改檔、跑指令、串政府資料庫</td></tr>
+<tr><td>你做什麼</td><td>複製、貼上、再複製</td><td>看它做、必要時喊停</td></tr>
+<tr><td>一個指令換來</td><td>一段答案</td><td>一連串動作 + 一份成品</td></tr>
+</table>
+<p><strong>用「員工」理解：</strong>對話式 AI 像個「博學但每天失憶的新人」，不認得你單位的公文格式、不記得你昨天交代過什麼；Agentic AI 像個「跟你三年的資深承辦」，認得檔案、記得慣用語、知道哪些簽呈要會辦人事。今天要做的，就是把第二種助理帶起來。</p>
+
+<h2 id="s2"><span class="s">S2</span>安裝與串接：VS Code + Claude Code</h2>
+<p>行政同仁多半沒裝過，卡住是正常的。</p>
+<h3>① 裝 VS Code（你的工作台）</h3>
+<ul>
+  <li>到 <a href="https://code.visualstudio.com" target="_blank" rel="noopener">code.visualstudio.com</a> 下載 Windows 版</li>
+  <li>安裝時勾 <strong>Add to PATH</strong>，其餘保持預設</li>
+</ul>
+<h3>② 裝 Claude Code CLI（在裡面幫你動手的 agent）</h3>
+<p>開 <strong>PowerShell</strong>，貼上官方推薦指令（<strong>不需要先裝 Node.js</strong>）：</p>
+<div class="promptbox"><div class="bar"><span>PowerShell</span><button class="copybtn">複製</button></div><pre>irm https://claude.ai/install.ps1 | iex</pre></div>
+<ul>
+  <li>被擋「無法載入指令碼」→ 先跑 <code>Set-ExecutionPolicy RemoteSigned -Scope CurrentUser</code> 再重試</li>
+  <li>公司／學校網路擋下載 → 改用 <code>winget install Anthropic.ClaudeCode</code></li>
+</ul>
+<h3>③ 串接 VS Code 與 Claude Code（重點）</h3>
+<p>兩條路做一條就好：</p>
+<ul>
+  <li><strong>路線 A（推薦新手）</strong>：VS Code 按 <code>Ctrl+Shift+X</code> → 搜「Claude Code」→ <strong>Install</strong>（擴充套件 <code>anthropic.claude-code</code>）</li>
+  <li><strong>路線 B</strong>：VS Code 開整合終端機 <code>Ctrl+`</code> → 打 <code>claude</code>，它會自動偵測在 VS Code 裡並連上 IDE（外部終端機可打 <code>/ide</code> 手動連）</li>
+</ul>
+<p>第一次跑 <code>claude</code> 會跳瀏覽器<strong>登入</strong>。串接後你會多：<strong>編輯器裡並排看 diff、點核准才生效</strong>（法規比對會用爆這個）、選取的文字自動變 context、<code>@檔名</code> 帶入檔案。</p>
+<div class="callout tip"><strong>卡點速查：</strong><code>command not found</code>→重開終端機或重跑安裝；擴充套件裝了沒出現→<code>Ctrl+Shift+P</code>→「Developer: Reload Window」。裝不起來別卡全場，先看 demo。</div>
+
+<h2 id="s3"><span class="s">S3</span>為什麼它能變成「懂你單位」的助理：三層記憶</h2>
+<table>
+<tr><th>層</th><th>是什麼</th><th>行政場景舉例</th></tr>
+<tr><td><code>CLAUDE.md</code></td><td>放專案資料夾的「單位守則」，每次自動讀</td><td>「公文用行政院格式」「數字用阿拉伯數字」「不可動已發文資料夾」</td></tr>
+<tr><td><code>memory/</code></td><td>綁「你這個人」的偏好，跨專案</td><td>「處長不喜歡『爰此』開頭」「新聞稿結尾不要口號」</td></tr>
+<tr><td><code>skills/</code></td><td>把常做的動作封裝成一個指令</td><td><code>/院務會議通知</code>、<code>/新聞稿</code>、<code>/法規比對</code></td></tr>
+</table>
+<p><strong>讓它記住的方法：</strong>糾正它之後加一句「<strong>把這個規則記下來，下次自動套用</strong>」，它就寫進去。這句是全場最重要的技巧——光糾正不說「記下來」，下次它還會犯。</p>
+
+<h2 id="s4"><span class="s">S4</span>10 個行政 demo 場景</h2>
+<p>每個都是老師平常在跑的工作流，換成行政情境。標 <span class="tag web">🌐 網頁版可做</span> 的下面附<strong>可直接複製的 Prompt</strong>；標 <span class="tag cc">💻 需 Claude Code</span> 的看老師 demo。</p>
+
+<div class="callout note"><strong>三段式心法（所有 Prompt 的骨架）：背景</strong>（你是誰、給誰、什麼事）＋<strong>任務</strong>（要達成什麼、哪些要件）＋<strong>格式</strong>（長怎樣、多長）。每留一處空白，AI 就替你自作主張一處。網頁版每個新任務都<strong>開一個新對話</strong>，要附檔就點輸入框的<strong>迴紋針 📎</strong>。</p></div>
+
+<h3>Demo 1 ｜公文／簽呈起草 <span class="tag web">🌐</span></h3>
+<p>把口頭交辦變成一份格式對的簽呈或函。</p>
+<div class="promptbox"><div class="bar"><span>Prompt — 把〔〕換成你的資訊</span><button class="copybtn">複製</button></div><pre>你是我的公文擬稿助理。以下用三段交辦，請據此擬一份公文。
+
+【背景】
+- 發文機關：〔○○大學○○處〕
+- 受文者：〔總務處〕
+- 事由：〔借用會議室並確認投影設備〕
+- 補充資訊：〔下週三 14:00–16:00、約 15 人、需投影機與麥克風〕
+
+【任務】
+擬一份「函」，要件包含：主旨、說明（分點）、辦法/請求事項。
+用語符合台灣公文格式與慣例，正式但不冗贅。
+
+【格式】
+- 主旨一句講完，句尾用制式結尾（如「請 查照。」）
+- 說明分點列（一、二、三…）
+- 全文控制在一頁
+- 文號與日期先留〔〕給我填，不要自己編</pre></div>
+<div class="ask"><b>追問句：</b>「說明第二點太文言，改白話一點。」／「改成『簽』的格式給處長核示。」</div>
+<div class="callout warn">文號、日期、法源依據，AI 不要它編——留空自己填、自己核。</div>
+
+<h3>Demo 2 ｜法規逐條比對 <span class="tag cc">💻</span> <span class="tag web">🌐 網頁備援</span></h3>
+<p>兩版辦法（現行 vs 修正草案）→ 逐條對照表。Claude Code 能<strong>並排顯示 diff</strong>最好用；網頁版少了並排畫面但能生對照表。</p>
+<div class="promptbox"><div class="bar"><span>Prompt — 網頁版備援</span><button class="copybtn">複製</button></div><pre>以下是〔○○辦法〕的「現行版」與「修正草案」，請逐條比對。
+
+【現行版】
+〔貼上全文，或上傳檔案〕
+
+【修正草案】
+〔貼上全文，或上傳檔案〕
+
+【任務】做一張逐條對照表，欄位：
+條號 / 現行條文 / 修正條文 / 變動類型（新增·刪除·修正） / 一句修正重點。
+條號有跳動、合併或新增的也要標出來。
+
+【格式】表格。未變動的條標「未修正」即可。
+只根據我貼的內容比對，不要推測未提供的條文。</pre></div>
+<div class="callout warn"><strong>網頁版沒有並排 diff，長辦法容易漏</strong>；涉及權利義務的關鍵條號，產出後一定自己再對一次。要並排 diff 就用 Claude Code。</div>
+
+<h3>Demo 3 ｜法規適用查詢 + 依據 <span class="tag cc">💻</span> <span class="tag web">🌐</span></h3>
+<p>貼一份辦法 + 一個實務情境，問它「適用哪條、要不要會辦」。</p>
+<div class="promptbox"><div class="bar"><span>Prompt</span><button class="copybtn">複製</button></div><pre>以下是〔○○大學兼任助理請假辦法〕全文，接著我給你一個實務情境。
+
+【辦法全文】
+〔貼上全文，或上傳檔案〕
+
+【我的問題】
+情境：〔兼任研究助理想請 3 天事假，主管問要不要會辦人事室〕
+請告訴我：
+1. 這情境適用哪一條（引出條號與原文句子）
+2. 你的判斷（要/不要會辦，理由）
+3. 哪裡有模糊或例外、需要我回查或問人事室
+
+務必只根據我貼的辦法回答；辦法沒寫到的就說「辦法未規定」，不要自己補。</pre></div>
+<div class="callout warn"><strong>大字警告：</strong>AI 會把<strong>不存在的條號</strong>講得很篤定（幻覺）。它的答案只能當「該看哪幾條」的指路，<strong>最終依據一律回法規原文</strong>，不可直接引 AI 的話當公文依據。</div>
+
+<h3>Demo 4 ｜新聞稿一稿多版 <span class="tag web">🌐</span></h3>
+<p>一份活動資訊 → 新聞稿／官網／FB／LINE 四版。</p>
+<div class="promptbox"><div class="bar"><span>Prompt</span><button class="copybtn">複製</button></div><pre>你是我的行政公關助理。以下是一場活動的資訊，請一次產出四個平台版本。
+
+【活動資訊】
+- 名稱：〔○○系「AI 與新聞」專題演講〕
+- 講者：〔○○○ 教授〕
+- 時間地點：〔7/20（六）14:00，○○樓 201 教室〕
+- 重點：〔開放校內外報名、免費、附茶點〕
+- 主辦：〔○○系〕
+
+【任務】產出四版，各自符合平台特性：
+1. 新聞稿（正式、倒金字塔、含一句系主任 quote 用〔〕佔位）
+2. 官網公告（條列資訊、報名連結〔〕佔位）
+3. Facebook 貼文（親切、3–5 行、1–2 個 emoji、結尾行動呼籲）
+4. LINE 群組通知（最短、只留重點時間地點＋報名一句話）
+
+【格式】四版各自加清楚標題，方便我分別複製貼出。</pre></div>
+<div class="ask"><b>追問句：</b>「FB 版再口語一點，開頭用問句抓人。」／「新聞稿加一段講者背景。」</div>
+<div class="callout warn">quote、報名連結、確切人數，AI 會留佔位或自己編——換成真的再發。</div>
+
+<h3>Demo 5 ｜會議紀錄整理 <span class="tag web">🌐</span></h3>
+<p>逐字稿或便條 → 有決議、有待辦的正式紀錄。</p>
+<div class="promptbox"><div class="bar"><span>Prompt</span><button class="copybtn">複製</button></div><pre>以下是〔○○會議〕的逐字稿／我的手寫便條，請整理成正式會議紀錄。
+
+【原始內容】
+〔貼上逐字稿或便條，或上傳檔案〕
+
+【任務】整理成三塊：
+1. 決議事項（每條一句、可執行）
+2. 待辦事項（表格：事項 / 負責人 / 期限）— 沒講到的標「待確認」
+3. 討論摘要（每個議題 2–3 句）
+
+【格式】用標題分三塊，待辦用表格。
+不要加原文沒有的決議；沒共識的標「未決」，不要寫成決議。</pre></div>
+<div class="ask"><b>追問句：</b>「第 2 案沒有結論，別寫成決議，改列未決。」／「待辦按期限排序。」</div>
+<div class="callout warn">AI 常把「討論到的」誤當「決議」——核對哪些是真的拍板。</div>
+
+<h3>Demo 6 ｜一疊 PDF／回覆彙整成總表 <span class="tag cc">💻</span></h3>
+<p>各系所回覆的一疊 PDF → 一張總表（系所／重點／是否逾期／缺漏）。老師 demo：它用 <code>Glob</code> 找檔、逐一 <code>Read</code>、產出總表。批次讀十幾個檔是它的日常。⚠️ 掃描檔（無文字層）要另外處理。</p>
+
+<h3>Demo 7 ｜查政府資料：採購／廠商／法案 <span class="tag cc">💻</span></h3>
+<p>串了台灣專屬的 <a href="https://hub.twinkleai.tw/" target="_blank" rel="noopener">Twinkle MCP</a> 後，直接用講的：「查某機關今年決標公告前 20 件」「用統編查廠商登記與董監事」「查立法院某法案進度」。政府採購、廠商徵信、法案追蹤，大學行政天天碰。</p>
+
+<h3>Demo 8 ｜公文／新聞稿校對 + 查證清單 <span class="tag web">🌐</span></h3>
+<p>文件發出前，抓錯字、抓公文用語、把每個數字日期列成查證清單。</p>
+<div class="promptbox"><div class="bar"><span>Prompt</span><button class="copybtn">複製</button></div><pre>以下是一份即將發出的〔公文／新聞稿〕，發出前幫我做兩件事。
+
+【文件】
+〔貼上全文，或上傳檔案〕
+
+【任務】
+A. 校對：列出（1）錯字/漏字（2）不通順或不符公文用語處（3）格式問題，各給修正建議。
+B. 查證清單：把文中每個可查證的事實（數字、日期、金額、法條、人名職稱、地點）逐條列出，標出哪些沒附來源、需要我再確認。
+
+【格式】A、B 兩塊分開；B 用表格：事實 / 類型 / 是否已佐證。
+只指出問題與建議，不要擅自改動原意。</pre></div>
+<div class="ask"><b>追問句：</b>「只列你有把握的錯字，不確定的別硬挑。」／「B 表格『需確認』的排最前面。」</div>
+<div class="callout warn">AI 校對會漏也會誤報，當「第一道篩子」。它最有用的是<strong>查證清單</strong>——照著回去核每個數字、日期、法條。</div>
+
+<h3>Demo 9 ｜行事曆祕書 <span class="tag cc">💻</span></h3>
+<p>「看我下週哪天最空、幫某會找一小時空檔並建立。」它呼叫 Google Calendar、回一張表 + 建議時段，你說「禮拜三下午建一小時 follow-up」，跳確認、按 Enter 就建好。你描述<strong>意圖</strong>，它選工具、執行、確認——這就是 agentic 的感覺。</p>
+
+<h3>Demo 10 ｜把重複工作固化成 skill + 記住單位慣例 <span class="tag cc">💻</span></h3>
+<p>每月的「院務會議通知」格式每次一樣、只換日期議程 → 現場做成一個 <code>/會議通知</code> skill（背景/任務/格式寫死，下次喊一聲就跑）；再糾正一次公文用語後說「<strong>把這規則記下來</strong>」，寫進 memory，下次自動套用。<strong>值得做成 skill 的＝頻率高、步驟固定、輸入輸出講得清楚。</strong></p>
+
+<h2 id="s5"><span class="s">S5</span>怎麼把 demo 變成你每天在用的</h2>
+<p>demo 看起來很神，真正的價值在<strong>它會跟著你長大</strong>，靠一個循環：</p>
+<ol class="steps">
+  <li>你叫它做（<code>/會議通知</code>）</li>
+  <li>它做出 90% 對的東西</li>
+  <li>你看出那 10% 不對 → 講「應該是 X 不是 Y」</li>
+  <li>它修正當下結果</li>
+  <li><strong>★ 你接著說「把這個規則記下來，下次自動套用」</strong></li>
+  <li>它寫進 SKILL.md / memory</li>
+  <li>下次跑 → 自動 100% 對</li>
+</ol>
+<p>第 5 步最容易漏。規則記得好一點的寫法，是連「為什麼」一起記（例：「不用『爰此』開頭 — Why：處長改過兩次 — How：改用『有關…一案』」），遇到邊角情況它才知道該不該套用。<strong>這就是「訓練 AI」的真相</strong>——沒有 GPU、沒有資料集，就是「做一次 + 糾正 + 記下來」重複幾十次。</p>
+
+<div class="callout note big">
+<strong>Take-away：</strong>回去挑<strong>一件每週重複的事</strong>（擬同類公文、發同類通知、整理同類回覆），先做給自己用，好用了再想能不能分享給同事。使用 AI 的目的不是效率本身，是把重複的事交出去之後，你想把時間花在什麼更值得的事情上。
+</div>
+
+<footer>
+Agentic AI × 大學行政 demo 講義 ・ 2026-07-07 ・ 講者 李怡志<br>
+本講義所有範例均為講者實際工作流。含個資／機密內容請勿貼入公用網頁版 AI。
+</footer>
+</div>
+
+<script>
+document.querySelectorAll('.copybtn').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    var pre=btn.closest('.promptbox').querySelector('pre');
+    var txt=pre.innerText;
+    function ok(){btn.textContent='已複製 ✓';btn.classList.add('done');
+      setTimeout(function(){btn.textContent='複製';btn.classList.remove('done')},1600)}
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText(txt).then(ok,function(){fallback()})
+    }else{fallback()}
+    function fallback(){
+      var ta=document.createElement('textarea');ta.value=txt;ta.style.position='fixed';ta.style.opacity='0';
+      document.body.appendChild(ta);ta.select();try{document.execCommand('copy');ok()}catch(e){}
+      document.body.removeChild(ta)
+    }
+  })
+});
+</script>
+</body>
+</html>
