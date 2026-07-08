@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>模組 1 · 多元工具 + Prompt 實作 · 公務員 AI 進階班</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; }
+body {
+  font-family: "Helvetica Neue", Arial, "Noto Sans TC", sans-serif;
+  background: #f0f2f5; margin: 0; min-height: 100vh; color: #1a1a1a;
+}
+.setup-wrap { display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 2rem; }
+.setup-card { background: #fff; border-radius: 14px; padding: 2.5rem; max-width: 520px; width: 100%; box-shadow: 0 4px 24px rgba(0,0,0,.1); }
+.setup-card h2 { margin: 0 0 .4rem; font-size: 1.25rem; }
+.setup-card p  { color: #555; font-size: .88rem; line-height: 1.7; margin: 0 0 1.4rem; }
+.setup-card input { width: 100%; padding: .7rem 1rem; border: 1.5px solid #ddd; border-radius: 8px; font-size: .95rem; margin-bottom: 1rem; }
+.setup-card input:focus { outline: none; border-color: #0055cc; }
+.hdr { background: #fff; padding: .85rem 1.8rem; border-bottom: 1px solid #e4e4e4; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 30; box-shadow: 0 2px 8px rgba(0,0,0,.06); }
+.hdr-left { display: flex; flex-direction: column; }
+.hdr h1 { margin: 0; font-size: 1rem; font-weight: 700; }
+.hdr-sub { font-size: .75rem; color: #999; margin-top: .1rem; }
+.hdr-right { display: flex; align-items: center; gap: .7rem; }
+.back-link { font-size: .78rem; color: #0055cc; text-decoration: none; font-weight: 600; margin-right: .3rem; }
+.back-link:hover { text-decoration: underline; }
+.dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+.dot.ok  { background: #22c55e; }
+.dot.err { background: #ef4444; }
+.conn-text { font-size: .75rem; color: #999; }
+.session-chip { font-size: .72rem; font-weight: 700; letter-spacing: .03em; background: #e8f0ff; color: #0055cc; padding: .2rem .6rem; border-radius: 20px; }
+.now-banner { background: #fbbf24; color: #7c5a00; font-size: .8rem; font-weight: 700; letter-spacing: .03em; text-align: center; padding: .35rem 1rem; position: sticky; top: 57px; z-index: 29; }
+.lesson-wrap { max-width: 800px; margin: 1.4rem auto 3rem; padding: 0 1.2rem; display: flex; flex-direction: column; gap: .8rem; }
+.section-hdr { display: flex; align-items: center; gap: .7rem; font-size: .72rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: #666; padding: .5rem 0 .1rem; margin-top: .6rem; }
+.section-hdr::after { content: ""; flex: 1; height: 1px; background: #d0d0d0; }
+.t-controls { background: #fff; border-radius: 10px; padding: .85rem 1.2rem; display: flex; align-items: center; gap: .9rem; flex-wrap: wrap; box-shadow: 0 1px 4px rgba(0,0,0,.07); }
+.t-controls label { font-size: .87rem; color: #555; white-space: nowrap; }
+.num-input { width: 60px; padding: .32rem .5rem; border: 1.5px solid #ddd; border-radius: 6px; font-size: 1rem; font-weight: 700; text-align: center; }
+.btn-reset   { background: #ef4444; color: #fff; }
+.btn-reset:hover { background: #cc0000; }
+.btn-primary { background: #0055cc; color: #fff; }
+.btn-primary:hover { background: #0044aa; }
+.btn-reset, .btn-primary { padding: .4rem .95rem; border: none; border-radius: 7px; font-size: .87rem; font-weight: 700; cursor: pointer; transition: background .15s; }
+.lesson-card { background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,.07); border-left: 4px solid transparent; transition: border-color .2s, background .2s; }
+.lesson-card.active { border-left-color: #fbbf24; }
+.lesson-card.done   { border-left-color: #22c55e; }
+.card-hdr { display: flex; align-items: center; justify-content: space-between; padding: .8rem 1.2rem; gap: .6rem; border-bottom: 1px solid #f0f0f0; background: #fafafa; }
+.lesson-card.active .card-hdr { background: #fffbeb; }
+.lesson-card.done   .card-hdr { background: #f0fff4; }
+.card-hdr-main { display: flex; align-items: center; gap: .5rem; flex: 1; flex-wrap: wrap; }
+.card-label { font-size: .95rem; font-weight: 700; }
+.u-time { font-size: .7rem; color: #aaa; font-weight: 400; background: #efefef; padding: .1rem .4rem; border-radius: 4px; }
+.tag-ex { font-size: .68rem; font-weight: 800; letter-spacing: .03em; background: #dcfce7; color: #15803d; padding: .1rem .45rem; border-radius: 4px; }
+.active-badge { font-size: .7rem; font-weight: 700; letter-spacing: .04em; background: #fbbf24; color: #7c5a00; padding: .15rem .5rem; border-radius: 4px; }
+.done-badge { font-size: .7rem; font-weight: 700; background: #22c55e; color: #fff; padding: .15rem .5rem; border-radius: 4px; }
+.card-body { padding: .8rem 1.3rem .6rem; transition: opacity .3s; }
+.lesson-card.done .card-body { opacity: .5; }
+.card-body p  { font-size: .88rem; line-height: 1.7; color: #333; margin: .5rem 0; }
+.card-body h4 { font-size: .86rem; font-weight: 800; color: #0055cc; margin: 1rem 0 .35rem; padding-bottom: .2rem; border-bottom: 1px dashed #dbe4f0; }
+.card-body h5 { font-size: .82rem; font-weight: 700; color: #444; margin: .8rem 0 .25rem; }
+.card-body ol, .card-body ul { margin: .4rem 0 .5rem 1.3rem; }
+.card-body > ul { list-style: disc; }
+.card-body > ol { list-style: decimal; }
+.card-body li ul { list-style: circle; margin-top: .2rem; }
+.card-body li { font-size: .87rem; line-height: 1.65; color: #333; margin-bottom: .32rem; }
+.card-body code { background: #f3f3f3; color: #c7254e; padding: .1em .35em; border-radius: 3px; font-size: .83em; font-family: "SFMono-Regular", Consolas, monospace; }
+.card-body pre { background: #1e293b; color: #e2e8f0; border-radius: 8px; padding: .8rem .95rem; margin: .5rem 0; overflow-x: auto; font-size: .8em; line-height: 1.6; white-space: pre-wrap; font-family: "SFMono-Regular", Consolas, monospace; position: relative; }
+.card-body pre .lbl { display:block; font-size: .72rem; color: #94a3b8; margin-bottom: .35rem; letter-spacing: .05em; text-transform: uppercase; font-weight: 700; }
+.card-body strong { color: #111; }
+.card-body a { color: #0055cc; }
+.steps { counter-reset: step; list-style: none !important; margin-left: 0 !important; padding-left: 0; }
+.steps > li { position: relative; padding-left: 2.1rem; margin-bottom: .55rem; }
+.steps > li::before { counter-increment: step; content: counter(step); position: absolute; left: 0; top: 0; width: 1.5rem; height: 1.5rem; background: #0055cc; color: #fff; border-radius: 50%; font-size: .78rem; font-weight: 800; display: flex; align-items: center; justify-content: center; }
+.note { background: #f0f7ff; border-left: 3px solid #0055cc; padding: .55rem .9rem; border-radius: 0 6px 6px 0; margin: .6rem 0; font-size: .84rem; line-height: 1.6; color: #333; }
+.warn { background: #fff1f0; border-left: 3px solid #ef4444; padding: .55rem .9rem; border-radius: 0 6px 6px 0; margin: .6rem 0; font-size: .84rem; line-height: 1.6; color: #333; }
+.expect { background: #f0fdf4; border-left: 3px solid #22c55e; padding: .55rem .9rem; border-radius: 0 6px 6px 0; margin: .6rem 0; font-size: .84rem; line-height: 1.6; color: #333; }
+.rescue { background: #fefce8; border-left: 3px solid #eab308; padding: .55rem .9rem; border-radius: 0 6px 6px 0; margin: .6rem 0; font-size: .84rem; line-height: 1.6; color: #333; }
+.check { background: #faf5ff; border-left: 3px solid #a855f7; padding: .55rem .9rem; border-radius: 0 6px 6px 0; margin: .6rem 0; font-size: .84rem; line-height: 1.6; color: #333; }
+.question { background: #fff8e6; border-left: 3px solid #f59e0b; padding: .55rem .9rem; border-radius: 0 6px 6px 0; margin: .6rem 0; font-size: .84rem; line-height: 1.6; color: #333; }
+.callout-t { font-weight: 800; display: block; margin-bottom: .2rem; }
+.card-foot { display: flex; align-items: center; justify-content: flex-end; padding: .65rem 1.2rem; border-top: 1px solid #f0f0f0; gap: .6rem; }
+.card-foot.t-foot { flex-direction: column; align-items: stretch; gap: .28rem; }
+.t-foot-top { display: flex; justify-content: space-between; align-items: center; }
+.t-hint-text { font-size: .72rem; color: #ccc; }
+.u-count { font-size: .85rem; font-weight: 700; color: #0055cc; }
+.bar-bg  { width: 100%; height: 7px; background: #eee; border-radius: 4px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 4px; background: #22c55e; transition: width .4s ease; }
+.bar-fill.low { background: #ef4444; }
+.bar-fill.mid { background: #fbbf24; }
+.btn-done { padding: .42rem 1.1rem; border: none; border-radius: 7px; font-size: .87rem; font-weight: 700; cursor: pointer; white-space: nowrap; transition: all .15s; background: #0055cc; color: #fff; }
+.btn-done:hover:not(:disabled) { background: #0044aa; transform: scale(1.03); }
+.btn-done.done   { background: #22c55e; cursor: default; }
+.btn-done:disabled { background: #e0e0e0; color: #999; cursor: not-allowed; }
+.btn-help { padding: .42rem .85rem; border: 1px solid #f59e0b; border-radius: 7px; font-size: .82rem; font-weight: 600; cursor: pointer; white-space: nowrap; transition: all .15s; background: #fff; color: #b45309; }
+.btn-help:hover:not(:disabled) { background: #fff8e6; transform: scale(1.03); }
+.btn-help.helped { background: #f59e0b; color: #fff; cursor: default; border-color: #f59e0b; }
+.btn-help:disabled { cursor: default; }
+.u-help { font-size: .82rem; font-weight: 700; color: #b45309; margin-left: .5rem; }
+.u-help.zero { color: #ccc; font-weight: 400; }
+.card-hdr.t-clickable { cursor: pointer; }
+.card-hdr.t-clickable:hover { filter: brightness(.97); }
+.exit-card { background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,.07); border-left: 4px solid #7c3aed; margin-top: 1rem; }
+.exit-hdr { padding: .8rem 1.2rem; background: #f5f3ff; font-size: .93rem; font-weight: 700; color: #5b21b6; border-bottom: 1px solid #ede9fe; }
+.exit-body { padding: .8rem 1.2rem; }
+.exit-body p { font-size: .86rem; line-height: 1.6; color: #333; margin: 0 0 .6rem; }
+.exit-body textarea { width: 100%; min-height: 90px; padding: .7rem .85rem; border: 1.5px solid #ddd; border-radius: 8px; font-size: .9rem; font-family: inherit; line-height: 1.6; resize: vertical; }
+.exit-body textarea:focus { outline: none; border-color: #7c3aed; }
+.exit-foot { display: flex; justify-content: flex-end; padding: 0 1.2rem 1rem; }
+.btn-exit { padding: .45rem 1.2rem; border: none; border-radius: 7px; font-size: .87rem; font-weight: 700; cursor: pointer; background: #7c3aed; color: #fff; transition: all .15s; }
+.btn-exit:hover:not(:disabled) { background: #6d28d9; transform: scale(1.03); }
+.btn-exit.sent { background: #22c55e; cursor: default; }
+.btn-exit:disabled { cursor: default; }
+.exit-ans-list { padding: .3rem 1.2rem 1rem; }
+.exit-ans { background: #faf9ff; border: 1px solid #ede9fe; border-radius: 7px; padding: .55rem .8rem; margin-bottom: .5rem; font-size: .84rem; line-height: 1.55; color: #333; white-space: pre-wrap; }
+.nav-foot { text-align:center; margin: 1.6rem 0 .5rem; }
+.nav-foot a { display:inline-block; margin: 0 .4rem; padding: .5rem 1.1rem; background:#fff; border-radius: 8px; text-decoration:none; color:#0055cc; font-weight:700; font-size:.85rem; box-shadow: 0 1px 4px rgba(0,0,0,.07); }
+.nav-foot a:hover { background:#f0f7ff; }
+@media (max-width: 520px) {
+  .hdr { padding: .8rem 1rem; }
+  .lesson-wrap { padding: 0 .7rem; margin-top: 1rem; }
+  .card-hdr { padding: .7rem 1rem; }
+  .card-body { padding: .7rem 1rem .5rem; }
+  .card-foot { padding: .55rem 1rem; }
+  .card-body li, .card-body p { font-size: .84rem; }
+}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+const FIREBASE_URL = "https://course-update-36460-default-rtdb.firebaseio.com";
+const TEACHER_HASH = "a93ac600f27f6602bf628cd929c9028e285038fc8637fe1ec6792e8850ade6a8";
+const POLL_MS = 2500;
+const MOD_TITLE = "模組 1：多元工具 + Prompt 實作";
+const MOD_SUB   = "全課地基";
+const EXIT_Q    = "三段式的心法是「每留一處空白，AI 就替你自作主張一處」。回想你今天做的練習：你覺得自己最容易「留白」的是背景、任務、還是格式？為什麼？";
+
+const NEXT_HREF = "gov-ai-m2_lesson.html";
+const EXERCISES = ["e1","e2","e3"];
+
+// ── Lesson content ─────────────────────────────────
+const CONTENT = {
+
+"c1": `<p>市面上主流的免費對話式 AI 有三家，<strong>都能做本課九成的事</strong>。你不用全學，選一個當主力就好——換工具的成本很低。</p>
+<h4>三家怎麼開</h4>
+<ul>
+  <li><strong>ChatGPT</strong>（OpenAI）— 網址 <a href="https://chatgpt.com" target="_blank">chatgpt.com</a>，用 Google 帳號即可登入</li>
+  <li><strong>Claude</strong>（Anthropic）— 網址 <a href="https://claude.ai" target="_blank">claude.ai</a>，繁中公文語感佳</li>
+  <li><strong>Gemini</strong>（Google）— 網址 <a href="https://gemini.google.com" target="_blank">gemini.google.com</a>，和 Google 帳號/文件整合好</li>
+</ul>
+<div class="note"><span class="callout-t">怎麼分辨好壞</span>下一格你會做「同一題問三家」的練習，親眼比。判準只有三個：① 繁中通不通順 ② 聽不聽得懂你的公務情境 ③ 能不能傳檔。</div>`,
+
+"e1": `<p><span class="callout-t">🎯 這個練習要幹嘛</span>用<strong>同一個問題</strong>問三家 AI，親眼看差異，選一家當你今天的主力。不用比出「誰最強」，是找「哪家你用起來最順」。</p>
+<h4>逐步操作</h4>
+<ol class="steps">
+  <li>開三個瀏覽器分頁，分別打開 <code>chatgpt.com</code>、<code>claude.ai</code>、<code>gemini.google.com</code>。</li>
+  <li>三家都用 Google 帳號登入（畫面上找「Continue with Google / 使用 Google 繼續」的按鈕點下去）。</li>
+  <li>在每一家的<strong>對話輸入框</strong>（畫面最下方那條長長的白色框）貼上<strong>同一段</strong>下面這個測試題。</li>
+</ol>
+<pre><span class="lbl">📋 複製這段去問三家</span>我是地方政府某科的承辦。請幫我用正式但不冗長的語氣，寫一則「本週五下午三點於三樓會議室召開單位業務會報」的內部通知，給科內同仁。控制在 150 字內。</pre>
+<ol class="steps" start="4" style="counter-reset: step 3;">
+  <li>三家都送出（按 Enter，或輸入框右邊的箭頭/紙飛機圖示）。</li>
+  <li>把三份結果並排看，問自己：哪一家的用語你<strong>直接就能拿去用</strong>、不太需要改？那家就當今天的主力。</li>
+</ol>
+<div class="expect"><span class="callout-t">✅ 你應該會看到</span>三家都會生出一段像樣的通知，格式大同小異（標題＋時間地點＋出席對象）。差別在語氣：有的偏公文腔、有的偏白話。<strong>沒有標準答案</strong>，選你順眼的。</div>
+<div class="rescue"><span class="callout-t">🆘 卡住了怎麼辦</span>
+<ul>
+  <li><strong>要我登入/註冊</strong>：用 Google 帳號最快，免記新密碼。</li>
+  <li><strong>叫我付費/額度用完</strong>：免費額度夠今天用；某家滿了就換另一家，這正是「選一家主力」的意義。</li>
+  <li><strong>回英文</strong>：在句尾加一句「請用繁體中文回答」。</li>
+</ul></div>
+<div class="check"><span class="callout-t">📌 完成標準</span>你已經登入至少一家、拿到一則通知草稿、心裡選好了今天的主力工具。做到就按「完成」。</div>`,
+
+"c2": `<p>這是<strong>全課最重要的一條</strong>，其他技巧都可以慢慢學，這條今天就要記死。</p>
+<div class="warn"><span class="callout-t">⛔ 鐵律</span>含<strong>個資、機密、尚未公開的公文</strong>，不要貼進公用網頁版 AI。免費版你貼進去的內容，<strong>可能被拿去訓練模型</strong>——等於把資料交出去了。</div>
+<h4>什麼算個資／機密</h4>
+<ul>
+  <li>姓名、身分證字號、學號/員工編號、電話、地址、生日、病歷、成績</li>
+  <li>還沒對外發布的公文、內部簽核意見、標案底價、人事案</li>
+</ul>
+<h4>真的要用怎麼辦——去識別化</h4>
+<p>把可辨識的資訊<strong>換成〔佔位符〕</strong>再貼。AI 不需要知道當事人是誰，也能幫你處理格式。</p>
+<div class="note"><span class="callout-t">例</span>原文「陳大文（身分證 A123456789）申請…」→ 改成「〔申請人〕（身分證〔ID〕）申請…」。拿回 AI 的結果後，再把〔〕換回真名。</div>`,
+
+"e2": `<p><span class="callout-t">🎯 這個練習要幹嘛</span>拿一段「有個資的假公文」，練習<strong>把個資遮成〔〕</strong>再交給 AI。這一招你以後每次用 AI 處理公務文件都會用到。</p>
+<h4>逐步操作</h4>
+<ol class="steps">
+  <li>先看這段<strong>故意塞滿個資</strong>的假句子（不是真人，練習用）：
+    <pre>王小明（電話 0912-345-678、地址台北市中正區○○路 5 號）
+於 6 月 3 日申請育嬰留職停薪，擬自 7 月 1 日起留停一年。</pre></li>
+  <li>自己動手，把裡面<strong>每一個可辨識個資</strong>換成〔〕：姓名、電話、地址都要遮。改成類似：
+    <pre>〔申請人〕（電話〔電話〕、地址〔地址〕）
+於〔申請日〕申請育嬰留職停薪，擬自〔起始日〕起留停一年。</pre></li>
+  <li>開你的主力 AI，貼上<strong>去識別化後</strong>的版本，加一句任務：
+    <pre><span class="lbl">📋 複製</span>以下是一件育嬰留停申請，請幫我擬一段陳核用的「簽」的說明段落，正式簡潔。文號、日期我自己填。
+
+〔把你遮好的版本貼在這裡〕</pre></li>
+  <li>看它產出的草稿——它完全不需要知道真名，一樣幫你把格式寫好。</li>
+</ol>
+<div class="expect"><span class="callout-t">✅ 你應該會看到</span>AI 生出一段公文說明，裡面沿用你的〔〕佔位符（或用「申請人」等中性詞）。<strong>證明：遮掉個資，工作照樣做得成。</strong></div>
+<div class="rescue"><span class="callout-t">🆘 卡住了怎麼辦</span><ul>
+  <li><strong>不確定哪些要遮</strong>：口訣「能指認到某個真人的都遮」——名字、號碼、地址、日期若能對到人也遮。</li>
+  <li><strong>AI 反問我缺資訊</strong>：正常，回一句「用〔〕佔位即可，我最後自己填」。</li>
+</ul></div>
+<div class="check"><span class="callout-t">📌 完成標準</span>你成功把一段含個資的文字遮成〔〕、丟給 AI、拿到一份沒有外洩個資的草稿。做到按「完成」。</div>`,
+
+"c3": `<p>為什麼你叫 AI 寫的東西常常「不對」？多半不是 AI 笨，是<strong>你沒把話講清楚</strong>。好結果來自一個公式：</p>
+<h4>三段式 = 背景 ＋ 任務 ＋ 格式</h4>
+<ul>
+  <li><strong>背景</strong>：你是誰、幫誰、什麼事、有什麼前提</li>
+  <li><strong>任務</strong>：具體要它做出什麼、有哪些必須包含的要件</li>
+  <li><strong>格式</strong>：長什麼樣、多長、分不分點、什麼語氣</li>
+</ul>
+<div class="warn"><span class="callout-t">核心心法</span><strong>每留一處空白，AI 就替你自作主張一處。</strong>你沒講語氣，它自己挑；你沒講長度，它可能寫三頁。想要什麼，就寫出來。</div>
+<div class="note">下一格你會用三段式，把一件<strong>你下週真的要做</strong>的小事寫成 prompt，並學會怎麼「追問」把 80 分調到 95 分。</div>`,
+
+"e3": `<p><span class="callout-t">🎯 這個練習要幹嘛</span>用三段式，把一件<strong>你下週真的要做的小事</strong>交給 AI。這是本模組的核心練習，做完你就掌握了全課地基。</p>
+<h4>Step 1：挑一件真的要做的小事</h4>
+<p>例如：跟別的單位借會議室、發一則活動通知、回一封有點難回的 email、寫一段公告。<strong>挑最小、最具體的一件。</strong></p>
+<h4>Step 2：照三段式框架把它寫出來</h4>
+<p>把下面的骨架複製到 AI，<strong>〔〕裡換成你的真實情況</strong>（記得：個資用〔〕遮）：</p>
+<pre><span class="lbl">📋 三段式骨架（複製後填空）</span>【背景】
+我是〔哪個單位的什麼角色〕，要處理〔什麼事〕。對象是〔誰〕。前提：〔有什麼要注意的，例如對方是上級/平行單位〕。
+
+【任務】
+請幫我〔寫一則通知／擬一段email／草一份公告〕，必須包含：〔要件1〕、〔要件2〕、〔要件3〕。
+
+【格式】
+語氣：〔正式／親切〕。長度：〔控制在 X 字／一段／分點〕。
+不要幫我編〔日期／文號／連結〕，那些留空我自己填。</pre>
+<h4>Step 3：拿到結果後「追問」調整</h4>
+<p>第一版通常 80 分。挑一句下面的追問句貼進<strong>同一個對話</strong>繼續調：</p>
+<ul>
+  <li>改語氣：「第二段太文言，改白話一點。」</li>
+  <li>補要件：「加一句附帶提醒對方回覆期限。」</li>
+  <li>改格式：「太長了，壓到 100 字內。」</li>
+  <li>換體例：「改成公文『簽』的格式，給主管核示。」</li>
+</ul>
+<div class="expect"><span class="callout-t">✅ 你應該會看到</span>第一版already能用但不完美；追問一到兩次後，<strong>語氣/長度/要件</strong>就調到你滿意。這個「產出→追問→再產出」的循環，就是用 AI 的日常節奏。</div>
+<div class="rescue"><span class="callout-t">🆘 卡住了怎麼辦</span><ul>
+  <li><strong>結果離題</strong>：多半是「背景」寫太少。回去補「你是誰、對象是誰、什麼前提」。</li>
+  <li><strong>它自己亂編日期/數字</strong>：正常，這叫幻覺。在格式段明講「日期文號留空我自己填」。</li>
+  <li><strong>越改越糟</strong>：別在同一對話硬凹，開「新對話」重貼乾淨的三段式。</li>
+</ul></div>
+<div class="check"><span class="callout-t">📌 完成標準</span>你有一份「下週真的能用」的成品，而且是靠三段式＋至少一次追問調出來的。做到按「完成」。</div>`,
+
+"c4": `<p>收束前，記住三個最容易踩的地雷：</p>
+<h4>地雷一：AI 會一本正經講錯（幻覺）</h4>
+<p>它會把<strong>不存在的法條、錯的日期、編造的數字</strong>講得非常篤定。<strong>凡是要當依據的（法條、金額、日期、人名職稱），一律回原文核。</strong>AI 幫你「找方向」，不幫你「做決定」。</p>
+<h4>地雷二：一個任務開一個新對話</h4>
+<p>別在同一對話裡連做公文又做新聞稿——前一個會「污染」後一個，讓它答得怪。換任務就開「新對話」（左上角 New chat）。</p>
+<h4>地雷三：它是助理，不是主管</h4>
+<p>用印、對外發文、簽准這些<strong>要負責任的動作</strong>，永遠是你決定。AI 產草稿，你把關。</p>
+<div class="question"><span class="callout-t">🏛️ 帶回去想</span>你每天做的事裡，哪些是「背景任務格式都講得清楚」的？那些就是最適合第一個交給 AI 的。</div>
+<div class="note"><span class="callout-t">📌 本模組作業</span>回去把「這週最煩的一件重複小事」寫成一份三段式 prompt，明天帶來當模組 3「做成模板」的素材。</div>`,
+};
+
+// UNITS: [id, label, time] — null id = section header
+const UNITS = [
+  [null,  "模組 1 · 多元工具 + 基礎提問 + Prompt 實作"],
+  ["c1",  "1-A 認識工具地圖（三家怎麼選）",        "20 min"],
+  ["e1",  "練習 1：同一題問三家、選主力",          "20 min"],
+  ["c2",  "1-B ★ 資安紅線（全課最重要）",          "15 min"],
+  ["e2",  "練習 2：把個資遮成〔〕再交給 AI",        "15 min"],
+  ["c3",  "1-C ★ 三段式提問法（背景+任務+格式）",   "20 min"],
+  ["e3",  "練習 3：用三段式做一件真的要做的事",     "50 min"],
+  ["c4",  "1-D 三個地雷 + 收束",                   "20 min"],
+];
+
+// ── State ─────────────────────────────────────────
+const params        = new URLSearchParams(location.search);
+const WANTS_TEACHER = params.has("t");
+let   IS_TEACHER    = WANTS_TEACHER && sessionStorage.getItem("teacher_auth") === "1";
+const LS_DB         = "cls_db_url";
+const COURSE_ID = (function(){
+  const stem = location.pathname.split('/').pop().replace(/\.html$/, '');
+  return stem.replace(/_(progress|classroom|lesson)$/, '');
+})();
+const LS_LOCAL = "cls_local_" + COURSE_ID;
+
+let dbUrl     = (FIREBASE_URL || localStorage.getItem(LS_DB) || "").replace(/\/$/, "");
+let connected = false;
+let pollTimer = null;
+
+let srv = { session: 0, total: 0, active: "" };
+UNITS.forEach(([id]) => { if (id) { srv[id] = 0; srv[id + "_help"] = 0; } });
+
+let local = JSON.parse(localStorage.getItem(LS_LOCAL) || '{"session":0,"done":{},"help":{},"exit":false}');
+if (!local.help) local.help = {};
+
+const root = document.getElementById("root");
+
+// ── Firebase REST ──────────────────────────────────
+function dbPath() { return `${dbUrl}/${COURSE_ID}.json`; }
+function exitPath() { return `${dbUrl}/${COURSE_ID}/exit_ticket.json`; }
+async function dbGet() {
+  try { const r = await fetch(dbPath()); if (!r.ok) throw new Error(r.status); connected = true; return await r.json(); }
+  catch { connected = false; return null; }
+}
+async function dbPatch(data) { return fetch(dbPath(), { method: "PATCH", body: JSON.stringify(data), headers: { "Content-Type": "application/json" } }); }
+async function dbPut(data)   { return fetch(dbPath(), { method: "PUT",   body: JSON.stringify(data), headers: { "Content-Type": "application/json" } }); }
+async function exitPost(text){ return fetch(exitPath(), { method: "POST", body: JSON.stringify({ text }), headers: { "Content-Type": "application/json" } }); }
+async function exitGet() { try { const r = await fetch(exitPath()); if (!r.ok) return null; return await r.json(); } catch { return null; } }
+
+// ── Sync ──────────────────────────────────────────
+async function poll() {
+  const data = await dbGet();
+  if (!data) { render(); return; }
+  if ((data.session || 0) > (local.session || 0)) {
+    local = { session: data.session, done: {}, help: {}, exit: false };
+    localStorage.setItem(LS_LOCAL, JSON.stringify(local));
+  }
+  srv.session = data.session || 0;
+  srv.total   = data.total   || 0;
+  srv.active  = data.active  || "";
+  UNITS.forEach(([id]) => { if (id) { srv[id] = data[id] || 0; srv[id + "_help"] = data[id + "_help"] || 0; } });
+  if (IS_TEACHER) {
+    const et = await exitGet();
+    srv._exit = et ? Object.values(et).map(v => v && v.text).filter(Boolean) : [];
+  }
+  render();
+}
+
+// ── Student action ────────────────────────────────
+async function markDone(uid) {
+  if (local.done[uid]) return;
+  local.done[uid] = true; localStorage.setItem(LS_LOCAL, JSON.stringify(local));
+  const next = (srv[uid] || 0) + 1; srv[uid] = next; render();
+  await dbPatch({ [uid]: next });
+}
+async function markHelp(uid) {
+  if (local.help[uid]) return;
+  local.help[uid] = true; localStorage.setItem(LS_LOCAL, JSON.stringify(local));
+  const k = uid + "_help"; const next = (srv[k] || 0) + 1; srv[k] = next; render();
+  await dbPatch({ [k]: next });
+}
+async function sendExit() {
+  const ta = document.getElementById("exit-ta");
+  const val = (ta?.value || "").trim();
+  if (!val || local.exit) return;
+  local.exit = true; localStorage.setItem(LS_LOCAL, JSON.stringify(local)); render();
+  await exitPost(val);
+}
+
+// ── Teacher actions ───────────────────────────────
+async function resetAll() {
+  if (!confirm("確定重置本模組所有學生進度？\n學生頁面將在 3 秒內自動更新。")) return;
+  const newSession = (srv.session || 0) + 1;
+  const fresh = { session: newSession, total: srv.total, active: srv.active };
+  UNITS.forEach(([id]) => { if (id) { fresh[id] = 0; fresh[id + "_help"] = 0; } });
+  await dbPut(fresh); srv = { ...fresh }; render();
+}
+async function setTotal(n) { if (isNaN(n) || n < 1) return; srv.total = n; await dbPatch({ total: n }); render(); }
+async function setActive(uid) { const next = srv.active === uid ? "" : uid; srv.active = next; render(); await dbPatch({ active: next }); }
+
+// ── Login screens ─────────────────────────────────
+function renderSetup() {
+  root.innerHTML = `<div class="setup-wrap"><div class="setup-card">
+  <h2>🔧 首次設定 Firebase</h2><p>請輸入 Firebase Realtime Database URL。</p>
+  <input id="db-in" type="url" placeholder="https://my-project-default-rtdb.firebaseio.com" value="${localStorage.getItem(LS_DB) || ""}">
+  <button class="btn-primary" style="width:100%;padding:.7rem" onclick="saveDb()">儲存並開始</button></div></div>`;
+}
+function saveDb() {
+  const val = document.getElementById("db-in").value.trim().replace(/\/$/, "");
+  if (!val.startsWith("https://")) { alert("請輸入完整 HTTPS URL"); return; }
+  dbUrl = val; localStorage.setItem(LS_DB, val); init();
+}
+function renderTeacherLogin() {
+  root.innerHTML = `<div class="setup-wrap"><div class="setup-card">
+  <h2>🔒 講師登入</h2><p>請輸入講師密碼以進入課堂管理介面。</p>
+  <input id="pw-in" type="password" placeholder="密碼" onkeydown="if(event.key==='Enter')checkTeacherPw()">
+  <button class="btn-primary" style="width:100%;padding:.7rem" onclick="checkTeacherPw()">登入</button>
+  <p id="pw-err" style="color:#ef4444;font-size:.85rem;margin:.6rem 0 0;display:none">密碼錯誤，請再試一次</p></div></div>`;
+  setTimeout(() => document.getElementById("pw-in")?.focus(), 50);
+}
+async function checkTeacherPw() {
+  const val = document.getElementById("pw-in")?.value || "";
+  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(val));
+  const hex = Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,"0")).join("");
+  if (hex === TEACHER_HASH) { sessionStorage.setItem("teacher_auth","1"); IS_TEACHER = true; init(); }
+  else { document.getElementById("pw-err").style.display = "block"; document.getElementById("pw-in").value = ""; document.getElementById("pw-in").focus(); }
+}
+
+// ── Connection indicator ──────────────────────────
+function connHtml() { return `<span class="dot ${connected ? "ok" : "err"}"></span><span class="conn-text">${connected ? "已連線" : "離線"}</span>`; }
+
+// ── Build one card ────────────────────────────────
+function buildCard(uid, label, time) {
+  const content   = CONTENT[uid] || "";
+  const isEx      = uid.endsWith("x") || /_ex$/.test(uid) || EXERCISES.includes(uid);
+  const inSession = local.session === srv.session;
+  const exTag     = isEx ? `<span class="tag-ex">✍️ 練習</span>` : "";
+
+  if (IS_TEACHER) {
+    const total = srv.total || 1;
+    const cnt = srv[uid] || 0;
+    const helpCnt = srv[uid + "_help"] || 0;
+    const pct = Math.min(100, Math.round(cnt / total * 100));
+    const fill = pct >= 80 ? "" : pct >= 40 ? " mid" : " low";
+    const isActive = srv.active === uid;
+    const badge = isActive ? `<span class="active-badge">現在進行</span>` : "";
+    return `<div class="lesson-card${isActive ? " active" : ""}">
+  <div class="card-hdr t-clickable" onclick="setActive('${uid}')">
+    <div class="card-hdr-main"><span class="card-label">${label}</span>${exTag}${time ? `<span class="u-time">${time}</span>` : ""}</div>${badge}
+  </div>
+  ${content ? `<div class="card-body">${content}</div>` : ""}
+  <div class="card-foot t-foot">
+    <div class="t-foot-top"><span class="t-hint-text">點擊標題以標記「現在進行」</span>
+      <span><span class="u-count">${cnt} / ${total}</span><span class="u-help${helpCnt === 0 ? " zero" : ""}" title="求助人數">🆘 ${helpCnt}</span></span></div>
+    <div class="bar-bg"><div class="bar-fill${fill}" style="width:${pct}%"></div></div>
+  </div></div>`;
+  } else {
+    const isDone = inSession && !!local.done[uid];
+    const isHelped = inSession && !!local.help[uid];
+    const isActive = srv.active === uid;
+    const cls = isDone ? " done" : isActive ? " active" : "";
+    const badge = isActive && !isDone ? `<span class="active-badge">現在</span>` : isDone ? `<span class="done-badge">✓ 完成</span>` : "";
+    return `<div class="lesson-card${cls}">
+  <div class="card-hdr"><div class="card-hdr-main"><span class="card-label">${label}</span>${exTag}${time ? `<span class="u-time">${time}</span>` : ""}</div>${badge}</div>
+  ${content ? `<div class="card-body">${content}</div>` : ""}
+  <div class="card-foot">
+    ${isDone ? "" : `<button class="btn-help${isHelped ? " helped" : ""}"${isHelped ? " disabled" : ""} onclick="${isHelped ? "" : `markHelp('${uid}')`}" title="不懂這段，請老師再說明">${isHelped ? "🆘 已舉手" : "🆘 卡住了"}</button>`}
+    <button class="btn-done${isDone ? " done" : ""}"${isDone ? " disabled" : ""} onclick="${isDone ? "" : `markDone('${uid}')`}">${isDone ? "✓ 完成" : "完成"}</button>
+  </div></div>`;
+  }
+}
+
+// ── Exit ticket ───────────────────────────────────
+function buildExit() {
+  if (IS_TEACHER) {
+    const answers = srv._exit || [];
+    const list = answers.length ? answers.map(a => `<div class="exit-ans">${a.replace(/</g,"&lt;")}</div>`).join("") : `<p style="color:#999;font-size:.84rem;padding:.3rem 0">尚無回覆。</p>`;
+    return `<div class="exit-card"><div class="exit-hdr">🎫 Exit Ticket 回覆（${answers.length}）</div><div class="exit-ans-list">${list}</div></div>`;
+  }
+  const sent = local.exit;
+  return `<div class="exit-card"><div class="exit-hdr">🎫 Exit Ticket · 離開本模組前回答</div>
+  <div class="exit-body"><p>${EXIT_Q}</p>
+  <textarea id="exit-ta" placeholder="寫下你的答案…" ${sent ? "disabled" : ""}>${sent ? "已送出，謝謝！" : ""}</textarea></div>
+  <div class="exit-foot"><button class="btn-exit${sent ? " sent" : ""}"${sent ? " disabled" : ""} onclick="sendExit()">${sent ? "✓ 已送出" : "送出"}</button></div></div>`;
+}
+
+// ── Render ────────────────────────────────────────
+function render() {
+  const scrollY = window.scrollY;
+  const activeUnit = UNITS.find(([id]) => id && id === srv.active);
+  const nowBanner = activeUnit ? `<div class="now-banner">現在：${activeUnit[1]}</div>` : "";
+  const items = UNITS.map(([uid, label, time]) => { if (!uid) return `<div class="section-hdr">${label}</div>`; return buildCard(uid, label, time); }).join("");
+  const teacherName = IS_TEACHER ? "（講師）" : "";
+  const header = `<div class="hdr">
+  <div class="hdr-left"><h1>${MOD_TITLE}${teacherName}</h1><div class="hdr-sub">${IS_TEACHER ? "點擊各段落標題以標記「現在進行」" : "跟著步驟做，完成一格按「完成」；卡住按「🆘 卡住了」"}</div></div>
+  <div class="hdr-right"><a class="back-link" href="gov-ai_lesson.html">← 課程目錄</a>${IS_TEACHER ? `<span class="session-chip">Session ${srv.session}</span>` : ""}${connHtml()}</div>
+</div>${nowBanner}`;
+  const controls = IS_TEACHER ? `<div class="t-controls"><label>學生總人數：</label>
+  <input class="num-input" type="number" min="1" max="300" value="${srv.total || ""}" placeholder="25" onchange="setTotal(parseInt(this.value))">
+  <button class="btn-reset" onclick="resetAll()">🔄 重置進度</button>${connHtml()}</div>` : "";
+  const nav = `<div class="nav-foot">
+    <a href="gov-ai_lesson.html">🏠 課程目錄</a>
+    ${NEXT_HREF ? `<a href="${NEXT_HREF}">下一個模組 →</a>` : ""}
+  </div>`;
+  root.innerHTML = `${header}<div class="lesson-wrap">${controls}${items}${buildExit()}${nav}</div>`;
+  requestAnimationFrame(() => window.scrollTo(0, scrollY));
+}
+
+// ── Init ──────────────────────────────────────────
+function init() {
+  if (WANTS_TEACHER && !IS_TEACHER) { renderTeacherLogin(); return; }
+  if (!dbUrl) { renderSetup(); return; }
+  poll(); clearInterval(pollTimer); pollTimer = setInterval(poll, POLL_MS);
+}
+init();
+</script>
+</body>
+</html>

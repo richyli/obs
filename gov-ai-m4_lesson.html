@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>模組 4 · 公務案例實作 · 公務員 AI 進階班</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; }
+body {
+  font-family: "Helvetica Neue", Arial, "Noto Sans TC", sans-serif;
+  background: #f0f2f5; margin: 0; min-height: 100vh; color: #1a1a1a;
+}
+.setup-wrap { display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 2rem; }
+.setup-card { background: #fff; border-radius: 14px; padding: 2.5rem; max-width: 520px; width: 100%; box-shadow: 0 4px 24px rgba(0,0,0,.1); }
+.setup-card h2 { margin: 0 0 .4rem; font-size: 1.25rem; }
+.setup-card p  { color: #555; font-size: .88rem; line-height: 1.7; margin: 0 0 1.4rem; }
+.setup-card input { width: 100%; padding: .7rem 1rem; border: 1.5px solid #ddd; border-radius: 8px; font-size: .95rem; margin-bottom: 1rem; }
+.setup-card input:focus { outline: none; border-color: #0055cc; }
+.hdr { background: #fff; padding: .85rem 1.8rem; border-bottom: 1px solid #e4e4e4; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 30; box-shadow: 0 2px 8px rgba(0,0,0,.06); }
+.hdr-left { display: flex; flex-direction: column; }
+.hdr h1 { margin: 0; font-size: 1rem; font-weight: 700; }
+.hdr-sub { font-size: .75rem; color: #999; margin-top: .1rem; }
+.hdr-right { display: flex; align-items: center; gap: .7rem; }
+.back-link { font-size: .78rem; color: #0055cc; text-decoration: none; font-weight: 600; margin-right: .3rem; }
+.back-link:hover { text-decoration: underline; }
+.dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+.dot.ok  { background: #22c55e; }
+.dot.err { background: #ef4444; }
+.conn-text { font-size: .75rem; color: #999; }
+.session-chip { font-size: .72rem; font-weight: 700; letter-spacing: .03em; background: #e8f0ff; color: #0055cc; padding: .2rem .6rem; border-radius: 20px; }
+.now-banner { background: #fbbf24; color: #7c5a00; font-size: .8rem; font-weight: 700; letter-spacing: .03em; text-align: center; padding: .35rem 1rem; position: sticky; top: 57px; z-index: 29; }
+.lesson-wrap { max-width: 800px; margin: 1.4rem auto 3rem; padding: 0 1.2rem; display: flex; flex-direction: column; gap: .8rem; }
+.section-hdr { display: flex; align-items: center; gap: .7rem; font-size: .72rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: #666; padding: .5rem 0 .1rem; margin-top: .6rem; }
+.section-hdr::after { content: ""; flex: 1; height: 1px; background: #d0d0d0; }
+.t-controls { background: #fff; border-radius: 10px; padding: .85rem 1.2rem; display: flex; align-items: center; gap: .9rem; flex-wrap: wrap; box-shadow: 0 1px 4px rgba(0,0,0,.07); }
+.t-controls label { font-size: .87rem; color: #555; white-space: nowrap; }
+.num-input { width: 60px; padding: .32rem .5rem; border: 1.5px solid #ddd; border-radius: 6px; font-size: 1rem; font-weight: 700; text-align: center; }
+.btn-reset   { background: #ef4444; color: #fff; }
+.btn-reset:hover { background: #cc0000; }
+.btn-primary { background: #0055cc; color: #fff; }
+.btn-primary:hover { background: #0044aa; }
+.btn-reset, .btn-primary { padding: .4rem .95rem; border: none; border-radius: 7px; font-size: .87rem; font-weight: 700; cursor: pointer; transition: background .15s; }
+.lesson-card { background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,.07); border-left: 4px solid transparent; transition: border-color .2s, background .2s; }
+.lesson-card.active { border-left-color: #fbbf24; }
+.lesson-card.done   { border-left-color: #22c55e; }
+.card-hdr { display: flex; align-items: center; justify-content: space-between; padding: .8rem 1.2rem; gap: .6rem; border-bottom: 1px solid #f0f0f0; background: #fafafa; }
+.lesson-card.active .card-hdr { background: #fffbeb; }
+.lesson-card.done   .card-hdr { background: #f0fff4; }
+.card-hdr-main { display: flex; align-items: center; gap: .5rem; flex: 1; flex-wrap: wrap; }
+.card-label { font-size: .95rem; font-weight: 700; }
+.u-time { font-size: .7rem; color: #aaa; font-weight: 400; background: #efefef; padding: .1rem .4rem; border-radius: 4px; }
+.tag-ex { font-size: .68rem; font-weight: 800; letter-spacing: .03em; background: #dcfce7; color: #15803d; padding: .1rem .45rem; border-radius: 4px; }
+.active-badge { font-size: .7rem; font-weight: 700; letter-spacing: .04em; background: #fbbf24; color: #7c5a00; padding: .15rem .5rem; border-radius: 4px; }
+.done-badge { font-size: .7rem; font-weight: 700; background: #22c55e; color: #fff; padding: .15rem .5rem; border-radius: 4px; }
+.card-body { padding: .8rem 1.3rem .6rem; transition: opacity .3s; }
+.lesson-card.done .card-body { opacity: .5; }
+.card-body p  { font-size: .88rem; line-height: 1.7; color: #333; margin: .5rem 0; }
+.card-body h4 { font-size: .86rem; font-weight: 800; color: #0055cc; margin: 1rem 0 .35rem; padding-bottom: .2rem; border-bottom: 1px dashed #dbe4f0; }
+.card-body h5 { font-size: .82rem; font-weight: 700; color: #444; margin: .8rem 0 .25rem; }
+.card-body ol, .card-body ul { margin: .4rem 0 .5rem 1.3rem; }
+.card-body > ul { list-style: disc; }
+.card-body > ol { list-style: decimal; }
+.card-body li ul { list-style: circle; margin-top: .2rem; }
+.card-body li { font-size: .87rem; line-height: 1.65; color: #333; margin-bottom: .32rem; }
+.card-body code { background: #f3f3f3; color: #c7254e; padding: .1em .35em; border-radius: 3px; font-size: .83em; font-family: "SFMono-Regular", Consolas, monospace; }
+.card-body pre { background: #1e293b; color: #e2e8f0; border-radius: 8px; padding: .8rem .95rem; margin: .5rem 0; overflow-x: auto; font-size: .8em; line-height: 1.6; white-space: pre-wrap; font-family: "SFMono-Regular", Consolas, monospace; position: relative; }
+.card-body pre .lbl { display:block; font-size: .72rem; color: #94a3b8; margin-bottom: .35rem; letter-spacing: .05em; text-transform: uppercase; font-weight: 700; }
+.card-body strong { color: #111; }
+.card-body a { color: #0055cc; }
+.steps { counter-reset: step; list-style: none !important; margin-left: 0 !important; padding-left: 0; }
+.steps > li { position: relative; padding-left: 2.1rem; margin-bottom: .55rem; }
+.steps > li::before { counter-increment: step; content: counter(step); position: absolute; left: 0; top: 0; width: 1.5rem; height: 1.5rem; background: #0055cc; color: #fff; border-radius: 50%; font-size: .78rem; font-weight: 800; display: flex; align-items: center; justify-content: center; }
+.note { background: #f0f7ff; border-left: 3px solid #0055cc; padding: .55rem .9rem; border-radius: 0 6px 6px 0; margin: .6rem 0; font-size: .84rem; line-height: 1.6; color: #333; }
+.warn { background: #fff1f0; border-left: 3px solid #ef4444; padding: .55rem .9rem; border-radius: 0 6px 6px 0; margin: .6rem 0; font-size: .84rem; line-height: 1.6; color: #333; }
+.expect { background: #f0fdf4; border-left: 3px solid #22c55e; padding: .55rem .9rem; border-radius: 0 6px 6px 0; margin: .6rem 0; font-size: .84rem; line-height: 1.6; color: #333; }
+.rescue { background: #fefce8; border-left: 3px solid #eab308; padding: .55rem .9rem; border-radius: 0 6px 6px 0; margin: .6rem 0; font-size: .84rem; line-height: 1.6; color: #333; }
+.check { background: #faf5ff; border-left: 3px solid #a855f7; padding: .55rem .9rem; border-radius: 0 6px 6px 0; margin: .6rem 0; font-size: .84rem; line-height: 1.6; color: #333; }
+.question { background: #fff8e6; border-left: 3px solid #f59e0b; padding: .55rem .9rem; border-radius: 0 6px 6px 0; margin: .6rem 0; font-size: .84rem; line-height: 1.6; color: #333; }
+.callout-t { font-weight: 800; display: block; margin-bottom: .2rem; }
+.card-foot { display: flex; align-items: center; justify-content: flex-end; padding: .65rem 1.2rem; border-top: 1px solid #f0f0f0; gap: .6rem; }
+.card-foot.t-foot { flex-direction: column; align-items: stretch; gap: .28rem; }
+.t-foot-top { display: flex; justify-content: space-between; align-items: center; }
+.t-hint-text { font-size: .72rem; color: #ccc; }
+.u-count { font-size: .85rem; font-weight: 700; color: #0055cc; }
+.bar-bg  { width: 100%; height: 7px; background: #eee; border-radius: 4px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 4px; background: #22c55e; transition: width .4s ease; }
+.bar-fill.low { background: #ef4444; }
+.bar-fill.mid { background: #fbbf24; }
+.btn-done { padding: .42rem 1.1rem; border: none; border-radius: 7px; font-size: .87rem; font-weight: 700; cursor: pointer; white-space: nowrap; transition: all .15s; background: #0055cc; color: #fff; }
+.btn-done:hover:not(:disabled) { background: #0044aa; transform: scale(1.03); }
+.btn-done.done   { background: #22c55e; cursor: default; }
+.btn-done:disabled { background: #e0e0e0; color: #999; cursor: not-allowed; }
+.btn-help { padding: .42rem .85rem; border: 1px solid #f59e0b; border-radius: 7px; font-size: .82rem; font-weight: 600; cursor: pointer; white-space: nowrap; transition: all .15s; background: #fff; color: #b45309; }
+.btn-help:hover:not(:disabled) { background: #fff8e6; transform: scale(1.03); }
+.btn-help.helped { background: #f59e0b; color: #fff; cursor: default; border-color: #f59e0b; }
+.btn-help:disabled { cursor: default; }
+.u-help { font-size: .82rem; font-weight: 700; color: #b45309; margin-left: .5rem; }
+.u-help.zero { color: #ccc; font-weight: 400; }
+.card-hdr.t-clickable { cursor: pointer; }
+.card-hdr.t-clickable:hover { filter: brightness(.97); }
+.exit-card { background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,.07); border-left: 4px solid #7c3aed; margin-top: 1rem; }
+.exit-hdr { padding: .8rem 1.2rem; background: #f5f3ff; font-size: .93rem; font-weight: 700; color: #5b21b6; border-bottom: 1px solid #ede9fe; }
+.exit-body { padding: .8rem 1.2rem; }
+.exit-body p { font-size: .86rem; line-height: 1.6; color: #333; margin: 0 0 .6rem; }
+.exit-body textarea { width: 100%; min-height: 90px; padding: .7rem .85rem; border: 1.5px solid #ddd; border-radius: 8px; font-size: .9rem; font-family: inherit; line-height: 1.6; resize: vertical; }
+.exit-body textarea:focus { outline: none; border-color: #7c3aed; }
+.exit-foot { display: flex; justify-content: flex-end; padding: 0 1.2rem 1rem; }
+.btn-exit { padding: .45rem 1.2rem; border: none; border-radius: 7px; font-size: .87rem; font-weight: 700; cursor: pointer; background: #7c3aed; color: #fff; transition: all .15s; }
+.btn-exit:hover:not(:disabled) { background: #6d28d9; transform: scale(1.03); }
+.btn-exit.sent { background: #22c55e; cursor: default; }
+.btn-exit:disabled { cursor: default; }
+.exit-ans-list { padding: .3rem 1.2rem 1rem; }
+.exit-ans { background: #faf9ff; border: 1px solid #ede9fe; border-radius: 7px; padding: .55rem .8rem; margin-bottom: .5rem; font-size: .84rem; line-height: 1.55; color: #333; white-space: pre-wrap; }
+.nav-foot { text-align:center; margin: 1.6rem 0 .5rem; }
+.nav-foot a { display:inline-block; margin: 0 .4rem; padding: .5rem 1.1rem; background:#fff; border-radius: 8px; text-decoration:none; color:#0055cc; font-weight:700; font-size:.85rem; box-shadow: 0 1px 4px rgba(0,0,0,.07); }
+.nav-foot a:hover { background:#f0f7ff; }
+@media (max-width: 520px) {
+  .hdr { padding: .8rem 1rem; }
+  .lesson-wrap { padding: 0 .7rem; margin-top: 1rem; }
+  .card-hdr { padding: .7rem 1rem; }
+  .card-body { padding: .7rem 1rem .5rem; }
+  .card-foot { padding: .55rem 1rem; }
+  .card-body li, .card-body p { font-size: .84rem; }
+}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+const FIREBASE_URL = "https://course-update-36460-default-rtdb.firebaseio.com";
+const TEACHER_HASH = "a93ac600f27f6602bf628cd929c9028e285038fc8637fe1ec6792e8850ade6a8";
+const POLL_MS = 2500;
+const MOD_TITLE = "模組 4：公務應用案例實作";
+const MOD_SUB   = "全課高潮";
+const EXIT_Q    = "這兩天結束後，你回單位「第一個要交給 AI 的一件事」是什麼？它最可能卡在「prompt 留白沒講清楚」還是「資安不能貼、要先去識別化」？為什麼？";
+
+const NEXT_HREF = "";
+const EXERCISES = ["e1","e2","e3","e4"];
+
+const CONTENT = {
+
+"intro": `<p>這是全課高潮。前兩天學的三段式、六件套、思維鏈/樹、生圖，現在<strong>全部落到四類你每天在做的公務情境</strong>，每類產一份真的能用的成品。最後一段，老師 demo「會動手的 AI」，讓你看見還能更省。</p>
+<div class="warn"><span class="callout-t">⛔ 老話重講一次</span>下面所有練習，凡是真實公文/個資，<strong>先去識別化</strong>（姓名、號碼、地址換〔〕）再貼。這條到最後一刻都成立。</div>`,
+
+"e1": `<p><span class="callout-t">🎯 情境一：公文／簽呈</span>把口頭交辦或一件要陳核的事，變成一份格式對的「函」或「簽」。</p>
+<h4>先分清楚「函」和「簽」</h4>
+<ul>
+  <li><strong>函</strong>：有受文者、對外或跨單位。結構：<strong>主旨 → 說明 → 辦法</strong></li>
+  <li><strong>簽</strong>：對內、向長官陳報請示。結構：<strong>主旨 → 說明 → 擬辦</strong></li>
+</ul>
+<h4>逐步操作</h4>
+<ol class="steps">
+  <li>挑一件你手上真的要擬的公文（例：跟總務處借場地、陳報一個活動計畫）。</li>
+  <li>用六件套骨架下指令，〔〕換成真情況：
+    <pre><span class="lbl">📋 複製後填空</span>【角色】你是我的公文擬稿助理，熟悉台灣公文程式。
+【背景】發文機關：〔○○機關○○科〕；受文者：〔○○〕；事由：〔…〕；補充：〔…〕。
+【任務】擬一份「〔函／簽〕」，含 主旨、說明（分點）、〔辦法／擬辦〕。用語正式不冗贅。
+【限制】文號、日期、法源留〔〕給我填，不要自己編。缺的資訊標「待補」。
+【格式】主旨一句、句尾用制式結尾語（如「請 查照。」）；說明分點（一、二…）；控制一頁。
+【自審】完成後標出哪些地方是我沒提供、你不該擅自填的。</pre></li>
+  <li>拿到草稿，用追問句調：「說明第二點改白話些」「改成簽給處長核示」。</li>
+</ol>
+<div class="expect"><span class="callout-t">✅ 你應該會看到</span>一份結構正確（主旨/說明/辦法或擬辦）、用語像公文的草稿，文號日期處留著〔〕等你填。</div>
+<div class="rescue"><span class="callout-t">🆘 卡住了怎麼辦</span><ul>
+  <li><strong>它自己編了文號/法條</strong>：把「限制」段講更死，或追問「把你編的文號、法條全部改回〔〕」。</li>
+  <li><strong>語氣太生硬/太隨便</strong>：追問「更符合平行單位間的公文語氣」。</li>
+  <li><strong>不確定該用函還是簽</strong>：對外/跨單位用函，對內請示長官用簽。</li>
+</ul></div>
+<div class="check"><span class="callout-t">📌 完成標準</span>你有一份公文/簽呈草稿，結構對、個資與待填處都留〔〕。做到按「完成」。</div>`,
+
+"e2": `<p><span class="callout-t">🎯 情境二：新聞稿一稿多版</span>一份活動素材，一次生出<strong>新聞稿＋官網公告＋FB＋LINE</strong> 四個平台版本。這是「人力 × 平台數」的放大。</p>
+<h4>逐步操作</h4>
+<ol class="steps">
+  <li>準備一份活動的基本資訊（名稱、講者、時間地點、重點、主辦）。</li>
+  <li>一次要四版：
+    <pre><span class="lbl">📋 複製後填空</span>【角色】你是我的行政公關助理。
+【背景】以下是一場活動的資訊：名稱〔…〕講者〔…〕時間地點〔…〕重點〔…〕主辦〔…〕。
+【任務】一次產出四個平台版本，各符合平台特性：
+1 新聞稿（正式、倒金字塔結構、含一句主管 quote 用〔〕佔位）
+2 官網公告（條列資訊、報名連結用〔〕佔位）
+3 FB 貼文（親切 3-5 行、1-2 emoji、結尾行動呼籲）
+4 LINE 通知（最短、只留時間地點＋報名一句話）
+【限制】quote、報名連結、確切人數用〔〕佔位，不要自己編。
+【格式】四版各加清楚標題，方便我分別複製。</pre></li>
+  <li>四版各自複製去用；把〔〕佔位換成真的（quote 找主管確認、連結貼真網址）。</li>
+</ol>
+<div class="expect"><span class="callout-t">✅ 你應該會看到</span>四段各有標題、語氣長度明顯不同：新聞稿最正式、FB 最親切、LINE 最短。過去你要改四遍，現在一次到位。</div>
+<div class="note"><span class="callout-t">💡 接模組 2</span>把 FB 版配上你模組 2 生的那張活動圖——圖＋文，一則完整貼文就成了。</div>
+<div class="rescue"><span class="callout-t">🆘 卡住了怎麼辦</span><ul>
+  <li><strong>四版都差不多</strong>：追問「FB 版再口語，LINE 版再短，兩者不要像新聞稿」。</li>
+  <li><strong>它把假 quote 寫得很真</strong>：提醒它用〔〕佔位；真 quote 一定找當事人確認再放。</li>
+</ul></div>
+<div class="check"><span class="callout-t">📌 完成標準</span>你有一份素材生出的四平台版本，各自像該平台的東西。做到按「完成」。</div>`,
+
+"e3": `<p><span class="callout-t">🎯 情境三：法規比對與適用查詢</span>兩個最實用的法規任務——逐條比對、適用查詢。</p>
+<div class="warn"><span class="callout-t">⛔ 本情境最重要的警告</span>AI 會把<strong>不存在的條號</strong>講得非常篤定。它的角色只是「幫你指路——該看哪幾條」，<strong>最終依據一律回法規原文</strong>，絕不可把 AI 的話直接引為公文依據。</div>
+<h4>任務 A：逐條比對（redline）</h4>
+<ol class="steps">
+  <li>準備「現行版」和「修正草案」兩份（貼全文或上傳檔）。</li>
+  <li>下指令：
+    <pre><span class="lbl">📋 複製</span>以下是〔○○辦法〕的現行版與修正草案，請逐條比對。
+【現行版】〔貼全文或上傳〕
+【修正草案】〔貼全文或上傳〕
+【任務】做逐條對照表：條號／現行條文／修正條文／變動類型（新增·刪除·修正）／一句修正重點。條號跳動、合併、新增也要標。
+【限制】只根據我貼的內容比對，不推測未提供的條文。
+【格式】表格；未變動的條標「未修正」，不用抄全文。</pre></li>
+  <li>拿到對照表，<strong>涉及權利義務的關鍵條號自己再核一次</strong>。</li>
+</ol>
+<h4>任務 B：適用查詢</h4>
+<pre><span class="lbl">📋 複製</span>以下是〔○○辦法〕全文，接著給你一個實務情境。
+【辦法全文】〔貼全文或上傳〕
+【情境】〔例如：兼任助理想請 3 天事假，要不要會辦人事？〕
+【任務】請告訴我：1 適用哪一條（引條號與原文句）2 你的判斷與理由 3 哪裡模糊、需要我回查或問人事。
+【限制】只根據我貼的辦法回答；辦法沒寫到就說「辦法未規定」，不要自己補。</pre>
+<div class="expect"><span class="callout-t">✅ 你應該會看到</span>A 給你一張逐條對照表（哪條改了、怎麼改）；B 幫你定位條文、給判斷、並老實標出「哪裡要回查」。它幫你<strong>快速找到該看哪幾條</strong>，省掉一下午手工對照。</div>
+<div class="rescue"><span class="callout-t">🆘 卡住了怎麼辦</span><ul>
+  <li><strong>它說某條「修正」但兩版看起來一樣</strong>：追問「第 X 條再確認，兩版差在哪」。網頁版沒有並排 diff，長辦法容易漏——這正是下一段 agentic demo 的殺手鐧。</li>
+  <li><strong>它引的條文我核對不到</strong>：立刻停，回法規原文查。這就是幻覺，別採信。</li>
+</ul></div>
+<div class="check"><span class="callout-t">📌 完成標準</span>你跑過比對與適用查詢各一次，並且知道「關鍵條號一定回原文核」。做到按「完成」。</div>`,
+
+"e4": `<p><span class="callout-t">🎯 情境四：會議紀錄／PDF 彙整</span>把一團流水帳，變成有決議、有待辦的正式紀錄；把一疊 PDF 彙整成表。</p>
+<h4>任務 A：會議紀錄</h4>
+<ol class="steps">
+  <li>準備一份會議逐字稿或你的手寫便條（去識別化）。</li>
+  <li>下指令：
+    <pre><span class="lbl">📋 複製</span>以下是〔○○會議〕的逐字稿／便條，整理成正式會議紀錄。
+【原始內容】〔貼上或上傳〕
+【任務】整理成三塊：
+1 決議事項（每條一句、可執行）
+2 待辦事項（表格：事項／負責人／期限，沒講到的標「待確認」）
+3 討論摘要（每議題 2-3 句）
+【限制】不要把「只是討論到的」寫成決議；沒共識的標「未決」，不要自己補結論。
+【格式】標題分三塊，待辦用表格。</pre></li>
+  <li>核對——<strong>哪些是真的拍板</strong>，哪些只是討論。</li>
+</ol>
+<h4>任務 B：PDF 彙整（對話式版）</h4>
+<p>一次上傳幾個 PDF（各系所/單位回覆），請它彙整成表：</p>
+<pre><span class="lbl">📋 複製</span>我上傳了幾份〔各單位回覆〕的 PDF，請彙整成一張表：單位／回覆重點／是否逾期／缺漏項。缺的標「待確認」。</pre>
+<div class="expect"><span class="callout-t">✅ 你應該會看到</span>A 把流水帳變成「決議／待辦（含負責人期限）／摘要」三塊；B 把幾份 PDF 濃縮成一張總表。<strong>結構化雜訊，是 AI 最擅長的。</strong></div>
+<div class="warn"><span class="callout-t">⚠️ 注意</span>AI 常把「討論到的」誤當「決議」——你要核對哪些真的拍板。免費網頁版對 PDF 有<strong>檔數/大小限制</strong>，一次幾份還行，一疊幾十份就要看下一段的 agentic demo。</div>
+<div class="check"><span class="callout-t">📌 完成標準</span>你把一份會議內容整理成三塊結構、或把幾份 PDF 彙整成一張表。做到按「完成」。</div>`,
+
+"demo": `<p><span class="callout-t">★★ 這一段：老師 demo，你看關鍵動作</span>前面四情境你都用「對話式 AI」做——你複製、貼上、再複製。現在看「<strong>會動手的 AI</strong>」在同樣的事上多做了什麼。<strong>你不用裝任何東西</strong>，用 claude.ai 網頁版的 Connector 就能看到。</p>
+<h4>對話式 vs 會動手的 AI</h4>
+<ul>
+  <li><strong>對話式</strong>（你這兩天在用的）：回你一段文字，動作你自己來（複製、貼上、對回 Word）</li>
+  <li><strong>Agentic（會動手的）</strong>：直接讀你的檔、改你的檔、串你的行事曆/雲端硬碟——你看它做、必要時喊停</li>
+</ul>
+<h4>老師會 demo 三段（免安裝）</h4>
+<ol class="steps">
+  <li><strong>行事曆祕書</strong>（Google Calendar Connector）：「看我下週哪天最空，幫某個會找一小時空檔並建立」→ 它回一張表、你確認、它直接建好。你描述<strong>意圖</strong>，它選工具、執行、確認——這就是 agentic 的感覺。</li>
+  <li><strong>雲端硬碟彙整</strong>（Google Drive Connector）：「讀我這個資料夾裡幾份回覆，彙整成一張總表」→ 對照情境四你手動一個個上傳，看差在哪。</li>
+  <li><strong>法規 redline 放大</strong>（回扣情境三）：老師端用真 Claude Code demo「兩個檔並排 diff＋逐條對照」，讓你看見對話式做不到的那一塊。</li>
+</ol>
+<div class="note"><span class="callout-t">為什麼它能「懂你單位」</span>會動手的 AI 之所以像「跟你三年的資深承辦」，是因為它能記住<strong>你的格式（單位守則）、你的偏好（處長不喜歡的用語）、把常做的事做成一鍵指令</strong>。這需要進一步安裝，回去看老師提供的資源。</div>
+<div class="question"><span class="callout-t">🏛️ 收束</span>當你發現「<strong>同一件事，我每週都在重貼背景、重上傳檔</strong>」——那就是該從對話式升級到會動手的 AI 的訊號。</div>
+<div class="check"><span class="callout-t">📌 完成標準</span>你看懂了對話式與 agentic 的差別，也知道自己哪件重複工作最該升級。做到按「完成」。</div>`,
+};
+
+const UNITS = [
+  [null,   "模組 4 · 公務應用案例實作（全課高潮）"],
+  ["intro","開場：四情境 + agentic demo 怎麼進行",  "5 min"],
+  ["e1",   "情境一：公文／簽呈（函、簽）",           "30 min"],
+  ["e2",   "情境二：新聞稿一稿多版",               "30 min"],
+  ["e3",   "情境三：法規比對與適用查詢",           "30 min"],
+  ["e4",   "情境四：會議紀錄／PDF 彙整",           "30 min"],
+  ["demo", "★★ Agentic Demo：會動手的 AI（免安裝）", "55 min"],
+];
+
+// ── State ─────────────────────────────────────────
+const params        = new URLSearchParams(location.search);
+const WANTS_TEACHER = params.has("t");
+let   IS_TEACHER    = WANTS_TEACHER && sessionStorage.getItem("teacher_auth") === "1";
+const LS_DB         = "cls_db_url";
+const COURSE_ID = (function(){
+  const stem = location.pathname.split('/').pop().replace(/\.html$/, '');
+  return stem.replace(/_(progress|classroom|lesson)$/, '');
+})();
+const LS_LOCAL = "cls_local_" + COURSE_ID;
+
+let dbUrl     = (FIREBASE_URL || localStorage.getItem(LS_DB) || "").replace(/\/$/, "");
+let connected = false;
+let pollTimer = null;
+
+let srv = { session: 0, total: 0, active: "" };
+UNITS.forEach(([id]) => { if (id) { srv[id] = 0; srv[id + "_help"] = 0; } });
+
+let local = JSON.parse(localStorage.getItem(LS_LOCAL) || '{"session":0,"done":{},"help":{},"exit":false}');
+if (!local.help) local.help = {};
+
+const root = document.getElementById("root");
+
+// ── Firebase REST ──────────────────────────────────
+function dbPath() { return `${dbUrl}/${COURSE_ID}.json`; }
+function exitPath() { return `${dbUrl}/${COURSE_ID}/exit_ticket.json`; }
+async function dbGet() {
+  try { const r = await fetch(dbPath()); if (!r.ok) throw new Error(r.status); connected = true; return await r.json(); }
+  catch { connected = false; return null; }
+}
+async function dbPatch(data) { return fetch(dbPath(), { method: "PATCH", body: JSON.stringify(data), headers: { "Content-Type": "application/json" } }); }
+async function dbPut(data)   { return fetch(dbPath(), { method: "PUT",   body: JSON.stringify(data), headers: { "Content-Type": "application/json" } }); }
+async function exitPost(text){ return fetch(exitPath(), { method: "POST", body: JSON.stringify({ text }), headers: { "Content-Type": "application/json" } }); }
+async function exitGet() { try { const r = await fetch(exitPath()); if (!r.ok) return null; return await r.json(); } catch { return null; } }
+
+// ── Sync ──────────────────────────────────────────
+async function poll() {
+  const data = await dbGet();
+  if (!data) { render(); return; }
+  if ((data.session || 0) > (local.session || 0)) {
+    local = { session: data.session, done: {}, help: {}, exit: false };
+    localStorage.setItem(LS_LOCAL, JSON.stringify(local));
+  }
+  srv.session = data.session || 0;
+  srv.total   = data.total   || 0;
+  srv.active  = data.active  || "";
+  UNITS.forEach(([id]) => { if (id) { srv[id] = data[id] || 0; srv[id + "_help"] = data[id + "_help"] || 0; } });
+  if (IS_TEACHER) {
+    const et = await exitGet();
+    srv._exit = et ? Object.values(et).map(v => v && v.text).filter(Boolean) : [];
+  }
+  render();
+}
+
+// ── Student action ────────────────────────────────
+async function markDone(uid) {
+  if (local.done[uid]) return;
+  local.done[uid] = true; localStorage.setItem(LS_LOCAL, JSON.stringify(local));
+  const next = (srv[uid] || 0) + 1; srv[uid] = next; render();
+  await dbPatch({ [uid]: next });
+}
+async function markHelp(uid) {
+  if (local.help[uid]) return;
+  local.help[uid] = true; localStorage.setItem(LS_LOCAL, JSON.stringify(local));
+  const k = uid + "_help"; const next = (srv[k] || 0) + 1; srv[k] = next; render();
+  await dbPatch({ [k]: next });
+}
+async function sendExit() {
+  const ta = document.getElementById("exit-ta");
+  const val = (ta?.value || "").trim();
+  if (!val || local.exit) return;
+  local.exit = true; localStorage.setItem(LS_LOCAL, JSON.stringify(local)); render();
+  await exitPost(val);
+}
+
+// ── Teacher actions ───────────────────────────────
+async function resetAll() {
+  if (!confirm("確定重置本模組所有學生進度？\n學生頁面將在 3 秒內自動更新。")) return;
+  const newSession = (srv.session || 0) + 1;
+  const fresh = { session: newSession, total: srv.total, active: srv.active };
+  UNITS.forEach(([id]) => { if (id) { fresh[id] = 0; fresh[id + "_help"] = 0; } });
+  await dbPut(fresh); srv = { ...fresh }; render();
+}
+async function setTotal(n) { if (isNaN(n) || n < 1) return; srv.total = n; await dbPatch({ total: n }); render(); }
+async function setActive(uid) { const next = srv.active === uid ? "" : uid; srv.active = next; render(); await dbPatch({ active: next }); }
+
+// ── Login screens ─────────────────────────────────
+function renderSetup() {
+  root.innerHTML = `<div class="setup-wrap"><div class="setup-card">
+  <h2>🔧 首次設定 Firebase</h2><p>請輸入 Firebase Realtime Database URL。</p>
+  <input id="db-in" type="url" placeholder="https://my-project-default-rtdb.firebaseio.com" value="${localStorage.getItem(LS_DB) || ""}">
+  <button class="btn-primary" style="width:100%;padding:.7rem" onclick="saveDb()">儲存並開始</button></div></div>`;
+}
+function saveDb() {
+  const val = document.getElementById("db-in").value.trim().replace(/\/$/, "");
+  if (!val.startsWith("https://")) { alert("請輸入完整 HTTPS URL"); return; }
+  dbUrl = val; localStorage.setItem(LS_DB, val); init();
+}
+function renderTeacherLogin() {
+  root.innerHTML = `<div class="setup-wrap"><div class="setup-card">
+  <h2>🔒 講師登入</h2><p>請輸入講師密碼以進入課堂管理介面。</p>
+  <input id="pw-in" type="password" placeholder="密碼" onkeydown="if(event.key==='Enter')checkTeacherPw()">
+  <button class="btn-primary" style="width:100%;padding:.7rem" onclick="checkTeacherPw()">登入</button>
+  <p id="pw-err" style="color:#ef4444;font-size:.85rem;margin:.6rem 0 0;display:none">密碼錯誤，請再試一次</p></div></div>`;
+  setTimeout(() => document.getElementById("pw-in")?.focus(), 50);
+}
+async function checkTeacherPw() {
+  const val = document.getElementById("pw-in")?.value || "";
+  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(val));
+  const hex = Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,"0")).join("");
+  if (hex === TEACHER_HASH) { sessionStorage.setItem("teacher_auth","1"); IS_TEACHER = true; init(); }
+  else { document.getElementById("pw-err").style.display = "block"; document.getElementById("pw-in").value = ""; document.getElementById("pw-in").focus(); }
+}
+
+// ── Connection indicator ──────────────────────────
+function connHtml() { return `<span class="dot ${connected ? "ok" : "err"}"></span><span class="conn-text">${connected ? "已連線" : "離線"}</span>`; }
+
+// ── Build one card ────────────────────────────────
+function buildCard(uid, label, time) {
+  const content   = CONTENT[uid] || "";
+  const isEx      = uid.endsWith("x") || /_ex$/.test(uid) || EXERCISES.includes(uid);
+  const inSession = local.session === srv.session;
+  const exTag     = isEx ? `<span class="tag-ex">✍️ 練習</span>` : "";
+
+  if (IS_TEACHER) {
+    const total = srv.total || 1;
+    const cnt = srv[uid] || 0;
+    const helpCnt = srv[uid + "_help"] || 0;
+    const pct = Math.min(100, Math.round(cnt / total * 100));
+    const fill = pct >= 80 ? "" : pct >= 40 ? " mid" : " low";
+    const isActive = srv.active === uid;
+    const badge = isActive ? `<span class="active-badge">現在進行</span>` : "";
+    return `<div class="lesson-card${isActive ? " active" : ""}">
+  <div class="card-hdr t-clickable" onclick="setActive('${uid}')">
+    <div class="card-hdr-main"><span class="card-label">${label}</span>${exTag}${time ? `<span class="u-time">${time}</span>` : ""}</div>${badge}
+  </div>
+  ${content ? `<div class="card-body">${content}</div>` : ""}
+  <div class="card-foot t-foot">
+    <div class="t-foot-top"><span class="t-hint-text">點擊標題以標記「現在進行」</span>
+      <span><span class="u-count">${cnt} / ${total}</span><span class="u-help${helpCnt === 0 ? " zero" : ""}" title="求助人數">🆘 ${helpCnt}</span></span></div>
+    <div class="bar-bg"><div class="bar-fill${fill}" style="width:${pct}%"></div></div>
+  </div></div>`;
+  } else {
+    const isDone = inSession && !!local.done[uid];
+    const isHelped = inSession && !!local.help[uid];
+    const isActive = srv.active === uid;
+    const cls = isDone ? " done" : isActive ? " active" : "";
+    const badge = isActive && !isDone ? `<span class="active-badge">現在</span>` : isDone ? `<span class="done-badge">✓ 完成</span>` : "";
+    return `<div class="lesson-card${cls}">
+  <div class="card-hdr"><div class="card-hdr-main"><span class="card-label">${label}</span>${exTag}${time ? `<span class="u-time">${time}</span>` : ""}</div>${badge}</div>
+  ${content ? `<div class="card-body">${content}</div>` : ""}
+  <div class="card-foot">
+    ${isDone ? "" : `<button class="btn-help${isHelped ? " helped" : ""}"${isHelped ? " disabled" : ""} onclick="${isHelped ? "" : `markHelp('${uid}')`}" title="不懂這段，請老師再說明">${isHelped ? "🆘 已舉手" : "🆘 卡住了"}</button>`}
+    <button class="btn-done${isDone ? " done" : ""}"${isDone ? " disabled" : ""} onclick="${isDone ? "" : `markDone('${uid}')`}">${isDone ? "✓ 完成" : "完成"}</button>
+  </div></div>`;
+  }
+}
+
+// ── Exit ticket ───────────────────────────────────
+function buildExit() {
+  if (IS_TEACHER) {
+    const answers = srv._exit || [];
+    const list = answers.length ? answers.map(a => `<div class="exit-ans">${a.replace(/</g,"&lt;")}</div>`).join("") : `<p style="color:#999;font-size:.84rem;padding:.3rem 0">尚無回覆。</p>`;
+    return `<div class="exit-card"><div class="exit-hdr">🎫 Exit Ticket 回覆（${answers.length}）</div><div class="exit-ans-list">${list}</div></div>`;
+  }
+  const sent = local.exit;
+  return `<div class="exit-card"><div class="exit-hdr">🎫 Exit Ticket · 離開本模組前回答</div>
+  <div class="exit-body"><p>${EXIT_Q}</p>
+  <textarea id="exit-ta" placeholder="寫下你的答案…" ${sent ? "disabled" : ""}>${sent ? "已送出，謝謝！" : ""}</textarea></div>
+  <div class="exit-foot"><button class="btn-exit${sent ? " sent" : ""}"${sent ? " disabled" : ""} onclick="sendExit()">${sent ? "✓ 已送出" : "送出"}</button></div></div>`;
+}
+
+// ── Render ────────────────────────────────────────
+function render() {
+  const scrollY = window.scrollY;
+  const activeUnit = UNITS.find(([id]) => id && id === srv.active);
+  const nowBanner = activeUnit ? `<div class="now-banner">現在：${activeUnit[1]}</div>` : "";
+  const items = UNITS.map(([uid, label, time]) => { if (!uid) return `<div class="section-hdr">${label}</div>`; return buildCard(uid, label, time); }).join("");
+  const teacherName = IS_TEACHER ? "（講師）" : "";
+  const header = `<div class="hdr">
+  <div class="hdr-left"><h1>${MOD_TITLE}${teacherName}</h1><div class="hdr-sub">${IS_TEACHER ? "點擊各段落標題以標記「現在進行」" : "跟著步驟做，完成一格按「完成」；卡住按「🆘 卡住了」"}</div></div>
+  <div class="hdr-right"><a class="back-link" href="gov-ai_lesson.html">← 課程目錄</a>${IS_TEACHER ? `<span class="session-chip">Session ${srv.session}</span>` : ""}${connHtml()}</div>
+</div>${nowBanner}`;
+  const controls = IS_TEACHER ? `<div class="t-controls"><label>學生總人數：</label>
+  <input class="num-input" type="number" min="1" max="300" value="${srv.total || ""}" placeholder="25" onchange="setTotal(parseInt(this.value))">
+  <button class="btn-reset" onclick="resetAll()">🔄 重置進度</button>${connHtml()}</div>` : "";
+  const nav = `<div class="nav-foot">
+    <a href="gov-ai_lesson.html">🏠 課程目錄</a>
+    ${NEXT_HREF ? `<a href="${NEXT_HREF}">下一個模組 →</a>` : ""}
+  </div>`;
+  root.innerHTML = `${header}<div class="lesson-wrap">${controls}${items}${buildExit()}${nav}</div>`;
+  requestAnimationFrame(() => window.scrollTo(0, scrollY));
+}
+
+// ── Init ──────────────────────────────────────────
+function init() {
+  if (WANTS_TEACHER && !IS_TEACHER) { renderTeacherLogin(); return; }
+  if (!dbUrl) { renderSetup(); return; }
+  poll(); clearInterval(pollTimer); pollTimer = setInterval(poll, POLL_MS);
+}
+init();
+</script>
+</body>
+</html>

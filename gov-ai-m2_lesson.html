@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>模組 2 · 生圖 + 文字生成 · 公務員 AI 進階班</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; }
+body {
+  font-family: "Helvetica Neue", Arial, "Noto Sans TC", sans-serif;
+  background: #f0f2f5; margin: 0; min-height: 100vh; color: #1a1a1a;
+}
+.setup-wrap { display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 2rem; }
+.setup-card { background: #fff; border-radius: 14px; padding: 2.5rem; max-width: 520px; width: 100%; box-shadow: 0 4px 24px rgba(0,0,0,.1); }
+.setup-card h2 { margin: 0 0 .4rem; font-size: 1.25rem; }
+.setup-card p  { color: #555; font-size: .88rem; line-height: 1.7; margin: 0 0 1.4rem; }
+.setup-card input { width: 100%; padding: .7rem 1rem; border: 1.5px solid #ddd; border-radius: 8px; font-size: .95rem; margin-bottom: 1rem; }
+.setup-card input:focus { outline: none; border-color: #0055cc; }
+.hdr { background: #fff; padding: .85rem 1.8rem; border-bottom: 1px solid #e4e4e4; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 30; box-shadow: 0 2px 8px rgba(0,0,0,.06); }
+.hdr-left { display: flex; flex-direction: column; }
+.hdr h1 { margin: 0; font-size: 1rem; font-weight: 700; }
+.hdr-sub { font-size: .75rem; color: #999; margin-top: .1rem; }
+.hdr-right { display: flex; align-items: center; gap: .7rem; }
+.back-link { font-size: .78rem; color: #0055cc; text-decoration: none; font-weight: 600; margin-right: .3rem; }
+.back-link:hover { text-decoration: underline; }
+.dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+.dot.ok  { background: #22c55e; }
+.dot.err { background: #ef4444; }
+.conn-text { font-size: .75rem; color: #999; }
+.session-chip { font-size: .72rem; font-weight: 700; letter-spacing: .03em; background: #e8f0ff; color: #0055cc; padding: .2rem .6rem; border-radius: 20px; }
+.now-banner { background: #fbbf24; color: #7c5a00; font-size: .8rem; font-weight: 700; letter-spacing: .03em; text-align: center; padding: .35rem 1rem; position: sticky; top: 57px; z-index: 29; }
+.lesson-wrap { max-width: 800px; margin: 1.4rem auto 3rem; padding: 0 1.2rem; display: flex; flex-direction: column; gap: .8rem; }
+.section-hdr { display: flex; align-items: center; gap: .7rem; font-size: .72rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: #666; padding: .5rem 0 .1rem; margin-top: .6rem; }
+.section-hdr::after { content: ""; flex: 1; height: 1px; background: #d0d0d0; }
+.t-controls { background: #fff; border-radius: 10px; padding: .85rem 1.2rem; display: flex; align-items: center; gap: .9rem; flex-wrap: wrap; box-shadow: 0 1px 4px rgba(0,0,0,.07); }
+.t-controls label { font-size: .87rem; color: #555; white-space: nowrap; }
+.num-input { width: 60px; padding: .32rem .5rem; border: 1.5px solid #ddd; border-radius: 6px; font-size: 1rem; font-weight: 700; text-align: center; }
+.btn-reset   { background: #ef4444; color: #fff; }
+.btn-reset:hover { background: #cc0000; }
+.btn-primary { background: #0055cc; color: #fff; }
+.btn-primary:hover { background: #0044aa; }
+.btn-reset, .btn-primary { padding: .4rem .95rem; border: none; border-radius: 7px; font-size: .87rem; font-weight: 700; cursor: pointer; transition: background .15s; }
+.lesson-card { background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,.07); border-left: 4px solid transparent; transition: border-color .2s, background .2s; }
+.lesson-card.active { border-left-color: #fbbf24; }
+.lesson-card.done   { border-left-color: #22c55e; }
+.card-hdr { display: flex; align-items: center; justify-content: space-between; padding: .8rem 1.2rem; gap: .6rem; border-bottom: 1px solid #f0f0f0; background: #fafafa; }
+.lesson-card.active .card-hdr { background: #fffbeb; }
+.lesson-card.done   .card-hdr { background: #f0fff4; }
+.card-hdr-main { display: flex; align-items: center; gap: .5rem; flex: 1; flex-wrap: wrap; }
+.card-label { font-size: .95rem; font-weight: 700; }
+.u-time { font-size: .7rem; color: #aaa; font-weight: 400; background: #efefef; padding: .1rem .4rem; border-radius: 4px; }
+.tag-ex { font-size: .68rem; font-weight: 800; letter-spacing: .03em; background: #dcfce7; color: #15803d; padding: .1rem .45rem; border-radius: 4px; }
+.active-badge { font-size: .7rem; font-weight: 700; letter-spacing: .04em; background: #fbbf24; color: #7c5a00; padding: .15rem .5rem; border-radius: 4px; }
+.done-badge { font-size: .7rem; font-weight: 700; background: #22c55e; color: #fff; padding: .15rem .5rem; border-radius: 4px; }
+.card-body { padding: .8rem 1.3rem .6rem; transition: opacity .3s; }
+.lesson-card.done .card-body { opacity: .5; }
+.card-body p  { font-size: .88rem; line-height: 1.7; color: #333; margin: .5rem 0; }
+.card-body h4 { font-size: .86rem; font-weight: 800; color: #0055cc; margin: 1rem 0 .35rem; padding-bottom: .2rem; border-bottom: 1px dashed #dbe4f0; }
+.card-body h5 { font-size: .82rem; font-weight: 700; color: #444; margin: .8rem 0 .25rem; }
+.card-body ol, .card-body ul { margin: .4rem 0 .5rem 1.3rem; }
+.card-body > ul { list-style: disc; }
+.card-body > ol { list-style: decimal; }
+.card-body li ul { list-style: circle; margin-top: .2rem; }
+.card-body li { font-size: .87rem; line-height: 1.65; color: #333; margin-bottom: .32rem; }
+.card-body code { background: #f3f3f3; color: #c7254e; padding: .1em .35em; border-radius: 3px; font-size: .83em; font-family: "SFMono-Regular", Consolas, monospace; }
+.card-body pre { background: #1e293b; color: #e2e8f0; border-radius: 8px; padding: .8rem .95rem; margin: .5rem 0; overflow-x: auto; font-size: .8em; line-height: 1.6; white-space: pre-wrap; font-family: "SFMono-Regular", Consolas, monospace; position: relative; }
+.card-body pre .lbl { display:block; font-size: .72rem; color: #94a3b8; margin-bottom: .35rem; letter-spacing: .05em; text-transform: uppercase; font-weight: 700; }
+.card-body strong { color: #111; }
+.card-body a { color: #0055cc; }
+.steps { counter-reset: step; list-style: none !important; margin-left: 0 !important; padding-left: 0; }
+.steps > li { position: relative; padding-left: 2.1rem; margin-bottom: .55rem; }
+.steps > li::before { counter-increment: step; content: counter(step); position: absolute; left: 0; top: 0; width: 1.5rem; height: 1.5rem; background: #0055cc; color: #fff; border-radius: 50%; font-size: .78rem; font-weight: 800; display: flex; align-items: center; justify-content: center; }
+.note { background: #f0f7ff; border-left: 3px solid #0055cc; padding: .55rem .9rem; border-radius: 0 6px 6px 0; margin: .6rem 0; font-size: .84rem; line-height: 1.6; color: #333; }
+.warn { background: #fff1f0; border-left: 3px solid #ef4444; padding: .55rem .9rem; border-radius: 0 6px 6px 0; margin: .6rem 0; font-size: .84rem; line-height: 1.6; color: #333; }
+.expect { background: #f0fdf4; border-left: 3px solid #22c55e; padding: .55rem .9rem; border-radius: 0 6px 6px 0; margin: .6rem 0; font-size: .84rem; line-height: 1.6; color: #333; }
+.rescue { background: #fefce8; border-left: 3px solid #eab308; padding: .55rem .9rem; border-radius: 0 6px 6px 0; margin: .6rem 0; font-size: .84rem; line-height: 1.6; color: #333; }
+.check { background: #faf5ff; border-left: 3px solid #a855f7; padding: .55rem .9rem; border-radius: 0 6px 6px 0; margin: .6rem 0; font-size: .84rem; line-height: 1.6; color: #333; }
+.question { background: #fff8e6; border-left: 3px solid #f59e0b; padding: .55rem .9rem; border-radius: 0 6px 6px 0; margin: .6rem 0; font-size: .84rem; line-height: 1.6; color: #333; }
+.callout-t { font-weight: 800; display: block; margin-bottom: .2rem; }
+.card-foot { display: flex; align-items: center; justify-content: flex-end; padding: .65rem 1.2rem; border-top: 1px solid #f0f0f0; gap: .6rem; }
+.card-foot.t-foot { flex-direction: column; align-items: stretch; gap: .28rem; }
+.t-foot-top { display: flex; justify-content: space-between; align-items: center; }
+.t-hint-text { font-size: .72rem; color: #ccc; }
+.u-count { font-size: .85rem; font-weight: 700; color: #0055cc; }
+.bar-bg  { width: 100%; height: 7px; background: #eee; border-radius: 4px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 4px; background: #22c55e; transition: width .4s ease; }
+.bar-fill.low { background: #ef4444; }
+.bar-fill.mid { background: #fbbf24; }
+.btn-done { padding: .42rem 1.1rem; border: none; border-radius: 7px; font-size: .87rem; font-weight: 700; cursor: pointer; white-space: nowrap; transition: all .15s; background: #0055cc; color: #fff; }
+.btn-done:hover:not(:disabled) { background: #0044aa; transform: scale(1.03); }
+.btn-done.done   { background: #22c55e; cursor: default; }
+.btn-done:disabled { background: #e0e0e0; color: #999; cursor: not-allowed; }
+.btn-help { padding: .42rem .85rem; border: 1px solid #f59e0b; border-radius: 7px; font-size: .82rem; font-weight: 600; cursor: pointer; white-space: nowrap; transition: all .15s; background: #fff; color: #b45309; }
+.btn-help:hover:not(:disabled) { background: #fff8e6; transform: scale(1.03); }
+.btn-help.helped { background: #f59e0b; color: #fff; cursor: default; border-color: #f59e0b; }
+.btn-help:disabled { cursor: default; }
+.u-help { font-size: .82rem; font-weight: 700; color: #b45309; margin-left: .5rem; }
+.u-help.zero { color: #ccc; font-weight: 400; }
+.card-hdr.t-clickable { cursor: pointer; }
+.card-hdr.t-clickable:hover { filter: brightness(.97); }
+.exit-card { background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,.07); border-left: 4px solid #7c3aed; margin-top: 1rem; }
+.exit-hdr { padding: .8rem 1.2rem; background: #f5f3ff; font-size: .93rem; font-weight: 700; color: #5b21b6; border-bottom: 1px solid #ede9fe; }
+.exit-body { padding: .8rem 1.2rem; }
+.exit-body p { font-size: .86rem; line-height: 1.6; color: #333; margin: 0 0 .6rem; }
+.exit-body textarea { width: 100%; min-height: 90px; padding: .7rem .85rem; border: 1.5px solid #ddd; border-radius: 8px; font-size: .9rem; font-family: inherit; line-height: 1.6; resize: vertical; }
+.exit-body textarea:focus { outline: none; border-color: #7c3aed; }
+.exit-foot { display: flex; justify-content: flex-end; padding: 0 1.2rem 1rem; }
+.btn-exit { padding: .45rem 1.2rem; border: none; border-radius: 7px; font-size: .87rem; font-weight: 700; cursor: pointer; background: #7c3aed; color: #fff; transition: all .15s; }
+.btn-exit:hover:not(:disabled) { background: #6d28d9; transform: scale(1.03); }
+.btn-exit.sent { background: #22c55e; cursor: default; }
+.btn-exit:disabled { cursor: default; }
+.exit-ans-list { padding: .3rem 1.2rem 1rem; }
+.exit-ans { background: #faf9ff; border: 1px solid #ede9fe; border-radius: 7px; padding: .55rem .8rem; margin-bottom: .5rem; font-size: .84rem; line-height: 1.55; color: #333; white-space: pre-wrap; }
+.nav-foot { text-align:center; margin: 1.6rem 0 .5rem; }
+.nav-foot a { display:inline-block; margin: 0 .4rem; padding: .5rem 1.1rem; background:#fff; border-radius: 8px; text-decoration:none; color:#0055cc; font-weight:700; font-size:.85rem; box-shadow: 0 1px 4px rgba(0,0,0,.07); }
+.nav-foot a:hover { background:#f0f7ff; }
+@media (max-width: 520px) {
+  .hdr { padding: .8rem 1rem; }
+  .lesson-wrap { padding: 0 .7rem; margin-top: 1rem; }
+  .card-hdr { padding: .7rem 1rem; }
+  .card-body { padding: .7rem 1rem .5rem; }
+  .card-foot { padding: .55rem 1rem; }
+  .card-body li, .card-body p { font-size: .84rem; }
+}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+const FIREBASE_URL = "https://course-update-36460-default-rtdb.firebaseio.com";
+const TEACHER_HASH = "a93ac600f27f6602bf628cd929c9028e285038fc8637fe1ec6792e8850ade6a8";
+const POLL_MS = 2500;
+const MOD_TITLE = "模組 2：AI 生圖 + 文字生成";
+const MOD_SUB   = "圖文實戰";
+const EXIT_Q    = "你今天生圖體會到「第一版通常不完美、要靠追問迭代」。回想你的活動宣傳圖，是第幾版才堪用？你覺得把 AI 生圖用在你單位工作，最大的顧慮是什麼（品質、著作權、還是不知道能用在哪）？";
+
+const NEXT_HREF = "gov-ai-m3_lesson.html";
+const EXERCISES = ["e1","e2","e3"];
+
+const CONTENT = {
+
+"c1": `<p>AI 生圖對公務很有用，但有<strong>能用</strong>和<strong>不能用</strong>的界線，先分清楚再動手。</p>
+<h4>✅ 能用在這些地方</h4>
+<ul>
+  <li>活動宣傳圖<strong>草稿</strong>（先生一版跟同事討論方向，比空口說快）</li>
+  <li>簡報配圖、內部溝通用的示意圖 / mockup</li>
+  <li>社群貼文（FB/IG/LINE）的插畫或背景圖</li>
+</ul>
+<h4>⚠️ 這些要小心 / 不要用</h4>
+<ul>
+  <li><strong>不生真實人物肖像</strong>——肖像權、深偽（deepfake）風險，尤其不要生首長、民代、真人職員的臉</li>
+  <li>正式公文、法定文件、獎狀證書<strong>不用</strong> AI 生成圖</li>
+  <li>機關 logo、識別標誌一律用<strong>官方檔</strong>，不要叫 AI「畫一個像我們機關的標誌」</li>
+</ul>
+<div class="warn"><span class="callout-t">⛔ 提醒</span>對外發布的 AI 生成圖，留意機關規範，必要時<strong>標示「AI 生成」</strong>。</div>`,
+
+"e1": `<p><span class="callout-t">🎯 這個練習要幹嘛</span>親手生你的<strong>第一張圖</strong>，感受「文字→圖」怎麼運作，並體會第一版通常不完美、要靠追問往上調。</p>
+<h4>先確認你手上哪個工具可以生圖</h4>
+<p>免費可生圖的常見選擇（老師會現場確認當天哪個可用）：</p>
+<ul>
+  <li><strong>ChatGPT</strong>：對話框直接打「幫我生一張…」，免費版有每日張數上限</li>
+  <li><strong>Gemini</strong>：同樣對話框直接要求生圖</li>
+  <li><strong>Copilot</strong>（<a href="https://copilot.microsoft.com" target="_blank">copilot.microsoft.com</a>）：內建 Designer 生圖</li>
+</ul>
+<h4>逐步操作</h4>
+<ol class="steps">
+  <li>打開老師指定的生圖工具，開一個新對話。</li>
+  <li>先貼這個<strong>陽春版</strong> prompt，送出，看它生什麼：
+    <pre><span class="lbl">📋 陽春版（故意寫得很模糊）</span>幫我生一張校園演講活動的宣傳圖。</pre></li>
+  <li>你會發現：它自己亂猜了風格、顏色、有沒有留標題空間。<strong>這就是「留白就自作主張」的視覺版。</strong></li>
+</ol>
+<div class="expect"><span class="callout-t">✅ 你應該會看到</span>一張「還可以但不是你要的」圖——可能顏色不對、沒地方放標題、風格太花。這很正常，下一格教你怎麼把它講清楚。</div>
+<div class="rescue"><span class="callout-t">🆘 卡住了怎麼辦</span><ul>
+  <li><strong>工具說不能生圖 / 額度滿</strong>：換老師指定的另一個工具。</li>
+  <li><strong>生出來是英文字</strong>：AI 生圖對「圖上的中文字」常出錯，這正常——圖上的文字<strong>之後用 Canva/PPT 自己加</strong>，別依賴 AI 把字打對。</li>
+</ul></div>
+<div class="check"><span class="callout-t">📌 完成標準</span>你成功生出至少一張圖（哪怕很醜）。做到按「完成」。</div>`,
+
+"c2": `<p>把生圖需求講清楚，用這個五件式骨架：</p>
+<h4>視覺 Prompt = 主體 ＋ 風格 ＋ 構圖 ＋ 色調 ＋ 用途/尺寸</h4>
+<ul>
+  <li><strong>主體</strong>：圖裡主要是什麼（校園、書本、講台、抽象科技感…）</li>
+  <li><strong>風格</strong>：扁平插畫 / 寫實照片 / 手繪 / 極簡</li>
+  <li><strong>構圖</strong>：主體擺哪、要不要留空白放標題</li>
+  <li><strong>色調</strong>：藍白（穩重）/ 暖橘（親切）/ 單色系</li>
+  <li><strong>用途/尺寸</strong>：直式海報 / 橫式 FB 封面 / 正方形 IG</li>
+</ul>
+<div class="note"><span class="callout-t">對照</span>模糊「一張活動海報」 → 具體「校園演講活動主視覺，<strong>扁平插畫風</strong>，<strong>藍白色調</strong>，<strong>上方大量留白放標題</strong>，<strong>直式海報</strong>」。差別立現。</div>
+<div class="note"><span class="callout-t">小訣竅</span>中文 prompt 可用；要更穩定可先叫 AI「幫我把這個生圖需求翻成英文 prompt」，再拿英文去生，出圖品質常更好。</div>`,
+
+"e2": `<p><span class="callout-t">🎯 這個練習要幹嘛</span>用五件式骨架，把上一格那張醜圖<strong>重生成一張你單位真的能用</strong>的活動宣傳圖，並迭代 2–3 版。</p>
+<h4>Step 1：填五件式骨架</h4>
+<pre><span class="lbl">📋 複製後填空</span>幫我生一張活動宣傳圖，用途是〔FB 貼文／直式海報〕。
+主體：〔例如 校園、講台、書與燈泡代表知識〕
+風格：〔扁平插畫風／簡約〕
+構圖：〔上方留白放標題，主體置中偏下〕
+色調：〔藍白為主／暖橘親切〕
+不要放任何文字（標題我自己用其他工具加）。</pre>
+<h4>Step 2：迭代 2–3 版</h4>
+<p>拿到第一版後，別重寫整段，只用一句<strong>追問</strong>微調（在同一對話）：</p>
+<ul>
+  <li>「再簡約一點，元素太多。」</li>
+  <li>「換成暖色調，感覺親切些。」</li>
+  <li>「上方再多留一些空白，我要放標題。」</li>
+  <li>「換直式，我要當海報。」</li>
+</ul>
+<div class="expect"><span class="callout-t">✅ 你應該會看到</span>從第一版到第三版，圖<strong>明顯往你要的方向靠</strong>。這就是心法：<strong>生圖是迭代，不是一次到位。</strong>通常第 2-3 版才堪用。</div>
+<div class="rescue"><span class="callout-t">🆘 卡住了怎麼辦</span><ul>
+  <li><strong>改了反而更糟</strong>：回上一版的描述重生，或說「回到剛剛那版，只改顏色」。</li>
+  <li><strong>圖上硬要加字還加錯</strong>：明確說「不要放任何文字」，字留給你自己加。</li>
+  <li><strong>額度用完</strong>：把滿意的那版<strong>右鍵存下來</strong>，換工具或明天再生。</li>
+</ul></div>
+<div class="check"><span class="callout-t">📌 完成標準</span>你有一張「單位下個活動真的能拿去用」的宣傳圖草稿，而且是靠五件式＋2-3 次追問調出來的。做到按「完成」。</div>`,
+
+"c3": `<p>模組 1 你學會用文字生「字」，這模組學會生「圖」。現在把兩個接起來——<strong>一份素材，一次生出圖＋文，湊成一則可直接發布的貼文</strong>。這正是行政公關每天在做的事。</p>
+<div class="note"><span class="callout-t">流程</span>一份活動素材 → ①用三段式生一段文案 → ②用五件式生一張配圖 → ③文＋圖 = 一則可貼的社群/公告。</div>
+<p>下一格你會完整走一次，產出一則<strong>你單位真實活動</strong>的圖文成品，明天帶到模組 4 當「新聞稿一稿多版」的素材。</p>`,
+
+"e3": `<p><span class="callout-t">🎯 這個練習要幹嘛</span>把「文字生成 + 圖像生成」串成一條龍，產出<strong>一則完整、可直接發布</strong>的社群貼文（圖＋文）。這是本模組的總結練習。</p>
+<h4>Step 1：先生文案（用模組 1 的三段式）</h4>
+<pre><span class="lbl">📋 複製後填空（在文字 AI）</span>【背景】我是〔單位〕，要在 FB 宣傳一場活動：〔活動名稱、時間、地點、對象、重點〕。
+【任務】寫一則 FB 貼文，親切口吻、3-5 行、開頭一句抓人、結尾一句行動呼籲（報名/分享）、1-2 個 emoji。
+【格式】報名連結用〔連結〕佔位，我自己補。</pre>
+<h4>Step 2：再生配圖（用本模組的五件式）</h4>
+<p>回到生圖工具，用五件式骨架生一張搭這則貼文的圖（記得：不要放文字）。</p>
+<h4>Step 3：組起來</h4>
+<ol class="steps">
+  <li>把 AI 生的<strong>文案</strong>複製到記事本，把〔連結〕換成真的報名網址。</li>
+  <li>把生好的<strong>圖</strong>存下來。</li>
+  <li>圖 + 文放一起——這就是一則可以直接貼上 FB 的完整貼文。</li>
+</ol>
+<div class="expect"><span class="callout-t">✅ 你應該會看到</span>你手上有「一段親切的文案 + 一張搭配的圖」，湊起來就是一則能發的貼文。過去這要找小編寫字、找設計出圖、等好幾天；現在你自己十分鐘出一版草稿先溝通。</div>
+<div class="rescue"><span class="callout-t">🆘 卡住了怎麼辦</span><ul>
+  <li><strong>文案太官腔</strong>：追問「更口語一點，像跟朋友介紹」。</li>
+  <li><strong>圖文氣質不搭</strong>：讓文案先定調（親切/正式），再據此重生圖。</li>
+  <li><strong>要多平台版本</strong>：先別急，這正是明天模組 4「一稿多版」要教的，今天先做好一則。</li>
+</ul></div>
+<div class="check"><span class="callout-t">📌 完成標準</span>你有一則「圖＋文」完整成品，存好、明天帶來。做到按「完成」。</div>`,
+};
+
+const UNITS = [
+  [null,  "模組 2 · AI 生圖 + 視覺 Prompt + 文字生成"],
+  ["c1",  "2-A 生圖能／不能用於公務",            "40 min"],
+  ["e1",  "練習 1：生你的第一張圖",              "20 min"],
+  ["c2",  "2-B 視覺 Prompt 五件式骨架",          "30 min"],
+  ["e2",  "練習 2：重生一張真的能用的宣傳圖",     "40 min"],
+  ["c3",  "2-C 圖 × 文串成一份成品（觀念）",      "20 min"],
+  ["e3",  "練習 3：產出一則完整圖文貼文",         "50 min"],
+];
+
+// ── State ─────────────────────────────────────────
+const params        = new URLSearchParams(location.search);
+const WANTS_TEACHER = params.has("t");
+let   IS_TEACHER    = WANTS_TEACHER && sessionStorage.getItem("teacher_auth") === "1";
+const LS_DB         = "cls_db_url";
+const COURSE_ID = (function(){
+  const stem = location.pathname.split('/').pop().replace(/\.html$/, '');
+  return stem.replace(/_(progress|classroom|lesson)$/, '');
+})();
+const LS_LOCAL = "cls_local_" + COURSE_ID;
+
+let dbUrl     = (FIREBASE_URL || localStorage.getItem(LS_DB) || "").replace(/\/$/, "");
+let connected = false;
+let pollTimer = null;
+
+let srv = { session: 0, total: 0, active: "" };
+UNITS.forEach(([id]) => { if (id) { srv[id] = 0; srv[id + "_help"] = 0; } });
+
+let local = JSON.parse(localStorage.getItem(LS_LOCAL) || '{"session":0,"done":{},"help":{},"exit":false}');
+if (!local.help) local.help = {};
+
+const root = document.getElementById("root");
+
+// ── Firebase REST ──────────────────────────────────
+function dbPath() { return `${dbUrl}/${COURSE_ID}.json`; }
+function exitPath() { return `${dbUrl}/${COURSE_ID}/exit_ticket.json`; }
+async function dbGet() {
+  try { const r = await fetch(dbPath()); if (!r.ok) throw new Error(r.status); connected = true; return await r.json(); }
+  catch { connected = false; return null; }
+}
+async function dbPatch(data) { return fetch(dbPath(), { method: "PATCH", body: JSON.stringify(data), headers: { "Content-Type": "application/json" } }); }
+async function dbPut(data)   { return fetch(dbPath(), { method: "PUT",   body: JSON.stringify(data), headers: { "Content-Type": "application/json" } }); }
+async function exitPost(text){ return fetch(exitPath(), { method: "POST", body: JSON.stringify({ text }), headers: { "Content-Type": "application/json" } }); }
+async function exitGet() { try { const r = await fetch(exitPath()); if (!r.ok) return null; return await r.json(); } catch { return null; } }
+
+// ── Sync ──────────────────────────────────────────
+async function poll() {
+  const data = await dbGet();
+  if (!data) { render(); return; }
+  if ((data.session || 0) > (local.session || 0)) {
+    local = { session: data.session, done: {}, help: {}, exit: false };
+    localStorage.setItem(LS_LOCAL, JSON.stringify(local));
+  }
+  srv.session = data.session || 0;
+  srv.total   = data.total   || 0;
+  srv.active  = data.active  || "";
+  UNITS.forEach(([id]) => { if (id) { srv[id] = data[id] || 0; srv[id + "_help"] = data[id + "_help"] || 0; } });
+  if (IS_TEACHER) {
+    const et = await exitGet();
+    srv._exit = et ? Object.values(et).map(v => v && v.text).filter(Boolean) : [];
+  }
+  render();
+}
+
+// ── Student action ────────────────────────────────
+async function markDone(uid) {
+  if (local.done[uid]) return;
+  local.done[uid] = true; localStorage.setItem(LS_LOCAL, JSON.stringify(local));
+  const next = (srv[uid] || 0) + 1; srv[uid] = next; render();
+  await dbPatch({ [uid]: next });
+}
+async function markHelp(uid) {
+  if (local.help[uid]) return;
+  local.help[uid] = true; localStorage.setItem(LS_LOCAL, JSON.stringify(local));
+  const k = uid + "_help"; const next = (srv[k] || 0) + 1; srv[k] = next; render();
+  await dbPatch({ [k]: next });
+}
+async function sendExit() {
+  const ta = document.getElementById("exit-ta");
+  const val = (ta?.value || "").trim();
+  if (!val || local.exit) return;
+  local.exit = true; localStorage.setItem(LS_LOCAL, JSON.stringify(local)); render();
+  await exitPost(val);
+}
+
+// ── Teacher actions ───────────────────────────────
+async function resetAll() {
+  if (!confirm("確定重置本模組所有學生進度？\n學生頁面將在 3 秒內自動更新。")) return;
+  const newSession = (srv.session || 0) + 1;
+  const fresh = { session: newSession, total: srv.total, active: srv.active };
+  UNITS.forEach(([id]) => { if (id) { fresh[id] = 0; fresh[id + "_help"] = 0; } });
+  await dbPut(fresh); srv = { ...fresh }; render();
+}
+async function setTotal(n) { if (isNaN(n) || n < 1) return; srv.total = n; await dbPatch({ total: n }); render(); }
+async function setActive(uid) { const next = srv.active === uid ? "" : uid; srv.active = next; render(); await dbPatch({ active: next }); }
+
+// ── Login screens ─────────────────────────────────
+function renderSetup() {
+  root.innerHTML = `<div class="setup-wrap"><div class="setup-card">
+  <h2>🔧 首次設定 Firebase</h2><p>請輸入 Firebase Realtime Database URL。</p>
+  <input id="db-in" type="url" placeholder="https://my-project-default-rtdb.firebaseio.com" value="${localStorage.getItem(LS_DB) || ""}">
+  <button class="btn-primary" style="width:100%;padding:.7rem" onclick="saveDb()">儲存並開始</button></div></div>`;
+}
+function saveDb() {
+  const val = document.getElementById("db-in").value.trim().replace(/\/$/, "");
+  if (!val.startsWith("https://")) { alert("請輸入完整 HTTPS URL"); return; }
+  dbUrl = val; localStorage.setItem(LS_DB, val); init();
+}
+function renderTeacherLogin() {
+  root.innerHTML = `<div class="setup-wrap"><div class="setup-card">
+  <h2>🔒 講師登入</h2><p>請輸入講師密碼以進入課堂管理介面。</p>
+  <input id="pw-in" type="password" placeholder="密碼" onkeydown="if(event.key==='Enter')checkTeacherPw()">
+  <button class="btn-primary" style="width:100%;padding:.7rem" onclick="checkTeacherPw()">登入</button>
+  <p id="pw-err" style="color:#ef4444;font-size:.85rem;margin:.6rem 0 0;display:none">密碼錯誤，請再試一次</p></div></div>`;
+  setTimeout(() => document.getElementById("pw-in")?.focus(), 50);
+}
+async function checkTeacherPw() {
+  const val = document.getElementById("pw-in")?.value || "";
+  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(val));
+  const hex = Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,"0")).join("");
+  if (hex === TEACHER_HASH) { sessionStorage.setItem("teacher_auth","1"); IS_TEACHER = true; init(); }
+  else { document.getElementById("pw-err").style.display = "block"; document.getElementById("pw-in").value = ""; document.getElementById("pw-in").focus(); }
+}
+
+// ── Connection indicator ──────────────────────────
+function connHtml() { return `<span class="dot ${connected ? "ok" : "err"}"></span><span class="conn-text">${connected ? "已連線" : "離線"}</span>`; }
+
+// ── Build one card ────────────────────────────────
+function buildCard(uid, label, time) {
+  const content   = CONTENT[uid] || "";
+  const isEx      = uid.endsWith("x") || /_ex$/.test(uid) || EXERCISES.includes(uid);
+  const inSession = local.session === srv.session;
+  const exTag     = isEx ? `<span class="tag-ex">✍️ 練習</span>` : "";
+
+  if (IS_TEACHER) {
+    const total = srv.total || 1;
+    const cnt = srv[uid] || 0;
+    const helpCnt = srv[uid + "_help"] || 0;
+    const pct = Math.min(100, Math.round(cnt / total * 100));
+    const fill = pct >= 80 ? "" : pct >= 40 ? " mid" : " low";
+    const isActive = srv.active === uid;
+    const badge = isActive ? `<span class="active-badge">現在進行</span>` : "";
+    return `<div class="lesson-card${isActive ? " active" : ""}">
+  <div class="card-hdr t-clickable" onclick="setActive('${uid}')">
+    <div class="card-hdr-main"><span class="card-label">${label}</span>${exTag}${time ? `<span class="u-time">${time}</span>` : ""}</div>${badge}
+  </div>
+  ${content ? `<div class="card-body">${content}</div>` : ""}
+  <div class="card-foot t-foot">
+    <div class="t-foot-top"><span class="t-hint-text">點擊標題以標記「現在進行」</span>
+      <span><span class="u-count">${cnt} / ${total}</span><span class="u-help${helpCnt === 0 ? " zero" : ""}" title="求助人數">🆘 ${helpCnt}</span></span></div>
+    <div class="bar-bg"><div class="bar-fill${fill}" style="width:${pct}%"></div></div>
+  </div></div>`;
+  } else {
+    const isDone = inSession && !!local.done[uid];
+    const isHelped = inSession && !!local.help[uid];
+    const isActive = srv.active === uid;
+    const cls = isDone ? " done" : isActive ? " active" : "";
+    const badge = isActive && !isDone ? `<span class="active-badge">現在</span>` : isDone ? `<span class="done-badge">✓ 完成</span>` : "";
+    return `<div class="lesson-card${cls}">
+  <div class="card-hdr"><div class="card-hdr-main"><span class="card-label">${label}</span>${exTag}${time ? `<span class="u-time">${time}</span>` : ""}</div>${badge}</div>
+  ${content ? `<div class="card-body">${content}</div>` : ""}
+  <div class="card-foot">
+    ${isDone ? "" : `<button class="btn-help${isHelped ? " helped" : ""}"${isHelped ? " disabled" : ""} onclick="${isHelped ? "" : `markHelp('${uid}')`}" title="不懂這段，請老師再說明">${isHelped ? "🆘 已舉手" : "🆘 卡住了"}</button>`}
+    <button class="btn-done${isDone ? " done" : ""}"${isDone ? " disabled" : ""} onclick="${isDone ? "" : `markDone('${uid}')`}">${isDone ? "✓ 完成" : "完成"}</button>
+  </div></div>`;
+  }
+}
+
+// ── Exit ticket ───────────────────────────────────
+function buildExit() {
+  if (IS_TEACHER) {
+    const answers = srv._exit || [];
+    const list = answers.length ? answers.map(a => `<div class="exit-ans">${a.replace(/</g,"&lt;")}</div>`).join("") : `<p style="color:#999;font-size:.84rem;padding:.3rem 0">尚無回覆。</p>`;
+    return `<div class="exit-card"><div class="exit-hdr">🎫 Exit Ticket 回覆（${answers.length}）</div><div class="exit-ans-list">${list}</div></div>`;
+  }
+  const sent = local.exit;
+  return `<div class="exit-card"><div class="exit-hdr">🎫 Exit Ticket · 離開本模組前回答</div>
+  <div class="exit-body"><p>${EXIT_Q}</p>
+  <textarea id="exit-ta" placeholder="寫下你的答案…" ${sent ? "disabled" : ""}>${sent ? "已送出，謝謝！" : ""}</textarea></div>
+  <div class="exit-foot"><button class="btn-exit${sent ? " sent" : ""}"${sent ? " disabled" : ""} onclick="sendExit()">${sent ? "✓ 已送出" : "送出"}</button></div></div>`;
+}
+
+// ── Render ────────────────────────────────────────
+function render() {
+  const scrollY = window.scrollY;
+  const activeUnit = UNITS.find(([id]) => id && id === srv.active);
+  const nowBanner = activeUnit ? `<div class="now-banner">現在：${activeUnit[1]}</div>` : "";
+  const items = UNITS.map(([uid, label, time]) => { if (!uid) return `<div class="section-hdr">${label}</div>`; return buildCard(uid, label, time); }).join("");
+  const teacherName = IS_TEACHER ? "（講師）" : "";
+  const header = `<div class="hdr">
+  <div class="hdr-left"><h1>${MOD_TITLE}${teacherName}</h1><div class="hdr-sub">${IS_TEACHER ? "點擊各段落標題以標記「現在進行」" : "跟著步驟做，完成一格按「完成」；卡住按「🆘 卡住了」"}</div></div>
+  <div class="hdr-right"><a class="back-link" href="gov-ai_lesson.html">← 課程目錄</a>${IS_TEACHER ? `<span class="session-chip">Session ${srv.session}</span>` : ""}${connHtml()}</div>
+</div>${nowBanner}`;
+  const controls = IS_TEACHER ? `<div class="t-controls"><label>學生總人數：</label>
+  <input class="num-input" type="number" min="1" max="300" value="${srv.total || ""}" placeholder="25" onchange="setTotal(parseInt(this.value))">
+  <button class="btn-reset" onclick="resetAll()">🔄 重置進度</button>${connHtml()}</div>` : "";
+  const nav = `<div class="nav-foot">
+    <a href="gov-ai_lesson.html">🏠 課程目錄</a>
+    ${NEXT_HREF ? `<a href="${NEXT_HREF}">下一個模組 →</a>` : ""}
+  </div>`;
+  root.innerHTML = `${header}<div class="lesson-wrap">${controls}${items}${buildExit()}${nav}</div>`;
+  requestAnimationFrame(() => window.scrollTo(0, scrollY));
+}
+
+// ── Init ──────────────────────────────────────────
+function init() {
+  if (WANTS_TEACHER && !IS_TEACHER) { renderTeacherLogin(); return; }
+  if (!dbUrl) { renderSetup(); return; }
+  poll(); clearInterval(pollTimer); pollTimer = setInterval(poll, POLL_MS);
+}
+init();
+</script>
+</body>
+</html>
