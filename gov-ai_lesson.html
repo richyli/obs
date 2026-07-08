@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>課堂講義 · 公務員 AI 應用進階班</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; }
+body {
+  font-family: "Helvetica Neue", Arial, "Noto Sans TC", sans-serif;
+  background: #f0f2f5; margin: 0; min-height: 100vh; color: #1a1a1a;
+}
+
+/* ── Setup / Login screens ────────────────────── */
+.setup-wrap {
+  display: flex; align-items: center; justify-content: center;
+  min-height: 100vh; padding: 2rem;
+}
+.setup-card {
+  background: #fff; border-radius: 14px; padding: 2.5rem;
+  max-width: 520px; width: 100%;
+  box-shadow: 0 4px 24px rgba(0,0,0,.1);
+}
+.setup-card h2 { margin: 0 0 .4rem; font-size: 1.25rem; }
+.setup-card p  { color: #555; font-size: .88rem; line-height: 1.7; margin: 0 0 1.4rem; }
+.setup-card input {
+  width: 100%; padding: .7rem 1rem; border: 1.5px solid #ddd;
+  border-radius: 8px; font-size: .95rem; margin-bottom: 1rem;
+}
+.setup-card input:focus { outline: none; border-color: #0055cc; }
+
+/* ── Sticky header ────────────────────────────── */
+.hdr {
+  background: #fff; padding: .85rem 1.8rem;
+  border-bottom: 1px solid #e4e4e4;
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 30;
+  box-shadow: 0 2px 8px rgba(0,0,0,.06);
+}
+.hdr-left { display: flex; flex-direction: column; }
+.hdr h1 { margin: 0; font-size: 1rem; font-weight: 700; }
+.hdr-sub { font-size: .75rem; color: #999; margin-top: .1rem; }
+.hdr-right { display: flex; align-items: center; gap: .7rem; }
+.dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+.dot.ok  { background: #22c55e; }
+.dot.err { background: #ef4444; }
+.conn-text { font-size: .75rem; color: #999; }
+.session-chip {
+  font-size: .72rem; font-weight: 700; letter-spacing: .03em;
+  background: #e8f0ff; color: #0055cc;
+  padding: .2rem .6rem; border-radius: 20px;
+}
+
+/* ── Active unit banner (below header) ────────── */
+.now-banner {
+  background: #fbbf24; color: #7c5a00;
+  font-size: .8rem; font-weight: 700; letter-spacing: .03em;
+  text-align: center; padding: .35rem 1rem;
+  position: sticky; top: 57px; z-index: 29;
+}
+
+/* ── Lesson wrapper ───────────────────────────── */
+.lesson-wrap {
+  max-width: 780px; margin: 1.4rem auto 3rem;
+  padding: 0 1.2rem;
+  display: flex; flex-direction: column; gap: .8rem;
+}
+
+/* ── Section divider ──────────────────────────── */
+.section-hdr {
+  display: flex; align-items: center; gap: .7rem;
+  font-size: .72rem; font-weight: 800; letter-spacing: .1em;
+  text-transform: uppercase; color: #666;
+  padding: .5rem 0 .1rem; margin-top: .6rem;
+}
+.section-hdr::after { content: ""; flex: 1; height: 1px; background: #d0d0d0; }
+
+/* ── Teacher controls bar ─────────────────────── */
+.t-controls {
+  background: #fff; border-radius: 10px;
+  padding: .85rem 1.2rem;
+  display: flex; align-items: center; gap: .9rem; flex-wrap: wrap;
+  box-shadow: 0 1px 4px rgba(0,0,0,.07);
+}
+.t-controls label { font-size: .87rem; color: #555; white-space: nowrap; }
+.num-input {
+  width: 60px; padding: .32rem .5rem;
+  border: 1.5px solid #ddd; border-radius: 6px;
+  font-size: 1rem; font-weight: 700; text-align: center;
+}
+.btn-reset   { background: #ef4444; color: #fff; }
+.btn-reset:hover { background: #cc0000; }
+.btn-primary { background: #0055cc; color: #fff; }
+.btn-primary:hover { background: #0044aa; }
+.btn-reset, .btn-primary {
+  padding: .4rem .95rem; border: none; border-radius: 7px;
+  font-size: .87rem; font-weight: 700; cursor: pointer; transition: background .15s;
+}
+
+/* ── Lesson card ──────────────────────────────── */
+.lesson-card {
+  background: #fff; border-radius: 10px; overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0,0,0,.07);
+  border-left: 4px solid transparent;
+  transition: border-color .2s, background .2s;
+}
+.lesson-card.active { border-left-color: #fbbf24; }
+.lesson-card.done   { border-left-color: #22c55e; }
+
+/* Card header */
+.card-hdr {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: .8rem 1.2rem; gap: .6rem;
+  border-bottom: 1px solid #f0f0f0;
+  background: #fafafa;
+}
+.lesson-card.active .card-hdr { background: #fffbeb; }
+.lesson-card.done   .card-hdr { background: #f0fff4; }
+.card-hdr-main { display: flex; align-items: center; gap: .5rem; flex: 1; flex-wrap: wrap; }
+.card-label { font-size: .93rem; font-weight: 700; }
+.u-time {
+  font-size: .7rem; color: #aaa; font-weight: 400;
+  background: #efefef; padding: .1rem .4rem; border-radius: 4px;
+}
+.active-badge {
+  font-size: .7rem; font-weight: 700; letter-spacing: .04em;
+  background: #fbbf24; color: #7c5a00;
+  padding: .15rem .5rem; border-radius: 4px;
+}
+.done-badge {
+  font-size: .7rem; font-weight: 700;
+  background: #22c55e; color: #fff;
+  padding: .15rem .5rem; border-radius: 4px;
+}
+
+/* Card body (lesson content) */
+.card-body {
+  padding: .7rem 1.2rem .5rem;
+  transition: opacity .3s;
+}
+.lesson-card.done .card-body { opacity: .45; }
+
+.card-body p  { font-size: .87rem; line-height: 1.65; color: #333; margin: .4rem 0; }
+.card-body h4 { font-size: .83rem; font-weight: 700; color: #444; margin: .8rem 0 .3rem; }
+.card-body ol, .card-body ul { margin: .4rem 0 .4rem 1.25rem; }
+.card-body > ul { list-style: disc; }
+.card-body > ol { list-style: decimal; }
+.card-body li ul { list-style: circle; margin-top: .2rem; }
+.card-body li { font-size: .87rem; line-height: 1.6; color: #333; margin-bottom: .28rem; }
+.card-body code {
+  background: #f3f3f3; color: #c7254e;
+  padding: .1em .35em; border-radius: 3px;
+  font-size: .83em; font-family: "SFMono-Regular", Consolas, monospace;
+}
+.card-body pre {
+  background: #f7f7f9; border: 1px solid #e6e6ec; border-radius: 6px;
+  padding: .7rem .85rem; margin: .5rem 0; overflow-x: auto;
+  font-size: .78em; line-height: 1.55; white-space: pre-wrap;
+  font-family: "SFMono-Regular", Consolas, monospace; color: #333;
+}
+.card-body strong { color: #111; }
+.card-body a { color: #0055cc; }
+
+.note {
+  background: #f0f7ff; border-left: 3px solid #0055cc;
+  padding: .5rem .85rem; border-radius: 0 6px 6px 0;
+  margin: .55rem 0; font-size: .84rem; line-height: 1.55; color: #333;
+}
+.warn {
+  background: #fff1f0; border-left: 3px solid #ef4444;
+  padding: .5rem .85rem; border-radius: 0 6px 6px 0;
+  margin: .55rem 0; font-size: .84rem; line-height: 1.55; color: #333;
+}
+.question {
+  background: #fff8e6; border-left: 3px solid #f59e0b;
+  padding: .5rem .85rem; border-radius: 0 6px 6px 0;
+  margin: .55rem 0; font-size: .84rem; line-height: 1.55; color: #333;
+}
+
+/* Card footer */
+.card-foot {
+  display: flex; align-items: center; justify-content: flex-end;
+  padding: .65rem 1.2rem; border-top: 1px solid #f0f0f0; gap: .6rem;
+}
+.card-foot.t-foot { flex-direction: column; align-items: stretch; gap: .28rem; }
+.t-foot-top {
+  display: flex; justify-content: space-between; align-items: center;
+}
+.t-hint-text { font-size: .72rem; color: #ccc; }
+.u-count { font-size: .85rem; font-weight: 700; color: #0055cc; }
+.bar-bg  { width: 100%; height: 7px; background: #eee; border-radius: 4px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 4px; background: #22c55e; transition: width .4s ease; }
+.bar-fill.low { background: #ef4444; }
+.bar-fill.mid { background: #fbbf24; }
+
+/* Done / complete button */
+.btn-done {
+  padding: .42rem 1.1rem; border: none; border-radius: 7px;
+  font-size: .87rem; font-weight: 700; cursor: pointer;
+  white-space: nowrap; transition: all .15s;
+  background: #0055cc; color: #fff;
+}
+.btn-done:hover:not(:disabled) { background: #0044aa; transform: scale(1.03); }
+.btn-done.done   { background: #22c55e; cursor: default; }
+.btn-done:disabled { background: #e0e0e0; color: #999; cursor: not-allowed; }
+
+/* Help / stuck button (student) */
+.btn-help {
+  padding: .42rem .85rem; border: 1px solid #f59e0b; border-radius: 7px;
+  font-size: .82rem; font-weight: 600; cursor: pointer;
+  white-space: nowrap; transition: all .15s;
+  background: #fff; color: #b45309;
+}
+.btn-help:hover:not(:disabled) { background: #fff8e6; transform: scale(1.03); }
+.btn-help.helped { background: #f59e0b; color: #fff; cursor: default; border-color: #f59e0b; }
+.btn-help:disabled { cursor: default; }
+
+/* Help count (teacher) */
+.u-help { font-size: .82rem; font-weight: 700; color: #b45309; margin-left: .5rem; }
+.u-help.zero { color: #ccc; font-weight: 400; }
+
+/* Teacher card: clickable header */
+.card-hdr.t-clickable { cursor: pointer; }
+.card-hdr.t-clickable:hover { filter: brightness(.97); }
+
+/* ── Exit ticket ──────────────────────────────── */
+.exit-card {
+  background: #fff; border-radius: 10px; overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0,0,0,.07);
+  border-left: 4px solid #7c3aed; margin-top: 1rem;
+}
+.exit-hdr {
+  padding: .8rem 1.2rem; background: #f5f3ff;
+  font-size: .93rem; font-weight: 700; color: #5b21b6;
+  border-bottom: 1px solid #ede9fe;
+}
+.exit-body { padding: .8rem 1.2rem; }
+.exit-body p { font-size: .86rem; line-height: 1.6; color: #333; margin: 0 0 .6rem; }
+.exit-body textarea {
+  width: 100%; min-height: 90px; padding: .7rem .85rem;
+  border: 1.5px solid #ddd; border-radius: 8px; font-size: .9rem;
+  font-family: inherit; line-height: 1.6; resize: vertical;
+}
+.exit-body textarea:focus { outline: none; border-color: #7c3aed; }
+.exit-foot { display: flex; justify-content: flex-end; padding: 0 1.2rem 1rem; }
+.btn-exit {
+  padding: .45rem 1.2rem; border: none; border-radius: 7px;
+  font-size: .87rem; font-weight: 700; cursor: pointer;
+  background: #7c3aed; color: #fff; transition: all .15s;
+}
+.btn-exit:hover:not(:disabled) { background: #6d28d9; transform: scale(1.03); }
+.btn-exit.sent { background: #22c55e; cursor: default; }
+.btn-exit:disabled { cursor: default; }
+.exit-ans-list { padding: .3rem 1.2rem 1rem; }
+.exit-ans {
+  background: #faf9ff; border: 1px solid #ede9fe; border-radius: 7px;
+  padding: .55rem .8rem; margin-bottom: .5rem; font-size: .84rem;
+  line-height: 1.55; color: #333; white-space: pre-wrap;
+}
+
+@media (max-width: 520px) {
+  .hdr { padding: .8rem 1rem; }
+  .lesson-wrap { padding: 0 .7rem; margin-top: 1rem; }
+  .card-hdr { padding: .7rem 1rem; }
+  .card-body { padding: .6rem 1rem .4rem; }
+  .card-foot { padding: .55rem 1rem; }
+  .card-body li, .card-body p { font-size: .83rem; }
+}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+const FIREBASE_URL = "https://course-update-36460-default-rtdb.firebaseio.com";
+const TEACHER_HASH = "a93ac600f27f6602bf628cd929c9028e285038fc8637fe1ec6792e8850ade6a8";
+const POLL_MS = 2500;
+
+// ── Lesson content (keyed by unit id) ─────────────
+const CONTENT = {
+
+// ══ Day 1 · 模組 1 ══
+"m1a": `<p>三家免費版都能做本課九成的事。先各開一個帳號、各問<strong>同一題</strong>，親眼看差異（回答風格、附檔能力、繁中品質）。</p>
+<ul>
+  <li><strong>ChatGPT</strong> — <a href="https://chatgpt.com" target="_blank">chatgpt.com</a></li>
+  <li><strong>Claude</strong> — <a href="https://claude.ai" target="_blank">claude.ai</a></li>
+  <li><strong>Gemini</strong> — <a href="https://gemini.google.com" target="_blank">gemini.google.com</a></li>
+</ul>
+<div class="note">定心丸：你<strong>不用全都學</strong>，選一個當主力就好。換工具的成本很低，別因為選擇焦慮卡住。</div>`,
+
+"m1b": `<p>這是全課<strong>最重要的一條</strong>，先講死：</p>
+<div class="warn">含<strong>個資、機密、未公開公文</strong>，不要貼進公用網頁版 AI。免費版的內容可能被用於改善模型。</div>
+<h4>要用的話怎麼做</h4>
+<ol>
+  <li><strong>去識別化</strong>：把姓名、身分證、學號、電話、門牌換成〔〕再貼</li>
+  <li>機關若有<strong>核可工具</strong>（地端／專案版），優先用</li>
+  <li>不確定就<strong>問資訊室</strong></li>
+</ol>
+<div class="question">💬 現場練習：拿一段假公文，把裡面所有可辨識個資遮成〔〕，再貼給 AI。</div>`,
+
+"m1c": `<p><strong>好結果 = 背景 ＋ 任務 ＋ 格式</strong>。每留一處空白，AI 就替你自作主張一處。</p>
+<ul>
+  <li><strong>背景</strong>：你是誰、給誰、什麼事</li>
+  <li><strong>任務</strong>：要達成什麼、哪些要件</li>
+  <li><strong>格式</strong>：長怎樣、多長</li>
+</ul>
+<h4>★ 現場實作（每人動手）</h4>
+<ol>
+  <li>挑一件<strong>下週真的要做</strong>的小事（借場地、發通知、回一封 email）</li>
+  <li>用三段式寫一份 prompt、送出、拿到結果</li>
+  <li>拿到 80 分的結果後，用<strong>追問句</strong>調：改語氣／補要件／改格式</li>
+</ol>
+<div class="note">追問句範例：「說明第二點太文言，改白話一點」「改成『簽』的格式給處長核示」「加一段附帶請求」。</div>`,
+
+"m1d": `<p>收束前記住三個地雷：</p>
+<ol>
+  <li><strong>AI 會一本正經講錯</strong>（幻覺）：日期、法條、數字、人名一定回頭核。</li>
+  <li><strong>一任務一對話</strong>：別在同一對話裡連做公文又做新聞稿，前一個會污染後一個。</li>
+  <li><strong>它是助理不是主管</strong>：要引為依據的，一律回原文核。</li>
+</ol>
+<div class="question">🏛️ 思考題：你每天做的事裡，哪些是「講得清楚背景任務格式」的？那些就是最適合先交給 AI 的。</div>
+<div class="note">📌 作業：回去把「這週最煩的一件重複小事」寫成三段式 prompt，Day 1 結束前完成。</div>`,
+
+// ══ Day 1 · 模組 2 ══
+"m2a": `<p>先分清楚 AI 生圖在公務裡<strong>能用</strong>和<strong>要小心</strong>的界線。</p>
+<h4>能用</h4>
+<ul><li>活動宣傳圖草稿、簡報配圖、社群貼文圖、概念示意圖、內部溝通 mockup</li></ul>
+<h4>要小心</h4>
+<ul>
+  <li><strong>不生真實人物肖像</strong>（肖像權／深偽風險）</li>
+  <li>正式公文／法定文件<strong>不用</strong> AI 圖</li>
+  <li>機關識別標誌要用<strong>官方版</strong></li>
+</ul>
+<div class="warn">對外用 AI 生成圖，留意機關規範，必要時標示「AI 生成」。</div>`,
+
+"m2b": `<p>生圖 prompt 的骨架：<strong>主體 ＋ 風格 ＋ 構圖 ＋ 色調 ＋ 用途/尺寸</strong>。</p>
+<div class="note">對照：模糊 prompt「一張活動海報」 vs 具體 prompt「校園演講活動主視覺、<strong>扁平插畫風</strong>、<strong>藍白色調</strong>、<strong>上方留白放標題</strong>、<strong>直式</strong>」。</div>
+<div class="note">中文 prompt 可用；要更穩，可請 AI「先幫我把這個需求翻成英文生圖 prompt」再拿去生。</div>`,
+
+"m2c": `<p>用當天可生圖的免費工具（老師會現場確認：ChatGPT 免費額度 / Gemini / Copilot 等）。</p>
+<h4>★ 每人動手</h4>
+<ol>
+  <li>生一張<strong>自己單位下一個活動</strong>的宣傳圖草稿</li>
+  <li>拿到第一版後<strong>迭代 2–3 版</strong>：用「再方一點／換暖色調／留更多標題空間」等追問句</li>
+</ol>
+<div class="note">心法：生圖是<strong>迭代不是一次到位</strong>。第一版通常只有 60 分，靠追問句往上調。</div>`,
+
+"m2d": `<p>把模組 1 的文字能力接上來——<strong>圖文一起生</strong>。</p>
+<ol>
+  <li>一份活動素材</li>
+  <li>→ 生一段文案（模組 1 的三段式）</li>
+  <li>→ 生一張配圖（本模組的視覺 prompt）</li>
+  <li>= 一則可貼的社群／公告</li>
+</ol>
+<div class="question">🏛️ 思考題：你單位現在做一張活動圖的流程是什麼？哪一步 AI 能先卡進去當草稿，讓後面的人省時間？</div>
+<div class="note">📌 作業：完成一則自己單位的「圖＋文」成品，Day 2 帶來。</div>`,
+
+// ══ Day 2 · 模組 3 ══
+"m3a": `<p>把三段式升級成「萬用六件套」，每一件是為了補一個常見錯。</p>
+<ul>
+  <li><strong>角色</strong>（定語氣）＋<strong>背景</strong>＋<strong>任務</strong></li>
+  <li>＋<strong>步驟/限制</strong>（防它亂補）＋<strong>格式</strong>＋<strong>品質檢查</strong>（逼它自審）</li>
+</ul>
+<div class="note">★ 現場：把模組 1 你自己那份三段式 prompt，升級成六件套。</div>`,
+
+"m3b": `<p>一件事你每週都在重貼背景，就該<strong>存成模板</strong>。</p>
+<ol>
+  <li>拿到一份「5 個公務常用 prompt 模板」（通知／簽稿／回信／摘要／比較）</li>
+  <li>改成<strong>自己單位</strong>的版本</li>
+  <li>存 Word / 記事本 / 對話釘選，下次直接叫用</li>
+</ol>
+<div class="question">💬 你手上哪一件事「每週都在重貼背景」？那就是第一個該做成模板的。</div>`,
+
+"m3c": `<p><strong>思維鏈（Chain-of-Thought）</strong>：叫 AI「先一步一步想，再給結論」，要算、要推、要判斷的題品質明顯變好。</p>
+<div class="note">咒語句型：「請先列出你的推理步驟，再給最終答案」「先分析利弊，最後才下建議」。</div>
+<h4>公務實例</h4>
+<p>「該不該准這筆經費／這個假」的判斷題，比較<strong>直接問</strong> vs <strong>要它先推理再答</strong>兩種輸出。</p>
+<div class="warn">推理過程也可能錯。CoT 讓錯誤<strong>看得見、可挑</strong>，不是保證正確。</div>`,
+
+"m3d": `<p><strong>思維樹（Tree-of-Thought）</strong>：叫 AI「先給我 3 個不同方向的方案，各講優缺，再推薦一個」，用在要選、要權衡的事。</p>
+<div class="note">咒語句型：「請提出 3 種不同做法，分別列優缺點與適用情境，最後推薦一個並說明理由」。</div>
+<h4>一句話分工</h4>
+<ul>
+  <li>要它<strong>想深</strong> → 思維鏈</li>
+  <li>要它<strong>想廣</strong>（多方案比較）→ 思維樹</li>
+</ul>
+<div class="question">🏛️ 思考題：你最近一個「想很久才決定」的公務判斷，若當初讓 AI 先鋪三案+列優缺，會不會更快、更周全？</div>
+<div class="note">📌 作業：用思維樹讓 AI 幫你把一個下週要決定的事鋪出三案。</div>`,
+
+// ══ Day 2 · 模組 4 ══
+"m4a": `<p><strong>公文／簽呈</strong>：有受文者用「函」（主旨/說明/辦法）；對內陳報請示長官用「簽」（主旨/說明/擬辦）。</p>
+<p>用模組 1 三段式 + 模組 3 六件套，產一份草稿。</p>
+<pre>你是我的公文擬稿助理，依三段交辦擬一份公文。
+【背景】發文機關：〔○○機關○○科〕；受文者：〔○○〕；事由：〔…〕；補充：〔…〕
+【任務】擬一份「〔函/簽〕」，要件含 主旨、說明（分點）、〔辦法/擬辦〕；用語符合台灣公文格式，正式不冗贅。
+【格式】主旨一句、句尾制式結尾語；說明分點（一、二、三…）；控制一頁；文號日期留〔〕給我填，不要自己編。</pre>
+<div class="warn">文號、日期、法源留〔〕自己填，不讓 AI 編。</div>`,
+
+"m4b": `<p><strong>新聞稿一稿多版</strong>：一份素材 → 新聞稿 + 官網公告 + FB + LINE 四版。</p>
+<pre>你是我的行政公關助理，依活動資訊一次產出四版。
+【活動資訊】名稱〔…〕講者〔…〕時間地點〔…〕重點〔…〕主辦〔…〕
+【任務】四版各符合平台特性：
+1 新聞稿（正式、倒金字塔、含一句主管 quote 用〔〕佔位）
+2 官網公告（條列、報名連結〔〕）
+3 FB（親切 3–5 行 1–2 emoji 結尾行動呼籲）
+4 LINE（最短、只留時間地點+報名一句）
+【格式】四版各加標題方便分別複製。quote/連結/人數用〔〕佔位別自己編。</pre>
+<div class="note">接續模組 2：四版文字 + 一張配圖 = 完整一則對外發布。</div>`,
+
+"m4c": `<p><strong>法規比對與適用查詢</strong>——兩個 prompt。</p>
+<h4>比對（redline）</h4>
+<pre>以下是〔○○辦法〕的現行版與修正草案，請逐條比對。
+【現行版】〔貼全文或上傳〕
+【修正草案】〔貼全文或上傳〕
+【任務】做逐條對照表：條號 / 現行條文 / 修正條文 / 變動類型（新增·刪除·修正）/ 一句修正重點。
+【格式】表格；未變動標「未修正」；只根據我貼的內容比對，不推測未提供的條文。</pre>
+<h4>適用查詢</h4>
+<pre>以下是〔○○辦法〕全文，接著給你一個實務情境。
+【辦法全文】〔貼全文或上傳〕
+【我的問題】情境：〔…〕。請告訴我：1 適用哪一條（引條號與原文句）2 你的判斷（理由）3 哪裡模糊需回查。
+務必只根據我貼的辦法回答；辦法沒寫到就說「辦法未規定」，不要自己補。</pre>
+<div class="warn">AI 會把<strong>不存在的條號</strong>講得很篤定。它只當「指路——該看哪幾條」，<strong>最終依據一律回法規原文</strong>，不可引 AI 的話當公文依據。</div>`,
+
+"m4d": `<p><strong>會議紀錄／PDF 彙整</strong>。</p>
+<pre>以下是〔○○會議〕逐字稿/便條，整理成正式會議紀錄。
+【原始內容】〔貼上或上傳〕
+【任務】三塊：1 決議事項（每條一句可執行）2 待辦（表格：事項/負責人/期限，缺的標「待確認」）3 討論摘要（每議題 2–3 句）
+【格式】標題分三塊，待辦用表格；不要把「討論到的」寫成決議，沒共識標「未決」。</pre>
+<div class="warn">AI 常把「討論到的」誤當「決議」，要核對哪些真的拍板。</div>
+<div class="note">PDF 彙整：對話式版一次上傳幾個 PDF 請它彙整成表（免費版有檔數/大小限制；大批量留到下一段 agentic demo）。</div>`,
+
+"m4e": `<p>★★ <strong>老師 demo 為主，你看關鍵動作</strong>——用 claude.ai 網頁版 Connector 示範「會動手的 AI」，你不用裝任何東西。</p>
+<h4>對話式 vs 會動手的 AI</h4>
+<ul>
+  <li><strong>對話式</strong>（你這兩天在用的）：回你一段文字，你複製、貼上、再複製</li>
+  <li><strong>Agentic</strong>（會動手的）：讀檔、改檔、串你的行事曆/雲端硬碟，你看它做、必要時喊停</li>
+</ul>
+<h4>免安裝 demo 三段</h4>
+<ol>
+  <li><strong>行事曆祕書</strong>（Google Calendar）：「看我下週哪天最空，幫某個會找一小時空檔並建立」→ 它回表、你確認、它建好</li>
+  <li><strong>雲端硬碟彙整</strong>（Google Drive）：「讀我這資料夾幾份回覆，彙整成一張總表」→ 對照上一段手動上傳版差在哪</li>
+  <li><strong>法規 redline 放大</strong>：老師端用真 Claude Code demo「並排 diff + 逐條對照」，看對話式做不到的那塊</li>
+</ol>
+<div class="note">會動手的 AI 能「懂你單位」，是因為它記得你的格式（CLAUDE.md）、你的偏好（memory）、把常做的事做成一鍵指令（skill）。想深入，回去看老師提供的資源。</div>
+<div class="question">🏛️ 收束：當你發現「同一件事我每週都在重貼背景、重上傳檔」，那就是該升級到會動手的 AI 的訊號。</div>`,
+};
+
+// UNITS: [id, label, time] — null id = section header
+const UNITS = [
+  [null,   "Day 1 · 模組 1：多元工具 + 基礎提問 + Prompt 實作（3 hr）"],
+  ["m1a",  "1-A 認識工具地圖（ChatGPT/Claude/Gemini）", "40 min"],
+  ["m1b",  "1-B ★ 資安紅線（全課最重要）",               "30 min"],
+  ["m1c",  "1-C ★ 三段式提問法 + 現場實作",              "70 min"],
+  ["m1d",  "1-D 常見地雷 + 收束",                        "40 min"],
+  [null,   "Day 1 · 模組 2：AI 生圖 + 視覺 Prompt + 文字生成（3 hr）"],
+  ["m2a",  "2-A 生圖能/不能用於公務",                    "40 min"],
+  ["m2b",  "2-B 視覺 Prompt 骨架",                       "30 min"],
+  ["m2c",  "2-C ★ 生圖實作（每人一張）",                 "60 min"],
+  ["m2d",  "2-D ★ 圖 × 文串成一份成品",                  "50 min"],
+  [null,   "Day 2 · 模組 3：萬用結構 + 模板 + 思維鏈/思維樹（3 hr）"],
+  ["m3a",  "3-A 三段式 → 萬用六件套",                    "40 min"],
+  ["m3b",  "3-B ★ 模板化：好 prompt 存起來重用",         "40 min"],
+  ["m3c",  "3-C ★ 思維鏈（想深）",                       "50 min"],
+  ["m3d",  "3-D ★ 思維樹（想廣）+ 收束",                 "50 min"],
+  [null,   "Day 2 · 模組 4：公務應用案例實作（3 hr）★ 高潮"],
+  ["m4a",  "4-A 公文/簽呈（函、簽、三段式）",            "30 min"],
+  ["m4b",  "4-B 新聞稿/對外公關一稿多版",                "30 min"],
+  ["m4c",  "4-C 法規比對與適用查詢",                     "30 min"],
+  ["m4d",  "4-D 會議紀錄/PDF 彙整",                      "30 min"],
+  ["m4e",  "4-E ★★ Agentic Demo：會動手的 AI（免安裝）", "60 min"],
+];
+
+// ── State ─────────────────────────────────────────
+const params        = new URLSearchParams(location.search);
+const WANTS_TEACHER = params.has("t");
+let   IS_TEACHER    = WANTS_TEACHER && sessionStorage.getItem("teacher_auth") === "1";
+const LS_DB         = "cls_db_url";
+const LS_LOCAL      = "cls_local";
+
+let dbUrl     = (FIREBASE_URL || localStorage.getItem(LS_DB) || "").replace(/\/$/, "");
+let connected = false;
+let pollTimer = null;
+
+let srv = { session: 0, total: 0, active: "" };
+UNITS.forEach(([id]) => { if (id) { srv[id] = 0; srv[id + "_help"] = 0; } });
+
+let local = JSON.parse(localStorage.getItem(LS_LOCAL) || '{"session":0,"done":{},"help":{},"exit":false}');
+if (!local.help) local.help = {};
+
+const root = document.getElementById("root");
+
+// ── Firebase REST ──────────────────────────────────
+const COURSE_ID = (function(){
+  const stem = location.pathname.split('/').pop().replace(/\.html$/, '');
+  if (['progress','classroom','lesson'].includes(stem)) return 'classroom';
+  return stem.replace(/_(progress|classroom|lesson)$/, '');
+})();
+function dbPath() { return `${dbUrl}/${COURSE_ID}.json`; }
+function exitPath() { return `${dbUrl}/${COURSE_ID}/exit_ticket.json`; }
+async function dbGet() {
+  try {
+    const r = await fetch(dbPath());
+    if (!r.ok) throw new Error(r.status);
+    connected = true; return await r.json();
+  } catch { connected = false; return null; }
+}
+async function dbPatch(data) {
+  return fetch(dbPath(), { method: "PATCH", body: JSON.stringify(data),
+    headers: { "Content-Type": "application/json" } });
+}
+async function dbPut(data) {
+  return fetch(dbPath(), { method: "PUT", body: JSON.stringify(data),
+    headers: { "Content-Type": "application/json" } });
+}
+async function exitPost(text) {
+  return fetch(exitPath(), { method: "POST", body: JSON.stringify({ text }),
+    headers: { "Content-Type": "application/json" } });
+}
+async function exitGet() {
+  try { const r = await fetch(exitPath()); if (!r.ok) return null; return await r.json(); }
+  catch { return null; }
+}
+
+// ── Sync ──────────────────────────────────────────
+async function poll() {
+  const data = await dbGet();
+  if (!data) { render(); return; }
+  if ((data.session || 0) > (local.session || 0)) {
+    local = { session: data.session, done: {}, help: {}, exit: false };
+    localStorage.setItem(LS_LOCAL, JSON.stringify(local));
+  }
+  srv.session = data.session || 0;
+  srv.total   = data.total   || 0;
+  srv.active  = data.active  || "";
+  UNITS.forEach(([id]) => {
+    if (id) {
+      srv[id]            = data[id]            || 0;
+      srv[id + "_help"]  = data[id + "_help"]  || 0;
+    }
+  });
+  if (IS_TEACHER) {
+    const et = await exitGet();
+    srv._exit = et ? Object.values(et).map(v => v && v.text).filter(Boolean) : [];
+  }
+  render();
+}
+
+// ── Student action ────────────────────────────────
+async function markDone(uid) {
+  if (local.done[uid]) return;
+  local.done[uid] = true;
+  localStorage.setItem(LS_LOCAL, JSON.stringify(local));
+  const next = (srv[uid] || 0) + 1;
+  srv[uid] = next; render();
+  await dbPatch({ [uid]: next });
+}
+async function markHelp(uid) {
+  if (local.help[uid]) return;
+  local.help[uid] = true;
+  localStorage.setItem(LS_LOCAL, JSON.stringify(local));
+  const k = uid + "_help";
+  const next = (srv[k] || 0) + 1;
+  srv[k] = next; render();
+  await dbPatch({ [k]: next });
+}
+async function sendExit() {
+  const ta = document.getElementById("exit-ta");
+  const val = (ta?.value || "").trim();
+  if (!val || local.exit) return;
+  local.exit = true;
+  localStorage.setItem(LS_LOCAL, JSON.stringify(local));
+  render();
+  await exitPost(val);
+}
+
+// ── Teacher actions ───────────────────────────────
+async function resetAll() {
+  if (!confirm("確定重置所有學生進度？\n學生頁面將在 3 秒內自動更新。")) return;
+  const newSession = (srv.session || 0) + 1;
+  const fresh = { session: newSession, total: srv.total, active: srv.active };
+  UNITS.forEach(([id]) => { if (id) { fresh[id] = 0; fresh[id + "_help"] = 0; } });
+  await dbPut(fresh); srv = { ...fresh }; render();
+}
+async function setTotal(n) {
+  if (isNaN(n) || n < 1) return;
+  srv.total = n; await dbPatch({ total: n }); render();
+}
+async function setActive(uid) {
+  const next = srv.active === uid ? "" : uid;
+  srv.active = next; render(); await dbPatch({ active: next });
+}
+
+// ── Login screens ─────────────────────────────────
+function renderSetup() {
+  root.innerHTML = `
+<div class="setup-wrap"><div class="setup-card">
+  <h2>🔧 首次設定 Firebase</h2>
+  <p>請輸入 Firebase Realtime Database URL。</p>
+  <input id="db-in" type="url" placeholder="https://my-project-default-rtdb.firebaseio.com"
+         value="${localStorage.getItem(LS_DB) || ""}">
+  <button class="btn-primary" style="width:100%;padding:.7rem" onclick="saveDb()">儲存並開始</button>
+</div></div>`;
+}
+function saveDb() {
+  const val = document.getElementById("db-in").value.trim().replace(/\/$/, "");
+  if (!val.startsWith("https://")) { alert("請輸入完整 HTTPS URL"); return; }
+  dbUrl = val; localStorage.setItem(LS_DB, val); init();
+}
+function renderTeacherLogin() {
+  root.innerHTML = `
+<div class="setup-wrap"><div class="setup-card">
+  <h2>🔒 講師登入</h2>
+  <p>請輸入講師密碼以進入課堂管理介面。</p>
+  <input id="pw-in" type="password" placeholder="密碼"
+         onkeydown="if(event.key==='Enter')checkTeacherPw()">
+  <button class="btn-primary" style="width:100%;padding:.7rem" onclick="checkTeacherPw()">登入</button>
+  <p id="pw-err" style="color:#ef4444;font-size:.85rem;margin:.6rem 0 0;display:none">密碼錯誤，請再試一次</p>
+</div></div>`;
+  setTimeout(() => document.getElementById("pw-in")?.focus(), 50);
+}
+async function checkTeacherPw() {
+  const val = document.getElementById("pw-in")?.value || "";
+  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(val));
+  const hex = Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,"0")).join("");
+  if (hex === TEACHER_HASH) {
+    sessionStorage.setItem("teacher_auth","1"); IS_TEACHER = true; init();
+  } else {
+    document.getElementById("pw-err").style.display = "block";
+    document.getElementById("pw-in").value = "";
+    document.getElementById("pw-in").focus();
+  }
+}
+
+// ── Connection indicator ──────────────────────────
+function connHtml() {
+  return `<span class="dot ${connected ? "ok" : "err"}"></span>
+          <span class="conn-text">${connected ? "已連線" : "離線"}</span>`;
+}
+
+// ── Build one card's HTML ─────────────────────────
+function buildCard(uid, label, time) {
+  const content  = CONTENT[uid] || "";
+  const inSession = local.session === srv.session;
+
+  if (IS_TEACHER) {
+    const total    = srv.total || 1;
+    const cnt      = srv[uid] || 0;
+    const helpCnt  = srv[uid + "_help"] || 0;
+    const pct      = Math.min(100, Math.round(cnt / total * 100));
+    const fill     = pct >= 80 ? "" : pct >= 40 ? " mid" : " low";
+    const isActive = srv.active === uid;
+    const badge    = isActive ? `<span class="active-badge">現在進行</span>` : "";
+
+    return `
+<div class="lesson-card${isActive ? " active" : ""}">
+  <div class="card-hdr t-clickable" onclick="setActive('${uid}')">
+    <div class="card-hdr-main">
+      <span class="card-label">${label}</span>
+      ${time ? `<span class="u-time">${time}</span>` : ""}
+    </div>
+    ${badge}
+  </div>
+  ${content ? `<div class="card-body">${content}</div>` : ""}
+  <div class="card-foot t-foot">
+    <div class="t-foot-top">
+      <span class="t-hint-text">點擊標題以標記「現在進行」</span>
+      <span>
+        <span class="u-count">${cnt} / ${total}</span>
+        <span class="u-help${helpCnt === 0 ? " zero" : ""}" title="求助人數">🆘 ${helpCnt}</span>
+      </span>
+    </div>
+    <div class="bar-bg"><div class="bar-fill${fill}" style="width:${pct}%"></div></div>
+  </div>
+</div>`;
+  } else {
+    const isDone   = inSession && !!local.done[uid];
+    const isHelped = inSession && !!local.help[uid];
+    const isActive = srv.active === uid;
+    const cls      = isDone ? " done" : isActive ? " active" : "";
+    const badge    = isActive && !isDone ? `<span class="active-badge">現在</span>`
+                   : isDone              ? `<span class="done-badge">✓ 完成</span>`
+                   :                       "";
+    return `
+<div class="lesson-card${cls}">
+  <div class="card-hdr">
+    <div class="card-hdr-main">
+      <span class="card-label">${label}</span>
+      ${time ? `<span class="u-time">${time}</span>` : ""}
+    </div>
+    ${badge}
+  </div>
+  ${content ? `<div class="card-body">${content}</div>` : ""}
+  <div class="card-foot">
+    ${isDone ? "" : `<button class="btn-help${isHelped ? " helped" : ""}"${isHelped ? " disabled" : ""}
+            onclick="${isHelped ? "" : `markHelp('${uid}')`}"
+            title="不懂這段，請老師再說明">
+      ${isHelped ? "🆘 已舉手" : "🆘 卡住了"}
+    </button>`}
+    <button class="btn-done${isDone ? " done" : ""}"${isDone ? " disabled" : ""}
+            onclick="${isDone ? "" : `markDone('${uid}')`}">
+      ${isDone ? "✓ 完成" : "完成"}
+    </button>
+  </div>
+</div>`;
+  }
+}
+
+// ── Exit ticket card ──────────────────────────────
+function buildExit() {
+  if (IS_TEACHER) {
+    const answers = srv._exit || [];
+    const list = answers.length
+      ? answers.map(a => `<div class="exit-ans">${a.replace(/</g,"&lt;")}</div>`).join("")
+      : `<p style="color:#999;font-size:.84rem;padding:.3rem 0">尚無回覆。</p>`;
+    return `
+<div class="exit-card">
+  <div class="exit-hdr">🎫 Exit Ticket 回覆（${answers.length}）</div>
+  <div class="exit-ans-list">${list}</div>
+</div>`;
+  }
+  const sent = local.exit;
+  return `
+<div class="exit-card">
+  <div class="exit-hdr">🎫 Exit Ticket · 下課前回答</div>
+  <div class="exit-body">
+    <p>這兩天結束後，你回單位<strong>第一個要交給 AI 的一件事</strong>是什麼？它最可能卡在「prompt 留白」還是「資安不能貼」？為什麼？</p>
+    <textarea id="exit-ta" placeholder="寫下你的答案…" ${sent ? "disabled" : ""}>${sent ? "已送出，謝謝！" : ""}</textarea>
+  </div>
+  <div class="exit-foot">
+    <button class="btn-exit${sent ? " sent" : ""}"${sent ? " disabled" : ""} onclick="sendExit()">
+      ${sent ? "✓ 已送出" : "送出"}
+    </button>
+  </div>
+</div>`;
+}
+
+// ── Render ────────────────────────────────────────
+function render() {
+  const scrollY = window.scrollY;
+
+  const activeUnit = UNITS.find(([id]) => id && id === srv.active);
+  const nowBanner  = activeUnit
+    ? `<div class="now-banner">現在：${activeUnit[1]}</div>`
+    : "";
+
+  const items = UNITS.map(([uid, label, time]) => {
+    if (!uid) return `<div class="section-hdr">${label}</div>`;
+    return buildCard(uid, label, time);
+  }).join("");
+
+  const header = IS_TEACHER ? `
+<div class="hdr">
+  <div class="hdr-left">
+    <h1>公務員 AI 進階班（講師）</h1>
+    <div class="hdr-sub">點擊各段落標題以標記「現在進行」</div>
+  </div>
+  <div class="hdr-right">
+    <span class="session-chip">Session ${srv.session}</span>
+    ${connHtml()}
+  </div>
+</div>
+${nowBanner}` : `
+<div class="hdr">
+  <div class="hdr-left">
+    <h1>公務員 AI 應用進階班</h1>
+    <div class="hdr-sub">依照步驟操作，完成後按「完成」；卡住按「🆘 卡住了」</div>
+  </div>
+  <div class="hdr-right">${connHtml()}</div>
+</div>
+${nowBanner}`;
+
+  const controls = IS_TEACHER ? `
+<div class="t-controls">
+  <label>學生總人數：</label>
+  <input class="num-input" type="number" min="1" max="300"
+         value="${srv.total || ""}" placeholder="25"
+         onchange="setTotal(parseInt(this.value))">
+  <button class="btn-reset" onclick="resetAll()">🔄 重置進度</button>
+  ${connHtml()}
+</div>` : "";
+
+  root.innerHTML = `${header}<div class="lesson-wrap">${controls}${items}${buildExit()}</div>`;
+  requestAnimationFrame(() => window.scrollTo(0, scrollY));
+}
+
+// ── Init ──────────────────────────────────────────
+function init() {
+  if (WANTS_TEACHER && !IS_TEACHER) { renderTeacherLogin(); return; }
+  if (!dbUrl) { renderSetup(); return; }
+  poll();
+  clearInterval(pollTimer);
+  pollTimer = setInterval(poll, POLL_MS);
+}
+
+init();
+</script>
+</body>
+</html>
