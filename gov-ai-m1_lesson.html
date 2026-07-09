@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>模組 1 · 多元工具 + Prompt 實作 · 公務員 AI 進階班</title>
+<title>模組 1 · 入門 + Prompt 實作 · 公務員 AI 進階班</title>
 <style>
 *, *::before, *::after { box-sizing: border-box; }
 body {
@@ -130,140 +130,56 @@ body {
 const FIREBASE_URL = "https://course-update-36460-default-rtdb.firebaseio.com";
 const TEACHER_HASH = "a93ac600f27f6602bf628cd929c9028e285038fc8637fe1ec6792e8850ade6a8";
 const POLL_MS = 2500;
-const MOD_TITLE = "模組 1：多元工具 + Prompt 實作";
+const MOD_TITLE = "模組 1：入門 + Prompt 實作";
 const MOD_SUB   = "全課地基";
-const EXIT_Q    = "三段式的心法是「每留一處空白，AI 就替你自作主張一處」。回想你今天做的練習：你覺得自己最容易「留白」的是背景、任務、還是格式？為什麼？";
+const EXIT_Q    = "三段式心法是「每留一處空白，AI 就替你自作主張一處」。回想今天的練習，你覺得自己最容易「留白」的是背景、任務、還是格式？為什麼？";
 
 const NEXT_HREF = "gov-ai-m2_lesson.html";
 const EXERCISES = ["e1","e2","e3"];
 
-// ── Lesson content ─────────────────────────────────
 const CONTENT = {
 
-"c1": `<p>市面上主流的免費對話式 AI 有三家，<strong>都能做本課九成的事</strong>。你不用全學，選一個當主力就好——換工具的成本很低。</p>
-<h4>三家怎麼開</h4>
-<ul>
-  <li><strong>ChatGPT</strong>（OpenAI）— 網址 <a href="https://chatgpt.com" target="_blank">chatgpt.com</a>，用 Google 帳號即可登入</li>
-  <li><strong>Claude</strong>（Anthropic）— 網址 <a href="https://claude.ai" target="_blank">claude.ai</a>，繁中公文語感佳</li>
-  <li><strong>Gemini</strong>（Google）— 網址 <a href="https://gemini.google.com" target="_blank">gemini.google.com</a>，和 Google 帳號/文件整合好</li>
-</ul>
-<div class="note"><span class="callout-t">怎麼分辨好壞</span>下一格你會做「同一題問三家」的練習，親眼比。判準只有三個：① 繁中通不通順 ② 聽不聽得懂你的公務情境 ③ 能不能傳檔。</div>`,
+"intro": `<p>模組 1 打地基：分辨工具、守住資安、學會三段式提問。三個練習由淺到深，每做完一格按「完成」，卡住按「🆘 卡住了」。</p>
+<div class="warn"><span class="callout-t">⛔ 全課最重要一條</span>含個資、機密、未公開公文，<strong>不要貼進公用網頁版 AI</strong>。免費版內容可能被拿去訓練。要用先去識別化（把姓名/身分證/電話換成〔〕）。</div>`,
 
-"e1": `<p><span class="callout-t">🎯 這個練習要幹嘛</span>用<strong>同一個問題</strong>問三家 AI，親眼看差異，選一家當你今天的主力。不用比出「誰最強」，是找「哪家你用起來最順」。</p>
-<h4>逐步操作</h4>
+"e1": `<p><span class="callout-t">🎯 同一題問三家 AI、選主力（20′）</span>用同一題問三家，親眼看差異，選一家當今天主力。不比誰最強，找你用起來最順的。</p>
 <ol class="steps">
-  <li>開三個瀏覽器分頁，分別打開 <code>chatgpt.com</code>、<code>claude.ai</code>、<code>gemini.google.com</code>。</li>
-  <li>三家都用 Google 帳號登入（畫面上找「Continue with Google / 使用 Google 繼續」的按鈕點下去）。</li>
-  <li>在每一家的<strong>對話輸入框</strong>（畫面最下方那條長長的白色框）貼上<strong>同一段</strong>下面這個測試題。</li>
+  <li>開三分頁：<a href="https://chatgpt.com" target="_blank">chatgpt.com</a>、<a href="https://claude.ai" target="_blank">claude.ai</a>、<a href="https://gemini.google.com" target="_blank">gemini.google.com</a>，用 Google 帳號登入。</li>
+  <li>三家貼<strong>同一段</strong>測試題（下方），送出。</li>
+  <li>並排看：哪家用語<strong>直接能用</strong>、不太需改？那家當主力。</li>
 </ol>
-<pre><span class="lbl">📋 複製這段去問三家</span>我是地方政府某科的承辦。請幫我用正式但不冗長的語氣，寫一則「本週五下午三點於三樓會議室召開單位業務會報」的內部通知，給科內同仁。控制在 150 字內。</pre>
-<ol class="steps" start="4" style="counter-reset: step 3;">
-  <li>三家都送出（按 Enter，或輸入框右邊的箭頭/紙飛機圖示）。</li>
-  <li>把三份結果並排看，問自己：哪一家的用語你<strong>直接就能拿去用</strong>、不太需要改？那家就當今天的主力。</li>
-</ol>
-<div class="expect"><span class="callout-t">✅ 你應該會看到</span>三家都會生出一段像樣的通知，格式大同小異（標題＋時間地點＋出席對象）。差別在語氣：有的偏公文腔、有的偏白話。<strong>沒有標準答案</strong>，選你順眼的。</div>
-<div class="rescue"><span class="callout-t">🆘 卡住了怎麼辦</span>
-<ul>
-  <li><strong>要我登入/註冊</strong>：用 Google 帳號最快，免記新密碼。</li>
-  <li><strong>叫我付費/額度用完</strong>：免費額度夠今天用；某家滿了就換另一家，這正是「選一家主力」的意義。</li>
-  <li><strong>回英文</strong>：在句尾加一句「請用繁體中文回答」。</li>
-</ul></div>
-<div class="check"><span class="callout-t">📌 完成標準</span>你已經登入至少一家、拿到一則通知草稿、心裡選好了今天的主力工具。做到就按「完成」。</div>`,
+<pre><span class="lbl">📋 複製去問三家</span>我是地方政府某科的承辦。請幫我用正式但不冗長的語氣，寫一則「本週五下午三點於三樓會議室召開單位業務會報」的內部通知，給科內同仁。控制在 150 字內。</pre>
+<div class="expect"><span class="callout-t">✅ 會看到</span>三家都生出像樣通知，差別在語氣。沒有標準答案，選順眼的。</div>
+<div class="rescue"><span class="callout-t">🆘 卡住</span>要付費→換一家；回英文→句尾加「請用繁體中文回答」。</div>`,
 
-"c2": `<p>這是<strong>全課最重要的一條</strong>，其他技巧都可以慢慢學，這條今天就要記死。</p>
-<div class="warn"><span class="callout-t">⛔ 鐵律</span>含<strong>個資、機密、尚未公開的公文</strong>，不要貼進公用網頁版 AI。免費版你貼進去的內容，<strong>可能被拿去訓練模型</strong>——等於把資料交出去了。</div>
-<h4>什麼算個資／機密</h4>
-<ul>
-  <li>姓名、身分證字號、學號/員工編號、電話、地址、生日、病歷、成績</li>
-  <li>還沒對外發布的公文、內部簽核意見、標案底價、人事案</li>
-</ul>
-<h4>真的要用怎麼辦——去識別化</h4>
-<p>把可辨識的資訊<strong>換成〔佔位符〕</strong>再貼。AI 不需要知道當事人是誰，也能幫你處理格式。</p>
-<div class="note"><span class="callout-t">例</span>原文「陳大文（身分證 A123456789）申請…」→ 改成「〔申請人〕（身分證〔ID〕）申請…」。拿回 AI 的結果後，再把〔〕換回真名。</div>`,
-
-"e2": `<p><span class="callout-t">🎯 這個練習要幹嘛</span>拿一段「有個資的假公文」，練習<strong>把個資遮成〔〕</strong>再交給 AI。這一招你以後每次用 AI 處理公務文件都會用到。</p>
-<h4>逐步操作</h4>
+"e2": `<p><span class="callout-t">🎯 個資去識別化再交給 AI（15′）</span>拿一段有個資的假文件，練習遮成〔〕再交給 AI。以後每次用 AI 處理真實文件都用得到。</p>
 <ol class="steps">
-  <li>先看這段<strong>故意塞滿個資</strong>的假句子（不是真人，練習用）：
-    <pre>王小明（電話 0912-345-678、地址台北市中正區○○路 5 號）
-於 6 月 3 日申請育嬰留職停薪，擬自 7 月 1 日起留停一年。</pre></li>
-  <li>自己動手，把裡面<strong>每一個可辨識個資</strong>換成〔〕：姓名、電話、地址都要遮。改成類似：
-    <pre>〔申請人〕（電話〔電話〕、地址〔地址〕）
-於〔申請日〕申請育嬰留職停薪，擬自〔起始日〕起留停一年。</pre></li>
-  <li>開你的主力 AI，貼上<strong>去識別化後</strong>的版本，加一句任務：
-    <pre><span class="lbl">📋 複製</span>以下是一件育嬰留停申請，請幫我擬一段陳核用的「簽」的說明段落，正式簡潔。文號、日期我自己填。
-
-〔把你遮好的版本貼在這裡〕</pre></li>
-  <li>看它產出的草稿——它完全不需要知道真名，一樣幫你把格式寫好。</li>
+  <li>看這段塞滿個資的假句子（非真人）：
+    <pre>王小明（電話 0912-345-678、地址台北市中正區○○路 5 號）於 6 月 3 日申請育嬰留職停薪，擬自 7 月 1 日起留停一年。</pre></li>
+  <li>自己把<strong>每個可辨識個資</strong>換成〔〕（姓名、電話、地址、日期）。</li>
+  <li>把遮好的版本貼給 AI，加一句任務：「請幫我擬一段陳核用的『簽』的說明段落，正式簡潔。文號日期我自己填。」</li>
 </ol>
-<div class="expect"><span class="callout-t">✅ 你應該會看到</span>AI 生出一段公文說明，裡面沿用你的〔〕佔位符（或用「申請人」等中性詞）。<strong>證明：遮掉個資，工作照樣做得成。</strong></div>
-<div class="rescue"><span class="callout-t">🆘 卡住了怎麼辦</span><ul>
-  <li><strong>不確定哪些要遮</strong>：口訣「能指認到某個真人的都遮」——名字、號碼、地址、日期若能對到人也遮。</li>
-  <li><strong>AI 反問我缺資訊</strong>：正常，回一句「用〔〕佔位即可，我最後自己填」。</li>
-</ul></div>
-<div class="check"><span class="callout-t">📌 完成標準</span>你成功把一段含個資的文字遮成〔〕、丟給 AI、拿到一份沒有外洩個資的草稿。做到按「完成」。</div>`,
+<div class="expect"><span class="callout-t">✅ 會看到</span>AI 完全不需要知道真名，一樣幫你把格式寫好。<strong>證明：遮掉個資，工作照樣做得成。</strong></div>
+<div class="rescue"><span class="callout-t">🆘 卡住</span>口訣「能指認到某個真人的都遮」。AI 反問缺資訊→回「用〔〕佔位即可」。</div>`,
 
-"c3": `<p>為什麼你叫 AI 寫的東西常常「不對」？多半不是 AI 笨，是<strong>你沒把話講清楚</strong>。好結果來自一個公式：</p>
+"e3": `<p><span class="callout-t">🎯 三段式做一件真的要做的事（50′）·本模組核心</span>用三段式把一件<strong>下週真的要做的小事</strong>交給 AI。心法：<strong>每留一處空白，AI 就替你自作主張一處。</strong></p>
 <h4>三段式 = 背景 ＋ 任務 ＋ 格式</h4>
-<ul>
-  <li><strong>背景</strong>：你是誰、幫誰、什麼事、有什麼前提</li>
-  <li><strong>任務</strong>：具體要它做出什麼、有哪些必須包含的要件</li>
-  <li><strong>格式</strong>：長什麼樣、多長、分不分點、什麼語氣</li>
-</ul>
-<div class="warn"><span class="callout-t">核心心法</span><strong>每留一處空白，AI 就替你自作主張一處。</strong>你沒講語氣，它自己挑；你沒講長度，它可能寫三頁。想要什麼，就寫出來。</div>
-<div class="note">下一格你會用三段式，把一件<strong>你下週真的要做</strong>的小事寫成 prompt，並學會怎麼「追問」把 80 分調到 95 分。</div>`,
-
-"e3": `<p><span class="callout-t">🎯 這個練習要幹嘛</span>用三段式，把一件<strong>你下週真的要做的小事</strong>交給 AI。這是本模組的核心練習，做完你就掌握了全課地基。</p>
-<h4>Step 1：挑一件真的要做的小事</h4>
-<p>例如：跟別的單位借會議室、發一則活動通知、回一封有點難回的 email、寫一段公告。<strong>挑最小、最具體的一件。</strong></p>
-<h4>Step 2：照三段式框架把它寫出來</h4>
-<p>把下面的骨架複製到 AI，<strong>〔〕裡換成你的真實情況</strong>（記得：個資用〔〕遮）：</p>
-<pre><span class="lbl">📋 三段式骨架（複製後填空）</span>【背景】
-我是〔哪個單位的什麼角色〕，要處理〔什麼事〕。對象是〔誰〕。前提：〔有什麼要注意的，例如對方是上級/平行單位〕。
-
-【任務】
-請幫我〔寫一則通知／擬一段email／草一份公告〕，必須包含：〔要件1〕、〔要件2〕、〔要件3〕。
-
-【格式】
-語氣：〔正式／親切〕。長度：〔控制在 X 字／一段／分點〕。
-不要幫我編〔日期／文號／連結〕，那些留空我自己填。</pre>
-<h4>Step 3：拿到結果後「追問」調整</h4>
-<p>第一版通常 80 分。挑一句下面的追問句貼進<strong>同一個對話</strong>繼續調：</p>
-<ul>
-  <li>改語氣：「第二段太文言，改白話一點。」</li>
-  <li>補要件：「加一句附帶提醒對方回覆期限。」</li>
-  <li>改格式：「太長了，壓到 100 字內。」</li>
-  <li>換體例：「改成公文『簽』的格式，給主管核示。」</li>
-</ul>
-<div class="expect"><span class="callout-t">✅ 你應該會看到</span>第一版already能用但不完美；追問一到兩次後，<strong>語氣/長度/要件</strong>就調到你滿意。這個「產出→追問→再產出」的循環，就是用 AI 的日常節奏。</div>
-<div class="rescue"><span class="callout-t">🆘 卡住了怎麼辦</span><ul>
-  <li><strong>結果離題</strong>：多半是「背景」寫太少。回去補「你是誰、對象是誰、什麼前提」。</li>
-  <li><strong>它自己亂編日期/數字</strong>：正常，這叫幻覺。在格式段明講「日期文號留空我自己填」。</li>
-  <li><strong>越改越糟</strong>：別在同一對話硬凹，開「新對話」重貼乾淨的三段式。</li>
-</ul></div>
-<div class="check"><span class="callout-t">📌 完成標準</span>你有一份「下週真的能用」的成品，而且是靠三段式＋至少一次追問調出來的。做到按「完成」。</div>`,
-
-"c4": `<p>收束前，記住三個最容易踩的地雷：</p>
-<h4>地雷一：AI 會一本正經講錯（幻覺）</h4>
-<p>它會把<strong>不存在的法條、錯的日期、編造的數字</strong>講得非常篤定。<strong>凡是要當依據的（法條、金額、日期、人名職稱），一律回原文核。</strong>AI 幫你「找方向」，不幫你「做決定」。</p>
-<h4>地雷二：一個任務開一個新對話</h4>
-<p>別在同一對話裡連做公文又做新聞稿——前一個會「污染」後一個，讓它答得怪。換任務就開「新對話」（左上角 New chat）。</p>
-<h4>地雷三：它是助理，不是主管</h4>
-<p>用印、對外發文、簽准這些<strong>要負責任的動作</strong>，永遠是你決定。AI 產草稿，你把關。</p>
-<div class="question"><span class="callout-t">🏛️ 帶回去想</span>你每天做的事裡，哪些是「背景任務格式都講得清楚」的？那些就是最適合第一個交給 AI 的。</div>
-<div class="note"><span class="callout-t">📌 本模組作業</span>回去把「這週最煩的一件重複小事」寫成一份三段式 prompt，明天帶來當模組 3「做成模板」的素材。</div>`,
+<pre><span class="lbl">📋 骨架（填空，個資用〔〕遮）</span>【背景】我是〔哪個單位的什麼角色〕，要處理〔什麼事〕。對象是〔誰〕。前提：〔要注意的〕。
+【任務】請幫我〔寫通知/擬email/草公告〕，必須包含：〔要件1〕、〔要件2〕、〔要件3〕。
+【格式】語氣：〔正式/親切〕。長度：〔X字/一段/分點〕。日期文號留空我自己填。</pre>
+<h4>拿到結果後追問（挑一句）</h4>
+<ul><li>「第二段太文言，改白話一點。」</li><li>「太長了，壓到 100 字內。」</li><li>「改成公文『簽』的格式給主管核示。」</li></ul>
+<div class="expect"><span class="callout-t">✅ 會看到</span>第一版 80 分，追問 1-2 次調到滿意。「產出→追問→再產出」就是用 AI 的日常節奏。</div>
+<div class="rescue"><span class="callout-t">🆘 卡住</span>離題→背景寫太少；亂編日期→格式段講死「留空我自己填」；越改越糟→開新對話重貼。</div>
+<div class="note"><span class="callout-t">📌 作業</span>回去把「這週最煩的一件重複小事」寫成三段式，明天帶來（模組 3 做成模板用）。</div>`,
 };
 
-// UNITS: [id, label, time] — null id = section header
 const UNITS = [
-  [null,  "模組 1 · 多元工具 + 基礎提問 + Prompt 實作"],
-  ["c1",  "1-A 認識工具地圖（三家怎麼選）",        "20 min"],
-  ["e1",  "練習 1：同一題問三家、選主力",          "20 min"],
-  ["c2",  "1-B ★ 資安紅線（全課最重要）",          "15 min"],
-  ["e2",  "練習 2：把個資遮成〔〕再交給 AI",        "15 min"],
-  ["c3",  "1-C ★ 三段式提問法（背景+任務+格式）",   "20 min"],
-  ["e3",  "練習 3：用三段式做一件真的要做的事",     "50 min"],
-  ["c4",  "1-D 三個地雷 + 收束",                   "20 min"],
+  [null,   "模組 1 · 入門 + 基礎提問（3 hr）"],
+  ["intro","開場 + 資安紅線",                "30 min"],
+  ["e1",   "練習 1：同一題問三家 AI 選主力",   "20 min"],
+  ["e2",   "練習 2：個資去識別化再交給 AI",    "15 min"],
+  ["e3",   "練習 3：三段式做一件真的要做的事", "50 min"],
 ];
 
 // ── State ─────────────────────────────────────────

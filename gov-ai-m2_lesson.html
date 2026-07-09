@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>模組 2 · 生圖 + 文字生成 · 公務員 AI 進階班</title>
+<title>模組 2 · 生圖 + 海報 · 公務員 AI 進階班</title>
 <style>
 *, *::before, *::after { box-sizing: border-box; }
 body {
@@ -130,122 +130,81 @@ body {
 const FIREBASE_URL = "https://course-update-36460-default-rtdb.firebaseio.com";
 const TEACHER_HASH = "a93ac600f27f6602bf628cd929c9028e285038fc8637fe1ec6792e8850ade6a8";
 const POLL_MS = 2500;
-const MOD_TITLE = "模組 2：AI 生圖 + 文字生成";
+const MOD_TITLE = "模組 2：AI 生圖 + 海報";
 const MOD_SUB   = "圖文實戰";
-const EXIT_Q    = "你今天生圖體會到「第一版通常不完美、要靠追問迭代」。回想你的活動宣傳圖，是第幾版才堪用？你覺得把 AI 生圖用在你單位工作，最大的顧慮是什麼（品質、著作權、還是不知道能用在哪）？";
+const EXIT_Q    = "今天學到「AI 生視覺強、生中文字弱，背景交給 AI、中文字自己排」。你回單位第一個想用 AI 生圖做的東西是什麼？你覺得最大的顧慮是品質、著作權、還是不知道能用在哪？";
 
 const NEXT_HREF = "gov-ai-m3_lesson.html";
-const EXERCISES = ["e1","e2","e3"];
+const EXERCISES = ["e1","e2","e3","e4"];
 
 const CONTENT = {
 
-"c1": `<p>AI 生圖對公務很有用，但有<strong>能用</strong>和<strong>不能用</strong>的界線，先分清楚再動手。</p>
-<h4>✅ 能用在這些地方</h4>
-<ul>
-  <li>活動宣傳圖<strong>草稿</strong>（先生一版跟同事討論方向，比空口說快）</li>
-  <li>簡報配圖、內部溝通用的示意圖 / mockup</li>
-  <li>社群貼文（FB/IG/LINE）的插畫或背景圖</li>
-</ul>
-<h4>⚠️ 這些要小心 / 不要用</h4>
-<ul>
-  <li><strong>不生真實人物肖像</strong>——肖像權、深偽（deepfake）風險，尤其不要生首長、民代、真人職員的臉</li>
-  <li>正式公文、法定文件、獎狀證書<strong>不用</strong> AI 生成圖</li>
-  <li>機關 logo、識別標誌一律用<strong>官方檔</strong>，不要叫 AI「畫一個像我們機關的標誌」</li>
-</ul>
-<div class="warn"><span class="callout-t">⛔ 提醒</span>對外發布的 AI 生成圖，留意機關規範，必要時<strong>標示「AI 生成」</strong>。</div>`,
+"intro": `<p>模組 2 學會用 AI 生圖做宣傳。核心心法：<strong>AI 生視覺強、生中文字弱 → 背景交給 AI，中文字自己在 Canva/PPT 排。</strong></p>
+<div class="warn"><span class="callout-t">⚠️ 生圖用於公務</span>不生真實人物肖像；正式公文/法定文件不用 AI 圖；機關 logo 用官方檔；對外用 AI 圖必要時標「AI 生成」。</div>
+<div class="note">📘 隨發參考手冊：<strong>宣傳小海報 AI 風格指南</strong>（8 種海報風格＋範本＋各工具文字處理），開在旁邊查。</div>`,
 
-"e1": `<p><span class="callout-t">🎯 這個練習要幹嘛</span>親手生你的<strong>第一張圖</strong>，感受「文字→圖」怎麼運作，並體會第一版通常不完美、要靠追問往上調。</p>
-<h4>先確認你手上哪個工具可以生圖</h4>
-<p>免費可生圖的常見選擇（老師會現場確認當天哪個可用）：</p>
-<ul>
-  <li><strong>ChatGPT</strong>：對話框直接打「幫我生一張…」，免費版有每日張數上限</li>
-  <li><strong>Gemini</strong>：同樣對話框直接要求生圖</li>
-  <li><strong>Copilot</strong>（<a href="https://copilot.microsoft.com" target="_blank">copilot.microsoft.com</a>）：內建 Designer 生圖</li>
-</ul>
-<h4>逐步操作</h4>
-<ol class="steps">
-  <li>打開老師指定的生圖工具，開一個新對話。</li>
-  <li>先貼這個<strong>陽春版</strong> prompt，送出，看它生什麼：
-    <pre><span class="lbl">📋 陽春版（故意寫得很模糊）</span>幫我生一張校園演講活動的宣傳圖。</pre></li>
-  <li>你會發現：它自己亂猜了風格、顏色、有沒有留標題空間。<strong>這就是「留白就自作主張」的視覺版。</strong></li>
-</ol>
-<div class="expect"><span class="callout-t">✅ 你應該會看到</span>一張「還可以但不是你要的」圖——可能顏色不對、沒地方放標題、風格太花。這很正常，下一格教你怎麼把它講清楚。</div>
-<div class="rescue"><span class="callout-t">🆘 卡住了怎麼辦</span><ul>
-  <li><strong>工具說不能生圖 / 額度滿</strong>：換老師指定的另一個工具。</li>
-  <li><strong>生出來是英文字</strong>：AI 生圖對「圖上的中文字」常出錯，這正常——圖上的文字<strong>之後用 Canva/PPT 自己加</strong>，別依賴 AI 把字打對。</li>
-</ul></div>
-<div class="check"><span class="callout-t">📌 完成標準</span>你成功生出至少一張圖（哪怕很醜）。做到按「完成」。</div>`,
-
-"c2": `<p>把生圖需求講清楚，用這個五件式骨架：</p>
+"e1": `<p><span class="callout-t">🎯 五件式重生宣傳圖（40′）</span>用五件式骨架生一張真的能用的宣傳圖，並迭代 2–3 版。</p>
 <h4>視覺 Prompt = 主體 ＋ 風格 ＋ 構圖 ＋ 色調 ＋ 用途/尺寸</h4>
-<ul>
-  <li><strong>主體</strong>：圖裡主要是什麼（校園、書本、講台、抽象科技感…）</li>
-  <li><strong>風格</strong>：扁平插畫 / 寫實照片 / 手繪 / 極簡</li>
-  <li><strong>構圖</strong>：主體擺哪、要不要留空白放標題</li>
-  <li><strong>色調</strong>：藍白（穩重）/ 暖橘（親切）/ 單色系</li>
-  <li><strong>用途/尺寸</strong>：直式海報 / 橫式 FB 封面 / 正方形 IG</li>
-</ul>
-<div class="note"><span class="callout-t">對照</span>模糊「一張活動海報」 → 具體「校園演講活動主視覺，<strong>扁平插畫風</strong>，<strong>藍白色調</strong>，<strong>上方大量留白放標題</strong>，<strong>直式海報</strong>」。差別立現。</div>
-<div class="note"><span class="callout-t">小訣竅</span>中文 prompt 可用；要更穩定可先叫 AI「幫我把這個生圖需求翻成英文 prompt」，再拿英文去生，出圖品質常更好。</div>`,
+<pre><span class="lbl">📋 複製後填空</span>幫我生一張活動宣傳圖，用途〔FB貼文/直式海報〕。
+主體：〔校園、講台、書與燈泡〕 風格：〔扁平插畫風/簡約〕
+構圖：〔上方留白放標題，主體置中偏下〕 色調：〔藍白/暖橘〕
+不要放任何文字（標題我自己加）。</pre>
+<h4>追問迭代（單句）</h4>
+<ul><li>「再簡約一點。」「換暖色調。」「上方多留白放標題。」「換直式。」</li></ul>
+<div class="expect"><span class="callout-t">✅ 會看到</span>第一版到第三版明顯往你要的靠。<strong>生圖是迭代不是一次到位。</strong></div>
+<div class="rescue"><span class="callout-t">🆘 卡住</span>越改越糟→「回剛剛那版只改顏色」；圖上加字亂碼→「不要放任何文字」字自己加。</div>`,
 
-"e2": `<p><span class="callout-t">🎯 這個練習要幹嘛</span>用五件式骨架，把上一格那張醜圖<strong>重生成一張你單位真的能用</strong>的活動宣傳圖，並迭代 2–3 版。</p>
-<h4>Step 1：填五件式骨架</h4>
-<pre><span class="lbl">📋 複製後填空</span>幫我生一張活動宣傳圖，用途是〔FB 貼文／直式海報〕。
-主體：〔例如 校園、講台、書與燈泡代表知識〕
-風格：〔扁平插畫風／簡約〕
-構圖：〔上方留白放標題，主體置中偏下〕
-色調：〔藍白為主／暖橘親切〕
-不要放任何文字（標題我自己用其他工具加）。</pre>
-<h4>Step 2：迭代 2–3 版</h4>
-<p>拿到第一版後，別重寫整段，只用一句<strong>追問</strong>微調（在同一對話）：</p>
-<ul>
-  <li>「再簡約一點，元素太多。」</li>
-  <li>「換成暖色調，感覺親切些。」</li>
-  <li>「上方再多留一些空白，我要放標題。」</li>
-  <li>「換直式，我要當海報。」</li>
-</ul>
-<div class="expect"><span class="callout-t">✅ 你應該會看到</span>從第一版到第三版，圖<strong>明顯往你要的方向靠</strong>。這就是心法：<strong>生圖是迭代，不是一次到位。</strong>通常第 2-3 版才堪用。</div>
-<div class="rescue"><span class="callout-t">🆘 卡住了怎麼辦</span><ul>
-  <li><strong>改了反而更糟</strong>：回上一版的描述重生，或說「回到剛剛那版，只改顏色」。</li>
-  <li><strong>圖上硬要加字還加錯</strong>：明確說「不要放任何文字」，字留給你自己加。</li>
-  <li><strong>額度用完</strong>：把滿意的那版<strong>右鍵存下來</strong>，換工具或明天再生。</li>
-</ul></div>
-<div class="check"><span class="callout-t">📌 完成標準</span>你有一張「單位下個活動真的能拿去用」的宣傳圖草稿，而且是靠五件式＋2-3 次追問調出來的。做到按「完成」。</div>`,
-
-"c3": `<p>模組 1 你學會用文字生「字」，這模組學會生「圖」。現在把兩個接起來——<strong>一份素材，一次生出圖＋文，湊成一則可直接發布的貼文</strong>。這正是行政公關每天在做的事。</p>
-<div class="note"><span class="callout-t">流程</span>一份活動素材 → ①用三段式生一段文案 → ②用五件式生一張配圖 → ③文＋圖 = 一則可貼的社群/公告。</div>
-<p>下一格你會完整走一次，產出一則<strong>你單位真實活動</strong>的圖文成品，明天帶到模組 4 當「新聞稿一稿多版」的素材。</p>`,
-
-"e3": `<p><span class="callout-t">🎯 這個練習要幹嘛</span>把「文字生成 + 圖像生成」串成一條龍，產出<strong>一則完整、可直接發布</strong>的社群貼文（圖＋文）。這是本模組的總結練習。</p>
-<h4>Step 1：先生文案（用模組 1 的三段式）</h4>
-<pre><span class="lbl">📋 複製後填空（在文字 AI）</span>【背景】我是〔單位〕，要在 FB 宣傳一場活動：〔活動名稱、時間、地點、對象、重點〕。
-【任務】寫一則 FB 貼文，親切口吻、3-5 行、開頭一句抓人、結尾一句行動呼籲（報名/分享）、1-2 個 emoji。
-【格式】報名連結用〔連結〕佔位，我自己補。</pre>
-<h4>Step 2：再生配圖（用本模組的五件式）</h4>
-<p>回到生圖工具，用五件式骨架生一張搭這則貼文的圖（記得：不要放文字）。</p>
-<h4>Step 3：組起來</h4>
+"e2": `<p><span class="callout-t">🎯 常見圖像風格實驗（40′）</span>建立一套「風格詞彙」控制生圖美感，四步由淺到深。</p>
 <ol class="steps">
-  <li>把 AI 生的<strong>文案</strong>複製到記事本，把〔連結〕換成真的報名網址。</li>
-  <li>把生好的<strong>圖</strong>存下來。</li>
-  <li>圖 + 文放一起——這就是一則可以直接貼上 FB 的完整貼文。</li>
+  <li><strong>純風格</strong>：只下一個藝術風格＋artwork，看反覆出現什麼元素。<pre>幫我生一張〔印象派 Impressionism〕風格的 artwork。</pre></li>
+  <li><strong>風格＋主體</strong>：把風格套到主體上。<pre>幫我生一張〔超現實主義〕風格的〔校園/市政廳〕。</pre></li>
+  <li><strong>混搭</strong>：疊兩個風格。<pre>結合〔立體派〕與〔波普藝術〕的活動主視覺，上方留白，直式。</pre></li>
+  <li><strong>應用</strong>：把喜歡的混搭套到不同主體與長寬比，記下成功的 prompt。</li>
 </ol>
-<div class="expect"><span class="callout-t">✅ 你應該會看到</span>你手上有「一段親切的文案 + 一張搭配的圖」，湊起來就是一則能發的貼文。過去這要找小編寫字、找設計出圖、等好幾天；現在你自己十分鐘出一版草稿先溝通。</div>
-<div class="rescue"><span class="callout-t">🆘 卡住了怎麼辦</span><ul>
-  <li><strong>文案太官腔</strong>：追問「更口語一點，像跟朋友介紹」。</li>
-  <li><strong>圖文氣質不搭</strong>：讓文案先定調（親切/正式），再據此重生圖。</li>
-  <li><strong>要多平台版本</strong>：先別急，這正是明天模組 4「一稿多版」要教的，今天先做好一則。</li>
-</ul></div>
-<div class="check"><span class="callout-t">📌 完成標準</span>你有一則「圖＋文」完整成品，存好、明天帶來。做到按「完成」。</div>`,
+<div class="note">20 種可用風格：印象派、超現實、立體派、極簡、包浩斯、巴洛克、波普、風格派、點彩、文藝復興…（見手冊速查表）。</div>
+<div class="expect"><span class="callout-t">✅ 會看到</span>同一主體換風格，氣質完全不同。你有了「指定美感方向」的能力。</div>
+<div class="rescue"><span class="callout-t">🆘 卡住</span>混搭四不像→換氣質相近的（極簡×包浩斯）；正式場合避免太前衛（超現實/立體派）。</div>`,
+
+"e3": `<p><span class="callout-t">🎯 宣傳小海報風格指南（45′）</span>完整海報流程：選風格 → 生留白背景 → Canva 加中文字。</p>
+<h4>Step 1 選風格（挑一個）</h4>
+<ul><li>瑞士排版（正式）｜極簡（單一訊息）｜扁平插畫（便民最安全）｜復古版畫（觀光）｜漸層現代（數位/青年）</li></ul>
+<h4>Step 2 生留白背景</h4>
+<pre><span class="lbl">📋 複製後填空</span>Promotional poster background, 〔style tag〕, vertical 2:3,
+〔主體/場景〕, large empty space at the top for a title,
+〔主色〕 dominant with 〔強調色〕 accent, clean and professional,
+no text, no glitter, no clip-art, no decorative borders.</pre>
+<p>關鍵兩句：<code>no text</code>（別亂放字）＋<code>empty space at the top for a title</code>（留白給中文標題）。</p>
+<h4>Step 3 Canva 加中文字</h4>
+<ol class="steps">
+  <li>Canva 開「海報」尺寸、上傳 AI 背景鋪滿。</li>
+  <li>加文字：主標題（大）、日期地點（中）、主辦/QR（小），字型統一。</li>
+  <li>匯出 PNG/PDF。</li>
+</ol>
+<div class="expect"><span class="callout-t">✅ 會看到</span>一張完整海報：AI 風格化背景＋你排的乾淨中文標題。理解為何不該叫 AI 直接畫中文標題。</div>
+<div class="rescue"><span class="callout-t">🆘 卡住</span>AI 硬放字亂碼→prompt 加 no text，或 Canva 用色塊蓋掉再加字；背景太滿→選極簡/瑞士（天生留白多）。</div>`,
+
+"e4": `<p><span class="callout-t">🎯 小組作業：大型活動海報小組設計（90′）</span>全組針對一個大型活動，<strong>共享一份統一風格 prompt</strong>，各自用 ChatGPT 做出一系列一致的海報。考點：AI 無法跨圖自動一致，靠共享 prompt 補上。</p>
+<h4>四階段</h4>
+<ol class="steps">
+  <li><strong>全組共識（20′）</strong>：選活動、投票定一個風格、定主色＋強調色＋構圖邏輯。</li>
+  <li><strong>★ 產出共享風格 prompt（20′）</strong>：全組一起寫，把「固定風格」和「每張替換的主體」分開，貼共享文件。</li>
+  <li><strong>各自生圖（25′）</strong>：每人貼同一份 prompt、只換自己那張的主體。<strong>不准改風格 tag。</strong></li>
+  <li><strong>加字＋併排檢查（25′）</strong>：Canva 加中文（約定同字型），4 張併排看像不像同系列，走味的回修。</li>
+</ol>
+<pre><span class="lbl">📋 共享風格 prompt 骨架</span>【固定風格（全組共用）】Promotional poster background, 〔style tag〕, vertical 2:3, 〔主色〕 dominant with 〔強調色〕 accent, empty band at top for title, clean, no text, no clip-art.
+【每張替換（各自填）】主體/場景：〔這張要呈現的內容〕</pre>
+<div class="expect"><span class="callout-t">✅ 交付</span>①活動與風格說明 ②全組共享 prompt 原文 ③4 張併排海報 ④反思：哪裡最難統一、AI 在哪幫上忙、哪裡靠人約定。</div>
+<div class="rescue"><span class="callout-t">🆘 卡住</span>系列走味→多半是風格 tag 被改或配色跑掉；字體不一致→統一在 Canva 事後排版做（AI 無法跨圖統一字型）。</div>
+<div class="note">⏱️ 時間長，可部分下放課後完成。</div>`,
 };
 
 const UNITS = [
-  [null,  "模組 2 · AI 生圖 + 視覺 Prompt + 文字生成"],
-  ["c1",  "2-A 生圖能／不能用於公務",            "40 min"],
-  ["e1",  "練習 1：生你的第一張圖",              "20 min"],
-  ["c2",  "2-B 視覺 Prompt 五件式骨架",          "30 min"],
-  ["e2",  "練習 2：重生一張真的能用的宣傳圖",     "40 min"],
-  ["c3",  "2-C 圖 × 文串成一份成品（觀念）",      "20 min"],
-  ["e3",  "練習 3：產出一則完整圖文貼文",         "50 min"],
+  [null,   "模組 2 · AI 生圖 + 海報（3 hr）"],
+  ["intro","開場 + 生圖用於公務的界線",       "20 min"],
+  ["e1",   "練習 1：五件式重生宣傳圖",         "40 min"],
+  ["e2",   "練習 2：常見圖像風格實驗",         "40 min"],
+  ["e3",   "練習 3：宣傳小海報風格指南",       "45 min"],
+  ["e4",   "★ 小組作業：大型活動海報小組設計", "90 min"],
 ];
 
 // ── State ─────────────────────────────────────────

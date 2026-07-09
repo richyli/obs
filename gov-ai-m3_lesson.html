@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>模組 3 · 萬用結構 + 思維鏈/樹 · 公務員 AI 進階班</title>
+<title>模組 3 · 進階結構 + 創意 · 公務員 AI 進階班</title>
 <style>
 *, *::before, *::after { box-sizing: border-box; }
 body {
@@ -130,133 +130,84 @@ body {
 const FIREBASE_URL = "https://course-update-36460-default-rtdb.firebaseio.com";
 const TEACHER_HASH = "a93ac600f27f6602bf628cd929c9028e285038fc8637fe1ec6792e8850ade6a8";
 const POLL_MS = 2500;
-const MOD_TITLE = "模組 3：萬用結構 + 思維鏈/樹";
+const MOD_TITLE = "模組 3：進階結構 + 創意";
 const MOD_SUB   = "讓 AI 想清楚";
-const EXIT_Q    = "思維鏈是「想深」、思維樹是「想廣」。你手上有哪一個「想很久才決定」的公務判斷，最適合下次交給思維鏈或思維樹先幫你鋪清楚？你會選哪一個、為什麼？";
+const EXIT_Q    = "思維鏈是「想深」、思維樹是「想廣」，Boden 三型是三種創意。你手上哪一個「想很久才決定」或「想不出新點子」的公務問題，最適合下次交給今天學的哪一招？為什麼？";
 
 const NEXT_HREF = "gov-ai-m4_lesson.html";
-const EXERCISES = ["e1","e2","e3"];
+const EXERCISES = ["e1","e2","e3","e4","e5","e6","e7"];
 
 const CONTENT = {
 
-"c1": `<p>模組 1 的三段式是入門版。要應付更複雜的公務任務，把它升級成<strong>萬用六件套</strong>——每多一件，就補掉一個常見的錯。</p>
+"intro": `<p>模組 3 進階：把提問升級成結構化，並用思維方法逼 AI 想清楚、想廣，最後用三種創意發想法找新點子。</p>
+<div class="note">⏱️ 本模組練習總時長偏長（7 張），講師依現場節奏取捨；創意四張可挑做或縮成快示範。</div>`,
+
+"e1": `<p><span class="callout-t">🎯 prompt 升級成六件套（30′）</span>三段式升級版，多兩件補常見錯。</p>
 <h4>萬用六件套</h4>
-<ol>
-  <li><strong>角色</strong>：「你是一位資深公文承辦」——定語氣與專業度</li>
-  <li><strong>背景</strong>：你是誰、幫誰、什麼事（同三段式）</li>
-  <li><strong>任務</strong>：具體要做什麼、哪些要件（同三段式）</li>
-  <li><strong>步驟/限制</strong>：「只根據我給的資料，不要自己補」——<strong>防它亂編</strong></li>
-  <li><strong>格式</strong>：長相、長度、分點（同三段式）</li>
-  <li><strong>品質檢查</strong>：「完成後自己檢查有沒有錯字、有沒有超過一頁」——<strong>逼它自審</strong></li>
-</ol>
-<div class="note"><span class="callout-t">為什麼有效</span>第 4 件（限制）擋掉幻覺，第 6 件（自審）讓它交件前先自我把關。這兩件是六件套比三段式強的關鍵。</div>`,
+<ul><li><strong>角色</strong>（定語氣）＋背景＋任務＋<strong>限制</strong>（防亂編）＋格式＋<strong>自審</strong>（逼把關）</li></ul>
+<pre><span class="lbl">📋 骨架</span>【角色】你是〔資深公文承辦〕。【背景】…【任務】…
+【限制】只根據我提供的資訊，缺的標「待補」，不編造數字/日期/法條。
+【格式】…【自審】完成後檢查錯字、長度、有沒有我沒提供卻被你編的資訊。</pre>
+<div class="expect"><span class="callout-t">✅ 會看到</span>升級版更貼合語氣、比較不亂編、結尾附「我檢查過這幾點請你確認」。後兩件是公務最需要的把關。</div>`,
 
-"e1": `<p><span class="callout-t">🎯 這個練習要幹嘛</span>把你<strong>模組 1 帶來的那份三段式 prompt</strong>，升級成六件套，親眼比較升級前後的輸出差多少。</p>
-<h4>逐步操作</h4>
+"e2": `<p><span class="callout-t">🎯 做一份可重用的填空模板（40′）</span>每週重貼同樣背景的事，存成模板，填空就跑。</p>
 <ol class="steps">
-  <li>找出你模組 1 作業寫的那份三段式 prompt（那件「每週都在做的煩事」）。</li>
-  <li>先在 AI 跑一次<strong>原本的三段式</strong>，把結果留著。</li>
-  <li>現在補上缺的三件——<strong>角色、限制、品質檢查</strong>，變成：
-    <pre><span class="lbl">📋 六件套骨架</span>【角色】你是一位〔資深公文承辦／熟悉本機關的公關〕。
-【背景】〔你原本的背景〕
-【任務】〔你原本的任務〕
-【限制】只根據我提供的資訊，缺的地方標「待補」，不要自己編造數字、日期、法條。
-【格式】〔你原本的格式〕
-【自審】完成後幫我檢查：① 有沒有錯字 ② 有沒有超過我要求的長度 ③ 有沒有我沒提供卻被你編出來的資訊，若有請標出來。</pre></li>
-  <li>跑升級版，和第 2 步的舊結果<strong>並排比較</strong>。</li>
+  <li>拿六件套 prompt，把每次會變的地方（日期/對象/事由）換成〔標籤〕，話術留著。</li>
+  <li>存進 Word（「我的 AI 模板.docx」）或 AI 對話釘選。</li>
+  <li>測一次：複製、換〔〕、送出，確認一次跑出你要的。</li>
 </ol>
-<div class="expect"><span class="callout-t">✅ 你應該會看到</span>升級版通常：更貼合你要的語氣（角色）、比較不會亂編（限制）、而且結尾會附一段「我檢查過，這幾點請你確認」（自審）。<strong>後面兩件是公務最需要的把關。</strong></div>
-<div class="rescue"><span class="callout-t">🆘 卡住了怎麼辦</span><ul>
-  <li><strong>沒帶模組 1 的 prompt</strong>：臨時挑一件小事（發通知/回信）現寫一份也行。</li>
-  <li><strong>感覺差不多</strong>：把任務換成更複雜的（要權衡、要引依據的），六件套的差距才明顯。</li>
-</ul></div>
-<div class="check"><span class="callout-t">📌 完成標準</span>你有一份升級成六件套的 prompt，且看得出它比三段式版更會把關。做到按「完成」。</div>`,
+<pre><span class="lbl">📋 通知模板範例</span>【角色】本機關承辦。【背景】通知〔對象〕關於〔事由〕。
+【任務】正式通知含 時間〔時間〕地點〔地點〕出席對象 準備事項〔事項〕。
+【限制】缺的標待補不編。【格式】150字內。【自審】查錯字與長度。</pre>
+<div class="expect"><span class="callout-t">✅ 會看到</span>換〔〕送出一次就得到堪用結果。模板價值：把「每週重寫」變「填空」。</div>`,
 
-"c2": `<p>一件事你<strong>每週都在重貼一樣的背景</strong>，那就該把好用的 prompt<strong>存成模板</strong>，下次改幾個字就跑。</p>
-<h4>公務常用的 5 種模板</h4>
-<ul>
-  <li><strong>通知模板</strong>：會議/活動通知</li>
-  <li><strong>簽稿模板</strong>：陳核用的「簽」</li>
-  <li><strong>回信模板</strong>：回覆民眾/單位的 email</li>
-  <li><strong>摘要模板</strong>：把長文件濃縮成重點</li>
-  <li><strong>比較模板</strong>：兩個方案/兩份文件對照</li>
-</ul>
-<div class="note"><span class="callout-t">怎麼存</span>不用什麼特別軟體：一份 Word / 記事本，或直接在 AI 對話裡「釘選」常用的那則。要用時複製出來、換掉〔〕就送。</div>`,
+"e3": `<p><span class="callout-t">🎯 思維鏈 vs 思維樹實測（70′）</span>要判斷用思維鏈（想深），要選方案用思維樹（想廣）。</p>
+<h4>Part A · 思維鏈（想深）</h4>
+<p>先直接問一個判斷題，再要它「先一步一步想再答」，比較兩次輸出。</p>
+<pre><span class="lbl">📋 思維鏈版</span>我要判斷〔某同仁假接特休〕這安排。請「先一步一步」列出：① 涉及哪些規定 ② 各自限制與卡點 ③ 哪些需回查原文，最後才給「可行/不可行/需確認」結論。</pre>
+<h4>Part B · 思維樹（想廣）</h4>
+<pre><span class="lbl">📋 思維樹版</span>我要辦一場〔活動〕，還沒決定形式。請提出 3 種做法（線上/實體/混合），各列優缺點與適用情境，最後推薦一個並說明理由。</pre>
+<div class="expect"><span class="callout-t">✅ 會看到</span>思維鏈把「為什麼」攤開＋標要回查的點；思維樹給三案優缺表＋推薦。</div>
+<div class="rescue"><span class="callout-t">🆘 卡住</span>它引法條→⚠️回原文核；三案很像→「讓差異更大、涵蓋不同資源與風險」。</div>`,
 
-"e2": `<p><span class="callout-t">🎯 這個練習要幹嘛</span>把你剛剛的六件套 prompt，<strong>改造成一份「換空格就能重用」的模板</strong>，並存起來。以後同類的事不用再從頭寫。</p>
-<h4>逐步操作</h4>
+"e4": `<p><span class="callout-t">🎯 AI 當腦力激盪夥伴（30′）</span>思維鏈骨架：發散→收斂→深化。好點子從一批爛點子裡篩＋長出來。</p>
 <ol class="steps">
-  <li>拿你上一個練習的六件套 prompt。</li>
-  <li>把裡面<strong>每次都會變的地方</strong>（日期、對象、事由、活動名稱）通通換成〔標籤〕，固定不變的話術留著。這樣它就從「一次性」變成「模板」。</li>
-  <li>例如通知模板：
-    <pre><span class="lbl">📋 通知模板範例</span>【角色】你是本機關承辦。
-【背景】我要通知〔對象〕關於〔事由〕。
-【任務】寫一則正式通知，含：時間〔時間〕、地點〔地點〕、出席對象、需準備事項〔事項〕。
-【限制】缺的標「待補」，不要自己編。
-【格式】150 字內、正式簡潔。
-【自審】檢查錯字與長度。</pre></li>
-  <li>把這份模板<strong>存進一個 Word 檔</strong>（就叫「我的 AI 模板.docx」），或在 AI 對話釘選。</li>
-  <li>馬上測一次：複製模板、換掉〔〕、送出，確認能一次跑出你要的東西。</li>
+  <li><strong>發散</strong>：要 20 個點子，越多元越好，<strong>不准批評</strong>。<pre>我要發想〔讓長者更願意用線上申辦的方法〕。先大量發散給我 20 個，保守到異想天開都要。</pre></li>
+  <li><strong>收斂</strong>：設三判準（辦得到/有感/三個月內能試）逐一評分，挑總分最高 3 個。</li>
+  <li><strong>深化</strong>：挑 1 個展開成可試辦雛形。</li>
 </ol>
-<div class="expect"><span class="callout-t">✅ 你應該會看到</span>換完〔〕送出，一次就得到堪用結果——因為話術骨架已經固定好了。<strong>這就是模板的價值：把「每週重寫」變成「填空」。</strong></div>
-<div class="rescue"><span class="callout-t">🆘 卡住了怎麼辦</span><ul>
-  <li><strong>不知道哪些該挖成〔〕</strong>：口訣「下次做同類事會變的，就挖空；話術不變的，留著」。</li>
-  <li><strong>模板太死板</strong>：保留一行「如需調整語氣請告訴我」，用的時候可追問微調。</li>
-</ul></div>
-<div class="check"><span class="callout-t">📌 完成標準</span>你有一份存好的、可重用的模板，且測過填空就能跑。做到按「完成」。</div>`,
+<div class="expect"><span class="callout-t">✅ 會看到</span>20 候選→收斂 3 個→養成 1 個雛形，看見好點子怎麼長出來。</div>`,
 
-"c3": `<p>複雜的事——要算、要推、要判斷的——AI 常給你「看起來對但站不住」的答案。解法是<strong>思維鏈（Chain-of-Thought）</strong>：叫它<strong>先一步一步想，再給結論</strong>。</p>
-<h4>咒語句型</h4>
-<ul>
-  <li>「請先列出你的推理步驟，再給最終答案。」</li>
-  <li>「先分析各項利弊，最後才下建議。」</li>
-  <li>「一步一步說明你怎麼算出這個數字。」</li>
-</ul>
-<div class="note"><span class="callout-t">為什麼有效</span>逼它把思路攤開，你就能<strong>看見它哪一步錯了</strong>，而不是只拿到一個黑箱結論。</div>
-<div class="warn"><span class="callout-t">⚠️ 重要</span>推理過程<strong>也可能錯</strong>。思維鏈讓錯誤「看得見、可挑」，不是保證正確。它幫你檢查，不幫你負責。</div>`,
-
-
-"e3": `<p><span class="callout-t">🎯 這個練習要幹嘛</span>用一個<strong>要判斷的公務題</strong>，親眼比較「直接問」vs「叫它先推理再答」差多少，再學會思維樹（多方案）。</p>
-<h4>Part A：思維鏈（想深）</h4>
+"e5": `<p><span class="callout-t">🎯 跨界類比找新點子（30′）</span>借別的領域的解法搬回自己的問題。</p>
 <ol class="steps">
-  <li>挑一個你會遇到的判斷題，例如「某同仁想請 5 天家庭照顧假接連特休，這樣安排行不行、要注意什麼」。</li>
-  <li>先<strong>直接問</strong>：「這樣請假可以嗎？」——看它給的結論。</li>
-  <li>再<strong>要它先推理</strong>：
-    <pre><span class="lbl">📋 思維鏈版</span>我要判斷〔某同仁家庭照顧假接特休〕這個安排。
-請「先一步一步」列出：① 涉及哪些規定 ② 各自的限制與可能卡點 ③ 哪些地方我需要回查法規原文，最後才給我一個「可行/不可行/需確認」的結論。</pre></li>
-  <li>比較兩次輸出：後者是不是讓你更看得懂「為什麼」、也更知道哪裡要自己再查？</li>
+  <li>找跨界解法：<pre>我的問題是〔民眾臨櫃等太久〕。請找餐飲、遊戲、電商、醫院、超商、航空各 1 個解類似問題的具體做法，說明核心機制。</pre></li>
+  <li>逐一轉譯回公務：「如果套用〔某機制〕，我單位可以怎麼做？會卡在哪？」</li>
+  <li>挑最可行的深化成試辦雛形。</li>
 </ol>
-<h4>Part B：思維樹（想廣）</h4>
-<p>要「選一個方案」的事，叫它先鋪多案再選：</p>
-<pre><span class="lbl">📋 思維樹版</span>我要辦一場〔活動〕，還沒決定形式。
-請提出 3 種不同做法（例如 線上／實體／混合），每種分別列「優點、缺點、適用情境」，最後推薦一個並說明理由。</pre>
-<div class="expect"><span class="callout-t">✅ 你應該會看到</span>思維鏈版把判斷的「為什麼」攤開、標出要回查的點；思維樹版給你三個方案的優缺對照表＋一個推薦。<strong>一句話分工：要想深用思維鏈，要想廣用思維樹。</strong></div>
-<div class="rescue"><span class="callout-t">🆘 卡住了怎麼辦</span><ul>
-  <li><strong>它引了法條</strong>：⚠️ 一定回原文核，AI 會把不存在的條號講得很篤定。</li>
-  <li><strong>三個方案很像</strong>：追問「請讓三案差異更大，涵蓋不同資源與風險」。</li>
-</ul></div>
-<div class="check"><span class="callout-t">📌 完成標準</span>你各跑過一次思維鏈與思維樹，且能說出兩者用途差異。做到按「完成」。</div>`,
+<div class="expect"><span class="callout-t">✅ 會看到</span>六領域解法表→轉譯回公務→一個可試辦的跨界點子。跳出「我們一向都這樣做」。</div>`,
 
-"c4": `<p>收束——把這模組的四招串起來：</p>
-<ul>
-  <li><strong>六件套</strong>：複雜任務用完整六件（多了限制防亂編、自審逼把關）</li>
-  <li><strong>模板</strong>：每週重複的事存起來，填空就跑</li>
-  <li><strong>思維鏈</strong>：要判斷、要推的事，叫它先想再答（想深）</li>
-  <li><strong>思維樹</strong>：要選方案的事，叫它先鋪多案再選（想廣）</li>
-</ul>
-<div class="question"><span class="callout-t">🏛️ 帶回去想</span>你最近一個「想很久才決定」的公務判斷，若當初讓 AI 先用思維樹鋪三案+列優缺，會不會更快、更周全？</div>
-<div class="note"><span class="callout-t">📌 本模組作業</span>用思維樹讓 AI 幫你把一個「下週要決定的事」鋪出三案，帶到模組 4。</div>`,
+"e6": `<p><span class="callout-t">🎯 組合式創意 Boden 1（25′）</span>把兩個既有、看似無關的東西用新方式湊在一起。</p>
+<p><strong>Boden 三型速記</strong>：組合式（新組合）｜探索式（框架內窮舉）｜變革式（打破框架）。</p>
+<pre><span class="lbl">📋 骨架</span>我單位有這些：〔服務/活動/場地，列5個〕。給你一組概念：〔遊戲化、訂閱制、快閃、盲盒、直播〕。用「組合式創意」兩兩強迫組合，生 10 個新點子（組合了什麼×什麼→變成什麼）。先湊出來不自我審查。</pre>
+<div class="expect"><span class="callout-t">✅ 會看到</span>10 個「A×B」組合→收斂 3 個。既有資源換組合就有新玩法。</div>`,
+
+"e7": `<p><span class="callout-t">🎯 探索式創意 Boden 2（25′）</span>不打破規則，在框架內窮盡沒走過的可能。</p>
+<pre><span class="lbl">📋 骨架</span>我單位的〔某服務〕現在這樣辦：〔現況〕。規則/限制：〔不能動的框架〕。用「探索式創意」——不打破規則，把這件事拆成可變維度（時間/地點/對象/形式/通路），每維度列現況 vs 沒試過的選項，組出 8 個「規則內但沒走過」的新做法。</pre>
+<div class="expect"><span class="callout-t">✅ 會看到</span>可變維度表→8 個框架內新做法→3 個可直接試。不推翻制度也能創新。</div>
+<div class="rescue"><span class="callout-t">🆘 卡住</span>它想打破規則→拉回「規則不能動，只在框架內找空白」。</div>
+<div class="note">想更激進？備用池有「變革式創意 Boden 3（打破框架）」，時間夠可加。</div>`,
 };
 
 const UNITS = [
-  [null,  "模組 3 · 萬用結構 + 模板 + 思維鏈／思維樹"],
-  ["c1",  "3-A 三段式 → 萬用六件套",             "40 min"],
-  ["e1",  "練習 1：把你的 prompt 升級成六件套",   "30 min"],
-  ["c2",  "3-B 模板化：好 prompt 存起來重用",     "20 min"],
-  ["e2",  "練習 2：做一份可重用的填空模板",       "40 min"],
-  ["c3",  "3-C 思維鏈（想深）",                  "20 min"],
-  ["e3",  "練習 3：思維鏈 vs 思維樹實測",        "70 min"],
-  ["c4",  "3-D 四招串起來 + 收束",              "20 min"],
+  [null,   "模組 3 · 進階結構 + 推理 + 創意（3 hr）"],
+  ["intro","開場",                        "5 min"],
+  ["e1",   "練習 1：prompt 升級成六件套",   "30 min"],
+  ["e2",   "練習 2：做一份可重用的填空模板", "40 min"],
+  ["e3",   "練習 3：思維鏈 vs 思維樹實測",  "70 min"],
+  ["e4",   "練習 4：AI 當腦力激盪夥伴",     "30 min"],
+  ["e5",   "練習 5：跨界類比找新點子",      "30 min"],
+  ["e6",   "練習 6：組合式創意（Boden 1）", "25 min"],
+  ["e7",   "練習 7：探索式創意（Boden 2）", "25 min"],
 ];
 
 // ── State ─────────────────────────────────────────

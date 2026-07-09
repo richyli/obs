@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>模組 4 · 公務案例實作 · 公務員 AI 進階班</title>
+<title>模組 4 · 公務應用 · 公務員 AI 進階班</title>
 <style>
 *, *::before, *::after { box-sizing: border-box; }
 body {
@@ -130,142 +130,103 @@ body {
 const FIREBASE_URL = "https://course-update-36460-default-rtdb.firebaseio.com";
 const TEACHER_HASH = "a93ac600f27f6602bf628cd929c9028e285038fc8637fe1ec6792e8850ade6a8";
 const POLL_MS = 2500;
-const MOD_TITLE = "模組 4：公務應用案例實作";
+const MOD_TITLE = "模組 4：公務應用";
 const MOD_SUB   = "全課高潮";
 const EXIT_Q    = "這兩天結束後，你回單位「第一個要交給 AI 的一件事」是什麼？它最可能卡在「prompt 留白沒講清楚」還是「資安不能貼、要先去識別化」？為什麼？";
 
 const NEXT_HREF = "";
-const EXERCISES = ["e1","e2","e3","e4"];
+const EXERCISES = ["e1","e2","e3","e4","e5","e6","e7","e8","e9","demo"];
 
 const CONTENT = {
 
-"intro": `<p>這是全課高潮。前兩天學的三段式、六件套、思維鏈/樹、生圖，現在<strong>全部落到四類你每天在做的公務情境</strong>，每類產一份真的能用的成品。最後一段，老師 demo「會動手的 AI」，讓你看見還能更省。</p>
-<div class="warn"><span class="callout-t">⛔ 老話重講一次</span>下面所有練習，凡是真實公文/個資，<strong>先去識別化</strong>（姓名、號碼、地址換〔〕）再貼。這條到最後一刻都成立。</div>`,
+"intro": `<p>全課高潮：前面學的能力全部落到十類真實公務情境。<strong>時長遠超 3 小時，講師依單位屬性挑做</strong>（社福重便民 FAQ、研考重民意分析…），其餘可快示範或下放課後。最後一段 agentic demo 壓軸。</p>
+<div class="warn"><span class="callout-t">⛔ 老話重講</span>凡真實公文/個資，先去識別化再貼。</div>`,
 
-"e1": `<p><span class="callout-t">🎯 情境一：公文／簽呈</span>把口頭交辦或一件要陳核的事，變成一份格式對的「函」或「簽」。</p>
-<h4>先分清楚「函」和「簽」</h4>
-<ul>
-  <li><strong>函</strong>：有受文者、對外或跨單位。結構：<strong>主旨 → 說明 → 辦法</strong></li>
-  <li><strong>簽</strong>：對內、向長官陳報請示。結構：<strong>主旨 → 說明 → 擬辦</strong></li>
-</ul>
-<h4>逐步操作</h4>
-<ol class="steps">
-  <li>挑一件你手上真的要擬的公文（例：跟總務處借場地、陳報一個活動計畫）。</li>
-  <li>用六件套骨架下指令，〔〕換成真情況：
-    <pre><span class="lbl">📋 複製後填空</span>【角色】你是我的公文擬稿助理，熟悉台灣公文程式。
-【背景】發文機關：〔○○機關○○科〕；受文者：〔○○〕；事由：〔…〕；補充：〔…〕。
-【任務】擬一份「〔函／簽〕」，含 主旨、說明（分點）、〔辦法／擬辦〕。用語正式不冗贅。
-【限制】文號、日期、法源留〔〕給我填，不要自己編。缺的資訊標「待補」。
-【格式】主旨一句、句尾用制式結尾語（如「請 查照。」）；說明分點（一、二…）；控制一頁。
-【自審】完成後標出哪些地方是我沒提供、你不該擅自填的。</pre></li>
-  <li>拿到草稿，用追問句調：「說明第二點改白話些」「改成簽給處長核示」。</li>
-</ol>
-<div class="expect"><span class="callout-t">✅ 你應該會看到</span>一份結構正確（主旨/說明/辦法或擬辦）、用語像公文的草稿，文號日期處留著〔〕等你填。</div>
-<div class="rescue"><span class="callout-t">🆘 卡住了怎麼辦</span><ul>
-  <li><strong>它自己編了文號/法條</strong>：把「限制」段講更死，或追問「把你編的文號、法條全部改回〔〕」。</li>
-  <li><strong>語氣太生硬/太隨便</strong>：追問「更符合平行單位間的公文語氣」。</li>
-  <li><strong>不確定該用函還是簽</strong>：對外/跨單位用函，對內請示長官用簽。</li>
-</ul></div>
-<div class="check"><span class="callout-t">📌 完成標準</span>你有一份公文/簽呈草稿，結構對、個資與待填處都留〔〕。做到按「完成」。</div>`,
+"e1": `<p><span class="callout-t">🎯 公文／簽呈草擬（30′）</span>有受文者用「函」（主旨/說明/辦法）；對內請示長官用「簽」（主旨/說明/擬辦）。</p>
+<pre><span class="lbl">📋 複製後填空</span>【角色】你是我的公文擬稿助理，熟悉台灣公文程式。
+【背景】發文機關〔○○科〕；受文者〔○○〕；事由〔…〕。
+【任務】擬一份「〔函/簽〕」，含主旨、說明（分點）、〔辦法/擬辦〕，用語正式不冗贅。
+【限制】文號、日期、法源留〔〕給我填，不要自己編。
+【格式】主旨一句＋制式結尾語；說明分點；控制一頁。【自審】標出你不該擅填的地方。</pre>
+<div class="rescue"><span class="callout-t">🆘 卡住</span>它編文號/法條→追問「全改回〔〕」；不確定函還是簽→對外用函、對內請示用簽。</div>`,
 
-"e2": `<p><span class="callout-t">🎯 情境二：新聞稿一稿多版</span>一份活動素材，一次生出<strong>新聞稿＋官網公告＋FB＋LINE</strong> 四個平台版本。這是「人力 × 平台數」的放大。</p>
-<h4>逐步操作</h4>
-<ol class="steps">
-  <li>準備一份活動的基本資訊（名稱、講者、時間地點、重點、主辦）。</li>
-  <li>一次要四版：
-    <pre><span class="lbl">📋 複製後填空</span>【角色】你是我的行政公關助理。
-【背景】以下是一場活動的資訊：名稱〔…〕講者〔…〕時間地點〔…〕重點〔…〕主辦〔…〕。
-【任務】一次產出四個平台版本，各符合平台特性：
-1 新聞稿（正式、倒金字塔結構、含一句主管 quote 用〔〕佔位）
-2 官網公告（條列資訊、報名連結用〔〕佔位）
-3 FB 貼文（親切 3-5 行、1-2 emoji、結尾行動呼籲）
-4 LINE 通知（最短、只留時間地點＋報名一句話）
-【限制】quote、報名連結、確切人數用〔〕佔位，不要自己編。
-【格式】四版各加清楚標題，方便我分別複製。</pre></li>
-  <li>四版各自複製去用；把〔〕佔位換成真的（quote 找主管確認、連結貼真網址）。</li>
-</ol>
-<div class="expect"><span class="callout-t">✅ 你應該會看到</span>四段各有標題、語氣長度明顯不同：新聞稿最正式、FB 最親切、LINE 最短。過去你要改四遍，現在一次到位。</div>
-<div class="note"><span class="callout-t">💡 接模組 2</span>把 FB 版配上你模組 2 生的那張活動圖——圖＋文，一則完整貼文就成了。</div>
-<div class="rescue"><span class="callout-t">🆘 卡住了怎麼辦</span><ul>
-  <li><strong>四版都差不多</strong>：追問「FB 版再口語，LINE 版再短，兩者不要像新聞稿」。</li>
-  <li><strong>它把假 quote 寫得很真</strong>：提醒它用〔〕佔位；真 quote 一定找當事人確認再放。</li>
-</ul></div>
-<div class="check"><span class="callout-t">📌 完成標準</span>你有一份素材生出的四平台版本，各自像該平台的東西。做到按「完成」。</div>`,
+"e2": `<p><span class="callout-t">🎯 新聞稿一稿多版（30′）</span>一份素材 → 新聞稿＋官網＋FB＋LINE 四版。</p>
+<pre><span class="lbl">📋 複製後填空</span>【角色】行政公關助理。【背景】活動：名稱〔…〕講者〔…〕時間地點〔…〕重點〔…〕。
+【任務】一次四版：1新聞稿（正式倒金字塔含quote用〔〕）2官網公告（條列+連結〔〕）3 FB（親切3-5行1-2emoji行動呼籲）4 LINE（最短只留時間地點+報名一句）。
+【限制】quote/連結/人數用〔〕佔位別編。【格式】四版各加標題。</pre>
+<div class="expect"><span class="callout-t">✅ 會看到</span>四版語氣長度明顯不同。可配模組 2 的圖，圖＋文=完整發布。</div>`,
 
-"e3": `<p><span class="callout-t">🎯 情境三：法規比對與適用查詢</span>兩個最實用的法規任務——逐條比對、適用查詢。</p>
-<div class="warn"><span class="callout-t">⛔ 本情境最重要的警告</span>AI 會把<strong>不存在的條號</strong>講得非常篤定。它的角色只是「幫你指路——該看哪幾條」，<strong>最終依據一律回法規原文</strong>，絕不可把 AI 的話直接引為公文依據。</div>
-<h4>任務 A：逐條比對（redline）</h4>
-<ol class="steps">
-  <li>準備「現行版」和「修正草案」兩份（貼全文或上傳檔）。</li>
-  <li>下指令：
-    <pre><span class="lbl">📋 複製</span>以下是〔○○辦法〕的現行版與修正草案，請逐條比對。
-【現行版】〔貼全文或上傳〕
-【修正草案】〔貼全文或上傳〕
-【任務】做逐條對照表：條號／現行條文／修正條文／變動類型（新增·刪除·修正）／一句修正重點。條號跳動、合併、新增也要標。
-【限制】只根據我貼的內容比對，不推測未提供的條文。
-【格式】表格；未變動的條標「未修正」，不用抄全文。</pre></li>
-  <li>拿到對照表，<strong>涉及權利義務的關鍵條號自己再核一次</strong>。</li>
-</ol>
-<h4>任務 B：適用查詢</h4>
-<pre><span class="lbl">📋 複製</span>以下是〔○○辦法〕全文，接著給你一個實務情境。
-【辦法全文】〔貼全文或上傳〕
-【情境】〔例如：兼任助理想請 3 天事假，要不要會辦人事？〕
-【任務】請告訴我：1 適用哪一條（引條號與原文句）2 你的判斷與理由 3 哪裡模糊、需要我回查或問人事。
-【限制】只根據我貼的辦法回答；辦法沒寫到就說「辦法未規定」，不要自己補。</pre>
-<div class="expect"><span class="callout-t">✅ 你應該會看到</span>A 給你一張逐條對照表（哪條改了、怎麼改）；B 幫你定位條文、給判斷、並老實標出「哪裡要回查」。它幫你<strong>快速找到該看哪幾條</strong>，省掉一下午手工對照。</div>
-<div class="rescue"><span class="callout-t">🆘 卡住了怎麼辦</span><ul>
-  <li><strong>它說某條「修正」但兩版看起來一樣</strong>：追問「第 X 條再確認，兩版差在哪」。網頁版沒有並排 diff，長辦法容易漏——這正是下一段 agentic demo 的殺手鐧。</li>
-  <li><strong>它引的條文我核對不到</strong>：立刻停，回法規原文查。這就是幻覺，別採信。</li>
-</ul></div>
-<div class="check"><span class="callout-t">📌 完成標準</span>你跑過比對與適用查詢各一次，並且知道「關鍵條號一定回原文核」。做到按「完成」。</div>`,
+"e3": `<p><span class="callout-t">🎯 政策分眾訊息改寫（35′）</span>同一政策對不同對象換說法（一稿多受眾）。</p>
+<pre><span class="lbl">📋 複製後填空</span>【背景】政策/服務〔…〕，核心內容〔一句話〕。
+【任務】針對不同對象各改一版（重點是各自的「關我什麼事」）：
+1長者（口語、實際好處）2年輕上班族（省時省錢、可線上）3業者（合作商機）4家長（對孩子/家庭影響）。
+【限制】核心事實不變，只換切入點與語氣。【格式】四版各加對象標題，每版100字內。</pre>
+<div class="expect"><span class="callout-t">✅ 會看到</span>核心一致但利益點與語氣明顯不同——長者版最口語、業者版談商機。</div>`,
 
-"e4": `<p><span class="callout-t">🎯 情境四：會議紀錄／PDF 彙整</span>把一團流水帳，變成有決議、有待辦的正式紀錄；把一疊 PDF 彙整成表。</p>
-<h4>任務 A：會議紀錄</h4>
-<ol class="steps">
-  <li>準備一份會議逐字稿或你的手寫便條（去識別化）。</li>
-  <li>下指令：
-    <pre><span class="lbl">📋 複製</span>以下是〔○○會議〕的逐字稿／便條，整理成正式會議紀錄。
-【原始內容】〔貼上或上傳〕
-【任務】整理成三塊：
-1 決議事項（每條一句、可執行）
-2 待辦事項（表格：事項／負責人／期限，沒講到的標「待確認」）
-3 討論摘要（每議題 2-3 句）
-【限制】不要把「只是討論到的」寫成決議；沒共識的標「未決」，不要自己補結論。
-【格式】標題分三塊，待辦用表格。</pre></li>
-  <li>核對——<strong>哪些是真的拍板</strong>，哪些只是討論。</li>
-</ol>
-<h4>任務 B：PDF 彙整（對話式版）</h4>
-<p>一次上傳幾個 PDF（各系所/單位回覆），請它彙整成表：</p>
-<pre><span class="lbl">📋 複製</span>我上傳了幾份〔各單位回覆〕的 PDF，請彙整成一張表：單位／回覆重點／是否逾期／缺漏項。缺的標「待確認」。</pre>
-<div class="expect"><span class="callout-t">✅ 你應該會看到</span>A 把流水帳變成「決議／待辦（含負責人期限）／摘要」三塊；B 把幾份 PDF 濃縮成一張總表。<strong>結構化雜訊，是 AI 最擅長的。</strong></div>
-<div class="warn"><span class="callout-t">⚠️ 注意</span>AI 常把「討論到的」誤當「決議」——你要核對哪些真的拍板。免費網頁版對 PDF 有<strong>檔數/大小限制</strong>，一次幾份還行，一疊幾十份就要看下一段的 agentic demo。</div>
-<div class="check"><span class="callout-t">📌 完成標準</span>你把一份會議內容整理成三塊結構、或把幾份 PDF 彙整成一張表。做到按「完成」。</div>`,
+"e4": `<p><span class="callout-t">🎯 民眾 FAQ 一次生成（30′）</span>讓 AI 當「不懂的民眾」先問一輪，一次生一份 FAQ。</p>
+<pre><span class="lbl">📋 複製後填空</span>【角色】你先扮演「完全不懂這服務的民眾」，再扮演承辦回答。
+【背景】服務規則〔貼重點〕。【任務】1以民眾角度列12個最可能問的（含容易搞混/漏辦的）2逐題白話擬答每題3句內 3標出「需回查正式規定」的別自己編條號金額期限。
+【格式】Q/A 條列，答案像櫃台口頭回答不念法條。</pre>
+<div class="expect"><span class="callout-t">✅ 會看到</span>12 題白話 FAQ，涵蓋你沒想到的疑問；需查證處被誠實標出。</div>`,
 
-"demo": `<p><span class="callout-t">★★ 這一段：老師 demo，你看關鍵動作</span>前面四情境你都用「對話式 AI」做——你複製、貼上、再複製。現在看「<strong>會動手的 AI</strong>」在同樣的事上多做了什麼。<strong>你不用裝任何東西</strong>，用 claude.ai 網頁版的 Connector 就能看到。</p>
-<h4>對話式 vs 會動手的 AI</h4>
-<ul>
-  <li><strong>對話式</strong>（你這兩天在用的）：回你一段文字，動作你自己來（複製、貼上、對回 Word）</li>
-  <li><strong>Agentic（會動手的）</strong>：直接讀你的檔、改你的檔、串你的行事曆/雲端硬碟——你看它做、必要時喊停</li>
-</ul>
-<h4>老師會 demo 三段（免安裝）</h4>
+"e5": `<p><span class="callout-t">🎯 法規比對與適用查詢（30′）</span>逐條比對＋適用查詢。</p>
+<div class="warn"><span class="callout-t">⛔ 最重要警告</span>AI 會把<strong>不存在的條號</strong>講得很篤定。它只「指路」，<strong>最終依據一律回法規原文</strong>，不可引 AI 的話當公文依據。</div>
+<pre><span class="lbl">📋 比對</span>以下〔○○辦法〕現行版與修正草案，逐條比對做對照表：條號/現行/修正/變動類型/一句重點。只根據我貼的內容比對，不推測。用表格。</pre>
+<pre><span class="lbl">📋 適用查詢</span>以下〔○○辦法〕全文＋情境〔…〕。請告訴我：1適用哪條（引條號原文）2判斷與理由 3哪裡需回查。只根據我貼的辦法回答，沒寫到就說「未規定」。</pre>
+<div class="rescue"><span class="callout-t">🆘 卡住</span>引的條文核對不到→立刻停回原文查（幻覺別採信）。並排 diff 是下一段 agentic 的殺手鐧。</div>`,
+
+"e6": `<p><span class="callout-t">🎯 長文件摘要與行動清單（25′）</span>長文件濃縮成「重點/我方要做的事/地雷」三塊。</p>
+<pre><span class="lbl">📋 複製後填空</span>【背景】一份〔計畫書/上級來函/長報告〕〔貼上或上傳〕，我是〔哪個單位承辦〕。
+【任務】三塊：1重點摘要（5條內，只留與決策執行有關的）2我方要做的事（表格：事項/期限/負責科室，缺的標待確認）3要注意的地雷。
+【限制】只根據文件，不補；引用處標在哪一段。</pre>
+<div class="expect"><span class="callout-t">✅ 會看到</span>長文件變一頁：5條重點＋一張「我要做什麼」表＋幾個地雷。</div>`,
+
+"e7": `<p><span class="callout-t">🎯 社群貼文月曆規劃（35′）</span>規劃一個月社群貼文的主題節奏，不靠靈感靠規劃。</p>
+<pre><span class="lbl">📋 複製後填空</span>【背景】我是〔單位〕小編，經營〔FB/IG/LINE〕，單位屬性〔…〕，這月事件〔活動/政策/節慶〕，每週能發〔3〕則。
+【任務】排一月貼文行事曆（表格：日期/主題類型/一句方向）。類型多樣：活動預告、便民小知識、幕後、節慶、互動問答，硬廣告最多三成。【格式】表格＋月底一則回顧。</pre>
+<div class="expect"><span class="callout-t">✅ 會看到</span>一張有節奏的月曆（不同類型穿插）。從「想到才發」變「照表發」。</div>`,
+
+"e8": `<p><span class="callout-t">🎯 社群留言回覆與危機話術（35′）</span>面對負評/情緒留言，用 AI 先擬穩住的理性回覆。</p>
+<pre><span class="lbl">📋 複製後填空（留言先去識別化）</span>【角色】社群小編助理，擅長公部門理性溝通。
+【背景】民眾留言〔已去識別化貼上幾則〕。【任務】逐則：1分類（疑問/誤解/情緒抱怨/惡意/須轉單）2擬回覆草稿（冷靜不對嗆、先同理再給正確資訊）3標出哪些該私訊/轉單、哪些涉個案不宜公開回。
+【限制】不承諾做不到的事；不確定標「需查證再回」。</pre>
+<div class="expect"><span class="callout-t">✅ 會看到</span>每則有分類＋理性回覆草稿＋處理判斷。情緒上頭時有穩的底稿可改。</div>
+<div class="rescue"><span class="callout-t">🆘 卡住</span>回覆太官腔→「先同理一句像人不是罐頭」；AI 過度承諾→「刪掉我無權承諾的」。</div>`,
+
+"e9": `<p><span class="callout-t">🎯 民眾網路建言撈取與分析（40′）</span>一大坨民意→爭點分類＋情緒＋建議＋重點個案。</p>
+<div class="note">撈取：只用單位有權存取的資料（民意信箱/陳情/問卷開放題/公開留言），貼進 AI 前去識別化，不爬受保護內容。</div>
+<pre><span class="lbl">📋 分析</span>【角色】民意分析助理。【背景】〔某政策〕民眾意見〔N則已去識別化〕。
+【任務】1爭點分類（幾個議題＋出現次數）2情緒判讀（每類情緒＋代表句）3具體建議 4少數但重要（安全/法律/弱勢）。
+【限制】不誇大不淡化，只根據提供意見，統計是趨勢非精確數字。</pre>
+<div class="expect"><span class="callout-t">✅ 會看到</span>散亂意見→爭點×情緒表＋建議＋重點個案。讀不完的留言變成能上簽的民意摘要。</div>
+<div class="rescue"><span class="callout-t">🆘 卡住</span>把少數當主流→「依實際次數排序別放大單一激烈留言」。⚠️去識別化、只用有權來源。</div>`,
+
+"demo": `<p><span class="callout-t">★★ Agentic Demo：會動手的 AI（55′，老師 demo 壓軸）</span>前面都用「對話式 AI」（你複製貼上）；看「會動手的 AI」在同樣的事上多做了什麼。<strong>免安裝</strong>，用 claude.ai 網頁 Connector。</p>
+<h4>對話式 vs 會動手</h4>
+<ul><li><strong>對話式</strong>：回你文字，動作你自己來。<strong>Agentic</strong>：讀檔/改檔/串你的行事曆雲端硬碟，你看它做、必要時喊停。</li></ul>
+<h4>老師 demo 三段</h4>
 <ol class="steps">
-  <li><strong>行事曆祕書</strong>（Google Calendar Connector）：「看我下週哪天最空，幫某個會找一小時空檔並建立」→ 它回一張表、你確認、它直接建好。你描述<strong>意圖</strong>，它選工具、執行、確認——這就是 agentic 的感覺。</li>
-  <li><strong>雲端硬碟彙整</strong>（Google Drive Connector）：「讀我這個資料夾裡幾份回覆，彙整成一張總表」→ 對照情境四你手動一個個上傳，看差在哪。</li>
-  <li><strong>法規 redline 放大</strong>（回扣情境三）：老師端用真 Claude Code demo「兩個檔並排 diff＋逐條對照」，讓你看見對話式做不到的那一塊。</li>
+  <li><strong>行事曆祕書</strong>（Google Calendar）：「看我下週哪天最空，幫某會找一小時建立」→回表、你確認、它建好。</li>
+  <li><strong>雲端硬碟彙整</strong>（Google Drive）：「讀這資料夾幾份回覆彙整成總表」→對照手動上傳差在哪。</li>
+  <li><strong>法規 redline 放大</strong>：老師端真 Claude Code demo 兩檔並排 diff＋逐條對照。</li>
 </ol>
-<div class="note"><span class="callout-t">為什麼它能「懂你單位」</span>會動手的 AI 之所以像「跟你三年的資深承辦」，是因為它能記住<strong>你的格式（單位守則）、你的偏好（處長不喜歡的用語）、把常做的事做成一鍵指令</strong>。這需要進一步安裝，回去看老師提供的資源。</div>
-<div class="question"><span class="callout-t">🏛️ 收束</span>當你發現「<strong>同一件事，我每週都在重貼背景、重上傳檔</strong>」——那就是該從對話式升級到會動手的 AI 的訊號。</div>
-<div class="check"><span class="callout-t">📌 完成標準</span>你看懂了對話式與 agentic 的差別，也知道自己哪件重複工作最該升級。做到按「完成」。</div>`,
+<div class="note">會動手的 AI 能「懂你單位」，因為它記得你的格式/偏好/把常做的事做成一鍵指令。想深入回去看資源。</div>
+<div class="question"><span class="callout-t">🏛️ 收束</span>當你發現「同一件事我每週都在重貼背景、重上傳檔」——那就是升級到會動手的 AI 的訊號。</div>`,
 };
 
 const UNITS = [
-  [null,   "模組 4 · 公務應用案例實作（全課高潮）"],
-  ["intro","開場：四情境 + agentic demo 怎麼進行",  "5 min"],
-  ["e1",   "情境一：公文／簽呈（函、簽）",           "30 min"],
-  ["e2",   "情境二：新聞稿一稿多版",               "30 min"],
-  ["e3",   "情境三：法規比對與適用查詢",           "30 min"],
-  ["e4",   "情境四：會議紀錄／PDF 彙整",           "30 min"],
-  ["demo", "★★ Agentic Demo：會動手的 AI（免安裝）", "55 min"],
+  [null,   "模組 4 · 公務應用（3 hr · 依單位屬性挑做）"],
+  ["intro","開場：十情境怎麼挑",              "5 min"],
+  ["e1",   "情境 1：公文／簽呈草擬",           "30 min"],
+  ["e2",   "情境 2：新聞稿一稿多版",           "30 min"],
+  ["e3",   "情境 3：政策分眾訊息改寫",         "35 min"],
+  ["e4",   "情境 4：民眾 FAQ 一次生成",        "30 min"],
+  ["e5",   "情境 5：法規比對與適用查詢",       "30 min"],
+  ["e6",   "情境 6：長文件摘要與行動清單",     "25 min"],
+  ["e7",   "情境 7：社群貼文月曆規劃",         "35 min"],
+  ["e8",   "情境 8：社群留言回覆與危機話術",   "35 min"],
+  ["e9",   "情境 9：民眾網路建言撈取與分析",   "40 min"],
+  ["demo", "★★ Agentic Demo：會動手的 AI",     "55 min"],
 ];
 
 // ── State ─────────────────────────────────────────
