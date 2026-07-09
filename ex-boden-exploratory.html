@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>探索式創意（Boden 2） · 練習</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;}
+body{font-family:"Helvetica Neue",Arial,"Noto Sans TC",sans-serif;background:#f0f2f5;margin:0;color:#1a1a1a;}
+.topnav{background:#fff;border-bottom:1px solid #e4e4e4;padding:.7rem 1.2rem;position:sticky;top:0;z-index:10;box-shadow:0 2px 8px rgba(0,0,0,.05);display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;font-size:.8rem;}
+.topnav a{color:#0055cc;text-decoration:none;font-weight:600;}
+.topnav a:hover{text-decoration:underline;}
+.topnav .sep{color:#bbb;}
+.topnav .cur{color:#666;}
+.tag-ex{font-size:.68rem;font-weight:800;background:#dcfce7;color:#15803d;padding:.1rem .45rem;border-radius:4px;}
+.wrap{max-width:800px;margin:1.4rem auto 3rem;padding:0 1.2rem;}
+.card{background:#fff;border-radius:12px;box-shadow:0 1px 6px rgba(0,0,0,.08);padding:1.4rem 1.6rem 1.8rem;border-left:5px solid #0055cc;}
+.card h1{font-size:1.3rem;margin:.2rem 0 1rem;}
+.card h2{font-size:1.05rem;font-weight:800;color:#0055cc;margin:1.3rem 0 .5rem;padding-bottom:.25rem;border-bottom:2px solid #eef2f8;}
+.card h3{font-size:.95rem;font-weight:800;color:#333;margin:1rem 0 .4rem;}
+.card h4{font-size:.9rem;font-weight:800;color:#0055cc;margin:.9rem 0 .3rem;}
+.card p{font-size:.9rem;line-height:1.75;color:#333;margin:.5rem 0;}
+.card ul,.card ol{margin:.4rem 0 .6rem 1.4rem;}
+.card li{font-size:.89rem;line-height:1.7;color:#333;margin-bottom:.32rem;}
+.card code{background:#f3f3f3;color:#c7254e;padding:.1em .35em;border-radius:3px;font-size:.85em;font-family:"SFMono-Regular",Consolas,monospace;}
+.card strong{color:#111;}
+.card a{color:#0055cc;}
+.card hr{border:none;border-top:1px solid #eee;margin:1.2rem 0;}
+.card pre{background:#1e293b;color:#e2e8f0;border-radius:8px;padding:.85rem 1rem;margin:.6rem 0;overflow-x:auto;font-size:.82em;line-height:1.6;white-space:pre-wrap;font-family:"SFMono-Regular",Consolas,monospace;}
+.card img{max-width:100%;border-radius:8px;margin:.5rem 0;}
+.tbl-wrap{overflow-x:auto;margin:.6rem 0;}
+.card table{border-collapse:collapse;width:100%;font-size:.84rem;}
+.card th,.card td{border:1px solid #e2e8f0;padding:.4rem .6rem;text-align:left;vertical-align:top;}
+.card th{background:#f8fafc;font-weight:700;}
+.note{background:#f0f7ff;border-left:3px solid #0055cc;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.warn{background:#fff1f0;border-left:3px solid #ef4444;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.expect{background:#f0fdf4;border-left:3px solid #22c55e;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.rescue{background:#fefce8;border-left:3px solid #eab308;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.check{background:#faf5ff;border-left:3px solid #a855f7;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.question{background:#fff8e6;border-left:3px solid #f59e0b;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.reuse-note{margin-top:1rem;font-size:.78rem;color:#888;text-align:center;}
+.botnav{text-align:center;margin:1.4rem 0;}
+.botnav a{display:inline-block;margin:.3rem;padding:.5rem 1.1rem;background:#fff;border-radius:8px;text-decoration:none;color:#0055cc;font-weight:700;font-size:.85rem;box-shadow:0 1px 4px rgba(0,0,0,.07);}
+.botnav a:hover{background:#f0f7ff;}
+@media(max-width:520px){.wrap{padding:0 .7rem;}.card{padding:1.1rem 1.1rem 1.4rem;}}
+</style>
+</head>
+<body>
+<div class="topnav">
+  <a href="gov-ai_lesson.html">🏠 公務員 AI 應用進階班</a><span class="sep">›</span>
+  <a href="gov-ai-m3_lesson.html">模組 3：進階結構 + 創意</a><span class="sep">›</span>
+  <span class="cur">探索式創意（Boden 2）</span>
+  <span class="tag-ex">✍️ 練習</span>
+</div>
+<div class="wrap">
+  <div class="card">
+<h2>練習：探索式創意（Boden 三型之二）</h2>
+<div class="note">跨課程可重用。個人創意發想面向。用 Margaret Boden 的<strong>探索式創意（exploratory）</strong>：不打破現有規則，而是在框架內窮盡沒被走過的可能。</div>
+<h2>🎯 目標</h2>
+<p>學會用「系統性窮舉」在既有規則內找新做法——不用推翻制度，而是問「同樣的框架下，還有哪些組合/角度我們沒試過？」核心：很多創新不必革命，是把現有空間走滿。</p>
+<h2>📖 Boden 三型速記</h2>
+<ul><li>組合式（[E 組合式創意]）：既有元素新組合。</li><li><strong>探索式</strong>（本卡）：<strong>既有框架內</strong>找沒走過的可能。</li><li>變革式（[E 變革式創意]）：打破框架本身。</li></ul>
+<h2>⏱️ 流程（25 分鐘）</h2>
+<p>1.（5′）講探索式：規則不變，但用維度窮舉找空白區。 2.（15′）學員定義現有框架、讓 AI 拆維度、系統性列出沒試過的組合。 3.（5′）分享一個「原來這樣也可以、只是沒人試過」的做法。</p>
+<h2>📋 材料</h2>
+<p><strong>複製後填空：</strong></p>
+<pre>【背景】我單位的〔某服務/某活動〕現在是這樣辦：〔現況描述〕。
+現有的限制/規則是：〔預算、法規、人力等不能動的框架〕。
+【任務】用「探索式創意」——不要打破上面的規則，
+而是把這件事拆成幾個「可變維度」（例如：時間、地點、對象、形式、通路），
+每個維度列出目前的做法 vs 還沒試過的選項，
+然後組出 8 個「規則內但我們沒走過」的新做法。
+【格式】先列維度表，再列 8 個新組合。</pre>
+<p><strong>收斂（追問）：</strong>「哪 3 個最容易在現有規則下直接試？各講怎麼小規模試。」</p>
+<h2>✅ 預期產出</h2>
+<p>一張「可變維度 × 現況/未試」表 → 8 個框架內的新做法 → 3 個可直接試辦。證明不推翻制度也能創新。</p>
+<h2>🆘 常見卡點與救援</h2>
+<ul><li><strong>它想打破規則</strong>：拉回來——「規則不能動，只在框架內找空白」。</li><li><strong>維度太少</strong>：追問「再多拆幾個維度，例如通路、搭配對象、時段」。</li><li><strong>選項還是老套</strong>：針對某一維度追問「這個維度有沒有極端或反向的選項」。</li></ul>
+<h2>📌 完成標準</h2>
+<p>在現有框架內產出至少 3 個「沒走過但可試」的做法。</p>
+<h2>🔀 變體</h2>
+<ul><li><strong>對照</strong>：同一問題分別用探索式（框架內）與變革式（打破框架）各做一次，比較。</li><li><strong>大學課版</strong>：在既有研究典範內找沒人做過的變項組合。</li></ul>
+  </div>
+  <div class="reuse-note">📎 此練習頁不綁課程，可被任何 AI 實務課程的目錄引用。</div>
+  <div class="botnav">
+    <a href="gov-ai-m3_lesson.html">← 回模組 3：進階結構 + 創意</a>
+    <a href="gov-ai_lesson.html">🏠 課程目錄</a>
+  </div>
+</div>
+</body>
+</html>

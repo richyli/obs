@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>常見圖像風格實驗 · 練習</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;}
+body{font-family:"Helvetica Neue",Arial,"Noto Sans TC",sans-serif;background:#f0f2f5;margin:0;color:#1a1a1a;}
+.topnav{background:#fff;border-bottom:1px solid #e4e4e4;padding:.7rem 1.2rem;position:sticky;top:0;z-index:10;box-shadow:0 2px 8px rgba(0,0,0,.05);display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;font-size:.8rem;}
+.topnav a{color:#0055cc;text-decoration:none;font-weight:600;}
+.topnav a:hover{text-decoration:underline;}
+.topnav .sep{color:#bbb;}
+.topnav .cur{color:#666;}
+.tag-ex{font-size:.68rem;font-weight:800;background:#dcfce7;color:#15803d;padding:.1rem .45rem;border-radius:4px;}
+.wrap{max-width:800px;margin:1.4rem auto 3rem;padding:0 1.2rem;}
+.card{background:#fff;border-radius:12px;box-shadow:0 1px 6px rgba(0,0,0,.08);padding:1.4rem 1.6rem 1.8rem;border-left:5px solid #0055cc;}
+.card h1{font-size:1.3rem;margin:.2rem 0 1rem;}
+.card h2{font-size:1.05rem;font-weight:800;color:#0055cc;margin:1.3rem 0 .5rem;padding-bottom:.25rem;border-bottom:2px solid #eef2f8;}
+.card h3{font-size:.95rem;font-weight:800;color:#333;margin:1rem 0 .4rem;}
+.card h4{font-size:.9rem;font-weight:800;color:#0055cc;margin:.9rem 0 .3rem;}
+.card p{font-size:.9rem;line-height:1.75;color:#333;margin:.5rem 0;}
+.card ul,.card ol{margin:.4rem 0 .6rem 1.4rem;}
+.card li{font-size:.89rem;line-height:1.7;color:#333;margin-bottom:.32rem;}
+.card code{background:#f3f3f3;color:#c7254e;padding:.1em .35em;border-radius:3px;font-size:.85em;font-family:"SFMono-Regular",Consolas,monospace;}
+.card strong{color:#111;}
+.card a{color:#0055cc;}
+.card hr{border:none;border-top:1px solid #eee;margin:1.2rem 0;}
+.card pre{background:#1e293b;color:#e2e8f0;border-radius:8px;padding:.85rem 1rem;margin:.6rem 0;overflow-x:auto;font-size:.82em;line-height:1.6;white-space:pre-wrap;font-family:"SFMono-Regular",Consolas,monospace;}
+.card img{max-width:100%;border-radius:8px;margin:.5rem 0;}
+.tbl-wrap{overflow-x:auto;margin:.6rem 0;}
+.card table{border-collapse:collapse;width:100%;font-size:.84rem;}
+.card th,.card td{border:1px solid #e2e8f0;padding:.4rem .6rem;text-align:left;vertical-align:top;}
+.card th{background:#f8fafc;font-weight:700;}
+.note{background:#f0f7ff;border-left:3px solid #0055cc;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.warn{background:#fff1f0;border-left:3px solid #ef4444;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.expect{background:#f0fdf4;border-left:3px solid #22c55e;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.rescue{background:#fefce8;border-left:3px solid #eab308;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.check{background:#faf5ff;border-left:3px solid #a855f7;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.question{background:#fff8e6;border-left:3px solid #f59e0b;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.reuse-note{margin-top:1rem;font-size:.78rem;color:#888;text-align:center;}
+.botnav{text-align:center;margin:1.4rem 0;}
+.botnav a{display:inline-block;margin:.3rem;padding:.5rem 1.1rem;background:#fff;border-radius:8px;text-decoration:none;color:#0055cc;font-weight:700;font-size:.85rem;box-shadow:0 1px 4px rgba(0,0,0,.07);}
+.botnav a:hover{background:#f0f7ff;}
+@media(max-width:520px){.wrap{padding:0 .7rem;}.card{padding:1.1rem 1.1rem 1.4rem;}}
+</style>
+</head>
+<body>
+<div class="topnav">
+  <a href="gov-ai_lesson.html">🏠 公務員 AI 應用進階班</a><span class="sep">›</span>
+  <a href="gov-ai-m2_lesson.html">模組 2：AI 生圖 + 海報</a><span class="sep">›</span>
+  <span class="cur">常見圖像風格實驗</span>
+  <span class="tag-ex">✍️ 練習</span>
+</div>
+<div class="wrap">
+  <div class="card">
+<h2>練習：常見圖像風格實驗</h2>
+<div class="note">跨課程可重用。AI 生圖進階。改編自《AI Image Generation Styles Guide》。教「用『風格詞彙』控制生圖的美感方向」，四步由淺到深：純風格 → 風格＋主體 → 混搭風格 → 應用組合。</div>
+<h2>🎯 目標</h2>
+<p>建立一套「風格詞彙」，讓學員能指定藝術風格（印象派、極簡、包浩斯…）控制生圖美感，並學會混搭風格、跨主體與長寬比維持穩定。核心：<strong>風格詞是生圖的方向盤，不是 Photoshop 濾鏡</strong>——換工具、換更新、換 prompt、換長寬比，結果都會變。</p>
+<h2>🖼️ 為什麼公務用得到</h2>
+<p>簡報配圖、活動主視覺、社群貼文——想要「一整套看起來同一風格」，就得會用風格詞彙鎖定調性（例如整份簡報都用「扁平極簡、藍白」）。</p>
+<h2>⏱️ 流程（40 分鐘，四步由淺到深）</h2>
+<p>1.（5′）講「風格詞＝方向盤」與四步練習法。 2.（10′）<strong>Step 1 純風格</strong>：只下一個藝術風格＋「artwork」，看 AI 生什麼、有什麼反覆出現的元素。 3.（10′）<strong>Step 2 風格＋主體</strong>：把風格套到一個具體主體上（例：印象派 × 貓、極簡 × 校園）。 4.（10′）<strong>Step 3 混搭風格</strong>：疊兩個風格，調出個人組合（例：立體派 × 波普）。 5.（5′）<strong>Step 4 應用組合</strong>：把喜歡的混搭套到不同主體與長寬比，確認穩定、記錄下來。</p>
+<h2>📋 材料</h2>
+<h3>Step 1 · 純風格探索</h3>
+<pre>幫我生一張〔印象派 Impressionism〕風格的 artwork。</pre>
+<p>換不同風格各生一張，觀察：這風格反覆出現什麼元素（色調、筆觸、構圖）？</p>
+<h3>Step 2 · 風格 ＋ 主體</h3>
+<pre>幫我生一張〔超現實主義 Surrealism〕風格的〔日式庭園〕。</pre>
+<div class="note">公務版可換主體：校園、市政廳、圖書館、活動現場。</div>
+<h3>Step 3 · 混搭風格（疊兩種）</h3>
+<pre>幫我生一張結合〔立體派 Cubism〕與〔波普藝術 Pop Art〕的〔活動主視覺〕，
+上方留白放標題，直式。</pre>
+<p>文件示範的混搭：<code>Cubism Pop Art</code>、<code>Renaissance Suprematism</code>、<code>Art Nouveau Pointillism</code>。</p>
+<h3>Step 4 · 應用組合</h3>
+<p>把你喜歡的那個混搭，套到 2–3 個不同主體（貼文圖／簡報封面／海報）與不同長寬比（正方 IG／橫式 FB／直式海報），確認風格穩定。<strong>把成功的 prompt 記下來，變成你的個人風格模板。</strong></p>
+<h3>📚 20 種常見藝術風格速查（改編自來源文件）</h3>
+<div class="tbl-wrap"><table><thead><tr><th>風格</th><th>特徵一句話</th></tr></thead><tbody><tr><td>印象派 Impressionism</td><td>專注光影和色彩，捕捉瞬間感覺</td></tr><tr><td>超現實主義 Surrealism</td><td>呈現夢境、超現實的意識內容</td></tr><tr><td>抽象表現主義 Abstract Expressionism</td><td>用非具象手法表達情緒</td></tr><tr><td>寫實主義 Realism</td><td>忠實描繪現實，重細節與精確</td></tr><tr><td>立體派 Cubism</td><td>重塑物體形狀，多視角並呈</td></tr><tr><td>波普藝術 Pop Art</td><td>用大眾文化圖像（廣告、漫畫）</td></tr><tr><td>極簡主義 Minimalism</td><td>減至最基本的形狀與色彩</td></tr><tr><td>裝飾藝術 Art Deco</td><td>豐富顏色、對稱形狀、華麗裝飾</td></tr><tr><td>新藝術 Art Nouveau</td><td>流動線條、有機形狀、自然主題</td></tr><tr><td>洛可可 Rococo</td><td>飽和色彩、華麗複雜、裝飾豐富</td></tr><tr><td>拜占庭藝術 Byzantine</td><td>符號性與裝飾性、強宗教主題</td></tr><tr><td>至上主義 Suprematism</td><td>幾何形狀、極簡顏色</td></tr><tr><td>風格派 De Stijl</td><td>形狀抽象化、色彩簡約化</td></tr><tr><td>民間藝術 Folk Art</td><td>反映特定文化傳統，樸素</td></tr><tr><td>邊緣藝術 Outsider Art</td><td>原始、直接的視覺表達</td></tr><tr><td>點彩派 Pointillism</td><td>用小點與視覺混色成像</td></tr><tr><td>文藝復興 Renaissance</td><td>人文主義、自然主義、科學透視</td></tr><tr><td>哥特式 Gothic</td><td>高度裝飾與象徵、強宗教色彩</td></tr><tr><td>包浩斯 Bauhaus</td><td>結合工藝與藝術，功能性、簡約</td></tr><tr><td>巴洛克 Baroque</td><td>戲劇性，強調運動、能量、對比</td></tr></tbody></table></div>
+<h2>✅ 預期產出</h2>
+<p>一份「試過哪些風格＋喜歡哪些混搭」的筆記，以及一組能穩定重現的個人風格 prompt 模板。從「隨機生圖」升級到「指定美感方向」。</p>
+<h2>🆘 常見卡點與救援</h2>
+<ul><li><strong>同一 prompt 每次差很多</strong>：正常——它不是濾鏡。想穩定就把風格詞、色調、構圖、長寬比都寫死。</li><li><strong>混搭變四不像</strong>：兩個風格差太遠會打架，換成氣質相近的（如極簡 × 包浩斯）。</li><li><strong>公務場合太前衛</strong>：正式用途選收斂的風格（極簡、包浩斯、風格派、扁平插畫），前衛的（超現實、立體派）留給活潑活動。</li><li><strong>圖上文字亂碼</strong>：一律「不放文字」，標題自己用 Canva/PPT 加。</li></ul>
+<h2>📌 完成標準</h2>
+<p>走完四步、試過至少 4 種風格與 1 種混搭，並記下一組個人風格模板。</p>
+<h2>🔀 變體</h2>
+<ul><li><strong>一致性任務</strong>：用同一風格生一整套簡報配圖（3–5 張），驗證整體協調。</li><li><strong>大學課版</strong>：藝術/設計/傳播課可深入談各流派的美學脈絡，再對照 AI 的詮釋。</li><li><strong>接力</strong>：選定風格後串 [E 五件式重生宣傳圖]／[E 產出一則完整圖文貼文]。</li></ul>
+  </div>
+  <div class="reuse-note">📎 此練習頁不綁課程，可被任何 AI 實務課程的目錄引用。</div>
+  <div class="botnav">
+    <a href="gov-ai-m2_lesson.html">← 回模組 2：AI 生圖 + 海報</a>
+    <a href="gov-ai_lesson.html">🏠 課程目錄</a>
+  </div>
+</div>
+</body>
+</html>

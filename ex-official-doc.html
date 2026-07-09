@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>公文／簽呈草擬 · 練習</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;}
+body{font-family:"Helvetica Neue",Arial,"Noto Sans TC",sans-serif;background:#f0f2f5;margin:0;color:#1a1a1a;}
+.topnav{background:#fff;border-bottom:1px solid #e4e4e4;padding:.7rem 1.2rem;position:sticky;top:0;z-index:10;box-shadow:0 2px 8px rgba(0,0,0,.05);display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;font-size:.8rem;}
+.topnav a{color:#0055cc;text-decoration:none;font-weight:600;}
+.topnav a:hover{text-decoration:underline;}
+.topnav .sep{color:#bbb;}
+.topnav .cur{color:#666;}
+.tag-ex{font-size:.68rem;font-weight:800;background:#dcfce7;color:#15803d;padding:.1rem .45rem;border-radius:4px;}
+.wrap{max-width:800px;margin:1.4rem auto 3rem;padding:0 1.2rem;}
+.card{background:#fff;border-radius:12px;box-shadow:0 1px 6px rgba(0,0,0,.08);padding:1.4rem 1.6rem 1.8rem;border-left:5px solid #0055cc;}
+.card h1{font-size:1.3rem;margin:.2rem 0 1rem;}
+.card h2{font-size:1.05rem;font-weight:800;color:#0055cc;margin:1.3rem 0 .5rem;padding-bottom:.25rem;border-bottom:2px solid #eef2f8;}
+.card h3{font-size:.95rem;font-weight:800;color:#333;margin:1rem 0 .4rem;}
+.card h4{font-size:.9rem;font-weight:800;color:#0055cc;margin:.9rem 0 .3rem;}
+.card p{font-size:.9rem;line-height:1.75;color:#333;margin:.5rem 0;}
+.card ul,.card ol{margin:.4rem 0 .6rem 1.4rem;}
+.card li{font-size:.89rem;line-height:1.7;color:#333;margin-bottom:.32rem;}
+.card code{background:#f3f3f3;color:#c7254e;padding:.1em .35em;border-radius:3px;font-size:.85em;font-family:"SFMono-Regular",Consolas,monospace;}
+.card strong{color:#111;}
+.card a{color:#0055cc;}
+.card hr{border:none;border-top:1px solid #eee;margin:1.2rem 0;}
+.card pre{background:#1e293b;color:#e2e8f0;border-radius:8px;padding:.85rem 1rem;margin:.6rem 0;overflow-x:auto;font-size:.82em;line-height:1.6;white-space:pre-wrap;font-family:"SFMono-Regular",Consolas,monospace;}
+.card img{max-width:100%;border-radius:8px;margin:.5rem 0;}
+.tbl-wrap{overflow-x:auto;margin:.6rem 0;}
+.card table{border-collapse:collapse;width:100%;font-size:.84rem;}
+.card th,.card td{border:1px solid #e2e8f0;padding:.4rem .6rem;text-align:left;vertical-align:top;}
+.card th{background:#f8fafc;font-weight:700;}
+.note{background:#f0f7ff;border-left:3px solid #0055cc;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.warn{background:#fff1f0;border-left:3px solid #ef4444;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.expect{background:#f0fdf4;border-left:3px solid #22c55e;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.rescue{background:#fefce8;border-left:3px solid #eab308;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.check{background:#faf5ff;border-left:3px solid #a855f7;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.question{background:#fff8e6;border-left:3px solid #f59e0b;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.reuse-note{margin-top:1rem;font-size:.78rem;color:#888;text-align:center;}
+.botnav{text-align:center;margin:1.4rem 0;}
+.botnav a{display:inline-block;margin:.3rem;padding:.5rem 1.1rem;background:#fff;border-radius:8px;text-decoration:none;color:#0055cc;font-weight:700;font-size:.85rem;box-shadow:0 1px 4px rgba(0,0,0,.07);}
+.botnav a:hover{background:#f0f7ff;}
+@media(max-width:520px){.wrap{padding:0 .7rem;}.card{padding:1.1rem 1.1rem 1.4rem;}}
+</style>
+</head>
+<body>
+<div class="topnav">
+  <a href="gov-ai_lesson.html">🏠 公務員 AI 應用進階班</a><span class="sep">›</span>
+  <a href="gov-ai-m4_lesson.html">模組 4：公務應用</a><span class="sep">›</span>
+  <span class="cur">公文／簽呈草擬</span>
+  <span class="tag-ex">✍️ 練習</span>
+</div>
+<div class="wrap">
+  <div class="card">
+<h2>練習：公文／簽呈草擬（函、簽）</h2>
+<div class="note">公務情境專用（公務員/行政人員課）。大學課可略過或改成「正式信函」。</div>
+<h2>🎯 目標</h2>
+<p>把口頭交辦或要陳核的事，用六件套變成一份格式對的「函」或「簽」。</p>
+<h2>前置知識：函 vs 簽</h2>
+<ul><li><strong>函</strong>：有受文者、對外或跨單位。結構 <strong>主旨 → 說明 → 辦法</strong>。</li><li><strong>簽</strong>：對內、向長官陳報請示。結構 <strong>主旨 → 說明 → 擬辦</strong>。</li></ul>
+<h2>⏱️ 流程（30 分鐘）</h2>
+<p>1.（5′）講函/簽差別。 2.（20′）學員挑一件真的要擬的公文，用六件套骨架下指令、追問調整。 3.（5′）分享一份草稿，點評結構是否正確。</p>
+<h2>📋 材料</h2>
+<p><strong>複製後填空（個資先去識別化）：</strong></p>
+<pre>【角色】你是我的公文擬稿助理，熟悉台灣公文程式。
+【背景】發文機關：〔○○機關○○科〕；受文者：〔○○〕；事由：〔…〕；補充：〔…〕。
+【任務】擬一份「〔函／簽〕」，含 主旨、說明（分點）、〔辦法／擬辦〕。用語正式不冗贅。
+【限制】文號、日期、法源留〔〕給我填，不要自己編。缺的資訊標「待補」。
+【格式】主旨一句、句尾用制式結尾語（如「請 查照。」）；說明分點（一、二…）；控制一頁。
+【自審】完成後標出哪些地方是我沒提供、你不該擅自填的。</pre>
+<h2>✅ 預期產出</h2>
+<p>結構正確（主旨/說明/辦法或擬辦）、用語像公文的草稿，文號日期處留〔〕等填。</p>
+<h2>🆘 常見卡點與救援</h2>
+<ul><li><strong>它自己編文號/法條</strong>：把「限制」段講更死，或追問「把編的文號、法條全改回〔〕」。</li><li><strong>語氣太生硬/太隨便</strong>：追問「更符合平行單位間的公文語氣」。</li><li><strong>不確定用函還是簽</strong>：對外/跨單位用函，對內請示長官用簽。</li></ul>
+<h2>📌 完成標準</h2>
+<p>有一份公文/簽呈草稿，結構對、個資與待填處都留〔〕。</p>
+<h2>🔀 變體</h2>
+<ul><li>可串現有 skill <code>/公文草稿</code>（台灣公文程式）作老師端 demo 對照。</li></ul>
+  </div>
+  <div class="reuse-note">📎 此練習頁不綁課程，可被任何 AI 實務課程的目錄引用。</div>
+  <div class="botnav">
+    <a href="gov-ai-m4_lesson.html">← 回模組 4：公務應用</a>
+    <a href="gov-ai_lesson.html">🏠 課程目錄</a>
+  </div>
+</div>
+</body>
+</html>

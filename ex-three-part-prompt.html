@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>三段式做一件真的要做的事 · 練習</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;}
+body{font-family:"Helvetica Neue",Arial,"Noto Sans TC",sans-serif;background:#f0f2f5;margin:0;color:#1a1a1a;}
+.topnav{background:#fff;border-bottom:1px solid #e4e4e4;padding:.7rem 1.2rem;position:sticky;top:0;z-index:10;box-shadow:0 2px 8px rgba(0,0,0,.05);display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;font-size:.8rem;}
+.topnav a{color:#0055cc;text-decoration:none;font-weight:600;}
+.topnav a:hover{text-decoration:underline;}
+.topnav .sep{color:#bbb;}
+.topnav .cur{color:#666;}
+.tag-ex{font-size:.68rem;font-weight:800;background:#dcfce7;color:#15803d;padding:.1rem .45rem;border-radius:4px;}
+.wrap{max-width:800px;margin:1.4rem auto 3rem;padding:0 1.2rem;}
+.card{background:#fff;border-radius:12px;box-shadow:0 1px 6px rgba(0,0,0,.08);padding:1.4rem 1.6rem 1.8rem;border-left:5px solid #0055cc;}
+.card h1{font-size:1.3rem;margin:.2rem 0 1rem;}
+.card h2{font-size:1.05rem;font-weight:800;color:#0055cc;margin:1.3rem 0 .5rem;padding-bottom:.25rem;border-bottom:2px solid #eef2f8;}
+.card h3{font-size:.95rem;font-weight:800;color:#333;margin:1rem 0 .4rem;}
+.card h4{font-size:.9rem;font-weight:800;color:#0055cc;margin:.9rem 0 .3rem;}
+.card p{font-size:.9rem;line-height:1.75;color:#333;margin:.5rem 0;}
+.card ul,.card ol{margin:.4rem 0 .6rem 1.4rem;}
+.card li{font-size:.89rem;line-height:1.7;color:#333;margin-bottom:.32rem;}
+.card code{background:#f3f3f3;color:#c7254e;padding:.1em .35em;border-radius:3px;font-size:.85em;font-family:"SFMono-Regular",Consolas,monospace;}
+.card strong{color:#111;}
+.card a{color:#0055cc;}
+.card hr{border:none;border-top:1px solid #eee;margin:1.2rem 0;}
+.card pre{background:#1e293b;color:#e2e8f0;border-radius:8px;padding:.85rem 1rem;margin:.6rem 0;overflow-x:auto;font-size:.82em;line-height:1.6;white-space:pre-wrap;font-family:"SFMono-Regular",Consolas,monospace;}
+.card img{max-width:100%;border-radius:8px;margin:.5rem 0;}
+.tbl-wrap{overflow-x:auto;margin:.6rem 0;}
+.card table{border-collapse:collapse;width:100%;font-size:.84rem;}
+.card th,.card td{border:1px solid #e2e8f0;padding:.4rem .6rem;text-align:left;vertical-align:top;}
+.card th{background:#f8fafc;font-weight:700;}
+.note{background:#f0f7ff;border-left:3px solid #0055cc;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.warn{background:#fff1f0;border-left:3px solid #ef4444;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.expect{background:#f0fdf4;border-left:3px solid #22c55e;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.rescue{background:#fefce8;border-left:3px solid #eab308;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.check{background:#faf5ff;border-left:3px solid #a855f7;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.question{background:#fff8e6;border-left:3px solid #f59e0b;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.reuse-note{margin-top:1rem;font-size:.78rem;color:#888;text-align:center;}
+.botnav{text-align:center;margin:1.4rem 0;}
+.botnav a{display:inline-block;margin:.3rem;padding:.5rem 1.1rem;background:#fff;border-radius:8px;text-decoration:none;color:#0055cc;font-weight:700;font-size:.85rem;box-shadow:0 1px 4px rgba(0,0,0,.07);}
+.botnav a:hover{background:#f0f7ff;}
+@media(max-width:520px){.wrap{padding:0 .7rem;}.card{padding:1.1rem 1.1rem 1.4rem;}}
+</style>
+</head>
+<body>
+<div class="topnav">
+  <a href="gov-ai_lesson.html">🏠 公務員 AI 應用進階班</a><span class="sep">›</span>
+  <a href="gov-ai-m1_lesson.html">模組 1：入門 + Prompt 實作</a><span class="sep">›</span>
+  <span class="cur">三段式做一件真的要做的事</span>
+  <span class="tag-ex">✍️ 練習</span>
+</div>
+<div class="wrap">
+  <div class="card">
+<h2>練習：用三段式做一件你真的要做的事</h2>
+<div class="note">跨課程可重用，AI 實務課的<strong>核心地基練習</strong>。學員做完就掌握「背景＋任務＋格式」的下指令骨架。</div>
+<h2>🎯 目標</h2>
+<p>用三段式（背景＋任務＋格式），把一件<strong>學員下週真的要做的小事</strong>交給 AI，並學會用「追問句」把 80 分調到 95 分。核心心法：<strong>每留一處空白，AI 就替你自作主張一處。</strong></p>
+<h2>⏱️ 流程（50 分鐘）</h2>
+<p>1.（5′）講三段式公式與「留白就自作主張」心法。 2.（5′）<strong>Step 1 挑事</strong>：每人挑一件真的要做、最小最具體的事（借場地、發通知、回一封難回的 email、寫段公告）。 3.（20′）<strong>Step 2 寫</strong>：照三段式骨架填空、送出、拿到結果。助教巡場看誰留白太多。 4.（15′）<strong>Step 3 追問</strong>：拿到第一版後用追問句調語氣/要件/格式，跑「產出→追問→再產出」循環。 5.（5′）配對分享：各講一處 AI 幫上忙、一處需要自己介入修。</p>
+<h2>📋 材料</h2>
+<p><strong>三段式骨架（複製後填空，個資用〔〕遮）：</strong></p>
+<pre>【背景】
+我是〔哪個單位的什麼角色〕，要處理〔什麼事〕。對象是〔誰〕。
+前提：〔有什麼要注意的，例如對方是上級/平行單位/老師/客戶〕。
+
+【任務】
+請幫我〔寫一則通知／擬一段 email／草一份公告〕，
+必須包含：〔要件1〕、〔要件2〕、〔要件3〕。
+
+【格式】
+語氣：〔正式／親切〕。長度：〔控制在 X 字／一段／分點〕。
+不要幫我編〔日期／文號／連結〕，那些留空我自己填。</pre>
+<p><strong>追問句庫（挑一句貼進同一對話）：</strong></p>
+<ul><li>改語氣：「第二段太文言，改白話一點。」</li><li>補要件：「加一句附帶提醒對方回覆期限。」</li><li>改格式：「太長了，壓到 100 字內。」</li><li>換體例：「改成公文『簽』的格式／改成給老師的正式信。」</li></ul>
+<h2>✅ 預期產出</h2>
+<p>第一版已能用但不完美；追問一到兩次後語氣/長度/要件調到滿意。這個「產出→追問→再產出」循環就是用 AI 的日常節奏。</p>
+<h2>🆘 常見卡點與救援</h2>
+<ul><li><strong>結果離題</strong>：多半「背景」寫太少，補「你是誰、對象是誰、什麼前提」。</li><li><strong>它自己亂編日期/數字</strong>：正常（幻覺），在格式段明講「日期文號留空我自己填」。</li><li><strong>越改越糟</strong>：別在同一對話硬凹，開新對話重貼乾淨的三段式。</li></ul>
+<h2>📌 完成標準</h2>
+<p>有一份「下週真的能用」的成品，靠三段式＋至少一次追問調出來。</p>
+<h2>🔀 變體</h2>
+<ul><li><strong>作業延伸</strong>：把「這週最煩的一件重複小事」寫成三段式，帶到「做成模板」練習。</li><li><strong>大學課版</strong>：情境換成「跟教授約 meeting／寫社團活動公告／回實習信」。</li></ul>
+  </div>
+  <div class="reuse-note">📎 此練習頁不綁課程，可被任何 AI 實務課程的目錄引用。</div>
+  <div class="botnav">
+    <a href="gov-ai-m1_lesson.html">← 回模組 1：入門 + Prompt 實作</a>
+    <a href="gov-ai_lesson.html">🏠 課程目錄</a>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>組合式創意（Boden 1） · 練習</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;}
+body{font-family:"Helvetica Neue",Arial,"Noto Sans TC",sans-serif;background:#f0f2f5;margin:0;color:#1a1a1a;}
+.topnav{background:#fff;border-bottom:1px solid #e4e4e4;padding:.7rem 1.2rem;position:sticky;top:0;z-index:10;box-shadow:0 2px 8px rgba(0,0,0,.05);display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;font-size:.8rem;}
+.topnav a{color:#0055cc;text-decoration:none;font-weight:600;}
+.topnav a:hover{text-decoration:underline;}
+.topnav .sep{color:#bbb;}
+.topnav .cur{color:#666;}
+.tag-ex{font-size:.68rem;font-weight:800;background:#dcfce7;color:#15803d;padding:.1rem .45rem;border-radius:4px;}
+.wrap{max-width:800px;margin:1.4rem auto 3rem;padding:0 1.2rem;}
+.card{background:#fff;border-radius:12px;box-shadow:0 1px 6px rgba(0,0,0,.08);padding:1.4rem 1.6rem 1.8rem;border-left:5px solid #0055cc;}
+.card h1{font-size:1.3rem;margin:.2rem 0 1rem;}
+.card h2{font-size:1.05rem;font-weight:800;color:#0055cc;margin:1.3rem 0 .5rem;padding-bottom:.25rem;border-bottom:2px solid #eef2f8;}
+.card h3{font-size:.95rem;font-weight:800;color:#333;margin:1rem 0 .4rem;}
+.card h4{font-size:.9rem;font-weight:800;color:#0055cc;margin:.9rem 0 .3rem;}
+.card p{font-size:.9rem;line-height:1.75;color:#333;margin:.5rem 0;}
+.card ul,.card ol{margin:.4rem 0 .6rem 1.4rem;}
+.card li{font-size:.89rem;line-height:1.7;color:#333;margin-bottom:.32rem;}
+.card code{background:#f3f3f3;color:#c7254e;padding:.1em .35em;border-radius:3px;font-size:.85em;font-family:"SFMono-Regular",Consolas,monospace;}
+.card strong{color:#111;}
+.card a{color:#0055cc;}
+.card hr{border:none;border-top:1px solid #eee;margin:1.2rem 0;}
+.card pre{background:#1e293b;color:#e2e8f0;border-radius:8px;padding:.85rem 1rem;margin:.6rem 0;overflow-x:auto;font-size:.82em;line-height:1.6;white-space:pre-wrap;font-family:"SFMono-Regular",Consolas,monospace;}
+.card img{max-width:100%;border-radius:8px;margin:.5rem 0;}
+.tbl-wrap{overflow-x:auto;margin:.6rem 0;}
+.card table{border-collapse:collapse;width:100%;font-size:.84rem;}
+.card th,.card td{border:1px solid #e2e8f0;padding:.4rem .6rem;text-align:left;vertical-align:top;}
+.card th{background:#f8fafc;font-weight:700;}
+.note{background:#f0f7ff;border-left:3px solid #0055cc;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.warn{background:#fff1f0;border-left:3px solid #ef4444;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.expect{background:#f0fdf4;border-left:3px solid #22c55e;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.rescue{background:#fefce8;border-left:3px solid #eab308;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.check{background:#faf5ff;border-left:3px solid #a855f7;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.question{background:#fff8e6;border-left:3px solid #f59e0b;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.reuse-note{margin-top:1rem;font-size:.78rem;color:#888;text-align:center;}
+.botnav{text-align:center;margin:1.4rem 0;}
+.botnav a{display:inline-block;margin:.3rem;padding:.5rem 1.1rem;background:#fff;border-radius:8px;text-decoration:none;color:#0055cc;font-weight:700;font-size:.85rem;box-shadow:0 1px 4px rgba(0,0,0,.07);}
+.botnav a:hover{background:#f0f7ff;}
+@media(max-width:520px){.wrap{padding:0 .7rem;}.card{padding:1.1rem 1.1rem 1.4rem;}}
+</style>
+</head>
+<body>
+<div class="topnav">
+  <a href="gov-ai_lesson.html">🏠 公務員 AI 應用進階班</a><span class="sep">›</span>
+  <a href="gov-ai-m3_lesson.html">模組 3：進階結構 + 創意</a><span class="sep">›</span>
+  <span class="cur">組合式創意（Boden 1）</span>
+  <span class="tag-ex">✍️ 練習</span>
+</div>
+<div class="wrap">
+  <div class="card">
+<h2>練習：組合式創意（Boden 三型之一）</h2>
+<div class="note">跨課程可重用。個人創意發想面向。用 Margaret Boden 的<strong>組合式創意（combinational）</strong>：把兩個既有、看似無關的東西用新方式湊在一起。</div>
+<h2>🎯 目標</h2>
+<p>學會用「強迫組合」逼出新點子——把單位既有的服務/活動/資源，跟一個不相干的東西湊起來，看能不能生出新做法。核心：創意常是「A × B」，不是憑空。</p>
+<h2>📖 Boden 三型速記（一句話）</h2>
+<ul><li><strong>組合式</strong>（本卡）：既有元素<strong>新組合</strong>（例：圖書館 × 咖啡廳）。</li><li><strong>探索式</strong>（[E 探索式創意]）：在<strong>既有框架內</strong>找沒走過的可能。</li><li><strong>變革式</strong>（[E 變革式創意]）：<strong>打破框架</strong>本身。</li></ul>
+<h2>⏱️ 流程（25 分鐘）</h2>
+<p>1.（5′）講組合式創意，舉例（政府服務 × 遊戲化 = 集章換好禮的接種活動）。 2.（15′）學員列自己的資源、隨機配對、讓 AI 幫想「湊起來會變什麼」。 3.（5′）分享最有搞頭的一個組合。</p>
+<h2>📋 材料</h2>
+<p><strong>複製後填空：</strong></p>
+<pre>【背景】我單位有這些東西：〔服務/活動/場地/資源，列 5 個〕。
+另外給你一組不相干的概念：〔遊戲化、訂閱制、快閃、社群共創、盲盒、直播〕。
+【任務】用「組合式創意」——把我的資源和這些概念**兩兩強迫組合**，
+生 10 個新點子（每個講：組合了什麼 × 什麼 → 會變成什麼新服務/活動）。
+不要自我審查，先湊出來再說。
+【格式】編號列表。</pre>
+<p><strong>收斂（追問）：</strong>「挑 3 個最可行的，各講一句為什麼、和一個可能的卡點。」</p>
+<h2>✅ 預期產出</h2>
+<p>10 個「A × B」的組合點子 → 收斂 3 個。看見既有資源換個組合就有新玩法。</p>
+<h2>🆘 常見卡點與救援</h2>
+<ul><li><strong>組合很牽強</strong>：正常，這是發散；牽強的丟掉留可行的。</li><li><strong>點子還是很傳統</strong>：把「不相干概念」換更遠的（例：加入「電競、寵物、露營」）。</li></ul>
+<h2>📌 完成標準</h2>
+<p>產出至少 3 個「兩個既有元素新組合」的點子。</p>
+<h2>🔀 變體</h2>
+<ul><li><strong>升級</strong>：組合式卡住了，改用 [E 變革式創意] 直接打破框架。</li><li><strong>大學課版</strong>：把兩個理論/兩個方法組合出新研究角度。</li></ul>
+  </div>
+  <div class="reuse-note">📎 此練習頁不綁課程，可被任何 AI 實務課程的目錄引用。</div>
+  <div class="botnav">
+    <a href="gov-ai-m3_lesson.html">← 回模組 3：進階結構 + 創意</a>
+    <a href="gov-ai_lesson.html">🏠 課程目錄</a>
+  </div>
+</div>
+</body>
+</html>

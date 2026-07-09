@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>思維鏈與思維樹實測 · 練習</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;}
+body{font-family:"Helvetica Neue",Arial,"Noto Sans TC",sans-serif;background:#f0f2f5;margin:0;color:#1a1a1a;}
+.topnav{background:#fff;border-bottom:1px solid #e4e4e4;padding:.7rem 1.2rem;position:sticky;top:0;z-index:10;box-shadow:0 2px 8px rgba(0,0,0,.05);display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;font-size:.8rem;}
+.topnav a{color:#0055cc;text-decoration:none;font-weight:600;}
+.topnav a:hover{text-decoration:underline;}
+.topnav .sep{color:#bbb;}
+.topnav .cur{color:#666;}
+.tag-ex{font-size:.68rem;font-weight:800;background:#dcfce7;color:#15803d;padding:.1rem .45rem;border-radius:4px;}
+.wrap{max-width:800px;margin:1.4rem auto 3rem;padding:0 1.2rem;}
+.card{background:#fff;border-radius:12px;box-shadow:0 1px 6px rgba(0,0,0,.08);padding:1.4rem 1.6rem 1.8rem;border-left:5px solid #0055cc;}
+.card h1{font-size:1.3rem;margin:.2rem 0 1rem;}
+.card h2{font-size:1.05rem;font-weight:800;color:#0055cc;margin:1.3rem 0 .5rem;padding-bottom:.25rem;border-bottom:2px solid #eef2f8;}
+.card h3{font-size:.95rem;font-weight:800;color:#333;margin:1rem 0 .4rem;}
+.card h4{font-size:.9rem;font-weight:800;color:#0055cc;margin:.9rem 0 .3rem;}
+.card p{font-size:.9rem;line-height:1.75;color:#333;margin:.5rem 0;}
+.card ul,.card ol{margin:.4rem 0 .6rem 1.4rem;}
+.card li{font-size:.89rem;line-height:1.7;color:#333;margin-bottom:.32rem;}
+.card code{background:#f3f3f3;color:#c7254e;padding:.1em .35em;border-radius:3px;font-size:.85em;font-family:"SFMono-Regular",Consolas,monospace;}
+.card strong{color:#111;}
+.card a{color:#0055cc;}
+.card hr{border:none;border-top:1px solid #eee;margin:1.2rem 0;}
+.card pre{background:#1e293b;color:#e2e8f0;border-radius:8px;padding:.85rem 1rem;margin:.6rem 0;overflow-x:auto;font-size:.82em;line-height:1.6;white-space:pre-wrap;font-family:"SFMono-Regular",Consolas,monospace;}
+.card img{max-width:100%;border-radius:8px;margin:.5rem 0;}
+.tbl-wrap{overflow-x:auto;margin:.6rem 0;}
+.card table{border-collapse:collapse;width:100%;font-size:.84rem;}
+.card th,.card td{border:1px solid #e2e8f0;padding:.4rem .6rem;text-align:left;vertical-align:top;}
+.card th{background:#f8fafc;font-weight:700;}
+.note{background:#f0f7ff;border-left:3px solid #0055cc;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.warn{background:#fff1f0;border-left:3px solid #ef4444;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.expect{background:#f0fdf4;border-left:3px solid #22c55e;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.rescue{background:#fefce8;border-left:3px solid #eab308;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.check{background:#faf5ff;border-left:3px solid #a855f7;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.question{background:#fff8e6;border-left:3px solid #f59e0b;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.reuse-note{margin-top:1rem;font-size:.78rem;color:#888;text-align:center;}
+.botnav{text-align:center;margin:1.4rem 0;}
+.botnav a{display:inline-block;margin:.3rem;padding:.5rem 1.1rem;background:#fff;border-radius:8px;text-decoration:none;color:#0055cc;font-weight:700;font-size:.85rem;box-shadow:0 1px 4px rgba(0,0,0,.07);}
+.botnav a:hover{background:#f0f7ff;}
+@media(max-width:520px){.wrap{padding:0 .7rem;}.card{padding:1.1rem 1.1rem 1.4rem;}}
+</style>
+</head>
+<body>
+<div class="topnav">
+  <a href="gov-ai_lesson.html">🏠 公務員 AI 應用進階班</a><span class="sep">›</span>
+  <a href="gov-ai-m3_lesson.html">模組 3：進階結構 + 創意</a><span class="sep">›</span>
+  <span class="cur">思維鏈與思維樹實測</span>
+  <span class="tag-ex">✍️ 練習</span>
+</div>
+<div class="wrap">
+  <div class="card">
+<h2>練習：思維鏈 vs 思維樹實測</h2>
+<div class="note">跨課程可重用。教兩個進階推理技巧與其分工——要想深用思維鏈、要想廣用思維樹。</div>
+<h2>🎯 目標</h2>
+<p>用一個要判斷的題，比較「直接問」vs「叫它先推理再答」差多少（思維鏈），再學會用思維樹讓 AI 先鋪多案再選。</p>
+<h2>⏱️ 流程（70 分鐘）</h2>
+<p>1.（10′）講思維鏈（想深）與思維樹（想廣）的差別與咒語句型。 2.（30′）<strong>Part A 思維鏈</strong>：挑一個判斷題，先直接問，再要它先推理再答，比較兩次輸出。 3.（25′）<strong>Part B 思維樹</strong>：挑一個要選方案的事，叫它先鋪三案＋列優缺再推薦。 4.（5′）收斂：一句話分工。</p>
+<h2>📋 材料</h2>
+<p><strong>Part A · 思維鏈版（複製後填空）：</strong></p>
+<pre>我要判斷〔某同仁家庭照顧假接特休／某活動要不要延期〕這個安排。
+請「先一步一步」列出：① 涉及哪些規定/考量 ② 各自的限制與可能卡點
+③ 哪些地方我需要回查原文，最後才給我「可行/不可行/需確認」的結論。</pre>
+<p><strong>Part B · 思維樹版（複製後填空）：</strong></p>
+<pre>我要辦一場〔活動〕，還沒決定形式。
+請提出 3 種不同做法（例如 線上／實體／混合），
+每種分別列「優點、缺點、適用情境」，最後推薦一個並說明理由。</pre>
+<h2>✅ 預期產出</h2>
+<p>思維鏈版把判斷的「為什麼」攤開、標出要回查的點；思維樹版給三案優缺對照表＋一個推薦。<strong>一句話分工：要想深用思維鏈，要想廣用思維樹。</strong></p>
+<h2>🆘 常見卡點與救援</h2>
+<ul><li><strong>它引了法條/數據</strong>：⚠️ 一定回原文核，AI 會把不存在的條號講得很篤定。</li><li><strong>三個方案很像</strong>：追問「讓三案差異更大，涵蓋不同資源與風險」。</li><li><strong>推理過程也可能錯</strong>：思維鏈讓錯誤看得見可挑，不是保證正確。</li></ul>
+<h2>📌 完成標準</h2>
+<p>各跑過一次思維鏈與思維樹，且能說出兩者用途差異。</p>
+<h2>🔀 變體</h2>
+<ul><li><strong>大學課版</strong>：思維鏈題換「這份研究設計的效度威脅」；思維樹題換「論文三種切入角度比較」。</li></ul>
+  </div>
+  <div class="reuse-note">📎 此練習頁不綁課程，可被任何 AI 實務課程的目錄引用。</div>
+  <div class="botnav">
+    <a href="gov-ai-m3_lesson.html">← 回模組 3：進階結構 + 創意</a>
+    <a href="gov-ai_lesson.html">🏠 課程目錄</a>
+  </div>
+</div>
+</body>
+</html>

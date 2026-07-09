@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>民眾網路建言撈取與分析 · 練習</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;}
+body{font-family:"Helvetica Neue",Arial,"Noto Sans TC",sans-serif;background:#f0f2f5;margin:0;color:#1a1a1a;}
+.topnav{background:#fff;border-bottom:1px solid #e4e4e4;padding:.7rem 1.2rem;position:sticky;top:0;z-index:10;box-shadow:0 2px 8px rgba(0,0,0,.05);display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;font-size:.8rem;}
+.topnav a{color:#0055cc;text-decoration:none;font-weight:600;}
+.topnav a:hover{text-decoration:underline;}
+.topnav .sep{color:#bbb;}
+.topnav .cur{color:#666;}
+.tag-ex{font-size:.68rem;font-weight:800;background:#dcfce7;color:#15803d;padding:.1rem .45rem;border-radius:4px;}
+.wrap{max-width:800px;margin:1.4rem auto 3rem;padding:0 1.2rem;}
+.card{background:#fff;border-radius:12px;box-shadow:0 1px 6px rgba(0,0,0,.08);padding:1.4rem 1.6rem 1.8rem;border-left:5px solid #0055cc;}
+.card h1{font-size:1.3rem;margin:.2rem 0 1rem;}
+.card h2{font-size:1.05rem;font-weight:800;color:#0055cc;margin:1.3rem 0 .5rem;padding-bottom:.25rem;border-bottom:2px solid #eef2f8;}
+.card h3{font-size:.95rem;font-weight:800;color:#333;margin:1rem 0 .4rem;}
+.card h4{font-size:.9rem;font-weight:800;color:#0055cc;margin:.9rem 0 .3rem;}
+.card p{font-size:.9rem;line-height:1.75;color:#333;margin:.5rem 0;}
+.card ul,.card ol{margin:.4rem 0 .6rem 1.4rem;}
+.card li{font-size:.89rem;line-height:1.7;color:#333;margin-bottom:.32rem;}
+.card code{background:#f3f3f3;color:#c7254e;padding:.1em .35em;border-radius:3px;font-size:.85em;font-family:"SFMono-Regular",Consolas,monospace;}
+.card strong{color:#111;}
+.card a{color:#0055cc;}
+.card hr{border:none;border-top:1px solid #eee;margin:1.2rem 0;}
+.card pre{background:#1e293b;color:#e2e8f0;border-radius:8px;padding:.85rem 1rem;margin:.6rem 0;overflow-x:auto;font-size:.82em;line-height:1.6;white-space:pre-wrap;font-family:"SFMono-Regular",Consolas,monospace;}
+.card img{max-width:100%;border-radius:8px;margin:.5rem 0;}
+.tbl-wrap{overflow-x:auto;margin:.6rem 0;}
+.card table{border-collapse:collapse;width:100%;font-size:.84rem;}
+.card th,.card td{border:1px solid #e2e8f0;padding:.4rem .6rem;text-align:left;vertical-align:top;}
+.card th{background:#f8fafc;font-weight:700;}
+.note{background:#f0f7ff;border-left:3px solid #0055cc;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.warn{background:#fff1f0;border-left:3px solid #ef4444;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.expect{background:#f0fdf4;border-left:3px solid #22c55e;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.rescue{background:#fefce8;border-left:3px solid #eab308;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.check{background:#faf5ff;border-left:3px solid #a855f7;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.question{background:#fff8e6;border-left:3px solid #f59e0b;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.reuse-note{margin-top:1rem;font-size:.78rem;color:#888;text-align:center;}
+.botnav{text-align:center;margin:1.4rem 0;}
+.botnav a{display:inline-block;margin:.3rem;padding:.5rem 1.1rem;background:#fff;border-radius:8px;text-decoration:none;color:#0055cc;font-weight:700;font-size:.85rem;box-shadow:0 1px 4px rgba(0,0,0,.07);}
+.botnav a:hover{background:#f0f7ff;}
+@media(max-width:520px){.wrap{padding:0 .7rem;}.card{padding:1.1rem 1.1rem 1.4rem;}}
+</style>
+</head>
+<body>
+<div class="topnav">
+  <a href="gov-ai_lesson.html">🏠 公務員 AI 應用進階班</a><span class="sep">›</span>
+  <a href="gov-ai-m4_lesson.html">模組 4：公務應用</a><span class="sep">›</span>
+  <span class="cur">民眾網路建言撈取與分析</span>
+  <span class="tag-ex">✍️ 練習</span>
+</div>
+<div class="wrap">
+  <div class="card">
+<h2>練習：民眾網路建言/批評/留言的撈取與分析</h2>
+<div class="note">跨課程可重用。民意分析面向。教「把一大坨民意（陳情、民意信箱、社群留言、問卷開放題）整理成可決策的爭點與情緒圖」。</div>
+<h2>🎯 目標</h2>
+<p>把一堆散亂的民眾意見（幾十上百則），用 AI 彙整成：<strong>主要爭點分類 / 各爭點的情緒與數量 / 具體改善建議 / 少數但重要的個案</strong>。核心：從噪音裡撈出「民眾到底在意什麼」。</p>
+<h2>⏱️ 流程（40 分鐘）</h2>
+<p>1.（8′）講「撈取」與「分析」兩步：先取得意見（合法來源＋去識別化），再讓 AI 歸納。強調不爬需登入/受保護的資料。 2.（27′）學員貼一批意見、讓 AI 做爭點分類＋情緒統計＋建議、追問深入。 3.（5′）分享一個「數量不多但很關鍵」的意見。</p>
+<h2>📋 材料</h2>
+<h3>撈取（先取得資料，合法且去識別化）</h3>
+<ul><li><strong>來源</strong>：單位的民意信箱、線上陳情、公聽會意見表、問卷開放題、公開粉專留言。</li><li><strong>原則</strong>：只用單位有權存取的資料；貼進 AI 前<strong>去掉姓名、帳號、電話等個資</strong>（換〔民眾A〕）。不爬需登入或受保護的內容。</li></ul>
+<h3>分析（複製後填空）</h3>
+<pre>【角色】你是我的民意分析助理。
+【背景】以下是〔某政策/某服務〕的民眾意見〔N 則，已去識別化〕：〔貼上或上傳〕。
+【任務】
+1 爭點分類：歸納成幾個主要議題，每類標出現次數（多→少）
+2 情緒判讀：每類標整體情緒（正面/中性/負面/憤怒）與代表性一句（去識別化引述）
+3 具體建議：民眾提到的可行改善點，條列
+4 少數但重要：數量少卻值得注意的個案（安全、法律、弱勢）
+【限制】不誇大也不淡化；只根據我提供的意見，不腦補民意；統計是趨勢非精確數字。
+【格式】1、4 用條列，2 用表格（議題／次數／情緒／代表句）。</pre>
+<h2>✅ 預期產出</h2>
+<p>一堆散亂意見 → 一張爭點×情緒表 + 改善建議清單 + 重點個案。原本讀不完的留言，變成能上簽的民意摘要。</p>
+<h2>🆘 常見卡點與救援</h2>
+<ul><li><strong>分類太粗</strong>：追問「把最大той類再拆成 3 個子議題」。</li><li><strong>它把少數意見當主流</strong>：追問「依實際出現次數排序，別放大單一激烈留言」。</li><li><strong>量太大貼不下</strong>：分批貼，各批先出小結，最後請它「合併這幾批的爭點」。</li><li><strong>⚠️ 資料倫理</strong>：去識別化、只用有權來源、對外引述要謹慎；情緒判讀僅供內部參考。</li></ul>
+<h2>📌 完成標準</h2>
+<p>一批民意整理成爭點分類＋情緒＋建議，且標出重點個案。</p>
+<h2>🔀 變體</h2>
+<ul><li><strong>趨勢版</strong>：同一議題不同時間兩批意見，比較民意有沒有變。</li><li><strong>大學課版</strong>：分析一份問卷開放題，或某議題的社群輿論。</li></ul>
+  </div>
+  <div class="reuse-note">📎 此練習頁不綁課程，可被任何 AI 實務課程的目錄引用。</div>
+  <div class="botnav">
+    <a href="gov-ai-m4_lesson.html">← 回模組 4：公務應用</a>
+    <a href="gov-ai_lesson.html">🏠 課程目錄</a>
+  </div>
+</div>
+</body>
+</html>
