@@ -41,7 +41,7 @@ body{font-family:"Helvetica Neue",Arial,"Noto Sans TC",sans-serif;background:#f0
 .drill{border:1px solid #e2e8f0;border-radius:10px;padding:.2rem 1rem 1rem;margin:1.1rem 0;background:#fff;}
 .drill-hd{display:flex;align-items:center;gap:.6rem;margin:.9rem 0 .3rem;flex-wrap:wrap;}
 .lvl{font-size:.72rem;font-weight:800;color:#fff;padding:.15rem .55rem;border-radius:5px;}
-.lvl.l1{background:#22c55e;} .lvl.l2{background:#0891b2;} .lvl.l3{background:#7c3aed;} .lvl.l4{background:#d97706;} .lvl.l5{background:#dc2626;}
+.lvl.l1{background:#22c55e;} .lvl.l2{background:#0891b2;} .lvl.l3{background:#7c3aed;} .lvl.l4{background:#d97706;} .lvl.l5{background:#dc2626;} .lvl.l6{background:#9f1239;}
 .drill-hd .dt{font-weight:800;font-size:1rem;color:#111;}
 .drill-hd .skill{font-size:.74rem;color:#888;background:#f3f4f6;padding:.12rem .5rem;border-radius:4px;}
 .ba{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin:.5rem 0;}
@@ -50,6 +50,14 @@ body{font-family:"Helvetica Neue",Arial,"Noto Sans TC",sans-serif;background:#f0
 .ba .good{background:#f0fdf4;border:1px solid #bbf7d0;}
 .ba .lab{font-weight:800;font-size:.76rem;display:block;margin-bottom:.25rem;}
 .ba .bad .lab{color:#dc2626;} .ba .good .lab{color:#16a34a;}
+.trybox{background:#eff6ff;border:1px dashed #60a5fa;border-radius:8px;padding:.6rem .85rem;margin:.7rem 0;font-size:.85rem;line-height:1.65;}
+.trybox .th{font-weight:800;color:#1d4ed8;font-size:.85rem;margin-bottom:.25rem;}
+.trybox details{margin-top:.5rem;}
+.trybox summary{cursor:pointer;color:#0055cc;font-weight:700;font-size:.82rem;list-style:none;}
+.trybox summary::-webkit-details-marker{display:none;}
+.trybox summary:hover{text-decoration:underline;}
+.trybox details[open] summary{margin-bottom:.35rem;}
+.trybox pre{margin-top:.35rem;}
 @media(max-width:520px){.wrap{padding:0 .7rem;}.card{padding:1.1rem 1.1rem 1.4rem;}.ba{grid-template-columns:1fr;}}
 .reuse-note{margin-top:1rem;font-size:.78rem;color:#888;text-align:center;}
 .botnav{text-align:center;margin:1.4rem 0;}
@@ -66,13 +74,13 @@ body{font-family:"Helvetica Neue",Arial,"Noto Sans TC",sans-serif;background:#f0
 </div>
 <div class="wrap">
   <div class="card">
-<h2>Prompt 分級闖關：五關由淺到深，把原則練成肌肉</h2>
+<h2>Prompt 分級闖關：六關由淺到深，把原則練成肌肉</h2>
 <div class="note">這是「基礎六原則」與「三段式」之間的<strong>純練手感關卡</strong>：一關練一招，每關都有壞例→好例對照，做完馬上自評。</div>
 <h2>✨ Take aways（你會學到）</h2>
-<p>把六原則從「聽懂」練到「手會」。五關各鎖定一個 prompt 技能，從最簡單的「改寫爛 prompt」爬到「連續追問把成品磨到能用」。<strong>重點不是全部做完，是每關親手打一次、親眼看差別。</strong></p>
+<p>把六原則從「聽懂」練到「手會」。六關各鎖定一個 prompt 技能，從最簡單的「改寫爛 prompt」爬到「連續追問把成品磨到能用」。<strong>重點不是全部做完，是每關親手打一次、親眼看差別。</strong></p>
 <div class="note"><strong>玩法</strong>：每關都在<strong>同一個對話</strong>裡，先送「起手」版看它給什麼，再送「升級」版，把兩次結果並排。差別越大，代表這一招越有感。做完想一想：你在哪一關看到最大落差？</div>
 
-<h2>🎮 五道關卡</h2>
+<h2>🎮 六道關卡</h2>
 
 <div class="drill">
 <div class="drill-hd"><span class="lvl l1">LV.1</span><span class="dt">改寫爛 prompt</span><span class="skill">技能：具體化</span></div>
@@ -96,7 +104,14 @@ body{font-family:"Helvetica Neue",Arial,"Noto Sans TC",sans-serif;background:#f0
 
 <div class="drill">
 <div class="drill-hd"><span class="lvl l3">LV.3</span><span class="dt">給範例（few-shot）</span><span class="skill">技能：示範</span></div>
-<p><strong>任務</strong>：貼一個「你要的樣子」當範本，要 AI 照著產出同款的下一則。示範一次，勝過形容詞十句。</p>
+<p><strong>任務</strong>：貼一個「你要的樣子」當範本，要 AI 照著產出同款。示範一次，勝過形容詞十句。下面三種是最常用的 few-shot 玩法，各給一個可複製示範。</p>
+
+<div class="ba">
+  <div class="bad"><span class="lab">✗ 沒範例</span>幫我寫三則活動快訊。（→ 格式各異，還要你手動統一）</div>
+  <div class="good"><span class="lab">✓ 有範例</span>（用下面任一種 few-shot）→ 格式一致，直接能用。</div>
+</div>
+
+<h4>① 仿「格式＋語氣」——給一則，要它照著寫更多</h4>
 <pre>照下面這則的語氣與格式，再幫我寫兩則不同主題的：
 
 範例：
@@ -104,15 +119,99 @@ body{font-family:"Helvetica Neue",Arial,"Noto Sans TC",sans-serif;background:#f0
 歡迎爸媽帶孩子一起聽故事，免報名，額滿為止。
 
 請比照，幫我寫：(1) 銀髮族數位課程 (2) 二手書交換市集</pre>
-<div class="ba">
-  <div class="bad"><span class="lab">✗ 沒範例</span>幫我寫三則活動快訊。（→ 格式各異，還要你手動統一）</div>
-  <div class="good"><span class="lab">✓ 有範例</span>（上面那段）→ 三則格式一致，直接能排版。</div>
+
+<h4>② 給「輸入→輸出」成對範例——教它一套轉換規則</h4>
+<p>示範幾組「原句 → 改寫」，AI 會歸納出你的規則，套到新句子。這招最適合「批次改一整批」。</p>
+<pre>照下面的範例，把民眾看不懂的公文句改成白話：
+
+範例：
+原句：本案業經核定在案，請查照辦理。
+白話：這件事已經核准了，麻煩您照著做。
+
+原句：台端所詢事項歉難照辦。
+白話：您問的事情我們沒辦法照做，很抱歉。
+
+現在換這句：
+原句：請於文到十五日內見復，逾期視同放棄。</pre>
+
+<h4>③ 給「分類標籤」範例——教它照你的類別歸類</h4>
+<pre>照下面的範例，把民眾留言分類（只回類別，不要解釋）：
+
+留言：路燈壞好久了都沒人修 → 類別：設施維修
+留言：想問低收補助怎麼申請 → 類別：福利諮詢
+留言：承辦態度很差 → 類別：服務申訴
+
+現在分類這則：
+留言：公園垃圾桶滿出來了</pre>
+
+<div class="rescue">🆘 產出跟範例不像？①範例給不只一個（2–3 個規律才明顯）②把「固定結構」明講：「每則都要有【標籤】、時間、地點、一句說明」。</div>
+
+<div class="trybox">
+<div class="th">✍️ 換你試（few-shot）</div>
+給 AI <strong>兩個「你單位真實的原句 → 你要的改寫」成對範例</strong>，再丟第三個原句要它照辦。主題自選（公文白話化、活動文案、罐頭回覆…）。
+<details><summary>👉 卡住了？點開看一份參考寫法</summary>
+<pre>照下面的範例，把生硬的公告改得親切好懂：
+
+範例：
+原句：茲訂於本月十五日舉辦志工說明會，請踴躍參加。
+親切版：15 號我們辦志工說明會，超歡迎你來坐坐！
+
+原句：申請人須檢附相關證明文件正本乙份。
+親切版：記得帶證明文件的正本一份來喔～
+
+現在換這句：
+原句：逾期未繳者，將依規定停止服務。</pre>
+</details>
 </div>
-<div class="rescue">🆘 產出跟範例不像？把範例裡的「固定結構」明講出來：「每則都要有【標籤】、時間、地點、一句說明」。</div>
 </div>
 
 <div class="drill">
-<div class="drill-hd"><span class="lvl l4">LV.4</span><span class="dt">指定輸出格式</span><span class="skill">技能：結構化</span></div>
+<div class="drill-hd"><span class="lvl l4">LV.4</span><span class="dt">設禁止清單（negative prompt）</span><span class="skill">技能：設邊界</span></div>
+<p><strong>任務</strong>：明確告訴 AI「<strong>不要</strong>做什麼」。前面的限制是講「要什麼」，這關是劃紅線——把你不想要的東西列成一張禁止清單，AI 就不會踩線。</p>
+<div class="note">為什麼需要？AI 常有你沒點就自作主張的毛病：自己編數字、加你沒說的功能、寫得落落長、用一堆官腔套語。把這些「不要」明講出來，產出就乾淨很多。</div>
+
+<h4>示範一：文字類的禁止清單</h4>
+<pre>幫我寫一則市府活動的臉書貼文，介紹週末的親子市集。
+
+不要：
+- 不要編任何我沒給你的時間、地點、攤位數字
+- 不要用「歡迎踴躍參加」「共襄盛舉」這類官腔套語
+- 不要超過 120 字
+- 不要用 emoji 表情符號
+- 不確定的地方寫〔待補〕，不要自己假設</pre>
+
+<h4>示範二：生圖類的 negative prompt（生圖最需要）</h4>
+<p>生海報／插圖時，「不要什麼」比「要什麼」還關鍵——AI 很愛亂加文字、亂放裝飾。</p>
+<pre>幫我生一張社區運動會的宣傳海報背景，扁平插畫風、藍白色調、上方留白放標題。
+
+負面提示（不要出現）：
+no text, no letters, no watermark, no rainbow gradient,
+no clip-art, no decorative borders, no clutter, no realistic faces</pre>
+
+<div class="ba">
+  <div class="bad"><span class="lab">✗ 只講要什麼</span>寫一則活動貼文。（→ 它加一堆官腔、自己編數字、還很長）</div>
+  <div class="good"><span class="lab">✓ 加禁止清單</span>（上面示範）→ 乾淨、沒亂編、沒套語、長度剛好。</div>
+</div>
+<div class="rescue">🆘 它還是踩線？把最在意的那條放<strong>第一條</strong>並加重語氣：「最重要：絕對不要編造任何數字」。或產出後回一句「第 2 點你又用了套語，拿掉重寫」。</div>
+
+<div class="trybox">
+<div class="th">✍️ 換你試（negative prompt）</div>
+挑一件你要 AI 幫忙的事，先寫「要什麼」，再列<strong>至少 3 條「不要什麼」</strong>（想想它平常最愛犯哪些毛病）。貼進 AI 看產出乾不乾淨。
+<details><summary>👉 卡住了？點開看一份參考寫法</summary>
+<pre>幫我擬一段回覆民眾陳情的罐頭句，主題是噪音檢舉已受理。
+
+不要：
+- 不要推諉，不要說「非本單位權責」
+- 不要用「業經」「爰」「俾」這類文言字
+- 不要給出具體處理天數（我還不確定）
+- 不要超過 3 句話
+- 不要制式到沒溫度，但也不要過度熱情</pre>
+</details>
+</div>
+</div>
+
+<div class="drill">
+<div class="drill-hd"><span class="lvl l5">LV.5</span><span class="dt">指定輸出格式</span><span class="skill">技能：結構化</span></div>
 <p><strong>任務</strong>：要 AI 直接吐出「你不用再重排」的結構——表格、分點、JSON 皆可。</p>
 <pre>我要籌辦一場社區座談，幫我把待辦拆成一張表格。
 欄位：任務、負責角色、期限（用相對天數如 T-7）、備註。
@@ -125,7 +224,7 @@ body{font-family:"Helvetica Neue",Arial,"Noto Sans TC",sans-serif;background:#f0
 </div>
 
 <div class="drill">
-<div class="drill-hd"><span class="lvl l5">LV.5</span><span class="dt">連續追問磨成品</span><span class="skill">技能：迭代</span></div>
+<div class="drill-hd"><span class="lvl l6">LV.6</span><span class="dt">連續追問磨成品</span><span class="skill">技能：迭代</span></div>
 <p><strong>任務</strong>：在同一對話裡跑「產出→追問→再產出」三輪，把一份初稿磨到「明天真的能用」。</p>
 <p><strong>示範追問三連（依序貼）：</strong></p>
 <pre>第一版拿到後：
@@ -137,10 +236,10 @@ body{font-family:"Helvetica Neue",Arial,"Noto Sans TC",sans-serif;background:#f0
 </div>
 
 <h2>✅ 完成標準</h2>
-<p>五關至少完成三關，並能講出「哪一關讓我看到最大落差」。做完你會發現：好 prompt 不是靈感，是<strong>把六原則逐項補齊</strong>的機械動作。</p>
+<p>六關至少完成三關，並能講出「哪一關讓我看到最大落差」。做完你會發現：好 prompt 不是靈感，是<strong>把原則逐項補齊</strong>的機械動作。</p>
 
 <h2>🔀 延伸練習／自我加強</h2>
-<ul><li>挑一關的起手 prompt，挑戰用<strong>最少字</strong>把結果調到你最滿意。</li><li>把 LV.5 的最終 prompt，在同一平台的「快版」與「強版」各跑一次，比較深度差異（呼應〈同一題問三家 AI〉）。</li><li>換自己單位的真實情境再跑一遍五關。</li></ul>
+<ul><li>挑一關的起手 prompt，挑戰用<strong>最少字</strong>把結果調到你最滿意。</li><li>把 LV.6 的最終 prompt，在同一平台的「快版」與「強版」各跑一次，比較深度差異（呼應〈同一題問三家 AI〉）。</li><li>換自己單位的真實情境再跑一遍六關。</li></ul>
   </div>
   <div class="botnav">
     <a href="gov-ai-m1_lesson.html">← 回模組 1：入門 + Prompt 實作</a>
