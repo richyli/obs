@@ -42,7 +42,24 @@ body{font-family:"Helvetica Neue",Arial,"Noto Sans TC",sans-serif;background:#f0
 .botnav{text-align:center;margin:1.4rem 0;}
 .botnav a{display:inline-block;margin:.3rem;padding:.5rem 1.1rem;background:#fff;border-radius:8px;text-decoration:none;color:#0055cc;font-weight:700;font-size:.85rem;box-shadow:0 1px 4px rgba(0,0,0,.07);}
 .botnav a:hover{background:#f0f7ff;}
-@media(max-width:520px){.wrap{padding:0 .7rem;}.card{padding:1.1rem 1.1rem 1.4rem;}}
+.pollbox{background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:1rem 1.1rem;margin:.6rem 0;}
+.poll-q{margin-bottom:1.1rem;}
+.poll-q:last-of-type{margin-bottom:.4rem;}
+.poll-qt{font-weight:800;font-size:.95rem;color:#111;margin-bottom:.55rem;}
+.poll-opts{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:.7rem;}
+.poll-opt{cursor:pointer;border:1.5px solid #cbd5e1;background:#fff;color:#334155;font-size:.85rem;font-weight:600;padding:.4rem .8rem;border-radius:20px;transition:all .12s;font-family:inherit;}
+.poll-opt:hover{border-color:#0055cc;color:#0055cc;}
+.poll-opt.sel{background:#0055cc;border-color:#0055cc;color:#fff;}
+.poll-bars{display:flex;flex-direction:column;gap:.32rem;}
+.poll-bar{display:flex;align-items:center;gap:.5rem;font-size:.82rem;}
+.poll-bar .lbl{flex:0 0 5.2rem;color:#334155;font-weight:600;text-align:right;white-space:nowrap;}
+.poll-bar .track{flex:1;background:#e5e9f0;border-radius:6px;height:1.15rem;overflow:hidden;}
+.poll-bar .fill{height:100%;background:linear-gradient(90deg,#0055cc,#3b82f6);border-radius:6px;width:0;transition:width .5s ease;}
+.poll-bar.mine .fill{background:linear-gradient(90deg,#7c3aed,#a855f7);}
+.poll-bar .cnt{flex:0 0 3.4rem;color:#64748b;font-size:.78rem;white-space:nowrap;}
+.poll-bar.mine .lbl{color:#7c3aed;}
+.poll-status{font-size:.76rem;color:#94a3b8;text-align:center;margin-top:.5rem;}
+@media(max-width:520px){.wrap{padding:0 .7rem;}.card{padding:1.1rem 1.1rem 1.4rem;}.poll-bar .lbl{flex:0 0 4.2rem;}}
 </style>
 </head>
 <body>
@@ -65,6 +82,36 @@ body{font-family:"Helvetica Neue",Arial,"Noto Sans TC",sans-serif;background:#f0
 寫一則「本週五下午三點於三樓會議室召開單位業務會報」的內部通知，
 給科內同仁。控制在 150 字內。</pre>
 <div class="note">大學課可把〔〕換成校園情境（例：「通知系學會幹部開會」）。</div>
+
+<h2>🗳️ 全班即時投票</h2>
+<div class="note">選完馬上看到<strong>全班的共同結果</strong>即時更新。可以改，改了大家的長條圖會跟著動。匿名，不會記你是誰。</div>
+<div id="pollBox" class="pollbox">
+  <div class="poll-q">
+    <div class="poll-qt">1️⃣ 你主要用哪一家當主力？</div>
+    <div class="poll-opts" data-poll="tool">
+      <button class="poll-opt" data-val="c1">ChatGPT</button>
+      <button class="poll-opt" data-val="c2">Claude</button>
+      <button class="poll-opt" data-val="c3">Gemini</button>
+      <button class="poll-opt" data-val="c4">Grok</button>
+      <button class="poll-opt" data-val="c5">Perplexity</button>
+      <button class="poll-opt" data-val="c6">Copilot</button>
+      <button class="poll-opt" data-val="c7">其他 · 都用</button>
+      <button class="poll-opt" data-val="c8">還沒固定</button>
+    </div>
+    <div class="poll-bars" data-bars="tool"></div>
+  </div>
+  <div class="poll-q">
+    <div class="poll-qt">2️⃣ 你有沒有付費？</div>
+    <div class="poll-opts" data-poll="pay">
+      <button class="poll-opt" data-val="p1">完全免費</button>
+      <button class="poll-opt" data-val="p2">有付一家</button>
+      <button class="poll-opt" data-val="p3">付好幾家</button>
+    </div>
+    <div class="poll-bars" data-bars="pay"></div>
+  </div>
+  <div class="poll-status" id="pollStatus">連線中…</div>
+</div>
+
 <h2>🗺️ 主流平台 × 版本對照表（選主力前先看）</h2>
 <div class="note">課堂只實測三家，但市面上不只三家。下表幫你快速判斷「哪家適合哪種活兒」。<strong>免費版都夠日常公務用</strong>，付費差在額度、速度與最新模型。</div>
 <div class="tbl-wrap">
@@ -109,5 +156,120 @@ body{font-family:"Helvetica Neue",Arial,"Noto Sans TC",sans-serif;background:#f0
     <a href="gov-ai_lesson.html">🏠 課程目錄</a>
   </div>
 </div>
+<script>
+(function(){
+  var FIREBASE_URL = "https://course-update-36460-default-rtdb.firebaseio.com";
+  // DB 規則只放行 classroom 節點的公開讀寫，故投票掛在 classroom 底下的獨立子鍵
+  var POLL_KEY = "classroom/govAiThreeAiPoll";
+  var LS_KEY   = "gov-ai-three-ai-poll";            // 本機記自己選什麼
+  var dbUrl = FIREBASE_URL.replace(/\/$/, "");
+  // 讀整個投票節點；寫入時針對 poll 子路徑做 PATCH（避免覆蓋整組）
+  function pathAll(){ return dbUrl + "/" + POLL_KEY + ".json"; }
+  function pathPoll(poll){ return dbUrl + "/" + POLL_KEY + "/" + poll + ".json"; }
+
+  // DB 一律用 ASCII 代號當 key（避開 Firebase 對特殊字元的限制與編碼問題），畫面顯示中文標籤
+  var QUESTIONS = {
+    tool: [["c1","ChatGPT"],["c2","Claude"],["c3","Gemini"],["c4","Grok"],
+           ["c5","Perplexity"],["c6","Copilot"],["c7","其他/都用"],["c8","還沒有"]],
+    pay:  [["p1","完全免費"],["p2","付一家"],["p3","付好幾家"]]
+  };
+  function codesOf(poll){ return QUESTIONS[poll].map(function(x){return x[0];}); }
+  function labelOf(poll,code){ var f=QUESTIONS[poll].filter(function(x){return x[0]===code;}); return f.length?f[0][1]:code; }
+
+  // 本機記住自己選了什麼（可改票、避免重複計）
+  var mine = JSON.parse(localStorage.getItem(LS_KEY) || "{}");
+  var tally = { tool:{}, pay:{} };
+  var statusEl = document.getElementById("pollStatus");
+
+  function setStatus(t){ if(statusEl) statusEl.textContent = t; }
+
+  async function dbGet(){
+    try{
+      var r = await fetch(pathAll(), {cache:"no-store"});
+      if(!r.ok) throw 0;
+      return (await r.json()) || {};
+    }catch(e){ return null; }
+  }
+  // 只 PATCH 該題子路徑，merge 發生在選項層，不覆蓋整組
+  async function dbPatchPoll(poll, obj){
+    try{
+      await fetch(pathPoll(poll), {method:"PATCH", body:JSON.stringify(obj),
+        headers:{"Content-Type":"application/json"}});
+      return true;
+    }catch(e){ return false; }
+  }
+
+  function renderBars(poll){
+    var wrap = document.querySelector('[data-bars="'+poll+'"]');
+    if(!wrap) return;
+    var codes = codesOf(poll);
+    var counts = tally[poll] || {};
+    var total = 0; codes.forEach(function(cd){ total += (counts[cd]||0); });
+    wrap.innerHTML = codes.map(function(cd){
+      var c = counts[cd]||0;
+      var pct = total ? Math.round(c/total*100) : 0;
+      var isMine = mine[poll] === cd;
+      return '<div class="poll-bar'+(isMine?' mine':'')+'">'+
+        '<span class="lbl">'+labelOf(poll,cd)+(isMine?' ✓':'')+'</span>'+
+        '<span class="track"><span class="fill" style="width:'+pct+'%"></span></span>'+
+        '<span class="cnt">'+c+' 票 '+pct+'%</span></div>';
+    }).join("");
+    // 標記已選按鈕
+    var box = document.querySelector('[data-poll="'+poll+'"]');
+    if(box){ box.querySelectorAll(".poll-opt").forEach(function(b){
+      b.classList.toggle("sel", b.dataset.val === mine[poll]);
+    }); }
+  }
+
+  function absorb(data){
+    ["tool","pay"].forEach(function(poll){
+      var node = (data && data[poll]) || {};
+      var t = {};
+      codesOf(poll).forEach(function(cd){ t[cd] = node[cd] || 0; });
+      tally[poll] = t;
+      renderBars(poll);
+    });
+  }
+
+  async function vote(poll, val){
+    var prev = mine[poll];
+    if(prev === val) return;                        // 沒變就不動
+    // 樂觀更新本地
+    tally[poll][val] = (tally[poll][val]||0) + 1;
+    if(prev) tally[poll][prev] = Math.max(0,(tally[poll][prev]||0) - 1);
+    mine[poll] = val;
+    localStorage.setItem(LS_KEY, JSON.stringify(mine));
+    renderBars(poll);
+    setStatus("已送出你的選擇 · 同步中…");
+    // 讀伺服器最新值，算增量後只 PATCH 該題子路徑（課堂規模足夠）
+    var data = await dbGet();
+    if(data === null){ setStatus("⚠️ 目前離線，你的票只存在本機；恢復連線後重選一次即可同步"); return; }
+    var node = data[poll] || {};
+    var upd = {};
+    upd[val] = (node[val]||0) + 1;
+    if(prev) upd[prev] = Math.max(0,(node[prev]||0) - 1);
+    var ok = await dbPatchPoll(poll, upd);
+    setStatus(ok ? "✅ 已記入全班統計" : "⚠️ 同步失敗，稍後自動重試");
+  }
+
+  // 綁定按鈕
+  document.querySelectorAll(".poll-opt").forEach(function(b){
+    b.addEventListener("click", function(){
+      var poll = b.closest("[data-poll]").dataset.poll;
+      vote(poll, b.dataset.val);
+    });
+  });
+
+  // 首次繪製（本地樂觀值）＋輪詢
+  absorb({});
+  async function poll(){
+    var data = await dbGet();
+    if(data === null){ setStatus("⚠️ 連線中斷，重試中…"); }
+    else{ absorb(data); setStatus(mine.tool||mine.pay ? "✅ 已同步 · 全班即時更新中" : "🟢 已連線 · 選一個開始"); }
+  }
+  poll();
+  setInterval(poll, 3000);
+})();
+</script>
 </body>
 </html>
