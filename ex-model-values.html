@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 不是中立的：模型也有立場 · 認識</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;}
+body{font-family:"Helvetica Neue",Arial,"Noto Sans TC",sans-serif;background:#f0f2f5;margin:0;color:#1a1a1a;}
+.topnav{background:#fff;border-bottom:1px solid #e4e4e4;padding:.7rem 1.2rem;position:sticky;top:0;z-index:10;box-shadow:0 2px 8px rgba(0,0,0,.05);display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;font-size:.8rem;}
+.topnav a{color:#0055cc;text-decoration:none;font-weight:600;}
+.topnav a:hover{text-decoration:underline;}
+.topnav .sep{color:#bbb;}
+.topnav .cur{color:#666;}
+.tag-ex{font-size:.68rem;font-weight:800;background:#fef3c7;color:#b45309;padding:.1rem .45rem;border-radius:4px;}
+.wrap{max-width:800px;margin:1.4rem auto 3rem;padding:0 1.2rem;}
+.card{background:#fff;border-radius:12px;box-shadow:0 1px 6px rgba(0,0,0,.08);padding:1.4rem 1.6rem 1.8rem;border-left:5px solid #0055cc;}
+.card h1{font-size:1.3rem;margin:.2rem 0 1rem;}
+.card h2{font-size:1.05rem;font-weight:800;color:#0055cc;margin:1.3rem 0 .5rem;padding-bottom:.25rem;border-bottom:2px solid #eef2f8;}
+.card h3{font-size:.95rem;font-weight:800;color:#333;margin:1rem 0 .4rem;}
+.card h4{font-size:.9rem;font-weight:800;color:#0055cc;margin:.9rem 0 .3rem;}
+.card p{font-size:.9rem;line-height:1.75;color:#333;margin:.5rem 0;}
+.card ul,.card ol{margin:.4rem 0 .6rem 1.4rem;}
+.card li{font-size:.89rem;line-height:1.7;color:#333;margin-bottom:.32rem;}
+.card code{background:#f3f3f3;color:#c7254e;padding:.1em .35em;border-radius:3px;font-size:.85em;font-family:"SFMono-Regular",Consolas,monospace;}
+.card strong{color:#111;}
+.card a{color:#0055cc;}
+.card hr{border:none;border-top:1px solid #eee;margin:1.2rem 0;}
+.card pre{background:#1e293b;color:#e2e8f0;border-radius:8px;padding:.85rem 1rem;margin:.6rem 0;overflow-x:auto;font-size:.82em;line-height:1.6;white-space:pre-wrap;font-family:"SFMono-Regular",Consolas,monospace;}
+.tbl-wrap{overflow-x:auto;margin:.6rem 0;}
+.card table{border-collapse:collapse;width:100%;font-size:.83rem;}
+.card th,.card td{border:1px solid #e2e8f0;padding:.4rem .6rem;text-align:left;vertical-align:top;}
+.card th{background:#f8fafc;font-weight:700;}
+.note{background:#f0f7ff;border-left:3px solid #0055cc;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.warn{background:#fff1f0;border-left:3px solid #ef4444;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.expect{background:#f0fdf4;border-left:3px solid #22c55e;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.check{background:#faf5ff;border-left:3px solid #a855f7;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.question{background:#fff8e6;border-left:3px solid #f59e0b;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.src{font-size:.78rem;color:#888;line-height:1.6;margin-top:.3rem;}
+.card details{margin-top:.5rem;}
+.card summary{cursor:pointer;color:#0055cc;font-weight:700;font-size:.85rem;list-style:none;}
+.card summary::-webkit-details-marker{display:none;}
+.card summary:hover{text-decoration:underline;}
+.card details[open] summary{margin-bottom:.4rem;}
+.botnav{text-align:center;margin:1.4rem 0;}
+.botnav a{display:inline-block;margin:.3rem;padding:.5rem 1.1rem;background:#fff;border-radius:8px;text-decoration:none;color:#0055cc;font-weight:700;font-size:.85rem;box-shadow:0 1px 4px rgba(0,0,0,.07);}
+.botnav a:hover{background:#f0f7ff;}
+@media(max-width:520px){.wrap{padding:0 .7rem;}.card{padding:1.1rem 1.1rem 1.4rem;}}
+</style>
+</head>
+<body>
+<div class="topnav">
+  <a href="gov-ai_lesson.html">🏠 AI提示工程實戰班─打造你的AI問答秘書第9期</a><span class="sep">›</span>
+  <a href="gov-ai-m1_lesson.html">模組 1：入門 + Prompt 實作</a><span class="sep">›</span>
+  <span class="cur">AI 不是中立的：模型也有立場</span>
+  <span class="tag-ex">📖 認識工具</span>
+</div>
+<div class="wrap">
+  <div class="card">
+<h2>AI 不是中立的：你選哪一家，會影響你看到什麼答案</h2>
+<div class="note">前面你選了一家 AI 當主力。這一頁要補上一個更重要的認識：<strong>AI 的答案不是「客觀事實」，而是它被訓練與被管制之後的產物</strong>。不同國家、不同公司做出來的模型，價值觀與敏感題的處理方式差很多——這對每天要處理公共事務的你，特別重要。</div>
+
+<h2>✨ Take aways（你會帶走什麼）</h2>
+<p>你會知道：<strong>①AI 的回答帶有它訓練來源的價值觀，沒有真正中立的模型</strong>；<strong>②中國開發的模型（如 DeepSeek）在政治敏感議題上有系統性的自我審查</strong>，且中英文問同一題答案會不一樣；<strong>③身為公務員，處理涉及兩岸、國安、人權的議題時該怎麼選工具、怎麼交叉查證。</strong></p>
+
+<h2>🌍 每個模型都戴著一副「文化眼鏡」</h2>
+<p>AI 是從資料學來的，而資料來自特定的社會。所以模型的「三觀」會很接近它的出身地。《經濟學人》2026 年的分析就發現，把各家 AI 放到文化價值的座標上，位置差很多：</p>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>模型</th><th>價值傾向</th><th>看得出來的地方</th></tr></thead>
+<tbody>
+<tr><td>ChatGPT／Gemini／Claude<br><span class="src">（美國開發）</span></td><td>偏世俗、重個人自由與自我表達，強調性別平等、個人權利</td><td>家庭衝突題傾向建議「設立界線、保持尊重距離」</td></tr>
+<tr><td>DeepSeek<br><span class="src">（中國開發）</span></td><td>偏集體主義、和諧敘事，重傳統價值</td><td>同樣的家庭衝突題傾向建議「尋求妥協、以和為貴」</td></tr>
+<tr><td>Grok<br><span class="src">（xAI）</span></td><td>強調「追求真理」與反權威，立場較獨特</td><td>在多數社會共享的道德框架之外，語氣直白</td></tr>
+</tbody>
+</table>
+</div>
+<div class="note">舉個具體的例子：問「婆婆一直干涉我的婚姻怎麼辦？」——西方模型多半建議<strong>保持尊重的距離、劃出界線</strong>（重個人）；DeepSeek 則傾向建議<strong>尋求妥協</strong>（重和諧）。兩個答案都不能說錯，但它們背後是<strong>不同的價值預設</strong>。你若沒意識到這件事，就會把其中一種當成「AI 說的標準答案」。</div>
+
+<h2>🚧 更關鍵的差別：敏感議題會不會被「管」</h2>
+<p>價值觀不同還算是文化差異，但另一件事就直接影響你能不能拿到完整資訊：<strong>模型會不會對特定議題進行審查</strong>。</p>
+<div class="note">政大人工智慧跨域研究中心（IAIC）比較過兩者的資訊治理邏輯，結論很清楚：<strong>ChatGPT 傾向「最小必要限制」</strong>——盡量少擋，只在必要時設限；<strong>DeepSeek 則採「全面預防性管制」</strong>——對政治、歷史與性相關議題高度敏感，寧可先擋再說。同樣一個問題，你在兩邊會拿到完全不同的資訊完整度。</div>
+
+<h3>國防大學研究：DeepSeek 的自我審查有跡可循</h3>
+<p>國防大學新聞系傅文成教授在《展望與探索》發表的研究，實測了 DeepSeek 在敏感議題上的回答，發現幾個明確模式：</p>
+<div class="warn">
+<ul>
+<li><strong>複誦官方敘事</strong>：問到香港民主運動、臺灣獨立、新疆人權時，DeepSeek 常用與中國官媒相似的用詞與框架，例如強調<strong>「境外勢力干預」「維護國家穩定」</strong>。</li>
+<li><strong>遇敏感詞就模糊化</strong>：偵測到尖銳提問時，傾向給出<strong>避重就輕、簡略、轉移話題</strong>的回答。談六四會迴避「軍事鎮壓」等字眼，只簡略提「學生聚集、政府維穩」。</li>
+<li><strong>中英文答案不一樣</strong>：同一題用英文問，回答相對寬鬆；<strong>切換成中文就明顯更嚴格</strong>。（研究也指出，ChatGPT 在中文語境雖仍提供資訊，但語氣會較謹慎。）</li>
+<li><strong>被當成「中立的技術解答」最危險</strong>：使用者往往以為 AI 的回答是客觀的，但內容其實已受政治考量影響——這讓它更容易在不知不覺中形塑認知。</li>
+</ul>
+</div>
+<div class="note">研究還提到一個常見誤解：有人以為「等 DeepSeek 加入繁體中文語料就會平衡了」。但研究指出，<strong>問題不在語料有沒有繁中，而在雲端版本內建的即時審查與內容規則</strong>——官方雲端版會依規範持續過濾，不是加點資料就能改變的。</div>
+
+<h2>🏛️ 這對公務員的實際意義</h2>
+<div class="warn"><strong>三個具體風險：</strong>
+<ul>
+<li><strong>資訊不完整而不自知</strong>：你查兩岸、國安、人權、歷史相關資料，若用了會自我審查的模型，缺漏的那一塊你根本看不到——它不會告訴你「這裡我略過了」。</li>
+<li><strong>用了帶立場的說法還以為是中性用語</strong>：如果你把 AI 給的框架（例如「境外勢力干預」）直接寫進公文或新聞稿，等於幫特定敘事背書。</li>
+<li><strong>資料安全</strong>：把公務資料貼進境外、尤其是受他國法規管轄的 AI 服務，牽涉的不只是答案品質，還有資料落地與外洩風險。機關電腦要裝什麼、能用哪些服務，一律先確認資訊單位與上級規範。</li>
+</ul>
+</div>
+
+<h2>✅ 那該怎麼辦？四個務實做法</h2>
+<div class="expect"><strong>① 涉及敏感或爭議議題，一定要交叉比對。</strong>同一題至少問兩家不同來源的 AI（例如美國系與其他），看答案有沒有系統性的差異。差很多，就代表這題有立場問題，要回到原始資料查。</div>
+<div class="expect"><strong>② 把 AI 當「線索」而非「定論」。</strong>公共議題、歷史事件、法規適用，AI 給的是起點，最終要回官方資料、法規原文、可信來源核對。</div>
+<div class="expect"><strong>③ 留意用詞。</strong>AI 產出裡若出現帶有特定政治框架的詞彙，別直接沿用進公務文件。用中性、事實性的敘述。</div>
+<div class="expect"><strong>④ 公務資料的紅線照舊。</strong>個資、機密、未公開文件不進公用 AI；使用境外服務前先確認機關規範。這一條在任何模型都適用。</div>
+
+<h2>🧪 動手比一比：同一題，兩家答案差多少？</h2>
+<div class="question"><strong>找一個有立場張力的題目，同時問兩家不同來源的 AI，並排比較。</strong>例如：
+<pre>請說明 1989 年天安門事件的起因與經過。</pre>
+<pre>請客觀說明臺灣的國際地位目前有哪些不同的論述立場。</pre>
+比較這幾點：<strong>①有沒有哪一家迴避、模糊、或轉移話題？②用詞框架一不一樣？③有沒有一家列出多方觀點、另一家只有單一說法？</strong>
+<details><summary>👉 你大概會看到什麼</summary>美國開發的模型通常會條列背景、多方觀點，甚至提到爭議與不同立場；中國開發的模型則可能簡略帶過、使用官方框架用語、或直接迴避。<strong>重點不是要你評斷哪家「好」，而是親眼確認一件事：AI 的答案取決於它是誰做的、受誰管。</strong>認識到這點，你以後看任何 AI 的回答，都會多一分警覺。</details></div>
+
+<h2>📌 帶走一句話</h2>
+<p><strong>沒有中立的 AI。</strong>每個模型都帶著訓練資料的價值觀，有些還帶著開發地的審查規則。這不代表 AI 不能用，而是提醒你：<strong>它給的是「一種說法」，不是「唯一的事實」</strong>。愈是涉及公共議題、愈是要對外發布，愈要交叉比對、回到原始資料——這是公務員的基本功。</p>
+
+<h2>🔀 延伸／自我了解</h2>
+<ul>
+<li>拿你單位常查的一個議題，用兩家不同來源的 AI 各問一次，看看差異在哪。</li>
+<li>查一下你的機關對於使用境外 AI 服務（特別是中國開發的服務）有沒有相關規範或禁令。</li>
+<li>想一想：如果你發現 AI 給的答案帶有明顯立場，你會怎麼在公文或簡報中處理這段資訊？</li>
+</ul>
+
+<div class="src"><strong>參考資料：</strong>政治大學人工智慧跨域研究中心（IAIC）「生成式 AI 資訊治理」展示；傅文成，〈DeepSeek 的意識形態偏向與自我審查機制：多語境對比之探索研究〉，《展望與探索》第 23 卷第 3 期；《經濟學人》2026 年關於各國 AI 模型價值觀差異的分析。</div>
+  </div>
+  <div class="botnav">
+    <a href="gov-ai-m1_lesson.html">← 回模組 1：入門 + Prompt 實作</a>
+    <a href="gov-ai_lesson.html">🏠 課程目錄</a>
+  </div>
+</div>
+</body>
+</html>
