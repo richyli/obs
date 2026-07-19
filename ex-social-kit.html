@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>社群宣傳圖文包 · 練習</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;}
+body{font-family:"Helvetica Neue",Arial,"Noto Sans TC",sans-serif;background:#f0f2f5;margin:0;color:#1a1a1a;}
+.topnav{background:#fff;border-bottom:1px solid #e4e4e4;padding:.7rem 1.2rem;position:sticky;top:0;z-index:10;box-shadow:0 2px 8px rgba(0,0,0,.05);display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;font-size:.8rem;}
+.topnav a{color:#0055cc;text-decoration:none;font-weight:600;}
+.topnav a:hover{text-decoration:underline;}
+.topnav .sep{color:#bbb;}
+.topnav .cur{color:#666;}
+.tag-ex{font-size:.68rem;font-weight:800;background:#dcfce7;color:#15803d;padding:.1rem .45rem;border-radius:4px;}
+.wrap{max-width:800px;margin:1.4rem auto 3rem;padding:0 1.2rem;}
+.card{background:#fff;border-radius:12px;box-shadow:0 1px 6px rgba(0,0,0,.08);padding:1.4rem 1.6rem 1.8rem;border-left:5px solid #0055cc;}
+.card h1{font-size:1.3rem;margin:.2rem 0 1rem;}
+.card h2{font-size:1.05rem;font-weight:800;color:#0055cc;margin:1.3rem 0 .5rem;padding-bottom:.25rem;border-bottom:2px solid #eef2f8;}
+.card h3{font-size:.95rem;font-weight:800;color:#333;margin:1rem 0 .4rem;}
+.card h4{font-size:.9rem;font-weight:800;color:#0055cc;margin:.9rem 0 .3rem;}
+.card p{font-size:.9rem;line-height:1.75;color:#333;margin:.5rem 0;}
+.card ul,.card ol{margin:.4rem 0 .6rem 1.4rem;}
+.card li{font-size:.89rem;line-height:1.7;color:#333;margin-bottom:.32rem;}
+.card code{background:#f3f3f3;color:#c7254e;padding:.1em .35em;border-radius:3px;font-size:.85em;font-family:"SFMono-Regular",Consolas,monospace;}
+.card strong{color:#111;}
+.card a{color:#0055cc;}
+.card hr{border:none;border-top:1px solid #eee;margin:1.2rem 0;}
+.card pre{background:#1e293b;color:#e2e8f0;border-radius:8px;padding:.85rem 1rem;margin:.6rem 0;overflow-x:auto;font-size:.82em;line-height:1.6;white-space:pre-wrap;font-family:"SFMono-Regular",Consolas,monospace;}
+.card img{max-width:100%;border-radius:8px;margin:.5rem 0;}
+.tbl-wrap{overflow-x:auto;margin:.6rem 0;}
+.card table{border-collapse:collapse;width:100%;font-size:.84rem;}
+.card th,.card td{border:1px solid #e2e8f0;padding:.4rem .6rem;text-align:left;vertical-align:top;}
+.card th{background:#f8fafc;font-weight:700;}
+.note{background:#f0f7ff;border-left:3px solid #0055cc;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.warn{background:#fff1f0;border-left:3px solid #ef4444;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.expect{background:#f0fdf4;border-left:3px solid #22c55e;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.rescue{background:#fefce8;border-left:3px solid #eab308;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.check{background:#faf5ff;border-left:3px solid #a855f7;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.question{background:#fff8e6;border-left:3px solid #f59e0b;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.reuse-note{margin-top:1rem;font-size:.78rem;color:#888;text-align:center;}
+.botnav{text-align:center;margin:1.4rem 0;}
+.botnav a{display:inline-block;margin:.3rem;padding:.5rem 1.1rem;background:#fff;border-radius:8px;text-decoration:none;color:#0055cc;font-weight:700;font-size:.85rem;box-shadow:0 1px 4px rgba(0,0,0,.07);}
+.botnav a:hover{background:#f0f7ff;}
+@media(max-width:520px){.wrap{padding:0 .7rem;}.card{padding:1.1rem 1.1rem 1.4rem;}}
+</style>
+</head>
+<body>
+<div class="topnav">
+  <a href="gov-ai_lesson.html">🏠 AI提示工程實戰班─打造你的AI問答秘書第9期</a><span class="sep">›</span>
+  <a href="gov-ai-m2_lesson.html">模組 2：AI 生圖 + 海報</a><span class="sep">›</span>
+  <span class="cur">社群宣傳圖文包</span>
+  <span class="tag-ex">✍️ 練習</span>
+</div>
+<div class="wrap">
+  <div class="card">
+<h2>練習：一個活動，一次生一整組社群宣傳圖文包</h2>
+<div class="note">這練習教你怎麼替一個政策或活動，一口氣生出「同一種風格、不同尺寸」的整組社群視覺：方形貼文圖、直式限時動態圖、一句話重點卡。</div>
+<h2>✨ Take aways（你會學到）</h2>
+<p>做完你能：先替一個活動定好一組風格詞與配色，再把同一套風格套進不同尺寸與構圖，生出方形（1:1）貼文圖、直式（9:16）限動圖、一句話重點卡，三張擺在一起看得出是同一個活動，而不是三張各走各的圖。你也會把這組風格存下來，下次辦活動直接改字重生。</p>
+<h2>📝 跟著做</h2>
+<p><strong>Step 1</strong>：挑一個你手邊真的要宣傳的活動，例如「里民防災講座」「圖書館換證優惠」「淨灘報名」。先只想一件事：這活動的<strong>風格與配色</strong>要長怎樣（例如藍白、乾淨、扁平插畫），這一步先不管尺寸。<br>
+<strong>Step 2</strong>：把下面材料區的<strong>風格詞</strong>那段填好，這段是等一下三張圖共用的靈魂，決定它們看起來像一家人。<br>
+<strong>Step 3</strong>：先生方形貼文主視覺（1:1，給 FB／IG 貼文用）。用材料區第一段 prompt，把風格詞貼進去。<br>
+<strong>Step 4</strong>：<strong>不要重寫風格</strong>，直接換材料區第二段 prompt（直式 9:16，給限時動態用），風格詞原封不動貼過去，只改長寬比與構圖描述。<br>
+<strong>Step 5</strong>：再用第三段 prompt 生一張「一句話重點卡」，一樣沿用同一組風格詞，畫面留大片空白等你放那句重點。<br>
+<strong>Step 6</strong>：三張都生好後，用同一個工具（Canva 或 PowerPoint）替它們補上中文標題與資訊。AI 生的圖不要讓它自己寫中文字，字幾乎都會是亂碼。</p>
+<h2>📋 材料</h2>
+<p><strong>先填這段風格詞（三張圖共用，決定整組是不是一家人）：</strong></p>
+<pre>風格與配色（story style）：
+- 整體風格：扁平插畫風、乾淨簡約、公部門親和感
+- 主色：藍白為主（深藍 + 天藍 + 白），少量暖橘點綴
+- 質感：柔和、不花俏、線條乾淨
+- 情緒：正式但親切，讓民眾覺得可靠
+- 主體元素：〔換成你的活動，例如 防災頭盔與家庭、書本與借書證、海灘與志工〕
+- 畫面一律不要出現任何文字（中文標題我事後自己加）
+關鍵詞（flat illustration, clean, minimal, blue and white palette,
+soft, friendly, government public service, no text）</pre>
+<p><strong>第一段：方形貼文主視覺（1:1，FB／IG 貼文）</strong></p>
+<pre>幫我生一張活動宣傳主視覺，長寬比 1:1（方形）。
+用途：FB 與 IG 貼文的主圖。
+〔把上面那段「風格與配色」整段貼在這裡〕
+構圖：主體置中，四周留一些呼吸空間，畫面平衡。
+再次強調：畫面不要放任何文字。</pre>
+<p><strong>第二段：直式限時動態圖（9:16，限動／IG Stories）</strong></p>
+<pre>沿用同一個活動、同一組風格與配色，重生一張直式圖，
+長寬比 9:16（直式手機全螢幕），用途：限時動態。
+〔把同一段「風格與配色」原封不動貼在這裡，不要改風格〕
+構圖：主體放在畫面中間偏下，上方保留大片留白給我放標題，
+下方保留一小條空間放日期或報名資訊。
+一樣不要放任何文字。</pre>
+<p><strong>第三段：一句話重點卡（1:1 或 9:16 皆可）</strong></p>
+<pre>沿用同一個活動、同一組風格與配色，生一張「一句話重點卡」，
+長寬比 1:1。
+〔把同一段「風格與配色」貼在這裡〕
+構圖：背景素雅、大面積留白（約畫面一半以上留空），
+只放一點點小小的裝飾插畫在角落，中央整片空白等我放一句重點文字。
+不要放任何文字。</pre>
+<p><strong>穩定度小技巧：</strong>若生出來的圖不夠聽話，先叫 AI「把上面這段需求翻成英文生圖 prompt」，再拿翻好的英文去生，通常更穩。</p>
+<h2>✅ 預期產出</h2>
+<div class="expect">三張圖：一張方形貼文主視覺、一張直式限動圖、一張一句話重點卡。三張擺在一起，配色與插畫風格一致，看得出是同一個活動的系列，而不是三張互不相干的圖。中文標題都是你事後用 Canva 或 PowerPoint 補上的，畫面乾淨、字沒有亂碼。</div>
+<h2>🆘 常見卡點與救援</h2>
+<ul>
+<li><strong>三張風格對不起來、像三個活動</strong>：多半是你每張都重寫了風格。回到材料區，把同一段「風格與配色」原封不動貼進每一段，只改長寬比與構圖那幾行。</li>
+<li><strong>AI 硬在圖上寫中文，全是亂碼</strong>：這是正常現象，AI 目前寫不好中文字。prompt 裡明確寫「不要放任何文字」，標題一律留給你自己在 Canva／PPT 加。</li>
+<li><strong>直式圖上方沒留白，標題沒地方放</strong>：追一句「上方再多留一大片空白，主體往下移，我要放標題」。生海報／限動一定要留白給標題。</li>
+<li><strong>第一版就不滿意想放棄</strong>：生圖是迭代出來的，不是一次到位。用單句在同一對話裡微調，例如「再簡約一點」「換暖一點的藍」，通常第 2–3 版才堪用。</li>
+<li><strong>額度用完了</strong>：先把滿意的那版右鍵存下來，換個工具或改天再繼續。</li>
+<li><strong>裡面有民眾個資或機密</strong>：任何個資、未公開的公文內容、機密資料都不要丟進公用 AI。宣傳圖只放對外公開的活動資訊即可。</li>
+</ul>
+<h2>📌 完成標準</h2>
+<p>你手上有一組三張、風格一致的社群圖文包（方形貼文＋直式限動＋一句話重點卡），全部沿用同一組風格詞與配色生成，中文標題事後自己補上，三張放一起看得出是同一個活動。</p>
+<h2>🔀 延伸練習／自我加強</h2>
+<ul>
+<li>把這組風格套到你單位<strong>既有的另一個活動</strong>上：風格詞不動，只換「主體元素」那一行與標題，看多快能生出第二個活動的整組圖。</li>
+<li>把你調到最順的那段「風格與配色」<strong>另存成一個可重用的風格 prompt</strong>（存在記事本或單位共用雲端），未來每次辦活動直接拿來改字重生，維持整個單位社群視覺的一致調性。</li>
+<li>再多生一種尺寸，例如橫式 FB 封面（16:9）或直式海報，湊成更完整的一套。</li>
+</ul>
+  </div>
+  <div class="botnav">
+    <a href="gov-ai-m2_lesson.html">← 回模組 2：AI 生圖 + 海報</a>
+    <a href="gov-ai_lesson.html">🏠 課程目錄</a>
+  </div>
+</div>
+</body>
+</html>

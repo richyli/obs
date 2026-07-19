@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>政策視覺化競賽 · 小組練習</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;}
+body{font-family:"Helvetica Neue",Arial,"Noto Sans TC",sans-serif;background:#f0f2f5;margin:0;color:#1a1a1a;}
+.topnav{background:#fff;border-bottom:1px solid #e4e4e4;padding:.7rem 1.2rem;position:sticky;top:0;z-index:10;box-shadow:0 2px 8px rgba(0,0,0,.05);display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;font-size:.8rem;}
+.topnav a{color:#0055cc;text-decoration:none;font-weight:600;}
+.topnav a:hover{text-decoration:underline;}
+.topnav .sep{color:#bbb;}
+.topnav .cur{color:#666;}
+.tag-ex{font-size:.68rem;font-weight:800;background:#dcfce7;color:#15803d;padding:.1rem .45rem;border-radius:4px;}
+.wrap{max-width:800px;margin:1.4rem auto 3rem;padding:0 1.2rem;}
+.card{background:#fff;border-radius:12px;box-shadow:0 1px 6px rgba(0,0,0,.08);padding:1.4rem 1.6rem 1.8rem;border-left:5px solid #0055cc;}
+.card h1{font-size:1.3rem;margin:.2rem 0 1rem;}
+.card h2{font-size:1.05rem;font-weight:800;color:#0055cc;margin:1.3rem 0 .5rem;padding-bottom:.25rem;border-bottom:2px solid #eef2f8;}
+.card h3{font-size:.95rem;font-weight:800;color:#333;margin:1rem 0 .4rem;}
+.card h4{font-size:.9rem;font-weight:800;color:#0055cc;margin:.9rem 0 .3rem;}
+.card p{font-size:.9rem;line-height:1.75;color:#333;margin:.5rem 0;}
+.card ul,.card ol{margin:.4rem 0 .6rem 1.4rem;}
+.card li{font-size:.89rem;line-height:1.7;color:#333;margin-bottom:.32rem;}
+.card code{background:#f3f3f3;color:#c7254e;padding:.1em .35em;border-radius:3px;font-size:.85em;font-family:"SFMono-Regular",Consolas,monospace;}
+.card strong{color:#111;}
+.card a{color:#0055cc;}
+.card hr{border:none;border-top:1px solid #eee;margin:1.2rem 0;}
+.card pre{background:#1e293b;color:#e2e8f0;border-radius:8px;padding:.85rem 1rem;margin:.6rem 0;overflow-x:auto;font-size:.82em;line-height:1.6;white-space:pre-wrap;font-family:"SFMono-Regular",Consolas,monospace;}
+.card img{max-width:100%;border-radius:8px;margin:.5rem 0;}
+.tbl-wrap{overflow-x:auto;margin:.6rem 0;}
+.card table{border-collapse:collapse;width:100%;font-size:.84rem;}
+.card th,.card td{border:1px solid #e2e8f0;padding:.4rem .6rem;text-align:left;vertical-align:top;}
+.card th{background:#f8fafc;font-weight:700;}
+.note{background:#f0f7ff;border-left:3px solid #0055cc;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.warn{background:#fff1f0;border-left:3px solid #ef4444;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.expect{background:#f0fdf4;border-left:3px solid #22c55e;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.rescue{background:#fefce8;border-left:3px solid #eab308;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.check{background:#faf5ff;border-left:3px solid #a855f7;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.question{background:#fff8e6;border-left:3px solid #f59e0b;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.reuse-note{margin-top:1rem;font-size:.78rem;color:#888;text-align:center;}
+.botnav{text-align:center;margin:1.4rem 0;}
+.botnav a{display:inline-block;margin:.3rem;padding:.5rem 1.1rem;background:#fff;border-radius:8px;text-decoration:none;color:#0055cc;font-weight:700;font-size:.85rem;box-shadow:0 1px 4px rgba(0,0,0,.07);}
+.botnav a:hover{background:#f0f7ff;}
+@media(max-width:520px){.wrap{padding:0 .7rem;}.card{padding:1.1rem 1.1rem 1.4rem;}}
+</style>
+</head>
+<body>
+<div class="topnav">
+  <a href="gov-ai_lesson.html">🏠 AI提示工程實戰班─打造你的AI問答秘書第9期</a><span class="sep">›</span>
+  <a href="gov-ai-m2_lesson.html">模組 2：AI 生圖 + 海報</a><span class="sep">›</span>
+  <span class="cur">小組練習：政策視覺化競賽</span>
+  <span class="tag-ex">✍️ 練習</span>
+</div>
+<div class="wrap">
+  <div class="card">
+<h2>小組練習：政策視覺化競賽</h2>
+<div class="note">💬 這練習教你和同組的人一起，把一個難懂的政策或一串數字，用 AI 生成一張讓民眾一眼就看懂的視覺圖，然後比比看哪一組最清楚。</div>
+<h2>✨ Take aways（你會學到）</h2>
+<p>做完你能挑出一個原本很生硬的政策，判斷該凸顯哪個重點，再用 AI 一版一版把它變成好懂的視覺圖；你也會學到怎麼跟組員一起收斂「我們到底要讓民眾懂什麼」這一句話。</p>
+<h2>📝 跟著做</h2>
+<p><strong>Step 1</strong>：跟同組的人一起，從下面材料區挑一個難懂的政策或數據（也可以換成你們單位手上真正在推、但民眾常搞不懂的那一個）。<br>
+<strong>Step 2</strong>：討論你們最想讓民眾一眼看懂的，到底是哪一個重點。是級距怎麼分？是誰符合資格？還是什麼情況該做什麼？先把它講成一句白話。<br>
+<strong>Step 3</strong>：照材料區的生圖 prompt 骨架填空，用 AI 生一張視覺圖，試著把那個重點畫清楚。<br>
+<strong>Step 4</strong>：看第一版哪裡還不夠懂，用一句話追問微調，迭代 2–3 版，愈調愈接近「不用解釋也看得懂」。<br>
+<strong>Step 5</strong>：AI 生的中文字幾乎都是亂碼，所以圖裡的標題和關鍵數字，等生完再自己用 Canva 或 PPT 補上去。</p>
+<div class="expect">每組最後要交兩樣東西：<strong>一張視覺圖</strong>，加上<strong>一句「我們想讓民眾一眼看懂什麼」</strong>。這句話就是你們整張圖的評分依據。</div>
+<h2>📋 材料</h2>
+<p><strong>示範政策題目（挑一個，或換成你們自己的）：</strong></p>
+<ul>
+<li><strong>垃圾費隨袋徵收</strong>：專用垃圾袋怎麼買、不同容量各多少錢、丟一般垃圾和回收各要不要用袋。</li>
+<li><strong>三級育兒補助級距</strong>：家庭收入落在哪一級、每級每月補助多少、要準備哪些文件。</li>
+<li><strong>颱風分級停班標準</strong>：風速或雨量到什麼程度、對應哪一級、哪些情況停班停課、哪些照常。</li>
+</ul>
+<p><strong>生圖 prompt 骨架（複製後填空）：</strong></p>
+<pre>幫我生一張政策說明的視覺圖（infographic），用途是給民眾看、要一眼看懂。
+主題：〔例如 颱風分級停班標準〕
+最想讓人看懂的重點：〔例如 什麼風速對應停班、什麼情況照常上班〕
+呈現方式：〔用分級階梯／流程圖／並排比較，把層次或步驟畫清楚〕
+風格：扁平化 infographic、簡約、圖示（icon）輔助、對比清楚
+構圖：直式，上方留一整塊空白給標題，資訊由上到下分層排列
+色調：〔藍白清爽／紅黃綠紅綠燈分級〕
+不要放任何文字（中文字會變亂碼，標題和數字我自己事後用工具加）。
+infographic, flat design, clean layout, icons, vertical poster, high contrast</pre>
+<p><strong>追問句（單句微調，在同一個對話裡繼續說）：</strong></p>
+<ul>
+<li>「層次再清楚一點，讓人一眼分得出哪一級是哪一級。」</li>
+<li>「元素太多太雜，簡化到只剩最重要的資訊。」</li>
+<li>「上方再多留一塊空白，我要放標題。」</li>
+<li>「改成紅綠燈配色，用顏色代表輕重。」</li>
+<li>「把它翻成英文 prompt 再生一次，讓構圖更穩。」</li>
+</ul>
+<h2>✅ 預期產出</h2>
+<p>一張直式視覺圖，就算把文字全部蓋掉，光看圖的分層、圖示和顏色，別人也大概猜得出這個政策在講什麼；再配上你們那一句「我們想讓民眾一眼看懂什麼」。從第一版到第三版，圖會明顯往「更好懂」的方向靠。心法：<strong>生圖是一版一版迭代出來的，不是一次到位。</strong></p>
+<h2>🆘 常見卡點與救援</h2>
+<ul>
+<li><strong>圖上的中文字全是亂碼</strong>：正常，別跟它硬凹。生圖時就叫它「不要放文字」，標題和數字最後自己用 Canva 或 PPT 加。</li>
+<li><strong>資訊塞太滿反而更看不懂</strong>：跟組員先砍到只留一個重點，說「簡化到只剩最重要的資訊」，一張圖不要什麼都想講。</li>
+<li><strong>改了反而更亂</strong>：說「回到剛剛那版，只改這一點」，一次只動一個地方。</li>
+<li><strong>生出來偏橫式、標題沒地方放</strong>：明確說「改直式，上方留一塊空白放標題」。</li>
+<li><strong>額度用完了</strong>：把目前最滿意的那版右鍵存下來，換個工具或改天再接著生。</li>
+<li><strong>組員意見喬不攏</strong>：回到那一句「我們想讓民眾一眼看懂什麼」，用它當標準，跟這句無關的元素就先拿掉。</li>
+</ul>
+<div class="warn">政策題目用公開資訊就好。任何含個資、內部尚未公開或機密的資料，都不要貼進公用的 AI 工具裡。</div>
+<h2>📌 完成標準</h2>
+<p>有一張能拿出來的直式視覺圖，加一句「我們想讓民眾一眼看懂什麼」。評比看的是<strong>一眼看不看得懂，比美不美觀更重要</strong>：把文字蓋住還猜得出重點的圖，勝過漂亮但看不懂的圖。</p>
+<h2>🎤 上台報告（每組 2 分鐘）</h2>
+<p>輪到你們這組時，對著大家講三個重點就好：</p>
+<ul>
+<li><strong>挑了哪個政策</strong>：你們選的是哪一個難懂的政策或數據，本來哪裡卡住民眾。</li>
+<li><strong>怎麼讓它變好懂</strong>：你們決定凸顯哪個重點、用什麼方式（分級、流程、並排）把它畫清楚，念出那一句「我們想讓民眾一眼看懂什麼」。</li>
+<li><strong>AI 幫上跟踩到的地方</strong>：AI 這次幫你們省了什麼、又在哪裡出包（例如中文變亂碼、一直塞太多元素），你們怎麼繞過去。</li>
+</ul>
+  </div>
+  <div class="botnav">
+    <a href="gov-ai-m2_lesson.html">← 回模組 2：AI 生圖 + 海報</a>
+    <a href="gov-ai_lesson.html">🏠 課程目錄</a>
+  </div>
+</div>
+</body>
+</html>
