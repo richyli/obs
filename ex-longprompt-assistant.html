@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>打磨長提示，做成你的專屬助手 · 練習</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;}
+body{font-family:"Helvetica Neue",Arial,"Noto Sans TC",sans-serif;background:#f0f2f5;margin:0;color:#1a1a1a;}
+.topnav{background:#fff;border-bottom:1px solid #e4e4e4;padding:.7rem 1.2rem;position:sticky;top:0;z-index:10;box-shadow:0 2px 8px rgba(0,0,0,.05);display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;font-size:.8rem;}
+.topnav a{color:#0055cc;text-decoration:none;font-weight:600;}
+.topnav a:hover{text-decoration:underline;}
+.topnav .sep{color:#bbb;}
+.topnav .cur{color:#666;}
+.tag-ex{font-size:.68rem;font-weight:800;background:#dcfce7;color:#15803d;padding:.1rem .45rem;border-radius:4px;}
+.wrap{max-width:800px;margin:1.4rem auto 3rem;padding:0 1.2rem;}
+.card{background:#fff;border-radius:12px;box-shadow:0 1px 6px rgba(0,0,0,.08);padding:1.4rem 1.6rem 1.8rem;border-left:5px solid #0055cc;}
+.card h1{font-size:1.3rem;margin:.2rem 0 1rem;}
+.card h2{font-size:1.05rem;font-weight:800;color:#0055cc;margin:1.3rem 0 .5rem;padding-bottom:.25rem;border-bottom:2px solid #eef2f8;}
+.card h3{font-size:.95rem;font-weight:800;color:#333;margin:1rem 0 .4rem;}
+.card h4{font-size:.9rem;font-weight:800;color:#0055cc;margin:.9rem 0 .3rem;}
+.card p{font-size:.9rem;line-height:1.75;color:#333;margin:.5rem 0;}
+.card ul,.card ol{margin:.4rem 0 .6rem 1.4rem;}
+.card li{font-size:.89rem;line-height:1.7;color:#333;margin-bottom:.32rem;}
+.card code{background:#f3f3f3;color:#c7254e;padding:.1em .35em;border-radius:3px;font-size:.85em;font-family:"SFMono-Regular",Consolas,monospace;}
+.card strong{color:#111;}
+.card a{color:#0055cc;}
+.card hr{border:none;border-top:1px solid #eee;margin:1.2rem 0;}
+.card pre{background:#1e293b;color:#e2e8f0;border-radius:8px;padding:.85rem 1rem;margin:.6rem 0;overflow-x:auto;font-size:.82em;line-height:1.6;white-space:pre-wrap;font-family:"SFMono-Regular",Consolas,monospace;}
+.tbl-wrap{overflow-x:auto;margin:.6rem 0;}
+.card table{border-collapse:collapse;width:100%;font-size:.84rem;}
+.card th,.card td{border:1px solid #e2e8f0;padding:.4rem .6rem;text-align:left;vertical-align:top;}
+.card th{background:#f8fafc;font-weight:700;}
+.note{background:#f0f7ff;border-left:3px solid #0055cc;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.warn{background:#fff1f0;border-left:3px solid #ef4444;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.expect{background:#f0fdf4;border-left:3px solid #22c55e;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.rescue{background:#fefce8;border-left:3px solid #eab308;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.plat{border:1px solid #e2e8f0;border-radius:10px;padding:.4rem 1rem 1rem;margin:.8rem 0;}
+.plat-hd{display:flex;align-items:center;gap:.5rem;margin:.7rem 0 .3rem;font-weight:800;font-size:.98rem;color:#111;}
+.plat-badge{font-size:.72rem;font-weight:800;color:#fff;padding:.15rem .5rem;border-radius:5px;}
+.b-gpt{background:#10a37f;} .b-gem{background:#1a73e8;} .b-claude{background:#d97706;}
+.reuse-note{margin-top:1rem;font-size:.78rem;color:#888;text-align:center;}
+.botnav{text-align:center;margin:1.4rem 0;}
+.botnav a{display:inline-block;margin:.3rem;padding:.5rem 1.1rem;background:#fff;border-radius:8px;text-decoration:none;color:#0055cc;font-weight:700;font-size:.85rem;box-shadow:0 1px 4px rgba(0,0,0,.07);}
+.botnav a:hover{background:#f0f7ff;}
+@media(max-width:520px){.wrap{padding:0 .7rem;}.card{padding:1.1rem 1.1rem 1.4rem;}}
+</style>
+</head>
+<body>
+<div class="topnav">
+  <a href="gov-ai_lesson.html">🏠 AI提示工程實戰班─打造你的AI問答秘書第9期</a><span class="sep">›</span>
+  <a href="gov-ai-m1_lesson.html">模組 1：入門 + Prompt 實作</a><span class="sep">›</span>
+  <span class="cur">打磨長提示，做成你的專屬助手</span>
+  <span class="tag-ex">✍️ 個人任務</span>
+</div>
+<div class="wrap">
+  <div class="card">
+<h2>個人任務：把一件常做的事，打磨成一個「專屬 AI 助手」</h2>
+<div class="note">這是上午的<strong>總結任務</strong>：把前面學的（角色、背景、限制、範例、格式）全部收進<strong>一份長提示</strong>，再把它變成一個你以後點一下就能用的<strong>專屬助手</strong>——ChatGPT 的 GPT、Gemini 的 Gem、或 Claude 的 Project 都行。</div>
+
+<h2>✨ Take aways（你會帶走什麼）</h2>
+<p>你會做出一份<strong>可重複使用的長提示</strong>（把「每次都要重講的背景與規則」一次寫好），並學會怎麼把它<strong>存成一個專屬助手</strong>，以後處理同一類工作，開它、丟資料就好，不用每次從頭交代。</p>
+
+<h2>🧠 為什麼要做「長提示」？</h2>
+<p>前面練的是「一次一個 prompt」。但你有些工作是<strong>每週、每天都在重複的</strong>（擬同一類公文、回同一類詢問、寫會議紀錄）。與其每次重打背景，不如把「你是誰、規則是什麼、要什麼格式」<strong>一次寫成一份長提示</strong>，存起來變成專屬助手。之後只要餵當次的資料，它就照你訂好的規矩辦。</p>
+
+<h2>📝 跟著做</h2>
+<p><strong>Step 1 選一件重複工作</strong>：挑一件你<strong>每週都要做好幾次、規則很固定</strong>的事（例：擬活動通知、回民眾陳情、把逐字稿整理成會議紀錄）。<br>
+<strong>Step 2 照骨架寫長提示</strong>：用下面的骨架，把這件事的角色、規則、格式、禁止事項一次寫清楚。<br>
+<strong>Step 3 在對話裡先測</strong>：把長提示貼進 AI，再丟一筆真實（去識別化的）資料，看它產出對不對，不對就回頭改長提示。<br>
+<strong>Step 4 存成專屬助手</strong>：測到滿意，照下面三家其中一家的做法，把長提示存成 GPT／Gem／Project。</p>
+
+<h2>📋 長提示骨架（複製後填空，這份是核心成果）</h2>
+<pre>你是我的〔○○承辦助手〕，專門幫我〔擬育嬰留停陳核說明／回覆民眾陳情…〕。
+
+【你的角色與立場】
+- 我是〔單位／職稱〕，服務對象是〔民眾／上級／同仁〕。
+- 語氣：〔正式但不冗長／誠懇不推諉〕。
+
+【每次我會給你】
+- 一筆〔申請案／陳情內容／逐字稿〕。個資我會先遮成〔〕，你不用追問當事人是誰。
+
+【你要產出】
+- 〔一段陳核說明／一則回覆／一份會議紀錄〕，包含：〔要件1〕〔要件2〕〔要件3〕。
+- 格式：〔分段／表格／條列〕，長度〔X 字內〕。
+
+【務必遵守（紅線）】
+- 不要編造任何我沒給的數字、日期、文號，不確定的寫〔待補〕。
+- 不要用〔業經、爰、俾〕這類過度文言的字。
+- 不要洩漏或臆測任何個人資訊。
+
+【範例（照這個語氣與格式）】
+輸入：〔一筆範例資料〕
+你的產出：〔一份理想範例〕
+
+準備好了就說「請提供這次的資料」，等我貼。</pre>
+<div class="note">關鍵：把<strong>「每次都一樣的規則」</strong>寫進長提示（角色、格式、紅線、範例），<strong>「每次不一樣的資料」</strong>之後再丟。這就是專屬助手的精神。</div>
+
+<h2>🚀 把長提示存成專屬助手（挑你用的那家）</h2>
+
+<div class="plat">
+<div class="plat-hd"><span class="plat-badge b-gpt">ChatGPT</span>建一個「GPT」</div>
+<ol>
+<li>左側或右上點你的頭像／「探索 GPT」→ <strong>「建立」(Create a GPT)</strong>（需要 Plus 付費版）。</li>
+<li>切到 <strong>Configure（設定）</strong> 分頁，把上面的長提示貼進 <strong>Instructions（指令）</strong>欄。</li>
+<li>填名稱（例「育嬰留停助手」）、簡介，可上傳範例檔當<strong>知識庫</strong>。</li>
+<li>右側即時測試，滿意後按 <strong>Create／儲存</strong>，選「只有我」。以後在側欄點它就能用。</li>
+</ol>
+</div>
+
+<div class="plat">
+<div class="plat-hd"><span class="plat-badge b-gem">Gemini</span>建一個「Gem」</div>
+<ol>
+<li>Gemini 左側找 <strong>「Gem 管理員」／「Gems」</strong> → <strong>新建 Gem</strong>。</li>
+<li>把長提示貼進 <strong>「指示」(Instructions)</strong> 欄，填 Gem 名稱。</li>
+<li>可上傳參考檔案。按 <strong>儲存／更新</strong>。</li>
+<li>以後在 Gemini 左側點這個 Gem，直接進入帶好規則的對話。</li>
+</ol>
+</div>
+
+<div class="plat">
+<div class="plat-hd"><span class="plat-badge b-claude">Claude</span>存成「Project」自訂指令</div>
+<ol>
+<li>Claude 左側 <strong>Projects</strong> → <strong>新建 Project</strong>，命名。</li>
+<li>把長提示貼進 Project 的 <strong>「自訂指令 / instructions」</strong>欄。</li>
+<li>可把常用的範例、規則文件加進 Project 的<strong>知識庫</strong>。</li>
+<li>之後在這個 Project 裡開對話，都會自動套用你的長提示。</li>
+</ol>
+<div class="note">進階：Claude 也支援 <strong>Skill</strong>（把一套流程打包），若你之後想做更自動化的版本可以再研究，今天先用 Project 就很夠。</div>
+</div>
+
+<div class="warn"><strong>三家共通提醒</strong>：① 建助手多半需要<strong>付費版</strong>（免費帳號可能只能用、不能建，那就先把長提示存在記事本，每次貼也行）。② 助手的<strong>知識庫別放真個資／機密</strong>——上傳等於交給平台。範例檔一律用去識別化的假資料。</div>
+
+<h2>✅ 完成標準</h2>
+<p>你有一份<strong>照著填、測過可用的長提示</strong>，並且（付費版）把它存成一個 GPT／Gem／Project，或（免費版）存進記事本當每次貼的範本。開它、丟一筆資料，就能穩定產出你要的東西。</p>
+
+<h2>🔀 延伸練習／自我加強</h2>
+<ul><li>幫自己第二件重複工作也做一個助手，慢慢累積一整套「個人 AI 工具箱」。</li><li>把助手分享給同事共用（GPT／Gem 可設連結分享），讓整個科用同一套規則。</li><li>回頭看 <a href="ex-reusable-template.html">做成模板</a> 練習，長提示其實就是「模板的加強版」。</li></ul>
+  </div>
+  <div class="botnav">
+    <a href="gov-ai-m1_lesson.html">← 回模組 1：入門 + Prompt 實作</a>
+    <a href="gov-ai_lesson.html">🏠 課程目錄</a>
+  </div>
+</div>
+</body>
+</html>

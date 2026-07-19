@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>桌面版／能連檔案的 AI 工具 · 認識</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;}
+body{font-family:"Helvetica Neue",Arial,"Noto Sans TC",sans-serif;background:#f0f2f5;margin:0;color:#1a1a1a;}
+.topnav{background:#fff;border-bottom:1px solid #e4e4e4;padding:.7rem 1.2rem;position:sticky;top:0;z-index:10;box-shadow:0 2px 8px rgba(0,0,0,.05);display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;font-size:.8rem;}
+.topnav a{color:#0055cc;text-decoration:none;font-weight:600;}
+.topnav a:hover{text-decoration:underline;}
+.topnav .sep{color:#bbb;}
+.topnav .cur{color:#666;}
+.tag-ex{font-size:.68rem;font-weight:800;background:#fef3c7;color:#b45309;padding:.1rem .45rem;border-radius:4px;}
+.wrap{max-width:800px;margin:1.4rem auto 3rem;padding:0 1.2rem;}
+.card{background:#fff;border-radius:12px;box-shadow:0 1px 6px rgba(0,0,0,.08);padding:1.4rem 1.6rem 1.8rem;border-left:5px solid #d97706;}
+.card h1{font-size:1.3rem;margin:.2rem 0 1rem;}
+.card h2{font-size:1.05rem;font-weight:800;color:#b45309;margin:1.3rem 0 .5rem;padding-bottom:.25rem;border-bottom:2px solid #fdf0e0;}
+.card h3{font-size:.95rem;font-weight:800;color:#333;margin:1rem 0 .4rem;}
+.card h4{font-size:.9rem;font-weight:800;color:#b45309;margin:.9rem 0 .3rem;}
+.card p{font-size:.9rem;line-height:1.75;color:#333;margin:.5rem 0;}
+.card ul,.card ol{margin:.4rem 0 .6rem 1.4rem;}
+.card li{font-size:.89rem;line-height:1.7;color:#333;margin-bottom:.32rem;}
+.card code{background:#f3f3f3;color:#c7254e;padding:.1em .35em;border-radius:3px;font-size:.85em;font-family:"SFMono-Regular",Consolas,monospace;}
+.card strong{color:#111;}
+.card a{color:#0055cc;}
+.card hr{border:none;border-top:1px solid #eee;margin:1.2rem 0;}
+.card pre{background:#1e293b;color:#e2e8f0;border-radius:8px;padding:.85rem 1rem;margin:.6rem 0;overflow-x:auto;font-size:.82em;line-height:1.6;white-space:pre-wrap;font-family:"SFMono-Regular",Consolas,monospace;}
+.tbl-wrap{overflow-x:auto;margin:.6rem 0;}
+.card table{border-collapse:collapse;width:100%;font-size:.83rem;}
+.card th,.card td{border:1px solid #e2e8f0;padding:.4rem .6rem;text-align:left;vertical-align:top;}
+.card th{background:#f8fafc;font-weight:700;}
+.note{background:#f0f7ff;border-left:3px solid #0055cc;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.warn{background:#fff1f0;border-left:3px solid #ef4444;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.expect{background:#f0fdf4;border-left:3px solid #22c55e;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.reuse-note{margin-top:1rem;font-size:.78rem;color:#888;text-align:center;}
+.botnav{text-align:center;margin:1.4rem 0;}
+.botnav a{display:inline-block;margin:.3rem;padding:.5rem 1.1rem;background:#fff;border-radius:8px;text-decoration:none;color:#0055cc;font-weight:700;font-size:.85rem;box-shadow:0 1px 4px rgba(0,0,0,.07);}
+.botnav a:hover{background:#f0f7ff;}
+@media(max-width:520px){.wrap{padding:0 .7rem;}.card{padding:1.1rem 1.1rem 1.4rem;}}
+</style>
+</head>
+<body>
+<div class="topnav">
+  <a href="gov-ai_lesson.html">🏠 AI提示工程實戰班─打造你的AI問答秘書第9期</a><span class="sep">›</span>
+  <a href="gov-ai-m4_lesson.html">模組 4：公務應用</a><span class="sep">›</span>
+  <span class="cur">桌面版／能連檔案的 AI 工具</span>
+  <span class="tag-ex">📖 認識工具</span>
+</div>
+<div class="wrap">
+  <div class="card">
+<h2>認識：桌面版 AI 與「能連你的檔案／工具」的新型態</h2>
+<div class="note">這是一頁<strong>知識介紹</strong>，不用動手。帶你認識比「網頁聊天」更進一步的 AI 工具型態——裝在電腦上、能讀你的檔案、甚至直接動手操作。知道有這些，你才知道自己的工作還能再省多少。</div>
+
+<h2>✨ Take aways（你會帶走什麼）</h2>
+<p>你會分清楚<strong>三種 AI 使用型態</strong>（純網頁聊天 → 桌面版 → 能動手的連線工具），知道各自差在哪、什麼樣的工作值得升級，以及升級要注意的資安界線。</p>
+
+<h2>🪜 三個層次：從「聊天」到「會動手」</h2>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>層次</th><th>它是什麼</th><th>你怎麼用</th><th>適合誰</th></tr></thead>
+<tbody>
+<tr><td><strong>① 網頁聊天</strong><br>（前面都在用的）</td><td>瀏覽器開網站、打字問答</td><td>複製貼上、來回對話</td><td>所有人，第一站</td></tr>
+<tr><td><strong>② 桌面版 App</strong></td><td>裝在電腦上的程式，隨開隨用、可設快捷鍵</td><td>不用開瀏覽器，選取文字就問；截圖直接問</td><td>每天大量用、想更順手的人</td></tr>
+<tr><td><strong>③ 能連線動手</strong><br>（agentic）</td><td>桌面版再接上「連接器」後，能讀你的檔案、行事曆、雲端硬碟，甚至直接改檔</td><td>你描述要什麼，它自己開檔、找資料、產出</td><td>有大量重複、跨檔案工作的人</td></tr>
+</tbody>
+</table>
+</div>
+<div class="note">這頁的重點是第 ② 和 ③ 層。第 ③ 層的實際樣子，就是 <a href="ex-agentic-demo.html">上一個 Agentic Demo</a> 你看到的那些。</div>
+
+<h2>🖥️ 主流「桌面版／連線」工具一覽</h2>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>工具</th><th>型態</th><th>特色</th><th>能連你的東西嗎？</th></tr></thead>
+<tbody>
+<tr><td><strong>Claude Desktop</strong></td><td>Mac／Windows 桌面 App</td><td>可裝「連接器（MCP）」讀本機資料夾、Google 雲端等；擅長長文與檔案</td><td>可（透過連接器）</td></tr>
+<tr><td><strong>ChatGPT 桌面版</strong></td><td>Mac／Windows App</td><td>快捷鍵隨叫隨到、可看你螢幕上的內容一起討論</td><td>部分（付費、連接器）</td></tr>
+<tr><td><strong>Microsoft Copilot</strong></td><td>整合進 Windows／Office</td><td>直接在 Word／Excel／Outlook 裡用，讀你正在編的檔</td><td>可（機關 M365 環境）</td></tr>
+<tr><td><strong>Gemini in Workspace</strong></td><td>整合進 Google 文件／Gmail</td><td>在 Google 生態裡直接用，讀你的文件與信</td><td>可（Google 帳號內）</td></tr>
+<tr><td><strong>Claude Code</strong></td><td>電腦上的指令工具</td><td>最會「動手」：讀整個資料夾、批次改檔、跑流程（較進階）</td><td>可（本機檔案）</td></tr>
+</tbody>
+</table>
+</div>
+<div class="warn"><strong>會一直更新</strong>：這些工具幾個月就改版、改名、加新功能。上表是 2026 上半年的樣子；重點不是背產品名，是懂<strong>「有比網頁聊天更進一步的型態，能直接連你的檔案與工具」</strong>。</div>
+
+<h2>🤔 我該升級到桌面版嗎？</h2>
+<p>用這三個問題自我判斷：</p>
+<ul>
+<li><strong>我每天用 AI 超過幾次嗎？</strong>——是 → 桌面版（②）會讓你更順（少開瀏覽器、快捷鍵、看螢幕）。</li>
+<li><strong>我常常要「把好幾個檔案的東西湊起來」嗎？</strong>——是 → 值得看能連線的工具（③），讓它自己讀檔彙整。</li>
+<li><strong>我有一套每週重複、跨檔案的固定流程嗎？</strong>——是 → 那就是 agentic／Claude Code 這類最能幫上忙的地方。</li>
+</ul>
+<div class="expect">沒有以上情況也完全沒關係——<strong>網頁聊天＋一份好的長提示，已經能解決八成公務需求</strong>。桌面工具是「用量大了再升級」的選項，不是必須。</div>
+
+<h2>🔐 升級前必看的資安界線</h2>
+<div class="warn">桌面版與連線工具<strong>威力更大，風險也更大</strong>——因為它能真的碰到你的檔案。務必：
+<ul>
+<li><strong>機關核可才裝</strong>：公務電腦裝軟體、開連接器，先確認資訊單位政策，別自己亂裝。</li>
+<li><strong>連接器只開必要範圍</strong>：能讀整個雲端硬碟不代表該全開，只授權你真的要用的資料夾。</li>
+<li><strong>個資／機密仍是紅線</strong>：工具能讀不代表可以讓它處理敏感資料，去識別化與機關規範照樣適用（回想 <a href="ex-deidentify.html">去識別化那一課</a>）。</li>
+</ul></div>
+
+<h2>📌 帶走一句話</h2>
+<p>AI 不只是「網頁上聊天」——它正在變成<strong>裝在你電腦裡、能讀你檔案、會替你動手的工作夥伴</strong>。今天先把網頁版＋好提示練熟；當你發現自己每天在重複同樣的搬檔、彙整，就是該認識這些桌面／連線工具的時候。</p>
+
+<h2>🔀 延伸／自我了解</h2>
+<ul><li>回去單位查一下：我們機關對 Claude Desktop／Copilot／連接器的使用政策是什麼？</li><li>把你「每週重複、跨檔案」的一件事寫下來，那就是你未來最該用 agentic 工具的地方。</li></ul>
+  </div>
+  <div class="botnav">
+    <a href="gov-ai-m4_lesson.html">← 回模組 4：公務應用</a>
+    <a href="gov-ai_lesson.html">🏠 課程目錄</a>
+  </div>
+</div>
+</body>
+</html>
