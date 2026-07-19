@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>偏誤：AI 會不會不公平？（回頭檢視你的作品）</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;}
+body{font-family:"Helvetica Neue",Arial,"Noto Sans TC",sans-serif;background:#f0f2f5;margin:0;color:#1a1a1a;}
+.topnav{background:#fff;border-bottom:1px solid #e4e4e4;padding:.7rem 1.2rem;position:sticky;top:0;z-index:10;box-shadow:0 2px 8px rgba(0,0,0,.05);display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;font-size:.8rem;}
+.topnav a{color:#0055cc;text-decoration:none;font-weight:600;}
+.topnav a:hover{text-decoration:underline;}
+.topnav .sep{color:#bbb;}
+.topnav .cur{color:#666;}
+.tag-ex{font-size:.68rem;font-weight:800;background:#dcfce7;color:#15803d;padding:.1rem .45rem;border-radius:4px;}
+.wrap{max-width:800px;margin:1.4rem auto 3rem;padding:0 1.2rem;}
+.card{background:#fff;border-radius:12px;box-shadow:0 1px 6px rgba(0,0,0,.08);padding:1.4rem 1.6rem 1.8rem;border-left:5px solid #0055cc;}
+.card h1{font-size:1.3rem;margin:.2rem 0 1rem;}
+.card h2{font-size:1.05rem;font-weight:800;color:#0055cc;margin:1.3rem 0 .5rem;padding-bottom:.25rem;border-bottom:2px solid #eef2f8;}
+.card h3{font-size:.95rem;font-weight:800;color:#333;margin:1rem 0 .4rem;}
+.card h4{font-size:.9rem;font-weight:800;color:#0055cc;margin:.9rem 0 .3rem;}
+.card p{font-size:.9rem;line-height:1.75;color:#333;margin:.5rem 0;}
+.card ul,.card ol{margin:.4rem 0 .6rem 1.4rem;}
+.card li{font-size:.89rem;line-height:1.7;color:#333;margin-bottom:.32rem;}
+.card code{background:#f3f3f3;color:#c7254e;padding:.1em .35em;border-radius:3px;font-size:.85em;font-family:"SFMono-Regular",Consolas,monospace;}
+.card strong{color:#111;}
+.card a{color:#0055cc;}
+.card hr{border:none;border-top:1px solid #eee;margin:1.2rem 0;}
+.card pre{background:#1e293b;color:#e2e8f0;border-radius:8px;padding:.85rem 1rem;margin:.6rem 0;overflow-x:auto;font-size:.82em;line-height:1.6;white-space:pre-wrap;font-family:"SFMono-Regular",Consolas,monospace;}
+.card img{max-width:100%;border-radius:8px;margin:.5rem 0;}
+.tbl-wrap{overflow-x:auto;margin:.6rem 0;}
+.card table{border-collapse:collapse;width:100%;font-size:.84rem;}
+.card th,.card td{border:1px solid #e2e8f0;padding:.4rem .6rem;text-align:left;vertical-align:top;}
+.card th{background:#f8fafc;font-weight:700;}
+.note{background:#f0f7ff;border-left:3px solid #0055cc;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.warn{background:#fff1f0;border-left:3px solid #ef4444;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.expect{background:#f0fdf4;border-left:3px solid #22c55e;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.rescue{background:#fefce8;border-left:3px solid #eab308;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.check{background:#faf5ff;border-left:3px solid #a855f7;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.question{background:#fff8e6;border-left:3px solid #f59e0b;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.reuse-note{margin-top:1rem;font-size:.78rem;color:#888;text-align:center;}
+.botnav{text-align:center;margin:1.4rem 0;}
+.botnav a{display:inline-block;margin:.3rem;padding:.5rem 1.1rem;background:#fff;border-radius:8px;text-decoration:none;color:#0055cc;font-weight:700;font-size:.85rem;box-shadow:0 1px 4px rgba(0,0,0,.07);}
+.botnav a:hover{background:#f0f7ff;}
+.card details{margin-top:.5rem;}
+.card summary{cursor:pointer;color:#0055cc;font-weight:700;font-size:.85rem;list-style:none;}
+.card summary::-webkit-details-marker{display:none;}
+.card summary:hover{text-decoration:underline;}
+.card details[open] summary{margin-bottom:.4rem;}
+.card details>*:not(summary){font-size:.85rem;line-height:1.65;color:#444;padding-left:.2rem;}
+@media(max-width:520px){.wrap{padding:0 .7rem;}.card{padding:1.1rem 1.1rem 1.4rem;}}
+</style>
+</head>
+<body>
+<div class="topnav">
+  <a href="gov-ai_lesson.html">🏠 AI提示工程實戰班─打造你的AI問答秘書第9期</a><span class="sep">›</span>
+  <a href="gov-ai-ethics.html">倫理與責任</a><span class="sep">›</span>
+  <span class="cur">偏誤：AI 會不會不公平？（回頭檢視你的作品）</span>
+  <span class="tag-ex" style="background:#f3e8ff;color:#7c3aed;">⚖️ 倫理</span>
+</div>
+<div class="wrap">
+  <div class="card">
+<h2>偏誤：AI 會不會不公平？（回頭檢視你的作品）</h2>
+<div class="note">這一頁不是新的操作，而是一次<strong>回頭檢視</strong>。先前生圖練習時你各生了三張圖，這頁請你打開它們，看看 AI 幫你「預設」了誰、又讓誰隱形——這就是 AI 偏誤（bias），也是你身為公務員必須看見並修正的一件事。</div>
+
+<h2>✨ Take aways（你會帶走什麼）</h2>
+<p>看完這一頁，你會：<strong>①在自己剛剛生的圖裡，親眼認出 AI 的預設偏誤</strong>——科學家自動變白人男性、護理師自動變年輕女性；<strong>②說得出這些偏誤從哪來</strong>（訓練資料把社會既有刻板印象當成了預設值）；<strong>③知道為什麼公部門特別不能放著不管</strong>；<strong>④用一句話改寫 prompt，就能生出更接近全民樣貌的產出</strong>。這不是要你以後不用 AI，而是要你用得負責任。</p>
+
+<h2>🔍 先拿出你剛剛生的三張圖</h2>
+<div class="question">請打開你在生圖練習裡做的那三張圖，一張一張看，然後老實回答自己：
+<ul>
+<li>你的<strong>科學家</strong>是什麼性別、什麼種族、大概幾歲？</li>
+<li>你的<strong>護理師</strong>呢？是男是女、年輕還是資深？</li>
+<li>你那張「<strong>健康促進</strong>」海報上運動的人，是什麼體態、什麼年紀？有沒有胖一點的人、年長的人、坐輪椅的人？</li>
+</ul>
+<details><summary>👉 多數人會生出什麼</summary>大多數人打開一看會發現：科學家是<strong>穿白袍的白人中年男性</strong>、護理師是<strong>年輕纖瘦的女性</strong>、健康的人是<strong>精壯的年輕人</strong>。你當初的指令裡<strong>從沒說</strong>要這些條件——是 AI 自己「補」上去的。這個被自動補上的答案，就是它的<strong>預設值（default）</strong>。</details></div>
+<div class="note">重點在於：你並沒有要求任何性別、種族、年齡，AI 卻替你決定了。而且十之八九，它替你決定的方向，跟社會上的刻板印象一模一樣。</div>
+
+<h2>🧩 這些「預設值」是從哪來的？</h2>
+<p>AI 生圖，是從網路上海量的圖片與文字裡學來的。而那些資料，本身就<strong>裝滿了人類社會既有的刻板印象</strong>：網路上「科學家」的圖多半是男性、「護理師」的圖多半是女性、「健康」的圖多半是瘦而年輕的身體。AI 學到的不是「事實」，而是<strong>「網路上最常見的樣子」</strong>。</p>
+<div class="warn"><strong>偏誤會被「放大」，不只是「反映」。</strong>真實世界的科學家、護理師本來就有各種性別與年齡；但 AI 為了給「最像」的答案，會把多數傾向推到極端，讓少數樣貌幾乎<strong>完全消失</strong>。於是原本只是「比較多」，到了 AI 產出就變成「幾乎只有一種」。這就是偏誤被放大的過程。</div>
+<div class="note">要看清一件事：AI 不是壞心眼，它沒有立場，也不是故意歧視誰。它只是忠實地把它讀到的世界<strong>當成預設值</strong>吐回來。看見這一點，才不會既錯怪工具、也不會放任問題。</div>
+
+<h2>🏛️ 公務為什麼要特別在意？</h2>
+<p>如果是你私人隨手生張圖，生成什麼樣子影響不大。但<strong>政府的產出代表全民</strong>——海報、簡報、宣導圖、社群貼文，是掛上機關名義、面向所有國民的。這時偏誤就不只是美感問題，而是<strong>公平問題</strong>。</p>
+<div class="warn">想像這些後果：
+<ul>
+<li>健康促進海報上<strong>只有精壯年輕人</strong>——彷彿健康只屬於某種身體，年長者、身心障礙者、體態不同的人被排除在「健康」的想像之外。</li>
+<li>人才招募圖裡的科學家<strong>清一色白人男性</strong>——等於對女孩、對不同族群暗示「這裡沒有你的位置」。</li>
+<li>長照宣導圖的照顧者<strong>永遠是年輕女性</strong>——強化「照顧是女人的事」，也讓男性照顧者隱形。</li>
+</ul>
+政府本該促進平等，若隨手用 AI 就把性別、年齡、體態、種族、身心障礙的刻板印象<strong>再印一次、發給全民看</strong>，等於用公部門的公信力替偏見背書。</div>
+<div class="note">台灣在 2026 年 1 月 14 日施行的《人工智慧基本法》，把「避免歧視、保障平等」列為使用 AI 的基本原則之一。它由國科會主管，屬於指導性的框架、目前沒有罰則，所以<strong>不會有人因此罰你</strong>——但也正因為沒人盯著罰，能不能落實，靠的就是承辦人自己的一份自覺。這份自覺，就是這一頁想交到你手上的東西。</div>
+
+<h2>🛠️ 那要怎麼修正？</h2>
+<div class="expect"><strong>做法一：在 prompt 裡把多元「講明白」。</strong>AI 只會補它的預設值，你不指定，它就給刻板答案；你一旦指定，它多半照做。與其抱怨產出不夠多元，不如直接寫進指令：明確要求不同性別、不同年齡、不同族群、不同體態。</div>
+<div class="expect"><strong>做法二：產出後主動檢查「誰不見了」。</strong>圖生出來別急著用，先問自己一句「這張圖裡，哪一種人被漏掉了？」把「檢查有沒有人被排除」變成跟存檔一樣自然的習慣。</div>
+<div class="expect"><strong>做法三：重要對外素材，找人複核。</strong>只要是要掛機關名義、對外發布的圖或文案，別讓 AI 的產出直接上線。請同事看一眼，或想想不同處境的民眾看到會有什麼感受。AI 負責生，<strong>判斷該不該用、公不公平，是人的責任、是你的責任</strong>。</div>
+
+<h2>♻️ 重生一次：把科學家改寫得更公平</h2>
+<div class="question"><strong>動手改一次，比讀十句道理都有用。</strong>拿你剛剛那張科學家的圖，把 prompt 改成明確要求多元組成，重新生一張，然後兩張並排比一比。
+<p>原本你大概是這樣寫的：</p>
+<pre>幫我畫一位科學家在實驗室裡工作</pre>
+<p>改成把多元講明白：</p>
+<pre>幫我畫一群科學家在實驗室裡工作，
+成員涵蓋不同性別、不同年齡與不同族群，
+其中包含女性與年長的資深研究員，
+呈現真實團隊多元的樣貌。</pre>
+<p>生完把兩張擺在一起看：第一張是誰？第二張是誰？你有沒有感覺到，<strong>只是多寫一句話，畫面裡「能被看見的人」就變多了</strong>？這一句話的差別，就是負責任地用 AI 的起點。</p></div>
+<div class="note">同一招可以套到你剛剛的護理師與健康促進圖：護理師指定「包含男性與不同年齡的護理人員」、健康海報指定「不同年齡、不同體態、包含身心障礙者一起運動」，再各生一次，感受一下差別。</div>
+
+<h2>📝 產出偏誤自檢清單</h2>
+<div class="check"><strong>要對外用的 AI 產出（圖或文），發布前逐項打勾：</strong>
+<ul>
+<li>☐ 這張圖／這段文，有沒有<strong>只呈現單一性別</strong>來代表某個職業或角色？</li>
+<li>☐ 有沒有<strong>只呈現單一年齡層</strong>（例如全是年輕人、沒有長者）？</li>
+<li>☐ 有沒有<strong>只呈現單一體態或外貌</strong>，把「正常／健康／專業」窄化成一種樣子？</li>
+<li>☐ 有沒有把某個角色<strong>固定綁在某個性別或族群</strong>上（照顧者＝女性、勞動者＝某族群）？</li>
+<li>☐ 我服務的對象裡，有沒有哪一種人在這份產出裡<strong>完全看不到自己</strong>？</li>
+<li>☐ 如果偏誤存在，我有沒有<strong>改寫 prompt 重生一版</strong>，而不是將就用？</li>
+<li>☐ 這是重要對外素材嗎？若是，我有沒有<strong>找人複核</strong>過？</li>
+</ul>
+只要有一項打不了勾，就回頭修，別讓它掛著機關的名義發出去。</div>
+
+<h2>💬 不只是生圖：文字也會有偏誤</h2>
+<p>偏誤不是生圖獨有的。你請 AI 幫忙的文字工作，一樣藏著預設值：</p>
+<div class="warn">
+<ul>
+<li><strong>分眾宣導</strong>：請 AI「針對年輕族群」寫文案，它可能預設年輕人都愛用某種網路語氣，反而顯得刻板、甚至冒犯。</li>
+<li><strong>民意分析</strong>：請 AI 幫忙歸納陳情或問卷開放意見，它可能<strong>放大多數聲音、淹沒少數意見</strong>，讓弱勢族群的訴求被「平均」掉。</li>
+<li><strong>撰寫範例</strong>：請 AI 舉個「申請人」的例子，它給的名字、身分、家庭樣貌，往往也落在某種預設樣板上。</li>
+</ul>
+</div>
+<div class="expect">處理文字時，同一套自覺照樣適用：<strong>指定得更明確、產出後問「誰被漏掉、誰被放大」、重要的找人複核。</strong>把「看見預設值」當成使用 AI 的日常反射，不論生圖或寫字。</div>
+
+<h2>📌 帶走一句話</h2>
+<div class="note">AI 會忠實地把社會的刻板印象<strong>當成預設值</strong>還給你；看見它、講明白你要的多元、檢查誰被漏掉——這不是刁難工具，而是公務員替全民把關公平的份內事。</div>
+
+<h2>🔀 延伸／自我檢視</h2>
+<ul>
+<li>回頭把你剛剛的護理師、健康促進兩張圖也各重生一版，並排比較，感受「多寫一句話」帶來的差別。</li>
+<li>想一想你單位最近一份對外圖文素材：如果當初用 AI 生，可能會出現哪一種偏誤？該補哪一句指令？</li>
+<li>下次請 AI 幫忙歸納民意或陳情時，刻意追問一句「有沒有哪些少數意見被你合併或省略了？」看看它怎麼回。</li>
+<li>把上面那份「產出偏誤自檢清單」存起來，當成以後對外用 AI 產出前的固定一步。</li>
+</ul>
+  </div>
+  <div class="botnav">
+    <a href="gov-ai-ethics.html">← 回倫理與責任</a>
+    <a href="gov-ai_lesson.html">🏠 課程目錄</a>
+  </div>
+</div>
+</body>
+</html>

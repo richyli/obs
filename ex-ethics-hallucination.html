@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>幻覺與核實：AI 會一本正經地編 · 倫理</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;}
+body{font-family:"Helvetica Neue",Arial,"Noto Sans TC",sans-serif;background:#f0f2f5;margin:0;color:#1a1a1a;}
+.topnav{background:#fff;border-bottom:1px solid #e4e4e4;padding:.7rem 1.2rem;position:sticky;top:0;z-index:10;box-shadow:0 2px 8px rgba(0,0,0,.05);display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;font-size:.8rem;}
+.topnav a{color:#0055cc;text-decoration:none;font-weight:600;}
+.topnav a:hover{text-decoration:underline;}
+.topnav .sep{color:#bbb;}
+.topnav .cur{color:#666;}
+.tag-ex{font-size:.68rem;font-weight:800;background:#dcfce7;color:#15803d;padding:.1rem .45rem;border-radius:4px;}
+.wrap{max-width:800px;margin:1.4rem auto 3rem;padding:0 1.2rem;}
+.card{background:#fff;border-radius:12px;box-shadow:0 1px 6px rgba(0,0,0,.08);padding:1.4rem 1.6rem 1.8rem;border-left:5px solid #0055cc;}
+.card h1{font-size:1.3rem;margin:.2rem 0 1rem;}
+.card h2{font-size:1.05rem;font-weight:800;color:#0055cc;margin:1.3rem 0 .5rem;padding-bottom:.25rem;border-bottom:2px solid #eef2f8;}
+.card h3{font-size:.95rem;font-weight:800;color:#333;margin:1rem 0 .4rem;}
+.card h4{font-size:.9rem;font-weight:800;color:#0055cc;margin:.9rem 0 .3rem;}
+.card p{font-size:.9rem;line-height:1.75;color:#333;margin:.5rem 0;}
+.card ul,.card ol{margin:.4rem 0 .6rem 1.4rem;}
+.card li{font-size:.89rem;line-height:1.7;color:#333;margin-bottom:.32rem;}
+.card code{background:#f3f3f3;color:#c7254e;padding:.1em .35em;border-radius:3px;font-size:.85em;font-family:"SFMono-Regular",Consolas,monospace;}
+.card strong{color:#111;}
+.card a{color:#0055cc;}
+.card hr{border:none;border-top:1px solid #eee;margin:1.2rem 0;}
+.card pre{background:#1e293b;color:#e2e8f0;border-radius:8px;padding:.85rem 1rem;margin:.6rem 0;overflow-x:auto;font-size:.82em;line-height:1.6;white-space:pre-wrap;font-family:"SFMono-Regular",Consolas,monospace;}
+.card img{max-width:100%;border-radius:8px;margin:.5rem 0;}
+.tbl-wrap{overflow-x:auto;margin:.6rem 0;}
+.card table{border-collapse:collapse;width:100%;font-size:.84rem;}
+.card th,.card td{border:1px solid #e2e8f0;padding:.4rem .6rem;text-align:left;vertical-align:top;}
+.card th{background:#f8fafc;font-weight:700;}
+.note{background:#f0f7ff;border-left:3px solid #0055cc;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.warn{background:#fff1f0;border-left:3px solid #ef4444;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.expect{background:#f0fdf4;border-left:3px solid #22c55e;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.rescue{background:#fefce8;border-left:3px solid #eab308;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.check{background:#faf5ff;border-left:3px solid #a855f7;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.question{background:#fff8e6;border-left:3px solid #f59e0b;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.reuse-note{margin-top:1rem;font-size:.78rem;color:#888;text-align:center;}
+.botnav{text-align:center;margin:1.4rem 0;}
+.botnav a{display:inline-block;margin:.3rem;padding:.5rem 1.1rem;background:#fff;border-radius:8px;text-decoration:none;color:#0055cc;font-weight:700;font-size:.85rem;box-shadow:0 1px 4px rgba(0,0,0,.07);}
+.botnav a:hover{background:#f0f7ff;}
+.card details{margin-top:.5rem;}
+.card summary{cursor:pointer;color:#0055cc;font-weight:700;font-size:.85rem;list-style:none;}
+.card summary::-webkit-details-marker{display:none;}
+.card summary:hover{text-decoration:underline;}
+.card details[open] summary{margin-bottom:.4rem;}
+.card details>*:not(summary){font-size:.85rem;line-height:1.65;color:#444;padding-left:.2rem;}
+@media(max-width:520px){.wrap{padding:0 .7rem;}.card{padding:1.1rem 1.1rem 1.4rem;}}
+</style>
+</head>
+<body>
+<div class="topnav">
+  <a href="gov-ai_lesson.html">🏠 AI提示工程實戰班─打造你的AI問答秘書第9期</a><span class="sep">›</span>
+  <a href="gov-ai-ethics.html">倫理與責任</a><span class="sep">›</span>
+  <span class="cur">幻覺與核實：AI 會一本正經地編</span>
+  <span class="tag-ex" style="background:#f3e8ff;color:#7c3aed;">⚖️ 倫理</span>
+</div>
+<div class="wrap">
+  <div class="card">
+<h2>幻覺與核實：AI 會一本正經地編</h2>
+<div class="note">這一頁在講一件你用 AI 辦公一定會踩到的事：AI 會用<strong>非常肯定的語氣，編出根本不存在的法條、數字、判例和出處</strong>。你要學會的不是「別再信 AI」，而是<strong>知道哪些地方一定得回頭查證</strong>——因為對外的那份公文，署名的是你。</div>
+
+<h2>✨ Take aways（你會帶走什麼）</h2>
+<p>看完這一頁，你會帶走四件事：<strong>①一眼認得</strong>「AI 幻覺」長什麼樣子——語氣越肯定，不代表越正確；<strong>②想得通它為什麼會編</strong>，因為它是在「接文字」不是在「查資料庫」；<strong>③分得出高風險場景</strong>，知道哪些內容一貼就得全查；<strong>④手上有一套核實 SOP</strong>，法條回全國法規資料庫、數字自己算、出處逐一對，讓 AI 當你的草稿，而查證這一關留在你自己手上。</p>
+
+<h2>🔍 先看一個例子：問法條，它編給你</h2>
+<p>假設你在擬一份回覆民眾的函，想引一條《行政程序法》的規定，於是你問 AI：</p>
+<pre>《行政程序法》關於「行政處分作成後多久內要送達」是第幾條？請把條文內容給我。</pre>
+<p>AI 很可能這樣回你，而且回得四平八穩、像模像樣：</p>
+<pre>依《行政程序法》第 98 條規定：「行政處分應於作成後
+七日內送達相對人；逾期未送達者，該處分不生效力。」</pre>
+<div class="warn"><strong>問題來了</strong>：這段話「讀起來」非常合理——有條號、有天數、有法律效果，語氣斬釘截鐵。但條號可能對不上、那個「七日內送達否則失效」的規則<strong>很可能是它自己編的</strong>。它不是去翻法典抄給你，而是照著「法條通常長這樣」的語感，生成了一段<strong>看起來像法條的文字</strong>。你若照抄進公文，錯的就是你這份公文。</div>
+<div class="note">同一招會發生在各種地方：它會生一個不存在的<strong>司法院大法官解釋字號</strong>、湊一個沒發生過的<strong>判例</strong>、掰一個聽起來很專業的<strong>統計數字</strong>、甚至補一個查無此頁的<strong>公報卷期或網址</strong>當出處。共同點是：<strong>格式全對、內容是假</strong>。</div>
+
+<h2>🧠 它為什麼會這樣？語氣自信 ≠ 內容正確</h2>
+<p>要抓幻覺，得先懂它的底層是怎麼運作的。這裡不談技術細節，只講一件對你判斷最關鍵的事：</p>
+<div class="note"><strong>AI 生成文字，本質是「一個字一個字接下去，挑最像會出現的下一個字」，不是「去某個資料庫把正確答案查出來」。</strong>它學過海量文字，所以很會模仿「法條的樣子」「判決書的樣子」「統計報告的樣子」——但模仿得像，不等於內容是真的。</p></div>
+<p>這帶出兩個你要記牢的推論：</p>
+<ul>
+<li><strong>它的「自信」是講話風格，不是把握度。</strong>它不會像人一樣「我不太確定，你查一下」。就算內容是它掰的，它照樣寫得斬釘截鐵，因為肯定的語氣本來就是法條、公文最常見的口吻，它學得很像。<strong>語氣完全不能拿來判斷對不對。</strong></li>
+<li><strong>越冷門、越specific 的東西越容易編。</strong>你問常識它多半答得對；但你一問「第幾條」「哪一號解釋」「幾年幾月的數字」這種<strong>需要精準查證的細節</strong>，正是它最容易「憑感覺補一個」的地方——偏偏公務工作要的就是這種精準。</li>
+</ul>
+<div class="expect"><strong>正確心態</strong>：把 AI 當成一個<strong>反應很快、口才很好、但沒去查資料就先開口的助理</strong>。它給你的方向、草稿、切入點通常很有用；但只要牽涉到「確切的條號、數字、來源」，你就得自己去對過一次才算數。</div>
+
+<h2>🚨 哪些場景一貼就是高風險？</h2>
+<p>不是所有用途都一樣危險。幫你潤個語氣、列個大綱，錯了改就好。但下面這幾類，<strong>AI 一旦編錯，後果會落到民眾權益或機關信譽上</strong>，一律當高風險處理：</p>
+<div class="warn">
+<strong>① 法規適用</strong>：引哪一條、要件是什麼、罰則多少——編錯就是適用法令錯誤。<br>
+<strong>② 數據引用</strong>：件數、金額、成長率、比率——編錯就是對外發布不實數字。<br>
+<strong>③ 對外正式文件</strong>：公文、新聞稿、簡報、致詞稿——署名機關，錯了收不回。<br>
+<strong>④ 給民眾的答覆</strong>：櫃檯回覆、承諾期限、權利義務說明——民眾會照著做、照著主張。
+</div>
+<div class="question"><strong>想一想</strong>：如果你把 AI 生的「依第 98 條，七日內未送達即失效」直接寫進給民眾的回函，民眾據此主張你們的處分無效、甚至提起救濟，這個責任會算在誰頭上？
+<details><summary>👉 點開想法</summary>算在你和機關頭上。對民眾而言，<strong>公文上的字就是機關的正式意思表示</strong>，沒有人會接受「這是 AI 寫的、不是我的意思」當理由。AI 不是你的免責聲明，它只是你的工具；<strong>工具用出來的成果，責任在使用工具的人</strong>。這正是為什麼高風險場景一定要人工查證。</details></div>
+
+<h2>✅ 核實 SOP：把 AI 的產出當「待查草稿」</h2>
+<p>不用把每句話都疑神疑鬼，但凡是會「對外、影響權益」的內容，照這套走一遍：</p>
+<div class="check">
+<strong>核實檢查清單（對外文件送出前）</strong>
+<ul>
+<li>☐ <strong>法條</strong>：條號與條文內容，一律回<strong>全國法規資料庫</strong>（law.moj.gov.tw）逐字對過，別信 AI 給的條號。</li>
+<li>☐ <strong>大法官解釋／判例／函釋</strong>：字號與要旨到<strong>司法院、主管機關官網</strong>查得到才採用；查不到就是不存在。</li>
+<li>☐ <strong>數字</strong>：件數、金額、比率<strong>自己用原始資料重算一次</strong>，不要沿用 AI 算出來的結果。</li>
+<li>☐ <strong>出處／網址</strong>：AI 附的來源<strong>點進去確認頁面真的存在、內容真的這樣寫</strong>——連結和卷期它也會編。</li>
+<li>☐ <strong>人名／單位／專有名詞</strong>：職稱、機關全銜、法規名稱有沒有寫錯或張冠李戴。</li>
+<li>☐ <strong>凡查不到的</strong>：一律當「這條是編的」處理，寧可拿掉，不要抱著僥倖送出去。</li>
+</ul>
+</div>
+<div class="warn"><strong>特別提醒一個陷阱</strong>：你要 AI「附上出處」是好習慣，但<strong>出處本身也可能是假的</strong>。它會生一個格式完美的引用——某某公報第幾卷第幾期、某某官網某頁——你不點進去看，根本分不出真假。<strong>「有附出處」不等於「查證過」，你自己點開對過，才算查證。</strong></div>
+
+<h2>🧰 一個好用的 prompt：叫它先自己標出不確定的地方</h2>
+<p>你沒辦法阻止 AI 編，但可以請它<strong>把最可能需要查的地方先圈出來</strong>，替你的核實省一半力氣。任務問完後，追加這一段：</p>
+<pre>請在上面的回答中，把你「不完全確定、或建議我另行查證」的地方標出來，
+特別是：法條條號與條文、數字、日期、判例或解釋字號、引用的出處。
+用【待查】標在該句後面，並簡單說明為什麼那一項需要查。
+如果某個具體條號或數字你其實沒有把握，請直接說「這部分我不確定」，
+不要為了看起來完整而自己補一個。</pre>
+<div class="note">這招不是萬靈丹——它有時仍會漏標、甚至把假的講得像真的。但實務上很有用：它會幫你把「法條條號、數字、字號、出處」這幾個高風險點集中標記出來，<strong>你的查證就有了明確的清單，不必逐字重讀</strong>。標了【待查】的，你就照上面的 SOP 一項一項對。</div>
+<div class="expect"><strong>搭配《人工智慧基本法》的精神</strong>：台灣的《人工智慧基本法》已於 2026 年 1 月 14 日施行，由國科會主管，目前是<strong>指導性的框架、沒有罰則</strong>，主要揭示「以人為本、負責任使用」等原則。它不會幫你查證，也不會替你扛錯；真正落地成你日常的，就是<strong>「對外前人工核實」這個動作</strong>——這既是自保，也正是這部法所講的負責任使用。</div>
+
+<h2>📌 帶走一句話</h2>
+<div class="expect"><strong>AI 給你的是草稿與線索，不是事實來源。</strong>凡是會對外、會影響民眾權益的內容——法條、數字、判例、出處——語氣再肯定，都得由你自己回官方來源查過一次。查證這一關，是 AI 幫不了你、也不能替你負責的那一關。</div>
+
+<h2>🔀 延伸／自我檢視</h2>
+<ul>
+<li>翻出你最近用 AI 幫忙寫的一份文件，找出裡面所有「條號、數字、日期、出處」，逐一回官方來源對——看看有沒有一項其實對不上。</li>
+<li>故意問 AI 一個你確知答案的冷門法條或字號，看它會不會「一本正經地編」，親手體驗一次幻覺長什麼樣。</li>
+<li>想一想：你單位裡哪幾種文件「錯了最麻煩」？把那幾種列成自己的高風險清單，日後只要 AI 碰到就自動進入核實模式。</li>
+<li>下次交辦同事用 AI 幫忙時，順手提醒一句：對外的條號和數字要自己查過——把核實這個習慣傳出去。</li>
+</ul>
+  </div>
+  <div class="botnav">
+    <a href="gov-ai-ethics.html">← 回倫理與責任</a>
+    <a href="gov-ai_lesson.html">🏠 課程目錄</a>
+  </div>
+</div>
+</body>
+</html>

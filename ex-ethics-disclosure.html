@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>揭露：該不該說這是 AI 做的？ · 倫理與責任</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;}
+body{font-family:"Helvetica Neue",Arial,"Noto Sans TC",sans-serif;background:#f0f2f5;margin:0;color:#1a1a1a;}
+.topnav{background:#fff;border-bottom:1px solid #e4e4e4;padding:.7rem 1.2rem;position:sticky;top:0;z-index:10;box-shadow:0 2px 8px rgba(0,0,0,.05);display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;font-size:.8rem;}
+.topnav a{color:#0055cc;text-decoration:none;font-weight:600;}
+.topnav a:hover{text-decoration:underline;}
+.topnav .sep{color:#bbb;}
+.topnav .cur{color:#666;}
+.tag-ex{font-size:.68rem;font-weight:800;background:#dcfce7;color:#15803d;padding:.1rem .45rem;border-radius:4px;}
+.wrap{max-width:800px;margin:1.4rem auto 3rem;padding:0 1.2rem;}
+.card{background:#fff;border-radius:12px;box-shadow:0 1px 6px rgba(0,0,0,.08);padding:1.4rem 1.6rem 1.8rem;border-left:5px solid #0055cc;}
+.card h1{font-size:1.3rem;margin:.2rem 0 1rem;}
+.card h2{font-size:1.05rem;font-weight:800;color:#0055cc;margin:1.3rem 0 .5rem;padding-bottom:.25rem;border-bottom:2px solid #eef2f8;}
+.card h3{font-size:.95rem;font-weight:800;color:#333;margin:1rem 0 .4rem;}
+.card h4{font-size:.9rem;font-weight:800;color:#0055cc;margin:.9rem 0 .3rem;}
+.card p{font-size:.9rem;line-height:1.75;color:#333;margin:.5rem 0;}
+.card ul,.card ol{margin:.4rem 0 .6rem 1.4rem;}
+.card li{font-size:.89rem;line-height:1.7;color:#333;margin-bottom:.32rem;}
+.card code{background:#f3f3f3;color:#c7254e;padding:.1em .35em;border-radius:3px;font-size:.85em;font-family:"SFMono-Regular",Consolas,monospace;}
+.card strong{color:#111;}
+.card a{color:#0055cc;}
+.card hr{border:none;border-top:1px solid #eee;margin:1.2rem 0;}
+.card pre{background:#1e293b;color:#e2e8f0;border-radius:8px;padding:.85rem 1rem;margin:.6rem 0;overflow-x:auto;font-size:.82em;line-height:1.6;white-space:pre-wrap;font-family:"SFMono-Regular",Consolas,monospace;}
+.card img{max-width:100%;border-radius:8px;margin:.5rem 0;}
+.tbl-wrap{overflow-x:auto;margin:.6rem 0;}
+.card table{border-collapse:collapse;width:100%;font-size:.84rem;}
+.card th,.card td{border:1px solid #e2e8f0;padding:.4rem .6rem;text-align:left;vertical-align:top;}
+.card th{background:#f8fafc;font-weight:700;}
+.note{background:#f0f7ff;border-left:3px solid #0055cc;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.warn{background:#fff1f0;border-left:3px solid #ef4444;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.expect{background:#f0fdf4;border-left:3px solid #22c55e;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.rescue{background:#fefce8;border-left:3px solid #eab308;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.check{background:#faf5ff;border-left:3px solid #a855f7;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.question{background:#fff8e6;border-left:3px solid #f59e0b;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.reuse-note{margin-top:1rem;font-size:.78rem;color:#888;text-align:center;}
+.botnav{text-align:center;margin:1.4rem 0;}
+.botnav a{display:inline-block;margin:.3rem;padding:.5rem 1.1rem;background:#fff;border-radius:8px;text-decoration:none;color:#0055cc;font-weight:700;font-size:.85rem;box-shadow:0 1px 4px rgba(0,0,0,.07);}
+.botnav a:hover{background:#f0f7ff;}
+.card details{margin-top:.5rem;}
+.card summary{cursor:pointer;color:#0055cc;font-weight:700;font-size:.85rem;list-style:none;}
+.card summary::-webkit-details-marker{display:none;}
+.card summary:hover{text-decoration:underline;}
+.card details[open] summary{margin-bottom:.4rem;}
+.card details>*:not(summary){font-size:.85rem;line-height:1.65;color:#444;padding-left:.2rem;}
+@media(max-width:520px){.wrap{padding:0 .7rem;}.card{padding:1.1rem 1.1rem 1.4rem;}}
+</style>
+</head>
+<body>
+<div class="topnav">
+  <a href="gov-ai_lesson.html">🏠 AI提示工程實戰班─打造你的AI問答秘書第9期</a><span class="sep">›</span>
+  <a href="gov-ai-ethics.html">倫理與責任</a><span class="sep">›</span>
+  <span class="cur">揭露：該不該說這是 AI 做的？</span>
+  <span class="tag-ex" style="background:#f3e8ff;color:#7c3aed;">⚖️ 倫理</span>
+</div>
+<div class="wrap">
+  <div class="card">
+<h2>揭露：該不該說這是 AI 做的？</h2>
+<div class="note">這一頁談的是 AI 使用的<strong>「揭露」</strong>：當你的公務產出用了 AI，你到底該不該講、要對誰講、又該怎麼講。這不是技術問題，而是你身為公務員對民眾誠信與可課責的責任問題。</div>
+
+<h2>✨ Take aways（你會帶走什麼）</h2>
+<p>讀完這頁你會帶走三件事：<strong>①一個判斷準則</strong>——哪些產出一定要揭露用了 AI，哪些其實不必；<strong>②幾套可以直接用的實務做法</strong>——內部陳核怎麼註記、對外怎麼適度說明、人工審核紀錄怎麼留；<strong>③一條不能忘的底線</strong>——AI 只是輔助，最終負責的人永遠是你，「AI 說的」不能拿來當卸責的藉口。</p>
+
+<h2>🤔 為什麼要揭露？</h2>
+<p>你可能會想：文件寫得好不好、對不對，才是重點，過程用不用 AI，有差嗎？在私人場合也許沒差，但你是公務員，情況不一樣。揭露的核心，是<strong>民眾對公部門的信任</strong>。</p>
+<div class="note"><strong>四個理由，一次講清楚：</strong>
+<br>①<strong>對民眾誠信</strong>：民眾預設一份公文、一則新聞稿背後是「機關的人在負責」，若整段其實是 AI 生成卻讓人誤以為出自專業判斷，這中間就有落差。
+<br>②<strong>可課責</strong>：出了錯要找得到人負責。揭露與留紀錄，是事後查得清「誰在哪一步做了什麼判斷」的前提。
+<br>③<strong>避免誤導</strong>：AI 會一本正經地講錯話（俗稱「幻覺」）。若讓民眾誤以為那是機關查證過的定論，誤導的責任在機關。
+<br>④<strong>公部門公信力</strong>：公信力是長期累積、一次崩塌的資產。一旦「原來公文都是 AI 亂寫的」變成印象，傷的是整個機關。</div>
+
+<h2>🚦 什麼一定要揭露，什麼可以不必？</h2>
+<p>不是每次開 AI 都得昭告天下。關鍵看兩件事：<strong>這份產出會不會對外、會不會影響到別人的權益或判斷</strong>。愈往「對外、影響權益」靠，揭露的必要性愈高。</p>
+
+<div class="expect"><strong>通常可以不必特別揭露（AI 純粹當工具，你全程主導、負責）</strong>
+<br>・你自己要用的內部草稿、想法發散、大綱整理
+<br>・請 AI 潤飾錯字、調順語句，內容與判斷都是你的
+<br>・把一段長文摘要成重點，供你自己閱讀
+<br>這類情境，AI 的角色相當於一支比較聰明的筆或字典，重點在你已逐字看過、對內容負全責。</div>
+
+<div class="warn"><strong>應該揭露或至少留下紀錄（產出會對外、或影響他人判斷與權益）</strong>
+<br>・對外正式發布的新聞稿、公告、懶人包
+<br>・直接面對民眾的溝通內容、回覆與說明
+<br>・提供給長官作為決策依據的分析、建議、評估
+<br>・任何會被當成「機關立場」或「事實查證結果」的文件
+<br>這類情境，別人是依據你的產出做判斷、下決定，所以「這是怎麼來的、有沒有經過人查證」就變得重要。</div>
+
+<div class="note"><strong>一句話抓原則</strong>：分不清時，就問自己——<strong>「如果之後有人問『這是不是 AI 寫的、你有沒有看過』，我能不能坦然回答？」</strong>能坦然回答，代表你的流程站得住腳；會心虛，代表該補上揭露或審核這一步。</div>
+
+<h2>🧭 情境判斷：換你決定要不要標</h2>
+<div class="note">下面三個情境都很日常。先自己判斷<strong>要不要揭露、對誰揭露、怎麼揭露</strong>，再點開參考觀點對照。答案常常不是非黑即白，重點是你想的理由對不對。</div>
+
+<div class="question"><strong>情境 1</strong>：機關要發一則對外新聞稿，宣傳新的便民服務。初稿是你請 AI 擬的，你改過兩輪、也查證過數字。這則新聞稿要不要在裡面標「本稿由 AI 協助撰寫」？
+<details><summary>👉 點開參考觀點</summary>多數情況<strong>不需要在新聞稿正文標註「AI 協助撰寫」</strong>，但理由要對。新聞稿對外代表的是<strong>機關的立場與承諾</strong>，你已改過兩輪、查證過數字，等於你（和機關）對每一句話負責，AI 在這裡是工具而非作者。真正重要的不是那行標註，而是<strong>你確實做了人工審核、內容屬實不誤導</strong>。反過來說，若你幾乎沒改、直接發，那問題不在「有沒有標」，而在「根本沒盡到審核責任」。另外，若稿中含 AI 生成的圖片或數據圖表，那部分傾向<strong>要標示為 AI 生成</strong>，避免讓民眾誤以為是實拍或實測。</details></div>
+
+<div class="question"><strong>情境 2</strong>：長官請你三天內生出一份議題分析。時間很趕，你用 AI 初擬了架構與大部分內容，自己補了在地脈絡。呈給長官時，要不要說明「這份是 AI 初擬的」？
+<details><summary>👉 點開參考觀點</summary><strong>傾向要說明，而且這對你有利。</strong>對內、對長官，揭露「AI 初擬、我補了哪些、哪些還沒能完全查證」不是承認偷懶，而是<strong>讓決策者知道這份資料的可信度邊界</strong>——哪些是紮實查證過的、哪些是 AI 產出還需再確認的。長官據此做決策，若你把 AI 沒查證的內容包裝成定論，一旦出錯，責任會回到你身上。務實做法：在文件開頭或口頭補一句「初稿以 AI 協助整理，數據與關鍵論點我已再查證，惟 X 部分尚待補實」。這既誠實、又保護你自己。</details></div>
+
+<div class="question"><strong>情境 3</strong>：民眾來信詢問一項法規適用。你請 AI 幫你查、幫你擬回覆，AI 給了看似完整的答案。你要直接把這段回覆寄出去嗎？要不要標明是 AI 寫的？
+<details><summary>👉 點開參考觀點</summary><strong>絕對不能直接寄出，該處理的不是「標不標」而是「查證了沒」。</strong>對外回覆民眾等於<strong>機關的正式答覆</strong>，會影響民眾的權益判斷。AI 對法規常「講得很像、但引錯條文或過時」，你必須<strong>逐項回到現行法規原文核對</strong>，確認無誤才由你（機關）具名回覆。要不要在信裡標「AI 協助」其次，關鍵是<strong>這封信一旦寄出，責任是你的、不是 AI 的</strong>。若涉及具體個案權益或裁量，更該由承辦依權責判斷，不宜讓 AI 的答案直接變成對民眾的答覆。</details></div>
+
+<div class="expect">三題想完的心法：<strong>①對外代表機關立場的（新聞稿），重點在你有沒有審核負責，而非那行標註；②對內給決策者的（分析），揭露可信度邊界反而保護你；③對外答覆民眾權益的（法規回覆），先查證、由人具名，AI 不能當最終答案。</strong></div>
+
+<h2>🛠️ 怎麼揭露？三個實務做法</h2>
+<p>揭露不是只有「在文件上蓋一行字」這一招。依對象不同，做法也不同。</p>
+
+<h3>① 內部陳核：在簽稿裡誠實註明</h3>
+<p>對內陳核時，若這份文件有相當比例出自 AI、或還有未完全查證之處，值得在<strong>說明欄或口頭</strong>交代一句。這不是形式，而是讓核章的長官知道「這份資料處在什麼成熟度」。可複製的寫法：</p>
+<pre>本案初稿以 AI 工具協助整理架構與文字，
+其中數據、法規引用及關鍵論點，職已逐項查證核對；
+〔某部分〕尚待補充佐證資料後再行確認，先行陳核鑒核。</pre>
+
+<h3>② 對外揭露：適度說明，不必自曝也不必隱瞞</h3>
+<p>對外文件不需要為每次潤稿都加註，但遇到<strong>整段內容由 AI 生成、或含 AI 生成的圖表與影像</strong>，傾向適度標示，避免民眾誤解。務實原則：<strong>會讓人誤以為是實拍、實測、或機關逐字撰寫的，就標；純屬工具輔助且你已負責審過的，可不標。</strong>常見標示方式：</p>
+<pre>（本圖／本內容由生成式 AI 協助製作，僅供示意）</pre>
+
+<h3>③ 留下人工審核紀錄：可課責的關鍵</h3>
+<p>最容易被忽略、卻最重要的一步。揭露是給別人看的，<strong>審核紀錄是保護你自己的</strong>。哪怕只是簡單在檔案或公務系統裡留一筆「幾月幾日、由誰、就哪些內容做了什麼查證」，一旦日後被質疑，你有據可查，證明「這不是 AI 亂寫直接送出，是經過人判斷的」。這正是「可課責」在實務上長什麼樣子。</p>
+
+<h2>🎯 一條不能退讓的底線：人是最終負責者</h2>
+<p>前面所有做法，都建立在同一個原則上，這也是這整頁最重要的一句話。</p>
+<div class="warn"><strong>AI 是輔助，你是最終負責的人。</strong>無論 AI 幫你寫了多少，只要那份產出掛在你的機關、你的職務之下送出去，責任就是你的。<strong>「這是 AI 說的」「AI 給我的資料錯了」不能拿來卸責。</strong>就像你用計算機算錯帳，不能怪計算機——工具是你選的、答案是你送出的。</p>
+<div class="note">台灣已於 2026 年 1 月 14 日公布施行《人工智慧基本法》，由國科會主管。它目前是一部<strong>指導性的框架法、沒有罰則</strong>，宣示「以人為本、負責任使用」等原則，並不會幫你免除既有的行政責任。也就是說，就算有了這部法，<strong>《個資法》《行政程序法》對你的要求一項都沒少</strong>，AI 只是你完成工作的工具，該負的責任還是你負。</div>
+
+<h2>✅ 送出前的自我檢查</h2>
+<div class="check"><strong>把用了 AI 的產出送出去之前，逐項問自己：</strong>
+<br>☐ 這份會對外、或會影響別人的判斷與權益嗎？（會 → 揭露與審核的標準都要拉高）
+<br>☐ 裡面的數據、法規、事實，我<strong>親自查證</strong>過了嗎？（不是「看起來對」，是回到原始出處核對過）
+<br>☐ 有沒有含 AI 生成的圖片、圖表、影像，需要標示為 AI 製作？
+<br>☐ 若之後有人問「這是不是 AI 做的、你看過沒」，我能坦然回答嗎？
+<br>☐ 我有沒有留下一筆<strong>人工審核紀錄</strong>，證明這經過我的判斷？
+<br>☐ 我是否清楚：這份文件一旦送出，<strong>責任在我，不在 AI</strong>？</div>
+
+<h2>📌 帶走一句話</h2>
+<p><strong>用 AI 不丟臉，讓民眾誤以為那是人查證過的、才是問題。</strong>該不該揭露，說到底就是一句：如果被問起，你能不能坦然說明它怎麼來、你怎麼把過關——能，你就站得住；不能，就補上揭露、查證與紀錄這幾步。因為在公部門，最終為每一份產出負責的，永遠是人，不是 AI。</p>
+
+<h2>🔀 延伸／自我檢視</h2>
+<ul>
+<li>回想你最近一次用 AI 協助的公務產出，套上面的檢查表跑一遍——有沒有哪一項其實沒做到？</li>
+<li>想想你的單位有沒有「AI 使用與揭露」的內部共識或規範？若沒有，你覺得最該先講清楚的是哪一條？</li>
+<li>找一個灰色地帶的例子（例如：用 AI 幫忙翻譯一份要對外的雙語公告），跟同事討論看看你們會不會標、為什麼。</li>
+<li>延伸思考：當 AI 生成的圖片愈來愈逼真，公部門對外圖卡的「AI 生成標示」該做到多嚴？這關係到民眾對官方影像的信任。</li>
+</ul>
+  </div>
+  <div class="botnav">
+    <a href="gov-ai-ethics.html">← 回倫理與責任</a>
+    <a href="gov-ai_lesson.html">🏠 課程目錄</a>
+  </div>
+</div>
+</body>
+</html>
