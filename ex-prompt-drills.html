@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prompt 分級闖關演練 · 練習</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;}
+body{font-family:"Helvetica Neue",Arial,"Noto Sans TC",sans-serif;background:#f0f2f5;margin:0;color:#1a1a1a;}
+.topnav{background:#fff;border-bottom:1px solid #e4e4e4;padding:.7rem 1.2rem;position:sticky;top:0;z-index:10;box-shadow:0 2px 8px rgba(0,0,0,.05);display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;font-size:.8rem;}
+.topnav a{color:#0055cc;text-decoration:none;font-weight:600;}
+.topnav a:hover{text-decoration:underline;}
+.topnav .sep{color:#bbb;}
+.topnav .cur{color:#666;}
+.tag-ex{font-size:.68rem;font-weight:800;background:#dcfce7;color:#15803d;padding:.1rem .45rem;border-radius:4px;}
+.wrap{max-width:800px;margin:1.4rem auto 3rem;padding:0 1.2rem;}
+.card{background:#fff;border-radius:12px;box-shadow:0 1px 6px rgba(0,0,0,.08);padding:1.4rem 1.6rem 1.8rem;border-left:5px solid #0055cc;}
+.card h1{font-size:1.3rem;margin:.2rem 0 1rem;}
+.card h2{font-size:1.05rem;font-weight:800;color:#0055cc;margin:1.3rem 0 .5rem;padding-bottom:.25rem;border-bottom:2px solid #eef2f8;}
+.card h3{font-size:.95rem;font-weight:800;color:#333;margin:1rem 0 .4rem;}
+.card h4{font-size:.9rem;font-weight:800;color:#0055cc;margin:.9rem 0 .3rem;}
+.card p{font-size:.9rem;line-height:1.75;color:#333;margin:.5rem 0;}
+.card ul,.card ol{margin:.4rem 0 .6rem 1.4rem;}
+.card li{font-size:.89rem;line-height:1.7;color:#333;margin-bottom:.32rem;}
+.card code{background:#f3f3f3;color:#c7254e;padding:.1em .35em;border-radius:3px;font-size:.85em;font-family:"SFMono-Regular",Consolas,monospace;}
+.card strong{color:#111;}
+.card a{color:#0055cc;}
+.card hr{border:none;border-top:1px solid #eee;margin:1.2rem 0;}
+.card pre{background:#1e293b;color:#e2e8f0;border-radius:8px;padding:.85rem 1rem;margin:.6rem 0;overflow-x:auto;font-size:.82em;line-height:1.6;white-space:pre-wrap;font-family:"SFMono-Regular",Consolas,monospace;}
+.card img{max-width:100%;border-radius:8px;margin:.5rem 0;}
+.tbl-wrap{overflow-x:auto;margin:.6rem 0;}
+.card table{border-collapse:collapse;width:100%;font-size:.84rem;}
+.card th,.card td{border:1px solid #e2e8f0;padding:.4rem .6rem;text-align:left;vertical-align:top;}
+.card th{background:#f8fafc;font-weight:700;}
+.note{background:#f0f7ff;border-left:3px solid #0055cc;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.warn{background:#fff1f0;border-left:3px solid #ef4444;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.expect{background:#f0fdf4;border-left:3px solid #22c55e;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.rescue{background:#fefce8;border-left:3px solid #eab308;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.check{background:#faf5ff;border-left:3px solid #a855f7;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.question{background:#fff8e6;border-left:3px solid #f59e0b;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.drill{border:1px solid #e2e8f0;border-radius:10px;padding:.2rem 1rem 1rem;margin:1.1rem 0;background:#fff;}
+.drill-hd{display:flex;align-items:center;gap:.6rem;margin:.9rem 0 .3rem;flex-wrap:wrap;}
+.lvl{font-size:.72rem;font-weight:800;color:#fff;padding:.15rem .55rem;border-radius:5px;}
+.lvl.l1{background:#22c55e;} .lvl.l2{background:#0891b2;} .lvl.l3{background:#7c3aed;} .lvl.l4{background:#d97706;} .lvl.l5{background:#dc2626;}
+.drill-hd .dt{font-weight:800;font-size:1rem;color:#111;}
+.drill-hd .skill{font-size:.74rem;color:#888;background:#f3f4f6;padding:.12rem .5rem;border-radius:4px;}
+.ba{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin:.5rem 0;}
+.ba .bad,.ba .good{border-radius:8px;padding:.55rem .75rem;font-size:.83rem;line-height:1.6;}
+.ba .bad{background:#fff1f0;border:1px solid #fecaca;}
+.ba .good{background:#f0fdf4;border:1px solid #bbf7d0;}
+.ba .lab{font-weight:800;font-size:.76rem;display:block;margin-bottom:.25rem;}
+.ba .bad .lab{color:#dc2626;} .ba .good .lab{color:#16a34a;}
+@media(max-width:520px){.wrap{padding:0 .7rem;}.card{padding:1.1rem 1.1rem 1.4rem;}.ba{grid-template-columns:1fr;}}
+.reuse-note{margin-top:1rem;font-size:.78rem;color:#888;text-align:center;}
+.botnav{text-align:center;margin:1.4rem 0;}
+.botnav a{display:inline-block;margin:.3rem;padding:.5rem 1.1rem;background:#fff;border-radius:8px;text-decoration:none;color:#0055cc;font-weight:700;font-size:.85rem;box-shadow:0 1px 4px rgba(0,0,0,.07);}
+.botnav a:hover{background:#f0f7ff;}
+</style>
+</head>
+<body>
+<div class="topnav">
+  <a href="gov-ai_lesson.html">🏠 AI提示工程實戰班─打造你的AI問答秘書第9期</a><span class="sep">›</span>
+  <a href="gov-ai-m1_lesson.html">模組 1：入門 + Prompt 實作</a><span class="sep">›</span>
+  <span class="cur">Prompt 分級闖關演練</span>
+  <span class="tag-ex">✍️ 練習</span>
+</div>
+<div class="wrap">
+  <div class="card">
+<h2>Prompt 分級闖關：五關由淺到深，把原則練成肌肉</h2>
+<div class="note">跨課程可重用。是「基礎六原則」與「三段式」之間的<strong>純練手感關卡</strong>：一關練一招，每關都有壞例→好例對照，做完馬上自評。假設學員零基礎。</div>
+<h2>🎯 目標</h2>
+<p>把六原則從「聽懂」練到「手會」。五關各鎖定一個 prompt 技能，從最簡單的「改寫爛 prompt」爬到「連續追問把成品磨到能用」。<strong>重點不是全部做完，是每關親手打一次、親眼看差別。</strong></p>
+<h2>⏱️ 課堂帶法（40 分鐘）</h2>
+<p>1.（3′）說明玩法：一關一招，貼「起手 prompt」送出、再貼「升級 prompt」送出，並排比。 2.（30′）學員自行闖關，助教巡場；卡住看該關的救援。 3.（5′）分享：你在哪一關「看到最大落差」？ 4.（2′）預告：這五招下一頁會被收進「三段式」骨架一次到位。</p>
+<div class="note"><strong>玩法</strong>：每關都在<strong>同一個對話</strong>裡，先送「起手」版看它給什麼，再送「升級」版，把兩次結果並排。差別越大，代表這一招越有感。</div>
+
+<h2>🎮 五道關卡</h2>
+
+<div class="drill">
+<div class="drill-hd"><span class="lvl l1">LV.1</span><span class="dt">改寫爛 prompt</span><span class="skill">技能：具體化</span></div>
+<p><strong>任務</strong>：把一句模糊的請求，改成有對象、有限制、有格式的版本。</p>
+<div class="ba">
+  <div class="bad"><span class="lab">✗ 起手</span>幫我寫個公告。</div>
+  <div class="good"><span class="lab">✓ 升級</span>幫我寫一則「圖書館本週六因設備維護閉館一天」的公告，貼在大門與官網，語氣簡明、控制在 80 字內。</div>
+</div>
+<div class="rescue">🆘 還是很空泛？逐一補上：<strong>什麼事、給誰看、貼哪、多長</strong>四項。</div>
+</div>
+
+<div class="drill">
+<div class="drill-hd"><span class="lvl l2">LV.2</span><span class="dt">加限制條件</span><span class="skill">技能：設邊界</span></div>
+<p><strong>任務</strong>：同一個請求，用「限制」把 AI 的自由發揮收進你要的範圍——字數、語氣、不准編造。</p>
+<div class="ba">
+  <div class="bad"><span class="lab">✗ 起手</span>介紹一下我們新上線的線上申辦系統。</div>
+  <div class="good"><span class="lab">✓ 升級</span>介紹我們新上線的線上申辦系統，給民眾看。限制：不超過 120 字、條列 3 個好處、<strong>不要編任何我沒給的功能或數字</strong>、結尾附一句「詳情請洽本所」。</div>
+</div>
+<div class="rescue">🆘 它還是自己亂加功能？在最後補一句「不確定的地方寫〔待補〕，不要自行假設」。</div>
+</div>
+
+<div class="drill">
+<div class="drill-hd"><span class="lvl l3">LV.3</span><span class="dt">給範例（few-shot）</span><span class="skill">技能：示範</span></div>
+<p><strong>任務</strong>：貼一個「你要的樣子」當範本，要 AI 照著產出同款的下一則。示範一次，勝過形容詞十句。</p>
+<pre>照下面這則的語氣與格式，再幫我寫兩則不同主題的：
+
+範例：
+【活動快訊】親子共讀時光｜7/26（六）10:00｜3F 兒童區
+歡迎爸媽帶孩子一起聽故事，免報名，額滿為止。
+
+請比照，幫我寫：(1) 銀髮族數位課程 (2) 二手書交換市集</pre>
+<div class="ba">
+  <div class="bad"><span class="lab">✗ 沒範例</span>幫我寫三則活動快訊。（→ 格式各異，還要你手動統一）</div>
+  <div class="good"><span class="lab">✓ 有範例</span>（上面那段）→ 三則格式一致，直接能排版。</div>
+</div>
+<div class="rescue">🆘 產出跟範例不像？把範例裡的「固定結構」明講出來：「每則都要有【標籤】、時間、地點、一句說明」。</div>
+</div>
+
+<div class="drill">
+<div class="drill-hd"><span class="lvl l4">LV.4</span><span class="dt">指定輸出格式</span><span class="skill">技能：結構化</span></div>
+<p><strong>任務</strong>：要 AI 直接吐出「你不用再重排」的結構——表格、分點、JSON 皆可。</p>
+<pre>我要籌辦一場社區座談，幫我把待辦拆成一張表格。
+欄位：任務、負責角色、期限（用相對天數如 T-7）、備註。
+至少 8 列，依時間先後排。只給表格，不要前後多餘說明。</pre>
+<div class="ba">
+  <div class="bad"><span class="lab">✗ 起手</span>幫我想辦座談要做哪些事。（→ 一大段文字，難追蹤）</div>
+  <div class="good"><span class="lab">✓ 升級</span>（上面那段）→ 一張可直接貼進 Excel 的分工表。</div>
+</div>
+<div class="rescue">🆘 表格跑版？加「用 Markdown 表格格式輸出」，或請它「改成可貼進 Excel 的 CSV」。</div>
+</div>
+
+<div class="drill">
+<div class="drill-hd"><span class="lvl l5">LV.5</span><span class="dt">連續追問磨成品</span><span class="skill">技能：迭代</span></div>
+<p><strong>任務</strong>：在同一對話裡跑「產出→追問→再產出」三輪，把一份初稿磨到「明天真的能用」。</p>
+<p><strong>示範追問三連（依序貼）：</strong></p>
+<pre>第一版拿到後：
+① 第二段太官腔，改白話，像在跟里民講話。
+② 加一句提醒對方「7/30 前回覆」。
+③ 幫我準備一個「更正式」和一個「更親切」兩種版本讓我挑。</pre>
+<div class="check">🎯 迭代的關鍵：<strong>一次只改一件事</strong>，講清楚「哪裡、怎麼改」。不要一句話塞五個要求，也不要不滿意就整段重寫——AI 記得前文，你只要說差在哪。</div>
+<div class="rescue">🆘 越改越糟、它開始鬼打牆？別在同一對話硬凹，開新對話、把「已經調好的乾淨版本」重貼一次當新起點。</div>
+</div>
+
+<h2>✅ 完成標準</h2>
+<p>五關至少完成三關，並能講出「哪一關讓我看到最大落差」。做完你會發現：好 prompt 不是靈感，是<strong>把六原則逐項補齊</strong>的機械動作。</p>
+
+<h2>🔀 變體</h2>
+<ul><li><strong>競賽版</strong>：同一起手 prompt，比誰用最少字把結果調到全班公認最好。</li><li><strong>版本對照版</strong>：把 LV.5 的最終 prompt，在同一平台的「快版」與「強版」各跑一次，比較深度差異（呼應〈同一題問三家 AI〉）。</li><li><strong>大學課版</strong>：情境全換成校園（社團公告、報告分工表、回教授信）。</li></ul>
+  </div>
+  <div class="reuse-note">📎 此練習頁不綁課程，可被任何 AI 實務課程的目錄引用。</div>
+  <div class="botnav">
+    <a href="gov-ai-m1_lesson.html">← 回模組 1：入門 + Prompt 實作</a>
+    <a href="gov-ai_lesson.html">🏠 課程目錄</a>
+  </div>
+</div>
+</body>
+</html>

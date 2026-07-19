@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>基礎提問六原則 · 練習</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;}
+body{font-family:"Helvetica Neue",Arial,"Noto Sans TC",sans-serif;background:#f0f2f5;margin:0;color:#1a1a1a;}
+.topnav{background:#fff;border-bottom:1px solid #e4e4e4;padding:.7rem 1.2rem;position:sticky;top:0;z-index:10;box-shadow:0 2px 8px rgba(0,0,0,.05);display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;font-size:.8rem;}
+.topnav a{color:#0055cc;text-decoration:none;font-weight:600;}
+.topnav a:hover{text-decoration:underline;}
+.topnav .sep{color:#bbb;}
+.topnav .cur{color:#666;}
+.tag-ex{font-size:.68rem;font-weight:800;background:#dcfce7;color:#15803d;padding:.1rem .45rem;border-radius:4px;}
+.wrap{max-width:800px;margin:1.4rem auto 3rem;padding:0 1.2rem;}
+.card{background:#fff;border-radius:12px;box-shadow:0 1px 6px rgba(0,0,0,.08);padding:1.4rem 1.6rem 1.8rem;border-left:5px solid #0055cc;}
+.card h1{font-size:1.3rem;margin:.2rem 0 1rem;}
+.card h2{font-size:1.05rem;font-weight:800;color:#0055cc;margin:1.3rem 0 .5rem;padding-bottom:.25rem;border-bottom:2px solid #eef2f8;}
+.card h3{font-size:.95rem;font-weight:800;color:#333;margin:1rem 0 .4rem;}
+.card h4{font-size:.9rem;font-weight:800;color:#0055cc;margin:.9rem 0 .3rem;}
+.card p{font-size:.9rem;line-height:1.75;color:#333;margin:.5rem 0;}
+.card ul,.card ol{margin:.4rem 0 .6rem 1.4rem;}
+.card li{font-size:.89rem;line-height:1.7;color:#333;margin-bottom:.32rem;}
+.card code{background:#f3f3f3;color:#c7254e;padding:.1em .35em;border-radius:3px;font-size:.85em;font-family:"SFMono-Regular",Consolas,monospace;}
+.card strong{color:#111;}
+.card a{color:#0055cc;}
+.card hr{border:none;border-top:1px solid #eee;margin:1.2rem 0;}
+.card pre{background:#1e293b;color:#e2e8f0;border-radius:8px;padding:.85rem 1rem;margin:.6rem 0;overflow-x:auto;font-size:.82em;line-height:1.6;white-space:pre-wrap;font-family:"SFMono-Regular",Consolas,monospace;}
+.card img{max-width:100%;border-radius:8px;margin:.5rem 0;}
+.tbl-wrap{overflow-x:auto;margin:.6rem 0;}
+.card table{border-collapse:collapse;width:100%;font-size:.84rem;}
+.card th,.card td{border:1px solid #e2e8f0;padding:.4rem .6rem;text-align:left;vertical-align:top;}
+.card th{background:#f8fafc;font-weight:700;}
+.note{background:#f0f7ff;border-left:3px solid #0055cc;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.warn{background:#fff1f0;border-left:3px solid #ef4444;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.expect{background:#f0fdf4;border-left:3px solid #22c55e;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.rescue{background:#fefce8;border-left:3px solid #eab308;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.check{background:#faf5ff;border-left:3px solid #a855f7;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.question{background:#fff8e6;border-left:3px solid #f59e0b;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.principle{background:#fff;border:1px solid #e2e8f0;border-left:4px solid #0055cc;border-radius:0 8px 8px 0;padding:.7rem 1rem;margin:.7rem 0;}
+.principle .pnum{display:inline-block;background:#0055cc;color:#fff;font-weight:800;font-size:.78rem;width:1.5rem;height:1.5rem;line-height:1.5rem;text-align:center;border-radius:6px;margin-right:.4rem;}
+.principle .ptitle{font-weight:800;font-size:.98rem;color:#111;}
+.ba{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin:.5rem 0;}
+.ba .bad,.ba .good{border-radius:8px;padding:.55rem .75rem;font-size:.83rem;line-height:1.6;}
+.ba .bad{background:#fff1f0;border:1px solid #fecaca;}
+.ba .good{background:#f0fdf4;border:1px solid #bbf7d0;}
+.ba .lab{font-weight:800;font-size:.76rem;display:block;margin-bottom:.25rem;}
+.ba .bad .lab{color:#dc2626;} .ba .good .lab{color:#16a34a;}
+@media(max-width:520px){.wrap{padding:0 .7rem;}.card{padding:1.1rem 1.1rem 1.4rem;}.ba{grid-template-columns:1fr;}}
+.reuse-note{margin-top:1rem;font-size:.78rem;color:#888;text-align:center;}
+.botnav{text-align:center;margin:1.4rem 0;}
+.botnav a{display:inline-block;margin:.3rem;padding:.5rem 1.1rem;background:#fff;border-radius:8px;text-decoration:none;color:#0055cc;font-weight:700;font-size:.85rem;box-shadow:0 1px 4px rgba(0,0,0,.07);}
+.botnav a:hover{background:#f0f7ff;}
+</style>
+</head>
+<body>
+<div class="topnav">
+  <a href="gov-ai_lesson.html">🏠 AI提示工程實戰班─打造你的AI問答秘書第9期</a><span class="sep">›</span>
+  <a href="gov-ai-m1_lesson.html">模組 1：入門 + Prompt 實作</a><span class="sep">›</span>
+  <span class="cur">基礎提問六原則</span>
+  <span class="tag-ex">✍️ 練習</span>
+</div>
+<div class="wrap">
+  <div class="card">
+<h2>基礎提問六原則：AI 聽不懂，多半是你沒說清楚</h2>
+<div class="note">跨課程可重用，AI 實務課的<strong>觀念地基</strong>。學完這頁再去做「三段式」練習會事半功倍。假設學員零基礎。</div>
+<h2>🎯 目標</h2>
+<p>建立一個核心心法：<strong>AI 不會通靈，你給多少線索，它就有多準。</strong>把「隨手丟一句、結果爛、怪 AI 笨」的挫折，換成「六個原則檢查一遍、一次就到位」。這六原則是後面所有練習（三段式、六件套、生圖）的共同底層。</p>
+<h2>🧠 一句話心法</h2>
+<div class="note">把 AI 當成一個<strong>能力很強、但完全不認識你、也不知道你要幹嘛的新進工讀生</strong>。你不會只丟一句「幫我弄個東西」給工讀生——你會講清楚你是誰、要什麼、給他看範例。對 AI 一模一樣。<strong>每留一處空白，AI 就替你自作主張一處。</strong></p>
+<h2>📋 六個基礎原則（附壞例 → 好例）</h2>
+
+<div class="principle">
+<span class="pnum">1</span><span class="ptitle">具體，不要模糊</span>
+<p>給明確的對象、數量、範圍、限制。模糊的問題只會換來模糊的答案。</p>
+<div class="ba">
+  <div class="bad"><span class="lab">✗ 壞例</span>幫我寫個活動通知。</div>
+  <div class="good"><span class="lab">✓ 好例</span>幫我寫一則「本週五下午三點於三樓會議室召開業務會報」的內部通知，給科內同仁，控制在 150 字內。</div>
+</div>
+</div>
+
+<div class="principle">
+<span class="pnum">2</span><span class="ptitle">給角色與身分</span>
+<p>先說「我是誰、對象是誰」。同一件事，寫給上級、平行單位、還是民眾，語氣天差地別——AI 要知道才拿捏得準。</p>
+<div class="ba">
+  <div class="bad"><span class="lab">✗ 壞例</span>回覆這封抱怨信。</div>
+  <div class="good"><span class="lab">✓ 好例</span>我是區公所民政課承辦。有位里民寫信抱怨路燈不亮。請用誠懇、負責、不推諉的語氣，代擬一則回覆，說明已轉工務單位處理。</div>
+</div>
+</div>
+
+<div class="principle">
+<span class="pnum">3</span><span class="ptitle">給範例（示範你要的樣子）</span>
+<p>與其用形容詞解釋，不如直接貼一個「你心中理想的樣子」。給一個範例，勝過講十句「要正式一點、要簡潔一點」。</p>
+<div class="ba">
+  <div class="bad"><span class="lab">✗ 壞例</span>幫我把這段話寫得專業一點。</div>
+  <div class="good"><span class="lab">✓ 好例</span>請照這個範例的語氣與格式改寫我下面這段：<br>「範例：本府為推動○○，訂於○月○日辦理○○，敬請踴躍參加。」</div>
+</div>
+</div>
+
+<div class="principle">
+<span class="pnum">4</span><span class="ptitle">拆步驟，別一次塞一大坨</span>
+<p>複雜任務先請它「分幾步做」，或你自己拆成幾輪問。一次要它「讀完、摘要、又翻譯、又寫成新聞稿」，容易每項都做半套。</p>
+<div class="ba">
+  <div class="bad"><span class="lab">✗ 壞例</span>把這份報告摘要、翻成英文、再改成三篇社群貼文、順便配標題。</div>
+  <div class="good"><span class="lab">✓ 好例</span>先做第一步：把這份報告摘要成 5 個重點。（拿到後再說）好，現在把這 5 點改寫成 3 篇 Facebook 貼文。</div>
+</div>
+</div>
+
+<div class="principle">
+<span class="pnum">5</span><span class="ptitle">指定輸出格式</span>
+<p>要表格、要分點、要幾個字、要幾段——講明白。不講，它就用它猜的格式，你還得手動重排。</p>
+<div class="ba">
+  <div class="bad"><span class="lab">✗ 壞例</span>比較這三個方案。</div>
+  <div class="good"><span class="lab">✓ 好例</span>用<strong>表格</strong>比較這三個方案，欄位為：方案、優點、缺點、預估成本、我的建議。每格不超過 20 字。</div>
+</div>
+</div>
+
+<div class="principle">
+<span class="pnum">6</span><span class="ptitle">迭代追問，不要一次定生死</span>
+<p>第一版當草稿，不滿意就在<strong>同一個對話</strong>裡追問微調。AI 記得前文，你只要說「哪裡不對、怎麼改」，不用整段重寫。</p>
+<div class="ba">
+  <div class="bad"><span class="lab">✗ 壞例</span>（第一版不滿意，直接放棄，自己重寫。）</div>
+  <div class="good"><span class="lab">✓ 好例</span>第二段太文言，改白話一點；結尾加一句提醒回覆期限；整體壓到 100 字內。</div>
+</div>
+</div>
+
+<h2>🧾 隨身檢查表（送出前對一遍）</h2>
+<div class="check">送出前問自己：<br>
+① 我有沒有說<strong>具體</strong>的對象／數量／限制？<br>
+② 我有沒有交代<strong>我是誰、對象是誰</strong>？<br>
+③ 要不要附一個<strong>範例</strong>讓它照著做？<br>
+④ 這任務會不會太大，該<strong>拆步驟</strong>？<br>
+⑤ 我有沒有指定<strong>輸出格式</strong>（表格／分點／字數）？<br>
+⑥ 拿到後我知道怎麼<strong>追問微調</strong>嗎？</div>
+
+<h2>⏱️ 課堂帶法（15 分鐘）</h2>
+<p>1.（5′）講「AI＝新進工讀生」心法與六原則。 2.（5′）現場示範：拿原則 1 的壞例送出、再用好例送出，並排看差多少。 3.（5′）點兩位學員各挑一條原則，用自己的公務情境造一個好例，口頭分享。</p>
+
+<h2>✅ 完成標準</h2>
+<p>能用自己的話覆述六原則的其中三條，並指出「我平常提問最常漏掉哪一條」。接著就進「三段式」練習，把這六原則收斂成一個好記的下指令骨架。</p>
+
+<h2>🔀 變體</h2>
+<ul><li><strong>大學課版</strong>：情境換成「跟教授約 meeting／寫社團公告／回實習信」。</li><li><strong>診斷版</strong>：請學員貼一句自己平常會打的爛 prompt，全班用六原則現場改造。</li></ul>
+  </div>
+  <div class="reuse-note">📎 此練習頁不綁課程，可被任何 AI 實務課程的目錄引用。</div>
+  <div class="botnav">
+    <a href="gov-ai-m1_lesson.html">← 回模組 1：入門 + Prompt 實作</a>
+    <a href="gov-ai_lesson.html">🏠 課程目錄</a>
+  </div>
+</div>
+</body>
+</html>
