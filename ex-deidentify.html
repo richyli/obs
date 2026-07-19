@@ -42,6 +42,12 @@ body{font-family:"Helvetica Neue",Arial,"Noto Sans TC",sans-serif;background:#f0
 .botnav{text-align:center;margin:1.4rem 0;}
 .botnav a{display:inline-block;margin:.3rem;padding:.5rem 1.1rem;background:#fff;border-radius:8px;text-decoration:none;color:#0055cc;font-weight:700;font-size:.85rem;box-shadow:0 1px 4px rgba(0,0,0,.07);}
 .botnav a:hover{background:#f0f7ff;}
+.card details{margin-top:.5rem;}
+.card summary{cursor:pointer;color:#0055cc;font-weight:700;font-size:.85rem;list-style:none;}
+.card summary::-webkit-details-marker{display:none;}
+.card summary:hover{text-decoration:underline;}
+.card details[open] summary{margin-bottom:.4rem;}
+.card details>*:not(summary){font-size:.85rem;line-height:1.65;color:#444;padding-left:.2rem;}
 @media(max-width:520px){.wrap{padding:0 .7rem;}.card{padding:1.1rem 1.1rem 1.4rem;}}
 </style>
 </head>
@@ -57,7 +63,7 @@ body{font-family:"Helvetica Neue",Arial,"Noto Sans TC",sans-serif;background:#f0
 <h2>練習：把個資遮成〔〕再交給 AI（去識別化）</h2>
 <div class="note">這一練習教你一招每次用 AI 處理真實文件都會用到的資安動作：<strong>把個資遮成〔〕再交給 AI</strong>。</div>
 <h2>✨ Take aways（你會學到）</h2>
-<p>拿一段「有個資的假文件」，練習<strong>把可辨識資訊遮成〔〕</strong>再交給 AI。這一招你以後每次用 AI 處理真實文件都會用到。</p>
+<p>做完你會三件事：<strong>①把可辨識資訊遮成〔〕</strong>再交給 AI；<strong>②一眼判斷</strong>一段文字能不能貼進 AI（直接識別／間接識別／機密）；<strong>③用 Excel 一次批次去識別化</strong>整份名冊。這是你每次用 AI 處理真實文件都會用到的資安基本功。</p>
 <h2>📝 跟著做</h2>
 <div class="warn"><strong>先記住這條鐵律</strong>：含個資、機密、未公開文件，<strong>不要原樣貼進公用網頁版 AI</strong>（免費版內容可能被拿去訓練）。要用先照下面把個資遮掉。</div>
 <p><strong>Step 1</strong>：看下面「塞滿個資的假句子」，把每一個能辨識到某個真人的資訊（名字、電話、地址、能對到人的日期）都換成〔〕。<br>
@@ -77,6 +83,53 @@ body{font-family:"Helvetica Neue",Arial,"Noto Sans TC",sans-serif;background:#f0
 〔貼上你遮好的版本〕</pre>
 <h2>✅ 預期產出</h2>
 <p>AI 生出一段說明，沿用〔〕佔位符或用「申請人」等中性詞。<strong>證明：遮掉個資，工作照樣做得成。</strong></p>
+
+<h2>🕵️ 辨識題：這幾段能不能直接貼進 AI？</h2>
+<div class="note">下面六個情境，各有不同的「外洩嫌疑」。先自己判斷<strong>能不能直接貼、哪裡有問題、該怎麼處理</strong>，再點開參考解析對答案。這比背規則更能練出敏感度。</div>
+
+<div class="question"><strong>情境 1</strong>：「陳美玲（0933-111-222），因主訴頭痛就診，經診斷為偏頭痛，建議轉神經內科。」
+<details><summary>👉 點開解析</summary>不能直接貼。<strong>姓名＋電話＋病歷</strong>三重敏感，其中<strong>健康資料</strong>是《個資法》特種個資，保護更嚴。姓名、電話遮成〔〕，病名可保留（去掉當事人就無法識別）。</details></div>
+
+<div class="question"><strong>情境 2</strong>：「本科現有承辦 3 人，平均年資 8 年，其中 1 位育嬰留停中。」
+<details><summary>👉 點開解析</summary>要小心。表面沒名字，但<strong>小單位＋獨特條件可反推到個人</strong>——「3 人裡唯一育嬰留停那位」在單位內幾乎等於指名。這叫<strong>間接識別</strong>。若無必要，刪掉「1 位育嬰留停中」這種能鎖定個人的細節。</details></div>
+
+<div class="question"><strong>情境 3</strong>：「○○里王里長（男，第 3 屆連任）反映路燈問題。」
+<details><summary>👉 點開解析</summary>不能直接貼。雖然沒寫全名，但<strong>里名＋職稱＋性別＋屆數，組合起來全里只有一個人</strong>。多個「準識別欄位」湊在一起，等同識別。把里名與職稱都遮掉，或只寫「某里民反映」。</details></div>
+
+<div class="question"><strong>情境 4</strong>：「申請人身分證字號 A123456789，申請低收入戶補助。」
+<details><summary>👉 點開解析</summary>絕對不能貼。<strong>身分證字號是唯一識別碼</strong>，加上「低收入戶」屬敏感的經濟／福利身分。整組遮成〔身分證字號〕〔福利類別〕，這種案件最好連去識別化都謹慎，改用機關核可工具處理。</details></div>
+
+<div class="question"><strong>情境 5</strong>：「本市 114 年 1–6 月路燈報修共 1,240 件，平均修復 3.2 天，較去年縮短 0.5 天。」
+<details><summary>👉 點開解析</summary>可以直接貼。<strong>純統計、無任何個人資訊</strong>，也非未公開機密。這題是要破除「什麼都不能貼」的過度恐懼——<strong>去識別化是為了安全地用 AI，不是禁止用 AI</strong>。彙總數據放心丟。</details></div>
+
+<div class="question"><strong>情境 6</strong>：「本案評選委員名單、廠商報價與底價 3,200 萬，簽陳核准中。」
+<details><summary>👉 點開解析</summary>不能貼，但問題<strong>不只是個資</strong>。委員名單是個資，但<strong>底價、未定案的簽稿更是「機密／未公開公務資訊」</strong>——就算把人名遮掉，商業機密與採購底價外洩仍是大事。鐵律要擴充成：<strong>個資＋機密＋未公開文件，都不進公用 AI。</strong></details></div>
+
+<div class="expect">六題做完的心法：<strong>①直接識別（名字/身分證）②間接識別（小樣本＋獨特條件、多欄位組合）③特種個資（健康/福利/前科）都要遮；④純彙總數據放心用；⑤機密與未公開文件，就算沒個資也不能貼。</strong></div>
+
+<h2>⚙️ 進階：用 Excel 批次去識別化（整份名冊一次遮）</h2>
+<div class="note">前面是「一段文字」手動遮。但如果你手上是<strong>一整份 Excel 名冊</strong>（幾百列姓名、電話、地址），一列列改會累死。這裡教你用 Excel 內建功能一次遮完。</div>
+
+<h3>做法 A · 尋找與取代（最快，適合單一欄）</h3>
+<p><strong>Step 1</strong>：選取要遮的那一欄（例如整欄電話）。<br>
+<strong>Step 2</strong>：按 <code>Ctrl + H</code> 開「尋找與取代」。<br>
+<strong>Step 3</strong>：尋找目標留規則、全部取代。但電話號碼各不相同，無法一次找同一字串——這招適合<strong>把某個固定字串（如單位名、統一格式）</strong>批次換掉。號碼、姓名這種「每列都不同」的，用下面做法 B。</p>
+
+<h3>做法 B · 用公式整欄產生去識別化版本（推薦）</h3>
+<p>在名冊旁邊開一個新欄，用公式自動生出遮好的版本，<strong>原欄不動、只把新欄交給 AI</strong>。</p>
+<p><strong>① 整欄換成固定佔位符</strong>（例如姓名整欄變〔申請人〕）：</p>
+<pre>="〔申請人〕"</pre>
+<p><strong>② 只留部分、遮中間</strong>（例如電話只留末 3 碼 <code>0912-345-678 → ****678</code>）：</p>
+<pre>="****"&amp;RIGHT(B2,3)</pre>
+<p><strong>③ 用序號取代姓名</strong>（保留可對照、但外人看不出是誰，<code>王小明 → 案件001</code>）：</p>
+<pre>="案件"&amp;TEXT(ROW()-1,"000")</pre>
+<p><strong>④ 把地址只留到區、砍掉門牌</strong>（<code>台北市中正區○○路5號 → 台北市中正區</code>）：</p>
+<pre>=LEFT(C2,FIND("區",C2))</pre>
+<div class="note">寫好第一列公式後，<strong>滑鼠移到儲存格右下角小方點、往下拖曳（或雙擊）</strong>，整欄幾百列一次套用。</div>
+
+<h3>做法 C · 交給 AI 前的最後一步（很重要）</h3>
+<p>把公式產生的<strong>去識別化欄「複製 → 選擇性貼上 → 只貼值」</strong>，貼到一份新表，<strong>刪掉原始姓名/電話/地址欄</strong>，另存新檔。這樣交出去的檔案裡<strong>完全不含原始個資</strong>（否則公式還參照著隱藏的原欄，等於沒遮）。確認新檔只剩去識別化欄，再交給 AI。</p>
+<div class="warn"><strong>常見錯誤</strong>：直接把「有公式的檔」丟出去。公式 <code>=LEFT(C2,...)</code> 背後還連著原始 C 欄的真實地址，個資根本沒離開檔案。<strong>一定要「貼成值＋刪原欄」</strong>。</div>
 <h2>🆘 常見卡點與救援</h2>
 <ul><li><strong>不確定哪些要遮</strong>：口訣「能指認到某個真人的都遮」——名字、號碼、地址、能對到人的日期都遮。</li><li><strong>AI 反問我缺資訊</strong>：回「用〔〕佔位即可，我最後自己填」。</li></ul>
 <h2>📌 完成標準</h2>
