@@ -47,6 +47,10 @@ body{font-family:"Helvetica Neue",Arial,"Noto Sans TC",sans-serif;background:#f0
 .ba .good{background:#f0fdf4;border:1px solid #bbf7d0;}
 .ba .lab{font-weight:800;font-size:.76rem;display:block;margin-bottom:.25rem;}
 .ba .bad .lab{color:#dc2626;} .ba .good .lab{color:#16a34a;}
+.ba pre{background:rgba(255,255,255,.7);color:#1a1a1a;border-radius:6px;padding:.5rem .6rem;margin:.15rem 0 0;font-size:.8rem;line-height:1.55;white-space:pre-wrap;font-family:inherit;overflow-x:auto;}
+.ba .good pre mark{background:#fde68a;color:#7c2d12;padding:0 .1em;border-radius:2px;font-weight:600;}
+.diffnote{background:#eef2ff;border-left:3px solid #6366f1;padding:.5rem .8rem;border-radius:0 6px 6px 0;margin:.45rem 0 0;font-size:.82rem;line-height:1.6;color:#3730a3;}
+.diffnote strong{color:#312e81;}
 @media(max-width:520px){.wrap{padding:0 .7rem;}.card{padding:1.1rem 1.1rem 1.4rem;}.ba{grid-template-columns:1fr;}}
 .reuse-note{margin-top:1rem;font-size:.78rem;color:#888;text-align:center;}
 .botnav{text-align:center;margin:1.4rem 0;}
@@ -69,60 +73,95 @@ body{font-family:"Helvetica Neue",Arial,"Noto Sans TC",sans-serif;background:#f0
 <p>建立一個核心心法：<strong>AI 不會通靈，你給多少線索，它就有多準。</strong>把「隨手丟一句、結果爛、怪 AI 笨」的挫折，換成「六個原則檢查一遍、一次就到位」。這六原則是後面所有練習（三段式、六件套、生圖）的共同底層。</p>
 <h2>🧠 一句話心法</h2>
 <div class="note">把 AI 當成一個<strong>能力很強、但完全不認識你、也不知道你要幹嘛的新進工讀生</strong>。你不會只丟一句「幫我弄個東西」給工讀生——你會講清楚你是誰、要什麼、給他看範例。對 AI 一模一樣。<strong>每留一處空白，AI 就替你自作主張一處。</strong></p>
-<h2>📋 六個基礎原則（附壞例 → 好例）</h2>
+<h2>📋 六個基礎原則（壞例 → 好例，都可直接複製去比）</h2>
+<div class="note">每個原則都給一組<strong>可複製的壞例與好例</strong>。玩法：把兩版<strong>分別貼進同一家 AI</strong>，並排看回覆差多少。好例裡<mark>黃底</mark>標的就是「比壞例多加了什麼」——那些細節正是好 prompt 的零件。</div>
 
 <div class="principle">
 <span class="pnum">1</span><span class="ptitle">具體，不要模糊</span>
 <p>給明確的對象、數量、範圍、限制。模糊的問題只會換來模糊的答案。</p>
 <div class="ba">
-  <div class="bad"><span class="lab">✗ 壞例</span>幫我寫個活動通知。</div>
-  <div class="good"><span class="lab">✓ 好例</span>幫我寫一則「本週五下午三點於三樓會議室召開業務會報」的內部通知，給科內同仁，控制在 150 字內。</div>
+  <div class="bad"><span class="lab">✗ 壞例（可複製去試）</span><pre>幫我寫個活動通知。</pre></div>
+  <div class="good"><span class="lab">✓ 好例（可複製去試）</span><pre>幫我寫一則內部通知，通知<mark>科內同仁</mark>，
+主題是<mark>本週五下午三點於三樓會議室召開業務會報</mark>。
+語氣<mark>正式但不冗長</mark>，<mark>控制在 150 字內</mark>，
+<mark>不用寫發文日期與文號，那些我自己補</mark>。</pre></div>
 </div>
+<div class="diffnote">🔍 <strong>好例多加了：</strong>①<strong>對象</strong>（給科內同仁）②<strong>具體人事時地</strong>（週五三點、三樓、業務會報）③<strong>語氣</strong>（正式不冗長）④<strong>長度限制</strong>（150 字）⑤<strong>留白邊界</strong>（日期文號我自己補，防它亂編）。把兩版都貼進 AI，你會看到壞例回一段空泛範本，好例直接能用。</div>
 </div>
 
 <div class="principle">
 <span class="pnum">2</span><span class="ptitle">給角色與身分</span>
 <p>先說「我是誰、對象是誰」。同一件事，寫給上級、平行單位、還是民眾，語氣天差地別——AI 要知道才拿捏得準。</p>
 <div class="ba">
-  <div class="bad"><span class="lab">✗ 壞例</span>回覆這封抱怨信。</div>
-  <div class="good"><span class="lab">✓ 好例</span>我是區公所民政課承辦。有位里民寫信抱怨路燈不亮。請用誠懇、負責、不推諉的語氣，代擬一則回覆，說明已轉工務單位處理。</div>
+  <div class="bad"><span class="lab">✗ 壞例（可複製去試）</span><pre>回覆這封抱怨信。</pre></div>
+  <div class="good"><span class="lab">✓ 好例（可複製去試）</span><pre><mark>我是區公所民政課承辦</mark>，
+要回覆<mark>一位寫信抱怨路燈不亮的里民</mark>。
+請用<mark>誠懇、負責、不推諉</mark>的語氣代擬回覆，
+內容說明<mark>已將問題轉工務單位處理、預計一週內派員檢修</mark>，
+<mark>對造成不便致歉</mark>。</pre></div>
 </div>
+<div class="diffnote">🔍 <strong>好例多加了：</strong>①<strong>我是誰</strong>（民政課承辦）②<strong>對象是誰</strong>（抱怨的里民，而非長官/廠商）③<strong>該有的態度</strong>（誠懇不推諉）④<strong>要交代的重點</strong>（已轉單位、時程、致歉）。同一封信，寫給里民和寫給上級的語氣完全不同——AI 要先知道角色才拿捏得準。</div>
 </div>
 
 <div class="principle">
 <span class="pnum">3</span><span class="ptitle">給範例（示範你要的樣子）</span>
 <p>與其用形容詞解釋，不如直接貼一個「你心中理想的樣子」。給一個範例，勝過講十句「要正式一點、要簡潔一點」。</p>
 <div class="ba">
-  <div class="bad"><span class="lab">✗ 壞例</span>幫我把這段話寫得專業一點。</div>
-  <div class="good"><span class="lab">✓ 好例</span>請照這個範例的語氣與格式改寫我下面這段：<br>「範例：本府為推動○○，訂於○月○日辦理○○，敬請踴躍參加。」</div>
+  <div class="bad"><span class="lab">✗ 壞例（可複製去試）</span><pre>幫我把這段話寫得專業一點：
+「我們下個月要辦一個講座，歡迎大家來。」</pre></div>
+  <div class="good"><span class="lab">✓ 好例（可複製去試）</span><pre>請<mark>照下面「範例」的語氣與格式</mark>，改寫我的原句。
+
+<mark>範例：本府為推動○○，訂於○月○日假○○辦理
+「○○講座」，內容豐富，敬請踴躍報名參加。</mark>
+
+原句：我們下個月要辦一個講座，歡迎大家來。</pre></div>
 </div>
+<div class="diffnote">🔍 <strong>好例多加了：</strong>一個<strong>實際的範例句</strong>。壞例只用形容詞「專業一點」，AI 只能猜；好例直接<strong>貼一個你要的樣子</strong>，AI 照著仿。給一個範例，勝過講十句「要正式、要簡潔」——這就是 few-shot（給範例）的威力。</div>
 </div>
 
 <div class="principle">
 <span class="pnum">4</span><span class="ptitle">拆步驟，別一次塞一大坨</span>
 <p>複雜任務先請它「分幾步做」，或你自己拆成幾輪問。一次要它「讀完、摘要、又翻譯、又寫成新聞稿」，容易每項都做半套。</p>
 <div class="ba">
-  <div class="bad"><span class="lab">✗ 壞例</span>把這份報告摘要、翻成英文、再改成三篇社群貼文、順便配標題。</div>
-  <div class="good"><span class="lab">✓ 好例</span>先做第一步：把這份報告摘要成 5 個重點。（拿到後再說）好，現在把這 5 點改寫成 3 篇 Facebook 貼文。</div>
+  <div class="bad"><span class="lab">✗ 壞例（可複製去試）</span><pre>把這份報告摘要、翻成英文、
+再改成三篇社群貼文、順便配標題。</pre></div>
+  <div class="good"><span class="lab">✓ 好例（可複製去試）</span><pre><mark>我們分幾步做，一步一步來，做完一步等我說「好」再繼續。</mark>
+
+<mark>第一步：</mark>把這份報告摘要成 5 個重點，每點一句話。
+
+<mark>（等 AI 做完、你確認後，再貼下一句）</mark>
+<mark>第二步：</mark>把剛剛這 5 個重點，改寫成 3 篇 Facebook 貼文，
+每篇 100 字內、各配一個標題。</pre></div>
 </div>
+<div class="diffnote">🔍 <strong>好例多加了：</strong>①一句<strong>「分步做、等我說好再繼續」</strong>的指揮②把大任務<strong>拆成有先後的第一步／第二步</strong>。壞例一次塞四件事，AI 容易每件都做半套；好例讓它一步做到位，你也能中途檢查、修正方向。</div>
 </div>
 
 <div class="principle">
 <span class="pnum">5</span><span class="ptitle">指定輸出格式</span>
 <p>要表格、要分點、要幾個字、要幾段——講明白。不講，它就用它猜的格式，你還得手動重排。</p>
 <div class="ba">
-  <div class="bad"><span class="lab">✗ 壞例</span>比較這三個方案。</div>
-  <div class="good"><span class="lab">✓ 好例</span>用<strong>表格</strong>比較這三個方案，欄位為：方案、優點、缺點、預估成本、我的建議。每格不超過 20 字。</div>
+  <div class="bad"><span class="lab">✗ 壞例（可複製去試）</span><pre>比較這三個方案：委外、自辦、公私協力。</pre></div>
+  <div class="good"><span class="lab">✓ 好例（可複製去試）</span><pre>比較這三個方案：委外、自辦、公私協力。
+
+<mark>請用表格呈現</mark>，<mark>欄位固定為：方案、優點、缺點、
+預估成本、適合情境、我的建議</mark>。
+<mark>每一格不超過 20 字</mark>，<mark>最後多一列給你的總體推薦</mark>。</pre></div>
 </div>
+<div class="diffnote">🔍 <strong>好例多加了：</strong>①<strong>輸出形式</strong>（用表格，不要一大段文字）②<strong>指定欄位</strong>（方案/優點/缺點/成本/建議）③<strong>每格字數上限</strong>④<strong>額外要一列總結</strong>。壞例回一大段散文你還得自己整理；好例直接吐一張能貼進簽稿的表。</div>
 </div>
 
 <div class="principle">
 <span class="pnum">6</span><span class="ptitle">迭代追問，不要一次定生死</span>
 <p>第一版當草稿，不滿意就在<strong>同一個對話</strong>裡追問微調。AI 記得前文，你只要說「哪裡不對、怎麼改」，不用整段重寫。</p>
 <div class="ba">
-  <div class="bad"><span class="lab">✗ 壞例</span>（第一版不滿意，直接放棄，自己重寫。）</div>
-  <div class="good"><span class="lab">✓ 好例</span>第二段太文言，改白話一點；結尾加一句提醒回覆期限；整體壓到 100 字內。</div>
+  <div class="bad"><span class="lab">✗ 壞例（第一版不滿意就整段重寫、或另開對話重問）</span><pre>（不滿意，關掉重來，
+自己從頭改，或重新描述一整段。）</pre></div>
+  <div class="good"><span class="lab">✓ 好例（在同一個對話裡，接著追問）</span><pre><mark>就在剛剛那版上改，不要整篇重寫</mark>：
+<mark>1. 第二段太文言，改白話一點，像在跟里民講話。</mark>
+<mark>2. 結尾加一句提醒對方「7/30 前回覆」。</mark>
+<mark>3. 整體壓到 100 字內。</mark></pre></div>
 </div>
+<div class="diffnote">🔍 <strong>好例多加了：</strong>①<strong>「在剛剛那版上改」</strong>——利用 AI 記得前文，不用重貼②<strong>一次一項、講清楚哪裡怎麼改</strong>。第一版當草稿，靠「產出→追問→再產出」磨到好，比每次從頭重來快得多。</div>
 </div>
 
 <h2>🧾 隨身檢查表（送出前對一遍）</h2>
