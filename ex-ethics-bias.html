@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>偏誤：AI 會不會不公平？（回頭檢視你的作品）</title>
+<title>偏誤：AI 會不會不公平？ · 倫理</title>
 <style>
 *,*::before,*::after{box-sizing:border-box;}
 body{font-family:"Helvetica Neue",Arial,"Noto Sans TC",sans-serif;background:#f0f2f5;margin:0;color:#1a1a1a;}
@@ -55,25 +55,30 @@ body{font-family:"Helvetica Neue",Arial,"Noto Sans TC",sans-serif;background:#f0
 <div class="topnav">
   <a href="gov-ai_lesson.html">🏠 AI提示工程實戰班─打造你的AI問答秘書第9期</a><span class="sep">›</span>
   <a href="gov-ai-ethics.html">倫理與責任</a><span class="sep">›</span>
-  <span class="cur">偏誤：AI 會不會不公平？（回頭檢視你的作品）</span>
+  <span class="cur">偏誤：AI 會不會不公平？</span>
   <span class="tag-ex" style="background:#f3e8ff;color:#7c3aed;">⚖️ 倫理</span>
 </div>
 <div class="wrap">
   <div class="card">
-<h2>偏誤：AI 會不會不公平？（回頭檢視你的作品）</h2>
-<div class="note">這一頁不是新的操作，而是一次<strong>回頭檢視</strong>。先前生圖練習時你生了三張圖——<a href="ex-poster-health.html">健康促進海報</a>、<a href="ex-poster-recruit.html">科技人才招募</a>、<a href="ex-poster-eldercare.html">長照服務</a>——這頁請你打開它們，看看 AI 幫你「預設」了誰、又讓誰隱形。這就是 AI 偏誤（bias），也是你身為公務員必須看見並修正的一件事。<br><span style="color:#888;">（如果剛剛沒生，現在點上面三個連結各生一張再回來。）</span></div>
+<h2>偏誤：AI 會不會不公平？</h2>
+<div class="note">這一頁談 AI 的<strong>偏誤（bias）</strong>：當你只給一個中性的指令，AI 會自動「補」上誰的樣子、又讓誰隱形。我們用一個 30 秒的小實驗，讓你親眼看見它。</div>
 
 <h2>✨ Take aways（你會帶走什麼）</h2>
-<p>看完這一頁，你會：<strong>①在自己剛剛生的圖裡，親眼認出 AI 的預設偏誤</strong>——科學家自動變白人男性、護理師自動變年輕女性；<strong>②說得出這些偏誤從哪來</strong>（訓練資料把社會既有刻板印象當成了預設值）；<strong>③知道為什麼公部門特別不能放著不管</strong>；<strong>④用一句話改寫 prompt，就能生出更接近全民樣貌的產出</strong>。這不是要你以後不用 AI，而是要你用得負責任。</p>
+<p>看完這一頁，你會：<strong>①親眼認出 AI 的預設偏誤</strong>——科學家自動變白人男性、護理師自動變年輕女性；<strong>②說得出這些偏誤從哪來</strong>（訓練資料把社會既有刻板印象當成了預設值）；<strong>③知道為什麼公部門特別不能放著不管</strong>；<strong>④用一句話改寫 prompt，就能生出更接近全民樣貌的產出</strong>。這不是要你以後不用 AI，而是要你用得負責任。</p>
 
-<h2>🔍 先拿出你剛剛生的三張圖</h2>
-<div class="question">請打開你在生圖練習裡做的那三張圖，一張一張看，然後老實回答自己：
+<h2>🔍 30 秒小實驗：你先看它生出誰</h2>
+<div class="question">把下面三句話<strong>分別</strong>貼進你的主力 AI，各生一張圖，一張一張看：
+<pre>幫我生一張「一位科學家在實驗室做研究」的插畫。
+幫我生一張「一位護理師照顧長者」的插畫。
+幫我生一張「一個正在運動、保持健康的人」的插畫。</pre>
+然後老實回答自己：
 <ul>
 <li>你的<strong>科學家</strong>是什麼性別、什麼種族、大概幾歲？</li>
 <li>你的<strong>護理師</strong>呢？是男是女、年輕還是資深？</li>
-<li>你那張「<strong>健康促進</strong>」海報上運動的人，是什麼體態、什麼年紀？有沒有胖一點的人、年長的人、坐輪椅的人？</li>
+<li>那個<strong>運動、健康的人</strong>，是什麼體態、什麼年紀？有沒有胖一點的、年長的、坐輪椅的？</li>
 </ul>
-<details><summary>👉 多數人會生出什麼</summary>大多數人打開一看會發現：科學家是<strong>穿白袍的白人中年男性</strong>、護理師是<strong>年輕纖瘦的女性</strong>、健康的人是<strong>精壯的年輕人</strong>。你當初的指令裡<strong>從沒說</strong>要這些條件——是 AI 自己「補」上去的。這個被自動補上的答案，就是它的<strong>預設值（default）</strong>。</details></div>
+<div class="note" style="margin-top:.5rem;">💡 如果你在前面的生圖練習已經生過這三類圖，直接把那幾張拿出來看就好，不用重生。</div>
+<details><summary>👉 多數人會生出什麼</summary>大多數人打開一看會發現：科學家是<strong>穿白袍的白人中年男性</strong>、護理師是<strong>年輕纖瘦的女性</strong>、健康的人是<strong>精壯的年輕人</strong>。你的指令裡<strong>從沒說</strong>要這些條件——是 AI 自己「補」上去的。這個被自動補上的答案，就是它的<strong>預設值（default）</strong>。</details></div>
 <div class="note">重點在於：你並沒有要求任何性別、種族、年齡，AI 卻替你決定了。而且十之八九，它替你決定的方向，跟社會上的刻板印象一模一樣。</div>
 
 <h2>🧩 這些「預設值」是從哪來的？</h2>
