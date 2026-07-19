@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>公文白話轉換器：做成全科共用的 AI 助手 · 練習</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;}
+body{font-family:"Helvetica Neue",Arial,"Noto Sans TC",sans-serif;background:#f0f2f5;margin:0;color:#1a1a1a;}
+.topnav{background:#fff;border-bottom:1px solid #e4e4e4;padding:.7rem 1.2rem;position:sticky;top:0;z-index:10;box-shadow:0 2px 8px rgba(0,0,0,.05);display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;font-size:.8rem;}
+.topnav a{color:#0055cc;text-decoration:none;font-weight:600;}
+.topnav a:hover{text-decoration:underline;}
+.topnav .sep{color:#bbb;}
+.topnav .cur{color:#666;}
+.tag-ex{font-size:.68rem;font-weight:800;background:#dcfce7;color:#15803d;padding:.1rem .45rem;border-radius:4px;}
+.wrap{max-width:800px;margin:1.4rem auto 3rem;padding:0 1.2rem;}
+.card{background:#fff;border-radius:12px;box-shadow:0 1px 6px rgba(0,0,0,.08);padding:1.4rem 1.6rem 1.8rem;border-left:5px solid #0055cc;}
+.card h1{font-size:1.3rem;margin:.2rem 0 1rem;}
+.card h2{font-size:1.05rem;font-weight:800;color:#0055cc;margin:1.3rem 0 .5rem;padding-bottom:.25rem;border-bottom:2px solid #eef2f8;}
+.card h3{font-size:.95rem;font-weight:800;color:#333;margin:1rem 0 .4rem;}
+.card h4{font-size:.9rem;font-weight:800;color:#0055cc;margin:.9rem 0 .3rem;}
+.card p{font-size:.9rem;line-height:1.75;color:#333;margin:.5rem 0;}
+.card ul,.card ol{margin:.4rem 0 .6rem 1.4rem;}
+.card li{font-size:.89rem;line-height:1.7;color:#333;margin-bottom:.32rem;}
+.card code{background:#f3f3f3;color:#c7254e;padding:.1em .35em;border-radius:3px;font-size:.85em;font-family:"SFMono-Regular",Consolas,monospace;}
+.card strong{color:#111;}
+.card a{color:#0055cc;}
+.card hr{border:none;border-top:1px solid #eee;margin:1.2rem 0;}
+.card pre{background:#1e293b;color:#e2e8f0;border-radius:8px;padding:.85rem 1rem;margin:.6rem 0;overflow-x:auto;font-size:.82em;line-height:1.6;white-space:pre-wrap;font-family:"SFMono-Regular",Consolas,monospace;}
+.tbl-wrap{overflow-x:auto;margin:.6rem 0;}
+.card table{border-collapse:collapse;width:100%;font-size:.84rem;}
+.card th,.card td{border:1px solid #e2e8f0;padding:.4rem .6rem;text-align:left;vertical-align:top;}
+.card th{background:#f8fafc;font-weight:700;}
+.note{background:#f0f7ff;border-left:3px solid #0055cc;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.warn{background:#fff1f0;border-left:3px solid #ef4444;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.expect{background:#f0fdf4;border-left:3px solid #22c55e;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.rescue{background:#fefce8;border-left:3px solid #eab308;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.check{background:#faf5ff;border-left:3px solid #a855f7;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.adv{background:#f8fafc;border:1px dashed #94a3b8;border-radius:8px;padding:.6rem .9rem;margin:.7rem 0;font-size:.85rem;line-height:1.65;color:#475569;}
+.adv .at{font-weight:800;color:#334155;font-size:.85rem;margin-bottom:.2rem;}
+.card details{margin-top:.5rem;}
+.card summary{cursor:pointer;color:#0055cc;font-weight:700;font-size:.85rem;list-style:none;}
+.card summary::-webkit-details-marker{display:none;}
+.card summary:hover{text-decoration:underline;}
+.botnav{text-align:center;margin:1.4rem 0;}
+.botnav a{display:inline-block;margin:.3rem;padding:.5rem 1.1rem;background:#fff;border-radius:8px;text-decoration:none;color:#0055cc;font-weight:700;font-size:.85rem;box-shadow:0 1px 4px rgba(0,0,0,.07);}
+.botnav a:hover{background:#f0f7ff;}
+@media(max-width:520px){.wrap{padding:0 .7rem;}.card{padding:1.1rem 1.1rem 1.4rem;}}
+</style>
+</head>
+<body>
+<div class="topnav">
+  <a href="gov-ai_lesson.html">🏠 AI提示工程實戰班─打造你的AI問答秘書第9期</a><span class="sep">›</span>
+  <a href="gov-ai-m4_lesson.html">模組 4：公務應用</a><span class="sep">›</span>
+  <span class="cur">公文白話轉換器（全科共用）</span>
+  <span class="tag-ex">✍️ 練習</span>
+</div>
+<div class="wrap">
+  <div class="card">
+<h2>練習：把「公文白話轉換器」做成全科共用的 AI 助手</h2>
+<div class="note">這練習教你把前面收集的<strong>官腔↔白話對照表</strong>，養成一個<strong>整個科室都能用的助手</strong>——不是你自己偷偷用的小技巧，而是掛在單位裡、大家共用、可以持續長大的資產。</div>
+
+<h2>✨ Take aways（你會學到）</h2>
+<p>做完你能：<strong>①把單位的用語規則寫成一份完整的助手指令</strong>；<strong>②把它建成 GPT／Gem／Project 並分享給同事共用</strong>；<strong>③知道怎麼讓這份資產持續更新、不會做完就爛掉。</strong>這是「個人會用 AI」升級成「單位有 AI 工具」的關鍵一步。</p>
+
+<h2>🤔 為什麼要做成「共用」的？</h2>
+<p>你自己調出一段好用的白話 prompt，很好——但問題是：<strong>隔壁同事不知道、下次輪調的人也不知道，每個人都要重新摸索一遍，而且每個人改出來的語氣還都不一樣。</strong>民眾收到同一個科發出的文，有的很白話、有的還是滿滿「爰、俾、業經」，這就不是個人技巧問題，是<strong>單位的一致性問題</strong>。</p>
+<div class="expect">做成共用助手的三個好處：<strong>①一致</strong>——全科發出去的文，語氣風格一樣；<strong>②省時</strong>——新人不用從零學，開助手就能用；<strong>③會長大</strong>——每個人遇到新的官腔詞就補進去，這份表越用越完整。</div>
+
+<h2>📝 跟著做</h2>
+<p><strong>Step 1 匯整全科的官腔清單</strong>：不要只用你自己的。問問同事、翻近期發出的公文與罐頭回覆，把大家常用的官腔詞句撈出來，湊成一張至少 15–20 組的對照表。<br>
+<strong>Step 2 訂共同規則</strong>：除了換詞，還要講清楚「什麼要保留、什麼不能動、語氣到哪個程度」——這些是全科的共識，不是個人偏好。<br>
+<strong>Step 3 寫成助手指令</strong>：用下面的完整骨架，把對照表與規則一次寫進去。<br>
+<strong>Step 4 測試</strong>：拿三份真實（去識別化的）文件實測，看產出穩不穩、有沒有改壞。<br>
+<strong>Step 5 建成助手並分享</strong>：建成 GPT／Gem／Project，設定分享給科內同事。<br>
+<strong>Step 6 定期維護</strong>：指定一個人負責，遇到新詞就補、有人覺得改壞了就調規則。</p>
+
+<h2>📋 材料：全科共用助手的完整指令（複製後填空）</h2>
+<pre>你是〔○○市○○局○○科〕的「公文白話轉換助手」。
+你的任務：把本科同仁提供的公文、公告、回覆，改寫成
+民眾看得懂的白話版本，同時維持公部門該有的禮貌與專業。
+
+【本科的用語對照表】（照這些改寫）
+業經核定在案 → 已經核准了
+請查照辦理 → 麻煩您照著做
+台端所詢事項歉難照辦 → 您問的這件事我們沒辦法照做，很抱歉
+請於文到十五日內見復 → 請在收到後 15 天內回覆
+爰依規定辦理 → 所以我們按規定處理
+俾利後續作業 → 這樣後面才好接著處理
+敬請惠予協助 → 再麻煩您幫忙
+共襄盛舉／踴躍參加 → 歡迎一起來
+〔繼續補上你們科自己常用的…〕
+
+【一律不要出現的字詞】
+爰、俾、茲、業經、台端、查照、惠予、迄、殊難、歉難、共襄盛舉
+
+【務必保留、不可更動】
+- 日期、金額、數字
+- 法規名稱與條號（例如「行政程序法第 92 條」）
+- 單位名稱、職稱、文號
+- 申請人姓名等個資欄位（若有〔〕佔位符，原樣保留）
+
+【語氣要求】
+- 像跟一位有禮貌的鄰居說明事情：清楚、客氣，但不文言
+- 一句不超過 25 字，避免拗口的長句與被動語態
+- 保持專業，不要過度口語或使用網路用語、表情符號
+
+【產出格式】
+- 直接給改寫後的全文
+- 若有你不確定該不該改的專有名詞，在最後用「⚠️ 待確認」條列出來
+- 不要加任何額外的說明或客套話
+
+準備好了就說「請提供要改寫的文件」，等我貼上。</pre>
+
+<h2>🧪 Step 4 測試：三份文件驗收</h2>
+<div class="check"><strong>建之前先在對話裡測過，三題都過再建成助手：</strong>
+<ul>
+<li>☐ <strong>一般公告</strong>（例如活動通知）：改完是否白話、資訊有沒有掉？</li>
+<li>☐ <strong>含法規條號的回覆</strong>：條號、法規名稱有沒有被改掉或改錯？</li>
+<li>☐ <strong>語氣敏感的信</strong>（婉拒、催辦）：改完會不會變得沒禮貌、或太隨便？</li>
+</ul>
+有一項不過，回頭修指令再測——<strong>指令調好才建助手，不然每個同事都會踩到同一個坑。</strong></div>
+
+<h2>🚀 Step 5 建成助手並分享給同事</h2>
+<div class="note">三家做法都一樣：把上面那段指令，貼進該平台的「指令／Instructions」欄位。
+<ul>
+<li><strong>ChatGPT</strong>：探索 GPT →「建立」→ Configure → 貼進 Instructions →命名（例「○○科公文白話助手」）→儲存後可設<strong>「知道連結的人可用」</strong>，把連結貼到科內群組。</li>
+<li><strong>Gemini</strong>：Gem 管理員 → 新建 Gem → 貼進「指示」→儲存 →可分享給同網域同事。</li>
+<li><strong>Claude</strong>：Projects → 新建 Project → 貼進自訂指令 →團隊版可分享給組織成員。</li>
+</ul>
+建助手多半需要付費版；若同仁多為免費帳號，<strong>退而求其次的做法一樣有效</strong>：把這段指令存成一份共享文件（Google Doc／科內共用資料夾），大家每次複製貼上使用。重點是<strong>全科用同一份</strong>，而不是各寫各的。</div>
+<div class="warn"><strong>分享前務必檢查</strong>：指令與知識庫裡<strong>不能有任何真實個資、機密或未公開文件</strong>。對照表與規則本身沒問題，但如果你想附上「範例文件」，一律用去識別化的假資料。</div>
+
+<h2>🔁 Step 6 讓它會長大：維護機制</h2>
+<div class="expect">做完就丟著，三個月後就沒人用了。建議訂三件小事：
+<ul>
+<li><strong>指定一位維護人</strong>（通常是最常改文的那位），負責更新指令。</li>
+<li><strong>設一個回報管道</strong>：同事發現「這個詞它沒改到」「這句改壞了」，就回報給維護人，一個月整理一次補進對照表。</li>
+<li><strong>交接時一併移交</strong>：把助手連結與指令原文寫進工作交接清單，人走了資產還在。</li>
+</ul></div>
+
+<div class="adv">
+<div class="at">🔧 進階：聽過「Claude Skill」嗎？</div>
+你今天做的是「把一套規則寫成指令、存成助手」。再往上一層，有些平台（例如 Claude）支援把一整套<strong>流程</strong>打包成 <strong>Skill</strong>：不只是一段指令，還可以附上參考文件、固定的處理步驟，甚至讓它自動判斷什麼時候該啟用。概念上就是「把一份標準作業程序交給 AI」。<br>
+對現在的你，<strong>用 GPT／Gem／Project 就完全夠用</strong>——Skill 適合已經有穩定流程、而且需要更複雜自動化的情境。知道有這個層次即可，等你的助手真的被全科用起來、規則穩定了，再研究不遲。
+</div>
+
+<h2>✅ 預期產出</h2>
+<p>一份<strong>全科共用的公文白話轉換助手</strong>：對照表 15 組以上、規則清楚、通過三份文件測試、已分享給同事（或存成共用文件），並且指定了維護人。</p>
+
+<h2>🆘 常見卡點與救援</h2>
+<ul>
+<li><strong>改得太白話、失了分寸</strong>：在語氣要求補一句「保持公部門應有的禮貌與正式度，只是不用文言字詞」。</li>
+<li><strong>法規條號被改掉</strong>：把「務必保留」那段往前移，並明確寫「以下內容原樣複製，不得改寫」。</li>
+<li><strong>每次結果不一致</strong>：多半是對照表太少、規則太模糊。補更多對照組，規則寫具體（字數、句型都講明）。</li>
+<li><strong>同事不用</strong>：多半是「不知道有這個」或「用起來比自己寫慢」。在科內會議實際示範一次，並確保連結好找。</li>
+</ul>
+
+<h2>📌 完成標準</h2>
+<p>助手建好（或共用文件備妥）、通過三份測試、至少一位同事實際用過並給了回饋、指定了維護人。</p>
+
+<h2>🔀 延伸練習／自我加強</h2>
+<ul>
+<li>同一套做法可以再做第二個科內助手：「新聞稿改寫器」「民眾陳情回覆助手」「會議紀錄整理器」，慢慢累積成單位的 AI 工具箱。</li>
+<li>把助手產出的白話版與原文並排，做成一份「改寫前後對照」，在科內會議分享，讓大家看見差別。</li>
+<li>回頭看 <a href="ex-longprompt-assistant.html">打磨長提示，做成你的專屬助手</a>，比較「個人助手」與「全科共用助手」在寫法上的差別——共用的要更明確、更少個人偏好。</li>
+</ul>
+  </div>
+  <div class="botnav">
+    <a href="gov-ai-m4_lesson.html">← 回模組 4：公務應用</a>
+    <a href="gov-ai_lesson.html">🏠 課程目錄</a>
+  </div>
+</div>
+</body>
+</html>
