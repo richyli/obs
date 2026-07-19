@@ -90,7 +90,7 @@ body{font-family:"Helvetica Neue",Arial,"Noto Sans TC",sans-serif;background:#f0
 <div class="note">選完馬上看到<strong>全班的共同結果</strong>即時更新。可以改，改了大家的長條圖會跟著動。匿名，不會記你是誰。</div>
 <div id="pollBox" class="pollbox">
   <div class="poll-q">
-    <div class="poll-qt">1️⃣ 你主要用哪一家當主力？</div>
+    <div class="poll-qt">1️⃣ 你用哪些 AI？<span style="font-weight:600;color:#64748b;font-size:.82rem;">（可複選）</span></div>
     <div class="poll-opts" data-poll="tool">
       <button class="poll-opt" data-val="c1">ChatGPT</button>
       <button class="poll-opt" data-val="c2">Claude</button>
@@ -165,7 +165,6 @@ body{font-family:"Helvetica Neue",Arial,"Noto Sans TC",sans-serif;background:#f0
   var POLL_KEY = "classroom/govAiThreeAiPoll";
   var LS_KEY   = "gov-ai-three-ai-poll";            // 本機記自己選什麼
   var dbUrl = FIREBASE_URL.replace(/\/$/, "");
-  // 讀整個投票節點；寫入時針對 poll 子路徑做 PATCH（避免覆蓋整組）
   function pathAll(){ return dbUrl + "/" + POLL_KEY + ".json"; }
   function pathPoll(poll){ return dbUrl + "/" + POLL_KEY + "/" + poll + ".json"; }
 
@@ -175,14 +174,17 @@ body{font-family:"Helvetica Neue",Arial,"Noto Sans TC",sans-serif;background:#f0
            ["c5","Perplexity"],["c6","Copilot"],["c7","其他/都用"],["c8","還沒有"]],
     pay:  [["p1","完全免費"],["p2","付一家"],["p3","付好幾家"]]
   };
+  var MULTI = { tool: true, pay: false };           // tool 可複選、pay 單選
   function codesOf(poll){ return QUESTIONS[poll].map(function(x){return x[0];}); }
   function labelOf(poll,code){ var f=QUESTIONS[poll].filter(function(x){return x[0]===code;}); return f.length?f[0][1]:code; }
 
-  // 本機記住自己選了什麼（可改票、避免重複計）
+  // 本機記住自己選什麼：tool = 陣列（複選）、pay = 字串（單選）
   var mine = JSON.parse(localStorage.getItem(LS_KEY) || "{}");
+  if(!Array.isArray(mine.tool)) mine.tool = mine.tool ? [mine.tool] : [];   // 相容舊格式
+  function isMine(poll,cd){ return MULTI[poll] ? (mine[poll]||[]).indexOf(cd)>=0 : mine[poll]===cd; }
+
   var tally = { tool:{}, pay:{} };
   var statusEl = document.getElementById("pollStatus");
-
   function setStatus(t){ if(statusEl) statusEl.textContent = t; }
 
   async function dbGet(){
@@ -192,7 +194,6 @@ body{font-family:"Helvetica Neue",Arial,"Noto Sans TC",sans-serif;background:#f0
       return (await r.json()) || {};
     }catch(e){ return null; }
   }
-  // 只 PATCH 該題子路徑，merge 發生在選項層，不覆蓋整組
   async function dbPatchPoll(poll, obj){
     try{
       await fetch(pathPoll(poll), {method:"PATCH", body:JSON.stringify(obj),
@@ -201,25 +202,40 @@ body{font-family:"Helvetica Neue",Arial,"Noto Sans TC",sans-serif;background:#f0
     }catch(e){ return false; }
   }
 
+  // 首次建立每條長條的 DOM 骨架（之後只更新寬度/數字，讓 CSS transition 跑得動）
+  function buildBars(poll){
+    var wrap = document.querySelector('[data-bars="'+poll+'"]');
+    if(!wrap || wrap.dataset.built) return;
+    wrap.innerHTML = codesOf(poll).map(function(cd){
+      return '<div class="poll-bar" data-code="'+cd+'">'+
+        '<span class="lbl"></span>'+
+        '<span class="track"><span class="fill" style="width:0%"></span></span>'+
+        '<span class="cnt"></span></div>';
+    }).join("");
+    wrap.dataset.built = "1";
+  }
+
   function renderBars(poll){
     var wrap = document.querySelector('[data-bars="'+poll+'"]');
     if(!wrap) return;
-    var codes = codesOf(poll);
+    buildBars(poll);
     var counts = tally[poll] || {};
-    var total = 0; codes.forEach(function(cd){ total += (counts[cd]||0); });
-    wrap.innerHTML = codes.map(function(cd){
+    var total = 0; codesOf(poll).forEach(function(cd){ total += (counts[cd]||0); });
+    codesOf(poll).forEach(function(cd){
+      var bar = wrap.querySelector('.poll-bar[data-code="'+cd+'"]');
+      if(!bar) return;
       var c = counts[cd]||0;
       var pct = total ? Math.round(c/total*100) : 0;
-      var isMine = mine[poll] === cd;
-      return '<div class="poll-bar'+(isMine?' mine':'')+'">'+
-        '<span class="lbl">'+labelOf(poll,cd)+(isMine?' ✓':'')+'</span>'+
-        '<span class="track"><span class="fill" style="width:'+pct+'%"></span></span>'+
-        '<span class="cnt">'+c+' 票 '+pct+'%</span></div>';
-    }).join("");
+      var mineNow = isMine(poll,cd);
+      bar.classList.toggle("mine", mineNow);
+      bar.querySelector(".lbl").textContent = labelOf(poll,cd) + (mineNow ? " ✓" : "");
+      bar.querySelector(".fill").style.width = pct + "%";      // 只改寬度 → transition 平順
+      bar.querySelector(".cnt").textContent = c + " 票 " + pct + "%";
+    });
     // 標記已選按鈕
     var box = document.querySelector('[data-poll="'+poll+'"]');
     if(box){ box.querySelectorAll(".poll-opt").forEach(function(b){
-      b.classList.toggle("sel", b.dataset.val === mine[poll]);
+      b.classList.toggle("sel", isMine(poll, b.dataset.val));
     }); }
   }
 
@@ -234,22 +250,38 @@ body{font-family:"Helvetica Neue",Arial,"Noto Sans TC",sans-serif;background:#f0
   }
 
   async function vote(poll, val){
-    var prev = mine[poll];
-    if(prev === val) return;                        // 沒變就不動
-    // 樂觀更新本地
-    tally[poll][val] = (tally[poll][val]||0) + 1;
-    if(prev) tally[poll][prev] = Math.max(0,(tally[poll][prev]||0) - 1);
-    mine[poll] = val;
+    var delta = {};                                  // 這次要對 DB 做的增減
+    if(MULTI[poll]){
+      // 複選：toggle
+      var arr = mine[poll] || (mine[poll]=[]);
+      var at = arr.indexOf(val);
+      if(at>=0){ arr.splice(at,1); delta[val] = -1; }   // 取消
+      else     { arr.push(val);   delta[val] = +1; }    // 勾選
+    } else {
+      // 單選：換選（同一個再點＝取消）
+      var prev = mine[poll];
+      if(prev === val){ mine[poll]=null; delta[val] = -1; }
+      else{
+        delta[val] = +1;
+        if(prev) delta[prev] = -1;
+        mine[poll] = val;
+      }
+    }
+    // 樂觀更新本地畫面
+    Object.keys(delta).forEach(function(cd){
+      tally[poll][cd] = Math.max(0,(tally[poll][cd]||0) + delta[cd]);
+    });
     localStorage.setItem(LS_KEY, JSON.stringify(mine));
     renderBars(poll);
     setStatus("已送出你的選擇 · 同步中…");
-    // 讀伺服器最新值，算增量後只 PATCH 該題子路徑（課堂規模足夠）
+    // 讀伺服器最新值，套用增量後 PATCH
     var data = await dbGet();
-    if(data === null){ setStatus("⚠️ 目前離線，你的票只存在本機；恢復連線後重選一次即可同步"); return; }
+    if(data === null){ setStatus("⚠️ 目前離線，你的票只存在本機；恢復連線後重點一次即可同步"); return; }
     var node = data[poll] || {};
     var upd = {};
-    upd[val] = (node[val]||0) + 1;
-    if(prev) upd[prev] = Math.max(0,(node[prev]||0) - 1);
+    Object.keys(delta).forEach(function(cd){
+      upd[cd] = Math.max(0,(node[cd]||0) + delta[cd]);
+    });
     var ok = await dbPatchPoll(poll, upd);
     setStatus(ok ? "✅ 已記入全班統計" : "⚠️ 同步失敗，稍後自動重試");
   }
@@ -262,12 +294,13 @@ body{font-family:"Helvetica Neue",Arial,"Noto Sans TC",sans-serif;background:#f0
     });
   });
 
-  // 首次繪製（本地樂觀值）＋輪詢
+  // 首次繪製骨架 ＋ 輪詢
   absorb({});
+  function voted(){ return (mine.tool&&mine.tool.length) || mine.pay; }
   async function poll(){
     var data = await dbGet();
     if(data === null){ setStatus("⚠️ 連線中斷，重試中…"); }
-    else{ absorb(data); setStatus(mine.tool||mine.pay ? "✅ 已同步 · 全班即時更新中" : "🟢 已連線 · 選一個開始"); }
+    else{ absorb(data); setStatus(voted() ? "✅ 已同步 · 全班即時更新中" : "🟢 已連線 · 選一個開始（第一題可複選）"); }
   }
   poll();
   setInterval(poll, 3000);
