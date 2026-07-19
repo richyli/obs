@@ -74,13 +74,13 @@ body{font-family:"Helvetica Neue",Arial,"Noto Sans TC",sans-serif;background:#f0
 </div>
 <div class="wrap">
   <div class="card">
-<h2>Prompt 分級闖關：六關由淺到深，把原則練成肌肉</h2>
+<h2>Prompt 分級闖關：七關由淺到深，把原則練成肌肉</h2>
 <div class="note">這是「基礎六原則」與「三段式」之間的<strong>純練手感關卡</strong>：一關練一招，每關都有壞例→好例對照，做完馬上自評。</div>
 <h2>✨ Take aways（你會學到）</h2>
-<p>把六原則從「聽懂」練到「手會」。六關各鎖定一個 prompt 技能，從最簡單的「改寫爛 prompt」爬到「連續追問把成品磨到能用」。<strong>重點不是全部做完，是每關親手打一次、親眼看差別。</strong></p>
+<p>把六原則從「聽懂」練到「手會」。七關各鎖定一個 prompt 技能，從最簡單的「改寫爛 prompt」爬到「把公文官腔改成白話」。<strong>重點不是全部做完，是每關親手打一次、親眼看差別。</strong></p>
 <div class="note"><strong>玩法</strong>：每關都在<strong>同一個對話</strong>裡，先送「起手」版看它給什麼，再送「升級」版，把兩次結果並排。差別越大，代表這一招越有感。做完想一想：你在哪一關看到最大落差？</div>
 
-<h2>🎮 六道關卡</h2>
+<h2>🎮 七道關卡</h2>
 
 <div class="drill">
 <div class="drill-hd"><span class="lvl l1">LV.1</span><span class="dt">改寫爛 prompt</span><span class="skill">技能：具體化</span></div>
@@ -235,11 +235,94 @@ no clip-art, no decorative borders, no clutter, no realistic faces</pre>
 <div class="rescue">🆘 越改越糟、它開始鬼打牆？別在同一對話硬凹，開新對話、把「已經調好的乾淨版本」重貼一次當新起點。</div>
 </div>
 
+<div class="drill">
+<div class="drill-hd"><span class="lvl l6" style="background:#0f766e;">LV.7</span><span class="dt">官腔 ↔ 白話對照表</span><span class="skill">技能：綜合（禁止清單＋給範例）</span></div>
+<p><strong>任務</strong>：上一關你說了一句「太官腔，改白話」——但什麼叫官腔？<strong>AI 不見得跟你想的一樣。</strong>這一關要你把「官腔」講成 AI 聽得懂的東西，方法有兩種，剛好就是 LV.3 與 LV.4 學過的招：<strong>列成禁止清單</strong>，或<strong>給對照範例</strong>。</p>
+
+<h4>Step 1 · 先收集你自己的「官腔清單」</h4>
+<p>回想你單位的公文、公告、罐頭回覆，把最常出現、民眾看了會皺眉的字詞句型撈出來，配上白話說法。先寫 5–8 組，這份表就是你接下來的彈藥。</p>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>官腔（民眾看不懂／有距離）</th><th>白話（一般人講話的樣子）</th></tr></thead>
+<tbody>
+<tr><td>業經核定在案</td><td>已經核准了</td></tr>
+<tr><td>請查照辦理</td><td>麻煩您照著做／請您配合</td></tr>
+<tr><td>台端所詢事項歉難照辦</td><td>您問的這件事我們沒辦法照做，很抱歉</td></tr>
+<tr><td>請於文到十五日內見復</td><td>請在收到後 15 天內回覆我們</td></tr>
+<tr><td>爰依規定辦理</td><td>所以我們按規定處理</td></tr>
+<tr><td>俾利後續作業</td><td>這樣後面才好接著處理</td></tr>
+<tr><td>敬請惠予協助</td><td>再麻煩您幫忙</td></tr>
+<tr><td>共襄盛舉／踴躍參加</td><td>歡迎一起來／很歡迎你來</td></tr>
+</tbody>
+</table>
+</div>
+<div class="note">上表是起頭，<strong>重點是加上你自己單位真正在用的那幾句</strong>——每個機關都有自己的口頭禪。</div>
+
+<h4>Step 2 · 用法 A：把它當「禁止清單」（negative prompt）</h4>
+<p>直接告訴 AI 哪些字不准用。適合你只想擋掉特定用語的時候。</p>
+<pre>幫我把下面這段公告改寫成民眾看得懂的白話。
+
+不要用這些字詞：業經、爰、俾、台端、查照、惠予、共襄盛舉、踴躍參加。
+不要用被動、拗口的長句，一句不超過 25 字。
+不要改動任何日期、金額與法規名稱。
+
+〔貼上你的公告原文〕</pre>
+
+<h4>Step 3 · 用法 B：把它當「對照範例」（few-shot）</h4>
+<p>不列黑名單，改成給它看幾組「原句 → 白話」，讓它自己抓到你要的語感。適合你想要整體風格轉換、而不只是換掉幾個詞。</p>
+<pre>照下面的範例，把公文句改寫成白話：
+
+原句：業經核定在案，請查照辦理。
+白話：這件事已經核准了，麻煩您照著做。
+
+原句：台端所詢事項歉難照辦。
+白話：您問的這件事我們沒辦法照做，很抱歉。
+
+原句：請於文到十五日內見復，逾期視同放棄。
+白話：請在收到後 15 天內回覆，超過期限就當作您放棄囉。
+
+現在換這段：
+〔貼上你的公告原文〕</pre>
+
+<h4>Step 4 · 兩種做法比一比</h4>
+<div class="ba">
+  <div class="bad"><span class="lab">A 禁止清單</span>擋得精準，你列到的字它就不用。但<strong>沒列到的官腔它照用</strong>，而且語氣可能還是硬的——因為你只說了「不要什麼」。</div>
+  <div class="good"><span class="lab">B 給範例</span>整體語感更接近你要的，連你沒明講的部分也會跟著變白話。但<strong>可能改得太over</strong>，把該保留的正式度也拿掉。</div>
+</div>
+<div class="check">🎯 兩招合起來最強：<strong>給 2–3 組範例定調（B），再補一句禁用清單守住紅線（A）</strong>，最後加上「日期、金額、法規名稱不要動」。這就是你以後改任何公文的萬用模板。</div>
+
+<div class="rescue">🆘 改得太白話、變得沒禮貌？補一句「保持禮貌與專業，只是不要文言」。<br>🆘 它把重要資訊改掉了？在 prompt 裡明確說「日期、金額、法規條號、單位名稱原樣保留」。</div>
+
+<div class="trybox">
+<div class="th">✍️ 換你試（收集＋實作）</div>
+<strong>①</strong> 從你手上真的要發的一份公告或回覆裡，撈出 <strong>3 句最官腔的話</strong>，各配一句白話。<br>
+<strong>②</strong> 用你的清單跑一次 <strong>A 禁止清單</strong>，再跑一次 <strong>B 給範例</strong>，兩版並排比。<br>
+<strong>③</strong> 挑出你覺得最好的那版，看看是 A、B、還是兩者合用。
+<details><summary>👉 卡住了？點開看一份 A＋B 合用的完整寫法</summary>
+<pre>幫我把下面這則公告改寫成民眾看得懂的白話。
+
+照這幾組範例的語感：
+原句：業經核定在案，請查照辦理。
+白話：這件事已經核准了，麻煩您照著做。
+原句：敬請惠予協助，共襄盛舉。
+白話：再麻煩您幫忙，也歡迎一起來參加。
+
+另外請遵守：
+- 不要用：爰、俾、台端、查照、惠予、踴躍參加
+- 一句不超過 25 字，不要拗口的長句
+- 保持禮貌與專業，只是不要文言
+- 日期、金額、法規條號、單位名稱一律原樣保留
+
+〔貼上你的公告原文〕</pre>
+</details>
+</div>
+</div>
+
 <h2>✅ 完成標準</h2>
-<p>六關至少完成三關，並能講出「哪一關讓我看到最大落差」。做完你會發現：好 prompt 不是靈感，是<strong>把原則逐項補齊</strong>的機械動作。</p>
+<p>七關至少完成三關，並能講出「哪一關讓我看到最大落差」。做完你會發現：好 prompt 不是靈感，是<strong>把原則逐項補齊</strong>的機械動作。</p>
 
 <h2>🔀 延伸練習／自我加強</h2>
-<ul><li>挑一關的起手 prompt，挑戰用<strong>最少字</strong>把結果調到你最滿意。</li><li>把 LV.6 的最終 prompt，在同一平台的「快版」與「強版」各跑一次，比較深度差異（呼應〈同一題問三家 AI〉）。</li><li>換自己單位的真實情境再跑一遍六關。</li></ul>
+<ul><li>挑一關的起手 prompt，挑戰用<strong>最少字</strong>把結果調到你最滿意。</li><li>把 LV.6 的最終 prompt，在同一平台的「快版」與「強版」各跑一次，比較深度差異（呼應〈同一題問三家 AI〉）。</li><li>換自己單位的真實情境再跑一遍七關。</li></ul>
   </div>
   <div class="botnav">
     <a href="gov-ai-m1_lesson.html">← 回模組 1：入門 + Prompt 實作</a>
