@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>小組討論：日常工作技巧與應用 · 練習</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;}
+body{font-family:"Helvetica Neue",Arial,"Noto Sans TC",sans-serif;background:#f0f2f5;margin:0;color:#1a1a1a;}
+.topnav{background:#fff;border-bottom:1px solid #e4e4e4;padding:.7rem 1.2rem;position:sticky;top:0;z-index:10;box-shadow:0 2px 8px rgba(0,0,0,.05);display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;font-size:.8rem;}
+.topnav a{color:#0055cc;text-decoration:none;font-weight:600;}
+.topnav a:hover{text-decoration:underline;}
+.topnav .sep{color:#bbb;}
+.topnav .cur{color:#666;}
+.tag-ex{font-size:.68rem;font-weight:800;background:#dbeafe;color:#1d4ed8;padding:.1rem .45rem;border-radius:4px;}
+.wrap{max-width:800px;margin:1.4rem auto 3rem;padding:0 1.2rem;}
+.card{background:#fff;border-radius:12px;box-shadow:0 1px 6px rgba(0,0,0,.08);padding:1.4rem 1.6rem 1.8rem;border-left:5px solid #1d4ed8;}
+.card h1{font-size:1.3rem;margin:.2rem 0 1rem;}
+.card h2{font-size:1.05rem;font-weight:800;color:#1d4ed8;margin:1.3rem 0 .5rem;padding-bottom:.25rem;border-bottom:2px solid #eef2f8;}
+.card h3{font-size:.95rem;font-weight:800;color:#333;margin:1rem 0 .4rem;}
+.card h4{font-size:.9rem;font-weight:800;color:#1d4ed8;margin:.9rem 0 .3rem;}
+.card p{font-size:.9rem;line-height:1.75;color:#333;margin:.5rem 0;}
+.card ul,.card ol{margin:.4rem 0 .6rem 1.4rem;}
+.card li{font-size:.89rem;line-height:1.7;color:#333;margin-bottom:.32rem;}
+.card code{background:#f3f3f3;color:#c7254e;padding:.1em .35em;border-radius:3px;font-size:.85em;font-family:"SFMono-Regular",Consolas,monospace;}
+.card strong{color:#111;}
+.card a{color:#1d4ed8;}
+.card hr{border:none;border-top:1px solid #eee;margin:1.2rem 0;}
+.card pre{background:#1e293b;color:#e2e8f0;border-radius:8px;padding:.85rem 1rem;margin:.6rem 0;overflow-x:auto;font-size:.82em;line-height:1.6;white-space:pre-wrap;font-family:"SFMono-Regular",Consolas,monospace;}
+.tbl-wrap{overflow-x:auto;margin:.6rem 0;}
+.card table{border-collapse:collapse;width:100%;font-size:.84rem;}
+.card th,.card td{border:1px solid #e2e8f0;padding:.4rem .6rem;text-align:left;vertical-align:top;}
+.card th{background:#f8fafc;font-weight:700;}
+.note{background:#f0f7ff;border-left:3px solid #1d4ed8;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.warn{background:#fff1f0;border-left:3px solid #ef4444;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.expect{background:#f0fdf4;border-left:3px solid #22c55e;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.step{background:#eff6ff;border-left:3px solid #3b82f6;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.worksheet{background:#fffbeb;border:1px solid #fcd34d;border-radius:10px;padding:.8rem 1rem;margin:.8rem 0;}
+.worksheet .wt{font-weight:800;color:#b45309;font-size:.92rem;margin-bottom:.4rem;}
+.worksheet ol{margin:.3rem 0 .3rem 1.3rem;}
+.worksheet li{margin-bottom:.5rem;}
+.blank{display:inline-block;min-width:8rem;border-bottom:1.5px dashed #b45309;}
+.report{background:#f5f3ff;border:1px solid #c4b5fd;border-radius:10px;padding:.8rem 1rem;margin:.8rem 0;}
+.report .rt{font-weight:800;color:#6d28d9;font-size:.92rem;margin-bottom:.4rem;}
+.reuse-note{margin-top:1rem;font-size:.78rem;color:#888;text-align:center;}
+.botnav{text-align:center;margin:1.4rem 0;}
+.botnav a{display:inline-block;margin:.3rem;padding:.5rem 1.1rem;background:#fff;border-radius:8px;text-decoration:none;color:#1d4ed8;font-weight:700;font-size:.85rem;box-shadow:0 1px 4px rgba(0,0,0,.07);}
+.botnav a:hover{background:#f0f7ff;}
+@media(max-width:520px){.wrap{padding:0 .7rem;}.card{padding:1.1rem 1.1rem 1.4rem;}}
+</style>
+</head>
+<body>
+<div class="topnav">
+  <a href="gov-ai_lesson.html">🏠 AI提示工程實戰班─打造你的AI問答秘書第9期</a><span class="sep">›</span>
+  <a href="gov-ai-m1_lesson.html">模組 1：入門 + Prompt 實作</a><span class="sep">›</span>
+  <span class="cur">小組討論：日常工作技巧與應用</span>
+  <span class="tag-ex">💬 小組討論</span>
+</div>
+<div class="wrap">
+  <div class="card">
+<h2>小組討論：AI 在日常公務怎麼用得最順？</h2>
+<div class="note">這是一場<strong>Best Practice 交流</strong>：每個人手上都有一些「AI 在日常工作幫上大忙」的小撇步，把它們攤開來、選一個最有共鳴的場景，一起打磨出一段「大家都能拿去用」的最佳 prompt，最後上台分享。</div>
+
+<h2>✨ Take aways（你會帶走什麼）</h2>
+<p>你會帶走一批同事實測過的<strong>日常公務 AI 用法</strong>，以及一段你們組共同打磨、可以直接複製回單位用的<strong>最佳 prompt 範本</strong>。別人踩過的坑你不用再踩。</p>
+
+<h2>💬 討論題（依序聊，邊聊邊記）</h2>
+<div class="step"><strong>暖身（每人一句）</strong>：講一件你<strong>最近用 AI 幫上忙</strong>的小事——寫了什麼、省了多少時間？</div>
+<ol>
+<li><strong>盤點日常場景</strong>：組內把「每週都要做、又適合交給 AI」的重複工作列出來（發通知、回罐頭信、寫會議紀錄、擬公告、整理民眾意見、翻白話…）。</li>
+<li><strong>選一個共通場景</strong>：挑一個<strong>大家都會碰到</strong>的（例如「擬一則內部通知」或「回覆民眾詢問」），當作這組要深入打磨的題目。</li>
+<li><strong>交換各自的招</strong>：針對這個場景，每個人講自己怎麼下 prompt、加了什麼讓結果更好、怎麼追問微調。</li>
+<li><strong>整合成一段最佳 prompt</strong>：把大家的好招合起來，寫出一段「照著填空就能用」的 prompt 範本。</li>
+<li><strong>提醒與紅線</strong>：這個場景有沒有個資／機密要注意？（呼應 <a href="ex-deidentify.html">去識別化</a>）</li>
+</ol>
+
+<h2>📝 小組學單（邊討論邊填）</h2>
+<div class="worksheet">
+<div class="wt">🗒️ 我們這組挑的場景</div>
+<ol>
+<li>我們深入打磨的場景是：<span class="blank"></span></li>
+<li>這件事以前手動大概要花：<span class="blank"></span>（分鐘）</li>
+<li>讓結果變好的三個關鍵（背景／角色／限制／範例／格式，挑三個）：<br><span class="blank"></span>、<span class="blank"></span>、<span class="blank"></span></li>
+<li>一個要小心的地方（個資／機密／容易亂編）：<span class="blank"></span></li>
+</ol>
+</div>
+
+<h2>🎯 每組要交：一段「最佳 prompt 範本」</h2>
+<div class="expect">把你們組打磨出來的 prompt 寫成<strong>可以照填的骨架</strong>，用〔〕標出要換的地方。參考格式：</div>
+<pre>【背景】我是〔單位／角色〕，要處理〔什麼事〕，對象是〔誰〕。
+【任務】請幫我〔做什麼〕，必須包含〔要件1〕〔要件2〕。
+【格式】語氣〔正式／親切〕，長度〔X 字內〕。
+【不要】不要編〔日期／數字〕，不確定的寫〔待補〕。</pre>
+<div class="note">這份範本就是你們組的成果——填得越具體，別人拿去越好用。</div>
+
+<h2>🎤 上台報告（每組 2 分鐘，講三件事）</h2>
+<div class="report">
+<div class="rt">📢 報告三重點</div>
+<ol>
+<li><strong>我們挑的場景＋為什麼</strong>：哪件日常工作、多少人天天在做。</li>
+<li><strong>我們的最佳 prompt</strong>：唸出範本，特別點出「加了哪一味讓結果變好」。</li>
+<li><strong>一個提醒</strong>：這個場景要注意的坑或紅線。</li>
+</ol>
+</div>
+
+<h2>📌 完成標準</h2>
+<p>組內每人都分享到自己的用法、選定一個共通場景、產出一段「照填就能用」的最佳 prompt 範本並完成報告。</p>
+
+<h2>🔀 延伸練習／自我加強</h2>
+<ul><li>把別組報告的最佳 prompt 也抄下來，回單位挑一個實際套用一週。</li><li>把你們組的範本存成單位共用檔（LINE 記事本／共享文件），讓同事都能填。</li><li>想再進階，帶著這個範本去做 <a href="ex-six-part-prompt.html">六件套</a> 或 <a href="ex-reusable-template.html">做成模板</a> 練習。</li></ul>
+  </div>
+  <div class="botnav">
+    <a href="gov-ai-m1_lesson.html">← 回模組 1：入門 + Prompt 實作</a>
+    <a href="gov-ai_lesson.html">🏠 課程目錄</a>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>小組討論：模型怎麼選 · 練習</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;}
+body{font-family:"Helvetica Neue",Arial,"Noto Sans TC",sans-serif;background:#f0f2f5;margin:0;color:#1a1a1a;}
+.topnav{background:#fff;border-bottom:1px solid #e4e4e4;padding:.7rem 1.2rem;position:sticky;top:0;z-index:10;box-shadow:0 2px 8px rgba(0,0,0,.05);display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;font-size:.8rem;}
+.topnav a{color:#0055cc;text-decoration:none;font-weight:600;}
+.topnav a:hover{text-decoration:underline;}
+.topnav .sep{color:#bbb;}
+.topnav .cur{color:#666;}
+.tag-ex{font-size:.68rem;font-weight:800;background:#dbeafe;color:#1d4ed8;padding:.1rem .45rem;border-radius:4px;}
+.wrap{max-width:800px;margin:1.4rem auto 3rem;padding:0 1.2rem;}
+.card{background:#fff;border-radius:12px;box-shadow:0 1px 6px rgba(0,0,0,.08);padding:1.4rem 1.6rem 1.8rem;border-left:5px solid #1d4ed8;}
+.card h1{font-size:1.3rem;margin:.2rem 0 1rem;}
+.card h2{font-size:1.05rem;font-weight:800;color:#1d4ed8;margin:1.3rem 0 .5rem;padding-bottom:.25rem;border-bottom:2px solid #eef2f8;}
+.card h3{font-size:.95rem;font-weight:800;color:#333;margin:1rem 0 .4rem;}
+.card h4{font-size:.9rem;font-weight:800;color:#1d4ed8;margin:.9rem 0 .3rem;}
+.card p{font-size:.9rem;line-height:1.75;color:#333;margin:.5rem 0;}
+.card ul,.card ol{margin:.4rem 0 .6rem 1.4rem;}
+.card li{font-size:.89rem;line-height:1.7;color:#333;margin-bottom:.32rem;}
+.card code{background:#f3f3f3;color:#c7254e;padding:.1em .35em;border-radius:3px;font-size:.85em;font-family:"SFMono-Regular",Consolas,monospace;}
+.card strong{color:#111;}
+.card a{color:#1d4ed8;}
+.card hr{border:none;border-top:1px solid #eee;margin:1.2rem 0;}
+.card pre{background:#1e293b;color:#e2e8f0;border-radius:8px;padding:.85rem 1rem;margin:.6rem 0;overflow-x:auto;font-size:.82em;line-height:1.6;white-space:pre-wrap;font-family:"SFMono-Regular",Consolas,monospace;}
+.tbl-wrap{overflow-x:auto;margin:.6rem 0;}
+.card table{border-collapse:collapse;width:100%;font-size:.84rem;}
+.card th,.card td{border:1px solid #e2e8f0;padding:.4rem .6rem;text-align:left;vertical-align:top;}
+.card th{background:#f8fafc;font-weight:700;}
+.note{background:#f0f7ff;border-left:3px solid #1d4ed8;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.warn{background:#fff1f0;border-left:3px solid #ef4444;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.expect{background:#f0fdf4;border-left:3px solid #22c55e;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.step{background:#eff6ff;border-left:3px solid #3b82f6;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.worksheet{background:#fffbeb;border:1px solid #fcd34d;border-radius:10px;padding:.8rem 1rem;margin:.8rem 0;}
+.worksheet .wt{font-weight:800;color:#b45309;font-size:.92rem;margin-bottom:.4rem;}
+.worksheet ol{margin:.3rem 0 .3rem 1.3rem;}
+.worksheet li{margin-bottom:.5rem;}
+.blank{display:inline-block;min-width:8rem;border-bottom:1.5px dashed #b45309;}
+.report{background:#f5f3ff;border:1px solid #c4b5fd;border-radius:10px;padding:.8rem 1rem;margin:.8rem 0;}
+.report .rt{font-weight:800;color:#6d28d9;font-size:.92rem;margin-bottom:.4rem;}
+.reuse-note{margin-top:1rem;font-size:.78rem;color:#888;text-align:center;}
+.botnav{text-align:center;margin:1.4rem 0;}
+.botnav a{display:inline-block;margin:.3rem;padding:.5rem 1.1rem;background:#fff;border-radius:8px;text-decoration:none;color:#1d4ed8;font-weight:700;font-size:.85rem;box-shadow:0 1px 4px rgba(0,0,0,.07);}
+.botnav a:hover{background:#f0f7ff;}
+@media(max-width:520px){.wrap{padding:0 .7rem;}.card{padding:1.1rem 1.1rem 1.4rem;}}
+</style>
+</head>
+<body>
+<div class="topnav">
+  <a href="gov-ai_lesson.html">🏠 AI提示工程實戰班─打造你的AI問答秘書第9期</a><span class="sep">›</span>
+  <a href="gov-ai-m1_lesson.html">模組 1：入門 + Prompt 實作</a><span class="sep">›</span>
+  <span class="cur">小組討論：模型怎麼選</span>
+  <span class="tag-ex">💬 小組討論</span>
+</div>
+<div class="wrap">
+  <div class="card">
+<h2>小組討論：這麼多家 AI，到底怎麼選？</h2>
+<div class="note">這是一場<strong>小組討論</strong>：大家把自己用各家 AI 的經驗攤開來交流，整理出一份「怎麼選、怎麼搭配」的共識，最後上台分享。沒有標準答案，重點是聽到別人怎麼用。</div>
+
+<h2>✨ Take aways（你會帶走什麼）</h2>
+<p>聽完別組同事的實戰經驗，你會更清楚<strong>哪家 AI 適合哪種公務、免費版夠不夠用、什麼時候該切「強版」</strong>，不再靠感覺亂選，也不用每家都付費。</p>
+
+<h2>💬 討論題（依序聊，邊聊邊記）</h2>
+<div class="step"><strong>暖身（每人一句）</strong>：你目前<strong>最常用哪一家</strong>？為什麼是它——順手、免費、還是同事推薦？</div>
+<ol>
+<li><strong>各家強在哪</strong>：組內有人用 ChatGPT、有人用 Claude、有人用 Gemini 嗎？各自覺得它最擅長什麼公務（寫公文？潤長文？查資料？）</li>
+<li><strong>免費夠不夠</strong>：你用免費版，遇過額度用完、被擋、回答變差嗎？有人付費嗎，值不值得？</li>
+<li><strong>版本怎麼切</strong>：有人用過「深思／強版」（GPT-5 Thinking、Claude Opus、Gemini 2.5 Pro）嗎？什麼情況下明顯比快版好？</li>
+<li><strong>搭配用法</strong>：有沒有人「這件事用這家、那件事用那家」？怎麼分工？</li>
+<li><strong>踩過的雷</strong>：哪一家在什麼情況讓你失望或出錯？（例如中文怪、亂編、格式跑掉）</li>
+</ol>
+<div class="note">可搭配 <a href="ex-three-ai.html">〈同一題問三家 AI〉</a> 那頁的「主流平台 × 版本對照表」邊看邊對。</div>
+
+<h2>📝 小組學單（邊討論邊填）</h2>
+<div class="worksheet">
+<div class="wt">🗒️ 我們這組的共識</div>
+<ol>
+<li>寫公文／正式文，我們推：<span class="blank"></span>，因為<span class="blank"></span></li>
+<li>查資料／要出處，我們推：<span class="blank"></span></li>
+<li>整理長文／逐字稿，我們推：<span class="blank"></span></li>
+<li>生圖／做海報，我們推：<span class="blank"></span></li>
+<li>「該切強版」的時機是：<span class="blank"></span></li>
+<li>組內共同的一個雷／注意事項：<span class="blank"></span></li>
+</ol>
+</div>
+
+<h2>🎯 每組要交：一個「最佳選擇建議」</h2>
+<div class="expect">用一句話總結你們組的結論，格式：<br>
+<strong>「做〔某類公務〕時，我們建議用〔某家／某版本〕，因為〔一個具體理由〕；但要注意〔一個提醒〕。」</strong><br>
+把這句寫下來，等一下報告。</div>
+
+<h2>🎤 上台報告（每組 2 分鐘，講三件事）</h2>
+<div class="report">
+<div class="rt">📢 報告三重點</div>
+<ol>
+<li><strong>我們組的主力共識</strong>：多數人用哪家、為什麼。</li>
+<li><strong>一個實用發現</strong>：一個「原來這家這樣用最好」或「這時候要切強版」的心得。</li>
+<li><strong>一句最佳選擇建議</strong>：把上面那句話唸出來。</li>
+</ol>
+</div>
+
+<h2>📌 完成標準</h2>
+<p>組內每個人都講到自己怎麼用、學單六格填完、產出一句「最佳選擇建議」並完成報告。</p>
+
+<h2>🔀 延伸練習／自我加強</h2>
+<ul><li>報告後，回 <a href="ex-three-ai.html">〈同一題問三家 AI〉</a> 的全班即時投票，看看全班的選擇跟你們組像不像。</li><li>回單位後，把組內學到的「搭配用法」實際試一週，看順不順。</li></ul>
+  </div>
+  <div class="botnav">
+    <a href="gov-ai-m1_lesson.html">← 回模組 1：入門 + Prompt 實作</a>
+    <a href="gov-ai_lesson.html">🏠 課程目錄</a>
+  </div>
+</div>
+</body>
+</html>
