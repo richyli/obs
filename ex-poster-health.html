@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>五件式重生宣傳圖 · 練習</title>
+<title>健康促進海報 · 練習</title>
 <style>
 *,*::before,*::after{box-sizing:border-box;}
 body{font-family:"Helvetica Neue",Arial,"Noto Sans TC",sans-serif;background:#f0f2f5;margin:0;color:#1a1a1a;}
@@ -28,17 +28,10 @@ body{font-family:"Helvetica Neue",Arial,"Noto Sans TC",sans-serif;background:#f0
 .card hr{border:none;border-top:1px solid #eee;margin:1.2rem 0;}
 .card pre{background:#1e293b;color:#e2e8f0;border-radius:8px;padding:.85rem 1rem;margin:.6rem 0;overflow-x:auto;font-size:.82em;line-height:1.6;white-space:pre-wrap;font-family:"SFMono-Regular",Consolas,monospace;}
 .card img{max-width:100%;border-radius:8px;margin:.5rem 0;}
-.tbl-wrap{overflow-x:auto;margin:.6rem 0;}
-.card table{border-collapse:collapse;width:100%;font-size:.84rem;}
-.card th,.card td{border:1px solid #e2e8f0;padding:.4rem .6rem;text-align:left;vertical-align:top;}
-.card th{background:#f8fafc;font-weight:700;}
 .note{background:#f0f7ff;border-left:3px solid #0055cc;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
 .warn{background:#fff1f0;border-left:3px solid #ef4444;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
 .expect{background:#f0fdf4;border-left:3px solid #22c55e;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
 .rescue{background:#fefce8;border-left:3px solid #eab308;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
-.check{background:#faf5ff;border-left:3px solid #a855f7;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
-.question{background:#fff8e6;border-left:3px solid #f59e0b;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
-.reuse-note{margin-top:1rem;font-size:.78rem;color:#888;text-align:center;}
 .botnav{text-align:center;margin:1.4rem 0;}
 .botnav a{display:inline-block;margin:.3rem;padding:.5rem 1.1rem;background:#fff;border-radius:8px;text-decoration:none;color:#0055cc;font-weight:700;font-size:.85rem;box-shadow:0 1px 4px rgba(0,0,0,.07);}
 .botnav a:hover{background:#f0f7ff;}
@@ -49,45 +42,50 @@ body{font-family:"Helvetica Neue",Arial,"Noto Sans TC",sans-serif;background:#f0
 <div class="topnav">
   <a href="gov-ai_lesson.html">🏠 AI提示工程實戰班─打造你的AI問答秘書第9期</a><span class="sep">›</span>
   <a href="gov-ai-m2_lesson.html">模組 2：AI 生圖 + 海報</a><span class="sep">›</span>
-  <span class="cur">五件式重生宣傳圖</span>
+  <span class="cur">健康促進海報</span>
   <span class="tag-ex">✍️ 練習</span>
 </div>
 <div class="wrap">
   <div class="card">
-<h2>練習：用五件式重生一張真的能用的宣傳圖</h2>
-<div class="note">這練習教你「視覺 prompt 的結構」，以及一個關鍵觀念：<strong>生圖是迭代出來的，不是一次到位</strong>。</div>
+<h2>練習：生一張「健康促進」宣傳海報主視覺</h2>
+<div class="note">這練習讓你用 AI 生一張衛生單位常用的「健康促進」海報主視覺——鼓勵民眾規律運動、保持健康。</div>
+
 <h2>✨ Take aways（你會學到）</h2>
-<p>用五件式骨架（主體＋風格＋構圖＋色調＋用途/尺寸），把上一練習的醜圖重生成一張真的能用的宣傳圖，並迭代 2–3 版。</p>
+<p>做完你能用一段 prompt 生出一張明亮、有活力的健康促進海報背景，之後放進 Canva/PPT 加上中文標語就能用。</p>
+
 <h2>📝 跟著做</h2>
-<p><strong>Step 1</strong>：照下面的五件式骨架填空，生一張你自己單位／社團下個活動的宣傳圖。<br>
-<strong>Step 2</strong>：用單句追問迭代 2–3 版。<br>
-<strong>提醒</strong>：第一版通常不夠好，通常到第 2–3 版才堪用，別急著放棄。</p>
-<h2>📋 材料</h2>
-<p><strong>五件式骨架（複製後填空）：</strong></p>
-<pre>幫我生一張活動宣傳圖，用途是〔FB 貼文／直式海報〕。
-主體：〔例如 校園、講台、書與燈泡代表知識〕
-風格：〔扁平插畫風／簡約／寫實照片〕
-構圖：〔上方留白放標題，主體置中偏下〕
-色調：〔藍白為主／暖橘親切／單色系〕
+<p><strong>Step 1</strong>：把下面的 prompt 複製，貼進你的主力 AI（ChatGPT／Gemini／Claude 等會生圖的）。<br>
+<strong>Step 2</strong>：看它生出來的圖，用一句話追問微調（顏色再亮一點、構圖再簡單一點）。<br>
+<strong>Step 3</strong>：迭代到你滿意，<strong>把圖存下來</strong>（右鍵另存）——這張等一下的課程會用到。</p>
+
+<h2>📋 材料（可複製的 prompt）</h2>
+<pre>幫我生一張「健康促進」宣傳海報的主視覺背景，用途是社區衛生宣導。
+主體：一個正在運動、保持健康的人。
+風格：扁平插畫風、明亮色調、活力感。
+構圖：主體置中偏下，上方留白放標題，直式 2:3。
 不要放任何文字（標題我自己用其他工具加）。</pre>
 <p><strong>追問句（單句微調，在同一對話）：</strong></p>
-<ul><li>「再簡約一點，元素太多。」</li><li>「換成暖色調，感覺親切些。」</li><li>「上方再多留一些空白，我要放標題。」</li><li>「換直式，我要當海報。」</li></ul>
-<h3>多練幾張：換不同主題再各生一張</h3>
-<p>學會五件式後，接著用同一套骨架練三個常見的公務宣傳主題（各自有獨立練習頁，跟著做即可）：</p>
-<ul>
-<li><a href="ex-poster-health.html">健康促進海報</a></li>
-<li><a href="ex-poster-recruit.html">科技人才招募主視覺</a></li>
-<li><a href="ex-poster-eldercare.html">長照服務宣傳海報</a></li>
-</ul>
-<div class="note">先照直覺生就好——記得<strong>把每張圖存下來</strong>，等一下的課程會用到。</div>
+<ul><li>「色調再明亮一點，感覺更有活力。」</li><li>「上方再多留一些空白，我要放標題。」</li><li>「背景再簡單一點，主體更突出。」</li></ul>
+
 <h2>✅ 預期產出</h2>
-<p>從第一版到第三版，圖明顯往你要的方向靠。心法：<strong>生圖是迭代，不是一次到位。</strong></p>
+<p>一張明亮、有活力的健康促進海報背景，上方留白可加中文標語。記得<strong>把圖存下來</strong>。</p>
+
 <h2>🆘 常見卡點與救援</h2>
-<ul><li><strong>改了反而更糟</strong>：說「回到剛剛那版，只改顏色」。</li><li><strong>圖上硬加字還加錯</strong>：明確說「不要放任何文字」，字留給自己加。</li><li><strong>額度用完</strong>：把滿意的那版右鍵存下來，換工具或改天再生。</li><li><strong>要更穩</strong>：先叫 AI「把這需求翻成英文生圖 prompt」再拿英文去生。</li></ul>
+<ul>
+<li><strong>圖上有亂碼文字</strong>：明確說「不要放任何文字」，標語留給自己用 Canva/PPT 加。</li>
+<li><strong>改了反而更糟</strong>：說「回到剛剛那版，只改顏色」。</li>
+<li><strong>額度用完</strong>：把滿意的那版存下來，換工具或改天再生。</li>
+<li><strong>要更穩</strong>：先叫 AI「把這需求翻成英文生圖 prompt」，再拿英文去生。</li>
+</ul>
+
 <h2>📌 完成標準</h2>
-<p>有一張真的能拿去用的宣傳圖草稿，靠五件式＋2–3 次追問調出來。</p>
+<p>有一張存下來的健康促進海報主視覺，靠一段 prompt ＋ 1–2 次追問調出來。</p>
+
 <h2>🔀 延伸練習／自我加強</h2>
-<ul><li>同一活動生「直式海報」與「橫式 FB 封面」兩種尺寸，比較差異。</li></ul>
+<ul>
+<li>換一個健康主題再生一張（戒菸、健康飲食、篩檢），用同一套做法。</li>
+<li>把生好的圖放進 Canva/PPT，加上中文標語與單位資訊，完成一張可發布的海報。</li>
+</ul>
   </div>
   <div class="botnav">
     <a href="gov-ai-m2_lesson.html">← 回模組 2：AI 生圖 + 海報</a>
