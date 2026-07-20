@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VS Code 安裝＋串接 Claude Code 完整指南 · 認識</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;}
+body{font-family:"Helvetica Neue",Arial,"Noto Sans TC",sans-serif;background:#f0f2f5;margin:0;color:#1a1a1a;}
+.topnav{background:#fff;border-bottom:1px solid #e4e4e4;padding:.7rem 1.2rem;position:sticky;top:0;z-index:10;box-shadow:0 2px 8px rgba(0,0,0,.05);display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;font-size:.8rem;}
+.topnav a{color:#0055cc;text-decoration:none;font-weight:600;}
+.topnav a:hover{text-decoration:underline;}
+.topnav .sep{color:#bbb;}
+.topnav .cur{color:#666;}
+.tag-ex{font-size:.68rem;font-weight:800;background:#fef3c7;color:#b45309;padding:.1rem .45rem;border-radius:4px;}
+.wrap{max-width:800px;margin:1.4rem auto 3rem;padding:0 1.2rem;}
+.card{background:#fff;border-radius:12px;box-shadow:0 1px 6px rgba(0,0,0,.08);padding:1.4rem 1.6rem 1.8rem;border-left:5px solid #d97706;}
+.card h1{font-size:1.3rem;margin:.2rem 0 1rem;}
+.card h2{font-size:1.05rem;font-weight:800;color:#b45309;margin:1.3rem 0 .5rem;padding-bottom:.25rem;border-bottom:2px solid #fdf0e0;}
+.card h3{font-size:.95rem;font-weight:800;color:#333;margin:1rem 0 .4rem;}
+.card h4{font-size:.9rem;font-weight:800;color:#b45309;margin:.9rem 0 .3rem;}
+.card p{font-size:.9rem;line-height:1.75;color:#333;margin:.5rem 0;}
+.card ul,.card ol{margin:.4rem 0 .6rem 1.4rem;}
+.card li{font-size:.89rem;line-height:1.7;color:#333;margin-bottom:.32rem;}
+.card code{background:#f3f3f3;color:#c7254e;padding:.1em .35em;border-radius:3px;font-size:.85em;font-family:"SFMono-Regular",Consolas,monospace;}
+.card strong{color:#111;}
+.card a{color:#0055cc;}
+.card hr{border:none;border-top:1px solid #eee;margin:1.2rem 0;}
+.card pre{background:#1e293b;color:#e2e8f0;border-radius:8px;padding:.85rem 1rem;margin:.6rem 0;overflow-x:auto;font-size:.82em;line-height:1.6;white-space:pre-wrap;font-family:"SFMono-Regular",Consolas,monospace;}
+.tbl-wrap{overflow-x:auto;margin:.6rem 0;}
+.card table{border-collapse:collapse;width:100%;font-size:.83rem;}
+.card th,.card td{border:1px solid #e2e8f0;padding:.4rem .6rem;text-align:left;vertical-align:top;}
+.card th{background:#f8fafc;font-weight:700;}
+.note{background:#f0f7ff;border-left:3px solid #0055cc;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.warn{background:#fff1f0;border-left:3px solid #ef4444;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.expect{background:#f0fdf4;border-left:3px solid #22c55e;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.step{background:#eff6ff;border-left:3px solid #3b82f6;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.rescue{background:#fefce8;border-left:3px solid #eab308;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.stepnum{display:inline-block;background:#d97706;color:#fff;font-weight:800;font-size:.85rem;width:1.6rem;height:1.6rem;line-height:1.6rem;text-align:center;border-radius:50%;margin-right:.4rem;flex-shrink:0;}
+.card details{margin:.7rem 0;border:1px solid #e2e8f0;border-radius:8px;padding:.2rem .9rem;background:#fafafa;}
+.card summary{cursor:pointer;color:#b45309;font-weight:800;font-size:.9rem;list-style:none;padding:.5rem 0;}
+.card summary::-webkit-details-marker{display:none;}
+.card summary:hover{text-decoration:underline;}
+.botnav{text-align:center;margin:1.4rem 0;}
+.botnav a{display:inline-block;margin:.3rem;padding:.5rem 1.1rem;background:#fff;border-radius:8px;text-decoration:none;color:#0055cc;font-weight:700;font-size:.85rem;box-shadow:0 1px 4px rgba(0,0,0,.07);}
+.botnav a:hover{background:#f0f7ff;}
+@media(max-width:520px){.wrap{padding:0 .7rem;}.card{padding:1.1rem 1.1rem 1.4rem;}}
+</style>
+</head>
+<body>
+<div class="topnav">
+  <a href="gov-ai_lesson.html">🏠 AI提示工程實戰班─打造你的AI問答秘書第9期</a><span class="sep">›</span>
+  <a href="gov-ai-m4_lesson.html">模組 4：公務應用</a><span class="sep">›</span>
+  <span class="cur">VS Code 安裝＋串接 Claude Code</span>
+  <span class="tag-ex">📖 安裝指南</span>
+</div>
+<div class="wrap">
+  <div class="card">
+<h2>VS Code 安裝＋串接 Claude Code：一步一步照做</h2>
+<div class="note">這是一份<strong>手把手安裝指南</strong>。前面你看過「會動手的 AI」能做什麼，這頁教你怎麼在自己的 Windows 電腦上把它裝起來、開始用。零基礎也能照著做完。</div>
+<div class="warn">⚠️ <strong>裝之前先確認一件事</strong>：公務電腦要安裝軟體，<strong>務必先確認機關資訊單位的政策</strong>。有些單位禁止自行安裝、或有指定的核可工具。這份指南適合<strong>個人電腦</strong>，或機關已核可的環境。</div>
+
+<h2>🧩 你會裝到哪些東西？先看全貌</h2>
+<p>Claude Code 要跑起來，需要三塊拼在一起。先有個概念，等一下就不會迷路：</p>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>要裝的東西</th><th>是什麼</th><th>為什麼要它</th></tr></thead>
+<tbody>
+<tr><td><strong>VS Code</strong></td><td>微軟出的免費程式編輯器</td><td>Claude Code 的「家」，提供圖形介面</td></tr>
+<tr><td><strong>Node.js</strong></td><td>一個執行環境（附帶 npm 安裝工具）</td><td>Claude Code 是靠它安裝與執行的</td></tr>
+<tr><td><strong>Claude Code</strong></td><td>會動手的 AI 本體</td><td>主角。分「命令列 CLI」與「VS Code 擴充功能」兩種介面</td></tr>
+</tbody>
+</table>
+</div>
+<div class="note">💡 你還需要一個 <strong>Claude 付費帳號</strong>（Pro、Max、Team 或 Enterprise 任一種）。不需要 API 金鑰，直接用帳號登入即可。</div>
+
+<h2>📝 完整安裝五步驟（Windows）</h2>
+
+<h3><span class="stepnum">1</span>安裝 VS Code</h3>
+<div class="step">到官網 <a href="https://code.visualstudio.com/" target="_blank" rel="noopener">code.visualstudio.com</a> 下載 Windows 版，一路「下一步」裝完。<br>
+<strong>建議勾選</strong>安裝時的「加入 PATH」與「在資料夾按右鍵用 Code 開啟」兩個選項，之後比較好用。<br>
+版本要求：<strong>VS Code 1.98.0 以上</strong>（新下載的都符合）。</div>
+
+<h3><span class="stepnum">2</span>安裝 Node.js</h3>
+<div class="step">到 <a href="https://nodejs.org/" target="_blank" rel="noopener">nodejs.org</a> 下載 <strong>LTS 版</strong>（左邊那顆、寫著「建議多數使用者」的綠色按鈕），一路裝完。<br>
+裝完<strong>開一個新的命令提示字元</strong>（開始選單搜尋「cmd」或「PowerShell」），輸入下面兩行確認裝好了：</div>
+<pre>node -v
+npm -v</pre>
+<div class="expect">✅ 如果各自跳出一組版本號（例如 <code>v20.11.0</code>、<code>10.2.4</code>），代表 Node.js 裝好了。</div>
+
+<h3><span class="stepnum">3</span>用 npm 安裝 Claude Code</h3>
+<div class="step">在同一個命令視窗，輸入這行安裝 Claude Code 本體：</div>
+<pre>npm install -g @anthropic-ai/claude-code</pre>
+<div class="warn">⚠️ <strong>不要在前面加 <code>sudo</code></strong>（Windows 本來就不用，加了反而出問題）。裝的時候會跑一陣子，正常。</div>
+<div class="step">裝完，輸入這行做健康檢查：</div>
+<pre>claude doctor</pre>
+<div class="expect">✅ 它會檢查你的環境並回報狀態，看到綠色的勾勾就沒問題。</div>
+
+<h3><span class="stepnum">4</span>在 VS Code 裝 Claude Code 擴充功能</h3>
+<div class="step">打開 VS Code，按 <code>Ctrl+Shift+X</code> 打開「擴充功能」面板，搜尋 <strong>「Claude Code」</strong>（作者是 Anthropic），按<strong>安裝</strong>。<br>
+裝好後如果沒出現，從命令面板（<code>Ctrl+Shift+P</code>）執行 <code>Developer: Reload Window</code> 重新載入一次。</div>
+<div class="note">💡 這個擴充功能自帶一份聊天面板要用的 Claude；第 3 步裝的 CLI 則是讓你能在 VS Code 的<strong>終端機</strong>裡直接打 <code>claude</code> 指令。兩個都裝，功能最完整。</div>
+
+<h3><span class="stepnum">5</span>登入，開始用</h3>
+<div class="step">在 VS Code 裡，點<strong>編輯器右上角的火花圖示（Spark）</strong>，或視窗右下角狀態列的 <strong>✱ Claude Code</strong>，打開 Claude 面板。<br>
+第一次會出現登入畫面，點<strong>登入</strong>，瀏覽器會跳出授權頁，用你的 Claude 付費帳號完成授權，回到 VS Code 就登入好了。</div>
+<div class="expect">✅ <strong>裝完了！</strong>現在你可以：選一段文字問它、用 <code>@檔名</code> 讓它讀某個檔、叫它改檔（它會先給你看修改對照、你同意才動手）。</div>
+
+<h2>🎯 裝好後，先試這三件事</h2>
+<div class="note">
+<strong>① 讓它讀一個檔</strong>：在聊天框輸入 <code>@</code> 接檔名（例如 <code>@報告.docx 幫我摘要三個重點</code>），它會讀那個檔回答你。<br>
+<strong>② 讓它比對兩個檔</strong>：把兩份文件放進同一個資料夾用 VS Code 開啟，叫它「把這兩份並排逐條比對，列出差異」。<br>
+<strong>③ 審核它的修改</strong>：叫它改一個檔，它會顯示「原本 vs 建議」的並排對照，你可以<strong>接受、拒絕、或直接改</strong>——它動手前一定先問你。
+</div>
+
+<h2>⌨️ 常用快捷鍵（Windows）</h2>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>快捷鍵</th><th>做什麼</th></tr></thead>
+<tbody>
+<tr><td><code>Ctrl+Esc</code></td><td>在「編輯器」與「Claude 聊天框」之間切換游標</td></tr>
+<tr><td><code>Alt+K</code></td><td>把目前選取的檔案／行號，以 @-提及插進聊天框</td></tr>
+<tr><td><code>Ctrl+Shift+Esc</code></td><td>開一個新對話（新分頁）</td></tr>
+<tr><td><code>Shift+Enter</code></td><td>聊天框內換行（不送出）</td></tr>
+<tr><td><code>Ctrl+`</code></td><td>開／關 VS Code 內建終端機（可在裡面打 <code>claude</code>）</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>🔐 三個許可模式：讓它多自動、多受控</h2>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>模式</th><th>行為</th><th>適合</th></tr></thead>
+<tbody>
+<tr><td><strong>Manual（手動）</strong></td><td>改檔前、跑指令前都先問你</td><td><strong>新手、處理重要檔案</strong>——最安全，建議先用這個</td></tr>
+<tr><td><strong>Plan（計畫）</strong></td><td>先寫出「打算怎麼做」讓你審核，同意才動手</td><td>複雜任務、想先看它的計畫</td></tr>
+<tr><td><strong>Edit automatically（自動編輯）</strong></td><td>直接改，不問</td><td>你已經很熟、且是可還原的環境</td></tr>
+</tbody>
+</table>
+</div>
+<div class="warn">⚠️ 公務用途<strong>強烈建議停在 Manual 模式</strong>：每個動作它都先問你、你看過再點頭，才不會發生「它自己改了你沒看到的檔」。點聊天框底部的模式指示器就能切換。</div>
+
+<h2>🆘 常見問題排除</h2>
+<ul>
+<li><strong>裝完擴充功能沒看到火花圖示</strong>：先<strong>打開一個檔案</strong>（只開資料夾不夠），圖示才會出現在編輯器右上角；或按右下角狀態列的 ✱ Claude Code。還是沒有就 <code>Developer: Reload Window</code> 重載。</li>
+<li><strong>終端機打 <code>claude</code> 說找不到指令</strong>：擴充功能不會自動把 <code>claude</code> 加到系統路徑，要確認第 3 步的 CLI 有裝成功（<code>npm install -g @anthropic-ai/claude-code</code>）。</li>
+<li><strong>一直要我登入</strong>：從命令面板執行 <code>Developer: Reload Window</code>；若還是不行，試著在終端機打 <code>claude</code> 用 CLI 登入一次。</li>
+<li><strong>跟其他 AI 擴充衝突</strong>：暫時停用 Cline、Continue 等其他 AI 擴充，重載 VS Code。</li>
+<li><strong>公司電腦裝不了</strong>：多半是權限或政策限制，找資訊單位確認；或改用 <a href="ex-desktop-tools.html">Claude Desktop</a>、網頁版等免安裝的方式。</li>
+</ul>
+
+<h2>🐧 進階：更穩定的 WSL 安裝法（選讀）</h2>
+<p>上面五步驟對多數人已經夠用。如果你之後要做比較重的開發、或遇到路徑相關的怪問題，Windows 官方更推薦的是<strong>在 WSL（Windows 裡的 Linux 環境）裡裝</strong>——比較穩，但步驟多、門檻高，不熟的人先用上面的方法就好。</p>
+<details>
+<summary>👉 點開看 WSL 完整安裝流程</summary>
+<div class="step"><strong>① 啟用 WSL</strong>：以系統管理員開 PowerShell，執行：</div>
+<pre>wsl --install</pre>
+<p>重開機後驗證：<code>wsl --list --verbose</code>。</p>
+<div class="step"><strong>② 裝 Ubuntu</strong>：到 Microsoft Store 搜尋並安裝 <strong>Ubuntu 22.04 LTS</strong>，首次開啟時建立使用者帳號，然後更新：</div>
+<pre>sudo apt update &amp;&amp; sudo apt upgrade -y
+sudo apt install build-essential curl git wget unzip -y</pre>
+<div class="step"><strong>③ 用 NVM 裝 Node.js</strong>（在 WSL 終端機裡）：</div>
+<pre>curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
+nvm install --lts
+nvm use --lts
+nvm alias default node</pre>
+<div class="step"><strong>④ 裝 Claude Code</strong>（一樣不要加 sudo）：</div>
+<pre>npm install -g @anthropic-ai/claude-code
+claude doctor</pre>
+<div class="step"><strong>⑤ VS Code 接 WSL</strong>：在 VS Code 裝「WSL」擴充功能，左下角綠色角落按鈕選「Connect to WSL」，之後在 WSL 環境裡開資料夾、開終端機打 <code>claude</code> 即可。</div>
+<div class="note">WSL 的好處是有一個乾淨的 Linux 環境，避免 Windows 路徑造成的麻煩；代價是要多裝一層、指令較多。純文書、公務用途通常用上面的原生五步驟就夠。</div>
+</details>
+
+<h2>📌 帶走一句話</h2>
+<p>裝 Claude Code 其實就三塊：<strong>VS Code（家）＋ Node.js（引擎）＋ Claude Code（主角）＋ 一個付費帳號登入</strong>。裝好後從 Manual 模式開始，讓它每個動作都先問過你，你會用得又安心又順手。裝不了也別急——<a href="ex-desktop-tools.html">Claude Desktop</a> 或網頁版一樣能用，只是不會「動手改檔」。</p>
+
+<h2>🔀 延伸</h2>
+<ul>
+<li>裝好後回去看 <a href="ex-agentic-overview.html">會動手的 AI：概念總覽</a>，對照哪些公務工作最適合用它。</li>
+<li>官方完整文件（中文）：<a href="https://code.claude.com/docs/zh-TW/vs-code" target="_blank" rel="noopener">code.claude.com/docs/zh-TW/vs-code</a>。</li>
+</ul>
+<div class="note" style="font-size:.8rem;color:#888;">參考來源：Claude Code 官方 VS Code 擴充功能文件（code.claude.com/docs/zh-TW/vs-code）、Windows 完整安裝指南（luka.tw）。工具介面與指令可能隨版本更新，以官方文件為準。</div>
+  </div>
+  <div class="botnav">
+    <a href="gov-ai-m4_lesson.html">← 回模組 4：公務應用</a>
+    <a href="gov-ai_lesson.html">🏠 課程目錄</a>
+  </div>
+</div>
+</body>
+</html>
