@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>第一天回顧與熱身 · 練習</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;}
+body{font-family:"Helvetica Neue",Arial,"Noto Sans TC",sans-serif;background:#f0f2f5;margin:0;color:#1a1a1a;}
+.topnav{background:#fff;border-bottom:1px solid #e4e4e4;padding:.7rem 1.2rem;position:sticky;top:0;z-index:10;box-shadow:0 2px 8px rgba(0,0,0,.05);display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;font-size:.8rem;}
+.topnav a{color:#0055cc;text-decoration:none;font-weight:600;}
+.topnav a:hover{text-decoration:underline;}
+.topnav .sep{color:#bbb;}
+.topnav .cur{color:#666;}
+.tag-ex{font-size:.68rem;font-weight:800;background:#e0e7ff;color:#4338ca;padding:.1rem .45rem;border-radius:4px;}
+.wrap{max-width:800px;margin:1.4rem auto 3rem;padding:0 1.2rem;}
+.card{background:#fff;border-radius:12px;box-shadow:0 1px 6px rgba(0,0,0,.08);padding:1.4rem 1.6rem 1.8rem;border-left:5px solid #4338ca;}
+.card h1{font-size:1.3rem;margin:.2rem 0 1rem;}
+.card h2{font-size:1.05rem;font-weight:800;color:#4338ca;margin:1.3rem 0 .5rem;padding-bottom:.25rem;border-bottom:2px solid #eef2f8;}
+.card h3{font-size:.95rem;font-weight:800;color:#333;margin:1rem 0 .4rem;}
+.card h4{font-size:.9rem;font-weight:800;color:#4338ca;margin:.9rem 0 .3rem;}
+.card p{font-size:.9rem;line-height:1.75;color:#333;margin:.5rem 0;}
+.card ul,.card ol{margin:.4rem 0 .6rem 1.4rem;}
+.card li{font-size:.89rem;line-height:1.7;color:#333;margin-bottom:.32rem;}
+.card code{background:#f3f3f3;color:#c7254e;padding:.1em .35em;border-radius:3px;font-size:.85em;font-family:"SFMono-Regular",Consolas,monospace;}
+.card strong{color:#111;}
+.card a{color:#0055cc;}
+.card pre{background:#1e293b;color:#e2e8f0;border-radius:8px;padding:.85rem 1rem;margin:.6rem 0;overflow-x:auto;font-size:.82em;line-height:1.6;white-space:pre-wrap;font-family:"SFMono-Regular",Consolas,monospace;}
+.tbl-wrap{overflow-x:auto;margin:.6rem 0;}
+.card table{border-collapse:collapse;width:100%;font-size:.84rem;}
+.card th,.card td{border:1px solid #e2e8f0;padding:.45rem .6rem;text-align:left;vertical-align:top;}
+.card th{background:#f8fafc;font-weight:700;}
+.note{background:#f0f7ff;border-left:3px solid #0055cc;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.warn{background:#fff1f0;border-left:3px solid #ef4444;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.expect{background:#f0fdf4;border-left:3px solid #22c55e;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.check{background:#faf5ff;border-left:3px solid #a855f7;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.question{background:#fff8e6;border-left:3px solid #f59e0b;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.card details{margin-top:.5rem;}
+.card summary{cursor:pointer;color:#4338ca;font-weight:700;font-size:.85rem;list-style:none;}
+.card summary::-webkit-details-marker{display:none;}
+.card summary:hover{text-decoration:underline;}
+.card details[open] summary{margin-bottom:.35rem;}
+.botnav{text-align:center;margin:1.4rem 0;}
+.botnav a{display:inline-block;margin:.3rem;padding:.5rem 1.1rem;background:#fff;border-radius:8px;text-decoration:none;color:#4338ca;font-weight:700;font-size:.85rem;box-shadow:0 1px 4px rgba(0,0,0,.07);}
+.botnav a:hover{background:#f0f7ff;}
+@media(max-width:520px){.wrap{padding:0 .7rem;}.card{padding:1.1rem 1.1rem 1.4rem;}}
+</style>
+</head>
+<body>
+<div class="topnav">
+  <a href="gov-ai_lesson.html">🏠 AI提示工程實戰班─打造你的AI問答秘書第9期</a><span class="sep">›</span>
+  <a href="gov-ai-m3_lesson.html">模組 3：進階結構 + 創意</a><span class="sep">›</span>
+  <span class="cur">第一天回顧與熱身</span>
+  <span class="tag-ex">🔄 複習</span>
+</div>
+<div class="wrap">
+  <div class="card">
+<h2>第一天回顧與熱身：把昨天的手感找回來</h2>
+<div class="note">隔了一晚，昨天學的東西很容易忘掉一半。這一頁用<strong>三分鐘回顧＋幾題快測＋一個熱身實作</strong>，把手感抓回來，再進今天的進階內容。</div>
+
+<h2>✨ Take aways（你會帶走什麼）</h2>
+<p>你會確認自己昨天真正記住了什麼、哪裡還虛；把最核心的<strong>三段式骨架與資安紅線</strong>複習一遍，然後用一個小任務暖手，準備好進入今天的思維鏈、思維樹與創意應用。</p>
+
+<h2>📋 第一天重點一覽</h2>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>學過什麼</th><th>一句話重點</th></tr></thead>
+<tbody>
+<tr><td><strong>選一家主力</strong></td><td>不必每家都用，找一個你順手的當主力；卡住時切「強版」再試。</td></tr>
+<tr><td><strong>AI 不是中立的</strong></td><td>不同國家做的模型帶不同價值觀與審查；敏感議題要交叉比對、回原始資料。</td></tr>
+<tr><td><strong>資安紅線</strong></td><td>個資、機密、未公開文件不進公用 AI；要用先把個資遮成〔〕。</td></tr>
+<tr><td><strong>基礎六原則</strong></td><td>具體、給角色、給範例、拆步驟、指定格式、迭代追問。</td></tr>
+<tr><td><strong>三段式骨架</strong></td><td>背景＋任務＋格式。每留一處空白，AI 就替你自作主張一處。</td></tr>
+<tr><td><strong>設邊界</strong></td><td>不只講「要什麼」，也要列「不要什麼」（不編造、不用官腔、不超長）。</td></tr>
+<tr><td><strong>給範例（few-shot）</strong></td><td>貼 2–3 組「原句→你要的樣子」，勝過講十句形容詞。</td></tr>
+<tr><td><strong>長提示做成助手</strong></td><td>重複性的工作，把規則一次寫好存成 GPT／Gem／Project，之後只餵資料。</td></tr>
+<tr><td><strong>AI 生圖</strong></td><td>五件式（主體＋風格＋構圖＋色調＋用途）；中文字事後自己加；生圖是迭代不是一次到位。</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>🎯 快測：昨天的東西還記得嗎？</h2>
+<div class="note">先自己在心裡答，再點開對答案。答不出來的那幾題，就是今天要特別留意的地方。</div>
+
+<div class="question"><strong>Q1</strong>：三段式是哪三段？
+<details><summary>👉 看答案</summary><strong>背景＋任務＋格式。</strong>背景＝我是誰、對象是誰、有什麼前提；任務＝要你做什麼、必須包含哪些要件；格式＝語氣、長度、呈現方式，以及「哪些不要幫我編」。</details></div>
+
+<div class="question"><strong>Q2</strong>：這句話有什麼問題——「幫我寫個活動通知。」
+<details><summary>👉 看答案</summary>太模糊，<strong>對象、內容、語氣、長度全都沒講</strong>，AI 只能自己猜。至少要補上：什麼活動（人事時地）、給誰看、語氣、字數上限，還有「日期文號留空我自己填」。</details></div>
+
+<div class="question"><strong>Q3</strong>：一份含民眾姓名、電話、地址的申請案，你要請 AI 幫忙擬說明，該怎麼做？
+<details><summary>👉 看答案</summary><strong>先去識別化再貼</strong>：把姓名、電話、地址都換成〔申請人〕〔電話〕〔地址〕，再交給 AI；並在指令裡說「用〔〕佔位即可，我最後自己填」。<strong>絕不能原樣貼進公用網頁版 AI。</strong></details></div>
+
+<div class="question"><strong>Q4</strong>：AI 一直用「業經、爰、俾」這種官腔，除了說「改白話」，還有哪兩招更有效？
+<details><summary>👉 看答案</summary><strong>①列禁止清單</strong>（明確寫出不准用哪些字）；<strong>②給對照範例</strong>（貼 2–3 組「原句→白話」讓它抓語感）。兩招合用最強，再補一句「日期、金額、法規名稱不要動」。</details></div>
+
+<div class="question"><strong>Q5</strong>：AI 生圖時，為什麼常要加「不要放任何文字」？
+<details><summary>👉 看答案</summary>因為 <strong>AI 生的中文字幾乎都是亂碼</strong>。正確流程是：讓 AI 生「留白給標題」的背景，<strong>中文標題事後自己用 Canva／PPT 加</strong>。</details></div>
+
+<div class="question"><strong>Q6</strong>：AI 給了你一個看起來很完整的法規條號與內容，你要直接用嗎？
+<details><summary>👉 看答案</summary><strong>絕對不行。</strong>AI 會用很肯定的語氣<strong>編造不存在的法條與數字</strong>（幻覺）。凡是要對外、或會影響民眾權益的，一律回到全國法規資料庫等原始出處逐項核對，由人具名負責。</details></div>
+
+<div class="expect">六題中有答不出來的？沒關係——回去點開對應的練習頁複習即可，那些頁面不會消失，之後回單位也能隨時查。</div>
+
+<h2>🔥 熱身實作：用昨天學的，做一件小事</h2>
+<p>不用想太多，挑一件<strong>你今天回辦公室真的要處理的小事</strong>（回一封信、寫一則通知、擬一段公告），用三段式加上邊界，一次寫完送出。目的只是<strong>把手感找回來</strong>。</p>
+<pre>【背景】
+我是〔單位／角色〕，要處理〔什麼事〕，對象是〔誰〕。
+
+【任務】
+請幫我〔寫什麼〕，必須包含：〔要件1〕、〔要件2〕。
+
+【格式】
+語氣〔正式／親切〕，長度〔X 字內〕。
+
+【不要】
+不要編造我沒給的日期、數字、法規；不確定的地方寫〔待補〕。
+不要用「業經、爰、俾、台端」這類文言字詞。</pre>
+<div class="check">🎯 送出前快速自檢：<strong>①背景有沒有交代我是誰、對象是誰？②有沒有講清楚長度與語氣？③有沒有擋掉「亂編」與「官腔」？④裡面有沒有不該貼的個資？</strong></div>
+
+<h2>📌 準備好進入今天了</h2>
+<p>昨天你學的是<strong>「把話講清楚」</strong>——怎麼下一個好指令、怎麼設邊界、怎麼給範例。今天要往上一層：<strong>讓 AI 想得更深、更廣</strong>——思維鏈（想深）、思維樹（想廣）、以及怎麼用 AI 當創意夥伴。基礎穩了，這些才發揮得出來。</p>
+
+<h2>🔀 想再複習？</h2>
+<ul>
+<li><a href="ex-prompt-principles.html">基礎提問六原則</a>——觀念地基，忘了就回來看。</li>
+<li><a href="ex-prompt-drills.html">Prompt 分級闖關（七關）</a>——含設邊界、給範例、官腔↔白話對照。</li>
+<li><a href="ex-three-part-prompt.html">三段式做一件真的要做的事</a>——最常用的骨架。</li>
+<li><a href="ex-deidentify.html">個資去識別化</a>——資安紅線，這條永遠適用。</li>
+</ul>
+  </div>
+  <div class="botnav">
+    <a href="gov-ai-m3_lesson.html">← 回模組 3：進階結構 + 創意</a>
+    <a href="gov-ai_lesson.html">🏠 課程目錄</a>
+  </div>
+</div>
+</body>
+</html>
