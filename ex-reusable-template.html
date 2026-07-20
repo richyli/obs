@@ -42,7 +42,19 @@ body{font-family:"Helvetica Neue",Arial,"Noto Sans TC",sans-serif;background:#f0
 .botnav{text-align:center;margin:1.4rem 0;}
 .botnav a{display:inline-block;margin:.3rem;padding:.5rem 1.1rem;background:#fff;border-radius:8px;text-decoration:none;color:#0055cc;font-weight:700;font-size:.85rem;box-shadow:0 1px 4px rgba(0,0,0,.07);}
 .botnav a:hover{background:#f0f7ff;}
-@media(max-width:520px){.wrap{padding:0 .7rem;}.card{padding:1.1rem 1.1rem 1.4rem;}}
+.trybox{background:#eff6ff;border:1px dashed #60a5fa;border-radius:8px;padding:.6rem .85rem;margin:.7rem 0;font-size:.85rem;line-height:1.65;}
+.trybox .th{font-weight:800;color:#1d4ed8;font-size:.85rem;margin-bottom:.25rem;}
+.trybox details{margin-top:.5rem;}
+.trybox summary{cursor:pointer;color:#0055cc;font-weight:700;font-size:.82rem;list-style:none;}
+.trybox summary::-webkit-details-marker{display:none;}
+.trybox summary:hover{text-decoration:underline;}
+.ba{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin:.5rem 0;}
+.ba .bad,.ba .good{border-radius:8px;padding:.55rem .75rem;font-size:.83rem;line-height:1.6;}
+.ba .bad{background:#fff1f0;border:1px solid #fecaca;}
+.ba .good{background:#f0fdf4;border:1px solid #bbf7d0;}
+.ba .lab{font-weight:800;font-size:.76rem;display:block;margin-bottom:.25rem;}
+.ba .bad .lab{color:#dc2626;} .ba .good .lab{color:#16a34a;}
+@media(max-width:520px){.wrap{padding:0 .7rem;}.card{padding:1.1rem 1.1rem 1.4rem;}.ba{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
@@ -58,24 +70,149 @@ body{font-family:"Helvetica Neue",Arial,"Noto Sans TC",sans-serif;background:#f0
 <div class="note">這練習教你把每週都要重寫的 prompt 改造成「換空格就能重用」的模板。</div>
 <h2>✨ Take aways（你會學到）</h2>
 <p>把好用的 prompt 改造成「換空格就能重用」的模板並存起來，以後同類的事不用從頭寫。</p>
+<h2>🤔 為什麼要做模板？</h2>
+<p>你可能已經調出過一段很好用的 prompt——問題是<strong>下次要用時找不到，只好重打一次</strong>，而且每次打出來的還不太一樣，產出品質就跟著浮動。模板要解決的就是這件事：<strong>把「每次重寫」變成「填空」。</strong></p>
+<div class="ba">
+  <div class="bad"><span class="lab">✗ 沒有模板</span>每次重打背景、重講規則 → 花時間、容易漏講、每次結果都不一樣、新同事完全學不到。</div>
+  <div class="good"><span class="lab">✓ 有模板</span>換掉〔幾個空格〕就送出 → 30 秒完成、規則不會漏、產出穩定、直接傳給同事就能用。</div>
+</div>
+
 <h2>📝 跟著做</h2>
-<p><strong>Step 1</strong>：找一個你每週都要重貼同樣背景的 prompt（例如既有的六件套 prompt）。<br><strong>Step 2</strong>：把每次會變的地方挖成〔標籤〕，固定的話術骨架留著。<br><strong>Step 3</strong>：把模板存進 Word 檔（「我的 AI 模板.docx」）或釘選在 AI 對話裡。<br><strong>Step 4</strong>：換掉〔標籤〕馬上測一次，確認填空就能跑。</p>
-<h2>📋 材料</h2>
-<p><strong>通知模板範例：</strong></p>
-<pre>【角色】你是本機關承辦。
-【背景】我要通知〔對象〕關於〔事由〕。
-【任務】寫一則正式通知，含：時間〔時間〕、地點〔地點〕、
-出席對象、需準備事項〔事項〕。
-【限制】缺的標「待補」，不要自己編。
-【格式】150 字內、正式簡潔。
-【自審】檢查錯字與長度。</pre>
-<p><strong>五種公務常用模板方向</strong>：通知、簽稿、回信、摘要、比較。（大學課可換成：作業要求、活動公告、給教授的信、文獻摘要、兩理論比較。）</p>
+<p><strong>Step 1 挑一件重複的事</strong>：找一件你<strong>每週都要做好幾次</strong>的事（發通知、回制式詢問、寫會議紀錄、擬簽稿）。<br>
+<strong>Step 2 先寫一次完整版</strong>：針對這件事，把背景、任務、格式、不要什麼，一次寫清楚跑一遍，調到滿意。<br>
+<strong>Step 3 挖空</strong>：把「下次做同類的事會換掉」的地方挖成〔標籤〕，話術骨架與規則留著不動。<br>
+<strong>Step 4 存起來</strong>：存進一份「我的 AI 模板」文件，或直接建成專屬助手。<br>
+<strong>Step 5 測一次</strong>：換掉〔標籤〕實際跑一遍，確認填空就能用。</p>
+
+<h2>🔍 完整示範：把一份通知變成模板</h2>
+<p><strong>① 先寫出這次真的要用的完整版（不挖空）：</strong></p>
+<pre>我是區公所民政課承辦，要通知里長們下週的業務說明會。
+請寫一則正式通知，包含：時間 7/25（五）14:00、
+地點 區公所三樓會議室、出席對象各里里長、
+需攜帶上季里務工作報告。
+語氣正式但不冗長，150 字內。
+不要編造我沒給的資訊，缺的地方寫〔待補〕。</pre>
+<div class="note">跑一次、確認產出可用之後，再進到下一步。<strong>先確定「這樣寫會得到好結果」，才值得做成模板。</strong></div>
+
+<p><strong>② 挖空：把會變的換成〔標籤〕</strong></p>
+<pre>我是〔單位／職稱〕，要通知〔對象〕關於〔事由〕。
+請寫一則正式通知，包含：時間〔時間〕、
+地點〔地點〕、出席對象〔出席者〕、
+需準備事項〔攜帶物／準備事項〕。
+語氣正式但不冗長，〔字數〕字內。
+不要編造我沒給的資訊，缺的地方寫〔待補〕。</pre>
+<div class="expect"><strong>哪些該挖、哪些該留？</strong>口訣：<strong>「下次會變的挖空，規則與話術留著」</strong>。<br>
+・<strong>挖空</strong>：對象、事由、時間、地點、數字、字數<br>
+・<strong>留著</strong>：你是誰的角色設定、語氣要求、「不要編造」「缺的寫待補」這類規則——這些每次都一樣，正是模板的價值所在。</div>
+
+<h2>📋 五種公務常用模板（挑你需要的直接改）</h2>
+
+<h4>① 通知／公告</h4>
+<pre>我是〔單位／職稱〕，要通知〔對象〕關於〔事由〕。
+請寫一則〔正式／親切〕通知，包含：時間〔〕、地點〔〕、
+對象〔〕、需準備〔〕。〔字數〕字內。
+不要編造沒給的資訊，缺的寫〔待補〕。</pre>
+
+<h4>② 陳核簽稿說明段</h4>
+<pre>我是〔單位／職稱〕，要就〔案由〕陳核。
+請幫我擬一段陳核用的說明，包含：辦理依據〔〕、
+目前進度〔〕、擬辦事項〔〕、需長官裁示事項〔〕。
+語氣正式簡潔，分點條列。
+文號、日期我自己填，法規條號我會自行核對，不要自行編造。</pre>
+
+<h4>③ 民眾詢問回覆</h4>
+<pre>我是〔單位／職稱〕，要回覆一位民眾詢問〔問題主題〕。
+已知資訊：〔你能提供的事實〕。
+請用誠懇、負責、不推諉的語氣擬一則回覆，說明〔處理方式／進度〕，
+並附上〔後續聯繫方式／時程〕。〔字數〕字內。
+不要用「業經、爰、俾、台端」這類文言字詞。
+不要承諾我沒說的處理時程。</pre>
+
+<h4>④ 長文件摘要</h4>
+<pre>請幫我把下面這份〔文件類型〕整理成三塊：
+① 三句話重點摘要
+② 與〔我的單位／我的業務〕直接相關的部分
+③ 我方需要辦理的事項（條列，含期限，沒寫期限的標「未定」）
+不要加入文件裡沒有的內容。
+
+〔貼上文件內容〕</pre>
+
+<h4>⑤ 方案比較表</h4>
+<pre>請用表格比較〔方案 A〕、〔方案 B〕、〔方案 C〕。
+欄位固定為：方案、優點、缺點、預估成本、法規面須注意、我的建議。
+每格不超過 25 字。最後多一列給你的整體建議。
+成本若我沒提供，寫「待估」，不要自行編造金額。</pre>
+
+<div class="trybox">
+<div class="th">✍️ 換你試（一）：把你的重複工作做成模板</div>
+挑一件你<strong>這週真的做過兩次以上</strong>的事，照上面五種模板挑最接近的一個改寫成你自己的版本。改完實際跑一次，確認填空就能用。
+<details><summary>👉 卡住了？點開看怎麼判斷該挖哪些空</summary>
+把你寫好的完整版逐句看過，問自己：「<strong>下週我處理同類的事，這句話會不會換？</strong>」<br>
+・會換 → 挖成〔標籤〕（人名、單位、日期、金額、主題、字數）<br>
+・不會換 → 留著（角色設定、語氣要求、禁止編造的規則、輸出格式）<br>
+如果整段幾乎都要換，代表這件事其實不夠重複，換一件更固定的來做。
+</details>
+</div>
+
+<h2>🗂️ 把模板存哪裡？三個層次</h2>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>存法</th><th>怎麼做</th><th>適合誰</th></tr></thead>
+<tbody>
+<tr><td><strong>① 一份文件</strong></td><td>開一個「我的 AI 模板.docx」或記事本，每個模板一段，用時複製貼上</td><td>所有人，零門檻，馬上能做</td></tr>
+<tr><td><strong>② 對話釘選</strong></td><td>在 AI 裡開一個專門的對話，把模板貼在第一則，之後都在這個對話裡用</td><td>只有自己用、模板不多時</td></tr>
+<tr><td><strong>③ 建成專屬助手</strong></td><td>把模板寫成 GPT／Gem／Project 的指令，開它就能用</td><td>用得很頻繁、或要分享給同事</td></tr>
+</tbody>
+</table>
+</div>
+<div class="note">建議從 <strong>①</strong> 開始——先累積 3-5 個真的會用的模板，等你發現「每天都在開這份文件複製」，再升級到 ③。做法可參考 <a href="ex-longprompt-assistant.html">打磨長提示，做成你的專屬助手</a>。</div>
+
+<div class="trybox">
+<div class="th">✍️ 換你試（二）：建立你的模板庫雛形</div>
+開一份文件，把<strong>三個</strong>你最需要的模板放進去（從上面五種挑，或自己寫）。每個模板上方加一行「什麼時候用這個」，方便日後快速找到。
+<details><summary>👉 卡住了？點開看模板庫的排版範例</summary>
+<pre>■ 模板 1：發內部通知
+   用於：科內會議、教育訓練、活動通知
+   〔模板內容…〕
+
+■ 模板 2：回覆民眾詢問
+   用於：一般業務詢問、進度查詢
+   〔模板內容…〕
+
+■ 模板 3：長文件摘要
+   用於：上級函文、研究報告、會議資料
+   〔模板內容…〕</pre>
+每次用到新情境、發現模板要微調，就順手把改良版存回去——<strong>模板是會長大的資產。</strong>
+</details>
+</div>
+
+<h2>🧭 什麼時候該做成模板？</h2>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>情境</th><th>該不該做模板</th><th>為什麼</th></tr></thead>
+<tbody>
+<tr><td>每週都要做、格式固定（通知、罐頭回覆）</td><td><strong>非常適合</strong></td><td>重複次數高，一次投資長期回收</td></tr>
+<tr><td>每月一次但很繁瑣（月報、統計摘要）</td><td><strong>適合</strong></td><td>次數少但每次都很花時間，且久沒做會忘記怎麼寫</td></tr>
+<tr><td>整個科室都在做同一件事</td><td><strong>最適合</strong></td><td>不只自己省時，還能讓全科產出一致（見 <a href="ex-plainlang-skill.html">全科共用助手</a>）</td></tr>
+<tr><td>一次性的特殊任務</td><td>不必</td><td>做模板的時間比直接寫還久</td></tr>
+<tr><td>每次條件都差很多、沒有固定骨架</td><td>不必</td><td>挖空後幾乎整段都是〔〕，等於沒模板</td></tr>
+</tbody>
+</table>
+</div>
+
 <h2>✅ 預期產出</h2>
 <p>換完〔〕送出，一次就得到堪用結果——因為話術骨架已固定。模板價值：把「每週重寫」變成「填空」。</p>
 <h2>🆘 常見卡點與救援</h2>
-<ul><li><strong>不知哪些挖成〔〕</strong>：口訣「下次做同類事會變的挖空；話術不變的留著」。</li><li><strong>模板太死板</strong>：留一行「如需調整語氣請告訴我」，用時可追問微調。</li></ul>
+<ul>
+<li><strong>不知哪些挖成〔〕</strong>：口訣「下次做同類事會變的挖空；話術與規則不變的留著」。</li>
+<li><strong>模板太死板、產出很僵</strong>：在模板最後留一行「如需調整語氣或長度，我會再跟你說」，用的時候照樣可以追問微調——模板是起點不是終點。</li>
+<li><strong>挖太多空，變成每次都在填一堆</strong>：代表你挖過頭了。把「其實每次都填一樣」的那幾格改回固定值。</li>
+<li><strong>模板存了但每次都找不到</strong>：檔名取得好找（「AI 模板」放桌面或常用資料夾），每個模板上方寫一行「什麼時候用」。</li>
+<li><strong>同事想用但不會填</strong>：在〔標籤〕裡直接寫提示，例如〔對象，例如：各里里長〕，別人一看就知道要填什麼。</li>
+<li><strong>用久了發現有缺漏</strong>：每次調整完順手存回模板，不要只改當次那份——不然下次又會踩同一個坑。</li>
+</ul>
 <h2>📌 完成標準</h2>
-<p>有一份存好的、可重用的模板，且測過填空就能跑。</p>
+<p>有一份存好的、可重用的模板（至少一個，理想是三個），且實際測過填空就能跑；並且知道自己下一步要不要升級成專屬助手。</p>
 <h2>🔀 延伸練習／自我加強</h2>
 <ul><li><strong>建自己的模板庫</strong>：多做幾個不同用途的模板（通知、簽稿、回信、摘要、比較各一個），彙整成一份專屬你的「模板庫」，以後同類的事直接拿來填空。</li></ul>
   </div>
