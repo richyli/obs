@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>小組討論：綜合闖關，混用今天的招解一個難題 · 練習</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;}
+body{font-family:"Helvetica Neue",Arial,"Noto Sans TC",sans-serif;background:#f0f2f5;margin:0;color:#1a1a1a;}
+.topnav{background:#fff;border-bottom:1px solid #e4e4e4;padding:.7rem 1.2rem;position:sticky;top:0;z-index:10;box-shadow:0 2px 8px rgba(0,0,0,.05);display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;font-size:.8rem;}
+.topnav a{color:#0055cc;text-decoration:none;font-weight:600;}
+.topnav a:hover{text-decoration:underline;}
+.topnav .sep{color:#bbb;}
+.topnav .cur{color:#666;}
+.tag-ex{font-size:.68rem;font-weight:800;background:#dbeafe;color:#1d4ed8;padding:.1rem .45rem;border-radius:4px;}
+.wrap{max-width:800px;margin:1.4rem auto 3rem;padding:0 1.2rem;}
+.card{background:#fff;border-radius:12px;box-shadow:0 1px 6px rgba(0,0,0,.08);padding:1.4rem 1.6rem 1.8rem;border-left:5px solid #1d4ed8;}
+.card h1{font-size:1.3rem;margin:.2rem 0 1rem;}
+.card h2{font-size:1.05rem;font-weight:800;color:#1d4ed8;margin:1.3rem 0 .5rem;padding-bottom:.25rem;border-bottom:2px solid #eef2f8;}
+.card h3{font-size:.95rem;font-weight:800;color:#333;margin:1rem 0 .4rem;}
+.card h4{font-size:.9rem;font-weight:800;color:#1d4ed8;margin:.9rem 0 .3rem;}
+.card p{font-size:.9rem;line-height:1.75;color:#333;margin:.5rem 0;}
+.card ul,.card ol{margin:.4rem 0 .6rem 1.4rem;}
+.card li{font-size:.89rem;line-height:1.7;color:#333;margin-bottom:.32rem;}
+.card code{background:#f3f3f3;color:#c7254e;padding:.1em .35em;border-radius:3px;font-size:.85em;font-family:"SFMono-Regular",Consolas,monospace;}
+.card strong{color:#111;}
+.card a{color:#1d4ed8;}
+.card pre{background:#1e293b;color:#e2e8f0;border-radius:8px;padding:.85rem 1rem;margin:.6rem 0;overflow-x:auto;font-size:.82em;line-height:1.6;white-space:pre-wrap;font-family:"SFMono-Regular",Consolas,monospace;}
+.tbl-wrap{overflow-x:auto;margin:.6rem 0;}
+.card table{border-collapse:collapse;width:100%;font-size:.84rem;}
+.card th,.card td{border:1px solid #e2e8f0;padding:.4rem .6rem;text-align:left;vertical-align:top;}
+.card th{background:#f8fafc;font-weight:700;}
+.note{background:#f0f7ff;border-left:3px solid #1d4ed8;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.warn{background:#fff1f0;border-left:3px solid #ef4444;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.expect{background:#f0fdf4;border-left:3px solid #22c55e;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.step{background:#eff6ff;border-left:3px solid #3b82f6;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.worksheet{background:#fffbeb;border:1px solid #fcd34d;border-radius:10px;padding:.8rem 1rem;margin:.8rem 0;}
+.worksheet .wt{font-weight:800;color:#b45309;font-size:.92rem;margin-bottom:.4rem;}
+.worksheet ol{margin:.3rem 0 .3rem 1.3rem;}
+.worksheet li{margin-bottom:.5rem;}
+.blank{display:inline-block;min-width:8rem;border-bottom:1.5px dashed #b45309;}
+.report{background:#f5f3ff;border:1px solid #c4b5fd;border-radius:10px;padding:.8rem 1rem;margin:.8rem 0;}
+.report .rt{font-weight:800;color:#6d28d9;font-size:.92rem;margin-bottom:.4rem;}
+.botnav{text-align:center;margin:1.4rem 0;}
+.botnav a{display:inline-block;margin:.3rem;padding:.5rem 1.1rem;background:#fff;border-radius:8px;text-decoration:none;color:#1d4ed8;font-weight:700;font-size:.85rem;box-shadow:0 1px 4px rgba(0,0,0,.07);}
+.botnav a:hover{background:#f0f7ff;}
+@media(max-width:520px){.wrap{padding:0 .7rem;}.card{padding:1.1rem 1.1rem 1.4rem;}}
+</style>
+</head>
+<body>
+<div class="topnav">
+  <a href="gov-ai_lesson.html">🏠 AI提示工程實戰班─打造你的AI問答秘書第9期</a><span class="sep">›</span>
+  <a href="gov-ai-m3_lesson.html">模組 3：進階結構 + 創意</a><span class="sep">›</span>
+  <span class="cur">小組討論：綜合闖關</span>
+  <span class="tag-ex">💬 小組討論</span>
+</div>
+<div class="wrap">
+  <div class="card">
+<h2>小組討論：混用今天的招，一起解一個真難題</h2>
+<div class="note">這是第三堂的<strong>總結小組討論</strong>：今天你們學了好幾種讓 AI「想得更深、更廣」的招——現在挑一個單位真正的難題，全組合力，<strong>混用其中兩招以上</strong>把它解到能提案，最後上台報告。</div>
+
+<h2>✨ Take aways（你會帶走什麼）</h2>
+<p>你會練到今天最關鍵的一件事——<strong>不是「會用某一招」，而是「面對真問題時，判斷該出哪幾招、怎麼搭配」</strong>。做完你們手上會有一份可以真的帶進單位會議的提案雛形。</p>
+
+<h2>🧰 今天學的招，先複習一下手上有哪些牌</h2>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>招</th><th>它幫你做什麼</th><th>什麼難題適合出這招</th></tr></thead>
+<tbody>
+<tr><td><a href="ex-cot-tot.html">思維鏈</a></td><td>要 AI 一步步推理給你看</td><td>要算、要抓邏輯、要判斷適用哪條規定</td></tr>
+<tr><td><a href="ex-cot-tot.html">思維樹</a></td><td>展開多方案再比較</td><td>修繕/重建/遷址這種「要選一個」的決策</td></tr>
+<tr><td><a href="ex-expert-panel.html">專家座談</a></td><td>找多方立場的人來辯論</td><td>牽涉多方、會有人反對的政策</td></tr>
+<tr><td><a href="ex-brainstorm.html">腦力激盪</a></td><td>發散→收斂→深化</td><td>要一批點子再篩出可行的</td></tr>
+<tr><td><a href="ex-cross-analogy.html">跨界類比</a></td><td>借別的行業的解法（往上）</td><td>老問題想不出新解、要創新亮點</td></tr>
+<tr><td><a href="ex-cross-analogy.html">第一性原理</a></td><td>拆到本質、質疑必要性（往下）</td><td>懷疑「這件事根本不必這樣做」</td></tr>
+<tr><td><a href="ex-boden-combinational.html">組合式創意</a></td><td>A × B 強迫組合</td><td>要把既有資源湊出新用途</td></tr>
+<tr><td><a href="ex-boden-exploratory.html">探索式創意</a></td><td>拆維度、窮舉沒試過的組合</td><td>現有做法只試過幾種、想找空白</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>💬 討論流程（全組一起做）</h2>
+<div class="step"><strong>Step 1 · 選題</strong>：從組員的工作裡挑一個<strong>真實、還沒解決、大家有感</strong>的難題。愈具體愈好——不要「如何提升為民服務」，要「某項服務民眾一直抱怨 X」。</div>
+<div class="step"><strong>Step 2 · 選招</strong>：對照上面的表，討論這個難題<strong>該出哪兩招以上</strong>。先想「它是決策型？創意型？多方角力型？」再挑招。這一步是重點，別急著打字。</div>
+<div class="step"><strong>Step 3 · 動手</strong>：把選定的招，用可複製的 prompt 實際跑一次（一台裝置操作、大家一起看）。招與招之間可以串——例如先用第一性原理拆、再用跨界類比借解；或先腦力激盪發散、再用專家座談檢驗。</div>
+<div class="step"><strong>Step 4 · 收斂成提案</strong>：把 AI 給的東西，經過全組判斷（可行嗎？合法規嗎？預算人力夠嗎？），收成一個具體、下週能開始的小方案。</div>
+<div class="step"><strong>Step 5 · 找一個破綻</strong>：提案別急著滿意——用<a href="ex-expert-panel.html">專家座談</a>或「魔鬼代言人」請 AI 挑你們方案的毛病，補起來。</div>
+
+<h2>🔗 招怎麼串？三個搭配示範</h2>
+<div class="note">
+<strong>① 拆 + 借（第一性原理 → 跨界類比）</strong>：先問「這流程哪些是真的必要」，砍掉冗贅之後，剩下的環節再去別的行業借更好的做法。<br>
+<strong>② 散 + 選（腦力激盪 → 思維樹）</strong>：先發散出一堆點子，把最有潛力的三個丟進思維樹，各自展開優缺點、成本、風險再比較。<br>
+<strong>③ 湊 + 驗（Boden 組合 → 專家座談）</strong>：先用強迫組合湊出新點子，再開一場虛擬座談，讓不同立場的人（含反對方）檢驗它站不站得住。
+</div>
+
+<h2>📝 小組學單（邊做邊填）</h2>
+<div class="worksheet">
+<div class="wt">🗒️ 我們這組的闖關紀錄</div>
+<ol>
+<li>我們挑的難題是：<span class="blank"></span></li>
+<li>它是哪一型？（決策／創意／多方角力／流程改造）：<span class="blank"></span></li>
+<li>我們決定出的兩招是：<span class="blank"></span> ＋ <span class="blank"></span></li>
+<li>為什麼選這兩招（一句話）：<span class="blank"></span></li>
+<li>跑完得到的方案是：<span class="blank"></span></li>
+<li>我們自己挑出的一個破綻／風險：<span class="blank"></span></li>
+</ol>
+</div>
+
+<h2>🎯 每組要交：一份「提案一頁」</h2>
+<div class="expect">把闖關結果收成一頁，包含五塊：
+<br><strong>① 難題</strong>：一句話講清楚要解什麼。
+<br><strong>② 用了哪兩招、怎麼串</strong>：讓別人知道你們怎麼想到這個方案的。
+<br><strong>③ 方案</strong>：具體、下週能開始的一個小做法。
+<br><strong>④ 一個風險或破綻</strong>：以及打算怎麼補。
+<br><strong>⑤ 要動用的資源</strong>：大概需要的人力、經費、跨誰協調。</div>
+<div class="warn">⚠️ 提醒：AI 給的數字、法條、案例都要自己查證，別直接寫進提案；涉及個案就用〔〕遮個資再跑。</div>
+
+<h2>🎤 上台報告（每組 2 分鐘，講三件事）</h2>
+<div class="report">
+<div class="rt">📢 報告三重點</div>
+<ol>
+<li><strong>難題＋你們出的招</strong>：什麼問題、為什麼選這兩招。</li>
+<li><strong>方案</strong>：唸出你們的具體做法，特別點出「哪一招幫你們想到別人想不到的角度」。</li>
+<li><strong>一個破綻</strong>：你們自己找到的風險，以及怎麼補。</li>
+</ol>
+</div>
+<div class="note">💡 報告的重點不是「方案多完美」，而是<strong>「你們怎麼用今天的招，把一個原本卡住的問題撬開」</strong>——這個思路才是能帶回單位重複用的東西。</div>
+
+<h2>📌 完成標準</h2>
+<p>全組選定一個真實難題、混用至少兩招跑出方案、自己挑出一個破綻、完成一頁提案與報告。</p>
+
+<h2>🔀 延伸練習／自我加強</h2>
+<ul>
+<li>把別組報告用的「招的搭配」記下來，回單位遇到類似類型的難題時照著套。</li>
+<li>把這份提案一頁實際帶進你單位的會議，當作討論的起點——看看真人會議跟 AI 沙盤推演差在哪。</li>
+<li>換一個難題，這次刻意用「不同的兩招搭配」再跑一次，累積你自己的「選招直覺」。</li>
+</ul>
+  </div>
+  <div class="botnav">
+    <a href="gov-ai-m3_lesson.html">← 回模組 3：進階結構 + 創意</a>
+    <a href="gov-ai_lesson.html">🏠 課程目錄</a>
+  </div>
+</div>
+</body>
+</html>
