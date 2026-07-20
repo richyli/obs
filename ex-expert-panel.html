@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>專家座談模式：讓 AI 開一場虛擬焦點團體 · 練習</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;}
+body{font-family:"Helvetica Neue",Arial,"Noto Sans TC",sans-serif;background:#f0f2f5;margin:0;color:#1a1a1a;}
+.topnav{background:#fff;border-bottom:1px solid #e4e4e4;padding:.7rem 1.2rem;position:sticky;top:0;z-index:10;box-shadow:0 2px 8px rgba(0,0,0,.05);display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;font-size:.8rem;}
+.topnav a{color:#0055cc;text-decoration:none;font-weight:600;}
+.topnav a:hover{text-decoration:underline;}
+.topnav .sep{color:#bbb;}
+.topnav .cur{color:#666;}
+.tag-ex{font-size:.68rem;font-weight:800;background:#dcfce7;color:#15803d;padding:.1rem .45rem;border-radius:4px;}
+.wrap{max-width:800px;margin:1.4rem auto 3rem;padding:0 1.2rem;}
+.card{background:#fff;border-radius:12px;box-shadow:0 1px 6px rgba(0,0,0,.08);padding:1.4rem 1.6rem 1.8rem;border-left:5px solid #0055cc;}
+.card h1{font-size:1.3rem;margin:.2rem 0 1rem;}
+.card h2{font-size:1.05rem;font-weight:800;color:#0055cc;margin:1.3rem 0 .5rem;padding-bottom:.25rem;border-bottom:2px solid #eef2f8;}
+.card h3{font-size:.95rem;font-weight:800;color:#333;margin:1rem 0 .4rem;}
+.card h4{font-size:.9rem;font-weight:800;color:#0055cc;margin:.9rem 0 .3rem;}
+.card p{font-size:.9rem;line-height:1.75;color:#333;margin:.5rem 0;}
+.card ul,.card ol{margin:.4rem 0 .6rem 1.4rem;}
+.card li{font-size:.89rem;line-height:1.7;color:#333;margin-bottom:.32rem;}
+.card code{background:#f3f3f3;color:#c7254e;padding:.1em .35em;border-radius:3px;font-size:.85em;font-family:"SFMono-Regular",Consolas,monospace;}
+.card strong{color:#111;}
+.card a{color:#0055cc;}
+.card hr{border:none;border-top:1px solid #eee;margin:1.2rem 0;}
+.card pre{background:#1e293b;color:#e2e8f0;border-radius:8px;padding:.85rem 1rem;margin:.6rem 0;overflow-x:auto;font-size:.82em;line-height:1.6;white-space:pre-wrap;font-family:"SFMono-Regular",Consolas,monospace;}
+.tbl-wrap{overflow-x:auto;margin:.6rem 0;}
+.card table{border-collapse:collapse;width:100%;font-size:.84rem;}
+.card th,.card td{border:1px solid #e2e8f0;padding:.4rem .6rem;text-align:left;vertical-align:top;}
+.card th{background:#f8fafc;font-weight:700;}
+.note{background:#f0f7ff;border-left:3px solid #0055cc;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.warn{background:#fff1f0;border-left:3px solid #ef4444;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.expect{background:#f0fdf4;border-left:3px solid #22c55e;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.rescue{background:#fefce8;border-left:3px solid #eab308;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.check{background:#faf5ff;border-left:3px solid #a855f7;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.question{background:#fff8e6;border-left:3px solid #f59e0b;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.trybox{background:#eff6ff;border:1px dashed #60a5fa;border-radius:8px;padding:.6rem .85rem;margin:.7rem 0;font-size:.85rem;line-height:1.65;}
+.trybox .th{font-weight:800;color:#1d4ed8;font-size:.85rem;margin-bottom:.25rem;}
+.trybox details{margin-top:.5rem;}
+.trybox summary{cursor:pointer;color:#0055cc;font-weight:700;font-size:.82rem;list-style:none;}
+.trybox summary::-webkit-details-marker{display:none;}
+.trybox summary:hover{text-decoration:underline;}
+.ba{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin:.5rem 0;}
+.ba .bad,.ba .good{border-radius:8px;padding:.55rem .75rem;font-size:.83rem;line-height:1.6;}
+.ba .bad{background:#fff1f0;border:1px solid #fecaca;}
+.ba .good{background:#f0fdf4;border:1px solid #bbf7d0;}
+.ba .lab{font-weight:800;font-size:.76rem;display:block;margin-bottom:.25rem;}
+.ba .bad .lab{color:#dc2626;} .ba .good .lab{color:#16a34a;}
+.botnav{text-align:center;margin:1.4rem 0;}
+.botnav a{display:inline-block;margin:.3rem;padding:.5rem 1.1rem;background:#fff;border-radius:8px;text-decoration:none;color:#0055cc;font-weight:700;font-size:.85rem;box-shadow:0 1px 4px rgba(0,0,0,.07);}
+.botnav a:hover{background:#f0f7ff;}
+@media(max-width:520px){.wrap{padding:0 .7rem;}.card{padding:1.1rem 1.1rem 1.4rem;}.ba{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="topnav">
+  <a href="gov-ai_lesson.html">🏠 AI提示工程實戰班─打造你的AI問答秘書第9期</a><span class="sep">›</span>
+  <a href="gov-ai-m3_lesson.html">模組 3：進階結構 + 創意</a><span class="sep">›</span>
+  <span class="cur">專家座談模式：虛擬焦點團體</span>
+  <span class="tag-ex">✍️ 練習</span>
+</div>
+<div class="wrap">
+  <div class="card">
+<h2>專家座談模式：讓 AI 一個人開一場「虛擬焦點團體」</h2>
+<div class="note">這練習教你一招進階用法：讓 AI <strong>同時扮演好幾位不同背景的專家</strong>，針對同一個問題各自發言、互相參考、多輪修正，最後辯證出一個比較周全的結論。等於你一個人，就開了一場焦點團體會議。</div>
+
+<h2>✨ Take aways（你會學到）</h2>
+<p>你會學到：<strong>①怎麼下指令，讓 AI 分飾多角、彼此辯論而不是各說各話</strong>；<strong>②怎麼設計「參與者」——找對的人上桌，比問對問題還重要</strong>；<strong>③怎麼讓討論真的收斂出結論，而不是一團和氣。</strong>這招特別適合公務裡「牽涉多方立場、沒有標準答案」的難題。</p>
+
+<h2>🧠 這是什麼？跟前面的思維樹差在哪</h2>
+<p>前面的<a href="ex-cot-tot.html">思維樹</a>是要 AI「自己展開多條路徑」來比較方案。<strong>專家座談</strong>則更進一步：讓 AI <strong>分身成好幾個「有立場的人」</strong>，每個人從自己的專業與利益出發發言，還會看別人講什麼、下一輪修正自己的說法。你得到的不只是幾個方案，而是<strong>「這件事在不同人眼中長什麼樣、他們會在哪裡吵起來、最後怎麼喬」</strong>。</p>
+<div class="note">它的學名有好幾個：Tree of Thought（思維樹的一種變形）、虛擬焦點團體、Multi-Agent（多代理人）。名字不重要，你只要記得它在做的事：<strong>一個 AI，扮演一群人，開一場會。</strong></div>
+
+<h2>⚙️ 三個讓它「真的在辯論」的關鍵設計</h2>
+<p>隨便說「請扮演三位專家討論」，通常會得到三段各說各話、沒有交集的獨白。要讓它真的辯證，指令裡一定要有這三件事：</p>
+<div class="note">
+<strong>① 給每位專家「不同的立場與專長」</strong>——差異愈大愈好。都是專家但都同一種背景，等於沒開會。<br>
+<strong>② 明講「看到別人的答案後，下一輪要參考、修正自己」</strong>——這句是靈魂。少了它，它們不會互動。<br>
+<strong>③ 設一個「收斂機制」</strong>——例如「寫不出更好答案的人就退出，直到剩一個」，或「討論至少三輪、直到取得共識」。逼它往結論走，而不是無限客套。
+</div>
+
+<h2>📋 核心骨架（複製後填空）</h2>
+<pre>想像現在有〔幾〕位專家在討論一個問題，
+專家【A】〔立場／專長〕、專家【B】〔立場／專長〕、專家【C】〔立場／專長〕。
+他們彼此欣賞，但也會提出建設性的意見。
+
+在每一輪討論中，每位專家都會寫出自己的答案讓其他人參考；
+看到別人的答案後，下一輪會參考別人的意見，繼續修改自己的答案。
+寫不出更好答案的專家，下一輪就退出討論。
+討論至少進行 3 輪，直到取得共識、或只剩一位專家為止。
+
+請你主持這場討論，記錄每一位專家每一輪的答案，
+最後寫出具體、可執行的結論。
+
+問題：〔你要討論的問題〕</pre>
+
+<h2>🔍 範例一：獨立書店怎麼吸引年輕人（三位性格互補的專家）</h2>
+<p>這是最基本的用法——請三位<strong>思考風格</strong>不同的專家。</p>
+<pre>想像現在有三位專家【A】、【B】、【C】在討論一個問題的解法：
+專家【A】擅長創意發想、專家【B】擅長數據分析、專家【C】擅長商業策略。
+他們彼此欣賞，但也會提出建設性的意見。
+
+在每一輪討論中，三位專家都會秀出自己的答案讓其他人參考；
+看到別人的答案後，下一輪會參考別人的意見繼續修改。
+寫不出更好答案的專家，下一輪就退出。討論至少 3 輪，直到取得共識。
+
+請你主持，記錄每位專家每一輪的答案，並寫出具體結論。
+問題：如何讓 18–21 歲的年輕人願意走進獨立書店消費？</pre>
+<div class="expect">你會看到：創意型先丟出天馬行空的點子（辦深夜書店、選書盲盒），分析型指出「哪些客群真的會來、成本多少」，策略型把可行的收斂成商業模式。<strong>三輪下來，天馬行空的被現實修剪、太保守的被創意撐開，最後留下的通常比你自己想的完整。</strong></div>
+
+<h2>🔍 範例二：幼兒園疑似餵藥事件（找「不同單位」的人上桌）</h2>
+<p>進階一點——不是找思考風格，而是找<strong>不同職位、不同權責</strong>的人，模擬真實的跨單位協調。</p>
+<pre>你是一場會議的主持人，邀請 4 位與會者：
+【A】來自教育主管機關、【B】是檢察官、【C】來自醫院、【D】是幼兒教育專家。
+他們彼此欣賞，但也會提出建設性的意見。
+
+每一輪 4 位都會寫下自己的看法讓其他人參考；
+看到別人的意見後，下一輪參考別人的觀點修正自己。
+提不出更好意見的人下一輪退出，直到取得共識。
+
+請你主持並記錄討論過程，寫出具體的處理建議。
+問題：新聞報導某幼兒園疑似餵食幼童非法鎮定劑，應該如何處理？</pre>
+<div class="expect">這場的價值在於<strong>每個角色會顧到你可能漏掉的面向</strong>：教育機關想到停權查核與家長溝通、檢察官想到證據保全與偵查不公開、醫院想到幼童驗傷與健康追蹤、幼教專家想到孩子的心理創傷。一個人很難同時想到這四塊，但四個角色一上桌就全帶出來了。</div>
+<div class="warn">⚠️ 這只是<strong>幫你把面向想全、事前沙盤推演</strong>的工具。真實案件的法律程序、醫療處置一定要回到實際權責單位與專業人員，AI 模擬的檢察官不能當法律意見。</div>
+
+<h2>🎭 更多角色搭配的靈感</h2>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>公務議題</th><th>可以請哪些人上桌</th></tr></thead>
+<tbody>
+<tr><td>老街商圈要不要假日封街徒步</td><td>店家代表、當地居民、交通警察、觀光行銷、身心障礙者代表（無障礙動線）</td></tr>
+<tr><td>要不要在公園設收費停車場</td><td>財政（增加收入）、里長（居民停車權益）、環保（綠地保護）、通勤族、法制</td></tr>
+<tr><td>長者數位服務推廣方案</td><td>資訊承辦、第一線櫃檯人員、里辦公處、長者本人代表、社工</td></tr>
+<tr><td>校園午餐要不要漲價</td><td>營養師、家長代表、供餐廠商、學校總務、社福（弱勢學生補助）</td></tr>
+</tbody>
+</table>
+</div>
+<div class="note">💡 一個實用技巧：如果你自己也想不到該找誰，<strong>先問 AI「這個議題應該邀請哪些立場的人來座談？請列出 5 位並說明他們各自會在意什麼」</strong>，讓它先幫你排出與會名單，你再從中挑選、增補。</div>
+
+<h2>⚖️ 沒設計好 vs 設計好</h2>
+<div class="ba">
+  <div class="bad"><span class="lab">✗ 隨便找人</span>「請三位專家討論這個政策。」<br>→ 三個都是「政策專家」，講出來的東西大同小異，像同一個人分三段講。沒有真正的張力，也沒顧到反對方。</div>
+  <div class="good"><span class="lab">✓ 刻意找立場衝突的人</span>「請支持方、反對方、財政、法制、受影響民眾各一位討論。」<br>→ 一定會吵起來，而吵的地方正是這個政策<strong>真正的難點與風險</strong>——這才是你需要事先知道的。</div>
+</div>
+<div class="check">🎯 專家座談的精髓：<strong>刻意把「會反對你的人」也放上桌。</strong>只找同溫層，開會等於自我安慰；放進反對者與利害衝突方，你才會在提案前就看見它的破綻，而不是被長官或民眾當場問倒。</div>
+
+<h2>✍️ 練習一（暖身）：三位風格專家解一個小題</h2>
+<div class="trybox">
+<div class="th">✍️ 動手做</div>
+用<strong>範例一的骨架</strong>（創意／分析／策略三位專家），換成一個你單位的小問題，跑一次三輪討論。題目例如：「如何提高里民參加社區活動的意願？」或「如何讓年輕人願意追蹤本局的社群帳號？」<br>
+自評重點：三位專家講的東西有沒有<strong>互相參考、後一輪有沒有真的修正</strong>？如果三段各說各話，就是你的指令漏了「看到別人的答案後要修正自己」這句。
+<details><summary>👉 卡住了？點開參考 prompt</summary>
+<pre>想像三位專家【A】創意發想、【B】數據分析、【C】商業策略在討論。
+他們彼此欣賞，但也會提建設性意見。
+每輪各自寫答案讓別人參考，下一輪參考別人意見修正自己，
+寫不出更好答案的下一輪退出，至少討論 3 輪直到共識。
+請你主持、記錄每輪答案、寫出具體可執行的結論。
+問題：如何提高本里 20–35 歲居民參加社區活動的意願？</pre>
+</details>
+</div>
+
+<h2>✍️ 練習二（進階）：自己設計一場「有張力」的座談</h2>
+<p>這一題的重點<strong>不在問題，而在你怎麼挑人</strong>。一場座談有沒有價值，八成取決於你請了誰上桌。</p>
+<div class="trybox">
+<div class="th">✍️ 動手做（分兩步）</div>
+挑一個你單位<strong>真實、牽涉多方、還沒定案</strong>的爭議題（例如：某公有地要蓋停車場還是保留綠地、夜市要不要遷址、某項服務要不要收費）。<br><br>
+<strong>第一步 · 設計與會者（這步最重要，花點心思）</strong>：列出 <strong>5 位</strong>與會者，其中<strong>至少要有一位是明確反對的、一位是容易被忽略的弱勢或少數群體</strong>。每位都寫一句「他最在意什麼」。<br>
+<strong>第二步 · 開會</strong>：把這 5 位放進骨架，讓他們多輪討論並收斂。看看討論中<strong>最激烈的衝突點是什麼</strong>——那通常就是你這個提案真正該處理的核心問題。
+<details><summary>👉 卡住了？點開「怎麼挑人」的示範（以「公有地蓋停車場 vs 保留綠地」為例）</summary>
+<strong>與會者設計（刻意製造張力）：</strong>
+<ul>
+<li>【A】<strong>財政單位</strong>——在意增加停車收入、解決違停。（支持蓋）</li>
+<li>【B】<strong>環保團體代表</strong>——在意都市綠地與降溫、生態。（明確反對）</li>
+<li>【C】<strong>附近居民</strong>——白天要停車、晚上想要有地方散步，立場矛盾。（搖擺）</li>
+<li>【D】<strong>行動不便者／推嬰兒車的家長</strong>——容易被忽略的一群，在意的是無障礙與安全，不管蓋什麼都要顧到。（少數聲音）</li>
+<li>【E】<strong>財主單位／主計</strong>——在意經費來源、維護成本、是否值得。（把關）</li>
+</ul>
+<pre>你是一場公民座談的主持人，邀請 5 位與會者：
+【A】財政單位（想增加停車收入、解決違停）
+【B】環保團體代表（重視都市綠地與生態，反對開發）
+【C】附近居民（白天要停車、晚上想散步，立場矛盾）
+【D】推嬰兒車的家長（在意無障礙與安全，容易被忽略）
+【E】主計單位（在意經費來源與長期維護成本）
+他們彼此欣賞，但也會提出建設性的意見。
+每輪各自寫下看法讓別人參考，下一輪參考別人意見修正自己，
+提不出更好意見的下一輪退出，至少 3 輪直到取得共識或折衷方案。
+請你主持、記錄討論、寫出具體結論，並特別標出討論中最大的爭議點。
+問題：市區一塊約 500 坪的公有地，應該蓋收費停車場還是保留為綠地？</pre>
+<p style="font-size:.83rem;margin-top:.4rem;">關鍵在【B】和【D】：如果只找財政、居民、主計（都在算錢與方便），這場會開起來會一面倒向蓋停車場，你事後才被環保團體和無障礙團體投訴。<strong>把反對方和弱勢方預先放上桌，等於在提案前就先聽到抗議，把破綻補起來。</strong></p>
+</details>
+</div>
+
+<h2>🧭 什麼時候該用專家座談？</h2>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>你遇到的情境</th><th>適不適合</th><th>為什麼</th></tr></thead>
+<tbody>
+<tr><td>牽涉多方立場、會有人反對的政策或方案</td><td><strong>非常適合</strong></td><td>能事先把各方會怎麼吵、吵在哪裡攤開，提案前先補漏</td></tr>
+<tr><td>你想不到「還有誰會受影響」</td><td><strong>適合</strong></td><td>不同角色會替你想到你漏掉的利害關係人</td></tr>
+<tr><td>需要創意但又要落地的發想</td><td><strong>適合</strong></td><td>創意型負責發散、分析與策略型負責收斂，互相修剪</td></tr>
+<tr><td>有明確標準答案的事（法規怎麼規定、數字多少）</td><td>不必</td><td>那是查證問題，不是討論問題，直接查原始資料</td></tr>
+<tr><td>單純要一份文件、一則通知</td><td>不必</td><td>用三段式或模板就好，殺雞不用牛刀</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>✅ 完成標準</h2>
+<p>你能設計出一場<strong>與會者立場夠多元（含反對方與弱勢方）</strong>的虛擬座談，讓 AI 跑完多輪討論並收斂出結論，而且你能指出「討論中最大的爭議點在哪」。</p>
+
+<h2>🆘 常見卡點與救援</h2>
+<ul>
+<li><strong>三位專家各說各話、沒有互動</strong>：指令漏了「看到別人的答案後，下一輪要參考並修正自己」，補上這句。</li>
+<li><strong>討論永遠一團和氣、收不出結論</strong>：加「寫不出更好答案的人就退出，直到剩一位」或「至少三輪並明確給出最終共識」。</li>
+<li><strong>角色都太像</strong>：把立場差異拉大，刻意放入「會反對」的人；或先請 AI 幫你列出該邀請哪些立場的人。</li>
+<li><strong>它開始編造數據、法條來支持某個立場</strong>：加一句「討論中若引用數字或法規，需標明是假設，實際數據我會另行查證」。</li>
+<li><strong>結論太空泛</strong>：要求「最後結論要具體、可執行，並列出各方都能接受的折衷點與仍有爭議的地方」。</li>
+</ul>
+
+<h2>🔀 延伸練習／自我加強</h2>
+<ul>
+<li>把練習二那場座談的結論，整理成一份「議題沙盤推演摘要」，實際帶進單位的會議當討論起點。</li>
+<li>換一個議題，這次<strong>先請 AI 幫你列出應該邀請哪些人</strong>，比較它排的名單跟你自己想的差在哪。</li>
+<li>試著在座談裡加入一位「魔鬼代言人」——專門挑每個方案的毛病，看看能不能逼出更穩的結論。</li>
+</ul>
+  </div>
+  <div class="botnav">
+    <a href="gov-ai-m3_lesson.html">← 回模組 3：進階結構 + 創意</a>
+    <a href="gov-ai_lesson.html">🏠 課程目錄</a>
+  </div>
+</div>
+</body>
+</html>
