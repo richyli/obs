@@ -73,6 +73,17 @@ body{font-family:"Helvetica Neue",Arial,"Noto Sans TC",sans-serif;background:#f0
 4 少數但重要：數量少卻值得注意的個案（安全、法律、弱勢）
 【限制】不誇大也不淡化；只根據我提供的意見，不腦補民意；統計是趨勢非精確數字。
 【格式】1、4 用條列，2 用表格（議題／次數／情緒／代表句）。</pre>
+<h2>🤖 用 Claude Code 可以這樣放大</h2>
+<div class="note">分析<strong>幾則</strong>留言，貼進對話式 AI 就行。但如果你有<strong>幾百上千筆</strong>的陳情、問卷開放題、社群留言（通常存在 Excel 或 CSV），一次貼一小段根本統計不出全貌——這時該用「會動手的 AI」。</div>
+<p>如果你電腦裝了 <strong>Claude Code</strong>（或其他能讀本機檔案的 agentic 工具），可以這樣做：</p>
+<ul>
+<li><strong>把留言／開放題匯出成一個 CSV 或 Excel 檔</strong>（記得先去識別化，把姓名、電話等個資拿掉）。</li>
+<li>叫它<strong>「讀這個檔的每一筆意見，分成幾個爭點類別，統計各類別筆數與情緒傾向，並把數量少但很關鍵的意見另外標出來，做成一張分析表」</strong>。</li>
+<li>它會<strong>逐筆分類、統計、產出表格檔</strong>，甚至幫你畫成長條圖——對話式做不到整批處理，也產不出檔案。</li>
+</ul>
+<div class="expect">💡 適合的場景：陳情案分類統計、問卷開放題歸納、社群輿情盤點、公聽會意見彙整。凡是<strong>「一整批文字資料要批次分類、統計、產表」</strong>，就是 Claude Code 遠勝對話式的地方。先了解概念看 <a href="ex-agentic-overview.html">會動手的 AI：概念總覽</a>。</div>
+<div class="warn">⚠️ 這裡最容易踩個資紅線：<strong>民眾意見常夾帶姓名、地址、電話</strong>，匯出檔一定要先去識別化再交給 AI。另外 AI 的分類與情緒判讀會有偏誤（回想 <a href="ex-ethics-bias.html">偏誤那一課</a>——它可能放大多數、淹沒少數意見），關鍵結論要人抽樣複核。</div>
+
 <h2>✅ 預期產出</h2>
 <p>一堆散亂意見 → 一張爭點×情緒表 + 改善建議清單 + 重點個案。原本讀不完的留言，變成能上簽的民意摘要。</p>
 <h2>🆘 常見卡點與救援</h2>

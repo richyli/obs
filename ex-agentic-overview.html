@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>會動手的 AI（Agentic）：概念總覽 · 認識</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;}
+body{font-family:"Helvetica Neue",Arial,"Noto Sans TC",sans-serif;background:#f0f2f5;margin:0;color:#1a1a1a;}
+.topnav{background:#fff;border-bottom:1px solid #e4e4e4;padding:.7rem 1.2rem;position:sticky;top:0;z-index:10;box-shadow:0 2px 8px rgba(0,0,0,.05);display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;font-size:.8rem;}
+.topnav a{color:#0055cc;text-decoration:none;font-weight:600;}
+.topnav a:hover{text-decoration:underline;}
+.topnav .sep{color:#bbb;}
+.topnav .cur{color:#666;}
+.tag-ex{font-size:.68rem;font-weight:800;background:#fef3c7;color:#b45309;padding:.1rem .45rem;border-radius:4px;}
+.wrap{max-width:800px;margin:1.4rem auto 3rem;padding:0 1.2rem;}
+.card{background:#fff;border-radius:12px;box-shadow:0 1px 6px rgba(0,0,0,.08);padding:1.4rem 1.6rem 1.8rem;border-left:5px solid #d97706;}
+.card h1{font-size:1.3rem;margin:.2rem 0 1rem;}
+.card h2{font-size:1.05rem;font-weight:800;color:#b45309;margin:1.3rem 0 .5rem;padding-bottom:.25rem;border-bottom:2px solid #fdf0e0;}
+.card h3{font-size:.95rem;font-weight:800;color:#333;margin:1rem 0 .4rem;}
+.card h4{font-size:.9rem;font-weight:800;color:#b45309;margin:.9rem 0 .3rem;}
+.card p{font-size:.9rem;line-height:1.75;color:#333;margin:.5rem 0;}
+.card ul,.card ol{margin:.4rem 0 .6rem 1.4rem;}
+.card li{font-size:.89rem;line-height:1.7;color:#333;margin-bottom:.32rem;}
+.card code{background:#f3f3f3;color:#c7254e;padding:.1em .35em;border-radius:3px;font-size:.85em;font-family:"SFMono-Regular",Consolas,monospace;}
+.card strong{color:#111;}
+.card a{color:#0055cc;}
+.card hr{border:none;border-top:1px solid #eee;margin:1.2rem 0;}
+.card pre{background:#1e293b;color:#e2e8f0;border-radius:8px;padding:.85rem 1rem;margin:.6rem 0;overflow-x:auto;font-size:.82em;line-height:1.6;white-space:pre-wrap;font-family:"SFMono-Regular",Consolas,monospace;}
+.tbl-wrap{overflow-x:auto;margin:.6rem 0;}
+.card table{border-collapse:collapse;width:100%;font-size:.83rem;}
+.card th,.card td{border:1px solid #e2e8f0;padding:.4rem .6rem;text-align:left;vertical-align:top;}
+.card th{background:#f8fafc;font-weight:700;}
+.note{background:#f0f7ff;border-left:3px solid #0055cc;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.warn{background:#fff1f0;border-left:3px solid #ef4444;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.expect{background:#f0fdf4;border-left:3px solid #22c55e;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.question{background:#fff8e6;border-left:3px solid #f59e0b;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.botnav{text-align:center;margin:1.4rem 0;}
+.botnav a{display:inline-block;margin:.3rem;padding:.5rem 1.1rem;background:#fff;border-radius:8px;text-decoration:none;color:#0055cc;font-weight:700;font-size:.85rem;box-shadow:0 1px 4px rgba(0,0,0,.07);}
+.botnav a:hover{background:#f0f7ff;}
+@media(max-width:520px){.wrap{padding:0 .7rem;}.card{padding:1.1rem 1.1rem 1.4rem;}}
+</style>
+</head>
+<body>
+<div class="topnav">
+  <a href="gov-ai_lesson.html">🏠 AI提示工程實戰班─打造你的AI問答秘書第9期</a><span class="sep">›</span>
+  <a href="gov-ai-m4_lesson.html">模組 4：公務應用</a><span class="sep">›</span>
+  <span class="cur">會動手的 AI：概念總覽</span>
+  <span class="tag-ex">📖 認識工具</span>
+</div>
+<div class="wrap">
+  <div class="card">
+<h2>會動手的 AI（Agentic）：什麼時候該從「聊天」升級成「動手」</h2>
+<div class="note">這是一頁<strong>概念總覽</strong>，不用動手。前面所有練習用的都是「對話式 AI」——你打字、它回你文字，動作你自己來。這頁講的是下一個層次：<strong>會直接讀你的檔案、幫你動手做事的 AI（agentic）</strong>，以及一個實用的判斷力：什麼樣的公務工作，該從對話式升級到會動手的。</div>
+
+<h2>✨ Take aways（你會帶走什麼）</h2>
+<p>你會分得清<strong>「對話式」與「會動手（agentic）」的差別</strong>，看得懂一件公務工作<strong>該用哪一種</strong>，並知道<strong>升級到會動手的工具時，有哪些資安界線一定要守。</strong></p>
+
+<h2>🪜 一句話分清楚兩者</h2>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th></th><th>對話式 AI（前面都在用的）</th><th>會動手的 AI（agentic）</th></tr></thead>
+<tbody>
+<tr><td>它做什麼</td><td>回你一段<strong>文字</strong></td><td>直接<strong>讀你的檔、改你的檔、跑一整套流程</strong></td></tr>
+<tr><td>動作誰做</td><td>你自己（複製、貼上、對回 Word）</td><td>它做，你在旁邊看、必要時喊停</td></tr>
+<tr><td>一次能處理</td><td>你貼進去的<strong>那一段</strong></td><td>整個<strong>資料夾、幾十份檔案</strong></td></tr>
+<tr><td>代表工具</td><td>ChatGPT、Claude、Gemini 網頁版</td><td>Claude Code、Copilot in Office、連接器（MCP）</td></tr>
+</tbody>
+</table>
+</div>
+<div class="note">💡 一個生活比喻：對話式像<strong>一位很會寫的顧問</strong>——你問他、他給你建議，執行要你自己來；會動手的像<strong>一位資深助理</strong>——你交代一件事，他直接去翻檔案、整理、做出來給你看。</div>
+
+<h2>🎯 判斷表：這件公務工作，該用哪一種？</h2>
+<p>不是每件事都要動用 agentic。用一個簡單原則判斷：<strong>牽涉到「一整批檔案」「跨檔比對」「要真的產出檔案」的，才值得升級；單純生一段文字的，對話式就好。</strong></p>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>公務工作</th><th>用哪種</th><th>為什麼</th></tr></thead>
+<tbody>
+<tr><td>擬一份公文、一則通知、一段公告</td><td><strong>對話式</strong></td><td>單次文字生成，殺雞不用牛刀</td></tr>
+<tr><td>把一份長文件摘要成重點</td><td>對話式可</td><td>一份還好；但若要一次讀<strong>整個資料夾</strong>就該用會動手的</td></tr>
+<tr><td><strong>兩份法規／契約並排逐條比對</strong></td><td><strong>會動手</strong></td><td>對話式貼不進兩份長文件、也做不出並排標差異 → 見 <a href="ex-regulation.html">法規比對</a></td></tr>
+<tr><td><strong>一整批民眾留言分類、統計、產表</strong></td><td><strong>會動手</strong></td><td>整批 CSV 資料，對話式一次只能貼一小段 → 見 <a href="ex-opinion-analysis.html">建言分析</a></td></tr>
+<tr><td><strong>一疊舊公文一次全轉白話</strong></td><td><strong>會動手</strong></td><td>讀整個資料夾批次改寫，對話式要一份份貼</td></tr>
+<tr><td>行事曆排會、雲端硬碟找檔彙整</td><td><strong>會動手</strong></td><td>要它實際去操作你的工具，不只給建議 → 見 <a href="ex-agentic-demo.html">Agentic Demo</a></td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>🧭 三頁怎麼分工</h2>
+<p>這一區有三頁，各看一個面向，建議照順序看：</p>
+<ul>
+<li><strong>這頁（概念）</strong>：搞懂對話式 vs 會動手的差別、什麼時候該升級。</li>
+<li><a href="ex-agentic-demo.html">Agentic Demo（實例現場）</a>：看老師實際示範「會動手的 AI」做三件事，感受它跟對話式的落差。</li>
+<li><a href="ex-desktop-tools.html">桌面版工具介紹（工具清單）</a>：認識 Claude Desktop、Copilot、Claude Code 等具體工具，以及該不該裝。</li>
+</ul>
+
+<h2>🔧 公務最有感的三個「會動手」場景</h2>
+<div class="expect">
+<strong>① 法規／契約並排比對</strong>：修法前後兩版並排，逐條標出「刪了什麼、加了什麼、改了什麼」。承辦手動比一整天，會動手的 AI 幾分鐘給你一張對照表。<br>
+<strong>② 一整批文件彙整</strong>：把一個資料夾的幾十份回覆、報告、會議紀錄，一次讀完、彙整成一張總表或一份摘要。<br>
+<strong>③ 重複流程自動化</strong>：每個月都要做的同一套整理（把 A 檔的東西挑出來、套進 B 格式、產出 C 報表），交代一次，之後照跑。
+</div>
+<div class="note">這三個場景在對應的練習頁（法規比對、長文件摘要、建言分析）裡，都有一個「🤖 用 Claude Code 可以這樣放大」的區塊，講具體怎麼做。</div>
+
+<h2>🤔 我現在就需要嗎？</h2>
+<p>用三個問題判斷：</p>
+<ul>
+<li><strong>我常常要「把好幾個檔案的東西湊起來」嗎？</strong>是 → 會動手的能幫你自動彙整。</li>
+<li><strong>我有一套每個月重複、跨檔案的固定流程嗎？</strong>是 → 那正是 agentic 最能省時的地方。</li>
+<li><strong>以上都沒有？</strong>——那<strong>對話式＋一份好的長提示，已經能解決八成公務需求</strong>。會動手的是「工作量大了再升級」的選項，不是必須。</li>
+</ul>
+
+<h2>🔐 升級前必看的資安界線</h2>
+<div class="warn">會動手的 AI <strong>威力更大，風險也更大</strong>——因為它能真的碰到你的檔案。務必：
+<ul>
+<li><strong>機關核可才裝</strong>：公務電腦裝軟體、開連接器，先確認資訊單位政策，別自己亂裝。</li>
+<li><strong>只授權必要範圍</strong>：能讀整個雲端硬碟不代表該全開，只授權你真的要用的資料夾。</li>
+<li><strong>個資／機密仍是紅線</strong>：工具能讀不代表可以讓它處理敏感資料；去識別化與機關規範照樣適用（回想 <a href="ex-deidentify.html">去識別化那一課</a>）。</li>
+<li><strong>它動手前你要看得到、能喊停</strong>：好的 agentic 工具會在真的改檔前讓你確認，別讓它全自動跑你沒看過的動作。</li>
+</ul></div>
+
+<h2>📌 帶走一句話</h2>
+<p>AI 不只是「網頁上聊天」——它正在變成<strong>會讀你檔案、替你動手的工作夥伴</strong>。判斷原則很簡單：<strong>要生一段文字，用對話式；要處理一整批檔案、跨檔比對、產出檔案，就是會動手的 AI 上場的時候。</strong>先把對話式＋好提示練熟，等你發現自己天天在重複搬檔、彙整，就是升級的訊號。</p>
+
+<h2>🔀 延伸／自我了解</h2>
+<ul>
+<li>看完 <a href="ex-agentic-demo.html">Agentic Demo</a>，感受「會動手」實際長什麼樣。</li>
+<li>回單位查一下：我們機關對 Claude Desktop／Copilot／連接器的使用政策是什麼？</li>
+<li>把你「每個月重複、要跨好幾個檔案」的一件事寫下來——那就是你未來最該用 agentic 工具的地方。</li>
+</ul>
+  </div>
+  <div class="botnav">
+    <a href="gov-ai-m4_lesson.html">← 回模組 4：公務應用</a>
+    <a href="gov-ai_lesson.html">🏠 課程目錄</a>
+  </div>
+</div>
+</body>
+</html>
