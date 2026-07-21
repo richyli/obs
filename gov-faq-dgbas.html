@@ -401,8 +401,51 @@
     return res;
   }
 
+  // 同義詞／簡稱↔全稱對照：搜任一詞，等於也搜同組其他詞。每組互為同義。
+  const SYN_GROUPS = [
+    ['國旅','國民旅遊','國旅卡','國民旅遊卡','休假補助'],
+    ['核銷','報帳','報支','結報','請款','核帳'],
+    ['憑證','單據','原始憑證','會計憑證'],
+    ['發票','統一發票','電子發票','電子憑證'],
+    ['統編','統一編號'],
+    ['補助','津貼'],
+    ['出席費','鐘點費','講座費'],
+    ['首長','機關首長'],
+    ['主計','會計','出納'],
+    ['傳票','會計憑證'],
+    ['影本','副本'],
+    ['正本','原件','原本'],
+    ['PCR','核酸','核酸檢測'],
+    ['快篩','抗原','家用快篩'],
+    ['水電費','水費','電費'],
+    ['電信費','電話費','網路費'],
+    ['郵資','郵費','郵票'],
+    ['採購卡','政府採購卡'],
+    ['出差','差旅','公差'],
+    ['計程車','小黃','taxi'],
+    ['餐費','便當','茶水費','誤餐費'],
+    ['廠商','供應商','業者'],
+  ];
+  // 建索引：詞 → 同組所有詞（含自己）
+  const SYN_MAP = {};
+  SYN_GROUPS.forEach(g => g.forEach(w => {
+    const lw = w.toLowerCase();
+    SYN_MAP[lw] = (SYN_MAP[lw] || []).concat(g.map(x=>x.toLowerCase()));
+  }));
+  // 把使用者輸入的詞，展開成「要比對的所有同義詞」（去重）
+  function expandTerms(term){
+    const t = term.toLowerCase();
+    const out = new Set([t]);
+    // 只要輸入「包含」某個同義詞（或某同義詞包含輸入），就把該組全帶進來
+    Object.keys(SYN_MAP).forEach(w => {
+      if (t.includes(w) || w.includes(t)) SYN_MAP[w].forEach(s => out.add(s));
+    });
+    return Array.from(out).filter(Boolean);
+  }
+
   function applyFilter(){
     const term = qInput.value.trim();
+    const terms = term ? expandTerms(term) : [];
     clearBtn.style.display = term ? 'block' : 'none';
     let shown = 0;
     DATA.forEach(cat => {
@@ -412,21 +455,23 @@
       items.forEach(d => {
         const q = d.dataset.q, a = d.dataset.a;
         const alts = d.dataset.alts ? d.dataset.alts.split('␟') : [];
-        const tl = term.toLowerCase();
-        const qHit = term && q.toLowerCase().includes(tl);
-        const aHit = term && a.toLowerCase().includes(tl);
+        // 找出「在某段文字裡命中的第一個同義詞」，用來做高亮；沒命中回空字串
+        const hitWord = (txt) => { const low = txt.toLowerCase(); for(const t of terms){ if(low.includes(t)) return t; } return ''; };
+        const qHit = term && hitWord(q);
+        const aHit = term && hitWord(a);
         const altHitIdx = [];
-        alts.forEach((x,j)=>{ if(term && x.toLowerCase().includes(tl)) altHitIdx.push(j); });
+        alts.forEach((x,j)=>{ if(term && hitWord(x)) altHitIdx.push(j); });
         const hit = !term || qHit || aHit || altHitIdx.length>0;
         d.style.display = hit ? '' : 'none';
         const altEls = d.querySelectorAll('.alt-list li');
         if(hit){
           catShown++; shown++;
-          d.querySelector('.qtext').innerHTML = highlight(q, term);
-          d.querySelector('.atext').innerHTML = highlight(a, term);
+          d.querySelector('.qtext').innerHTML = qHit ? highlight(q, qHit) : esc(q);
+          d.querySelector('.atext').innerHTML = aHit ? highlight(a, aHit) : esc(a);
           altEls.forEach((li,j)=>{
-            li.innerHTML = (term && altHitIdx.includes(j)) ? highlight(alts[j], term) : esc(alts[j]);
-            li.classList.toggle('alt-hit', term && altHitIdx.includes(j));
+            const hw = (term && altHitIdx.includes(j)) ? hitWord(alts[j]) : '';
+            li.innerHTML = hw ? highlight(alts[j], hw) : esc(alts[j]);
+            li.classList.toggle('alt-hit', !!hw);
           });
           // reveal answer if the reason it matched is in the body/alts (not just the visible main question)
           if(term && (aHit || altHitIdx.length>0)) d.open = true;
