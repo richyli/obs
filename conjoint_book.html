@@ -623,6 +623,9 @@ MathJax = {
 - 長問卷誘發直線型刻板反應偏誤，HB 透過短問卷設計可降低此偏誤（Lenk et al., 1996）。
 - 預算限制下，當 part-worth 異質性相對回應誤差比值 $\text{tr}(\Sigma)/\sigma^2$ 大時，應用更多受訪者、每人評估更少 profiles（Lenk et al., 1996）。
 - HB-MNL 在多模態偏好結構下仍穩健，單一常態先驗可有效外推（Goeken et al., 2023）。
+- <strong>HB 常態先驗可放寬為 component 混合</strong>：Allenby, Arora &amp; Ginter（1998）把 HB 的單一常態母群先驗推廣為 $k$ 個 component 的常態混合 $\beta_j \sim \sum_k \phi_k\,\mathcal{N}(\bar\beta_k, D_k)$，允許母群分布為多峰或偏態，並讓 latent class 成為 $D_k = 0$ 的巢套特例（Allenby, Arora &amp; Ginter, 1998；延伸：normal component mixture）。
+- <strong>Gibbs sampler + Metropolis-Hastings 估計常態混合 HB</strong>：Allenby et al.（1998）以 Gibbs sampler 遞迴抽樣（10,000 次迭代、前 5,000 warm-up）；$\beta_j$ 的 full conditional 無閉式，改以 random-walk 的 Metropolis-Hastings 抽（提議 $\Delta\beta \sim \mathcal{N}(0, .25)$，接受率 &gt; 50%），$\bar\beta$ 抽自常態、$D$ 抽自 Inverted Wishart；多 component 時引入 latent 指標 $s_{jk}$ 標記受訪者所屬 component（Allenby et al., 1998；延伸：Metropolis-Hastings、Gibbs sampler、Allenby 1998 Methods）。
+- <strong>常態混合與 latent class 的 label switching 識別問題</strong>：對調 component 標籤 likelihood 完全相同（label switching）；Allenby et al.（1998）在先驗上對 component 質量施加序數限制 $\phi_1 > \phi_2 > \cdots > \phi_k$、並用 proper 先驗於共變異數矩陣避免無界 likelihood 解決識別問題（Allenby et al., 1998；延伸：Allenby 1998 Methods）。
 - CBC + HB 估計已成為 conjoint 實務主流標準（Agarwal et al., 2014）。
 - <strong>HB 於 algorithm aversion 情境</strong>：Egala &amp; Liang（2024）在 $N = 362$ 迦納臨床醫師 mCDS CBC 採用 HB；以 Lenk et al. (1996) 規格 $Y_i = X_i \beta_i + \varepsilon_i$ 與 covariate 映射 $\beta_i = \Theta z_i + \delta_i$，允許 gender、年齡、執業角色、年資等 covariate 下的 aversion 差異分析（Egala &amp; Liang, 2024; Egala 2024 Methods）。
 - <strong>HB 與 CBC scale 分離需充足任務數</strong>：Egala &amp; Liang（2024）採 fractional factorial orthogonal design 僅 2 tasks × 8 profiles，總資料量有限；雖 McFadden pseudo $R^2 = 0.309$ 落在良好區間，但無 holdout 驗證且 scale heterogeneity 未分離，提示小型 CBC 的 HB 應用需警覺估計不確定性（Egala &amp; Liang, 2024）。
@@ -699,6 +702,10 @@ MathJax = {
 <li>狄利克雷過程混合模型（DPM-MNL）自動決定群數，無需預設組內同質（Goeken et al., 2023）。</li>
 <li>模糊 C 均值（FCM）提供軟隸屬度與視覺彈性，避免硬分類資訊損失（Asioli et al., 2018）。</li>
 <li>當研究目的是管理溝通，LC-MNL 離散分群更實用；若目的是理解偏好結構，HB 或 ML+FCM 更嚴謹。</li>
+<li><strong>連續混合 nest 離散 latent class</strong>：Allenby, Arora &amp; Ginter（1998）以 $k$ 個 component 的常態混合建模 part-worth 異質性 $\beta_j \sim \sum_k \phi_k\,\mathcal{N}(\bar\beta_k, D_k)$，當各 component 共變異數 $D_k \to 0$ 時退化為 LC-MNL 有限點質量模型——因此常態混合是「母模型」、latent class 是「$D_k = 0$ 的受限子模型」，「群內同質假設是否成立」變成可被資料檢驗的 $D_k = 0$ 約束（Allenby, Arora &amp; Ginter, 1998；延伸：normal component mixture nests latent class model）。</li>
+<li><strong>群內異質性遠大於群間異質性</strong>：三個資料集（船外引擎 conjoint、番茄醬與鮪魚 scanner panel）中，within-component 異質性（$D_k$ 對角元素）一致遠大於 across-component 異質性（$\bar\beta_k$ 之間差異）；加權後的總體異質性分布幾乎不呈 multimodality，代表變異主要來自群內而非群間——把市場切成少數同質區隔會漏掉主要異質性來源（Allenby et al., 1998；延伸：within-component heterogeneity dwarfs across-component heterogeneity、within-component heterogeneity）。</li>
+<li><strong>連續混合在 holdout 預測全面勝過 latent class</strong>：連續常態混合（階層貝氏）在樣本內 log marginal density（船外引擎小 45%、番茄醬小 30%、鮪魚小 24%）與樣本外 holdout MAD（船外引擎小 14%、番茄醬與鮪魚各小 25%）皆優於 latent class；意即「以標準 latent class 模型辨識區隔，並非穩健的區隔基礎」，離散點質量近似有偏（Allenby et al., 1998；延伸：continuous mixture beats latent class on holdout prediction）。</li>
+<li><strong>市場或需上百個區隔</strong>：Allenby et al.（1998）以「用少數密度函數建模一整條山脈」為喻，主張真實市場因利益組合與使用情境極多，可能需要上百個或更多區隔才能刻畫；對與異質性分布呈非線性關係的決策（如 repositioning、定價）尤其關鍵，因為 latent class 提供的摘要點不保證得到好的期望利潤估計（Allenby et al., 1998；延伸：markets may need a hundred or more segments not a few）。</li>
 <li><strong>LC-MNL 歷史源頭</strong>：Kamakura &amp; Russell（1989）首次將潛在類別邏輯模型（LC-MNL）引入 choice model，以 maximum likelihood 同時識別具不同偏好結構的消費群體；此為 LC-MNL 在 conjoint 中應用的奠基文獻（Kamakura &amp; Russell, 1989; latent class conjoint）。</li>
 <li><strong>整合型估計勝過兩階段聚類</strong>：LC-MNL 相較於「先估計個體 part-worth 再 Ward/K-means 聚類」的兩階段流程，直接最大化整體對數概似，避免個體估計誤差累積傳播至分群步驟（Kamakura &amp; Russell, 1989；詳見 Integrated conjoint segmentation methods outperform two-stage procedures）。</li>
 <li><strong>Monte Carlo 最佳分群方法</strong>：Vriens（1996）以 Monte Carlo 模擬比較九種分群方法，Latent Class Normal Regression（LCN）在參數還原、配適度、群體還原三項準則中表現<strong>全面最佳</strong>，Fuzzy Clusterwise Regression（FCR）為次佳（Vriens, 1996; Vriens 1996 Metric Conjoint）。</li>

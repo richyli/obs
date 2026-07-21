@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>常見 AI 圖像工具介紹 · 模組 2</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;}
+body{font-family:"Helvetica Neue",Arial,"Noto Sans TC",sans-serif;background:#f0f2f5;margin:0;color:#1a1a1a;}
+.topnav{background:#fff;border-bottom:1px solid #e4e4e4;padding:.7rem 1.2rem;position:sticky;top:0;z-index:10;box-shadow:0 2px 8px rgba(0,0,0,.05);display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;font-size:.8rem;}
+.topnav a{color:#0055cc;text-decoration:none;font-weight:600;}
+.topnav a:hover{text-decoration:underline;}
+.topnav .sep{color:#bbb;}
+.topnav .cur{color:#666;}
+.tag-ex{font-size:.68rem;font-weight:800;background:#e0e7ff;color:#4338ca;padding:.1rem .45rem;border-radius:4px;}
+.wrap{max-width:800px;margin:1.4rem auto 3rem;padding:0 1.2rem;}
+.card{background:#fff;border-radius:12px;box-shadow:0 1px 6px rgba(0,0,0,.08);padding:1.4rem 1.6rem 1.8rem;border-left:5px solid #0055cc;}
+.card h1{font-size:1.3rem;margin:.2rem 0 1rem;}
+.card h2{font-size:1.05rem;font-weight:800;color:#0055cc;margin:1.3rem 0 .5rem;padding-bottom:.25rem;border-bottom:2px solid #eef2f8;}
+.card h3{font-size:.95rem;font-weight:800;color:#333;margin:1rem 0 .4rem;}
+.card h4{font-size:.9rem;font-weight:800;color:#0055cc;margin:.9rem 0 .3rem;}
+.card p{font-size:.9rem;line-height:1.75;color:#333;margin:.5rem 0;}
+.card ul,.card ol{margin:.4rem 0 .6rem 1.4rem;}
+.card li{font-size:.89rem;line-height:1.7;color:#333;margin-bottom:.32rem;}
+.card code{background:#f3f3f3;color:#c7254e;padding:.1em .35em;border-radius:3px;font-size:.85em;font-family:"SFMono-Regular",Consolas,monospace;}
+.card strong{color:#111;}
+.card a{color:#0055cc;}
+.card hr{border:none;border-top:1px solid #eee;margin:1.2rem 0;}
+.card pre{background:#1e293b;color:#e2e8f0;border-radius:8px;padding:.85rem 1rem;margin:.6rem 0;overflow-x:auto;font-size:.82em;line-height:1.6;white-space:pre-wrap;font-family:"SFMono-Regular",Consolas,monospace;}
+.card img{max-width:100%;border-radius:8px;margin:.5rem 0;}
+.tbl-wrap{overflow-x:auto;margin:.6rem 0;}
+.card table{border-collapse:collapse;width:100%;font-size:.84rem;}
+.card th,.card td{border:1px solid #e2e8f0;padding:.4rem .6rem;text-align:left;vertical-align:top;}
+.card th{background:#f8fafc;font-weight:700;}
+.note{background:#f0f7ff;border-left:3px solid #0055cc;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.warn{background:#fff1f0;border-left:3px solid #ef4444;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.expect{background:#f0fdf4;border-left:3px solid #22c55e;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.tool{border:1px solid #e5e9f0;border-radius:10px;padding:1rem 1.2rem;margin:.9rem 0;background:#fbfcfe;}
+.tool h3{margin-top:0;}
+.pill{display:inline-block;font-size:.7rem;font-weight:800;padding:.12rem .5rem;border-radius:999px;margin-left:.4rem;vertical-align:middle;}
+.pill-free{background:#dcfce7;color:#15803d;}
+.pill-paid{background:#fef3c7;color:#b45309;}
+.pill-mix{background:#e0e7ff;color:#4338ca;}
+.reuse-note{margin-top:1rem;font-size:.78rem;color:#888;text-align:center;}
+.botnav{text-align:center;margin:1.4rem 0;}
+.botnav a{display:inline-block;margin:.3rem;padding:.5rem 1.1rem;background:#fff;border-radius:8px;text-decoration:none;color:#0055cc;font-weight:700;font-size:.85rem;box-shadow:0 1px 4px rgba(0,0,0,.07);}
+.botnav a:hover{background:#f0f7ff;}
+@media(max-width:520px){.wrap{padding:0 .7rem;}.card{padding:1.1rem 1.1rem 1.4rem;}}
+</style>
+</head>
+<body>
+<div class="topnav">
+  <a href="gov-ai_lesson.html">🏠 AI提示工程實戰班─打造你的AI問答秘書第9期</a><span class="sep">›</span>
+  <a href="gov-ai-m2_lesson.html">模組 2：AI 生圖 + 海報</a><span class="sep">›</span>
+  <span class="cur">常見 AI 圖像工具介紹</span>
+  <span class="tag-ex">🧭 工具導覽</span>
+</div>
+<div class="wrap">
+  <div class="card">
+<h1>🧭 常見 AI 圖像工具介紹</h1>
+<div class="note">開始練習前，先認識現在最常用的幾個 AI 生圖工具，知道各自的強項與取得方式，之後練習你就能挑對工具、少走冤枉路。本頁不用背，當成「選工具的地圖」，需要時回來查。</div>
+
+<h2>✨ 一句話重點</h2>
+<p>AI 生圖工具沒有「最好」，只有「最適合這件事」。大致分三種路線：<strong>Nano Banana</strong>（Google，擅長「改圖」與角色一致）、<strong>ChatGPT 生圖 / Google Imagen</strong>（懂指令、圖上文字最準）、<strong>Midjourney</strong>（美感最強，但要付費、較不受控）。公務場合我們最常用前兩類——因為它們免費或內建、聽得懂中文、圖上文字比較不會亂。</p>
+
+<h2>📊 四款主流工具一覽</h2>
+<div class="tbl-wrap"><table>
+<thead><tr><th>工具</th><th>是誰做的</th><th>最擅長</th><th>取得方式</th><th>費用</th></tr></thead>
+<tbody>
+<tr><td><strong>Nano Banana</strong><br>(Gemini 生圖)</td><td>Google</td><td>改圖、去背、換背景、角色/商品前後一致、多張合成</td><td>Gemini App、Google AI Studio</td><td>有免費額度</td></tr>
+<tr><td><strong>ChatGPT 生圖</strong><br>(GPT Image)</td><td>OpenAI</td><td>聽懂複雜指令、圖上文字最準、邊聊邊改</td><td>ChatGPT（網站 / App）</td><td>免費版有限次<br>付費更穩</td></tr>
+<tr><td><strong>Google Imagen</strong></td><td>Google</td><td>照片級寫實、風景/人像質感</td><td>Gemini、ImageFX</td><td>有免費額度</td></tr>
+<tr><td><strong>Midjourney</strong></td><td>Midjourney</td><td>藝術感、美學質感最高，風格強烈</td><td>midjourney.com、Discord</td><td>純付費，無免費</td></tr>
+</tbody>
+</table></div>
+<div class="note">名詞小抄：<code>Nano Banana</code>（香蕉圖示）是 Google 影像模型 <strong>Gemini 2.5 Flash Image</strong> 的暱稱；升級版叫 <strong>Nano Banana Pro</strong>。<code>GPT Image</code> 就是現在 <strong>ChatGPT 內建的那個生圖</strong>（取代了舊的 DALL·E）。<code>Imagen</code> 是 Google 另一條偏「寫實照片」的生圖模型。</p></div>
+
+<h2>🔧 逐一介紹</h2>
+
+<div class="tool">
+<h3>🍌 Nano Banana（Google Gemini 生圖）<span class="pill pill-free">免費額度</span></h3>
+<p><strong>它是什麼</strong>：Google Gemini 內建的生圖／改圖模型，暱稱「Nano Banana」，強化版叫「Nano Banana Pro」。</p>
+<p><strong>最強的地方</strong>：<strong>「改」既有圖片</strong>——上傳一張照片，用中文說「幫我把背景換成藍天」「把這個人的衣服改成正式西裝」「去掉路人」，它能局部修改而不整張重畫。還很擅長讓<strong>同一個角色、同一個商品在不同圖裡長得一樣</strong>，很適合做系列海報。</p>
+<p><strong>公務用途</strong>：活動照片修圖、換背景、把去年海報的主角換季節換場景、多張素材合成一張主視覺。</p>
+<p><strong>取得</strong>：手機或電腦開 <a href="https://gemini.google.com" target="_blank" rel="noopener">Gemini</a>，或 <a href="https://aistudio.google.com" target="_blank" rel="noopener">Google AI Studio</a>，登入 Google 帳號即可，有免費額度。</p>
+</div>
+
+<div class="tool">
+<h3>💬 ChatGPT 生圖（GPT Image）<span class="pill pill-mix">免費有限次</span></h3>
+<p><strong>它是什麼</strong>：ChatGPT 裡直接輸入文字就會畫圖的功能（模型叫 GPT Image，已取代舊的 DALL·E）。</p>
+<p><strong>最強的地方</strong>：<strong>最聽得懂複雜指令</strong>，而且<strong>圖上的文字最不會亂</strong>——要放中文/英文標題、標語、簡單資訊圖，它相對可靠。可以「邊聊邊改」：畫完再說「標題再大一點、換暖色」，它接著改。</p>
+<p><strong>公務用途</strong>：需要文字的宣傳圖、簡報示意圖、資訊圖、社群貼文圖；不確定要什麼時最好用，因為可以對話式慢慢調。</p>
+<p><strong>取得</strong>：<a href="https://chatgpt.com" target="_blank" rel="noopener">ChatGPT</a> 登入即可用，免費版有每日次數限制，付費版（Plus）更快更穩。</p>
+</div>
+
+<div class="tool">
+<h3>🏞️ Google Imagen<span class="pill pill-free">免費額度</span></h3>
+<p><strong>它是什麼</strong>：Google 另一條偏「寫實照片」的生圖模型（你提到的 Imagen 2 是較早版本，現已進到更新代）。</p>
+<p><strong>最強的地方</strong>：<strong>照片級寫實</strong>——風景、人像、質感、光線很自然，適合要「像真的拍出來」的圖。</p>
+<p><strong>公務用途</strong>：需要擬真情境圖（例如城市街景、自然環境、活動氛圍照）而不是插畫風時。</p>
+<p><strong>取得</strong>：多數整合在 <a href="https://gemini.google.com" target="_blank" rel="noopener">Gemini</a> 與 Google 的 <a href="https://labs.google/fx/tools/image-fx" target="_blank" rel="noopener">ImageFX</a> 裡，一般不必特別分它和 Nano Banana，Gemini 會幫你選。</p>
+</div>
+
+<div class="tool">
+<h3>🎨 Midjourney<span class="pill pill-paid">純付費</span></h3>
+<p><strong>它是什麼</strong>：一家獨立公司做的生圖工具，以「美感」聞名的老牌工具。</p>
+<p><strong>最強的地方</strong>：<strong>藝術質感、氛圍、美學是四款裡最頂的</strong>，風格強烈、出圖漂亮，設計師愛用。</p>
+<p><strong>要注意</strong>：<strong>沒有免費版</strong>（要訂閱月費）；比較不受精細指令控制，圖上文字容易亂，中文支援也較弱。<strong>公務日常不一定需要它</strong>——除非追求特別高的視覺質感。</p>
+<p><strong>取得</strong>：<a href="https://www.midjourney.com" target="_blank" rel="noopener">midjourney.com</a> 網頁版，或透過 Discord，需訂閱付費。</p>
+</div>
+
+<h2>🧭 公務場合怎麼挑？</h2>
+<ul>
+<li><strong>要「改」現有照片、換背景、系列一致</strong> → 先用 <strong>Nano Banana（Gemini）</strong>。</li>
+<li><strong>圖上要放文字、要邊聊邊調、不確定要什麼</strong> → 用 <strong>ChatGPT 生圖</strong>。</li>
+<li><strong>要像真的拍出來的寫實照</strong> → <strong>Google Imagen / Gemini</strong>。</li>
+<li><strong>追求極致美感、且願意付費</strong> → <strong>Midjourney</strong>。</li>
+</ul>
+<div class="expect">實務建議：從<strong>免費又內建的 Gemini（Nano Banana）和 ChatGPT</strong> 兩個先練熟就夠應付九成公務需求。同一句 prompt 可以丟到兩個工具比一比，選你喜歡的那張。</div>
+
+<h2>⚠️ 共同注意事項（不分工具）</h2>
+<div class="warn">
+<ul style="margin:.2rem 0 .2rem 1.2rem;">
+<li><strong>不要放機密／個資</strong>：民眾照片、內部文件不要上傳到公開 AI 工具。</li>
+<li><strong>圖上文字可能出錯</strong>：正式標題、機關名稱、日期，建議事後用 Canva／PPT 自己加，最保險。</li>
+<li><strong>每次生成都不一樣</strong>：AI 生圖不是濾鏡，同一句話每次結果都會變；要穩定就把風格、顏色、構圖、長寬比都寫清楚，並把好用的 prompt 存下來。</li>
+<li><strong>著作權與授權</strong>：對外正式使用前，確認該工具的商用授權條款，避免爭議。</li>
+</ul>
+</div>
+
+<h2>✅ 看完你會</h2>
+<p>知道四款主流 AI 生圖工具各自的強項、費用與取得方式，並能在「要改圖 / 要文字 / 要寫實 / 要美感」四種需求下挑對工具。接著就可以回模組 2 開始動手練習。</p>
+
+  </div>
+  <div class="botnav">
+    <a href="gov-ai-m2_lesson.html">← 回模組 2：AI 生圖 + 海報</a>
+    <a href="gov-ai_lesson.html">🏠 課程目錄</a>
+  </div>
+</div>
+</body>
+</html>

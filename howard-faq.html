@@ -1,0 +1,597 @@
+<!doctype html><html lang="zh-Hant"><head>
+<meta charset="utf-8">
+<title>福華國際文教會館 常見問題 FAQ</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{
+    --paper:#EEF0EC; --paper-2:#F6F7F4; --card:#FFFFFF;
+    --ink:#1C231F; --ink-soft:#4B554E; --ink-faint:#79837C;
+    --rule:#D6DAD3; --rule-soft:#E4E7E0;
+    --pine:#2C6A4F; --pine-deep:#1F5240; --pine-soft:#4E8E72;
+    --amber:#B07A1E;
+    --accent:var(--pine);
+    --tip-bg:#EAF2ED; --tip-bd:#BFDBCB; --tip-ink:#255742;
+    --shadow:0 1px 2px rgba(28,35,31,.05),0 10px 28px rgba(28,35,31,.06);
+    --focus:#2C6A4F;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --paper:#121613; --paper-2:#171B18; --card:#1C211D;
+      --ink:#E6EAE6; --ink-soft:#AAB4AD; --ink-faint:#7C867F;
+      --rule:#2A312C; --rule-soft:#222824;
+      --pine:#6FB894; --pine-deep:#8FCCAC; --pine-soft:#5CA882;
+      --amber:#D9AD5A;
+      --accent:var(--pine);
+      --tip-bg:#1A2620; --tip-bd:#2E4A3B; --tip-ink:#9BD1B4;
+      --shadow:0 1px 2px rgba(0,0,0,.4),0 12px 32px rgba(0,0,0,.4);
+      --focus:#6FB894;
+    }
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,-apple-system,sans-serif;
+    line-height:1.72; -webkit-font-smoothing:antialiased; font-feature-settings:"palt" 1;
+  }
+  .serif{font-family:"Songti TC","Noto Serif TC",Georgia,"Times New Roman",serif;}
+  a{color:var(--pine-deep); text-decoration:none;}
+  a:hover{text-decoration:underline;}
+  :focus-visible{outline:2px solid var(--focus); outline-offset:2px; border-radius:4px;}
+  .navbar{background:var(--card); border-bottom:1px solid var(--rule); position:sticky; top:0; z-index:40;}
+  .navbar-in{max-width:1180px; margin:0 auto; padding:11px 24px; display:flex; align-items:center; gap:8px; flex-wrap:wrap;}
+  .navbar .brand{font-weight:700; font-size:13.5px; margin-right:8px;}
+  .navbar a{display:inline-block; padding:5px 11px; border-radius:8px; font-size:13px; text-decoration:none; color:var(--ink-soft); border:1px solid var(--rule-soft);}
+  .navbar a:hover{background:var(--paper-2); color:var(--ink); text-decoration:none;}
+  .navbar a.here{background:color-mix(in srgb,var(--pine) 15%,transparent); color:var(--pine-deep); border-color:transparent; font-weight:600;}
+  header.mast{background:linear-gradient(180deg,var(--paper-2),var(--paper)); border-bottom:1px solid var(--rule);}
+  .mast-in{max-width:1180px; margin:0 auto; padding:38px 24px 30px;}
+  .kicker{font-size:12px; letter-spacing:.24em; text-transform:uppercase; color:var(--pine); font-weight:700; margin:0 0 12px;}
+  h1.title{font-size:clamp(26px,4.6vw,40px); line-height:1.14; margin:0 0 12px; font-weight:700; letter-spacing:-.01em; text-wrap:balance;}
+  .lede{color:var(--ink-soft); font-size:16px; margin:0; max-width:64ch;}
+  .mast-meta{display:flex; flex-wrap:wrap; gap:6px 22px; margin-top:18px; font-size:13px; color:var(--ink-faint);}
+  .mast-meta b{color:var(--ink-soft); font-weight:600;}
+  .searchwrap{max-width:1180px; margin:0 auto; padding:22px 24px 4px; position:sticky; top:0; z-index:20;
+    background:linear-gradient(180deg,var(--paper) 72%,transparent);}
+  .searchbox{display:flex; align-items:center; gap:12px; background:var(--card); border:1px solid var(--rule);
+    border-radius:14px; padding:13px 16px; box-shadow:var(--shadow);}
+  .searchbox:focus-within{border-color:var(--pine); box-shadow:0 0 0 3px color-mix(in srgb,var(--pine) 20%,transparent);}
+  .searchbox svg{flex:none; color:var(--ink-faint);}
+  #q{flex:1; border:0; background:transparent; color:var(--ink); font-size:16px; font-family:inherit; outline:none;}
+  #q::placeholder{color:var(--ink-faint);}
+  .qcount{font-size:12.5px; color:var(--ink-faint); white-space:nowrap; font-variant-numeric:tabular-nums;}
+  #clearq{border:0; background:transparent; color:var(--ink-faint); cursor:pointer; font-size:18px; line-height:1; padding:2px 4px; display:none;}
+  #clearq:hover{color:var(--ink);}
+  .shell{max-width:1180px; margin:0 auto; padding:12px 24px 60px; display:grid; grid-template-columns:248px 1fr; gap:34px; align-items:start;}
+  nav.rail{position:sticky; top:88px; align-self:start;}
+  .rail h2{font-size:11.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-faint); margin:6px 8px 10px; font-weight:700;}
+  .rail ul{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:1px;}
+  .rail a{display:flex; align-items:center; gap:10px; padding:8px 10px; border-radius:9px; color:var(--ink-soft); font-size:14px; line-height:1.3;}
+  .rail a .ic{width:20px; text-align:center; color:var(--pine); font-size:13px; flex:none;}
+  .rail a .ct{margin-left:auto; font-size:11.5px; color:var(--ink-faint); font-variant-numeric:tabular-nums;}
+  .rail a:hover{background:var(--rule-soft); text-decoration:none; color:var(--ink);}
+  .rail a.active{background:color-mix(in srgb,var(--pine) 14%,transparent); color:var(--pine-deep); font-weight:600;}
+  .rail a.active .ct{color:var(--pine-deep);}
+  main{min-width:0;}
+  .notice{background:var(--tip-bg); border:1px solid var(--tip-bd); border-radius:12px; padding:15px 18px; margin:6px 0 28px; font-size:13.5px; color:var(--tip-ink); line-height:1.66;}
+  .notice b{color:var(--tip-ink);}
+  .cat{margin-bottom:42px; scroll-margin-top:96px;}
+  .cat-head{display:flex; align-items:center; gap:12px; padding-bottom:12px; margin-bottom:6px; border-bottom:2px solid var(--ink);}
+  .cat-head .ic{font-size:18px; color:var(--pine);}
+  .cat-head h3{font-size:19px; font-weight:700; margin:0; letter-spacing:-.01em;}
+  .cat-head .n{margin-left:auto; font-size:12px; color:var(--ink-faint); font-variant-numeric:tabular-nums;}
+  details.qa{border-bottom:1px solid var(--rule-soft); background:transparent;}
+  details.qa[open]{background:var(--card); border:1px solid var(--rule-soft); border-radius:12px; margin:8px 0; box-shadow:var(--shadow);}
+  summary.qhead{list-style:none; cursor:pointer; display:flex; align-items:flex-start; gap:14px; padding:15px 8px; font-size:15.5px; font-weight:600; color:var(--ink); line-height:1.5;}
+  details.qa[open] summary.qhead{padding:16px 18px 10px;}
+  summary.qhead::-webkit-details-marker{display:none;}
+  .qmark{flex:none; color:var(--pine); font-family:"Songti TC","Noto Serif TC",Georgia,serif; font-weight:700; font-size:16px; line-height:1.5; width:16px;}
+  .chev{flex:none; margin-left:auto; color:var(--ink-faint); transition:transform .22s ease; margin-top:4px;}
+  details.qa[open] .chev{transform:rotate(180deg); color:var(--pine);}
+  .qbody{padding:0 18px 18px 48px;}
+  details.qa:not([open]) .qbody{display:none;}
+  .qbody p{margin:0 0 10px; font-size:14.5px; color:var(--ink-soft); line-height:1.76;}
+  .tip{display:flex; gap:9px; align-items:flex-start; background:var(--tip-bg); border-left:3px solid var(--pine); border-radius:0 8px 8px 0; padding:9px 12px; font-size:13px; color:var(--tip-ink); margin-top:12px; line-height:1.6;}
+  .tip .tl{font-weight:700; letter-spacing:.03em; flex:none;}
+  .noresult{display:none; text-align:center; padding:60px 20px; color:var(--ink-faint);}
+  .noresult.show{display:block;}
+  mark{background:color-mix(in srgb,var(--pine) 26%,transparent); color:inherit; border-radius:3px; padding:0 1px;}
+  footer{max-width:1180px; margin:0 auto; padding:24px; border-top:1px solid var(--rule); color:var(--ink-faint); font-size:12.5px; line-height:1.7;}
+  footer b{color:var(--ink-soft);}
+  @media (max-width:860px){
+    .shell{grid-template-columns:1fr; gap:8px;}
+    nav.rail{position:static; margin-bottom:16px; border:1px solid var(--rule-soft); border-radius:12px; padding:12px; background:var(--card);}
+    .rail ul{flex-direction:row; flex-wrap:wrap; gap:6px;}
+    .rail a{background:var(--rule-soft);}
+    .rail a .ct{display:none;}
+    .rail h2{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="navbar-in">
+    <span class="brand">福華 FAQ 案例</span>
+    <a href="howard-faq-case.html">① 案例總覽</a>
+    <a href="howard-review-analysis.html">② 評論分析</a>
+    <a href="howard-faq.html" class="here">③ FAQ 成品</a>
+  </div>
+</nav>
+
+<header class="mast">
+  <div class="mast-in">
+    <p class="kicker">常見問題 · Frequently Asked Questions</p>
+    <h1 class="title serif">住宿・會議・研習前，先看這 100 題</h1>
+    <p class="lede">我們把旅客與活動主辦單位最常詢問、也最容易產生落差的問題整理於此，並如實說明本館的特性與限制。事前對齊期待，是讓您有更好體驗最有效的方式。</p>
+    <div class="mast-meta">
+      <span><b>福華國際文教會館</b></span>
+      <span>台北市大安區新生南路三段 30 號</span>
+      <span><b>公關信箱</b> pr-ih@howard-hotels.com.tw</span>
+    </div>
+  </div>
+</header>
+
+<div class="searchwrap">
+  <div class="searchbox">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.5" y2="16.5"></line></svg>
+    <input id="q" type="search" placeholder="搜尋問題，例如：早餐、機車、隔音、暖氣、失物、Wi-Fi…" autocomplete="off" aria-label="搜尋常見問題">
+    <button id="clearq" aria-label="清除搜尋">×</button>
+    <span class="qcount" id="qcount"></span>
+  </div>
+</div>
+
+<div class="shell">
+  <nav class="rail" aria-label="分類導覽">
+    <h2>問題分類</h2>
+    <ul id="railList"></ul>
+  </nav>
+
+  <main>
+    <div class="notice">
+      本頁內容依據旅客實際反映的常見疑問整理，主動說明本館作為「文教會館」的定位與部分較資深設施的現況，目的在<b>減少期待落差</b>。若您的問題未列於此，或入住／活動中遇到任何狀況，歡迎隨時聯繫櫃檯，我們會即時協助。
+    </div>
+    <div id="faqRoot"></div>
+    <div class="noresult" id="noresult">
+      <p style="font-size:16px; margin:0 0 6px;">找不到符合「<span id="nrTerm"></span>」的問題</p>
+      <p style="font-size:14px; margin:0;">試試更簡短的關鍵字（如「早餐」「停車」「隔音」），或直接來信 pr-ih@howard-hotels.com.tw 詢問。</p>
+    </div>
+  </main>
+</div>
+
+<footer>
+  <b>福華國際文教會館 · 常見問題</b>　本頁為服務性質之問答整理，實際政策（入退房時間、房價、含餐含停車、場地費、優惠資格、季節性設施等）以現場公告與您的訂單／報價為準。<br>
+  如有任何住宿、餐飲、會議或場地疑問，歡迎來電或寄至公關信箱 <b>pr-ih@howard-hotels.com.tw</b>，我們會盡快回覆。<br>
+  <span style="display:inline-block; margin-top:8px;">本 FAQ 依 <a href="howard-review-analysis.html">② 低星評論分析</a> 反推而成 · <a href="howard-faq-case.html">← 回案例總覽，看方法</a></span>
+</footer>
+
+<script>
+window.FAQ_CATS = [
+  {key:"about",   name:"關於會館與定位", icon:"◆"},
+  {key:"booking", name:"訂房・入住・退房", icon:"◈"},
+  {key:"room",    name:"客房設備與體驗", icon:"❑"},
+  {key:"aircon",  name:"空調・暖氣・溫度", icon:"❄"},
+  {key:"quiet",   name:"隔音與安寧", icon:"♪"},
+  {key:"clean",   name:"清潔・防蚊・衛生", icon:"✦"},
+  {key:"bath",    name:"衛浴與水壓", icon:"♒"},
+  {key:"dining",  name:"早餐與餐飲", icon:"☕"},
+  {key:"meeting", name:"會議・研習・場地", icon:"▤"},
+  {key:"parking", name:"停車・交通・接送", icon:"⊞"},
+  {key:"service", name:"服務・櫃檯・失物", icon:"✎"},
+  {key:"price",   name:"價格・優惠・對象", icon:"$"},
+];
+</script>
+<script>
+window.FAQ = [
+{cat:"about", q:"這裡到底是飯店還是研習中心？可以一般人訂來住嗎？",
+ a:"兩者兼具。本館是「文教會館」，主要功能是承接公務人員訓練、企業研習、研討會與各式會議，同時附設對外開放的付費住宿與餐飲。若您期待的是純度假型五星度假飯店，體驗定位會有落差；若是出差、開會、參加研習後就近過夜，本館的一站式（會議＋住宿＋餐飲＋停車）正是設計初衷。",
+ tip:"把它想成「離台大最近、會議與住宿合一的商務文教會館」，期待會最準。"},
+{cat:"about", q:"網路上說「不像五星級」，我先有點心理準備嗎？",
+ a:"本館建物與部分設備確實較為資深，客房走實用簡潔路線，並非新穎的精品飯店裝潢。若以「都會商務／文教會館」的標準看待，地點、機能與價格是主要優勢；若以最新五星度假村標準對照，硬體會顯得樸實。我們持續分區更新，訂房前歡迎向櫃檯確認是否有較新整修的房型。",
+ tip:"想要較新的房間，訂房時直接註明「希望安排整修過的房型」。"},
+{cat:"about", q:"這間跟其他福華大飯店一樣嗎？",
+ a:"本館屬福華飯店體系，但定位為「文教會館」，與福華旗下度假型或商務型飯店的裝潢等級、房型與服務內容不同，請勿直接以其他分館的照片或體驗作為預期基準。",
+ tip:""},
+{cat:"about", q:"我是來台北玩的，住這裡方便嗎？",
+ a:"適合以機能與地點為主的旅客：鄰近台大、師大、公館與大安森林公園，步行可達生活圈。若您重視新穎裝潢、度假氛圍或熱鬧的觀光地段，可能會覺得環境偏安靜、樸實。建議依「安靜、機能、近台大」這三個關鍵字判斷是否符合需求。",
+ tip:"喜歡安靜、方便到台大/公館的旅客最適合。"},
+{cat:"about", q:"第一次住，有沒有什麼要先注意的？",
+ a:"三個訣竅：①訂房時說明用途（過夜／參加會議／需要安靜）與偏好（較新房型、樓層、床軟硬）；②抵達前確認早餐與退房時間、停車與門口位置；③任何不符期待（清潔、蚊蟲、設備）第一時間反映櫃檯，我們才能即時處理。事前對齊期待，是減少落差最有效的方式。",
+ tip:"『先講清楚需求』比『事後客訴』更能得到好體驗。"},
+{cat:"about", q:"這裡氣氛會不會很嚴肅、很像公家機關？",
+ a:"因主要服務公務訓練與研習，館內氛圍確實較為安靜、務實，少了度假飯店的華麗感，有旅客形容像「來到機關單位」。若您追求的是安靜、單純、方便辦事與休息的環境，這正合適；若想要熱鬧繽紛的旅遊住宿感，建議先調整預期。",
+ tip:"想要安靜務實者最合拍；想要度假熱鬧感的請先調預期。"},
+{cat:"about", q:"房子看起來有點舊，住起來安全嗎？地震會不會怕怕的？",
+ a:"本館為合法營運之會館，建物與消防設備依規定維護檢查。若您入住後對任何安全相關細節（如逃生動線、設施狀況）有疑慮，歡迎向櫃檯詢問樓層逃生資訊，我們會據實說明並持續維護，讓您安心住宿。",
+ tip:"入住可先看房門後的逃生圖，有疑問直接問櫃檯。"},
+{cat:"booking", q:"幾點可以進房？幾點要退房（check in / check out）？",
+ a:"一般入住時間為下午 3:00 起、退房為上午 11:00（部分房型或專案為 12:00，以您的訂單為準）。實際時間請以訂房確認為主，若有疑問可先來電確認。",
+ tip:"訂單上的退房時間才是準的，出發前先看一眼。"},
+{cat:"booking", q:"我比較早到，可以提早進房嗎？",
+ a:"可提出需求，但需視當日房況而定，無法保證。建議訂房時先註明預計抵達時間並來電確認；若房間尚未整理完成，我們會盡量安排行李寄放與休息區等候。提早入住屬額外協調，敬請理解無法一律答應。",
+ tip:"想提早入住，前一天先來電問當日房況最實在。"},
+{cat:"booking", q:"可以晚一點退房嗎？下午才走。",
+ a:"可提出申請，同樣視當日後續訂房狀況而定，可能酌收費用或無法提供。若您有明確需求（如下午才離開），請於退房前盡早向櫃檯詢問，我們會依房況盡量協助。",
+ tip:"有延退需求越早問越好，當天早上才問常常已排不出。"},
+{cat:"booking", q:"還沒到退房時間，打掃阿姨會來敲門嗎？",
+ a:"房務原則上會在您退房後才進房清潔。為避免曾有旅客反映「接近退房時間被敲門或開門」的情況，我們已加強要求人員務必先確認房間已退房。若您仍在房內，請保持門鏈扣上；如遇提早敲門，請直接回應或告知櫃檯，房務會立即改後再來。",
+ tip:"在房內時扣好門鏈，是保障隱私最直接的方法。"},
+{cat:"booking", q:"我在房間裡，工作人員會不會突然刷卡進來？",
+ a:"不會無故開門。房務、工程或送物人員進房前應先敲門並表明身分、獲得同意；退房前的清潔也應在確認退房後進行。為雙重保障，建議您在房內休息時扣上門鏈；若對任何進房情形有疑慮，請立即聯繫櫃檯，我們會查明並回覆。",
+ tip:""},
+{cat:"booking", q:"我訂了好幾間房，家人朋友晚點到，他們拿得到房卡嗎？",
+ a:"可以，但為避免曾發生的「後到親友對不到訂房」情形，建議訂房時就把每間房的入住人姓名與抵達時間一併登記，並告知櫃檯哪幾間是同一筆訂單。入住時請主訂人先確認房卡分配，或授權由誰代領，能大幅減少現場等候與誤會。",
+ tip:"多間房請先登記各房入住人與代領人，親友到就能直接拿卡。"},
+{cat:"booking", q:"一間房會給幾張房卡？可以多要一張嗎？",
+ a:"標準單人房通常提供一張房卡。若同房入住需要多張，或需要多次進出，請於入住時向櫃檯提出，我們會依房型與房況協助補發。",
+ tip:"需要兩張卡，入住時直接跟櫃檯講。"},
+{cat:"booking", q:"我明明訂好了，到現場會不會被說沒房、或只剩一天？",
+ a:"我們以訂單紀錄為準。為避免極少數的系統或溝通落差，強烈建議您保留訂房確認信或簡訊（含日期、房型、房數），入住時出示。如發現與您的認知不符，請當場請櫃檯調閱訂單，我們會立即釐清處理。",
+ tip:"保留訂房確認信，是自保也是最快釐清的方式。"},
+{cat:"booking", q:"打電話訂房講不清楚，有沒有別的方式？",
+ a:"若您在電話訂房或詢問時感覺應對不夠親切，我們深感抱歉，並持續加強人員訓練。您也可改用線上訂房或 Email 留下需求，文字紀錄更清楚、也方便後續核對。造成不佳感受，我們會檢討改善。",
+ tip:"複雜需求用 Email 或線上訂房留字，比電話更不容易漏。"},
+{cat:"booking", q:"訂好之後想改日期或換房型，可以嗎？",
+ a:"可依訂房條件辦理修改，實際能否更動與是否有價差，視方案與房況而定。請盡早聯繫我們或原訂房平台提出，越早處理彈性越大。",
+ tip:"要改訂單越早越好，臨近日期彈性會變小。"},
+{cat:"room", q:"房間會不會很小？想要住大一點的。",
+ a:"本館以單人房、標準房為主，空間走實用取向，部分房型偏精簡；套房則有獨立起居空間。若您需要較寬敞的空間，建議訂房時選擇套房或詢問較大坪數房型，避免抵達後落差。",
+ tip:"要空間大一點就選套房，或訂房時先問坪數。"},
+{cat:"room", q:"房間新不新？床和棉被會不會很舊？",
+ a:"建物與部分客房較為資深，床墊、枕頭與寢具我們持續汰換，但不同房間新舊程度不一。若您對睡眠品質較敏感，訂房時可註明「希望較新房型」或「偏好較硬／較軟的床」，我們會盡量安排；入住後若寢具有任何不適或異狀，請立即反映更換。",
+ tip:"對床敏感者，訂房先講軟硬偏好，入住有問題立刻換。"},
+{cat:"room", q:"枕頭睡不習慣，可以換嗎？",
+ a:"可以。若枕頭軟硬不合，請撥打客房電話向櫃檯要求更換，我們會盡快送達。過去曾有反映更換不夠及時，我們已要求加快回應；若等候過久，煩請再次來電催促，造成不便敬請見諒。",
+ tip:"枕頭不合直接打電話換，等太久請再催一次。"},
+{cat:"room", q:"房間插座、USB 好用嗎？我想一晚充飽手機。",
+ a:"多數房間插座與 USB 孔正常，但因設備較資深，偶有個別插座或 USB-C 孔供電不穩的情形。入住時建議先測試主要插座是否通電；若充電異常，請立即通知櫃檯換房或修繕，避免充了一整夜卻沒充到電。",
+ tip:"睡前先插一下確認會充電，有問題馬上反映。"},
+{cat:"room", q:"房間有窗簾、被套、拖鞋這些基本的東西嗎？",
+ a:"標準客房均配有窗簾、寢具被套與基本備品。若您入住時發現任何備品缺漏（如被套、拖鞋、床頭燈不亮），這不是正常標準，請立即聯繫櫃檯補齊或換房，我們會即時處理。",
+ tip:"備品缺漏不是常態，發現就反映，馬上補。"},
+{cat:"room", q:"房間電視頻道多嗎？可以看 Netflix 那些嗎？",
+ a:"客房電視提供基本有線頻道，頻道數與畫質因設備而異，部分房型未必配置電視盒或串流服務。若您重視追劇或特定頻道，建議自備行動裝置與行動網路。若電視收訊或頻道有問題，可請櫃檯協助。",
+ tip:"想追劇建議自備手機＋行動網路，別完全靠房內電視。"},
+{cat:"room", q:"房間會不會有小燈亮亮的害我睡不著？",
+ a:"部分房間門邊或設備會有指示燈。若您對光線敏感，入住時可先檢視並請櫃檯協助處理（如提供遮蔽或調整）。曾有旅客因夜間門燈亮起而不安，我們建議睡前先確認光源、必要時聯繫櫃檯，我們會盡力協助改善您的睡眠環境。",
+ tip:"對光敏感者睡前巡一下光源，需要就請櫃檯處理。"},
+{cat:"room", q:"有沒有客廳、臥室分開的房型？",
+ a:"有。部分套房為起居室與臥室分隔的格局，適合需要工作或會客的旅客。若有此需求，訂房時請指定套房房型。",
+ tip:""},
+{cat:"room", q:"房間有礦泉水、煮水壺嗎？水喝完能再要嗎？",
+ a:"客房備有煮水壺與瓶裝／飲用水，部分樓層另設飲水機。若瓶裝水用完需要補充，或熱水壺需要清潔，請通知櫃檯，我們會補送與處理。",
+ tip:"水喝完了直接請櫃檯補，別客氣。"},
+{cat:"room", q:"可以加床、多住一個人嗎？",
+ a:"部分房型可加床或加人，但有人數與空間上限，且可能酌收費用。請於訂房時提出需求，我們會依房型評估是否可行，避免入住後才發現空間不足。",
+ tip:"要加床加人請訂房時先講，現場臨時加不一定排得出。"},
+{cat:"room", q:"房間會不會有菸味或怪味道？我很敏感。",
+ a:"本館客房多為禁菸房。過去曾有旅客反映個別房間有菸味或異味（如經空調傳入、枕頭氣味）。若您入住後聞到異味，請立即反映，我們會協助除味、更換寢具或換房，不需將就。",
+ tip:"聞到菸味／異味立刻反映，我們換寢具或換房。"},
+{cat:"room", q:"房間會不會很暗？我想要亮一點的。",
+ a:"部分房型窗戶與採光較有限，燈光走柔和路線，個別旅客覺得偏暗。若您需要較明亮的環境（如工作），可請櫃檯提供檯燈或安排採光較好的房間。",
+ tip:"需要亮一點可要檯燈，或訂房問採光較好的房。"},
+{cat:"aircon", q:"冬天房間會冷嗎？有暖氣嗎？",
+ a:"本館暖氣採季節性開放，通常在氣溫較低時才會啟用（過去現場曾以「約攝氏 10 度以下」為參考門檻）。若您冬季怕冷，建議：①訂房時先詢問當期暖氣開放狀況；②入住後覺得冷可向櫃檯索取暖器或加被。我們理解此政策曾造成期待落差，會持續檢討調整。",
+ tip:"冬天怕冷先問暖氣、入住覺得冷就要暖器或加被。"},
+{cat:"aircon", q:"冷氣夠冷嗎？溫度可以自己調嗎？",
+ a:"部分客房與會議空間的空調控溫範圍有限（曾有旅客反映最低約 26 度、風向不易調整）。若您怕熱，建議入住時先試調並向櫃檯反映需求，我們會協助檢查空調是否正常運作或提供電扇。",
+ tip:"怕熱者入住先試冷氣，不夠涼就請櫃檯查修或給電扇。"},
+{cat:"aircon", q:"一進房間好悶熱，冷氣是不是要等很久才涼？",
+ a:"部分房型空調為集中或到房才啟動，未必能於入住前預冷，因此剛進房時可能較悶熱。建議一進房先開到最強、拉開讓空氣流通；若久候仍不涼，請通知櫃檯檢查。",
+ tip:"進房先開最強冷氣＋通風，悶熱久了就報修。"},
+{cat:"aircon", q:"棉被太薄會冷，可以多要一條嗎？",
+ a:"可以加被。若房內僅提供較薄的涼被、您覺得不夠暖，請立即向櫃檯索取加厚棉被或暖器，切勿將就受凍。曾有旅客反映冬夜被子偏薄，我們已提醒同仁主動確認季節性寢具，也歡迎您直接提出需求。",
+ tip:"覺得被子薄，直接打電話要加被或暖器。"},
+{cat:"aircon", q:"冷氣運轉聲會不會很大聲吵到睡覺？",
+ a:"因部分設備較資深，個別房間空調運轉聲可能較明顯。若您淺眠，入住後覺得噪音干擾，請聯繫櫃檯，我們會協助檢查或視房況換房。",
+ tip:"淺眠者若被空調聲吵，可請櫃檯查修或換房。"},
+{cat:"aircon", q:"我又怕熱又淺眠，要怎麼訂房比較好？",
+ a:"因部分房間空調控溫與運轉聲較資深，怕熱又淺眠者建議：入住時同時反映「希望較涼且安靜的房間」，我們會盡量安排；必要時提供電扇輔助。若當房兼顧不易，可請櫃檯協調換房。",
+ tip:"把『要涼＋要安靜』一起講，我們幫你挑房或給電扇。"},
+{cat:"quiet", q:"房間隔音好不好？我很淺眠、很怕吵。",
+ a:"坦白說，本館部分客房隔音較為一般，曾有旅客反映能聽到鄰房談話、洗澡或水管聲。若您對聲音敏感，建議：①訂房時要求安排較安靜樓層或非電梯／管道間旁的房間；②自備耳塞；③入住後如受鄰房嚴重干擾，請立即聯繫櫃檯協助勸導或換房。",
+ tip:"淺眠者訂房要安靜房＋自備耳塞，受吵就請櫃檯換房。"},
+{cat:"quiet", q:"半夜隔壁很吵，可以找人來處理嗎？",
+ a:"可以。若遭遇鄰房喧嘩、深夜噪音，請立即撥打客房電話通知櫃檯／值班人員，我們會前往了解與勸導；情況嚴重且有空房時，會協助您換房。請勿隱忍整夜，即時反映我們才能處理。",
+ tip:"被吵別忍，馬上打櫃檯，我們去勸導或幫你換房。"},
+{cat:"quiet", q:"房間會不會一直聽到水管、機器的聲音？",
+ a:"少數房間可能鄰近管道或機電空間，會聽到水流或運轉聲。若您入住後受此干擾，請告知櫃檯，我們會盡量替您調整至較安靜的房間。",
+ tip:""},
+{cat:"quiet", q:"靠馬路，車聲或施工會不會很吵？",
+ a:"本館位於新生南路旁，臨路房間可能有交通聲；週邊如遇施工亦可能有短期噪音。若您需要特別安靜，訂房時可要求安排背向馬路的房間，並先詢問近期是否有工程。",
+ tip:"要安靜就訂『背馬路』的房，並先問近期有無施工。"},
+{cat:"quiet", q:"早上會不會被打掃聲吵醒？我想睡晚一點。",
+ a:"房務多於上午開始整理，走廊或鄰房清潔可能有聲響，加上隔音較一般，淺眠者早晨可能被影響。建議掛上「請勿打擾」牌並自備耳塞；若被提早打擾，請告知櫃檯調整清掃順序。",
+ tip:"掛『請勿打擾』牌＋耳塞，睡得更安穩。"},
+{cat:"clean", q:"房間會不會有蚊子？我很怕被叮。",
+ a:"本館鄰近台大與大安森林公園綠地，夏季蚊蟲較活躍，個別房間曾有蚊子情形，我們深感抱歉並持續加強環境消殺與防治。若您入住後發現蚊蟲，請立即聯繫櫃檯，我們可提供電蚊拍／防蚊用品或協助換房。您也可自備防蚊液，入住先檢查紗窗與門縫是否緊閉。",
+ tip:"怕蚊子可自備防蚊液，發現蚊蟲立刻要電蚊拍或換房。"},
+{cat:"clean", q:"房間有蚊子跟櫃檯講，他們會處理嗎？",
+ a:"會。反映後我們應提供電蚊拍、防蚊措施或安排消殺，必要時換房。過去曾有「反映後未及時送達電蚊拍」的情形，我們已檢討流程；若您反映後遲未獲處理，請再次來電並要求盡快，我們會優先處理。",
+ tip:"反映蚊子若沒下文，請再催一次並要求換房。"},
+{cat:"clean", q:"房間打掃乾淨嗎？我很介意頭髮跟灰塵。",
+ a:"每間房退房後均會清潔整理。若您入住後仍發現毛髮、灰塵或清潔死角（如櫃子、地板、浴室），這不符我們的標準，請立即拍照並通知櫃檯，我們會安排重新清潔或換房，並向您致歉。",
+ tip:"發現清潔不到位，拍照＋反映，我們重清或換房。"},
+{cat:"clean", q:"進房發現又舊又髒，可以要求換一間嗎？",
+ a:"可以。若入住的房間清潔或狀況明顯不佳，請當場向櫃檯反映要求更換；我們應提供符合標準的房間，且不因客人身分、國籍而有差別待遇。造成任何不佳的第一印象，我們會誠實檢討並即時補救。",
+ tip:"房況明顯不佳，當場就要求換房，別將就。"},
+{cat:"clean", q:"浴室、淋浴間會不會發霉、有污漬？",
+ a:"部分較資深的衛浴設備，塑膠件或矽利康處可能有使用痕跡，我們持續維護汰換。若您發現黴斑、污漬或明顯老化影響使用，請通知櫃檯，我們會清潔處理或協助換房。",
+ tip:""},
+{cat:"clean", q:"餐廳、走廊這些公共空間乾淨嗎？",
+ a:"公共區域由專人定時清潔維護。若您發現如走廊異味、水池久未整理、地面清潔死角等問題，歡迎告知現場人員或櫃檯，我們會即時處理，也感謝您協助我們維持環境品質。",
+ tip:"看到公共區清潔問題，跟現場人員講一聲我們就會處理。"},
+{cat:"clean", q:"什麼時候來蚊子最多？要特別小心嗎？",
+ a:"因鄰近綠地，春夏（約 4–10 月）蚊蟲較活躍，是最需注意的季節。這段期間建議自備防蚊液、入住先確認紗窗門縫，有蚊蟲立即反映索取防治用品或換房，我們也會加強此時段的環境消殺。",
+ tip:"春夏來訪備好防蚊液，入住先檢查紗窗門縫。"},
+{cat:"clean", q:"我很龜毛，一進房間該檢查哪些地方？",
+ a:"歡迎入住後花兩分鐘檢查：床單被套是否潔淨平整、浴室與馬桶周邊有無毛髮污漬、櫃子地板角落灰塵、紗窗門縫是否密合（防蚊）、以及是否有異味。任何一項不符標準，請立即反映，我們重清或換房，讓您住得安心。",
+ tip:"入住花兩分鐘檢查五件事：床單、浴室、角落、紗窗、氣味。"},
+{cat:"bath", q:"洗澡水壓夠嗎？會不會水很小？",
+ a:"多數房間水壓正常，但因管線較資深，個別房間或時段曾有水壓偏小、水量不穩的情形。若您入住後發現洗澡或水龍頭水量明顯過小，請立即通知櫃檯，我們會派工程檢查或替您換房。",
+ tip:"水太小別忍一晚，馬上報修或換房。"},
+{cat:"bath", q:"馬桶沖得乾淨嗎？會不會漏水？",
+ a:"衛浴設備定期維護，但少數房間曾有馬桶沖水力道不足或漏水情形。若您遇到，請通知櫃檯，我們會立即維修或安排換房，不需將就使用。",
+ tip:""},
+{cat:"bath", q:"房間吹風機風力夠嗎？頭髮吹得乾嗎？",
+ a:"客房配有吹風機，但部分房型的機型風量較小、吹乾較慢。若您在意，可向櫃檯詢問是否有較大風量的機型可借用，或自備慣用吹風機。",
+ tip:"在意吹風機風量，可自備或向櫃檯借較強的機型。"},
+{cat:"bath", q:"浴室會不會很小、很擠？",
+ a:"部分房型浴室走精簡設計，空間偏小。若您需要較寬敞的衛浴，建議選擇套房或較高階房型，並於訂房時詢問。",
+ tip:""},
+{cat:"bath", q:"洗澡熱水穩不穩？會不會忽冷忽熱？",
+ a:"熱水為全日供應。若您遇到熱水不穩、忽冷忽熱或需久候，請通知櫃檯，我們會協助檢查熱水系統。",
+ tip:""},
+{cat:"dining", q:"早餐幾點到幾點？太晚去還有東西吃嗎？",
+ a:"早餐一般供應時間約為 07:00–10:00（實際以現場公告為準）。提醒您：熱門菜色在接近尾聲（約 9:20–9:30 後）可能陸續售完且不再補菜，若想吃得豐盛，建議早一點前往。",
+ tip:"想吃得好，9:20 前到最保險，太晚菜色會變少。"},
+{cat:"dining", q:"我一大早就要出門，早餐可以幫我打包嗎？",
+ a:"可以事先預約打包（過去作業為前一晚約 8:00 前告知）。請注意：打包餐點多為前一晚備妥、冷藏保存，領取時可能是冷食，且客製化選項有限。若您非常在意早餐溫度或內容，建議評估是否於外面用餐。我們會如實告知打包內容，避免期待落差。",
+ tip:"打包早餐是冷食、前晚備妥，很在意溫度的話可考慮外食。"},
+{cat:"dining", q:"早餐好吃嗎？菜色多不多？",
+ a:"早餐以台式與西式基本品項為主（如粥、小菜、麵包、飲品等），走實惠實用路線，未必等同大型度假飯店的豪華 buffet。若您期待非常多樣的國際級早餐，建議先調整預期；同時也有不少旅客覺得吃得飽、符合價位。",
+ tip:"把早餐當『吃得飽的實惠款』看待，體驗會最中肯。"},
+{cat:"dining", q:"早餐的熱牛奶、咖啡是熱的嗎？",
+ a:"我們會維持餐點供應品質，但曾有旅客反映熱飲不夠熱、咖啡機待修等情形，我們已加強現場巡檢。若您用餐時發現餐點溫度或設備異常，請當場告知服務人員，我們會立即補正。",
+ tip:"熱飲不夠熱、機器故障，當場跟服務人員說馬上處理。"},
+{cat:"dining", q:"裡面的餐廳、自助餐好吃嗎？值得去嗎？",
+ a:"館內設有餐廳與咖啡廳，提供自助餐與單點。餐飲評價較為分歧，部分旅客覺得普通或 CP 值一般。建議您依當日菜單與需求選擇；若對某道餐點不滿意，歡迎現場反映，我們會作為改進依據。周邊公館、師大商圈也有多元選擇可搭配。",
+ tip:"想吃選擇多，也可搭配步行可達的公館／師大商圈。"},
+{cat:"dining", q:"帶小孩吃飯，小孩怎麼算錢？會問年齡嗎？",
+ a:"兒童餐與收費依年齡／身高規定辦理，現場人員可能會確認孩童年齡以正確計費，這是標準作業、並非針對特定客人。若過程讓您感到不適，我們致歉並會加強人員的溝通方式。建議用餐前先向服務人員確認兒童計費標準，避免誤會。",
+ tip:"用餐前先問清楚兒童計費標準，帶證件更順。"},
+{cat:"dining", q:"裡面或附近有便利商店嗎？買泡麵有附筷子嗎？",
+ a:"地下樓層設有自營便利商店與咖啡廳，可購買飲料、零食與生活用品；最近的外部便利商店步行約 5 分鐘。提醒：便利商店部分品項（如餐具）可能需另行購買，泡麵未必附免費餐具，建議自備或先詢問。",
+ tip:"泡麵餐具可能要另買，介意的話自備一副。"},
+{cat:"dining", q:"裡面的便利商店、咖啡廳開到幾點？",
+ a:"營業時間依現場公告為準（便利商店多於夜間有結束時間）。若您有夜間採買需求，建議先確認打烊時間，或改至步行約 5 分鐘的外部超商。",
+ tip:"要夜間採買先看打烊時間，太晚就走去外面超商。"},
+{cat:"dining", q:"附近有什麼好吃的？晚上會不會很冷清？",
+ a:"本館鄰近公館、師大商圈與台大周邊，步行可達不少餐廳與小吃；但緊鄰館旁的街廓相對安靜，夜間或假日部分店家可能沒開。建議想吃選擇多時往公館／師大方向走，或先查詢營業時間。",
+ tip:"想吃選擇多往公館／師大走；館旁較安靜，假日先查有無營業。"},
+{cat:"meeting", q:"我來開會、上課，會議廳的 Wi-Fi 和手機收訊好嗎？",
+ a:"重要提醒：部分會議廳（如較深樓層的演講廳）行動網路訊號與 Wi-Fi 覆蓋較弱，曾有與會者反映在會議廳連網不順。建議：①主辦單位如需網路，請事前與本館場務確認並索取專用連線資訊；②與會者可自備行動網路備援；③住宿區訊號通常較會議廳穩定。",
+ tip:"會議廳訊號較弱，重要簡報請自備行動網路或先問主辦單位連線方式。"},
+{cat:"meeting", q:"會議廳的麥克風、音響、投影機會不會出狀況？",
+ a:"我們提供標準視聽設備，但為確保您的活動順利，強烈建議主辦單位於活動開始前（建議提前 30 分鐘以上）進場測試音響、麥克風電量與投影。曾有活動反映設備準備或測試不足，我們已加強場前檢查；您也可事先與場務約定測試時間與現場技術支援。",
+ tip:"重要活動請提前 30 分鐘進場測設備，並先約好現場技術支援。"},
+{cat:"meeting", q:"活動當天現場有人幫忙弄設備嗎？",
+ a:"會安排場務協助。為避免臨場等候，建議租借時就把「需要協助的時段、設備清單、聯絡窗口」寫清楚，並於前一日再確認一次。若現場需要即時支援，請直接聯繫約定的場務窗口。",
+ tip:"租場時就把設備清單和聯絡窗口列清楚，前一天再確認一次。"},
+{cat:"meeting", q:"東西忘在會議廳，之後找得回來嗎？",
+ a:"特別提醒：活動結束後場地會由清潔人員收拾，遺留物品有可能被一併清理，曾有與會者反映遺失個人物品。請您務必在離場前帶走所有隨身物品（保溫杯、記事本、資料夾、3C 等）；若確有遺留，請「立即」聯繫場務或櫃檯，越早通報越有機會尋回。",
+ tip:"離場前務必清點帶走所有東西；真的忘了，立刻通報越快越好。"},
+{cat:"meeting", q:"開會的座位會不會很擠、腳很難伸？",
+ a:"部分場地為提高容納量，座位間距較緊。若您的活動重視舒適度或需要走動，租借時請說明預計人數與桌型需求，我們可依場地條件建議較寬鬆的排列方式。",
+ tip:"重視舒適度，租場時先講人數與桌型，我們幫你排寬一點。"},
+{cat:"meeting", q:"研習中午的便當、茶水怎麼安排？有地方吃嗎？",
+ a:"可代訂會議便當與茶水。為避免曾發生「發便當卻無明確用餐地點」的情形，建議主辦單位於租借時一併確認：用餐區位置、桌椅安排與時段。茶水回收區也請清楚標示，避免與新杯混放。我們會配合您的流程事先規劃。",
+ tip:"訂便當時一起把『在哪吃、幾點吃』確認好，體驗差很多。"},
+{cat:"meeting", q:"我想租場地辦活動，費用怎麼算？",
+ a:"場地費依廳室大小、時段（半天／全天）、設備與餐飲需求而定，並非固定價，需個別洽詢報價。建議來電或 Email 說明日期、人數、時段與設備／餐飲需求，我們會提供明細報價。也建議請對方把各項費用「條列清楚」，避免事後認知落差。",
+ tip:"詢價時把日期、人數、設備、餐飲一次講清楚，並要求逐項報價。"},
+{cat:"meeting", q:"開會開到一半冷氣會被關掉、或太冷太熱嗎？",
+ a:"活動期間空調會依場地開啟，但曾有反映夏季活動尾聲空調提早關閉、或溫度不理想。若您的活動時間較長，建議事先與場務約定空調維持到散場，並指定聯絡人以便中途調整。",
+ tip:"長時間活動先講好『空調開到散場』，並留一個可即時調整的窗口。"},
+{cat:"meeting", q:"我不知道活動在哪一間、哪一樓，怎麼找？",
+ a:"為避免走錯，建議主辦單位事先提供活動名稱與樓層給本館櫃檯備查，並在報名資訊中標明廳室與入口（本館有新生南路與溫州街不同出入口）。抵達時可直接向櫃檯報上活動名稱詢問，我們會指引您。",
+ tip:"主辦單位先把活動與樓層給櫃檯備查，賓客報名字就能被指路。"},
+{cat:"meeting", q:"活動想擺攤位、做特別佈置，可以嗎？",
+ a:"部分會議中心外部空間可佈置展示攤位，適合百人上下的會議搭配。若有特殊佈置、進退場動線或用電需求，請於租借時詳述，我們會評估場地條件並事先規劃，避免當天才發現限制。",
+ tip:"有攤位或特殊佈置需求，租場時先講、先勘場。"},
+{cat:"meeting", q:"上完課想回房間安靜辦公、開線上會議，方便嗎？",
+ a:"適合短期出差、上課後回房辦公休息；房內可上網、有基本桌面空間。提醒隔音較一般，若需要視訊會議等對安寧要求高的情境，建議選較安靜樓層並自備行動網路備援。",
+ tip:"要在房內視訊開會，選安靜房＋自備網路更保險。"},
+{cat:"parking", q:"住房有附停車嗎？怎麼折抵停車費？",
+ a:"本館設有地下停車場，部分住宿專案含停車。實際是否含停車、如何折抵，請以您的訂單為準；入住時可向櫃檯確認停車折抵方式（如索取折抵條碼／QR）。若人員未主動說明，歡迎主動詢問。",
+ tip:"入住就問清楚『我的方案含不含停車、怎麼折抵』。"},
+{cat:"parking", q:"我騎機車來，可以停嗎？",
+ a:"重要提醒：本館地下停車場主要提供汽車停放，不一定提供機車車位，因此住宿附的「一車位」通常指汽車，機車未必適用。若您騎機車前來，請事先來電確認機車停放方式，避免現場無法停放的落差。周邊巷弄請勿隨意停放以免影響住戶。",
+ tip:"騎機車務必先問清楚能不能停，別假設附車位就含機車。"},
+{cat:"parking", q:"停車場的柵欄、繳費機會不會卡住出不去？",
+ a:"停車場設有自動收費與柵欄系統，尖峰時進出可能較慢，過去也曾有柵欄或代幣感應異常的個案。若您進出時遇到柵欄不開、代幣掉不出來或機器故障，請按對講機或聯繫櫃檯，我們會即時協助放行。",
+ tip:"卡在柵欄別急，按對講機或找櫃檯，我們馬上處理。"},
+{cat:"parking", q:"開車來門口好找嗎？入口會不會很難進？",
+ a:"本館鄰新生南路，招牌相對低調，出入口與車道較窄，建議依導航至「新生南路三段 30 號」並放慢車速。若不確定車道，可先在門口詢問人員指引。",
+ tip:"導航到新生南路三段30號，車道較窄請慢行。"},
+{cat:"parking", q:"下雨天可以在門口停一下讓人上下車嗎？",
+ a:"門口可短暫停靠供旅客上下車，但因空間與動線有限、需維持通行，人員可能請您盡速駛離或改停停車場。若造成溝通上的不佳感受，我們致歉並會提醒同仁以更妥善的方式引導，尤其雨天協助賓客與長者上下車。",
+ tip:"雨天上下車請盡量快，需要協助可先請門口人員幫忙。"},
+{cat:"parking", q:"搭捷運、公車怎麼來？離捷運站會很遠嗎？",
+ a:"本館鄰近台大、師大與公館商圈，但距最近捷運站步行約 10–15 分鐘（約 1 公里），並非緊鄰捷運。建議：可搭乘公車至新生南路沿線站牌，或從捷運站轉乘公車／步行。雨天請攜帶雨具。",
+ tip:"離捷運要走 10–15 分鐘，趕時間可搭公車或轉乘。"},
+{cat:"parking", q:"機場接送的車可以開到門口接送嗎？",
+ a:"可以在門口進行接送，但請配合現場動線與人員引導、避免長時間占用車道。若您有預約接送，建議事先告知櫃檯抵達時間與車輛資訊，我們會協助安排上下車，讓貴賓（尤其國際訪客）獲得妥善接待。",
+ tip:"有接送先告知櫃檯時間與車輛，門口引導會更順。"},
+{cat:"parking", q:"車位好停嗎？會不會很窄很難停？",
+ a:"地下停車場空間大致充足，但出入口與部分車道較窄，迴轉需小心。首次前來建議放慢車速，必要時可請現場人員協助指引。大型車輛建議先來電確認可否進場。",
+ tip:"車道較窄請慢行；開大車先來電問能不能進場。"},
+{cat:"service", q:"聽說服務態度不太好，是真的嗎？",
+ a:"我們理解過去有部分關於櫃檯或現場人員應對的負面反映，對於任何讓您感到不受尊重的經驗，我們誠摯致歉。本館持續進行服務訓練與現場督導，並歡迎您具體回饋（時間、地點、人員），這是我們改善的重要依據。您的每一則意見我們都會轉相關部門檢討。",
+ tip:"遇到不佳應對，記下時間地點回饋我們，才能真正改到位。"},
+{cat:"service", q:"住的時候遇到問題，要找誰處理最快？",
+ a:"最快的方式是直接聯繫櫃檯（客房內電話）或現場服務人員。多數問題（清潔、設備、寢具、噪音、蚊蟲）都能在現場即時處理；若現場無法解決，可請求主管協助。即時反映往往比事後客訴更能改善您當下的體驗。",
+ tip:"有問題先找櫃檯／現場人員，當下處理最有效。"},
+{cat:"service", q:"我想客訴或給建議，會有人回我嗎？",
+ a:"會。您可透過現場、電話或公關信箱（pr-ih@howard-hotels.com.tw）提出，我們會將問題轉相關部門檢討並回覆。若涉及退費或補償，需依情況與規定個案評估。我們重視每位客人的意見，也感謝您給我們改善的機會。",
+ tip:"正式反映可寄公關信箱 pr-ih@howard-hotels.com.tw，會轉部門處理。"},
+{cat:"service", q:"我東西忘在房間或館內了，怎麼拿回來？",
+ a:"請「盡快」聯繫櫃檯並說明遺失物品、時間與地點，我們會協助調閱與尋找。提醒：房間退房後與活動場地收拾後，遺留物會進入清理流程，越早通報尋回機會越高。貴重物品建議離開前務必清點。",
+ tip:"發現忘東西立刻通報，越快越有機會找回。"},
+{cat:"service", q:"櫃檯說法不一樣、或幫我弄錯了怎麼辦？",
+ a:"若遇到資訊不一致或作業疏失，請當場請人員協助釐清，必要時請主管出面；我們主張人員應承擔並協助解決，而非推諉。造成困擾我們深感抱歉，也會針對個案檢討並強化教育訓練。",
+ tip:"遇到作業出錯可要求主管協助，我們會負責釐清。"},
+{cat:"service", q:"服務會不會看人、對外國人或某些客人差別待遇？",
+ a:"不會，也不應該。我們要求對所有賓客一視同仁、以禮相待。若您感到受到差別對待，這絕非我們的標準，請立即反映（含時間、人員），我們會嚴肅查明與檢討。",
+ tip:"若感覺被差別對待，請立刻具體反映，我們嚴肅處理。"},
+{cat:"service", q:"有游泳池、健身房嗎？住客能用嗎？要另外付費嗎？",
+ a:"本館設有室內游泳池與健身房，住客使用方式與外部人士收費依現場規定辦理（外部使用可能酌收單次費用）。使用前建議先向櫃檯確認開放時間、收費與置物規則，避免現場落差。",
+ tip:"用泳池／健身房前先問開放時間與收費，帶齊裝備。"},
+{cat:"service", q:"太早到、或退房後想去逛逛，行李可以寄放嗎？",
+ a:"可以。無論是提早抵達尚未能入住、或退房後想先去辦事，都可將行李寄放櫃檯。請主動向櫃檯登記領取方式，貴重物品建議隨身攜帶。",
+ tip:"提早到或退房後都能寄放行李，貴重物品自己帶著。"},
+{cat:"service", q:"可以開發票／收據嗎？公司報帳要打統編。",
+ a:"提供發票／收據，可依報帳需求開立抬頭與統編。請於結帳時主動告知抬頭、統編與所需格式，避免事後重開的往返。",
+ tip:"報帳先在結帳時講好抬頭與統編，一次開對。"},
+{cat:"service", q:"外國朋友來住，櫃檯會講英文嗎？",
+ a:"櫃檯可提供基本英文溝通，協助辦理入住與常見需求。若您有較複雜的需求，建議以文字（Email／訊息）補充說明，溝通更精準。我們也持續提升對國際賓客的接待品質。",
+ tip:"複雜需求用英文 Email 補充，溝通更清楚。"},
+{cat:"service", q:"泳池更衣室、置物櫃被別人佔用怎麼辦？",
+ a:"若您使用泳池／健身設施時，遇到更衣室或梳妝台被物品長時間占用，請告知現場人員協助處理與勸導。我們會維護公共設施的使用秩序，也感謝您協助反映。",
+ tip:"設施被占用請找現場人員協助，別自行搬動他人物品。"},
+{cat:"price", q:"一晚大概多少錢？划算嗎？",
+ a:"本館以台北市區同級住宿而言，價格相對平實、週末波動也較小，主要價值在於地點（近台大／公館）、機能與含早餐／停車的方案。若您以最新五星飯店標準衡量硬體，可能覺得偏舊；若以「機能取向的商務文教住宿」衡量，多數旅客認為合理。",
+ tip:"看重地點與機能會覺得划算；只看裝潢新舊則見仁見智。"},
+{cat:"price", q:"我是公教人員，有折扣嗎？",
+ a:"本館長期承接公務人員訓練與研習，部分方案對公教或特定對象有優惠或折扣（含周邊敦親睦鄰折扣等）。實際適用資格與折扣，請於訂房或用餐時出示相關證件並向櫃檯確認。",
+ tip:"公教身分或在地住戶可先問有沒有適用折扣，記得帶證件。"},
+{cat:"price", q:"怎麼訂最划算？單人房好像比外面雙人房還貴？",
+ a:"房價受房型、日期、專案與含餐／停車與否影響，單看房型不易比較。建議：①比較「含早餐／含停車」的總價而非單看房價；②留意平日與專案房；③直接向櫃檯詢問最適合您需求的方案，我們會協助試算。",
+ tip:"比價要看『含餐含停車的總價』，別只比房型單價。"},
+{cat:"price", q:"房價有含早餐、停車、Wi-Fi 嗎？",
+ a:"是否含早餐、停車、網路依「房型與專案」而定，並非全部一致。訂房時請確認方案內容；入住時可再向櫃檯核對，避免以為有含卻未含的落差。",
+ tip:"訂房先確認『含不含早餐／停車／網路』，入住再核對一次。"},
+{cat:"price", q:"聽說門口有賣平價便當，現在還有嗎？",
+ a:"過去特殊時期本館曾於前後門販售平價便當（新生南路側西式、溫州街側中式）。此為階段性服務，是否持續供應請以現場公告為準，建議來電確認。",
+ tip:""},
+{cat:"price", q:"住得不滿意，可以要求退費或補償嗎？",
+ a:"若因本館可歸責的服務或設備問題影響您的住宿，請即時反映，我們會依實際情況與相關規定評估補救方式（如換房、補送備品、必要時的費用調整）。退費補償屬個案評估，即時且具體的溝通有助於妥善處理。",
+ tip:"覺得該補償，請當下具體反映，個案我們會評估。"},
+{cat:"price", q:"我要連住好幾天，有長住優惠嗎？",
+ a:"適合多日出差、研習的連續入住，機能便利。長住是否有優惠依當期方案而定，建議直接洽詢並說明入住天數，我們會協助評估最適方案。",
+ tip:"要長住先講天數問方案，通常能談到較合適的價。"},
+{cat:"price", q:"考試季、活動期間房間會不會很難訂？",
+ a:"因鄰近台大，考試季、大型研習或活動期間住宿需求較高，建議提早預訂並確認房型。若您是為特定活動而來（如在館內樓層考試／開會），越早訂越能安排到合適的房。",
+ tip:"考試季／活動期趁早訂，才訂得到合適房型。"},
+];
+</script>
+<script>
+(function(){
+  const CATS = window.FAQ_CATS;
+  const FAQ = window.FAQ;
+  const root = document.getElementById('faqRoot');
+  const railList = document.getElementById('railList');
+  const grouped = {};
+  CATS.forEach(c=>grouped[c.key]=[]);
+  FAQ.forEach((f,i)=>{ f._i=i; (grouped[f.cat]||(grouped[f.cat]=[])).push(f); });
+  CATS.forEach(c=>{
+    const li=document.createElement('li');
+    li.innerHTML=`<a href="#cat-${c.key}" data-cat="${c.key}"><span class="ic">${c.icon}</span><span>${c.name}</span><span class="ct">${grouped[c.key].length}</span></a>`;
+    railList.appendChild(li);
+  });
+  CATS.forEach(c=>{
+    const sec=document.createElement('section');
+    sec.className='cat'; sec.id='cat-'+c.key; sec.dataset.cat=c.key;
+    sec.innerHTML=`<div class="cat-head"><span class="ic">${c.icon}</span><h3>${c.name}</h3><span class="n">${grouped[c.key].length} 題</span></div>`;
+    grouped[c.key].forEach(f=>{
+      const d=document.createElement('details'); d.className='qa'; d.dataset.i=f._i;
+      const tip = f.tip ? `<div class="tip"><span class="tl">小提醒</span><span class="tiptext">${f.tip}</span></div>` : '';
+      const paras = f.a.split('\n').map(p=>`<p class="atext">${p}</p>`).join('');
+      d.innerHTML=`<summary class="qhead"><span class="qmark">Q</span><span class="qtext">${f.q}</span>
+        <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></summary>
+        <div class="qbody">${paras}${tip}</div>`;
+      sec.appendChild(d);
+    });
+    root.appendChild(sec);
+  });
+  const railLinks = [...railList.querySelectorAll('a')];
+  const sections = [...document.querySelectorAll('section.cat')];
+  const spy = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        const k=e.target.dataset.cat;
+        railLinks.forEach(a=>a.classList.toggle('active', a.dataset.cat===k));
+      }
+    });
+  },{rootMargin:'-40% 0px -55% 0px', threshold:0});
+  sections.forEach(s=>spy.observe(s));
+  const q=document.getElementById('q');
+  const qcount=document.getElementById('qcount');
+  const clearBtn=document.getElementById('clearq');
+  const noresult=document.getElementById('noresult');
+  const nrTerm=document.getElementById('nrTerm');
+  const TOTAL=FAQ.length;
+  qcount.textContent = TOTAL+' 題';
+  function esc(s){return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');}
+  function clearMarks(el){
+    el.querySelectorAll('mark').forEach(m=>{ m.replaceWith(document.createTextNode(m.textContent)); });
+    el.normalize();
+  }
+  function highlight(el, term){
+    clearMarks(el);
+    if(!term) return;
+    const rx=new RegExp(esc(term),'gi');
+    const tw=document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+    const nodes=[]; let n; while(n=tw.nextNode()) nodes.push(n);
+    nodes.forEach(node=>{
+      const t=node.nodeValue; if(!rx.test(t)) return; rx.lastIndex=0;
+      const frag=document.createDocumentFragment(); let last=0, m;
+      while((m=rx.exec(t))){
+        if(m.index>last) frag.appendChild(document.createTextNode(t.slice(last,m.index)));
+        const mk=document.createElement('mark'); mk.textContent=m[0]; frag.appendChild(mk);
+        last=m.index+m[0].length; if(m[0].length===0) rx.lastIndex++;
+      }
+      if(last<t.length) frag.appendChild(document.createTextNode(t.slice(last)));
+      node.replaceWith(frag);
+    });
+  }
+  function run(){
+    const term=q.value.trim();
+    const lower=term.toLowerCase();
+    clearBtn.style.display = term ? 'block' : 'none';
+    let shown=0;
+    const catShown={};
+    document.querySelectorAll('details.qa').forEach(d=>{
+      const f=FAQ[+d.dataset.i];
+      const hay=(f.q+' '+f.a+' '+(f.tip||'')).toLowerCase();
+      const hit = !term || hay.includes(lower);
+      d.style.display = hit ? '' : 'none';
+      if(hit){ shown++; catShown[f.cat]=(catShown[f.cat]||0)+1;
+        if(term){
+          d.open=true;
+          highlight(d.querySelector('.qtext'), term);
+          d.querySelectorAll('.atext, .tiptext').forEach(el=>highlight(el, term));
+        } else {
+          d.open=false;
+          clearMarks(d.querySelector('.qtext'));
+          d.querySelectorAll('.atext, .tiptext').forEach(clearMarks);
+        }
+      }
+    });
+    sections.forEach(s=>{ s.style.display = (!term || catShown[s.dataset.cat]) ? '' : 'none'; });
+    railLinks.forEach(a=>{ const c=a.querySelector('.ct'); const k=a.dataset.cat;
+      c.textContent = term ? (catShown[k]||0) : grouped[k].length; });
+    qcount.textContent = term ? (shown+' / '+TOTAL+' 題') : (TOTAL+' 題');
+    noresult.classList.toggle('show', term && shown===0);
+    nrTerm.textContent = term;
+  }
+  q.addEventListener('input', run);
+  clearBtn.addEventListener('click', ()=>{ q.value=''; run(); q.focus(); });
+  document.addEventListener('keydown', e=>{
+    if(e.key==='/' && document.activeElement!==q){ e.preventDefault(); q.focus(); }
+    if(e.key==='Escape' && document.activeElement===q){ q.value=''; run(); }
+  });
+})();
+</script>
+
+</body></html>

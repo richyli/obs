@@ -1,0 +1,286 @@
+<!doctype html><html lang="zh-Hant"><head>
+<meta charset="utf-8">
+<title>福華國際文教會館 低星評論分析</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{
+    --paper:#EDEEF1; --paper-2:#F5F6F8; --card:#FFFFFF;
+    --ink:#1D2127; --ink-soft:#4A515C; --ink-faint:#7B828E;
+    --rule:#D3D7DE; --rule-soft:#E2E5EA;
+    --brick:#A6392E; --brick-soft:#C86155;
+    --s1:#9B2C22; --s2:#C67A19; --s3:#5C6672;
+    --bar-bg:#DFE2E7; --accent:#A6392E;
+    --shadow:0 1px 2px rgba(29,33,39,.06),0 8px 24px rgba(29,33,39,.05);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --paper:#14161A; --paper-2:#191C21; --card:#1E2228;
+      --ink:#E7E9ED; --ink-soft:#AEB4BE; --ink-faint:#7E858F;
+      --rule:#2C313A; --rule-soft:#242932;
+      --brick:#E07E71; --brick-soft:#B65246;
+      --s1:#D96A5D; --s2:#D99A4A; --s3:#8B95A2;
+      --bar-bg:#2A2F38; --accent:#E07E71;
+      --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px rgba(0,0,0,.35);
+    }
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,-apple-system,sans-serif;
+    line-height:1.7; -webkit-font-smoothing:antialiased; font-feature-settings:"palt" 1;
+  }
+  .serif{font-family:"Songti TC","Noto Serif TC",Georgia,"Times New Roman",serif;}
+  .mono{font-family:"SFMono-Regular",ui-monospace,"Menlo","Consolas",monospace; font-variant-numeric:tabular-nums;}
+  .wrap{max-width:940px; margin:0 auto; padding:0 24px;}
+  a{color:var(--brick);}
+  /* nav */
+  .navbar{background:var(--card); border-bottom:1px solid var(--rule); position:sticky; top:0; z-index:30;}
+  .navbar .wrap{display:flex; align-items:center; gap:8px; padding-top:11px; padding-bottom:11px; flex-wrap:wrap;}
+  .navbar .brand{font-weight:700; font-size:13.5px; margin-right:8px;}
+  .navbar a{display:inline-block; padding:5px 11px; border-radius:8px; font-size:13px; text-decoration:none; color:var(--ink-soft); border:1px solid var(--rule-soft);}
+  .navbar a:hover{background:var(--paper-2); color:var(--ink);}
+  .navbar a.here{background:color-mix(in srgb,var(--brick) 14%,transparent); color:var(--brick); border-color:transparent; font-weight:600;}
+  header.mast{border-bottom:2px solid var(--ink); margin-top:32px;}
+  .mast .wrap{padding-bottom:22px;}
+  .eyebrow{font-size:12.5px; letter-spacing:.22em; text-transform:uppercase; color:var(--brick); font-weight:600; margin:0 0 14px;}
+  h1.title{font-size:clamp(30px,5.4vw,46px); line-height:1.12; margin:0 0 10px; font-weight:700; letter-spacing:-.01em; text-wrap:balance;}
+  .subtitle{color:var(--ink-soft); font-size:16.5px; margin:0; max-width:60ch;}
+  .dateline{display:flex; flex-wrap:wrap; gap:6px 20px; margin-top:18px; font-size:13px; color:var(--ink-faint);}
+  .dateline b{color:var(--ink-soft); font-weight:600;}
+  .figband{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--rule); border:1px solid var(--rule); border-radius:12px; overflow:hidden; margin:34px 0 8px; box-shadow:var(--shadow);}
+  .fig{background:var(--card); padding:20px 18px;}
+  .fig .num{font-size:clamp(26px,4.4vw,38px); font-weight:700; letter-spacing:-.02em; line-height:1;}
+  .fig .num.mono{font-family:"SFMono-Regular",ui-monospace,"Menlo",monospace;}
+  .fig .lab{font-size:12.5px; color:var(--ink-faint); margin-top:9px; line-height:1.45;}
+  .fig .num.brick{color:var(--brick);}
+  section{margin-top:52px;}
+  h2.sec{font-size:13px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-faint); font-weight:600; margin:0 0 4px; display:flex; align-items:baseline; gap:12px;}
+  h2.sec::before{content:attr(data-n); font-family:"SFMono-Regular",ui-monospace,monospace; color:var(--brick); font-weight:700; font-size:12px;}
+  .sec-lead{font-size:20px; font-weight:700; margin:2px 0 22px; letter-spacing:-.01em; text-wrap:balance;}
+  .stars-row{display:flex; gap:14px; flex-wrap:wrap;}
+  .starcard{flex:1 1 150px; background:var(--card); border:1px solid var(--rule-soft); border-radius:10px; padding:16px 18px; box-shadow:var(--shadow); border-left:4px solid var(--sc);}
+  .starcard.s1{--sc:var(--s1)} .starcard.s2{--sc:var(--s2)} .starcard.s3{--sc:var(--s3)}
+  .starcard .h{display:flex; align-items:baseline; justify-content:space-between;}
+  .starcard .st{font-size:14px; font-weight:600; color:var(--sc);}
+  .starcard .ct{font-size:26px; font-weight:700; font-variant-numeric:tabular-nums;}
+  .starcard .sub{font-size:12px; color:var(--ink-faint); margin-top:2px;}
+  .themes{display:flex; flex-direction:column; gap:2px;}
+  .trow{display:grid; grid-template-columns:26px minmax(0,1fr) 96px; align-items:center; gap:16px; padding:13px 4px; border-bottom:1px solid var(--rule-soft);}
+  .trow:first-child{border-top:1px solid var(--rule-soft);}
+  .trank{font-family:"SFMono-Regular",ui-monospace,monospace; font-size:12.5px; color:var(--ink-faint); text-align:right;}
+  .tmain{min-width:0;}
+  .tname{font-size:15.5px; font-weight:600; margin-bottom:7px; display:flex; align-items:center; gap:9px; flex-wrap:wrap;}
+  .tag{font-size:10.5px; letter-spacing:.04em; padding:2px 7px; border-radius:20px; font-weight:600; background:color-mix(in srgb,var(--brick) 12%,transparent); color:var(--brick);}
+  .bar{height:9px; border-radius:6px; background:var(--bar-bg); overflow:hidden; display:flex;}
+  .bar i{display:block; height:100%;}
+  .bar .b1{background:var(--s1)} .bar .b2{background:var(--s2)} .bar .b3{background:var(--s3)}
+  .tnum{text-align:right; font-variant-numeric:tabular-nums;}
+  .tnum .pc{font-size:17px; font-weight:700;}
+  .tnum .ab{font-size:11.5px; color:var(--ink-faint);}
+  .legend{display:flex; gap:18px; flex-wrap:wrap; margin:20px 0 4px; font-size:12.5px; color:var(--ink-soft);}
+  .legend span{display:inline-flex; align-items:center; gap:7px;}
+  .dot{width:11px; height:11px; border-radius:3px; display:inline-block;}
+  .note-inline{font-size:13px; color:var(--ink-faint); margin-top:14px; line-height:1.6;}
+  .qgrid{display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:16px;}
+  .quote{background:var(--card); border:1px solid var(--rule-soft); border-radius:12px; padding:20px 20px 16px; box-shadow:var(--shadow); position:relative; border-top:3px solid var(--qc,var(--brick));}
+  .quote .qh{display:flex; align-items:center; gap:9px; margin-bottom:11px;}
+  .qstar{font-weight:700; font-size:13px; color:var(--qc);}
+  .qtheme{font-size:11.5px; color:var(--ink-faint); letter-spacing:.02em;}
+  .qtime{margin-left:auto; font-size:11.5px; color:var(--ink-faint);}
+  .quote p{margin:0; font-size:14.5px; line-height:1.72; color:var(--ink);}
+  .quote.s1{--qc:var(--s1)} .quote.s2{--qc:var(--s2)} .quote.s3{--qc:var(--s3)}
+  .takeaways{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+  .tk{background:var(--card); border:1px solid var(--rule-soft); border-radius:12px; padding:20px 22px; box-shadow:var(--shadow);}
+  .tk h3{margin:0 0 8px; font-size:16px; font-weight:700; display:flex; align-items:baseline; gap:9px;}
+  .tk h3 .k{font-family:"SFMono-Regular",ui-monospace,monospace; font-size:12px; color:var(--brick);}
+  .tk p{margin:0; font-size:14px; color:var(--ink-soft); line-height:1.68;}
+  .method{background:var(--paper-2); border:1px solid var(--rule-soft); border-radius:12px; padding:22px 24px;}
+  .method h2.sec{margin-bottom:12px;}
+  .method ul{margin:0; padding-left:20px; font-size:13.5px; color:var(--ink-soft); line-height:1.7;}
+  .method li{margin-bottom:7px;}
+  .method b{color:var(--ink);}
+  .caveat{margin-top:14px; font-size:12.5px; color:var(--ink-faint); border-left:3px solid var(--brick); padding-left:14px; line-height:1.6;}
+  .cta{margin:44px 0 8px; background:var(--card); border:1px solid var(--rule-soft); border-radius:14px; padding:24px; box-shadow:var(--shadow); display:flex; gap:18px; align-items:center; flex-wrap:wrap;}
+  .cta .txt{flex:1 1 300px;}
+  .cta h3{margin:0 0 6px; font-size:18px; font-weight:700;}
+  .cta p{margin:0; font-size:14px; color:var(--ink-soft);}
+  .cta a.btn{display:inline-block; background:var(--brick); color:#fff; padding:11px 20px; border-radius:10px; font-size:14.5px; font-weight:600; text-decoration:none;}
+  .cta a.btn:hover{filter:brightness(1.08);}
+  footer{margin:40px 0 48px; padding-top:22px; border-top:1px solid var(--rule); color:var(--ink-faint); font-size:12.5px;}
+  @media (max-width:680px){
+    .figband{grid-template-columns:1fr 1fr;}
+    .takeaways{grid-template-columns:1fr;}
+    .trow{grid-template-columns:22px minmax(0,1fr) 78px; gap:12px;}
+  }
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="wrap">
+    <span class="brand">福華 FAQ 案例</span>
+    <a href="howard-faq-case.html">① 案例總覽</a>
+    <a href="howard-review-analysis.html" class="here">② 評論分析</a>
+    <a href="howard-faq.html">③ FAQ 成品</a>
+  </div>
+</nav>
+
+<header class="mast">
+  <div class="wrap">
+    <p class="eyebrow">Google 地圖評論分析 · 低星輿情</p>
+    <h1 class="title serif">福華國際文教會館<br>1–3 星負評主題解析</h1>
+    <p class="subtitle">抓取 Google 地圖評分最低優先的 495 則 1–3 星評分，就其中 297 則有文字內容者做主題歸類，找出這家台大對面老牌文教會館被抱怨最集中的痛點。這是「<a href="howard-faq-case.html">評論→FAQ</a>」案例的第一步：診斷。</p>
+    <div class="dateline mono">
+      <span><b>對象</b> 台北市大安區新生南路三段30號</span>
+      <span><b>整體評分</b> 4.2 / 5（4,378 則）</span>
+      <span><b>抓取</b> 2026-07-21</span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="figband">
+    <div class="fig"><div class="num mono">495</div><div class="lab">1–3 星評分則數<br>（評分最低優先抓取）</div></div>
+    <div class="fig"><div class="num mono">297</div><div class="lab">其中含文字留言<br>可做內容分析</div></div>
+    <div class="fig"><div class="num mono brick">2</div><div class="lab">最大痛點主題<br>餐飲 · 會議場地</div></div>
+    <div class="fig"><div class="num mono">17</div><div class="lab">歸納出的<br>抱怨主題數</div></div>
+  </div>
+
+  <section>
+    <h2 class="sec" data-n="01">評分結構</h2>
+    <p class="sec-lead">低星以 3 星「勉強及格但失望」為主，1 星則是真正的踩雷</p>
+    <div class="stars-row">
+      <div class="starcard s3"><div class="h"><span class="st">★★★ 3 星</span><span class="ct">301</span></div><div class="sub">占低星 61%，多為「還可以但不值這價/老舊」的溫和失望</div></div>
+      <div class="starcard s1"><div class="h"><span class="st">★ 1 星</span><span class="ct">107</span></div><div class="sub">占 22%，集中於清潔、蟲害、服務態度與設備故障</div></div>
+      <div class="starcard s2"><div class="h"><span class="st">★★ 2 星</span><span class="ct">87</span></div><div class="sub">占 18%，隔音、寢具、CP 值等體驗性抱怨</div></div>
+    </div>
+    <p class="note-inline">說明：這是<b>刻意用「評分最低優先」排序</b>抓取的結果，因此代表的是全站最不滿的一群人，而非整體樣貌（整體仍有 4.2 星）。</p>
+  </section>
+
+  <section>
+    <h2 class="sec" data-n="02">抱怨主題排行</h2>
+    <p class="sec-lead">297 則文字留言的主題頻次（一則可同時觸及多個主題）</p>
+    <div class="legend">
+      <span><i class="dot" style="background:var(--s1)"></i>1 星</span>
+      <span><i class="dot" style="background:var(--s2)"></i>2 星</span>
+      <span><i class="dot" style="background:var(--s3)"></i>3 星</span>
+      <span style="color:var(--ink-faint)">橫條長度 = 提及則數占 297 則的比例，內部依星等堆疊</span>
+    </div>
+    <div class="themes" id="themes"></div>
+    <p class="note-inline">「餐飲」與「會議/活動場地」並列雙峰，反映此處的真實用途：它不只是旅館，更是<b>研習、研討會、便當會議</b>的公家場地——大量負評來自參加活動、而非過夜的客人。</p>
+  </section>
+
+  <section>
+    <h2 class="sec" data-n="03">代表性原文</h2>
+    <p class="sec-lead">每個主要痛點挑一則具代表性的真實留言為證</p>
+    <div class="qgrid" id="quotes"></div>
+  </section>
+
+  <section>
+    <h2 class="sec" data-n="04">五個可行動的結論</h2>
+    <p class="sec-lead">若要拉抬低星、止血負評，優先序如下</p>
+    <div class="takeaways">
+      <div class="tk"><h3><span class="k">A</span>餐飲是最大且最可控的痛點</h3><p>早餐與一樓自助餐被抱怨最多（27.9%）：菜色少、熱食不熱、打包食物冰冷、性價比低。這是不必大裝修就能改善的環節，投報率最高。</p></div>
+      <div class="tk"><h3><span class="k">B</span>把「會議場地」當成獨立產品經營</h3><p>四分之一負評來自研習/研討會場景：麥克風沒電、音響爆音、Wi-Fi 連不上、遺失物「統一丟掉」。活動客量大且會口碑擴散，應有專責場務 SOP。</p></div>
+      <div class="tk"><h3><span class="k">C</span>服務態度的 1 星殺傷力最大</h3><p>「服務態度差」在 1 星中占比異常高（27 則中 13 則為 1 星）：摔筆、臭臉、門衛趕車、被貼「公務員/鐵飯碗心態」標籤。單一惡劣互動即釀 1 星。</p></div>
+      <div class="tk"><h3><span class="k">D</span>硬體老舊是結構性天花板</h3><p>設施陳舊、隔音差、空調/暖氣壞、床墊寢具老舊反覆出現，且不少人拿「五星級」期待對照。短期靠寢具與隔音局部處理，長期需翻修。</p></div>
+      <div class="tk"><h3><span class="k">E</span>清潔與蟲害是最危險的紅線</h3><p>則數不算最多（6%）但殺傷力極強：蚊子、跳蚤咬、蟑螂、馬桶有毛髮、地毯髒。這類一旦被寫出多半是 1 星且附照片，最傷「文教/五星」招牌。</p></div>
+      <div class="tk"><h3><span class="k">F</span>停車規則造成不必要的摩擦</h3><p>「附車位卻不給停機車」、柵欄故障關住客人的車、雨天門衛趕接送車——都是規則與現場執行的落差，成本低卻頻繁引爆。</p></div>
+    </div>
+  </section>
+
+  <div class="cta">
+    <div class="txt">
+      <h3>下一步：把痛點反轉成 FAQ</h3>
+      <p>這份分析找出了「期待落差」的來源。案例的第二步，是把每個痛點改寫成一則「事前對齊期待」的問答，做成可搜尋的 FAQ。</p>
+    </div>
+    <a class="btn" href="howard-faq.html">前往 ③ FAQ 成品 →</a>
+  </div>
+
+  <section class="method">
+    <h2 class="sec" data-n="05">資料與方法</h2>
+    <ul>
+      <li><b>來源</b>：Google 地圖「福華國際文教會館」評論頁，以 Playwright 無頭瀏覽器渲染、<b>依「評分最低」排序</b>捲動載入。</li>
+      <li><b>抓取量</b>：去重後 610 則，其中 495 則為 1–3 星、297 則含文字。4–5 星因排序在後未完整抓取，本報告不涵蓋。</li>
+      <li><b>評分解析</b>：福華含 Trip.com 匯入評論用小數制（如 1.7/5），已四捨五入為整數星等後歸類。</li>
+      <li><b>主題歸類</b>：以關鍵詞規則對每則留言比對 17 個主題，一則可命中多個主題，故各主題比例相加大於 100%。約 23% 留言為單句或雜項未歸入主題。</li>
+    </ul>
+    <p class="caveat">限制：這是「最不滿一群人」的放大鏡，不代表整體滿意度（全站仍 4.2 星）；關鍵詞歸類會有少量誤判（例如「早餐很好」也含「早餐」詞），比例宜視為量級指標而非精確統計。部分長留言在頁面被摺疊為「…」，僅取可見前段。</p>
+  </section>
+
+  <footer class="mono">福華國際文教會館 · Google 地圖 1–3 星評論主題分析 · 樣本 n=297（含文字）／495（1–3 星）· 抓取日 2026-07-21 · <a href="howard-faq-case.html">← 回案例總覽</a></footer>
+</div>
+
+<script>
+const TOTAL = 297;
+const themes = [
+  {name:"早餐 / 餐飲差", c:83, s:{1:15,2:15,3:53}, tag:"最大痛點"},
+  {name:"會議 / 活動場地問題", c:75, s:{1:14,2:7,3:54}, tag:"最大痛點"},
+  {name:"服務態度差", c:27, s:{1:13,2:5,3:9}, tag:"1星集中"},
+  {name:"浴室 / 衛浴問題", c:24, s:{1:7,2:3,3:14}},
+  {name:"隔音差 / 噪音", c:24, s:{1:6,2:6,3:12}},
+  {name:"空調 / 冷暖氣問題", c:20, s:{1:6,2:3,3:11}},
+  {name:"設施老舊 / 陳舊", c:20, s:{1:6,2:2,3:12}},
+  {name:"訂房 / 入住流程", c:19, s:{1:9,2:5,3:5}},
+  {name:"清潔衛生差 / 蟲害", c:18, s:{1:10,2:3,3:5}, tag:"紅線"},
+  {name:"停車問題", c:17, s:{1:6,3:11}},
+  {name:"價格 / CP 值不佳", c:17, s:{1:3,2:6,3:8}},
+  {name:"床 / 寢具不適", c:13, s:{1:5,2:2,3:6}},
+  {name:"Wi-Fi / 網路 / 電視", c:10, s:{1:3,2:3,3:4}},
+  {name:"異味", c:8, s:{1:3,2:2,3:3}},
+  {name:"公務員 / 公辦民營心態", c:7, s:{1:3,3:4}},
+  {name:"房間狹小 / 採光", c:7, s:{1:1,2:2,3:4}},
+  {name:"停電 / 設備故障", c:4, s:{1:2,2:2}},
+];
+const maxPct = Math.max(...themes.map(t=>t.c))/TOTAL*100;
+const host = document.getElementById('themes');
+themes.forEach((t,i)=>{
+  const pct = t.c/TOTAL*100;
+  const scale = pct/maxPct*100;
+  const s1=(t.s[1]||0), s2=(t.s[2]||0), s3=(t.s[3]||0);
+  const w1=s1/t.c*100, w2=s2/t.c*100, w3=s3/t.c*100;
+  const tag = t.tag ? `<span class="tag">${t.tag}</span>` : '';
+  const row = document.createElement('div');
+  row.className='trow';
+  row.innerHTML = `
+    <div class="trank">${String(i+1).padStart(2,'0')}</div>
+    <div class="tmain">
+      <div class="tname">${t.name}${tag}</div>
+      <div class="bar" style="width:${scale}%; min-width:60px">
+        <i class="b1" style="width:${w1}%"></i>
+        <i class="b2" style="width:${w2}%"></i>
+        <i class="b3" style="width:${w3}%"></i>
+      </div>
+    </div>
+    <div class="tnum"><span class="pc">${pct.toFixed(1)}%</span><br><span class="ab">${t.c} 則</span></div>`;
+  host.appendChild(row);
+});
+const quotes = [
+  {s:1,th:"清潔 / 蟲害",t:"5 個月前",q:"可能是老的旅館了所有房間比較老舊，一進去就看到蚊子，果然睡到半夜就被跳蚤咬了一個包，好癢喔，到今天第二天了還會癢。"},
+  {s:1,th:"服務態度",t:"1 年前",q:"只是問問看能不能提早入住，櫃檯女服務生直接當著面給我臭臉摔筆，飯店住過那麼多間，沒看過把客人當仇人對待的⋯也不能仗著吃公家飯不會倒就這副嘴臉吧。"},
+  {s:1,th:"餐飲 / 打包",t:"5 個月前",q:"請飯店幫忙打包早餐要前一晚八點前講，包的食物前一晚就準備冰在冰箱⋯在 10 度的早晨，吃著冰凍的菜三明治和水煮蛋。"},
+  {s:1,th:"停電 / 故障",t:"5 個月前",q:"凌晨四時多停電，一直到早上八點半才陸續供電。大家摸黑吃早餐，有開口的才發一支小手電筒照菜。詢問何時修好一問三不知，要求延後退房也直接說不。"},
+  {s:1,th:"會議場地 / 失物",t:"1 年前",q:"場地很棒也舒適，美中不足的是⋯千萬不要在會議廳遺留東西，基本上 100% 會得到回覆『找不到』。同事掉過保溫杯、記事本、手錶、筆袋⋯"},
+  {s:1,th:"停車 / 門衛",t:"6 個月前",q:"我是機場接送司機，下雨天要把車開上去接重要外國客人，門衛態度非常差，對外國客說『滾下去，這裡不能停車』。"},
+  {s:2,th:"隔音 / 電視 / 早餐",t:"2 年前",q:"隔音是我住過最差的，左右兩邊房客的八卦聽得一清二楚；電視只有 42 台，有些沒聲音；早餐的『熱牛奶』完全是溫的，咖啡機更扯⋯"},
+  {s:1,th:"衛浴 / 清潔",t:"3 年前",q:"一入住就看到馬桶上有別人的毛髮，請問房間真的有打掃過嗎？這種五星級飯店真叫人不敢恭維。"},
+  {s:3,th:"設施老舊 / 空間",t:"3 個月前",q:"設備老舊，房間很小，空調聲音影響睡眠。"},
+];
+const qhost = document.getElementById('quotes');
+quotes.forEach(q=>{
+  const stars = '★'.repeat(q.s);
+  const el = document.createElement('div');
+  el.className = 'quote s'+q.s;
+  el.innerHTML = `
+    <div class="qh">
+      <span class="qstar">${stars} ${q.s} 星</span>
+      <span class="qtheme">${q.th}</span>
+      <span class="qtime mono">${q.t}</span>
+    </div>
+    <p>${q.q}</p>`;
+  qhost.appendChild(el);
+});
+</script>
+
+</body></html>
