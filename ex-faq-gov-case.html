@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>實戰案例：把政府問答集變成可搜尋 FAQ · 練習延伸</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;}
+body{font-family:"Helvetica Neue",Arial,"Noto Sans TC",sans-serif;background:#f0f2f5;margin:0;color:#1a1a1a;}
+.topnav{background:#fff;border-bottom:1px solid #e4e4e4;padding:.7rem 1.2rem;position:sticky;top:0;z-index:10;box-shadow:0 2px 8px rgba(0,0,0,.05);display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;font-size:.8rem;}
+.topnav a{color:#0055cc;text-decoration:none;font-weight:600;}
+.topnav a:hover{text-decoration:underline;}
+.topnav .sep{color:#bbb;}
+.topnav .cur{color:#666;}
+.tag-ex{font-size:.68rem;font-weight:800;background:#dbeafe;color:#1d4ed8;padding:.1rem .45rem;border-radius:4px;}
+.wrap{max-width:820px;margin:1.4rem auto 3rem;padding:0 1.2rem;}
+.card{background:#fff;border-radius:12px;box-shadow:0 1px 6px rgba(0,0,0,.08);padding:1.4rem 1.6rem 1.8rem;border-left:5px solid #0055cc;}
+.card h1{font-size:1.35rem;margin:.2rem 0 .3rem;}
+.card .lede{font-size:.9rem;color:#555;line-height:1.7;margin:0 0 1rem;}
+.card h2{font-size:1.05rem;font-weight:800;color:#0055cc;margin:1.5rem 0 .5rem;padding-bottom:.25rem;border-bottom:2px solid #eef2f8;}
+.card h3{font-size:.95rem;font-weight:800;color:#333;margin:1rem 0 .4rem;}
+.card p{font-size:.9rem;line-height:1.75;color:#333;margin:.5rem 0;}
+.card ul,.card ol{margin:.4rem 0 .6rem 1.4rem;}
+.card li{font-size:.89rem;line-height:1.7;color:#333;margin-bottom:.35rem;}
+.card code{background:#f3f3f3;color:#c7254e;padding:.1em .35em;border-radius:3px;font-size:.85em;font-family:"SFMono-Regular",Consolas,monospace;}
+.card strong{color:#111;}
+.card a{color:#0055cc;}
+.card hr{border:none;border-top:1px solid #eee;margin:1.2rem 0;}
+.tbl-wrap{overflow-x:auto;margin:.6rem 0;}
+.card table{border-collapse:collapse;width:100%;font-size:.83rem;}
+.card th,.card td{border:1px solid #e2e8f0;padding:.4rem .6rem;text-align:left;vertical-align:top;}
+.card th{background:#f8fafc;font-weight:700;}
+.note{background:#f0f7ff;border-left:3px solid #0055cc;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.warn{background:#fff1f0;border-left:3px solid #ef4444;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.expect{background:#f0fdf4;border-left:3px solid #22c55e;padding:.55rem .9rem;border-radius:0 6px 6px 0;margin:.6rem 0;font-size:.86rem;line-height:1.65;}
+.result-cta{display:flex;align-items:center;gap:.9rem;background:linear-gradient(135deg,#0055cc,#003a99);color:#fff;border-radius:12px;padding:1.1rem 1.3rem;margin:1.2rem 0;text-decoration:none;box-shadow:0 4px 14px rgba(0,60,150,.25);}
+.result-cta .ic{font-size:1.6rem;}
+.result-cta .t{flex:1;}
+.result-cta .t b{display:block;font-size:1rem;}
+.result-cta .t span{font-size:.78rem;opacity:.9;}
+.result-cta .go{font-weight:800;font-size:1.1rem;}
+.steps{counter-reset:s;list-style:none;margin:.4rem 0;padding:0;}
+.steps li{position:relative;padding:.15rem 0 .7rem 2.2rem;margin:0;}
+.steps li::before{counter-increment:s;content:counter(s);position:absolute;left:0;top:.05rem;width:1.5rem;height:1.5rem;background:#e8f0ff;color:#0055cc;border-radius:7px;font-weight:800;font-size:.82rem;display:flex;align-items:center;justify-content:center;}
+.pill{display:inline-block;font-size:.72rem;font-weight:700;background:#eef2f8;color:#334155;border-radius:5px;padding:.1rem .5rem;margin:.1rem .2rem .1rem 0;}
+.botnav{text-align:center;margin:1.4rem 0;}
+.botnav a{display:inline-block;margin:.3rem;padding:.5rem 1.1rem;background:#fff;border-radius:8px;text-decoration:none;color:#0055cc;font-weight:700;font-size:.85rem;box-shadow:0 1px 4px rgba(0,0,0,.07);}
+.botnav a:hover{background:#f0f7ff;}
+.reuse-note{margin-top:1rem;font-size:.78rem;color:#888;text-align:center;}
+@media(max-width:520px){.wrap{padding:0 .7rem;}.card{padding:1.1rem 1.1rem 1.4rem;}}
+</style>
+</head>
+<body>
+<div class="topnav">
+  <a href="gov-ai_lesson.html">🏠 AI提示工程實戰班─打造你的AI問答秘書第9期</a><span class="sep">›</span>
+  <a href="gov-ai-m4_lesson.html">模組 4：公務應用</a><span class="sep">›</span>
+  <span class="cur">實戰案例：主計總處 FAQ</span>
+  <span class="tag-ex">🧪 實戰案例</span>
+</div>
+<div class="wrap">
+  <div class="card">
+
+<h1>實戰案例：把一整頁政府問答集，變成「換句話問也查得到」的 FAQ</h1>
+<p class="lede">這頁是<a href="ex-faq-gen.html">練習 4「民眾 FAQ 一次生成」</a>的真實延伸——把課堂上的小 prompt，一路做到「拿真實政府網頁 → 抽出上百題 → 依身分重分類 → 每題再長出多種問法 → 上線成可搜尋網頁」的完整規模。記錄的是<strong>思路與做法</strong>，讓你看到 AI 從「幫你想問題」一路擴到「幫你交付一個工具」的全貌。</p>
+
+<a class="result-cta" href="gov-faq-dgbas.html">
+  <span class="ic">🧾</span>
+  <span class="t"><b>先看成品：可搜尋 FAQ 網頁</b><span>129 題 · 11 種身分分類 · 收錄 1021 種問法 · 即時搜尋＋關鍵字高亮</span></span>
+  <span class="go">→</span>
+</a>
+
+<h2>🎯 起點：一個很典型的公務需求</h2>
+<p>來源是行政院主計總處「內部審計 &gt; 問答集」的一頁：<code>ebasnew.dgbas.gov.tw/PublicInsideAudit</code>，掛著 5 份 PDF 問答集（經費結報、憑證保管、媒體宣導、國外出差疫情、物品管理）。原文是寫給主計、審計人員看的，術語重、又長又硬。</p>
+<p>需求很清楚，也很日常：</p>
+<ul>
+  <li>把整頁內容轉成<strong>一題一答</strong>的 FAQ；</li>
+  <li>問題<strong>依使用者身分重新分類</strong>；</li>
+  <li>問法要<strong>站在民眾/承辦的角度</strong>，不要用專業審計術語。</li>
+</ul>
+<p>這正是練習 4 的精神——差別只在，這次的素材是「一整個網頁＋5 份 PDF」，不是一段貼上的規則。</p>
+
+<h2>🧭 思路：拆成五個關卡</h2>
+<ol class="steps">
+  <li><strong>先把內容真的拿到手</strong>。網頁的連結是 JavaScript 動態頁，直接抓抓不到，得先找出每份文件背後的下載網址，把 6 份 PDF 抓下來、抽成純文字。<span class="pill">別讓 AI 用猜的，要餵它真資料</span></li>
+  <li><strong>忠實抽出每一題</strong>。最大那份（經費結報）有 50 頁、78 題，交給 AI 逐題整理成「問題＋白話重點答案」，關鍵數字、條件、法規要點都保留，但不照抄長段法條。<span class="pill">零幻覺：以原文為準</span></li>
+  <li><strong>換一個分類軸</strong>。原文照「法規章節」分；我們改成照「<strong>誰會遇到、正在做什麼</strong>」分——我要報帳、我要出差、我要辦活動、我要管物品……共 11 種身分。同一件事，先問「這是誰的問題」，再放進對應區塊。<span class="pill">從承辦視角，不是法條視角</span></li>
+  <li><strong>把問題改成人話</strong>。像「收據欠缺政府支出憑證處理要點第 4 點規定之事項者……」改寫成「<strong>我拿到的是醫院收據，上面沒有政府規定的那些欄位，還要自己補簽名嗎？</strong>」</li>
+  <li><strong>上線成工具</strong>。做成單一 HTML 網頁：頂部即時搜尋、左側身分導覽、手風琴展開、深淺色雙主題、關鍵字高亮，手機也能用。</li>
+</ol>
+
+<h2>🔁 關鍵升級：從「一問一答」到「多問一答」</h2>
+<p>做完第一版後，冒出一個真實問題：<strong>同一個答案，不同人會用完全不同的字去搜</strong>。承辦搜「簽到單」、出納搜「便當費核銷」、長官問「開會餐費要附什麼」——講的是同一件事，卻可能都搜不到那一題。</p>
+<p>所以把資料從「一問一答」改成<strong>「多問一答」（多對一）</strong>：每個答案底下掛 6–9 種不同角度的問法當搜尋索引。</p>
+<div class="note"><strong>怎麼大量生成又不亂？</strong> 用「分工平行」的做法：讓 11 個 AI 分身各自負責一個身分類別，同時為那一類的每一題長出多種問法，涵蓋四個面向——<strong>不同身分</strong>（承辦/出納/出差同仁/廠商/受補助團體）、<strong>不同用詞</strong>（發票↔統一發票↔電子發票；核銷↔報帳↔報支↔結報）、<strong>不同句式</strong>（可以嗎／怎麼辦／我遇到…該…／短關鍵字）、<strong>情境化</strong>（把答案裡的「感謝狀」「國旅卡」「小編」變成入口）。最後合併成 129 題、共 1021 種問法，零遺漏。</div>
+<p>網頁上只顯示一個「主問法」保持乾淨；其餘問法藏起來當索引，展開答案時附一行「<strong>🔎 也有人這樣問</strong>」。搜到隱藏問法一樣命中、一樣高亮。</p>
+
+<h2>📦 最後交付了什麼</h2>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>產出</th><th>內容</th><th>用途</th></tr></thead>
+<tbody>
+<tr><td><a href="gov-faq-dgbas.html">可搜尋 FAQ 網頁</a></td><td>129 題、11 身分、1021 種問法，即時搜尋＋高亮＋雙主題</td><td>民眾/同仁自助查詢、可分享的連結</td></tr>
+<tr><td>Obsidian 筆記版</td><td>同內容的 Markdown，每題附「也可以這樣問」</td><td>離線全文搜尋、日後維護</td></tr>
+<tr><td>結構化資料</td><td>把 PDF 抽成乾淨的問答 JSON</td><td>之後要換版面、再加工都不必重抽</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>💡 從這個案例學到的三件事</h2>
+<ul>
+  <li><strong>餵真資料，逼零幻覺</strong>：金額、條號、期限這類，一律以原文為準，不讓 AI 自己編。這是公務用 AI 的紅線。</li>
+  <li><strong>分類軸換一下，好用度差很多</strong>：同樣的內容，從「法條章節」換成「誰在做什麼」，民眾就找得到自己那格。</li>
+  <li><strong>查得到，比整理得漂亮更重要</strong>：把「同一件事的各種問法」都收進搜尋索引，才不會發生「答案明明在裡面、卻搜不到」。</li>
+</ul>
+
+<div class="expect"><strong>可以自己套用的場景：</strong>任何一份「規則很硬、民眾常問、承辦答到累」的東西——申請須知、收費標準、請假規定、報帳問答——都能用同一套流程，做成一個換句話問也查得到的自助 FAQ。</div>
+
+<hr>
+<p style="font-size:.82rem;color:#888;">本頁記錄的是一次用 AI（含 Claude Code）從真實網頁到上線工具的完整過程，供你參考做法與思路。實際辦理仍以各原始問答集全文與現行法令為準。</p>
+
+  </div>
+  <div class="botnav">
+    <a href="gov-faq-dgbas.html">🧾 看 FAQ 成品</a>
+    <a href="ex-faq-gen.html">← 練習 4：民眾 FAQ 一次生成</a>
+    <a href="gov-ai-m4_lesson.html">回模組 4</a>
+    <a href="gov-ai_lesson.html">🏠 課程目錄</a>
+  </div>
+</div>
+</body>
+</html>
