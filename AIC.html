@@ -30,9 +30,10 @@ MathJax = {
 <p><strong>定義</strong>：AIC = −2 ln L + 2k。Akaike (1974) 提出；近似 Kullback-Leibler divergence 最小化。固定 penalty 2k。</p>
 <p><strong>限制</strong>：Fiebig et al. (2010) Monte Carlo 顯示 AIC 在樣本不夠大時<strong>過度接受複雜模型</strong>；應搭配 BIC / CAIC 使用。</p>
 <p><strong>選擇潛在類別數的早期應用</strong>：Kamakura &amp; Russell (1989) 以 $\text{AIC}=-2(LL-p)/N$（$p=5M-1$）選擇 LC-MNL 的區隔數 $M$，取五區隔解（雖 $M=6$ 才最小，但 5 段後幾乎不再改善）。見 Five preference segments best fit switching households by AIC。</p>
+<p><strong>未具階次一致性</strong>：AIC 的固定懲罰 $2k$ 不隨樣本數加重，因此不是 order consistent 準則——即使 $n \to \infty$，選中過大模型的機率不會趨近 0。在混合模型選擇成分數（群集數）的 Monte Carlo 實驗中，Celeux &amp; Soromenho (1993) 證實 <strong>AIC 系統性高估群集數</strong>；相較之下他們提出的熵準則 NEC表現與 AIC 相近，但不帶有這種高估傾向。</p>
 <hr />
-<p><strong>相關論文</strong>：Fiebig 2010 Generalized、Kamakura 1989 Probabilistic
-<strong>相關概念</strong>：BIC、CAIC、model selection、LC-MNL、finite mixture model</p>
+<p><strong>相關論文</strong>：Fiebig 2010 Generalized、Kamakura 1989 Probabilistic、Celeux 1993 Entropy
+<strong>相關概念</strong>：BIC、CAIC、model selection、LC-MNL、finite mixture model、order consistency、normalized entropy criterion</p>
 </main>
 </div>
 <script>

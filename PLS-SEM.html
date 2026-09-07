@@ -50,6 +50,10 @@ MathJax = {
 <li><a href="#_10">進階：跨群分析三件套</a></li>
 <li><a href="#_11">進階：預測力評估</a></li>
 <li><a href="#_12">早期資訊系統應用範例（形成性構念 + 多階段中介）</a></li>
+<li><a href="#jasp-pls-semrogers-2024-unlocking-vb-sem">補充：用免費軟體 JASP 跑 PLS-SEM（Rogers 2024 Unlocking VB-SEM）</a></li>
+<li><a href="#pls-cb-sem-2017">選 PLS 而非 CB-SEM 的三個理由（黃識銘 2017）</a></li>
+<li><a href="#_13">命名與軟體要對齊（一個反面案例）</a></li>
+<li><a href="#pls-2026-08-17">兩個《電子商務學報》應用案例：選 PLS 的兩種理由（2026-08-17 補充）</a></li>
 </ul>
 </li>
 </ul>
@@ -100,7 +104,7 @@ MathJax = {
 <ul>
 <li><strong>開創性文獻</strong>：Herman Wold（1975, 1982）— 提出 PLS path modeling 作為 CB-SEM 的替代（暫無 wiki/ 資料）</li>
 <li><strong>方法發展里程碑</strong>：Chin（1998）— 系統化 PLS-SEM 並推廣至行銷、資訊系統領域（暫無 wiki/ 資料）；Hair et al.（2017）— <em>A Primer on PLS-SEM</em> 為當前最常引用的實務指南（暫無 wiki/ 資料）</li>
-<li><strong>wiki/ 應用案例</strong>：Le（2024）— 越南假新聞分享研究，以 PLS-SEM 檢驗風險感知、媒體信任、壓力對假新聞採用／分享的影響，含 disclosure willingness 調節（Le 2024 Methods、Le 2024 Spread Fake News）；Sumra et al.（2024）— 巴基斯坦 COVID 線上教育研究，6 構念 8 假設 750 樣本，含 PLS-MGA 城鄉與師生群組比較（Sumra 2022 Methods、Sumra 2022 Online Education）</li>
+<li><strong>wiki/ 應用案例</strong>：Le（2024）— 越南假新聞分享研究，以 PLS-SEM 檢驗風險感知、媒體信任、壓力對假新聞採用／分享的影響，含 disclosure willingness 調節（Le 2024 Methods、Le 2024 Spread Fake News）；Sumra et al.（2024）— 巴基斯坦 COVID 線上教育研究，6 構念 8 假設 750 樣本，含 PLS-MGA 城鄉與師生群組比較（Sumra 2022 Methods、Sumra 2022 Online Education）；李家瑩等（2022）— 蝦皮電商遊戲化研究（SmartPLS 3.2，482 樣本），示範<strong>二階形成性構念</strong>（遊戲化顧客契合機制含挑戰／積分／獎勵三子構念）的處理：以 VIF &lt; 2 診斷子構念共線性、以外部權重判斷貢獻，正是選 PLS 而非 CB-SEM 的關鍵理由（李家瑩 2022 Methods）</li>
 <li><strong>相關 wiki 筆記</strong>：PLS-SEM Applications in Conjoint and Marketing Research、PLS-SEM explains 93.8 percent of furniture consumer preference variance、PLSPM</li>
 </ul>
 <h4 id="_6">相關學者</h4>
@@ -453,6 +457,43 @@ vs <a href="CB-SEM.html">CB-SEM</a></p>
 <p><strong>相關論文（既有）</strong>：Le 2024 Spread Fake News、Head 2012 Understanding student、Simons 2021 Two Sides、<a href="Hair_2022_PLS.html">Hair_2022_PLS</a>、<a href="Dijkstra_Henseler.html">Dijkstra_Henseler</a>、<a href="Henseler_2016_MICOM.html">Henseler_2016_MICOM</a>、Wang 2016 Intention、Ma 2007 IT Design
 <strong>進階概念</strong>：<a href="PLSc.html">PLSc</a>、<a href="MICOM.html">MICOM</a>、<a href="Henseler_PLS_MGA.html">Henseler_PLS_MGA</a>、<a href="parametric_MGA.html">parametric_MGA</a>、<a href="PLSpredict.html">PLSpredict</a>、<a href="Q_squared_predict.html">Q_squared_predict</a>、Model Fit、<a href="CB-SEM.html">CB-SEM</a>、<a href="capitalize_on_chance.html">capitalize_on_chance</a>
 另見：Model Fit、<a href="CB-SEM.html">CB-SEM</a>、<a href="Hair_2022_PLS.html">Hair_2022_PLS</a> 中對應段落</p>
+<hr />
+<h4 id="jasp-pls-semrogers-2024-unlocking-vb-sem">補充：用免費軟體 JASP 跑 PLS-SEM（Rogers 2024 Unlocking VB-SEM）</h4>
+<p>Rogers &amp; Barboza（2024） 是一份教學論文，示範用免費開源的 JASP 0.18.1（SEM/PLS 模組，後端 cSEM）執行基本 PLS-SEM，並以巴西足球迷消費資料（$n = 269$）重現原先 SmartPLS 3.3 的結果，證明結果幾乎相同。此文把 PLS-SEM 定位為 Breiman（2001）「演算法建模文化」下的 VB-SEM，並整理出一張基本 PLS-SEM 的決策準則地圖（信度→收斂效度AVE→區辨效度<a href="HTMT.html">HTMT</a>→共線性<a href="VIF_Variance_Inflation_Factor.html">VIF</a>→結構模型 $R^2$／$f^2$／<a href="PLSpredict.html">PLSpredict</a>）。反映式構念採 <a href="PLSc.html">PLSc</a>。實務啟示：JASP 補上「付費易用 vs 免費難用」的空缺，但需跨三模組才能覆蓋 VIF 與 HTMT。</p>
+<p><strong>相關論文（補充）</strong>：Rogers 2024 Unlocking VB-SEM、Rogers 2024 Methods
+<strong>相關概念（補充）</strong>：VB-SEM、JASP、cSEM、AVE、two cultures of statistical modeling</p>
+<hr />
+<h3 id="pls-cb-sem-2017">選 PLS 而非 CB-SEM 的三個理由（黃識銘 2017）</h3>
+<p>黃識銘 (2017) 明確交代了為何不用 LISREL 或 AMOS，這段理由可以直接當作方法節的引用範本：</p>
+<ol>
+<li><strong>研究焦點是預測</strong>（品牌忠誠）而非檢定理論模型與資料的整體配適</li>
+<li>模型中有<strong>形成式</strong>（formative）構念——品牌愛慕為二階形成式構念，共變異數基礎 SEM 處理形成式指標會遇到識別問題</li>
+<li>模型<strong>複雜</strong>（多重中介），$N=383$ 對 CB-SEM 而言不算寬裕</li>
+</ol>
+<p><strong>二階構念的兩階段處理</strong>：先把品牌親近、品牌熱情、品牌承諾三個一階構面各 4 題做成二階形成式構念，再以 latent variable scores 帶入 PLS 模型。</p>
+<p><strong>估計設定</strong>：PLS Algorithm 求路徑係數（$\beta$），拔靴法（bootstrap）5,000 次重抽求 $t$ 值與 $R^2$（Chin, 2010；Hair, Ringle &amp; Sarstedt, 2011）。</p>
+<p><strong>PLS 的配適與預測指標</strong>：</p>
+<ul>
+<li><strong>GoF</strong>（Goodness of Fit；Tenenhaus, Vinzi, Chatelin &amp; Lauro, 2005）：$\text{GoF} = \sqrt{\overline{\text{communality}} \times \overline{R^2}}$，判準 0.02／0.15／0.35 對應低／中／高效果</li>
+<li><strong>Stone-Geisser $Q^2$</strong>（blindfolding；Hair, Hult, Ringle &amp; Sarstedt, 2014）：cv-communality 交叉評估測量模型的共同性，cv-redundancy 交叉評估結構模型的重疊性；判準同樣是 0.02／0.15／0.35（Henseler, Ringle &amp; Sinkovics, 2009）</li>
+</ul>
+<p><strong>要注意 GoF 不是 CB-SEM 意義下的配適指標</strong>。它是 communality 與 $R^2$ 的幾何平均，分佈性質與門檻值在文獻上爭議不小。該研究以 GoF 加上「假設顯著比例」與「精簡度」三準則（Morgan &amp; Hunt, 1994）做模式選擇，而 GoF 本身其實<strong>指向無中介模式</strong>（.718 &gt; .671），最終結論是靠另兩個準則贏來的（見 Full mediation model beats direct and no-mediation competing models on parsimony）。</p>
+<p><strong>新增相關論文</strong>：黃識銘 2017 品牌形、黃識銘 2017 Methods
+<strong>新增相關概念</strong>：mediation analysis、marker variable、common method bias、structural equation modeling</p>
+<h3 id="_13">命名與軟體要對齊（一個反面案例）</h3>
+<p>黃慧玲等（2025）的方法節寫「使用線性結構方程模式（SEM）」，但實際上跑的是 SmartPLS 3.0，也就是 PLS-SEM。可以從報導內容確認：全文沒有任何 $\chi^2$、CFI、RMSEA 等整體適配指標（PLS-SEM 不產生這些），只報 $R^2$ 與路徑係數，這與 PLS 的作法一致。寫方法節時，估計法的名稱要跟軟體與所報指標對齊——<a href="CB-SEM.html">CB-SEM</a> 與 PLS-SEM 的估計邏輯、適配判準與係數解讀都不同，混用詞彙會讓讀者無從判斷結果該怎麼讀。</p>
+<h3 id="pls-2026-08-17">兩個《電子商務學報》應用案例：選 PLS 的兩種理由（2026-08-17 補充）</h3>
+<p>這兩篇並置起來，剛好示範了選擇 PLS 而非 <a href="CB-SEM.html">CB-SEM</a> 的兩類理由——一類是<strong>測量模式</strong>決定的（不可替代），一類是<strong>樣本與模型複雜度</strong>決定的（可討論）。</p>
+<p><strong>1. 因為有形成性構念（李家瑩 2013 以期望，N = 282，SmartPLS）</strong></p>
+<p>該研究的「失誤歸因」由三個「造成失誤的原因」（嚴重程度、穩定性、可控制性）組成，屬於formative indicator，CB-SEM 會遇到識別問題，因此必須用 PLS。這是<strong>由測量模式的性質決定</strong>的選擇，不是由樣本大小決定。</p>
+<p>配套處理值得學：形成性構念在信度表直接標 <code>n.s.</code>，不報 composite reliability 與 AVE，並改看指標權重與 t 值（0.494 / 0.592 / 0.228，第三項 t = 1.784 未達顯著）。</p>
+<p>顯著性檢定用 Bootstrap 反覆抽樣 500 次（Chin, 1998），因為 PLS 不提供路徑係數的 p 值。</p>
+<p><strong>2. 因為樣本小、模型複雜（張育瑋 2024 顧客，N = 222）</strong></p>
+<p>九個構面、二十八個題項、九條路徑，樣本 222。作者引 Gefen and Straub（2005）說 PLS-SEM 對樣本大小和資料分佈的要求較低、引 Chin（1998）說可以用小樣本檢查複雜的研究模型。</p>
+<p>該研究的檢查流程完整，可當問卷型 PLS 研究的模板：nonresponse bias（$\chi^2$ 比較早期與晚期填答者）→ <a href="CMB_Common_method_bias.html">CMB Common method bias</a>（Harman 單因子，最大變異 14.87% &lt; 50%）→ 量測模型（α 0.84–0.95、CR 0.92–0.96、AVE 0.73–0.88、交叉負荷量 + <a href="Fornell-Larcker.html">Fornell-Larcker</a>）→ 結構模型（路徑係數、t 值、$R^2$）。</p>
+<p><strong>⚠️ 一個要注意的做法</strong>：該研究報告 SRMR = 0.04 與 NFI = 0.83 作為整體適配度。這兩個指標原本是為共變異數基礎的 CB-SEM 設計的，PLS 文獻雖已接受 SRMR 作近似適配指標，NFI 的 0.8 門檻仍相對寬鬆。引用 PLS 研究時應以路徑係數與 $R^2$ 為主，適配指標為輔。</p>
+<p><strong>新增相關論文</strong>：李家瑩 2013 以期望、李家瑩 2013 Methods、張育瑋 2024 顧客、張育瑋 2024 Methods
+<strong>新增相關概念</strong>：formative indicator、SmartPLS、<a href="CMB_Common_method_bias.html">CMB Common method bias</a>、nonresponse bias</p>
 </main>
 </div>
 <script>
