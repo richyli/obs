@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="把「很亂」「找不到」「怪怪的」翻成理論名稱：六類三十六條，附理論說明與修法。">
+<title>儀表板抱怨翻譯表</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;700&family=Noto+Sans+TC:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root {
+    --paper:      #eef1ec;
+    --surface:    #fbfcfa;
+    --surface-2:  #e6eae4;
+    --ink:        #16232b;
+    --ink-soft:   #3d4d52;
+    --muted:      #5d6b66;
+    --rule:       #c6d0c8;
+    --rule-soft:  #dce2db;
+    --accent:     #1f5c63;
+    --accent-ink: #ffffff;
+    --signal:     #b4322a;
+
+    --f-display: "Noto Serif TC", "Songti TC", Georgia, serif;
+    --f-body:    "Noto Sans TC", "Microsoft JhengHei", system-ui, sans-serif;
+    --f-mono:    "IBM Plex Mono", "Consolas", ui-monospace, monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:      #10161a;
+      --surface:    #171f22;
+      --surface-2:  #1e282a;
+      --ink:        #e7ede8;
+      --ink-soft:   #c2cec8;
+      --muted:      #90a099;
+      --rule:       #2c3a38;
+      --rule-soft:  #232e2f;
+      --accent:     #77c2c4;
+      --accent-ink: #0d1416;
+      --signal:     #e8796c;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --paper:      #10161a;
+    --surface:    #171f22;
+    --surface-2:  #1e282a;
+    --ink:        #e7ede8;
+    --ink-soft:   #c2cec8;
+    --muted:      #90a099;
+    --rule:       #2c3a38;
+    --rule-soft:  #232e2f;
+    --accent:     #77c2c4;
+    --accent-ink: #0d1416;
+    --signal:     #e8796c;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--f-body);
+    font-size: 15.5px;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 40px 24px 80px; }
+
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+  .eyebrow {
+    font-family: var(--f-mono);
+    font-size: 11.5px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* hero */
+  .hero { border-bottom: 1px solid var(--rule); padding-bottom: 24px; }
+  .hero h1 {
+    font-family: var(--f-display);
+    font-weight: 700;
+    font-size: clamp(30px, 5.2vw, 46px);
+    line-height: 1.18;
+    letter-spacing: -.01em;
+    margin: 10px 0 0;
+    text-wrap: balance;
+  }
+  .hero .lede { max-width: 62ch; margin: 12px 0 0; color: var(--ink-soft); font-size: 16px; }
+  .facts {
+    display: flex; flex-wrap: wrap; gap: 8px 28px;
+    margin-top: 22px; padding-top: 16px;
+    border-top: 1px solid var(--rule-soft);
+    font-family: var(--f-mono); font-size: 12.5px; color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+  .facts b { color: var(--ink); font-weight: 500; }
+
+  /* how to use */
+  .use {
+    margin-top: 24px;
+    background: var(--surface);
+    border: 1px solid var(--rule-soft);
+    border-left: 3px solid var(--accent);
+    padding: 18px 22px;
+  }
+  .use h2 {
+    font-family: var(--f-display); font-size: 17px; font-weight: 600; margin: 0 0 8px;
+  }
+  .use ol { margin: 0; padding-left: 20px; }
+  .use li { margin-bottom: 4px; max-width: 66ch; }
+  .use li:last-child { margin-bottom: 0; }
+
+  /* nav */
+  .nav {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(118px, 1fr);
+    gap: 2px;
+    margin-top: 24px;
+    overflow-x: auto;
+  }
+  .nav a {
+    display: block;
+    background: var(--surface);
+    border: 1px solid var(--rule-soft);
+    border-left: 3px solid var(--accent);
+    padding: 10px 13px;
+    text-decoration: none;
+    color: var(--ink);
+  }
+  .nav a:hover { background: var(--surface-2); }
+  .nav .n { font-family: var(--f-mono); font-size: 11px; letter-spacing: .12em; color: var(--muted); }
+  .nav .t { font-size: 13.5px; font-weight: 500; margin-top: 2px; }
+
+  /* sections */
+  section { margin-top: 60px; padding-top: 32px; border-top: 3px solid var(--ink); }
+  .sec-head { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
+  .sec-head h2 {
+    font-family: var(--f-display);
+    font-size: clamp(22px, 3.2vw, 30px);
+    font-weight: 700; margin: 0; letter-spacing: -.01em;
+  }
+  .sec-num {
+    font-family: var(--f-mono); font-size: 13px; letter-spacing: .12em;
+    color: var(--accent-ink); background: var(--accent);
+    padding: 3px 9px; align-self: center;
+  }
+  .sec-note { margin: 12px 0 0; color: var(--ink-soft); max-width: 68ch; }
+
+  /* entries */
+  .entries { margin-top: 22px; }
+  .entry {
+    display: grid;
+    grid-template-columns: 210px 230px 1fr;
+    gap: 22px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--rule-soft);
+    align-items: start;
+  }
+  .entry:first-child { border-top: 1px solid var(--rule-soft); }
+
+  .said {
+    font-family: var(--f-display);
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.45;
+    margin: 0;
+  }
+  .plus {
+    display: inline-block;
+    margin-left: 6px;
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: .08em;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    padding: 0 4px;
+    vertical-align: 2px;
+  }
+
+  .theory { font-family: var(--f-mono); font-size: 13px; line-height: 1.65; color: var(--ink); }
+  .theory .zh { display: block; font-family: var(--f-body); font-size: 13px; color: var(--muted); margin-top: 3px; }
+
+  .says { margin: 0; max-width: 62ch; }
+  .fix {
+    margin: 8px 0 0;
+    font-size: 14px;
+    color: var(--ink-soft);
+    border-left: 2px solid var(--rule);
+    padding-left: 12px;
+    max-width: 62ch;
+  }
+  .fix b {
+    font-family: var(--f-mono);
+    font-size: 11px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 400;
+    margin-right: 6px;
+  }
+
+  /* footer */
+  .end { margin-top: 60px; padding-top: 20px; border-top: 3px solid var(--ink); }
+  .end p { max-width: 70ch; color: var(--ink-soft); }
+  .end .u { font-family: var(--f-mono); font-size: 12.5px; word-break: break-all; }
+  footer { margin-top: 28px; font-family: var(--f-mono); font-size: 12px; color: var(--muted); }
+
+  @media (max-width: 820px) {
+    .entry { grid-template-columns: 1fr; gap: 10px; }
+    .theory { border-left: 2px solid var(--rule); padding-left: 10px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="eyebrow">資訊視覺化 · 課堂講評與作業用</div>
+    <h1>儀表板抱怨翻譯表</h1>
+    <p class="lede">你看得出來哪裡不對，但只講得出「很亂」「找不到」「怪怪的」。這張表把這些口語接到理論名稱上——讓你的直覺變成查得到、引用得了、寫得進說明文件的東西。左邊是你會說的話，中間是它的學名，右邊是這個理論到底在說什麼，以及怎麼修。</p>
+    <div class="facts">
+      <span>分類　<b>6 類</b></span>
+      <span>條目　<b>36 條</b></span>
+      <span>標 ＋ 者　<b>本次依理論擴充</b></span>
+      <span>配套　<b>Dashboard 診斷框架 v1</b></span>
+    </div>
+  </header>
+
+  <div class="use">
+    <h2>怎麼用</h2>
+    <ol>
+      <li><b>互評時</b>：先用左欄找到你想講的那句話，再用中欄的學名把話講完整——「這裡不是很亂，是視覺競爭失控，所有卡片視覺重量一樣，沒有元素勝出。」</li>
+      <li><b>寫作業說明文件時</b>：Design 與 Interactivity 兩節直接引用中欄的理論，比寫「我覺得這樣比較好看」有說服力得多。</li>
+      <li><b>自己改稿時</b>：右欄的「修法」是可以直接執行的動作，不是原則宣示。</li>
+    </ol>
+  </div>
+
+  <nav class="nav">
+    <a href="#c1"><div class="n">A</div><div class="t">看不清楚</div></a>
+    <a href="#c2"><div class="n">B</div><div class="t">找不到</div></a>
+    <a href="#c3"><div class="n">C</div><div class="t">說不出哪裡怪</div></a>
+    <a href="#c4"><div class="n">D</div><div class="t">不順</div></a>
+    <a href="#c5"><div class="n">E</div><div class="t">感覺不對</div></a>
+    <a href="#c6"><div class="n">F</div><div class="t">看完沒印象</div></a>
+  </nav>
+
+  <!-- A -->
+  <section id="c1">
+    <div class="sec-head"><span class="sec-num">A</span><h2>看不清楚</h2></div>
+    <p class="sec-note">問題出在最前面 250 毫秒——資訊還沒被讀，就已經在視覺系統裡輸掉了。</p>
+    <div class="entries">
+
+      <div class="entry">
+        <p class="said">很亂／眼花撩亂</p>
+        <div class="theory">Biased Competition Theory<span class="zh">視覺競爭失控（Desimone &amp; Duncan, 1995）</span></div>
+        <div>
+          <p class="says">視覺皮質裡不同刺激在競爭同一批神經表徵資源，勝負由物理顯著性與任務目標共同決定。當每張卡片的字級、顏色、邊框都一樣，就沒有任何元素能在競爭中勝出，注意力被均分，等於沒有重點。</p>
+          <p class="fix"><b>修法</b>首屏只允許一個區塊擁有最高視覺權重，其餘一律降級。</p>
+        </div>
+      </div>
+
+      <div class="entry">
+        <p class="said">太花俏／太刺眼</p>
+        <div class="theory">Feature Integration Theory · Pre-Attentive Processing<span class="zh">前注意處理（Treisman &amp; Gelade, 1980）</span></div>
+        <div>
+          <p class="says">顏色、方向、大小、動態這些特徵在 200–250 毫秒內被平行偵測，不需要注意力介入。問題是這種「免費」的顯著性有限：裝飾用了，真正的警示就沒得用。</p>
+          <p class="fix"><b>修法</b>把最強的前注意特徵（動態、飽和紅）保留給唯一一種訊息，全站不再有第二個地方用它。</p>
+        </div>
+      </div>
+
+      <div class="entry">
+        <p class="said">一眼看過去東西太多<span class="plus">＋</span></p>
+        <div class="theory">Feature Congestion<span class="zh">特徵擁擠度</span></div>
+        <div>
+          <p class="says">畫面的視覺雜訊可以被量化：局部區域內顏色、方向、亮度的變異越大，搜尋就越慢、越容易漏看。這解釋了為什麼「每一格都做得很用心」的頁面反而最難用。</p>
+          <p class="fix"><b>修法</b>把背景元素去飽和、拿掉外框與陰影，讓變異集中在該被看見的地方。</p>
+        </div>
+      </div>
+
+      <div class="entry">
+        <p class="said">顏色跟意思打架<span class="plus">＋</span></p>
+        <div class="theory">Stroop Effect<span class="zh">語意與視覺屬性衝突</span></div>
+        <div>
+          <p class="says">當顏色的語意與文字的語意衝突（綠色的「落後」、紅色的「達標」），大腦必須額外花時間壓抑錯誤的自動反應，判讀速度顯著變慢。</p>
+          <p class="fix"><b>修法</b>先定死色彩語法（紅＝異常、綠＝達標、灰＝背景），全站不准例外，連品牌色也不行。</p>
+        </div>
+      </div>
+
+      <div class="entry">
+        <p class="said">顏色深淺分不出來<span class="plus">＋</span></p>
+        <div class="theory">Stevens' Power Law · CIELAB<span class="zh">感知非線性、感知均勻色階</span></div>
+        <div>
+          <p class="says">亮度的感知指數約 0.33，代表物理上等距的數值差，在高值區被壓縮到幾乎看不見。彩虹色（Rainbow／Jet）更糟：黃色的明度峰值會讓中等數值在視覺上最突出，製造出資料裡根本不存在的模式。</p>
+          <p class="fix"><b>修法</b>熱力圖改用 viridis 或 CIELAB 等感知均勻色階，不要用彩虹色。</p>
+        </div>
+      </div>
+
+      <div class="entry">
+        <p class="said">看不懂這是什麼圖<span class="plus">＋</span></p>
+        <div class="theory">Schema Theory<span class="zh">graph schema 啟動失敗（Pinker, 1990）</span></div>
+        <div>
+          <p class="says">人是先用一般的圖表基模，去生成眼前這張圖的專屬基模。圖表形式越新奇，基模啟動越慢；讀者還在猜「這是什麼圖」的時候，資料本身根本沒被讀到。</p>
+          <p class="fix"><b>修法</b>任務本身已經複雜時，優先用讀者熟悉的圖表慣例。每一次不必要的創新，都是在要求對方重新學一套。</p>
+        </div>
+      </div>
+
+      <div class="entry">
+        <p class="said">看不懂（術語太多）</p>
+        <div class="theory">Task Mental Model<span class="zh">先備知識假設（Shah &amp; Hoeffner）</span></div>
+        <div>
+          <p class="says">圖表理解同時受「圖表知識」與「內容知識」影響。預設使用者都懂淨流入、留存率、加權指數，其實是假設了一整套專家心智模型已經存在。</p>
+          <p class="fix"><b>修法</b>第一次出現的專業名詞就地解釋，或提供新手／進階兩種檢視。</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- B -->
+  <section id="c2">
+    <div class="sec-head"><span class="sec-num">B</span><h2>找不到</h2></div>
+    <p class="sec-note">東西都在頁面上，但使用者到不了——這是覓食路徑與工作記憶的問題，不是資料量的問題。</p>
+    <div class="entries">
+
+      <div class="entry">
+        <p class="said">找很久／不好找</p>
+        <div class="theory">Guided Search Theory · Information Foraging Theory<span class="zh">優先地圖、資訊氣味（Wolfe；Pirolli &amp; Card, 1999）</span></div>
+        <div>
+          <p class="says">人不會平均掃過畫面，而是先形成一張優先地圖，注意力再落到最可能有收穫的位置。連結與按鈕的文字就是「資訊氣味」——氣味弱，使用者無法預測點下去會拿到什麼，就不點。</p>
+          <p class="fix"><b>修法</b>把「更多資訊」「查看詳情」改成「查看台北市 3 件重大案件」，讓標籤自己說明報酬。</p>
+        </div>
+      </div>
+
+      <div class="entry">
+        <p class="said">不知道從哪裡開始看</p>
+        <div class="theory">Narrative Visualization<span class="zh">Martini Glass 結構（Segel &amp; Heer, 2010）</span></div>
+        <div>
+          <p class="says">好的資料敘事先有一段作者引導的杯腳，把詮釋框架建立起來，再打開杯碗讓讀者自由探索。一開始就丟出完整資料庫，等於要求讀者在沒有框架的情況下自己找問題。</p>
+          <p class="fix"><b>修法</b>首頁放三個具名案例當杯腳，點進去就是完整詳情，看完再放人去搜尋。</p>
+        </div>
+      </div>
+
+      <div class="entry">
+        <p class="said">要來回看／東西很散</p>
+        <div class="theory">Split-Attention Effect · Working Memory<span class="zh">分散注意力效應、4±1 組塊（Cowan, 2001）</span></div>
+        <div>
+          <p class="says">相互依存的資訊被分開放置時，工作記憶必須同時保持多個位置，外在認知負荷直接上升。圖例放在右下角、圖表在左上角，就是典型案例。</p>
+          <p class="fix"><b>修法</b>圖例直接標在線的末端；需要比較的兩組資料並排，不要一左一右跨越整頁。</p>
+        </div>
+      </div>
+
+      <div class="entry">
+        <p class="said">看久很疲累</p>
+        <div class="theory">Free Energy Principle · Miyake 執行功能<span class="zh">自由能消耗高、切換成本累積</span></div>
+        <div>
+          <p class="says">認知系統持續在最小化預測誤差；當畫面一直給出無法被既有模型解釋的東西，誤差就收斂不了，主觀感受就是累。每多一次分頁切換、篩選重設，也多付一次注意力轉換成本。</p>
+          <p class="fix"><b>修法</b>維持穩定的版面與色彩語法，並把目前的篩選狀態常駐顯示，不要讓使用者靠記憶維持脈絡。</p>
+        </div>
+      </div>
+
+      <div class="entry">
+        <p class="said">無法判斷重要性</p>
+        <div class="theory">Signal Detection Theory<span class="zh">辨識力 d′（Tanner &amp; Swets, 1954）</span></div>
+        <div>
+          <p class="says">感知是在神經噪音背景下做的統計決策。d′ 是信號分佈與噪音分佈的距離——沒有「正常長什麼樣」的基準線，兩個分佈在感知上完全重疊，d′ 趨近於零，再認真看也判斷不出來。</p>
+          <p class="fix"><b>修法</b>畫出歷史正常波動範圍（例如 ±2σ 控制帶），讓偏離自己浮現。</p>
+        </div>
+      </div>
+
+      <div class="entry">
+        <p class="said">不知道這個數字是高還是低<span class="plus">＋</span></p>
+        <div class="theory">Statistical Faithfulness · Schema 補空<span class="zh">比較基準忠實性</span></div>
+        <div>
+          <p class="says">基模會主動填補空白，但填進去的未必正確。沒有目標值、去年同期、正常範圍，使用者就用自己的預設去補——這是最常被忽略、也最容易修的一項。</p>
+          <p class="fix"><b>修法</b>每個關鍵數字都附一個基準：「3.2%（目標 4.0%，上季 3.8%）」。</p>
+        </div>
+      </div>
+
+      <div class="entry">
+        <p class="said">點進去就後悔<span class="plus">＋</span></p>
+        <div class="theory">Information Foraging<span class="zh">邊際值定理與 patch-leaving</span></div>
+        <div>
+          <p class="says">當前區塊的邊際報酬低於環境平均獲取率時，理性的覓食者就離開。詳情頁只有一句摘要，使用者退出去之後，連帶不再信任其他入口。</p>
+          <p class="fix"><b>修法</b>詳情頁至少給足欄位、來源與相關項目，讓點擊的時間投資划算。</p>
+        </div>
+      </div>
+
+      <div class="entry">
+        <p class="said">每一頁長得都不一樣<span class="plus">＋</span></p>
+        <div class="theory">Scene Grammar Theory<span class="zh">場景語法先驗（Oliva &amp; Torralba, 2001）</span></div>
+        <div>
+          <p class="says">空間包絡在約 100 毫秒內就被辨識，激活「這是什麼類型的畫面」的先驗。佈局每頁都變，使用者每次都要重建場景理解，注意力沒辦法直接落在異常上。</p>
+          <p class="fix"><b>修法</b>全站共用同一套版面骨架與色彩語法，讓違反常態的東西自己突出。</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- C -->
+  <section id="c3">
+    <div class="sec-head"><span class="sec-num">C</span><h2>說不出來哪裡有問題</h2></div>
+    <p class="sec-note">這一類最危險：畫面看起來很專業，但推論已經被帶偏。學生最需要學名的也是這一類。</p>
+    <div class="entries">
+
+      <div class="entry">
+        <p class="said">資料看起來很怪</p>
+        <div class="theory">Predictive Coding<span class="zh">先驗與資料衝突（Rao &amp; Ballard, 1999）</span></div>
+        <div>
+          <p class="says">大腦持續預測感覺輸入並最小化誤差。當資料違反強烈的先驗，人傾向懷疑資料而不是更新信念——先驗越強，越可能直接說「這數字一定有問題」。</p>
+          <p class="fix"><b>修法</b>異常值旁邊直接標資料來源、統計期間與計算方式，降低懷疑資料的誘因。</p>
+        </div>
+      </div>
+
+      <div class="entry">
+        <p class="said">資料有問題</p>
+        <div class="theory">Statistical Faithfulness<span class="zh">統計忠實性（Gelman &amp; Unwin, 2013）</span></div>
+        <div>
+          <p class="says">視覺化必須忠實呈現效果量、不確定性、比較基準與視覺顯著性。關鍵的一句話是：不確定性的缺席本身就是一種誤導——只給點估計，等於隱含承諾這些數值是確定的。</p>
+          <p class="fix"><b>修法</b>加上誤差範圍或信賴帶；做不到時，至少寫明樣本數與資料期間。</p>
+        </div>
+      </div>
+
+      <div class="entry">
+        <p class="said">這個圖表在畫什麼？</p>
+        <div class="theory">Stevens' Power Law<span class="zh">知覺量與物理量的冪次關係</span></div>
+        <div>
+          <p class="says">同一份資料換成不同視覺屬性，被讀出來的強度就不一樣。面積、體積、色深的感知指數都遠低於長度，意思是差距會被系統性低估。</p>
+          <p class="fix"><b>修法</b>需要精確比較的數值不要交給面積、體積或色深。</p>
+        </div>
+      </div>
+
+      <div class="entry">
+        <p class="said">這個圖用錯圖型了<span class="plus">＋</span></p>
+        <div class="theory">Perceptual Ladder<span class="zh">視覺編碼準確度階梯（Cleveland &amp; McGill；Munzner）</span></div>
+        <div>
+          <p class="says">不同視覺通道的判讀準確度有明確排序：共同尺度上的位置 &gt; 長度 &gt; 角度 &gt; 面積 &gt; 亮度飽和度 &gt; 曲率體積。最重要的資料屬性應該用最有效的通道編碼。</p>
+          <p class="fix"><b>修法</b>核心比較用長條圖、點圖、散布圖；熱力圖、泡泡圖、樹狀圖留給大致的強弱感知。</p>
+        </div>
+      </div>
+
+      <div class="entry">
+        <p class="said">差距看起來很大，其實沒有<span class="plus">＋</span></p>
+        <div class="theory">效果量忠實性<span class="zh">Y 軸截斷、視覺顯著性一致性</span></div>
+        <div>
+          <p class="says">視覺上的差距大小應該正比於統計效果量。Y 軸從 95 開始，1% 的差距在畫面上看起來像 50%，讀者會系統性高估。反過來，把統計上不顯著的差異用鮮豔顏色高亮，也是同一種錯。</p>
+          <p class="fix"><b>修法</b>Y 軸從 0 開始，非得截斷就明確標注；只強調通過檢定的差異。</p>
+        </div>
+      </div>
+
+      <div class="entry">
+        <p class="said">我被這張圖騙了</p>
+        <div class="theory">Graphical Inference · Lineup Protocol<span class="zh">視覺推論（Hullman &amp; Gelman, 2021；Wickham et al., 2010）</span></div>
+        <div>
+          <p class="says">視覺化的終極標準不是好不好看，而是「讀者的信念有沒有以統計上正確的方式被更新」。Lineup 把真圖混進一堆虛無假設下的隨機圖，挑不出來就代表那個模式本來就不存在。</p>
+          <p class="fix"><b>修法</b>看到明顯模式時先自問：如果資料是隨機的，這張圖會不會長得差不多？</p>
+        </div>
+      </div>
+
+      <div class="entry">
+        <p class="said">只有一個數字，沒有範圍<span class="plus">＋</span></p>
+        <div class="theory">Uncertainty Visualization · Hypothetical Outcome Plots<span class="zh">不確定性視覺化（Hullman et al., 2015）</span></div>
+        <div>
+          <p class="says">人對靜態誤差棒的解讀很差，但對「多種可能結果輪流出現」的動畫理解得相當好。把預期分佈畫出來，讀者才感覺得到觀測值相對於預期落在哪。</p>
+          <p class="fix"><b>修法</b>至少畫出信賴帶；互動作品可以做成多個抽樣結果的切換。</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- D -->
+  <section id="c4">
+    <div class="sec-head"><span class="sec-num">D</span><h2>不順</h2></div>
+    <p class="sec-note">操作成本等同於行動門檻。使用者不是不想做，是做起來太貴。</p>
+    <div class="entries">
+
+      <div class="entry">
+        <p class="said">很難操作</p>
+        <div class="theory">Fitts's Law<span class="zh">MT = a + b·log₂(D/W+1)（Fitts, 1954）</span></div>
+        <div>
+          <p class="says">移動到目標的時間，隨距離增加、隨目標寬度減少而變長。高操作時間等效於提高行動門檻——按鈕做得又小又遠，等於在勸退。</p>
+          <p class="fix"><b>修法</b>主要行動按鈕至少 44px 高，放在視線自然落點；高頻操作貼螢幕邊緣，利用邊界的無限寬度。</p>
+        </div>
+      </div>
+
+      <div class="entry">
+        <p class="said">選項太多，不知道選哪個<span class="plus">＋</span></p>
+        <div class="theory">Hick-Hyman Law<span class="zh">選擇時間隨選項數對數成長</span></div>
+        <div>
+          <p class="says">決策時間隨可選項數的對數上升。十個並列的篩選器不是給了十倍自由，是給了一次更慢的決策。</p>
+          <p class="fix"><b>修法</b>把篩選器分層或分群，先給三個最常用的，其餘收進「進階」。</p>
+        </div>
+      </div>
+
+      <div class="entry">
+        <p class="said">等很久／反應很慢</p>
+        <div class="theory">Two Streams Hypothesis<span class="zh">背側流的即時視覺導引</span></div>
+        <div>
+          <p class="says">視覺分成腹側流（辨識「是什麼」）與背側流（導引「怎麼動」）。背側流的運作是即時的，一旦操作回饋延遲，手與眼的迴路就對不上，主觀上就是「卡」。</p>
+          <p class="fix"><b>修法</b>互動要有立即的視覺回饋，資料還在算就先給狀態，不要讓畫面靜止不動。</p>
+        </div>
+      </div>
+
+      <div class="entry">
+        <p class="said">滑桿很難拉到我要的值<span class="plus">＋</span></p>
+        <div class="theory">Steering Law<span class="zh">通道導引律</span></div>
+        <div>
+          <p class="says">沿著狹窄通道移動的時間，正比於通道長度除以寬度。細長的滑桿、狹窄的下拉選單，都是在要求高精度的連續控制。</p>
+          <p class="fix"><b>修法</b>滑桿加大命中區、提供數值輸入或預設區間按鈕當替代路徑。</p>
+        </div>
+      </div>
+
+      <div class="entry">
+        <p class="said">要點五次才做得完一件事<span class="plus">＋</span></p>
+        <div class="theory">Miyake 執行功能 · Fitts's Law<span class="zh">切換成本 × 操作成本累加</span></div>
+        <div>
+          <p class="says">每多一個步驟，就多一次注意力轉換成本加上一次操作成本。從「看到」到「完成必要行動」超過三步，完成率就明顯掉下來。</p>
+          <p class="fix"><b>修法</b>把主要任務壓在三步以內，每一步都預填能預填的欄位。</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- E -->
+  <section id="c5">
+    <div class="sec-head"><span class="sec-num">E</span><h2>感覺不對</h2></div>
+    <p class="sec-note">說不上來但就是不想信。多半是編碼慣例被違反，或是信號被自己稀釋掉了。</p>
+    <div class="entries">
+
+      <div class="entry">
+        <p class="said">顏色怪怪的</p>
+        <div class="theory">Bertin Visual Variables · Color Opponency<span class="zh">視覺變數的性質、色彩對立</span></div>
+        <div>
+          <p class="says">Bertin 把視覺變數分成有序與無序兩類：位置、大小、明度可以表達順序，色相不行。用彩虹色表達高低，等於拿一個無序的變數去承擔有序的任務。視網膜的色彩對立機制也決定了哪些顏色組合會互相干擾。</p>
+          <p class="fix"><b>修法</b>順序型資料用明度或飽和度的單色階，類別型資料才用色相，且控制在 5–7 種以內。</p>
+        </div>
+      </div>
+
+      <div class="entry">
+        <p class="said">資料不像真的</p>
+        <div class="theory">Statistical Faithfulness<span class="zh">統計忠實性</span></div>
+        <div>
+          <p class="says">過度平滑的曲線、剛好都是整數的數值、完美對齊的比例，會觸發讀者的懷疑。真實資料本來就有雜訊，把雜訊修掉反而降低可信度。</p>
+          <p class="fix"><b>修法</b>保留原始的參差，需要平滑時同時顯示原始點。</p>
+        </div>
+      </div>
+
+      <div class="entry">
+        <p class="said">警告太多，後來我就不看了<span class="plus">＋</span></p>
+        <div class="theory">Signal Detection Theory<span class="zh">決策標準 β 漂移、警示疲勞</span></div>
+        <div>
+          <p class="says">假警報率高，先驗機率就下降，決策標準會理性地漂移到保守端——結果是漏報增加。使用者不是懶，是在做正確的貝氏更新。</p>
+          <p class="fix"><b>修法</b>警示分層，最高層極少出現且強制介入；低層預設不顯示。</p>
+        </div>
+      </div>
+
+      <div class="entry">
+        <p class="said">看起來很滿，但沒有重點<span class="plus">＋</span></p>
+        <div class="theory">Data-Ink Ratio<span class="zh">資料墨水比（Tufte）</span></div>
+        <div>
+          <p class="says">任何不代表資料的裝飾，都會在顯著性地圖上產生無意義的激活。3D 效果與陰影會製造強烈邊緣，大腦得額外花力氣忽略它們才看得到真正的資料長度。</p>
+          <p class="fix"><b>修法</b>拿掉 3D、陰影、深色網格與無意義漸層，先做減法再談美感。</p>
+        </div>
+      </div>
+
+      <div class="entry">
+        <p class="said">說不出這頁要我做什麼<span class="plus">＋</span></p>
+        <div class="theory">Task-Oriented Design<span class="zh">圖表與任務的對應（Pictorial–Semantic–Task 框架）</span></div>
+        <div>
+          <p class="says">很多誤讀來自讀者只看到圖形線索，卻沒接上語意線索——只看得到上升下降，不知道那代表成本、風險還是轉換率。每張圖都該明確回答「比較什麼、監測什麼、診斷什麼」。</p>
+          <p class="fix"><b>修法</b>每個區塊給一個任務型標題（「哪一區今天最需要處理」），不要只寫欄位名。</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- F -->
+  <section id="c6">
+    <div class="sec-head"><span class="sec-num">F</span><h2>看完沒印象<span class="plus">＋ 新增分類</span></h2></div>
+    <p class="sec-note">原表沒有這一類，但它是新聞與公共資訊型儀表板真正的成敗點——當下看懂了，離開畫面就什麼也沒帶走。</p>
+    <div class="entries">
+
+      <div class="entry">
+        <p class="said">看完就忘了<span class="plus">＋</span></p>
+        <div class="theory">Dual-Coding Theory<span class="zh">雙重編碼（Paivio, 1971）</span></div>
+        <div>
+          <p class="says">語言系統與非語言系統同時被激活，會留下雙重記憶痕跡，保留率明顯較高。這也是圖優效應的來源：視覺圖像比純文字更容易被認出與回想。</p>
+          <p class="fix"><b>修法</b>關鍵訊息同時給圖與字，不要只給表格，也不要只給一張沒有說明的圖。</p>
+        </div>
+      </div>
+
+      <div class="entry">
+        <p class="said">講得很抽象，記不住<span class="plus">＋</span></p>
+        <div class="theory">具象性效應<span class="zh">Concreteness Effect</span></div>
+        <div>
+          <p class="says">具體、可視化的概念比抽象概念更容易形成心像。「這個藥可能傷害肝臟」與「乙醯胺酚超過每日建議攝取量 300mg」講的是同一件事，記得住的只有前者。</p>
+          <p class="fix"><b>修法</b>把單位與門檻翻譯成讀者身上會發生的事。</p>
+        </div>
+      </div>
+
+      <div class="entry">
+        <p class="said">當下懂，回到現場想不起來<span class="plus">＋</span></p>
+        <div class="theory">Context-Dependent Memory<span class="zh">情境依賴記憶、提取線索</span></div>
+        <div>
+          <p class="says">記憶在與編碼時相似的情境中提取效率最高。使用者是在賣場、在投票所、在辦公室做決定的，不是在你的網頁前面。</p>
+          <p class="fix"><b>修法</b>給出下次會遇到的視覺線索——包裝長什麼樣、招牌在哪、表單第幾欄，而不只是名稱。</p>
+        </div>
+      </div>
+
+      <div class="entry">
+        <p class="said">跟我沒關係<span class="plus">＋</span></p>
+        <div class="theory">Elaborative Rehearsal<span class="zh">精細加工</span></div>
+        <div>
+          <p class="says">連結到個人既有記憶的新資訊，記憶強度遠高於孤立呈現的資訊。「某地區某批次」與「你可能在超商買過」是完全不同的編碼深度。</p>
+          <p class="fix"><b>修法</b>用位置、時間或消費經驗把資料接到讀者身上，個人相關的資訊放在最前面。</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="end">
+    <div class="eyebrow">配套文件</div>
+    <p>這張表回答「我看到的問題叫什麼名字」；逐條檢查一份儀表板做得好不好，用另一份：</p>
+    <p><a class="u" href="https://richyli.github.io/visual/" target="_blank" rel="noopener">richyli.github.io/visual/</a> — Dashboard 診斷框架 v1，十個章節、每則附做對的樣子、做錯的樣子與理論依據。</p>
+    <p>兩份的分工：先用這張表把感覺講成問題，再用診斷框架逐條核對、決定要不要改。</p>
+    <footer>資訊視覺化 · 國立政治大學新聞學系 李怡志 · 原表 15 條，2026-09 依理論擴充為 36 條，標 ＋ 者為新增</footer>
+  </div>
+
+</div>
+</body>
+</html>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="10 分鐘演講：教學生用 vibe coding 做互動儀表板——兩個基本知識、AI 五個系統性錯誤、五件學生作品。">
+<meta name="description" content="教學生用 vibe coding 做互動儀表板：兩個基本知識、AI 五個系統性錯誤、五件學生作品。">
 <title>用 Vibe Coding 教做儀表板</title>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;700&family=Noto+Sans+TC:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
@@ -475,13 +475,13 @@
 <div class="wrap">
 
   <header class="hero">
-    <div class="eyebrow">演講素材 · 10 分鐘 · 李怡志</div>
+    <div class="eyebrow">資訊視覺化 · 國立政治大學新聞學系 李怡志</div>
     <h1>用 Vibe Coding 教做儀表板</h1>
-    <p class="lede">學生不會寫程式，但要在兩週內交出一個能被別人打開、能互動、能講出故事的儀表板。這份講稿記錄實際教過之後，哪兩件事一定要先講、AI 會固定在哪裡出錯、以及做得好的作品好在哪裡。</p>
+    <p class="lede">學生不會寫程式，卻要交出一個別人打得開、能互動、能講出故事的儀表板。實際教過之後，整理成三件事：哪兩個基本知識一定要先建立、AI 固定會在哪裡出錯、以及做得好的作品好在哪裡。</p>
     <div class="facts">
       <span>題材　<b>2016 立委政治獻金</b></span>
       <span>資料　<b>261 位候選人 · 27 欄位</b></span>
-      <span>展示作品　<b>5 件</b></span>
+      <span>學生作品　<b>5 件</b></span>
       <span>工具　<b>對話式 AI ＋ GitHub Pages</b></span>
     </div>
   </header>
@@ -503,8 +503,7 @@
     </div>
     <p class="sec-note">一份靜態圖表只驗收得到「會不會畫圖」。互動儀表板一次驗收六件事：能不能取得資料、能不能選定受眾與視角、能不能處理資料、能不能合理呈現、能不能編排版面、能不能用互動說完一個故事。Vibe coding 出現以後，這六件事第一次可以在不會寫程式的班上全部要求到。</p>
     <div class="callout">
-      <span class="lbl">開場一句話</span>
-      <p>今年這批學生全部沒有寫過網頁，卻交出了五個網址都打得開的政治獻金資料庫——真正要教的不是怎麼叫 AI 寫程式，是怎麼判斷它寫出來的東西好不好。</p>
+      <p>這批學生沒有人寫過網頁，最後交出五個網址都打得開的政治獻金資料庫。真正要教的不是怎麼叫 AI 寫程式，是怎麼判斷它寫出來的東西好不好。</p>
     </div>
   </section>
 
@@ -525,9 +524,9 @@
       </div>
       <div class="doc">
         <h3>評價背後的學術支持</h3>
-        <a class="u" href="https://docs.google.com/document/d/1E26kJHapxOUKykF9FnWlzVMENpeyZO7ppP97eKR-T54/edit" target="_blank" rel="noopener">普通用語 vs 理論用語對照表</a>
-        <p>學生看得出問題，但只講得出「很亂」「找不到」「怪怪的」。這份表把這些口語直接接到理論名稱上，讓他們的直覺變成可以查、可以引用、可以寫進說明文件的東西。</p>
-        <p class="cite">用途：課堂講評與作業說明文件。這也是整份作業裡最快見效的一份——講評的品質在發下這張表之後就變了。</p>
+        <a class="u" href="https://richyli.github.io/obs/dashboard_complaint_glossary.html" target="_blank" rel="noopener">richyli.github.io/obs/dashboard_complaint_glossary.html</a>
+        <p>學生看得出問題，但只講得出「很亂」「找不到」「怪怪的」。這份表把這些口語直接接到理論名稱上，再補一句這個理論到底在說什麼、以及怎麼修，讓直覺變成可以查、可以引用、可以寫進說明文件的東西。</p>
+        <p class="cite">六類三十六條，涵蓋看不清楚、找不到、說不出哪裡怪、不順、感覺不對、看完沒印象。用在互評與說明文件上最快見效——講評的品質在發下這張表之後就變了。</p>
       </div>
     </div>
 
@@ -564,6 +563,8 @@
         <div class="gterm"><b>我被圖表騙了</b><span>Graphical Inference</span></div>
       </div>
     </div>
+
+    <p class="sec-note">上面是其中一部分。完整版六類三十六條，附各條的理論說明與修法：<a href="https://richyli.github.io/obs/dashboard_complaint_glossary.html" target="_blank" rel="noopener">儀表板抱怨翻譯表</a>。</p>
   </section>
 
   <!-- 3 -->
@@ -572,18 +573,18 @@
       <span class="sec-num">03</span>
       <h2>兩個基本知識</h2>
     </div>
-    <p class="sec-note">理論靠山就是上面那份診斷框架。現場只講兩個，第三個排在備用——講不完就跳過，不要三個都講一半。</p>
+    <p class="sec-note">三件事都可以在上面那份診斷框架裡查到對應章節。最先要建立的是前兩個——它們在學生的作品上立刻驗證得出來；第三個要舉比較長的例子才講得清楚。</p>
 
     <div class="rows">
 
       <div class="row">
         <div class="row-key">
           <h3>資訊的重要性</h3>
-          <span class="tag main">主講</span>
+          <span class="tag main">訊號</span>
         </div>
         <div class="row-body">
           <p class="say">儀表板不是把資料畫出來，是決定哪一格值得先看。</p>
-          <p><span class="lbl">課堂怎麼做</span>請學生在自己的作品上圈出「最重要的那一個數字」，再請旁邊同學說出他第一眼看到的是哪一個。兩個圈不一樣，就是設計失敗，不是同學不專心。</p>
+          <p><span class="lbl">怎麼驗收</span>請學生在自己的作品上圈出「最重要的那一個數字」，再請旁邊的人說出他第一眼看到的是哪一個。兩個圈不一樣，就是設計失敗，不是對方不專心。</p>
           <p class="cite">診斷框架第 1、3 節：Iconic Memory 在 250ms 內抓完整快照，顏色與動態屬於 pre-attentive 特徵，不需注意力就會被偵測（Treisman &amp; Gelade, 1980）。關鍵一句是「信號的特徵必須專屬」——紅色如果同時用在裝飾性標題和真實警示上，feature map 的信號純度就沒了。再往下就是 Signal Detection 的 d′ 與 β：沒有基準線的數字，d′ 趨近於零。</p>
         </div>
       </div>
@@ -591,11 +592,11 @@
       <div class="row">
         <div class="row-key">
           <h3>資訊分層</h3>
-          <span class="tag main">主講</span>
+          <span class="tag main">層次</span>
         </div>
         <div class="row-body">
           <p class="say">概覽 → 縮放篩選 → 細節，三層不能壓成一層。</p>
-          <p><span class="lbl">課堂怎麼做</span>把「清單頁 → 個人頁 → 返回清單」訂成硬性驗收條件。展示的五件作品裡，做得起來的那幾件全都有這條動線；沒有這條動線的作品，使用者一點進去就出不來。</p>
+          <p><span class="lbl">怎麼驗收</span>把「清單頁 → 個人頁 → 返回清單」訂成硬性條件。下面五件作品裡，成立的那幾件全都有這條動線；沒有這條動線的，使用者一點進去就出不來。</p>
           <p class="cite">診斷框架第 2、4、6 節：工作記憶只有 4±1 個組塊，一張卡片同時塞當前值、目標值、上月值、去年值、趨勢、排名就已經超載；Gestalt 的均質連結性（Palmer &amp; Rock, 1994）說同一個容器內的元素在最早期就被當成同一組——所以「分層」不是排版偏好，是知覺層次的事實。</p>
         </div>
       </div>
@@ -603,21 +604,17 @@
       <div class="row">
         <div class="row-key">
           <h3>設定閱聽人</h3>
-          <span class="tag">備用</span>
+          <span class="tag">受眾</span>
         </div>
         <div class="row-body">
           <p class="say">先決定給誰看，索引方式才決定得了。</p>
-          <p><span class="lbl">課堂怎麼做</span>要求作業說明文件第一段就寫「這個故事給誰看、預期他做什麼」。寫不出來的，通常最後就會交出一個空的搜尋框。</p>
+          <p><span class="lbl">怎麼驗收</span>要求說明文件第一段就寫「這個故事給誰看、預期他做什麼」。寫不出來的，最後通常就會交出一個空的搜尋框。</p>
           <p class="cite">診斷框架第 8、10 節：Information Foraging（Pirolli &amp; Card, 1999）的資訊氣味與邊際值定理解釋了學生最常見的失敗——首頁報酬率太低，使用者十秒就離開；Martini Glass 結構（Segel &amp; Heer, 2010）則說明為什麼要先作者引導再開放探索。</p>
         </div>
       </div>
 
     </div>
 
-    <div class="callout">
-      <span class="lbl">這個排序在什麼情況下是錯的</span>
-      <p>我把「設定閱聽人」排在備用，理由是前兩個在現場立刻可以用學生作品驗證，這個要舉較長的例子才講得清楚。但如果台下是正在考慮要不要出這份作業的老師，順序應該反過來——對他們最可遷移的正是「先設定閱聽人」，另外兩個他們回去自己讀框架就好。開講前先看一眼台下是誰。</p>
-    </div>
   </section>
 
   <!-- 4 -->
@@ -630,11 +627,11 @@
       <div>
         <h3>多重索引方式</h3>
         <p>同一份資料要留四條進入路徑：查特定的人（Lookup）、依分類瀏覽（Browse）、開放探索（Explore）、回頭找看過的（Locate）。只給一個搜尋框，等於只服務已經知道自己要查誰的那種人。</p>
-        <p class="cite">五件作品的互動控制項（下拉選單＋按鈕＋輸入框）從 6 個到 23 個都有，差距近四倍。這個數字在課堂上可以直接數，是最省事的檢查點。</p>
+        <p class="cite">五件作品的互動控制項（下拉選單＋按鈕＋輸入框）從 6 個到 23 個都有，差距近四倍。這個數字可以直接數，是最省事的檢查點。</p>
       </div>
       <div>
         <h3>Show Cases</h3>
-        <p>首頁一定要有具名的示範案例，點下去直接進詳情。這件事我沒有硬性規定，但五件作品裡有三件自己長出了「編輯精選」——因為他們自己測試時就發現，一個沒有起點的資料庫沒有人會用。</p>
+        <p>首頁一定要有具名的示範案例，點下去直接進詳情。這件事沒有列進要求，但五件作品裡有三件自己長出了「編輯精選」——因為他們自己測試時就發現，一個沒有起點的資料庫沒有人會用。</p>
         <p class="cite">這就是 Martini Glass 的杯腳：先用作者選好的案例把詮釋框架建立起來，再放使用者自己去查。</p>
       </div>
     </div>
@@ -646,7 +643,7 @@
       <span class="sec-num">05</span>
       <h2>AI 會犯的五個錯</h2>
     </div>
-    <p class="sec-note">這五個不是學生的錯，是 vibe coding 的系統性偏誤——不指定，AI 就用「看似合理」的預設值把空白填掉。右欄是可以直接貼給學生的修正指令。</p>
+    <p class="sec-note">這五個不是學生的錯，是 vibe coding 的系統性偏誤——不指定，AI 就用「看似合理」的預設值把空白填掉。右欄是可以直接照著貼的修正指令。</p>
 
     <div class="probs">
 
@@ -704,7 +701,7 @@
       <span class="sec-num">06</span>
       <h2>好作品好在哪</h2>
     </div>
-    <p class="sec-note">五件作品用的是同一份資料，卻做出五種不同的東西——這件事本身就是最好的示範。長條是各作品的互動控制項數量（下拉選單／按鈕／輸入框），現場可以當場數給大家看。</p>
+    <p class="sec-note">五件作品用的是同一份資料，卻做出五種不同的東西——這件事本身就是最好的示範。長條是各作品的互動控制項數量：下拉選單、按鈕、輸入框。</p>
 
     <div class="works">
 
@@ -720,7 +717,7 @@
           <div class="bar-row"><span>選單</span><span class="bar"><span style="width:100%"></span></span><span>10</span></div>
           <div class="bar-row"><span>按鈕</span><span class="bar"><span style="width:100%"></span></span><span>11</span></div>
           <div class="bar-row"><span>輸入</span><span class="bar"><span style="width:100%"></span></span><span>2</span></div>
-          <a class="work-open" href="https://ceuwan1113-sys.github.io/99999998/" target="_blank" rel="noopener">現場開啟</a>
+          <a class="work-open" href="https://ceuwan1113-sys.github.io/99999998/" target="_blank" rel="noopener">開啟作品</a>
         </div>
       </div>
 
@@ -736,7 +733,7 @@
           <div class="bar-row"><span>選單</span><span class="bar"><span style="width:60%"></span></span><span>6</span></div>
           <div class="bar-row"><span>按鈕</span><span class="bar"><span style="width:18%"></span></span><span>2</span></div>
           <div class="bar-row"><span>輸入</span><span class="bar"><span style="width:50%"></span></span><span>1</span></div>
-          <a class="work-open" href="https://wharf12100.github.io/Political-Donation-/" target="_blank" rel="noopener">現場開啟</a>
+          <a class="work-open" href="https://wharf12100.github.io/Political-Donation-/" target="_blank" rel="noopener">開啟作品</a>
         </div>
       </div>
 
@@ -745,14 +742,14 @@
           <h3>The Weight of Politics 政治的重量</h3>
           <span class="url">stanleywang940110-byte.github.io/politic/</span>
           <p class="pt">兩層動線最乾淨的一件。</p>
-          <p>「權力的軌跡，數字的重量」開場，接 Editor's Picks 觀察指標，再進縣市／政黨／排序三段篩選的清單，點進去是收支總覽與獻金來源佔比，且留了「← 返回結果清單」。分層講完之後拿這件當範例最省時間。</p>
+          <p>「權力的軌跡，數字的重量」開場，接 Editor's Picks 觀察指標，再進縣市／政黨／排序三段篩選的清單，點進去是收支總覽與獻金來源佔比，且留了「← 返回結果清單」。資訊分層的三個層次在這件上一次看得完。</p>
         </div>
         <div class="meter">
           <div class="meter-head">互動控制項</div>
           <div class="bar-row"><span>選單</span><span class="bar"><span style="width:50%"></span></span><span>5</span></div>
           <div class="bar-row"><span>按鈕</span><span class="bar"><span style="width:55%"></span></span><span>6</span></div>
           <div class="bar-row"><span>輸入</span><span class="bar"><span style="width:100%"></span></span><span>2</span></div>
-          <a class="work-open" href="https://stanleywang940110-byte.github.io/politic/" target="_blank" rel="noopener">現場開啟</a>
+          <a class="work-open" href="https://stanleywang940110-byte.github.io/politic/" target="_blank" rel="noopener">開啟作品</a>
         </div>
       </div>
 
@@ -762,14 +759,14 @@
           <span class="url">fangk-ship-it.github.io/fkq_pp/</span>
           <p class="pt">唯一真的動手畫圖的一件。</p>
           <p>五件裡只有這件用了 D3 自己繪製圖形（頁面上有四組 SVG），沒有停在「AI 給什麼就用什麼」。可以用來講「工具選擇也是設計決定」。</p>
-          <p class="cite">提醒：這件的畫面完全由 JavaScript 產生，抓靜態檔看不到內容——上台前一定要先開一次確認載得起來，這正是我課後檢討寫下「要同學截圖所有互動步驟」的原因。</p>
+          <p class="cite">這件的畫面完全由 JavaScript 產生，存下靜態檔是看不到內容的。互動作品的保存與評分因此必須連操作步驟一起截圖，否則幾個月後打不開，作品就等於不存在。</p>
         </div>
         <div class="meter">
           <div class="meter-head">互動控制項</div>
           <div class="bar-row"><span>選單</span><span class="bar"><span style="width:10%"></span></span><span>1</span></div>
           <div class="bar-row"><span>按鈕</span><span class="bar"><span style="width:55%"></span></span><span>6</span></div>
           <div class="bar-row"><span>輸入</span><span class="bar"><span style="width:100%"></span></span><span>2</span></div>
-          <a class="work-open" href="https://fangk-ship-it.github.io/fkq_pp/" target="_blank" rel="noopener">現場開啟</a>
+          <a class="work-open" href="https://fangk-ship-it.github.io/fkq_pp/" target="_blank" rel="noopener">開啟作品</a>
         </div>
       </div>
 
@@ -779,27 +776,26 @@
           <span class="url">water0821.github.io/DATA2/</span>
           <p class="pt">拿來當對照組：風格最完整，索引最少。</p>
           <p>整件作品的視覺語言一致到底，以地圖當主要入口（The Geography of Power），機密檔案的調性從標題貫穿到頁尾。但全站只有六個互動控制項、沒有任何下拉選單，介面幾乎全英文——想查特定候選人的人反而最難進去。</p>
-          <p class="cite">這件放最後講：風格與索引在時間有限時會互相排擠，而學生幾乎都會先把時間花在風格上。這是這份作業最值得討論的取捨，不是缺點清單。</p>
+          <p class="cite">風格與索引在時間有限時會互相排擠，而多數人會先把時間花在風格上。這是這份作業最值得討論的一個取捨，不是缺點清單。</p>
         </div>
         <div class="meter">
           <div class="meter-head">互動控制項</div>
           <div class="bar-row"><span>選單</span><span class="bar"><span class="q" style="width:3%"></span></span><span>0</span></div>
           <div class="bar-row"><span>按鈕</span><span class="bar"><span class="q" style="width:45%"></span></span><span>5</span></div>
           <div class="bar-row"><span>輸入</span><span class="bar"><span class="q" style="width:50%"></span></span><span>1</span></div>
-          <a class="work-open" href="https://water0821.github.io/DATA2/" target="_blank" rel="noopener">現場開啟</a>
+          <a class="work-open" href="https://water0821.github.io/DATA2/" target="_blank" rel="noopener">開啟作品</a>
         </div>
       </div>
 
     </div>
 
     <div class="callout">
-      <span class="lbl">收尾一句話</span>
-      <p>AI 讓「做得出來」變得很便宜，所以稀缺的變成判斷力——判斷哪一格值得先看、判斷誰會來看、判斷這個版面是不是真的比較好。這件事沒有辦法外包，也正是這門課現在該教的東西。</p>
+      <p>AI 讓「做得出來」變得很便宜，稀缺的因此變成判斷力——判斷哪一格值得先看、判斷誰會來看、判斷這個版面是不是真的比較好。這件事沒有辦法外包，也正是這門課現在該教的東西。</p>
     </div>
   </section>
 
   <div class="appendix">
-    <div class="eyebrow">現場備用連結</div>
+    <div class="eyebrow">延伸資料</div>
     <div class="links">
       <div class="link-row">
         <span class="eyebrow">診斷框架</span>
@@ -816,9 +812,9 @@
         </div>
       </div>
       <div class="link-row">
-        <span class="eyebrow">被問到時</span>
+        <span class="eyebrow">作業規格</span>
         <div>
-          <div>作業規格：題目自訂、至少四種資訊、至少一個互動、附說明文件六節（Goal Setting／Analysis／Visualization／Design／Interactivity／Storytelling）</div>
+          <div>題目自訂、至少四種資訊、至少一個互動，並附說明文件六節：Goal Setting／Analysis／Visualization／Design／Interactivity／Storytelling</div>
         </div>
       </div>
     </div>
