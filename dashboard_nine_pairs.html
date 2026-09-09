@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="九條儀表板理論，每條配一組並排的好例與壞例，全部取自五件學生作品的原始碼實測。">
+<meta name="description" content="九條儀表板理論，每條配一組並排示範：同樣的內容與資料，一邊照理論做、一邊不照。">
 <title>儀表板九組對照</title>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;700&family=Noto+Sans+TC:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
@@ -15,6 +15,11 @@
     --accent:#1f5c63; --accent-ink:#ffffff;
     --good:#1f6b4a; --good-bg:#e4efe7;
     --bad:#b4322a;  --bad-bg:#f6e6e3;
+
+    --screen:#ffffff; --screen-line:#e3e8e3; --screen-line-2:#f0f3f0;
+    --screen-ink:#1b2a30; --screen-mute:#7b8983; --screen-fill:#f5f7f5;
+    --demo-accent:#1f5c63; --demo-alert:#c0392b;
+
     --f-display:"Noto Serif TC","Songti TC",Georgia,serif;
     --f-body:"Noto Sans TC","Microsoft JhengHei",system-ui,sans-serif;
     --f-mono:"IBM Plex Mono","Consolas",ui-monospace,monospace;
@@ -27,6 +32,10 @@
       --accent:#77c2c4; --accent-ink:#0d1416;
       --good:#7fc9a3; --good-bg:#16261f;
       --bad:#e8796c;  --bad-bg:#2c1d1b;
+
+      --screen:#0d1214; --screen-line:#27322f; --screen-line-2:#1a2325;
+      --screen-ink:#dfe7e2; --screen-mute:#8b9a94; --screen-fill:#161f21;
+      --demo-accent:#77c2c4; --demo-alert:#e8796c;
     }
   }
   :root[data-theme="dark"] {
@@ -36,9 +45,13 @@
     --accent:#77c2c4; --accent-ink:#0d1416;
     --good:#7fc9a3; --good-bg:#16261f;
     --bad:#e8796c;  --bad-bg:#2c1d1b;
+
+    --screen:#0d1214; --screen-line:#27322f; --screen-line-2:#1a2325;
+    --screen-ink:#dfe7e2; --screen-mute:#8b9a94; --screen-fill:#161f21;
+    --demo-accent:#77c2c4; --demo-alert:#e8796c;
   }
 
-  * { box-sizing: border-box; }
+  * { box-sizing:border-box; }
   body {
     margin:0; background:var(--paper); color:var(--ink);
     font-family:var(--f-body); font-size:15.5px; line-height:1.75;
@@ -75,14 +88,22 @@
     padding:18px 22px;
   }
   .method h2 { font-family:var(--f-display); font-size:17px; font-weight:600; margin:0 0 8px; }
-  .method p { margin:0 0 8px; max-width:70ch; }
+  .method p { margin:0 0 8px; max-width:72ch; }
   .method p:last-child { margin-bottom:0; }
 
-  /* works legend */
-  .cast { display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:2px; margin-top:24px; }
-  .cast div { background:var(--surface); border:1px solid var(--rule-soft); padding:10px 13px; }
-  .cast .k { font-family:var(--f-mono); font-size:11px; letter-spacing:.1em; color:var(--muted); }
-  .cast .v { font-size:13.5px; font-weight:500; margin-top:2px; line-height:1.45; }
+  /* nav */
+  .nav {
+    display:grid; grid-auto-flow:column; grid-auto-columns:minmax(112px,1fr);
+    gap:2px; margin-top:24px; overflow-x:auto;
+  }
+  .nav a {
+    display:block; background:var(--surface); border:1px solid var(--rule-soft);
+    border-left:3px solid var(--accent); padding:9px 12px;
+    text-decoration:none; color:var(--ink);
+  }
+  .nav a:hover { background:var(--surface-2); }
+  .nav .n { font-family:var(--f-mono); font-size:11px; letter-spacing:.12em; color:var(--muted); }
+  .nav .t { font-size:13px; font-weight:500; margin-top:2px; line-height:1.4; }
 
   /* pair block */
   section { margin-top:60px; padding-top:32px; border-top:3px solid var(--ink); }
@@ -95,9 +116,7 @@
     font-family:var(--f-mono); font-size:13px; letter-spacing:.12em;
     color:var(--accent-ink); background:var(--accent); padding:3px 9px; align-self:center;
   }
-  .law {
-    margin:12px 0 0; color:var(--ink-soft); max-width:72ch;
-  }
+  .law { margin:12px 0 0; color:var(--ink-soft); max-width:72ch; }
   .law em { font-style:normal; font-family:var(--f-mono); font-size:13.5px; color:var(--muted); }
 
   .pair { display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:22px; }
@@ -105,66 +124,142 @@
   .panel.g { border-top:3px solid var(--good); }
   .panel.b { border-top:3px solid var(--bad); }
   .phead {
-    display:flex; align-items:baseline; gap:10px;
+    display:flex; align-items:baseline; gap:10px; flex-wrap:wrap;
     padding:12px 18px 10px; border-bottom:1px solid var(--rule-soft);
-    flex-wrap:wrap;
   }
-  .verdict {
-    font-family:var(--f-mono); font-size:11px; letter-spacing:.12em;
-    padding:2px 8px;
-  }
+  .verdict { font-family:var(--f-mono); font-size:11px; letter-spacing:.12em; padding:2px 8px; }
   .panel.g .verdict { background:var(--good-bg); color:var(--good); }
-  .panel.b .verdict { background:var(--bad-bg);  color:var(--bad); }
-  .pwork { font-size:13.5px; font-weight:500; }
-  .panel > p { margin:12px 18px 0; max-width:46ch; }
-  .evi {
-    margin:12px 18px 0; font-family:var(--f-mono); font-size:12px; line-height:1.7;
-    color:var(--muted); border-left:2px solid var(--rule); padding-left:11px;
-    word-break:break-word;
+  .panel.b .verdict { background:var(--bad-bg); color:var(--bad); }
+  .pwhat { font-size:13.5px; font-weight:500; }
+  .panel > p { margin:12px 18px 0; max-width:48ch; }
+  .look {
+    margin:12px 18px 0; font-size:13.5px; color:var(--muted);
+    border-left:2px solid var(--rule); padding-left:11px; max-width:48ch;
+  }
+  .look b {
+    font-family:var(--f-mono); font-size:10.5px; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--muted); font-weight:400;
+    display:block; margin-bottom:2px;
   }
 
-  /* miniature stage */
-  .mini { margin:14px 18px 0; padding:14px; border:1px solid var(--rule-soft); overflow-x:auto; }
-  .mini-cap {
+  /* ---------- demo screen ---------- */
+  .demo {
+    margin:14px 18px 0; padding:14px; background:var(--screen);
+    border:1px solid var(--screen-line); overflow-x:auto;
+    font-size:12px; line-height:1.55; color:var(--screen-ink);
+  }
+  .demo * { box-sizing:border-box; }
+  .d-title {
+    font-family:var(--f-mono); font-size:10px; letter-spacing:.12em;
+    color:var(--screen-mute); margin-bottom:9px;
+  }
+
+  /* rows */
+  .d-rows { display:grid; gap:1px; background:var(--screen-line-2); }
+  .d-row {
+    display:grid; grid-template-columns:1fr auto auto; gap:10px;
+    background:var(--screen); padding:7px 9px; align-items:center;
+    font-variant-numeric:tabular-nums;
+  }
+  .d-row .nm { color:var(--screen-ink); }
+  .d-row .vl { color:var(--screen-mute); font-family:var(--f-mono); font-size:11px; }
+  .d-row .fl { font-family:var(--f-mono); font-size:10px; padding:1px 6px; }
+
+  /* tags */
+  .d-tags { display:flex; flex-wrap:wrap; gap:5px; }
+  .d-tags span {
+    font-size:10.5px; padding:2px 7px; border:1px solid var(--screen-line);
+    color:var(--screen-mute);
+  }
+
+  /* kpi card */
+  .d-kpi-flat { border:1px solid var(--screen-line); padding:11px 13px; }
+  .d-kpi-flat .lb { font-family:var(--f-mono); font-size:9.5px; letter-spacing:.12em; color:var(--screen-mute); }
+  .d-kpi-flat .vv { font-size:23px; font-weight:700; margin-top:3px; font-variant-numeric:tabular-nums; }
+  .d-kpi-flat .sub { border-top:1px solid var(--screen-line); margin-top:9px; padding-top:6px; font-size:10.5px; color:var(--screen-mute); }
+
+  .d-kpi-fancy {
+    background:linear-gradient(145deg,#6a5acd,#2a9d8f);
+    border-radius:16px; box-shadow:0 10px 26px rgba(0,0,0,.28), inset 0 1px 0 rgba(255,255,255,.35);
+    padding:12px 14px; color:#ffffff; border:2px solid rgba(255,255,255,.4);
+  }
+  .d-kpi-fancy .lb { font-family:var(--f-mono); font-size:9.5px; letter-spacing:.12em; opacity:.85; }
+  .d-kpi-fancy .vv { font-size:23px; font-weight:700; margin-top:3px; text-shadow:0 2px 8px rgba(0,0,0,.45); font-variant-numeric:tabular-nums; }
+  .d-kpi-fancy .sub {
+    margin-top:9px; padding-top:6px; font-size:10.5px;
+    border-top:1px dashed rgba(255,255,255,.5);
+    background:linear-gradient(90deg,rgba(255,255,255,.22),transparent);
+    border-radius:8px;
+  }
+
+  /* bars & donut */
+  .d-bars { display:grid; gap:6px; }
+  .d-bar { display:grid; grid-template-columns:64px 1fr 40px; gap:8px; align-items:center; font-size:11px; }
+  .d-bar .t { height:10px; background:var(--demo-accent); display:block; }
+  .d-bar .p { font-family:var(--f-mono); font-size:10px; color:var(--screen-mute); text-align:right; }
+  .d-donut-wrap { display:flex; align-items:center; gap:12px; }
+  .d-donut { width:104px; height:104px; border-radius:50%; flex:none; position:relative; }
+  .d-donut::after {
+    content:""; position:absolute; inset:26px; border-radius:50%; background:var(--screen);
+  }
+  .d-legend { display:grid; gap:3px; font-size:10px; color:var(--screen-mute); }
+  .d-legend i { display:inline-block; width:9px; height:9px; margin-right:5px; vertical-align:-1px; }
+
+  /* entries */
+  .d-entries { display:grid; gap:5px; }
+  .d-entries a, .d-entries span {
+    display:block; padding:7px 9px; border:1px solid var(--screen-line);
+    color:var(--screen-ink); text-decoration:none; font-size:11.5px;
+  }
+  .d-entries .weak { color:var(--screen-mute); text-align:center; }
+
+  /* filters */
+  .d-filters { display:grid; gap:6px; }
+  .d-sel {
+    border:1px solid var(--screen-line); padding:6px 9px; font-size:11px;
+    color:var(--screen-ink); display:flex; justify-content:space-between; gap:8px;
+  }
+  .d-sel .cv { color:var(--screen-mute); font-family:var(--f-mono); font-size:10px; }
+  .d-optwall { font-size:10.5px; color:var(--screen-mute); line-height:1.85; }
+
+  /* cases */
+  .d-cases { display:grid; gap:5px; }
+  .d-case { border:1px solid var(--screen-line); padding:8px 10px; }
+  .d-case .cn { font-weight:600; font-size:12px; }
+  .d-case .cr { font-size:10.5px; color:var(--screen-mute); margin-top:1px; }
+
+  /* empty / skeleton */
+  .d-empty {
+    height:118px; display:flex; flex-direction:column; gap:6px;
+    align-items:center; justify-content:center;
+    border:1px dashed var(--screen-line); color:var(--screen-mute);
+    font-family:var(--f-mono); font-size:11px;
+  }
+  .sk { background:var(--screen-fill); height:11px; display:block; }
+  .d-skel { display:grid; gap:7px; height:118px; align-content:center; }
+
+  /* buttons */
+  .d-btns { display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
+  .btn-lg {
+    min-height:44px; padding:11px 18px; border:1px solid var(--demo-accent);
+    color:var(--demo-accent); font-size:12.5px;
+    display:inline-flex; align-items:center;
+  }
+  .btn-sm {
+    padding:2px 6px; border:1px solid var(--screen-line);
+    color:var(--screen-mute); font-size:9.5px; line-height:1.4;
+    display:inline-flex; align-items:center;
+  }
+  .ruler { font-family:var(--f-mono); font-size:9.5px; color:var(--screen-mute); margin-top:7px; }
+
+  .cap {
     margin:6px 18px 0; font-family:var(--f-mono); font-size:10.5px;
-    letter-spacing:.08em; color:var(--muted);
-  }
-  .sw { display:flex; flex-wrap:wrap; gap:4px; }
-  .sw i { display:block; width:26px; height:26px; }
-  .sw.tiny i { width:18px; height:18px; }
-
-  .bars { display:grid; gap:7px; }
-  .bar-l { display:grid; grid-template-columns:76px 1fr; gap:9px; align-items:center; font-size:11.5px; }
-  .bar-l .t { background:#D4AF37; height:11px; display:block; }
-  .bar-l span:first-child { color:#E5E7EB; font-family:var(--f-body); }
-
-  .donut { width:118px; height:118px; border-radius:50%; margin:0 auto; }
-  .donut-hole {
-    width:118px; height:118px; border-radius:50%;
-    display:flex; align-items:center; justify-content:center;
-  }
-  .donut-hole span {
-    width:58px; height:58px; border-radius:50%; background:#16213E;
-    display:block;
-  }
-
-  .btnrow { display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
-  .fake-btn { font-family:var(--f-body); border:1px solid rgba(212,175,55,.28); color:#D4AF37; background:transparent; }
-  .fake-btn.small { padding:.35rem .9rem; font-size:.72rem; }
-  .fake-btn.big { padding:12px 20px; min-height:46px; display:inline-flex; align-items:center; font-size:13px; }
-
-  .entry-list { display:grid; gap:6px; font-size:12.5px; }
-  .entry-list i { font-style:normal; display:block; padding:7px 10px; }
-
-  .frame {
-    height:104px; display:flex; align-items:center; justify-content:center;
-    font-family:var(--f-mono); font-size:11.5px;
+    letter-spacing:.06em; color:var(--muted);
   }
 
   .fix {
     margin-top:18px; padding:14px 18px;
-    background:var(--surface-2); border-left:3px solid var(--accent);
-    max-width:80ch;
+    background:var(--surface-2); border-left:3px solid var(--accent); max-width:82ch;
   }
   .fix b {
     font-family:var(--f-mono); font-size:11px; letter-spacing:.1em;
@@ -176,10 +271,8 @@
   .end .u { font-family:var(--f-mono); font-size:12.5px; word-break:break-all; }
   footer { margin-top:28px; font-family:var(--f-mono); font-size:12px; color:var(--muted); }
 
-  @media (max-width: 860px) {
-    .pair { grid-template-columns:1fr; }
-  }
-  @media (prefers-reduced-motion: reduce) { * { transition:none !important; animation:none !important; } }
+  @media (max-width:860px) { .pair { grid-template-columns:1fr; } }
+  @media (prefers-reduced-motion:reduce) { * { transition:none !important; animation:none !important; } }
 </style>
 </head>
 <body>
@@ -188,266 +281,291 @@
   <header class="hero">
     <div class="eyebrow">資訊視覺化 · 國立政治大學新聞學系 李怡志</div>
     <h1>儀表板九組對照</h1>
-    <p class="lede">九條理論，每一條配一組並排的真實例子。例子全部來自同一份作業——五位學生用同一份 2016 立委政治獻金資料（261 位候選人）各做一個互動儀表板。同樣的資料、同樣的時間，做出來的東西在這九個地方分岔了，而每一個分岔背後都有一條可以查的理論。</p>
+    <p class="lede">九條理論，每一條配一組並排的示範：同樣的內容、同樣的資料，一邊照理論做，一邊不照。差別不必用講的，看兩格就知道。</p>
     <div class="facts">
       <span>對照組　<b>9 組</b></span>
-      <span>來源　<b>5 件學生作品</b></span>
-      <span>資料　<b>2016 立委政治獻金 · 261 人</b></span>
-      <span>證據　<b>各作品原始碼實測</b></span>
+      <span>示範　<b>18 個可比較的畫面</b></span>
+      <span>主題　<b>政治獻金查詢介面</b></span>
+      <span>資料　<b>示意值，非真實申報數</b></span>
     </div>
   </header>
 
   <div class="method">
-    <h2>理論怎麼挑的</h2>
-    <p>不是先列理論再找例子，是反過來——先看這五件作品在哪些地方真的分岔了，再回頭找那個分岔對應哪一條理論。一條理論如果五件作品做得一樣好或一樣差，就沒有選進來，因為它教不出東西。</p>
-    <p>每一組的證據都是從作品原始碼實測出來的：色碼數量、CSS 選擇器、按鈕的 padding、下拉選單的選項數、載入的函式庫。這些都可以自己開瀏覽器檢視原始碼複驗。</p>
-    <p>下面每一格的小圖是<b>依作品實際數值與色碼重製的示意</b>，不是螢幕截圖——為了讓兩邊在同一個尺度下並排比較。要看真正的樣子，開作品本身。</p>
+    <h2>這九條是怎麼挑出來的</h2>
+    <p>不是先列理論再找例子。先看一屆學生用同一份資料各做一個儀表板，交出來的作品在哪些地方真的分岔——有人做對、有人做錯，而且錯得有系統——再回頭找那個分岔對應哪一條理論。五件作品做得一樣好或一樣差的地方，就沒有選進來，因為它教不出東西。</p>
+    <p>下面每一組的兩個畫面都是為了說明而重新設計的，不是任何一件實際作品。兩邊的內容與資料刻意完全一樣，只有一個設計決定不同，這樣差異才歸得了因。畫面裡的數字是示意值。</p>
   </div>
 
-  <div class="cast">
-    <div><div class="k">W1</div><div class="v">The Weight of Politics 政治的重量</div></div>
-    <div><div class="k">W2</div><div class="v">政治獻金大公開</div></div>
-    <div><div class="k">W3</div><div class="v">大金庫：政治獻金查詢</div></div>
-    <div><div class="k">W4</div><div class="v">THE CAPITAL 2016</div></div>
-    <div><div class="k">W5</div><div class="v">2016 金權政治獻金資料庫</div></div>
-  </div>
+  <nav class="nav">
+    <a href="#p1"><div class="n">01</div><div class="t">顏色數量</div></a>
+    <a href="#p2"><div class="n">02</div><div class="t">信號專屬</div></a>
+    <a href="#p3"><div class="n">03</div><div class="t">裝飾雜訊</div></a>
+    <a href="#p4"><div class="n">04</div><div class="t">編碼選擇</div></a>
+    <a href="#p5"><div class="n">05</div><div class="t">入口與氣味</div></a>
+    <a href="#p6"><div class="n">06</div><div class="t">選項數量</div></a>
+    <a href="#p7"><div class="n">07</div><div class="t">敘事杯腳</div></a>
+    <a href="#p8"><div class="n">08</div><div class="t">首屏狀態</div></a>
+    <a href="#p9"><div class="n">09</div><div class="t">命中區</div></a>
+  </nav>
 
   <!-- 1 -->
   <section id="p1">
     <div class="sec-head"><span class="sec-num">01</span><h2>顏色的數量上限</h2></div>
-    <p class="law">Subitizing 的上限大約 4–5 個：在這個數量以內，人可以「一眼數完」不必逐一掃描。顏色一旦超過這個數量，辨色就從前注意的平行處理掉回序列搜尋，圖例必須一個一個讀。<em>Subitizing · Feature Integration Theory</em></p>
+    <p class="law">人一眼能數完的數量大約 4–5 個。顏色種類一旦超過，辨色就從前注意的平行處理掉回序列搜尋——使用者必須一個一個對圖例，顏色反而變成負擔。<em>Subitizing · Feature Integration Theory</em></p>
 
     <div class="pair">
       <div class="panel g">
-        <div class="phead"><span class="verdict">好</span><span class="pwork">W4 THE CAPITAL 2016</span></div>
-        <div class="mini" style="background:#ffffff">
-          <div class="sw">
-            <i style="background:#000000"></i><i style="background:#555555"></i><i style="background:#666666"></i>
-            <i style="background:#999999"></i><i style="background:#eeeeee;box-shadow:inset 0 0 0 1px #ccc"></i>
-            <i style="background:#ffffff;box-shadow:inset 0 0 0 1px #ccc"></i>
+        <div class="phead"><span class="verdict">好</span><span class="pwhat">同一份委員會分類，3 種顏色</span></div>
+        <div class="demo">
+          <div class="d-title">委員會分布</div>
+          <div class="d-tags">
+            <span style="border-color:var(--demo-accent);color:var(--demo-accent)">財政 24</span>
+            <span>內政 31</span><span>經濟 28</span><span>交通 19</span>
+            <span>教育文化 22</span><span>司法法制 17</span>
+            <span>外交國防 15</span><span>社福衛環 26</span>
           </div>
         </div>
-        <div class="mini-cap">全站 6 個色值</div>
-        <p>整個站只有黑、白與四階灰。顏色完全不承擔語意，層次全部交給字級、粗細與線寬。要判斷哪裡重要，看的是排版，不是顏色。</p>
-        <p class="evi">CSS 變數只有四個：<br>--black #000000<br>--white #FFFFFF<br>--border-thick 2px solid #000<br>--border-thin 1px solid #000</p>
+        <div class="cap">灰＝一般 · 一個強調色＝目前選取</div>
+        <p>八個分類全部同一種灰，只有「目前選取」那一個上色。顏色只承擔一個意思，所以那個意思一眼看得到。</p>
+        <p class="look"><b>看這裡</b>把視線放鬆，第一個跳出來的是不是「財政」？</p>
       </div>
 
       <div class="panel b">
-        <div class="phead"><span class="verdict">不好</span><span class="pwork">W2 政治獻金大公開</span></div>
-        <div class="mini" style="background:#0D0D1A">
-          <div class="sw tiny">
-            <i style="background:#00897b"></i><i style="background:#00acc1"></i><i style="background:#00bcd4"></i>
-            <i style="background:#1565c0"></i><i style="background:#1b9931"></i><i style="background:#2196f3"></i>
-            <i style="background:#4caf50"></i><i style="background:#607d8b"></i><i style="background:#6d4c41"></i>
-            <i style="background:#795548"></i><i style="background:#808080"></i><i style="background:#8bc34a"></i>
-            <i style="background:#9c27b0"></i><i style="background:#9e9e9e"></i><i style="background:#c0392b"></i>
-            <i style="background:#c8a200"></i><i style="background:#d4af37"></i><i style="background:#e53935"></i>
-            <i style="background:#e91e63"></i><i style="background:#f44336"></i><i style="background:#ff1744"></i>
-            <i style="background:#ff5722"></i><i style="background:#ff6b35"></i><i style="background:#ff9800"></i>
-            <i style="background:#ffab00"></i><i style="background:#8B0000"></i>
+        <div class="phead"><span class="verdict">不好</span><span class="pwhat">同一份分類，8 種顏色</span></div>
+        <div class="demo">
+          <div class="d-title">委員會分布</div>
+          <div class="d-tags">
+            <span style="background:#e74c3c;color:#fff;border-color:#e74c3c">財政 24</span>
+            <span style="background:#3498db;color:#fff;border-color:#3498db">內政 31</span>
+            <span style="background:#27ae60;color:#fff;border-color:#27ae60">經濟 28</span>
+            <span style="background:#f39c12;color:#fff;border-color:#f39c12">交通 19</span>
+            <span style="background:#9b59b6;color:#fff;border-color:#9b59b6">教育文化 22</span>
+            <span style="background:#16a085;color:#fff;border-color:#16a085">司法法制 17</span>
+            <span style="background:#d35400;color:#fff;border-color:#d35400">外交國防 15</span>
+            <span style="background:#c0392b;color:#fff;border-color:#c0392b">社福衛環 26</span>
           </div>
         </div>
-        <div class="mini-cap">單一頁面裡的 26 個色值</div>
-        <p>CSS 裡其實有一套很有紀律的語意色盤，但 HTML 裡又另外散落了 26 個色碼，等於兩套色彩系統並存。使用者無法從顏色推論任何規則，只能回頭讀圖例。</p>
-        <p class="evi">style.css 定義 14 個語意變數；<br>index.html 內另有 26 個 hex，<br>其中光紅色就四個：<br>#f44336 #e53935 #ff1744 #c0392b</p>
+        <div class="cap">每個分類一個顏色</div>
+        <p>看起來比較「有設計」，但沒有一個分類跳得出來。顏色多到必須逐一辨認，等於回到讀文字——那顏色就白上了。</p>
+        <p class="look"><b>看這裡</b>現在還看得出哪一個是選取中的嗎？</p>
       </div>
     </div>
 
-    <p class="fix"><b>怎麼改</b>先決定顏色要不要承擔語意。要，就把色票鎖進 CSS 變數，全站只准從那裡取色；不要，就學 W4 交給排版，反而更難出錯。</p>
+    <p class="fix"><b>怎麼改</b>先問這個顏色要表達什麼。分類多於五個就不要用顏色分類，用位置與排序；顏色留給「狀態」——選取中、異常、已處理，這種一次只有少數幾個的東西。</p>
   </section>
 
   <!-- 2 -->
   <section id="p2">
     <div class="sec-head"><span class="sec-num">02</span><h2>信號的特徵必須專屬</h2></div>
-    <p class="law">顏色、動態、大小這些前注意特徵在 200–250 毫秒內被平行偵測，不需要注意力。但同一個特徵若被多種意思共用，它的信號純度就消失了——紅色同時代表「警示」和「某個分類」的時候，紅色什麼都不代表。<em>Feature Integration Theory · Pre-Attentive Processing</em></p>
+    <p class="law">顏色與動態在 200–250 毫秒內被平行偵測，不需要注意力。但同一個特徵若被多種意思共用，信號純度就消失——紅色同時代表警示、標題和裝飾的時候，紅色什麼都不代表。<em>Feature Integration Theory · Pre-Attentive Processing</em></p>
 
     <div class="pair">
       <div class="panel g">
-        <div class="phead"><span class="verdict">好</span><span class="pwork">W2 的政黨色</span></div>
-        <div class="mini" style="background:#16213E">
-          <div class="sw">
-            <i style="background:#1B9931" title="民進黨"></i>
-            <i style="background:#1565C0" title="國民黨"></i>
-            <i style="background:#B8860B" title="時代力量"></i>
-            <i style="background:#FF6B35" title="親民黨"></i>
+        <div class="phead"><span class="verdict">好</span><span class="pwhat">紅色只出現一次</span></div>
+        <div class="demo">
+          <div class="d-title">候選人收支檢核</div>
+          <div class="d-rows">
+            <div class="d-row"><span class="nm">候選人 A</span><span class="vl">12,480,000</span><span class="fl" style="color:var(--screen-mute)">正常</span></div>
+            <div class="d-row"><span class="nm">候選人 B</span><span class="vl">9,220,000</span><span class="fl" style="color:var(--screen-mute)">正常</span></div>
+            <div class="d-row"><span class="nm">候選人 C</span><span class="vl">31,650,000</span><span class="fl" style="background:var(--demo-alert);color:#fff">超出申報上限</span></div>
+            <div class="d-row"><span class="nm">候選人 D</span><span class="vl">7,910,000</span><span class="fl" style="color:var(--screen-mute)">正常</span></div>
+            <div class="d-row"><span class="nm">候選人 E</span><span class="vl">14,030,000</span><span class="fl" style="color:var(--screen-mute)">正常</span></div>
           </div>
         </div>
-        <div class="mini-cap">四個政黨 · 四個固定色</div>
-        <p>四個政黨各綁一個色碼，寫成 CSS 變數，全站不變。這是相似性原則的正確用法：同一個視覺特徵永遠對應同一個意思，使用者看兩頁就學會了。</p>
-        <p class="evi">--dpp #1B9931　--kmt #1565C0<br>--npp #B8860B　--ppp #FF6B35</p>
+        <div class="cap">全表唯一的紅＝唯一需要處理的事</div>
+        <p>標題、標籤、狀態全部維持中性，只有真正異常的那一列是紅的。掃過去不必讀完五列，紅色自己會浮出來。</p>
+        <p class="look"><b>看這裡</b>異常那一列，你花了幾毫秒找到？</p>
       </div>
 
       <div class="panel b">
-        <div class="phead"><span class="verdict">不好</span><span class="pwork">W2 的紅色</span></div>
-        <div class="mini" style="background:#16213E">
-          <div class="sw">
-            <i style="background:#8B0000"></i><i style="background:#f44336"></i>
-            <i style="background:#e53935"></i><i style="background:#ff1744"></i>
-            <i style="background:#c0392b"></i>
+        <div class="phead"><span class="verdict">不好</span><span class="pwhat">紅色到處都是</span></div>
+        <div class="demo">
+          <div class="d-title" style="color:#e74c3c">● 候選人收支檢核 ●</div>
+          <div class="d-rows">
+            <div class="d-row"><span class="nm">候選人 A</span><span class="vl" style="color:#e74c3c">12,480,000</span><span class="fl" style="background:#ff7675;color:#fff">已審</span></div>
+            <div class="d-row"><span class="nm">候選人 B</span><span class="vl" style="color:#e74c3c">9,220,000</span><span class="fl" style="background:#d63031;color:#fff">待補</span></div>
+            <div class="d-row"><span class="nm">候選人 C</span><span class="vl" style="color:#e74c3c">31,650,000</span><span class="fl" style="background:#c0392b;color:#fff">超出申報上限</span></div>
+            <div class="d-row"><span class="nm">候選人 D</span><span class="vl" style="color:#e74c3c">7,910,000</span><span class="fl" style="background:#ff7675;color:#fff">已審</span></div>
+            <div class="d-row"><span class="nm">候選人 E</span><span class="vl" style="color:#e74c3c">14,030,000</span><span class="fl" style="background:#e17055;color:#fff">複核中</span></div>
           </div>
         </div>
-        <div class="mini-cap">同一份作品裡的五個紅</div>
-        <p>同一件作品，色彩紀律在 CSS 裡有、在 HTML 裡沒有。五個紅分散在強調、分類、標記各處，等到真的需要一個「這裡要立刻處理」的紅，已經沒有紅可以用了。</p>
-        <p class="evi">--crimson #8B0000 是語意紅；<br>另外四個紅寫死在 HTML 內，<br>用於分類標記與強調。</p>
+        <div class="cap">標題紅、數字紅、四種狀態四種紅</div>
+        <p>紅色被拿去當強調色、當狀態色、當裝飾。等到真的有一件事需要立刻處理，已經沒有紅可以用了——它得跟另外七個紅競爭。</p>
+        <p class="look"><b>看這裡</b>同一列異常，這次要找多久？</p>
       </div>
     </div>
 
-    <p class="fix"><b>怎麼改</b>挑一個顏色當警示專用色，然後全站搜尋一次，把其他地方用到它的都換掉。這件事十分鐘就做得完，但只有想過「信號專屬」的人才會去做。</p>
+    <p class="fix"><b>怎麼改</b>挑一個顏色當警示專用，然後全站搜尋一次，把其他地方用到它的都換掉。十分鐘做得完，但只有想過「信號專屬」的人才會去做。</p>
   </section>
 
   <!-- 3 -->
   <section id="p3">
     <div class="sec-head"><span class="sec-num">03</span><h2>裝飾會製造假信號</h2></div>
-    <p class="law">任何不代表資料的視覺變異，都會在顯著性地圖上產生無意義的激活。陰影與漸層製造出強烈邊緣，大腦得額外花力氣忽略它們，才看得到真正的資料。<em>Data-Ink Ratio · Feature Congestion</em></p>
+    <p class="law">任何不代表資料的視覺變異，都會在顯著性地圖上產生無意義的激活。陰影與漸層製造強烈邊緣，大腦得額外花力氣忽略它們，才看得到真正的資料。<em>Data-Ink Ratio · Feature Congestion</em></p>
 
     <div class="pair">
       <div class="panel g">
-        <div class="phead"><span class="verdict">好</span><span class="pwork">W4 THE CAPITAL 2016</span></div>
-        <div class="mini" style="background:#ffffff">
-          <div style="border:2px solid #000;padding:12px 14px">
-            <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.12em;color:#666">TOTAL INCOME</div>
-            <div style="font-size:24px;color:#000;font-weight:700;margin-top:4px">NT$ 12,480,000</div>
-            <div style="border-top:1px solid #000;margin-top:10px;padding-top:6px;font-size:11px;color:#555">CORPORATE 41%</div>
+        <div class="phead"><span class="verdict">好</span><span class="pwhat">數字自己就是重點</span></div>
+        <div class="demo">
+          <div class="d-kpi-flat">
+            <div class="lb">總收入</div>
+            <div class="vv">NT$ 12,480,000</div>
+            <div class="sub">企業捐贈占 41%　目標區間 800–1,500 萬</div>
           </div>
         </div>
-        <div class="mini-cap">2px 實線 · 0 漸層 · 0 陰影</div>
-        <p>邊界只用純黑細線，沒有圓角、沒有陰影、沒有漸層。整頁唯一的視覺變異就是資料本身，數字要突出時靠字級，不靠特效。</p>
-        <p class="evi">gradient: 0 處<br>box-shadow: 0 處<br>border: 2px / 1px solid #000</p>
+        <div class="cap">一條細線 · 無漸層 · 無陰影</div>
+        <p>邊界只用一條細線，層次交給字級與留白。畫面上唯一強烈的東西是那個數字，因為它本來就該是唯一強烈的東西。</p>
+        <p class="look"><b>看這裡</b>先看到數字，還是先看到卡片？</p>
       </div>
 
       <div class="panel b">
-        <div class="phead"><span class="verdict">不好</span><span class="pwork">W5 2016 金權政治獻金資料庫</span></div>
-        <div class="mini" style="background:#180807">
-          <div style="background:linear-gradient(160deg,rgba(255,229,158,.14),rgba(55,10,15,.85));border:1px solid rgba(242,197,91,.42);border-radius:14px;box-shadow:0 8px 22px rgba(0,0,0,.42);padding:12px 14px">
-            <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.12em;color:#c9b88c">總收入</div>
-            <div style="font-size:24px;color:#ffe79a;font-weight:700;margin-top:4px;text-shadow:0 2px 6px rgba(0,0,0,.5)">NT$ 12,480,000</div>
-            <div style="border-top:1px solid rgba(242,197,91,.3);margin-top:10px;padding-top:6px;font-size:11px;color:#c9b88c">企業捐贈 41%</div>
+        <div class="phead"><span class="verdict">不好</span><span class="pwhat">卡片比數字還搶眼</span></div>
+        <div class="demo">
+          <div class="d-kpi-fancy">
+            <div class="lb">總收入</div>
+            <div class="vv">NT$ 12,480,000</div>
+            <div class="sub">企業捐贈占 41%　目標區間 800–1,500 萬</div>
           </div>
         </div>
-        <div class="mini-cap">23 個漸層 · 23 個圓角 · 7 個陰影</div>
-        <p>視覺語言本身很完整，金色與酒紅的搭配也撐得起「金權」這個題目。但變異全部集中在裝飾上——每一張卡片都在發光，於是沒有一張卡片是重點。</p>
-        <p class="evi">golden_politics2016.css：<br>gradient 23 處 · border-radius 23 處<br>box-shadow 7 處 · 36 個色值</p>
+        <div class="cap">漸層 · 圓角 · 外陰影 · 內光 · 文字陰影</div>
+        <p>同樣的內容，加上漸層、陰影與高光。每一個效果都製造出資料裡不存在的邊緣，數字必須跟這些邊緣競爭注意力——而它輸了。</p>
+        <p class="look"><b>看這裡</b>把眼睛瞇起來，剩下的是數字還是那團漸層？</p>
       </div>
     </div>
 
-    <p class="fix"><b>怎麼改</b>不是把裝飾全砍掉，是讓裝飾只出現在不承載資料的地方。標題區可以華麗，數字區要素。先做一次減法，再決定要加回哪一項。</p>
+    <p class="fix"><b>怎麼改</b>不是把裝飾全砍掉，是讓裝飾只出現在不承載資料的地方。標題區可以華麗，數字區要素。先做一次減法，再決定加回哪一項。</p>
   </section>
 
   <!-- 4 -->
   <section id="p4">
     <div class="sec-head"><span class="sec-num">04</span><h2>同一份資料，兩種編碼</h2></div>
-    <p class="law">視覺通道的判讀準確度有明確排序：共同尺度上的位置最準，其次是長度，再來才是角度、面積、亮度。最重要的比較應該用最有效的通道。<em>Perceptual Ladder · Cleveland &amp; McGill</em></p>
+    <p class="law">視覺通道的判讀準確度有明確排序：共同尺度上的位置最準，其次是長度，再來才是角度、面積、亮度。最重要的比較，應該用最有效的通道。<em>Perceptual Ladder · Cleveland &amp; McGill</em></p>
 
     <div class="pair">
       <div class="panel g">
-        <div class="phead"><span class="verdict">好</span><span class="pwork">W1 政治的重量</span></div>
-        <div class="mini" style="background:#070912">
-          <div class="bars">
-            <div class="bar-l"><span>個人捐贈</span><span class="t" style="width:72%"></span></div>
-            <div class="bar-l"><span>營利事業</span><span class="t" style="width:54%"></span></div>
-            <div class="bar-l"><span>人民團體</span><span class="t" style="width:31%"></span></div>
-            <div class="bar-l"><span>政黨捐贈</span><span class="t" style="width:22%"></span></div>
-            <div class="bar-l"><span>匿名捐贈</span><span class="t" style="width:9%"></span></div>
-            <div class="bar-l"><span>其他收入</span><span class="t" style="width:5%"></span></div>
+        <div class="phead"><span class="verdict">好</span><span class="pwhat">長度編碼：共用一條基線</span></div>
+        <div class="demo">
+          <div class="d-title">獻金來源占比</div>
+          <div class="d-bars">
+            <div class="d-bar"><span>個人捐贈</span><span class="t" style="width:76%"></span><span class="p">38%</span></div>
+            <div class="d-bar"><span>營利事業</span><span class="t" style="width:70%"></span><span class="p">35%</span></div>
+            <div class="d-bar"><span>人民團體</span><span class="t" style="width:28%"></span><span class="p">14%</span></div>
+            <div class="d-bar"><span>政黨捐贈</span><span class="t" style="width:16%"></span><span class="p">8%</span></div>
+            <div class="d-bar"><span>匿名捐贈</span><span class="t" style="width:6%"></span><span class="p">3%</span></div>
+            <div class="d-bar"><span>其他收入</span><span class="t" style="width:4%"></span><span class="p">2%</span></div>
           </div>
         </div>
-        <div class="mini-cap">長度編碼 · 六類共用同一條基線（比例為示意）</div>
-        <p>六個捐贈來源畫成共用左端基線的長條，用寬度百分比呈現。要回答「個人捐贈是不是比營利事業多、多多少」，眼睛可以直接比長度，不必換算。</p>
-        <p class="evi">script.js 以 style.width 設定百分比<br>類別：個人捐贈／營利事業捐贈／<br>人民團體／政黨捐贈／匿名捐贈／其他</p>
+        <div class="cap">六類 · 同一條左端基線</div>
+        <p>個人捐贈和營利事業只差 3 個百分點，在長條上看得出來是「差一點點」。要排序、要比較、要看差距，長度都做得到。</p>
+        <p class="look"><b>看這裡</b>不看右邊的數字，你分得出前兩名誰比較多嗎？</p>
       </div>
 
       <div class="panel b">
-        <div class="phead"><span class="verdict">不好</span><span class="pwork">W2 政治獻金大公開</span></div>
-        <div class="mini" style="background:#16213E">
-          <div class="donut" style="background:conic-gradient(#D4AF37 0 38%,#1B9931 38% 63%,#1565C0 63% 79%,#FF6B35 79% 90%,#9C27B0 90% 96%,#607D8B 96% 100%)">
-            <div class="donut-hole"><span></span></div>
+        <div class="phead"><span class="verdict">不好</span><span class="pwhat">角度編碼：同樣六類</span></div>
+        <div class="demo">
+          <div class="d-title">獻金來源占比</div>
+          <div class="d-donut-wrap">
+            <div class="d-donut" style="background:conic-gradient(#1f5c63 0 38%,#2f8f88 38% 73%,#6aa9a0 73% 87%,#9bc3bb 87% 95%,#c2d9d4 95% 98%,#e0ece9 98% 100%)"></div>
+            <div class="d-legend">
+              <div><i style="background:#1f5c63"></i>個人捐贈 38%</div>
+              <div><i style="background:#2f8f88"></i>營利事業 35%</div>
+              <div><i style="background:#6aa9a0"></i>人民團體 14%</div>
+              <div><i style="background:#9bc3bb"></i>政黨捐贈 8%</div>
+              <div><i style="background:#c2d9d4"></i>匿名捐贈 3%</div>
+              <div><i style="background:#e0ece9"></i>其他收入 2%</div>
+            </div>
           </div>
         </div>
-        <div class="mini-cap">角度編碼 · 同樣六類（比例為示意）</div>
-        <p>同一份「獻金來源佔比」，改用甜甜圈呈現。角度與弧長的判讀準確度遠低於長度，相鄰兩塊差幾個百分點時，多數人分不出來，只能讀旁邊的數字——那圖就沒有在工作。</p>
-        <p class="evi">index.html：&lt;canvas id="donutCanvas"&gt;<br>以 ctx.arc() 手繪三段弧<br>（沒有用任何圖表函式庫）</p>
+        <div class="cap">六類 · 角度與弧長</div>
+        <p>同樣的數字，改用角度。前兩塊的 3 個百分點差距在弧上幾乎看不出來，最後三塊擠成細縫。而且圖例在旁邊，眼睛得來回跑。</p>
+        <p class="look"><b>看這裡</b>遮住圖例，你講得出哪一塊是「政黨捐贈」嗎？</p>
       </div>
     </div>
 
-    <p class="fix"><b>怎麼改</b>圓餅與甜甜圈只適合「一塊明顯過半」這種粗略判斷。需要逐項比較就換成共用基線的長條，程式改動不到十行，準確度差很多。</p>
+    <p class="fix"><b>怎麼改</b>圓餅與甜甜圈只適合「有一塊明顯過半」這種粗略判斷。要逐項比較就換共用基線的長條，並把標籤直接標在條的旁邊，省掉圖例這一趟。</p>
   </section>
 
   <!-- 5 -->
   <section id="p5">
-    <div class="sec-head"><span class="sec-num">05</span><h2>入口要有好幾條</h2></div>
-    <p class="law">人像覓食動物一樣，靠「資訊氣味」決定要不要往下深入。不同任務需要不同的覓食路徑：查特定的人、依分類瀏覽、開放探索、回頭找看過的——只給一條路，就是只服務其中一種人。<em>Information Foraging Theory</em></p>
+    <div class="sec-head"><span class="sec-num">05</span><h2>入口要有氣味</h2></div>
+    <p class="law">人像覓食動物一樣，靠「資訊氣味」決定要不要往下深入。連結文字若無法讓人預測點下去會拿到什麼，報酬不確定，多數人就不點了。<em>Information Foraging Theory</em></p>
 
     <div class="pair">
       <div class="panel g">
-        <div class="phead"><span class="verdict">好</span><span class="pwork">W5 2016 金權政治獻金資料庫</span></div>
-        <div class="mini" style="background:#180807">
-          <div class="entry-list">
-            <i style="background:rgba(255,229,158,.09);color:#fff0c2;border:1px solid rgba(242,197,91,.42)">簡易搜尋　候選人／政黨／選區</i>
-            <i style="background:rgba(255,229,158,.09);color:#fff0c2;border:1px solid rgba(242,197,91,.42)">進階搜尋　政黨 × 委員會 × 地區</i>
-            <i style="background:rgba(255,229,158,.09);color:#fff0c2;border:1px solid rgba(242,197,91,.42)">範例查詢　直接給三組現成條件</i>
-            <i style="background:rgba(255,229,158,.09);color:#fff0c2;border:1px solid rgba(242,197,91,.42)">編輯精選　柯建銘／王定宇／黃國昌</i>
-            <i style="background:rgba(255,229,158,.09);color:#fff0c2;border:1px solid rgba(242,197,91,.42)">企業捐贈排行</i>
+        <div class="phead"><span class="verdict">好</span><span class="pwhat">每條路都說明白會拿到什麼</span></div>
+        <div class="demo">
+          <div class="d-title">從哪裡開始</div>
+          <div class="d-entries">
+            <a href="#p5">查特定候選人　輸入姓名或選區</a>
+            <a href="#p5">看台北市 12 位候選人的收支</a>
+            <a href="#p5">企業捐贈金額排行前 20 名</a>
+            <a href="#p5">比較兩個政黨的收入結構</a>
           </div>
         </div>
-        <div class="mini-cap">五種進入方式</div>
-        <p>五條路各自服務一種人：知道要查誰的、只想篩條件的、不知道從哪開始的、想看熱門的、想看整體結構的。頁內導覽把這五條路直接列在最上面。</p>
-        <p class="evi">6 個 select · 52 個 option<br>17 個站內錨點連結<br>導覽列：為何重要／查詢金流／編輯精選／看排行</p>
+        <div class="cap">四條路 · 各自寫明報酬</div>
+        <p>四種不同的人各有一條路：知道要查誰的、想看某地的、想看極端值的、想比較的。每個標籤都包含名詞與數量，點之前就知道會拿到什麼。</p>
+        <p class="look"><b>看這裡</b>你現在能預測第二條點下去會出現什麼嗎？</p>
       </div>
 
       <div class="panel b">
-        <div class="phead"><span class="verdict">不好</span><span class="pwork">W4 THE CAPITAL 2016</span></div>
-        <div class="mini" style="background:#ffffff">
-          <div class="entry-list">
-            <i style="border:1px solid #000;color:#000">SELECT A REGION（地圖）</i>
-            <i style="border:1px solid #000;color:#000">Quick Search：台北市／新北市／高雄市</i>
-            <i style="border:1px dashed #999;color:#999">（沒有政黨、委員會、當選與否的篩選）</i>
+        <div class="phead"><span class="verdict">不好</span><span class="pwhat">只有一條路，而且沒有味道</span></div>
+        <div class="demo">
+          <div class="d-title">從哪裡開始</div>
+          <div class="d-entries">
+            <span class="weak" style="border-style:dashed">🔍　搜尋</span>
+            <a href="#p5" style="text-align:center">更多資訊</a>
+            <span class="weak" style="border:0">共 261 筆資料</span>
           </div>
         </div>
-        <div class="mini-cap">實際上只有一條路</div>
-        <p>入口只有地圖，加三個城市的快捷鍵。想找特定候選人、想比較政黨、想看企業捐贈排行的人，全部沒有路可以走——地圖很漂亮，但它預設了每個人都從地理位置開始想事情。</p>
-        <p class="evi">select 0 個 · input 1 個 · button 5 個<br>（五件作品中互動控制項最少）</p>
+        <div class="cap">一個搜尋框 · 一個通用按鈕</div>
+        <p>搜尋框只服務「已經知道自己要查誰」的人。「更多資訊」四個字沒有任何氣味——不知道會拿到什麼，就不值得花那一次點擊。</p>
+        <p class="look"><b>看這裡</b>你會在這個框裡打什麼？想得到嗎？</p>
       </div>
     </div>
 
-    <p class="fix"><b>怎麼改</b>先列出三種不同的使用者各自會怎麼開始，再確認每一種都有入口。地圖可以留，但它不該是唯一的門。</p>
+    <p class="fix"><b>怎麼改</b>把每個按鈕的文字改成「動詞＋對象＋數量」。「更多資訊」改成「看台北市 12 位候選人」，改的是一行字，換到的是使用者願不願意點。</p>
   </section>
 
   <!-- 6 -->
   <section id="p6">
     <div class="sec-head"><span class="sec-num">06</span><h2>但選項不能一次全給</h2></div>
-    <p class="law">決策時間隨選項數的對數成長。這條和上一條是一體兩面：入口要多條，但每一條入口上的選項要少——多入口不等於多選項。<em>Hick-Hyman Law</em></p>
+    <p class="law">決策時間隨選項數的對數成長。這條和上一條是一體兩面：入口要多條，但每條入口上的選項要少——多入口不等於多選項。<em>Hick-Hyman Law</em></p>
 
     <div class="pair">
       <div class="panel g">
-        <div class="phead"><span class="verdict">好</span><span class="pwork">W1 政治的重量</span></div>
-        <div class="mini" style="background:#070912">
-          <div class="entry-list">
-            <i style="border:1px solid rgba(212,175,55,.25);color:#E5E7EB">首頁　搜尋框＋縣市＋政黨</i>
-            <i style="border:1px dashed rgba(212,175,55,.2);color:#9CA3AF">↓ 進入結果頁後才出現</i>
-            <i style="border:1px solid rgba(212,175,55,.25);color:#E5E7EB">結果頁　縣市＋政黨＋排序方式</i>
+        <div class="phead"><span class="verdict">好</span><span class="pwhat">先給三個，其餘收起來</span></div>
+        <div class="demo">
+          <div class="d-title">篩選</div>
+          <div class="d-filters">
+            <div class="d-sel"><span>政黨</span><span class="cv">全部 ▾</span></div>
+            <div class="d-sel"><span>地區</span><span class="cv">全部 ▾</span></div>
+            <div class="d-sel"><span>當選與否</span><span class="cv">全部 ▾</span></div>
+            <div class="d-sel" style="border-style:dashed;color:var(--screen-mute)"><span>＋ 更多條件</span><span class="cv">委員會・現任・性別</span></div>
           </div>
         </div>
-        <div class="mini-cap">漸進揭露：先兩個，再三個</div>
-        <p>首頁只擺兩個篩選加一個搜尋框，第三段排序等進到結果頁才出現。使用者在還不知道自己要什麼的時候，不需要面對全部條件。</p>
-        <p class="evi">首頁：home-city-filter／home-party-filter<br>結果頁：city-filter-select／<br>party-filter-select／排序<br>選項由資料動態產生，不寫死</p>
+        <div class="cap">三個常用條件 · 其餘一鍵展開</div>
+        <p>最常用的三個直接給，其他收在「更多條件」後面，但把裡面有什麼寫出來——使用者知道展開會拿到什麼，不必先展開才知道。</p>
+        <p class="look"><b>看這裡</b>要開始篩選，你需要先讀幾個字？</p>
       </div>
 
       <div class="panel b">
-        <div class="phead"><span class="verdict">不好</span><span class="pwork">W5 2016 金權政治獻金資料庫</span></div>
-        <div class="mini" style="background:#180807">
-          <div style="border:1px solid rgba(242,197,91,.42);padding:9px 11px;font-size:12px;color:#fff0c2;line-height:1.8">
-            政黨（7）：民進黨・國民黨・時代力量・親民黨・台聯・綠社盟・無黨籍<br>
-            委員會（8）：內政・外交國防・經濟・財政・司法法制・教育文化・交通・社福衛環<br>
-            地區（20）：臺北・新北・桃園・臺中・臺南・高雄・基隆・新竹市・新竹縣・彰化⋯
+        <div class="phead"><span class="verdict">不好</span><span class="pwhat">六個維度一次攤開</span></div>
+        <div class="demo">
+          <div class="d-title">進階篩選</div>
+          <div class="d-optwall">
+            政黨：民進黨・國民黨・時代力量・親民黨・台聯・綠社盟・無黨籍<br>
+            委員會：內政・外交國防・經濟・財政・司法法制・教育文化・交通・社福衛環<br>
+            地區：臺北・新北・桃園・臺中・臺南・高雄・基隆・新竹市・新竹縣・苗栗・彰化・南投・雲林・嘉義市・嘉義縣・屏東・宜蘭・花蓮・臺東・離島<br>
+            當選：已當選・未當選　現任：是・否　性別：男・女
           </div>
         </div>
-        <div class="mini-cap">同一個畫面攤開 35 個以上選項</div>
-        <p>進階搜尋一次把政黨、委員會、地區三個維度全部展開，光這三個就 35 個選項寫死在 HTML 裡。選擇成本高到很多人乾脆退回去用簡易搜尋——這一區等於白做。</p>
-        <p class="evi">index.html 內 52 個 &lt;option&gt;<br>全部靜態寫死，同時可見</p>
+        <div class="cap">同一個畫面 41 個選項</div>
+        <p>條件全部給了，看起來很完整。但使用者要先讀完 41 個選項才知道自己要選哪個，多數人讀到第二行就退回去用搜尋框——這一整區等於白做。</p>
+        <p class="look"><b>看這裡</b>從看到這區到按下第一個選項，你要花多久？</p>
       </div>
     </div>
 
-    <p class="fix"><b>怎麼改</b>把「多入口」和「多選項」分開想。W5 的五條入口是對的，錯的是其中一條入口上就擺了 35 個選項。分層、預設收合、或先給三個最常用的，都可以。</p>
+    <p class="fix"><b>怎麼改</b>「多入口」和「多選項」分開想。五條入口是對的，錯的是其中一條入口上就擺了 41 個選項。分層、預設收合、或先給三個最常用的，都可以。</p>
   </section>
 
   <!-- 7 -->
@@ -457,35 +575,36 @@
 
     <div class="pair">
       <div class="panel g">
-        <div class="phead"><span class="verdict">好</span><span class="pwork">W3 大金庫 · W5 金權資料庫</span></div>
-        <div class="mini" style="background:#7C4A28">
-          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;color:#FFD166;margin-bottom:8px">金庫富豪榜（總收入 TOP 3）</div>
-          <div class="entry-list">
-            <i style="background:#FFF4B3;color:#5C3A21;font-weight:600">1　具名候選人 → 點擊直接進詳情</i>
-            <i style="background:#FEEAB4;color:#5C3A21">2　具名候選人 → 點擊直接進詳情</i>
-            <i style="background:#FFF9EB;color:#5C3A21">3　具名候選人 → 點擊直接進詳情</i>
+        <div class="phead"><span class="verdict">好</span><span class="pwhat">三個具名起點</span></div>
+        <div class="demo">
+          <div class="d-title">先看這三個</div>
+          <div class="d-cases">
+            <div class="d-case"><div class="cn">收入最高的候選人</div><div class="cr">3,165 萬元，是全體中位數的 4.2 倍</div></div>
+            <div class="d-case"><div class="cn">企業捐贈占比最高</div><div class="cr">收入 87% 來自 12 家公司</div></div>
+            <div class="d-case"><div class="cn">花最少錢當選的人</div><div class="cr">支出 214 萬，得票 6.8 萬張</div></div>
           </div>
         </div>
-        <div class="mini-cap">首屏就有具名的起點</div>
-        <p>W3 首頁直接放「金庫富豪榜 Top 3」，W5 放柯建銘、王定宇、黃國昌三位具名案例。使用者不必先想到要查誰，點一個就進到完整詳情，順便學會這個站怎麼用。</p>
-        <p class="evi">W3：🌟 金庫富豪榜 (總收入 Top 3)<br>W5：編輯精選案例三人＋企業捐贈排行<br>W1 亦有 Editor's Picks 觀察指標</p>
+        <div class="cap">三個案例 · 各附一句「為什麼值得看」</div>
+        <p>使用者不必先想到要查誰。點一個進去，順便學會這個站怎麼用、有哪些欄位、可以問什麼問題——之後再去自由探索，就帶著框架了。</p>
+        <p class="look"><b>看這裡</b>看完這三格，你心裡有沒有浮出第四個想查的問題？</p>
       </div>
 
       <div class="panel b">
-        <div class="phead"><span class="verdict">不好</span><span class="pwork">W4 THE CAPITAL 2016</span></div>
-        <div class="mini" style="background:#ffffff">
-          <div class="frame" style="border:1px dashed #999;color:#666;flex-direction:column;gap:6px">
-            <div style="letter-spacing:.2em">SELECT A REGION</div>
-            <div style="color:#999">Found 0 Candidates</div>
+        <div class="phead"><span class="verdict">不好</span><span class="pwhat">開場就要求使用者先做決定</span></div>
+        <div class="demo">
+          <div class="d-title">先看這三個</div>
+          <div class="d-empty">
+            <div>請先選擇縣市</div>
+            <div style="opacity:.7">目前顯示 0 筆</div>
           </div>
         </div>
-        <div class="mini-cap">首屏要求使用者先做決定</div>
-        <p>開場就是「選一個地區」，在選之前列表顯示 Found 0 Candidates。第一眼的報酬率是零，而且它要求使用者先有一個問題，才給得出答案。</p>
-        <p class="evi">首屏無任何具名案例<br>清單初始狀態為 0 筆</p>
+        <div class="cap">選之前，畫面上沒有任何內容</div>
+        <p>第一眼的報酬是零，而且它要求使用者先有一個問題，才給得出答案。對這個題目本來就沒有問題的人，到這裡就離開了。</p>
+        <p class="look"><b>看這裡</b>你知道選了台北市之後會看到什麼嗎？</p>
       </div>
     </div>
 
-    <p class="fix"><b>怎麼改</b>把「Found 0」換成三個具名案例。這是所有修法裡最便宜的一個，通常一小時內做得完，而它改變的是使用者的第一印象。</p>
+    <p class="fix"><b>怎麼改</b>把「目前顯示 0 筆」換成三個具名案例，各附一句為什麼值得看。這是所有修法裡最便宜的一個，改變的是使用者的第一印象。</p>
   </section>
 
   <!-- 8 -->
@@ -495,29 +614,35 @@
 
     <div class="pair">
       <div class="panel g">
-        <div class="phead"><span class="verdict">好</span><span class="pwork">W5 2016 金權政治獻金資料庫</span></div>
-        <div class="mini" style="background:#180807">
-          <div style="border:1px solid rgba(242,197,91,.42);padding:11px 13px">
-            <div style="color:#ffe79a;font-family:'Noto Serif TC',serif;font-size:15px">錢，如何走進政治？</div>
-            <div style="color:#c9b88c;font-size:11.5px;margin-top:5px">政治獻金不是八卦，是民主的帳本。</div>
-            <div style="display:flex;gap:14px;margin-top:9px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:#fff0c2">
-              <span>資料筆數 261</span><span>核心欄位 27</span><span>查詢方式 2</span>
+        <div class="phead"><span class="verdict">好</span><span class="pwhat">打開就有東西可讀</span></div>
+        <div class="demo">
+          <div style="border:1px solid var(--screen-line);padding:10px 12px">
+            <div style="font-family:var(--f-display);font-size:14px;font-weight:600">錢，如何走進政治？</div>
+            <div style="color:var(--screen-mute);font-size:10.5px;margin-top:3px">2016 立委選舉政治獻金查詢</div>
+            <div style="display:flex;gap:14px;margin-top:9px;font-family:var(--f-mono);font-size:10.5px;color:var(--screen-ink)">
+              <span>候選人 261</span><span>欄位 27</span><span>入口 4</span>
             </div>
           </div>
         </div>
-        <div class="mini-cap">開啟即完成，零等待</div>
-        <p>整頁是靜態 HTML，沒有任何資料抓取。導言、統計、搜尋入口在第一個畫面就全部到位，關掉網路也讀得到。</p>
-        <p class="evi">fetch 呼叫：0 次<br>外部 script：0 個<br>沒有任何「載入中」文案</p>
+        <div class="cap">標題、說明、規模、入口都在第一幀</div>
+        <p>首屏那一小塊寫成真的 HTML，資料再交給後面的 JavaScript。標題、規模、能做什麼，在第一個畫面就交代完，網路慢也讀得到。</p>
+        <p class="look"><b>看這裡</b>就算後面全部載入失敗，這一格還是有資訊。</p>
       </div>
 
       <div class="panel b">
-        <div class="phead"><span class="verdict">不好</span><span class="pwork">W3 大金庫：政治獻金查詢</span></div>
-        <div class="mini" style="background:#FFF9EB">
-          <div class="frame" style="border:1px dashed #B5651D;color:#A0522D">Loading…</div>
+        <div class="phead"><span class="verdict">不好</span><span class="pwhat">要等程式跑完才長出來</span></div>
+        <div class="demo">
+          <div class="d-skel">
+            <span class="sk" style="width:52%"></span>
+            <span class="sk" style="width:34%"></span>
+            <span class="sk" style="width:76%"></span>
+            <span class="sk" style="width:68%"></span>
+            <div style="font-family:var(--f-mono);font-size:10.5px;color:var(--screen-mute);margin-top:4px">Loading…</div>
+          </div>
         </div>
-        <div class="mini-cap">內容全部由瀏覽器現場編譯後才出現</div>
-        <p>畫面全由 React 產生，而且 Babel 是在使用者的瀏覽器裡即時編譯的。要先下載六個外部函式庫、編譯、再抓 CSV，畫面才會有東西——這幾秒鐘裡，使用者看到的是空的。</p>
-        <p class="evi">外部 script 六支：react · react-dom ·<br>babel/standalone · tailwindcss ·<br>papaparse · lucide<br>存成靜態檔完全看不到內容</p>
+        <div class="cap">前幾秒使用者看到的就是這個</div>
+        <p>畫面全部由 JavaScript 產生，要先下載函式庫、抓資料、渲染，才會有東西。這幾秒鐘裡沒有任何線索告訴使用者這是什麼網站、值不值得等。</p>
+        <p class="look"><b>看這裡</b>光看這一格，你講得出這是什麼主題的網站嗎？</p>
       </div>
     </div>
 
@@ -527,39 +652,43 @@
   <!-- 9 -->
   <section id="p9">
     <div class="sec-head"><span class="sec-num">09</span><h2>點得到才算做得到</h2></div>
-    <p class="law">移動到目標的時間，隨距離增加、隨目標縮小而變長。操作成本高，等效於提高行動門檻——按鈕做得太小，功能等於沒做。<em>Fitts's Law</em></p>
+    <p class="law">移動到目標的時間，隨距離增加、隨目標縮小而變長。操作成本高等效於提高行動門檻——按鈕做得太小，功能等於沒做。<em>Fitts's Law</em></p>
 
     <div class="pair">
       <div class="panel g">
-        <div class="phead"><span class="verdict">好</span><span class="pwork">W5 2016 金權政治獻金資料庫</span></div>
-        <div class="mini" style="background:#180807">
-          <div class="btnrow">
-            <span class="fake-btn big" style="border-color:rgba(242,197,91,.42);color:#fff0c2;background:rgba(255,229,158,.09)">打開金庫搜尋</span>
-            <span style="display:inline-flex;align-items:center;min-height:48px;padding:0 12px;border:1px solid rgba(242,197,91,.42);color:#c9b88c;font-size:12px">全部政黨 ▾</span>
+        <div class="phead"><span class="verdict">好</span><span class="pwhat">44px 起跳</span></div>
+        <div class="demo">
+          <div class="d-title">排序方式</div>
+          <div class="d-btns">
+            <span class="btn-lg">獻金總額</span>
+            <span class="btn-lg">企業捐贈</span>
+            <span class="btn-lg">得票數</span>
           </div>
+          <div class="ruler">高度 44px · 內距 11px 18px</div>
         </div>
-        <div class="mini-cap">按鈕 46px 高 · 輸入與下拉 48px 高</div>
-        <p>所有按鈕設 min-height 46px，所有輸入框與下拉設 48px，都超過 44px 的建議下限。手機上單手也點得到，不必瞄準。</p>
-        <p class="evi">golden_politics2016.css：<br>button { min-height:46px; padding:12px 20px }<br>input, select { min-height:48px }</p>
+        <div class="cap">手機上單手也點得到</div>
+        <p>可點擊的東西用內距撐開，不是靠字級。目標大，移動時間就短，使用者不必瞄準——尤其在手機上，這是能不能用的差別。</p>
+        <p class="look"><b>看這裡</b>用手指比一下，這個大小點得中嗎？</p>
       </div>
 
       <div class="panel b">
-        <div class="phead"><span class="verdict">不好</span><span class="pwork">W2 政治獻金大公開</span></div>
-        <div class="mini" style="background:#16213E">
-          <div class="btnrow">
-            <span class="fake-btn small">獻金總額</span>
-            <span class="fake-btn small">企業捐贈</span>
-            <span class="fake-btn small">個人捐贈</span>
-            <span class="fake-btn small">得票數</span>
+        <div class="phead"><span class="verdict">不好</span><span class="pwhat">功能有，但點不到</span></div>
+        <div class="demo">
+          <div class="d-title">排序方式</div>
+          <div class="d-btns">
+            <span class="btn-sm">獻金總額</span>
+            <span class="btn-sm">企業捐贈</span>
+            <span class="btn-sm">得票數</span>
           </div>
+          <div class="ruler">高度約 20px · 內距 2px 6px</div>
         </div>
-        <div class="mini-cap">排序鈕實高約 23px</div>
-        <p>五種排序是這件作品最強的功能，但按鈕只有 .35rem 的上下內距、.72rem 的字，實際高度大約 23px。功能做出來了，手機上卻很難點中——做得最好的部分被最小的細節擋住。</p>
-        <p class="evi">style.css：<br>.sort-btn { padding:.35rem .9rem }<br>.ex-tag { padding:.35rem .9rem }<br>font-size: .72rem</p>
+        <div class="cap">同樣三個功能，縮到一半以下</div>
+        <p>排序常常是整個介面最有價值的功能，卻最容易被做成一排小字。功能寫出來了，使用者在手機上點三次中一次——那就等於沒有這個功能。</p>
+        <p class="look"><b>看這裡</b>這三個按鈕，你有把握一次點中中間那個嗎？</p>
       </div>
     </div>
 
-    <p class="fix"><b>怎麼改</b>把可點擊元素的 min-height 設成 44px 起跳，內距用 padding 撐開而不是靠字級。改一行 CSS，功能的可用性差一個檔次。</p>
+    <p class="fix"><b>怎麼改</b>可點擊元素的 min-height 設 44px 起跳，內距用 padding 撐開而不是靠字級。改一行 CSS，可用性差一個檔次。</p>
   </section>
 
   <div class="end">
@@ -567,7 +696,7 @@
     <p>這一頁回答「原則長什麼樣子」；另外兩份分別回答另外兩個問題：</p>
     <p><a class="u" href="https://richyli.github.io/visual/" target="_blank" rel="noopener">richyli.github.io/visual/</a> — Dashboard 診斷框架 v1，逐條檢查一份儀表板做得好不好。</p>
     <p><a class="u" href="https://richyli.github.io/obs/dashboard_complaint_glossary.html" target="_blank" rel="noopener">richyli.github.io/obs/dashboard_complaint_glossary.html</a> — 儀表板抱怨翻譯表，把「很亂」「找不到」「怪怪的」翻成理論名稱。</p>
-    <footer>2026-09 · 九組對照的證據取自五件作品的原始碼實測；小圖為依實際數值與色碼重製之示意，非螢幕截圖</footer>
+    <footer>2026-09 · 九條理論的取捨來自一屆學生五件作品的實際分岔；所有示範畫面為說明而重新設計，數字為示意值</footer>
   </div>
 
 </div>
