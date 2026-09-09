@@ -710,7 +710,7 @@
           <h3>政治獻金大公開 — 錢的流向決定政治的走向</h3>
           <span class="url">ceuwan1113-sys.github.io/99999998/</span>
           <p class="pt">索引做得最完整的一件。</p>
-          <p>五種篩選（政黨、縣市、性別、當選狀態、委員會）配上五種排序，再加政黨快捷按鈕；首頁先用四個 KPI 把 261 位候選人、30 億元、當選席次、企業捐贈交代完，才進清單。清單、編輯精選、詳情、返回四段動線都接得起來。</p>
+          <p>五種篩選（政黨、縣市、性別、當選狀態、委員會）配上五種排序，再加政黨快捷按鈕；首頁先用四個 KPI 把 261 位候選人、30 億元、當選席次、企業捐贈交代完，才進清單。清單、編輯精選、詳情、返回四段動線都接得起來。獻金來源的甜甜圈圖是用 canvas 逐段手繪的，沒有借助任何圖表函式庫。</p>
         </div>
         <div class="meter">
           <div class="meter-head">互動控制項</div>
@@ -757,9 +757,9 @@
         <div>
           <h3>大金庫：政治獻金查詢</h3>
           <span class="url">fangk-ship-it.github.io/fkq_pp/</span>
-          <p class="pt">唯一真的動手畫圖的一件。</p>
-          <p>五件裡只有這件用了 D3 自己繪製圖形（頁面上有四組 SVG），沒有停在「AI 給什麼就用什麼」。可以用來講「工具選擇也是設計決定」。</p>
-          <p class="cite">這件的畫面完全由 JavaScript 產生，存下靜態檔是看不到內容的。互動作品的保存與評分因此必須連操作步驟一起截圖，否則幾個月後打不開，作品就等於不存在。</p>
+          <p class="pt">技術野心最大的一件，代價也最直接。</p>
+          <p>五件裡唯一用完整前端框架的一件：React 加上 Tailwind、PapaParse，介面圖示用 lucide。它示範了「工具選擇也是設計決定」——包括這個決定要付的代價。</p>
+          <p class="cite">代價是首屏：Babel 在使用者的瀏覽器裡即時編譯，要先下載六個外部函式庫才畫得出東西，存成靜態檔完全看不到內容。互動作品的保存與評分因此必須連操作步驟一起截圖，否則幾個月後打不開，作品就等於不存在。</p>
         </div>
         <div class="meter">
           <div class="meter-head">互動控制項</div>
@@ -775,7 +775,7 @@
           <h3>THE CAPITAL 2016 — Decoding Power</h3>
           <span class="url">water0821.github.io/DATA2/</span>
           <p class="pt">拿來當對照組：風格最完整，索引最少。</p>
-          <p>整件作品的視覺語言一致到底，以地圖當主要入口（The Geography of Power），機密檔案的調性從標題貫穿到頁尾。但全站只有六個互動控制項、沒有任何下拉選單，介面幾乎全英文——想查特定候選人的人反而最難進去。</p>
+          <p>整件作品的視覺語言一致到底，全站只有黑白與四階灰六個色值，機密檔案的調性從標題貫穿到頁尾。地圖是用 D3 的 geoMercator 投影真的畫出來的，不是貼圖。但全站只有六個互動控制項、沒有任何下拉選單，介面幾乎全英文——想查特定候選人的人反而最難進去。</p>
           <p class="cite">風格與索引在時間有限時會互相排擠，而多數人會先把時間花在風格上。這是這份作業最值得討論的一個取捨，不是缺點清單。</p>
         </div>
         <div class="meter">
@@ -809,6 +809,13 @@
         <div>
           <div>台北市人口遷徙儀表板 — 兩段對話做完：先清資料（民國轉西元、區域別拆欄），再做 Sankey 與縣市地圖</div>
           <a class="u" href="https://richyli.github.io/sj/population-flow-v3.html" target="_blank" rel="noopener">richyli.github.io/sj/population-flow-v3.html</a>
+        </div>
+      </div>
+      <div class="link-row">
+        <span class="eyebrow">原則對照</span>
+        <div>
+          <div>儀表板九組對照 — 九條理論各配一組並排的好例與壞例，例子全部取自這五件作品，證據來自原始碼實測</div>
+          <a class="u" href="https://richyli.github.io/obs/dashboard_nine_pairs.html" target="_blank" rel="noopener">richyli.github.io/obs/dashboard_nine_pairs.html</a>
         </div>
       </div>
       <div class="link-row">
