@@ -123,6 +123,63 @@
   }
   .facts b { color: var(--ink); font-weight: 500; }
 
+  /* ---------- quick conclusion ---------- */
+  .tldr {
+    margin-top: 26px;
+    background: var(--surface);
+    border: 1px solid var(--rule-soft);
+    border-left: 3px solid var(--signal);
+    padding: 18px 22px 20px;
+  }
+  .tldr-head {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .tldr-head .eyebrow { color: var(--signal); }
+  .tldr-head p { margin: 0; font-size: 13px; color: var(--muted); }
+
+  .tldr ol {
+    list-style: none;
+    counter-reset: tldr;
+    margin: 12px 0 0;
+    padding: 0;
+  }
+  .tldr li {
+    counter-increment: tldr;
+    display: grid;
+    grid-template-columns: 26px 1fr;
+    gap: 14px;
+    padding: 14px 0;
+    border-top: 1px solid var(--rule-soft);
+  }
+  .tldr li::before {
+    content: counter(tldr);
+    font-family: var(--f-mono);
+    font-size: 12px;
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    text-align: center;
+    color: var(--accent-ink);
+    background: var(--accent);
+    margin-top: 3px;
+  }
+  .tldr h3 {
+    font-family: var(--f-display);
+    font-size: 17.5px;
+    font-weight: 600;
+    margin: 0 0 4px;
+    line-height: 1.4;
+  }
+  .tldr .ev {
+    margin: 0;
+    color: var(--ink-soft);
+    font-size: 14.5px;
+    max-width: 70ch;
+  }
+
   /* ---------- outline nav ---------- */
   .rail {
     display: grid;
@@ -462,6 +519,8 @@
 
   @media (max-width: 760px) {
     .row, .prob, .work, .link-row { grid-template-columns: 1fr; gap: 12px; }
+    .tldr { padding: 16px 16px 18px; }
+    .tldr li { grid-template-columns: 22px 1fr; gap: 10px; }
     .sec-head { flex-wrap: wrap; }
     .sec-head .eyebrow { margin-left: 0; width: 100%; }
   }
@@ -485,6 +544,33 @@
       <span>工具　<b>對話式 AI ＋ GitHub Pages</b></span>
     </div>
   </header>
+
+  <div class="tldr">
+    <div class="tldr-head">
+      <span class="eyebrow">快速結論</span>
+      <p>整場講的就是這三句，細節在下面六節。</p>
+    </div>
+    <ol>
+      <li>
+        <div>
+          <h3>AI 做得出儀表板</h3>
+          <p class="ev">這班沒有人寫過網頁，最後交出五個打得開、能互動的網址。261 位候選人、27 個欄位的資料庫，用對話就生得出來——「做得出來」已經不再是門檻。</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <h3>理論指揮得動 AI</h3>
+          <p class="ev">不指定，AI 就用看似合理的預設值把空白填掉：整班同一種審美、一個空的搜尋框、一張卡片塞七個數字。理論的用處在這裡——把「訊號的特徵必須專屬」「一個區塊最多四個組塊」「先給具名案例再放人探索」翻成可以直接貼進對話框的指令。</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <h3>理論與經驗檢查得了產出</h3>
+          <p class="ev">驗收不靠感覺：作者圈出最重要的那一格，旁邊的人說出第一眼看到哪一格，兩個圈對不上就是設計失敗；清單→詳情→返回的動線通不通，一試就知道；互動控制項可以直接數，五件作品從 6 個到 23 個差了近四倍。做得出來變便宜之後，稀缺的就是這種判斷。</p>
+        </div>
+      </li>
+    </ol>
+  </div>
 
   <div class="rail">
     <a class="rail-seg" href="#s1"><div class="rail-num">01</div><div class="rail-name">為什麼要他們做</div></a>
